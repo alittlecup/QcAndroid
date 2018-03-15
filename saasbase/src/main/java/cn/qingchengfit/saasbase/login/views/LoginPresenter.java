@@ -74,6 +74,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
   public void loginWx(String code) {
     JsonObject body = new JsonObject();
     body.addProperty("code", code);
+    body.addProperty("session_config",true);
     RxRegiste(loginModel.wxLogin(body)
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())

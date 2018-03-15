@@ -5,11 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.staff.beans.Invitation;
+import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.subscribes.NetSubscribe;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -69,6 +76,24 @@ public class TrainerTabInviteListFragment extends StaffTabInviteListFragment {
       return;
     }
     routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
+  }
+
+  @Override void cancelInvite(Invitation invitation, IFlexible item, int position) {
+    RxRegiste(staffModel.cancelTrainerInvite(invitation.getId())
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            invitation.setStatus(3);
+            ((CommonUserItem) item).setUser(invitation);
+            commonFlexAdapter.notifyItemChanged(position);
+          } else {
+            onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   //@Override public boolean onItemClick(int position) {

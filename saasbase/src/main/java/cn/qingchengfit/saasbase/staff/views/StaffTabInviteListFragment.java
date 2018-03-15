@@ -56,18 +56,16 @@ public class StaffTabInviteListFragment extends BaseStaffListFragment {
 
   }
 
-
-
   @Override public int getFbIcon() {
     return R.drawable.ic_add_staff;
   }
 
   @Override public void onClickFab() {
-    if (!permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)){
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
     }
-    routeTo("/add/",null);
+    routeTo("/add/", null);
   }
 
   @Override protected String getTitle() {
@@ -77,50 +75,49 @@ public class StaffTabInviteListFragment extends BaseStaffListFragment {
   @Override public boolean onItemClick(int position) {
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
-    if (item instanceof CommonUserItem && ((CommonUserItem) item).getUser() instanceof Invitation){
+    if (item instanceof CommonUserItem && ((CommonUserItem) item).getUser() instanceof Invitation) {
       Invitation invitation = (Invitation) ((CommonUserItem) item).getUser();
-      if (invitation.getStatus() ==2 || invitation.getStatus() == 3)
-        return true;
-      DialogSheet.builder(getContext())
-        .addButton("撤销邀请", R.color.red,view -> {
-          if (!hasCancelPermission()){
-            showAlert(R.string.sorry_for_no_permission);
-            return;
-          }
-
-          RxRegiste(staffModel.cancelInvite(invitation.getId())
-            .onBackpressureLatest()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new NetSubscribe<QcDataResponse>() {
-              @Override public void onNext(QcDataResponse qcResponse) {
-                if (ResponseConstant.checkSuccess(qcResponse)) {
-                  invitation.setStatus(3);
-                  ((CommonUserItem) item).setUser(invitation);
-                  commonFlexAdapter.notifyItemChanged(position);
-                } else {
-                  onShowError(qcResponse.getMsg());
-                }
-              }
-            }));
-        })
-        .addButton("重新发送邀请",R.color.text_dark,view -> {
-          if (!permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)){
-            showAlert(R.string.sorry_for_no_permission);
-            return;
-          }
-          reInvite(invitation);
-        })
-        .show();
+      if (invitation.getStatus() == 2 || invitation.getStatus() == 3) return true;
+      DialogSheet.builder(getContext()).addButton("撤销邀请", R.color.red, view -> {
+        if (!hasCancelPermission()) {
+          showAlert(R.string.sorry_for_no_permission);
+          return;
+        }
+        cancelInvite(invitation, item, position);
+      }).addButton("重新发送邀请", R.color.text_dark, view -> {
+        if (!permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)) {
+          showAlert(R.string.sorry_for_no_permission);
+          return;
+        }
+        reInvite(invitation);
+      }).show();
     }
     return true;
   }
 
-  boolean hasCancelPermission(){
+  boolean hasCancelPermission() {
     return permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE);
   }
 
-   void reInvite(Invitation invitation){
-    routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
+  void reInvite(Invitation invitation) {
+    routeTo("/reinvite/", StaffReInviteParams.builder().invitation(invitation).build());
+  }
+
+  void cancelInvite(Invitation invitation, IFlexible item, int position) {
+    RxRegiste(staffModel.cancelInvite(invitation.getId())
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            invitation.setStatus(3);
+            ((CommonUserItem) item).setUser(invitation);
+            commonFlexAdapter.notifyItemChanged(position);
+          } else {
+            onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 }

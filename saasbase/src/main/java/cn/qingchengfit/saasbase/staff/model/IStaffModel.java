@@ -47,6 +47,7 @@ public interface IStaffModel {
   rx.Observable<QcDataResponse<InvitationListWrap>> getInvitedStaffList();
   rx.Observable<QcDataResponse<InvitationWrap>> inviteStaff(InvitationBody body);
   rx.Observable<QcDataResponse> cancelInvite(String inviteId);
+  rx.Observable<QcDataResponse> cancelTrainerInvite(String inviteId);
 
   rx.Observable<QcDataResponse> addStaff(ManagerBody body);
   rx.Observable<QcDataResponse> delStaff(String id);

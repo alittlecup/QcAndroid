@@ -83,6 +83,10 @@ public class StaffModel implements IStaffModel {
     return staffApi.qcCancleIvitation(loginStatus.staff_id(),inviteId,new StatusBody(3),gymWrapper.getParams());
   }
 
+  @Override public Observable<QcDataResponse> cancelTrainerInvite(String inviteId) {
+    return staffApi.qcCancleTrainerIvitation(loginStatus.staff_id(),inviteId,new StatusBody(3),gymWrapper.getParams());
+  }
+
   @Override public Observable<QcDataResponse> addStaff(ManagerBody body) {
     return null;
   }

@@ -12,7 +12,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.WebFragment;
 import rx.functions.Action1;
 
 public class WebContainerActivity extends BaseActivity implements FragCallBack {
@@ -28,10 +27,11 @@ public class WebContainerActivity extends BaseActivity implements FragCallBack {
         setContentView(R.layout.activity_web_container);
         if (getIntent() != null && !TextUtils.isEmpty(getIntent().getStringExtra("url"))) {
             getSupportFragmentManager().beginTransaction()
-                .replace(R.id.web_container, WebFragment.newInstance(getIntent().getStringExtra("url")))
+                .replace(R.id.web_container, WebFragmentForTest.newInstance(getIntent().getStringExtra("url")))
                 .commit();
         }
     }
+
 
     @Override public void onBackPressed() {
         //        if (getSupportFragmentManager().getFragments().size() >1){

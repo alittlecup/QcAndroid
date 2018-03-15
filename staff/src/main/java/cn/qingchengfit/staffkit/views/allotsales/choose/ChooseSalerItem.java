@@ -1,17 +1,14 @@
 package cn.qingchengfit.staffkit.views.allotsales.choose;
 
 import android.graphics.drawable.Animatable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
-import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
+import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -42,10 +39,8 @@ public class ChooseSalerItem extends AbstractFlexibleItem<ChooseSalerItem.Choose
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseSalerVH holder, int position, List payloads) {
-        Glide.with(holder.itemView.getContext())
-            .load(mSaler.avatar)
-            .asBitmap()
-            .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
+        int da = mSaler.getGender() == 0?R.drawable.default_manage_male:R.drawable.default_manager_female;
+        PhotoUtils.smallCircle(holder.salerHeaderImg,mSaler.avatar,da,da);
         holder.salerNameTv.setText(mSaler.username);
         //adapter.animateView(holder.itemView, position, adapter.isSelected(position));
 

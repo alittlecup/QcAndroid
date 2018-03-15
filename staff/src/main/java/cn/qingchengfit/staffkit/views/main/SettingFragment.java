@@ -238,6 +238,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     Glide.with(getContext())
       .load(PhotoUtils.getSmall(bean.getAvatar()))
       .asBitmap()
+      .placeholder(bean.getGender()==0?R.drawable.default_manage_male:R.drawable.default_manager_female)
       .into(new CircleImgWrapper(headerIcon, getContext()));
     drawerName.setText(bean.getUsername());
     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, bean.getUsername());
