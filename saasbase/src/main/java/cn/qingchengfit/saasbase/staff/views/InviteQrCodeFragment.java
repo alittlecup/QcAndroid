@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -21,6 +22,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.google.zxing.WriterException;
 import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
@@ -51,6 +53,7 @@ import timber.log.Timber;
 
   FragmentQrcodeInviteBinding db;
   private Bitmap bitmap;
+  @Inject GymWrapper gymWrapper;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -71,10 +74,9 @@ import timber.log.Timber;
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
           if (bitmap != null) {
-            ShareDialogFragment.newInstance("等待分享文案", "等待分享文案", bitmap, url)
+            ShareDialogFragment.newInstance("邀请函", gymWrapper.name()+"邀请您加入", bitmap, url)
               .show(getFragmentManager(), "");
           }
-          // TODO: 2018/1/9 分享文案
         }
       });
     return db.getRoot();
