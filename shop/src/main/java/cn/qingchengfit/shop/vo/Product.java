@@ -85,15 +85,15 @@ public class Product
   private Integer total_sales;
   private Integer priority;
 
-  public List<String> getCard_tpl_ids() {
+  public List<Integer> getCard_tpl_ids() {
     return card_tpl_ids;
   }
 
-  public void setCard_tpl_ids(List<String> card_tpl_ids) {
+  public void setCard_tpl_ids(List<Integer> card_tpl_ids) {
     this.card_tpl_ids = card_tpl_ids;
   }
 
-  private List<String> card_tpl_ids;
+  private List<Integer> card_tpl_ids;
 
   public boolean getSupport_card() {
     return support_card;
@@ -396,7 +396,7 @@ public class Product
     dest.writeValue(this.month_sales);
     dest.writeValue(this.total_sales);
     dest.writeValue(this.priority);
-    dest.writeStringList(this.card_tpl_ids);
+    dest.writeList(this.card_tpl_ids);
     dest.writeByte(this.support_card ? (byte) 1 : (byte) 0);
   }
 
@@ -426,7 +426,7 @@ public class Product
     this.month_sales = (Integer) in.readValue(Integer.class.getClassLoader());
     this.total_sales = (Integer) in.readValue(Integer.class.getClassLoader());
     this.priority = (Integer) in.readValue(Integer.class.getClassLoader());
-    this.card_tpl_ids = in.createStringArrayList();
+    in.readList(this.card_tpl_ids, Integer.class.getClassLoader());
     this.support_card = in.readByte() != 0;
   }
 

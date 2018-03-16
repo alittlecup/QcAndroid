@@ -30,7 +30,7 @@ import java.util.List;
 @Leaf(module = "shop", path = "/product/paycard") public class ProductPayPage
     extends ShopBaseFragment<PageProductPayBinding, ProductPayViewModel> {
   CommonFlexAdapter adapter;
-  @Need ArrayList<String> ids;
+  @Need ArrayList<Integer> ids;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
@@ -46,8 +46,8 @@ import java.util.List;
   private void upDateSelectPosition(List<CardSwitchItem> items) {
     if (ids != null && !ids.isEmpty()) {
       for (int pos = 0; pos < items.size(); pos++) {
-        for (String id : ids) {
-          if (id.equals(items.get(pos).getData().getShopCardTplId())) {
+        for (Integer id : ids) {
+          if (String.valueOf(id).equals(items.get(pos).getData().getShopCardTplId())) {
             adapter.toggleSelection(pos);
           }
         }
@@ -82,13 +82,13 @@ import java.util.List;
         List<Integer> selectedPositions = adapter.getSelectedPositions();
         Intent intent = new Intent();
         if (selectedPositions != null && !selectedPositions.isEmpty()) {
-          ArrayList<String> ids = new ArrayList<>();
+          ArrayList<Integer> ids = new ArrayList<>();
           for (Integer pos : selectedPositions) {
             CardSwitchItem item = (CardSwitchItem) adapter.getItem(pos);
             ICardShopChooseItemData data = item.getData();
-            ids.add(data.getShopCardTplId());
+            ids.add(Integer.valueOf(data.getShopCardTplId()));
           }
-          intent.putStringArrayListExtra("card_tpls", ids);
+          intent.putIntegerArrayListExtra("card_tpls", ids);
         }
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().onBackPressed();

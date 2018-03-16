@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
+import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
+import cn.qingchengfit.shop.util.ViewUtil;
+import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2018/2/1.
@@ -44,18 +48,35 @@ import java.util.ArrayList;
     if (product.getSupport_card()) {
       dealCardTplIds(new ArrayList<>(product.getCard_tpl_ids()));
     }
+    if (product.getSupport_card()) {
+      goodsAdapter.setStatus(GoodProductItem.SHOW_CARD_PRICE);
+    } else {
+      goodsAdapter.setStatus(0);
+    }
     updateGoodList();
     if (product.getCategory() != null) {
-      // TODO: 2018/2/1 分类规则
       mBinding.productCetegory.setContent(product.getCategory().getName());
     }
     mBinding.productWeight.setContent(
         product.getPriority() == null ? "" : product.getPriority().toString());
     dealDeliverTypes(new ArrayList<>(product.getDelivery_types()));
+
+    mBinding.productName.setContent(mViewModel.getProduct().getName());
+    mBinding.productUnit.setContent(mViewModel.getProduct().getUnit());
   }
 
   private void updateGoodList() {
-
+    List<Good> goods = mViewModel.getProduct().getGoods();
+    List<GoodProductItem> items = new ArrayList<>();
+    for (Good good : goods) {
+      items.add(new GoodProductItem(good));
+    }
+    goodsAdapter.updateDataSet(items);
+    mBinding.goodsRecyclerview.postDelayed(new Runnable() {
+      @Override public void run() {
+        ViewUtil.resetRecyclerViewHeight(mBinding.goodsRecyclerview);
+      }
+    }, 50);
   }
 
   @Nullable @Override
@@ -68,7 +89,6 @@ import java.util.ArrayList;
     initBottom();
     return view;
   }
-
 
   private void initBottom() {
     mBinding.buttonLeft.setText(getString(R.string.delete));

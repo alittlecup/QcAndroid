@@ -78,7 +78,7 @@ import java.util.List;
     });
     mViewModel.chooseCardEvent.observe(this, aVoid -> {
       Uri uri = Uri.parse("qcstaff://shop/product/paycard");
-      List<String> card_tpl_ids = mViewModel.getProduct().getCard_tpl_ids();
+      List<Integer> card_tpl_ids = mViewModel.getProduct().getCard_tpl_ids();
       if (card_tpl_ids != null && !card_tpl_ids.isEmpty()) {
         toOtherFragmentForBack(uri,
             new ProductPayPageParams().ids(new ArrayList<>(card_tpl_ids)).build(), TO_CARD_CODE);
@@ -213,13 +213,13 @@ import java.util.List;
         ArrayList<Integer> deliver = data.getIntegerArrayListExtra("delivers");
         dealDeliverTypes(deliver);
       } else if (requestCode == TO_CARD_CODE) {
-        ArrayList<String> ids = data.getStringArrayListExtra("card_tpls");
+        ArrayList<Integer> ids = data.getIntegerArrayListExtra("card_tpls");
         dealCardTplIds(ids);
       }
     }
   }
 
-  protected void dealCardTplIds(ArrayList<String> ids) {
+  protected void dealCardTplIds(ArrayList<Integer> ids) {
     if (ids == null || ids.isEmpty()) {
       mBinding.productCardTpl.setContent("");
       mViewModel.getProduct().setCard_tpl_ids(new ArrayList<>());
@@ -244,7 +244,7 @@ import java.util.List;
     mBinding.productDeliver.setContent(sb.toString());
   }
 
-  CommonFlexAdapter goodsAdapter;
+ public CommonFlexAdapter goodsAdapter;
 
   private void initGoodRecyclerView() {
     List<GoodProductItem> goods = new ArrayList<>();
