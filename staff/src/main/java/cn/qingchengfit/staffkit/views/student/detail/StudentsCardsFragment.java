@@ -87,12 +87,13 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
     }
 
     @Override public void onData(int count, List<Card> cards) {
-        cardnum.setText(count + "张会员卡");
+        cardnum.setText(cards.size() + "张会员卡");
         datas.clear();
         if (cards == null) return;
         for (int i = 0; i < cards.size(); i++) {
             datas.add(new CardItem(cards.get(i)));
         }
+        adatper.clear();
         adatper.updateDataSet(datas);
         recycleview.setNoData(datas.size() == 0);
     }
