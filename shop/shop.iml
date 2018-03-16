@@ -202,6 +202,7 @@
     <orderEntry type="library" name="javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="com.android.databinding:adapters-3.1.0-alpha09" level="project" />
     <orderEntry type="library" name="com.squareup.phrase:phrase:1.1.0@jar" level="project" />
+    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.25.3" level="project" />
     <orderEntry type="library" name="com.taobao.android:weex_sdk-0.17.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-27.0.0" level="project" />
     <orderEntry type="library" name="android.arch.persistence:db-1.0.0" level="project" />
@@ -212,7 +213,6 @@
     <orderEntry type="library" name="me.zhanghai.android.materialprogressbar:library-1.1.4" level="project" />
     <orderEntry type="library" name="com.commonsware.cwac:cam2-0.7.6" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:common:1.0.3@jar" level="project" />
-    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.25.2" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:common-java8:1.0.0@jar" level="project" />
     <orderEntry type="library" name="com.squareup.sqlbrite:sqlbrite-1.1.1" level="project" />
     <orderEntry type="library" name="com.github.PhilJay:MPAndroidChart:v3.0.1@jar" level="project" />

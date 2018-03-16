@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
+import cn.qingchengfit.shop.ui.product.productdetail.ShopProductModifyDetailPageParams;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
@@ -39,6 +40,11 @@ import java.util.List;
 
     mViewModel.getDeleteProductResult().observe(this, aBoolean -> {
       ToastUtils.show("delete-->" + aBoolean);
+    });
+    mViewModel.detailEvent.observe(this, aVoid -> {
+      routeTo("/modify/detail",
+          new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
+              .build());
     });
   }
 

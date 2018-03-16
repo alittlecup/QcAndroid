@@ -107,12 +107,11 @@ import java.util.List;
     mViewModel.getPostProductResult().observe(this, aBoolean -> {
       ToastUtils.show(aBoolean ? "success" : "error");
       if (aBoolean) {
-        routeTo("/add/success", new ProductAddSuccessPageParams().status(mViewModel.getProduct().getProductStatus()).build());
+        routeTo("/add/success",
+            new ProductAddSuccessPageParams().status(mViewModel.getProduct().getProductStatus())
+                .build());
         popBack();
       }
-    });
-    mViewModel.detailEvent.observe(this,aVoid -> {
-      routeTo("/product/detail",null);
     });
   }
 
@@ -170,7 +169,7 @@ import java.util.List;
     return true;
   }
 
-  private void toOtherFragmentForBack(Uri uri, Bundle params, int requestCode) {
+  protected void toOtherFragmentForBack(Uri uri, Bundle params, int requestCode) {
     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
     if (params != null) {
       intent.putExtras(params);
@@ -244,7 +243,7 @@ import java.util.List;
     mBinding.productDeliver.setContent(sb.toString());
   }
 
- public CommonFlexAdapter goodsAdapter;
+  public CommonFlexAdapter goodsAdapter;
 
   private void initGoodRecyclerView() {
     List<GoodProductItem> goods = new ArrayList<>();
