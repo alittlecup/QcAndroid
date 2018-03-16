@@ -144,6 +144,25 @@ android {
   }
 }
 
+//自动加固
+afterEvaluate {
+  android.applicationVariants.all { variant ->
+    variant.assemble.doLast {
+      if (variant.buildType.name.contains('release')) {
+        variant.outputs.all {
+          output ->
+            def apkpath = output.outputFile as File
+            exec {
+              ignoreExitValue true
+              def rootFile = new File("output")
+              commandLine "sh", rootFile.absolutePath+"/../reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+            }
+        }
+
+      }
+    }
+  }
+}
 
 dependencies {
   implementation project(path: ':saasbase')

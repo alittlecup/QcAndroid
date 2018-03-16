@@ -11,7 +11,6 @@ import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
-import cn.qingchengfit.model.responese.ChatFriendsData;
 import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.network.QcRestRepository;
@@ -23,6 +22,7 @@ import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
 import cn.qingchengfit.recruit.views.organization.QcSerachGymRepsonse;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.chat.model.ChatFriendsData;
 import cn.qingchengfit.saasbase.chat.model.RecordWrap;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
@@ -180,7 +180,7 @@ public class QcCloudClient {
     private OkHttpClient okHttpClient;
 
     public QcCloudClient() {
-        String host = "http://couldtest.qingchengfit.cn/";
+        String host = "http://cloudtest.qingchengfit.cn/";
         host = PreferenceUtils.getPrefString(App.AppContex, "debug_ip",
           host);
 

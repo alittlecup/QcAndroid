@@ -12,24 +12,10 @@
       />
 
   <include layout="@layout/fragment_unlogin_add_photo"/>
-
+  
   <Space
       android:layout_width="match_parent"
-      android:layout_height="20dp"
-      />
-
-  <com.qingchengfit.fitcoach.component.CircleIndicator
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      android:id="@+id/splash_indicator"
-      android:layout_width="match_parent"
-      android:layout_height="20dp"
-      android:layout_gravity="bottom"
-      app:ci_drawable="@drawable/circle_prime"
-      />
-
-  <Space
-      android:layout_width="match_parent"
-      android:layout_height="20dp"
+      android:layout_height="60dp"
       />
 
   <LinearLayout

@@ -5,14 +5,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.LazyloadFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -43,17 +47,39 @@ public class UnloginManageFragment extends LazyloadFragment {
         super.onCreate(savedInstanceState);
         manageFragment = new ManageFragment();
         homeBannerFragment = new HomeBannerFragment();
+        RxBus.getBus().register(EventLoginChange.class)
+          .onBackpressureDrop()
+          .throttleFirst(500, TimeUnit.MILLISECONDS)
+          .compose(bindToLifecycle())
+          .compose(doWhen(FragmentEvent.CREATE_VIEW))
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new BusSubscribe<EventLoginChange>() {
+              @Override public void onNext(EventLoginChange eventLoginChange) {
+                  changeView();
+              }
+          });
+        getChildFragmentManager().beginTransaction()
+          .add(getLayoutRes(),manageFragment)
+          .add(getLayoutRes(),homeBannerFragment)
+          .hide(manageFragment)
+          .hide(homeBannerFragment)
+          .commitAllowingStateLoss();
     }
 
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
-        RxBusAdd(EventLoginChange.class)
-          .onBackpressureLatest()
-          .delay(500, TimeUnit.MILLISECONDS)
-          .subscribe(eventLoginChange -> changeView());
-        changeView();
+        //RxBusAdd(EventLoginChange.class)
+        //  .onBackpressureLatest()
+        //  .delay(500, TimeUnit.MILLISECONDS)
+        //  .subscribe(eventLoginChange -> changeView());
+
         return view;
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        changeView();
     }
 
     @Override protected void onVisible() {
@@ -62,19 +88,23 @@ public class UnloginManageFragment extends LazyloadFragment {
 
 
     public void changeView() {
+        //if (!isAdded()) return;
         if (loginStatus.isLogined()) {
             RxRegiste(repoCoachService.readAllServices().observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                 if (coachServices.size() == 0) {
                     //无场馆
-                    stuff(homeBannerFragment, null);
+                    getChildFragmentManager().beginTransaction()
+                      .show(homeBannerFragment).hide(manageFragment).commitAllowingStateLoss();
                 } else {
                     //有场馆
-                    stuff(manageFragment);
+                    getChildFragmentManager().beginTransaction()
+                      .show(manageFragment).hide(homeBannerFragment).commitAllowingStateLoss();
                 }
             }));
 
         } else {
-            stuff(homeBannerFragment, null);
+            getChildFragmentManager().beginTransaction()
+              .show(homeBannerFragment).hide(manageFragment).commitAllowingStateLoss();
         }
     }
 

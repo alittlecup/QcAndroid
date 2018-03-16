@@ -5,16 +5,21 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import io.reactivex.Flowable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -50,32 +55,42 @@ public class UnLoginHomeFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         mainScheduleFragment = new MainScheduleFragment();
         homeBannerFragment = new UnLoginScheduleAdFragment();
+        RxBus.getBus().register(EventLoginChange.class)
+          .onBackpressureDrop()
+          .throttleFirst(500, TimeUnit.MILLISECONDS)
+          .compose(bindToLifecycle())
+          .compose(doWhen(FragmentEvent.CREATE_VIEW))
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new BusSubscribe<EventLoginChange>() {
+              @Override public void onNext(EventLoginChange eventLoginChange) {
+                  changeLogin();
+              }
+          });
+        getChildFragmentManager().beginTransaction()
+          .add(getLayoutRes(),mainScheduleFragment)
+          .add(getLayoutRes(),homeBannerFragment)
+          .hide(homeBannerFragment)
+          .commitAllowingStateLoss();
+
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
-        RxBusAdd(EventLoginChange.class)
-          .onBackpressureLatest()
-          .subscribe(eventLoginChange -> changeLogin());
-        changeLogin();
         return view;
     }
 
-    @Override protected void onInVisible() {
-        super.onInVisible();
-        //if (mainScheduleFragment.isVisible()){
-        //    mainScheduleFragment.setInvisible();
-        //}
+    @Override public void onResume() {
+        super.onResume();
+        changeLogin();
     }
 
     @Override protected void onVisible() {
         super.onVisible();
-        //if (mainScheduleFragment.isVisible()){
-        //    mainScheduleFragment.setVisible();
-        //}
+        changeLogin();
     }
 
     private void changeLogin(){
+        //if (!isAdded()) return;
         if (loginStatus.isLogined()) {
             //已登录
             //if (spGetService == null) {
@@ -83,16 +98,22 @@ public class UnLoginHomeFragment extends BaseFragment {
                 RxRegiste(spGetService.observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                     if (coachServices.size() == 0) {
                         //无场馆
-                        stuff(homeBannerFragment, null);
+                        getChildFragmentManager().beginTransaction()
+                          .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
+                          .show(homeBannerFragment).hide(mainScheduleFragment).commitAllowingStateLoss();
                     } else {
                         //有场馆
-                        stuff(mainScheduleFragment);
+                        getChildFragmentManager().beginTransaction()
+                          .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
+                          .show(mainScheduleFragment).hide(homeBannerFragment).commitAllowingStateLoss();
                     }
                 }));
             //}
         } else {
             //未登录
-            stuff(homeBannerFragment, null);
+            getChildFragmentManager().beginTransaction()
+              .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
+              .show(homeBannerFragment).hide(mainScheduleFragment).commitAllowingStateLoss();
         }
     }
 

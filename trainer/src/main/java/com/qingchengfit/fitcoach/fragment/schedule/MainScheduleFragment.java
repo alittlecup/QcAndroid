@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,13 +80,31 @@ public class MainScheduleFragment extends BaseFragment {
         return mCoachService;
     }
 
-    @Override protected void onFinishAnimation() {
-        super.onFinishAnimation();
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         scheduleWeekFragment = new ScheduleWeekFragment();
         scheduesFragment = new ScheduesFragmentBuilder(new Date().getTime()).build();
+        getChildFragmentManager().beginTransaction()
+          .add(getLayoutRes(),scheduleWeekFragment)
+          .add(getLayoutRes(),scheduesFragment)
+          .hide(scheduleWeekFragment)
+          .hide(scheduesFragment)
+          .commitAllowingStateLoss();
+    }
 
-        stuff(isWeekView ? scheduleWeekFragment : scheduesFragment);
+    @Override protected void onFinishAnimation() {
+        super.onFinishAnimation();
+
         setVisible();
+
+    }
+
+    @Override protected void onVisible() {
+        super.onVisible();
+        getChildFragmentManager().beginTransaction()
+          .show(isWeekView ? scheduleWeekFragment : scheduesFragment)
+          .hide(isWeekView ? scheduesFragment:scheduleWeekFragment)
+          .commitAllowingStateLoss();
     }
 
     @Override public int getLayoutRes() {
@@ -131,7 +150,7 @@ public class MainScheduleFragment extends BaseFragment {
                 }
             }
         });
-
+        onVisible();
         return view;
     }
     public void setVisible(){

@@ -2,7 +2,11 @@ package com.qingchengfit.fitcoach.fragment.main;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -58,10 +62,15 @@ public class MainWebFragment extends WebFragment {
         //可见，但还没被初始化
     }
 
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+        View v= super.onCreateView(inflater, container, savedInstanceState);
+        mWebClose.setVisibility(View.GONE);
+        return v;
+    }
+
     @Override protected void onVisible() {
-      //if (isLoaded && mRefreshSwipeRefreshLayout != null) {
-      //    mRefreshSwipeRefreshLayout.setRefreshing(false);
-      //}
         SensorsUtils.track("AND_discover_tab_click", null, getContext());
     }
 
@@ -75,9 +84,6 @@ public class MainWebFragment extends WebFragment {
 
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-              //if (mRefreshSwipeRefreshLayout != null) {
-              //    mRefreshSwipeRefreshLayout.setRefreshing(false);
-              //}
             }
 
             @Override public void onLoadResource(WebView view, String url) {
