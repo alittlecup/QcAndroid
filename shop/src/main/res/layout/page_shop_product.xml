@@ -182,6 +182,7 @@
               android:background="@color/colorPrimary"
               android:enabled="@{viewModel.isEdit}"
               app:civ_hint=""
+              android:onClick="@{(view)->viewModel.toProductDesc()}"
               app:civ_lable="@string/product_desc"
               app:civ_showright="@{viewModel.isEdit}"
               app:enable="@{viewModel.isEdit}"

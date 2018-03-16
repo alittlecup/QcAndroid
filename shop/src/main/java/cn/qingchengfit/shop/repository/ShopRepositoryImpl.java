@@ -12,6 +12,7 @@ import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,7 +128,7 @@ public class ShopRepositoryImpl implements ShopRepository {
     }));
   }
 
-  @Override public LiveData<Product> qcLoadProductInfo(String staff_id, String product_id,
+  @Override public LiveData<ProductWrapper> qcLoadProductInfo(String staff_id, String product_id,
       HashMap<String, Object> map) {
     return toLiveData(remoteService.qcLoadProductInfo(staff_id, map, product_id));
   }

@@ -111,6 +111,9 @@ import java.util.List;
         popBack();
       }
     });
+    mViewModel.detailEvent.observe(this,aVoid -> {
+      routeTo("/product/detail",null);
+    });
   }
 
   private boolean checkProductInfo(Product product) {
@@ -307,7 +310,7 @@ import java.util.List;
       FrameLayout frameLayout = (FrameLayout) LayoutInflater.from(container.getContext())
           .inflate(R.layout.item_empty_image, null);
       ImageView imageView = frameLayout.findViewById(R.id.image);
-      imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+      imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
       container.addView(frameLayout);
       imageView.setTag(R.id.image, position);
       Glide.with(imageView.getContext())

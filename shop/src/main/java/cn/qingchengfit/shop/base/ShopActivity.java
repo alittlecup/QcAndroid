@@ -22,6 +22,7 @@ import cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryFragment;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPage;
 import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayPage;
 import cn.qingchengfit.shop.ui.product.prices.ProductPricesPage;
+import cn.qingchengfit.shop.ui.product.productdetail.ShopProductDetailPage;
 import com.anbillon.flabellum.annotations.Trunk;
 
 @Trunk(fragments = {
@@ -30,7 +31,7 @@ import com.anbillon.flabellum.annotations.Trunk;
     ShopProductPage.class, ProductInventoryPage.class, UpdateInventoryPage.class,
     ProductAddSuccessPage.class, ProductPayPage.class, ProductDeliverPage.class,
     ProductPricesPage.class, ShopBottomCategoryFragment.class, ShopProductAddPage.class,
-    ShopProductModifyPage.class, ShopViewModel.class
+    ShopProductModifyPage.class, ShopViewModel.class, ShopProductDetailPage.class,
 }) public class ShopActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "shop";

@@ -8,6 +8,7 @@ import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageCategoryListBinding;
 import cn.qingchengfit.shop.ui.category.ShopCategoryPage;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class ShopCategoryListPage
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter);
-
+    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     mBinding.swipeRefresh.setOnRefreshListener(() -> mViewModel.loadSource("2"));
   }
 }

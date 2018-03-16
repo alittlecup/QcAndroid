@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import javax.inject.Inject;
 
 /**
@@ -25,6 +26,7 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   public final ActionLiveEvent deliverChannelEvent = new ActionLiveEvent();
   public final ActionLiveEvent saveProductEvent = new ActionLiveEvent();
   public final ActionLiveEvent chooseCardEvent = new ActionLiveEvent();
+  public final ActionLiveEvent detailEvent = new ActionLiveEvent();
   private ObservableField<Product> product = new ObservableField<>();
 
   public MediatorLiveData<Boolean> getPostProductResult() {
@@ -75,7 +77,7 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void toProductDesc() {
-
+    detailEvent.call();
   }
 
   public void chooseCardTpl() {
@@ -96,10 +98,10 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void loadProduct(String id) {
-    LiveData<Product> productLiveData =
+    LiveData<ProductWrapper> productLiveData =
         repository.qcLoadProductInfo(loginStatus.staff_id(), id, gymWrapper.getParams());
     loadProductResult.addSource(productLiveData, product1 -> {
-      loadProductResult.setValue(product1);
+      loadProductResult.setValue(product1.product);
       loadProductResult.removeSource(productLiveData);
     });
   }

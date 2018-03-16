@@ -7,6 +7,7 @@ import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 
@@ -47,6 +48,6 @@ public interface ShopRemoteRepository {
   Flowable<QcDataResponse> qcPutProduct(String staff_id, HashMap<String, Object> params,
       Product json);
 
-  Flowable<QcDataResponse<Product>> qcLoadProductInfo(String staff_id,
+  Flowable<QcDataResponse<ProductWrapper>> qcLoadProductInfo(String staff_id,
       HashMap<String, Object> params, String product_id);
 }

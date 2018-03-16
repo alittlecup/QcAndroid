@@ -48,7 +48,7 @@ public class ProductListItem
       DataBindingViewHolder<ItemProductListBinding> holder, int position, List payloads) {
     ItemProductListBinding dataBinding = holder.getDataBinding();
     dataBinding.productName.setText(data.getProductName());
-    dataBinding.productAddDate.setText(DateUtils.getYYYYMMDDfromServer(data.getProductAddTime()));
+    dataBinding.productAddDate.setText("添加时间："+DateUtils.Date2YYYYMMDDHHmmss(DateUtils.formatDateFromServer(data.getProductAddTime())));
     SpannableString spannableString = new SpannableString("￥" + data.getProductPrices() + "起");
     spannableString.setSpan(new AbsoluteSizeSpan(12, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
     spannableString.setSpan(new AbsoluteSizeSpan(18, true), 1, spannableString.length() - 1,

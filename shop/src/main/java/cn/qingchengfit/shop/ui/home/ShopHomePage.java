@@ -4,8 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.weex.ui.WeexSplashPage;
 import com.anbillon.flabellum.annotations.Leaf;
 import cn.qingchengfit.shop.R;
@@ -16,6 +21,7 @@ import cn.qingchengfit.shop.ui.home.inventorylist.ShopInventoryListPage;
 import cn.qingchengfit.shop.ui.home.productlist.ShopProductsListPage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -23,6 +29,7 @@ import java.util.List;
 @Leaf(module = "shop", path = "/shop/home") public class ShopHomePage
     extends ShopBaseFragment<PageShopHomeBinding, ShopHomeViewModel> {
   private List<Pair<String, Fragment>> fragmentList;
+  @Inject GymWrapper gymWrapper;
 
   @Override protected void subscribeUI() {
 
@@ -34,6 +41,13 @@ import java.util.List;
     initToolBar();
     initView();
     mBinding.setViewModel(mViewModel);
+    mBinding.showWebPreview.setOnClickListener(v -> {
+      String url = gymWrapper.getCoachService().getHost()
+          + "shop/"
+          + gymWrapper.shop_id()
+          + "/mobile/user/commodity/";
+      WebActivity.startWeb(url, getActivity());
+    });
     return mBinding;
   }
 
@@ -47,6 +61,12 @@ import java.util.List;
   private void initToolBar() {
     mBinding.setToolbarModel(new ToolbarModel("商店"));
     initToolbar(mBinding.includeToolbar.toolbar);
+    if (!CompatUtils.less21()
+        && mBinding.showWebPreview.getParent() instanceof ViewGroup
+        && isfitSystemPadding()) {
+      mBinding.showWebPreview.setPadding(0,
+          MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+    }
   }
 
   public List<Pair<String, Fragment>> getFragmentList() {

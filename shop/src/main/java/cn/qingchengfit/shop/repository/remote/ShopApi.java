@@ -7,6 +7,7 @@ import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -109,7 +110,7 @@ public interface ShopApi {
    * 获取商品信息
    */
   @GET("api/staffs/{staff_id}/mall/products/{product_id}/")
-  Flowable<QcDataResponse<Product>> qcLoadProductInfo(@Path("staff_id") String staff_id,
+  Flowable<QcDataResponse<ProductWrapper>> qcLoadProductInfo(@Path("staff_id") String staff_id,
       @Path("product_id") String product_id,@QueryMap HashMap<String, Object> params);
 }
 

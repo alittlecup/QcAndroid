@@ -73,7 +73,6 @@ import java.util.ArrayList;
   private void initBottom() {
     mBinding.buttonLeft.setText(getString(R.string.delete));
     mBinding.buttonRight.setText("上架");
-    //mBinding.buttonRight.setText(productStatus ? "下架" : "上架");
     mBinding.buttonLeft.setOnClickListener(v -> mViewModel.deleteProduct(productId));
     mBinding.buttonRight.setOnClickListener(v -> {
       mViewModel.getProduct().setStatus(!productStatus);

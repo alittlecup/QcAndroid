@@ -11,6 +11,7 @@ import cn.qingchengfit.shop.databinding.PageInventoryListBinding;
 import cn.qingchengfit.shop.ui.inventory.product.ProductInventoryPageParams;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryListItem;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -53,6 +54,7 @@ public class ShopInventoryListPage
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setAdapter(adapter);
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     adapter.addListener(this);
   }
 

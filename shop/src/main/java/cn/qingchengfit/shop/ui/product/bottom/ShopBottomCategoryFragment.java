@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,14 +71,16 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
               categoryChooseItems.add(new CategoryChooseItem(category));
             }
             mViewModel.items.set(categoryChooseItems);
-            if (categoryChooseItems.size() >= 4) {
-              mBinding.recyclerview.post(() -> {
-                if (mBinding.recyclerview.getChildCount() >= 4) {
+            if(items.size()>4){
+              mBinding.recyclerview.postDelayed(new Runnable() {
+                @Override public void run() {
+                  //int height=MeasureUtils.dpToPx(60f,getResources());
+                  int height=mBinding.recyclerview.getChildAt(0).getHeight();
                   ViewGroup.LayoutParams layoutParams = mBinding.recyclerview.getLayoutParams();
-                  layoutParams.height = mBinding.recyclerview.getChildAt(0).getHeight() * 4;
+                  layoutParams.height=height*4;
                   mBinding.recyclerview.setLayoutParams(layoutParams);
                 }
-              });
+              },50);
             }
           }
         });
@@ -102,13 +103,19 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
   private void initRecyclerView() {
     mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
     adapter.setMode(SelectableAdapter.Mode.SINGLE);
-    mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()) {
-      @Override
-      public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec,
-          int heightSpec) {
-        super.onMeasure(recycler, state, widthSpec, heightSpec);
-      }
-    });
+    mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext())
+    //{
+    //  @Override
+    //  public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec,
+    //      int heightSpec) {
+    //    if (getItemCount() > 4) {
+    //      setMeasuredDimension(View.MeasureSpec.getSize(widthSpec), MeasureUtils.dpToPx(60f,getResources())*4);
+    //    } else {
+    //      super.onMeasure(recycler, state, widthSpec, heightSpec);
+    //    }
+    //  }
+    //}
+    );
     mBinding.recyclerview.addItemDecoration(
         new FlexibleItemDecoration(getContext()).withDivider(R.color.divider_grey).withOffset(2));
     adapter.addListener(this);

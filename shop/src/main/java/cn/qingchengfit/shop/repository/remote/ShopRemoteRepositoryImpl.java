@@ -8,6 +8,7 @@ import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.reactivex.Flowable;
@@ -104,7 +105,7 @@ import retrofit2.http.QueryMap;
     return shopApi.qcPutProduct(staff_id, params, json);
   }
 
-  @Override public Flowable<QcDataResponse<Product>> qcLoadProductInfo(String staff_id,
+  @Override public Flowable<QcDataResponse<ProductWrapper>> qcLoadProductInfo(String staff_id,
       HashMap<String, Object> params, String product_id) {
     return shopApi.qcLoadProductInfo(staff_id, product_id, params);
   }

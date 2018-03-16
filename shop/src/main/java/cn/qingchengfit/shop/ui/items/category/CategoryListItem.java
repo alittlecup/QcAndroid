@@ -35,9 +35,7 @@ public class CategoryListItem
       FlexibleAdapter adapter) {
     DataBindingViewHolder<ItemCategotyListBinding> viewHolder =
         new DataBindingViewHolder<>(view, adapter);
-    ItemCategotyListBinding dataBinding = viewHolder.getDataBinding();
-    dataBinding.categoryDelete.setOnClickListener(v -> listener.onDeleteClick(data));
-    dataBinding.categoryUpdate.setOnClickListener(v -> listener.onPutClick(data));
+
     return viewHolder;
   }
 
@@ -49,5 +47,7 @@ public class CategoryListItem
     dataBinding.categoryProductCount.setText(dataBinding.getRoot()
         .getContext()
         .getString(R.string.category_products, data.getCategoryProductCount()));
+    dataBinding.categoryDelete.setOnClickListener(v -> listener.onDeleteClick(data));
+    dataBinding.categoryUpdate.setOnClickListener(v -> listener.onPutClick(data));
   }
 }

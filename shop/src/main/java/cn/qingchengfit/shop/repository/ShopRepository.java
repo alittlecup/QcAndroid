@@ -6,6 +6,7 @@ import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public interface ShopRepository {
 
   LiveData<Boolean> qcPutProduct(String staff_id, Product json,HashMap<String, Object> map);
 
-  LiveData<Product> qcLoadProductInfo(String staff_id, String product_id,HashMap<String, Object> map);
+  LiveData<ProductWrapper> qcLoadProductInfo(String staff_id, String product_id,HashMap<String, Object> map);
 
   LiveData<List<ICardShopChooseItemData>> qcLoadCardTpls(String type,String isEnable);
 

@@ -1,7 +1,5 @@
 package cn.qingchengfit.shop.ui.home.productlist;
 
-import android.databinding.OnRebindCallback;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +15,7 @@ import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -76,14 +75,14 @@ public class ShopProductsListPage
     loadData();
     initRxbus();
     initSearchProduct();
-    mBinding.addOnRebindCallback(new OnRebindCallback() {
-      @Override public void onBound(ViewDataBinding binding) {
-        if (adapter.isEmpty()) {
-          Log.d("TAG", "onBound: ");
-          setEmptyView();
-        }
-      }
-    });
+    //mBinding.addOnRebindCallback(new OnRebindCallback() {
+    //  @Override public void onBound(ViewDataBinding binding) {
+    //    if (adapter.isEmpty()) {
+    //      Log.d("TAG", "onBound: ");
+    //      setEmptyView();
+    //    }
+    //  }
+    //});
     return mBinding;
   }
 
@@ -140,6 +139,7 @@ public class ShopProductsListPage
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter);
+    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     adapter.addListener(this);
   }
 

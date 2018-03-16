@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
@@ -84,7 +83,7 @@ public class ShopCategoryListViewModel
     }
 
     @NonNull @Override public CategoryListItem create(Category category) {
-      return FlexibleFactory.create(CategoryListItem.class, category, listener);
+      return new CategoryListItem(category,listener);
     }
   }
 
