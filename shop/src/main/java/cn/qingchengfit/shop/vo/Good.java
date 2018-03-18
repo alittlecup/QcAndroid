@@ -147,7 +147,7 @@ public class Good extends BaseObservable implements Parcelable {
     }
   }
 
-  public static class Rule {
+  public static class Rule implements Parcelable {
 
     protected String cost;
 
@@ -168,6 +168,33 @@ public class Good extends BaseObservable implements Parcelable {
     public void setChannel(String channel) {
       this.channel = channel;
     }
+
+    @Override public int describeContents() {
+      return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+      dest.writeString(this.cost);
+      dest.writeString(this.channel);
+    }
+
+    public Rule() {
+    }
+
+    protected Rule(Parcel in) {
+      this.cost = in.readString();
+      this.channel = in.readString();
+    }
+
+    public static final Creator<Rule> CREATOR = new Creator<Rule>() {
+      @Override public Rule createFromParcel(Parcel source) {
+        return new Rule(source);
+      }
+
+      @Override public Rule[] newArray(int size) {
+        return new Rule[size];
+      }
+    };
   }
 
   @Override public int describeContents() {

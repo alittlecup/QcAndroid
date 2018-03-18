@@ -3,8 +3,6 @@ package cn.qingchengfit.shop.ui.inventory.product;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
-import android.databinding.Observable;
-import android.databinding.Observable.OnPropertyChangedCallback;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -30,8 +28,7 @@ public class UpdateInventoryViewModel extends ShopBaseViewModel {
   public final ObservableField<String> unit = new ObservableField<>();
   public final ObservableBoolean isAdd = new ObservableBoolean(true);
   public final ObservableInt curInventory = new ObservableInt(0);
-  public final ObservableField<String> offSet = new ObservableField<>();
-  public final ObservableInt offSetInventory = new ObservableInt();
+  public final ObservableInt offSetInventory = new ObservableInt(0);
   public final ObservableField<String> productName = new ObservableField<>();
   public final ObservableField<String> goodName = new ObservableField<>();
   private final MutableLiveData<String> productId = new MutableLiveData<>();
@@ -54,19 +51,7 @@ public class UpdateInventoryViewModel extends ShopBaseViewModel {
   @Inject public UpdateInventoryViewModel() {
     goods = Transformations.switchMap(productId, this::loadGoodInfo);
     updateResult = Transformations.switchMap(goodId, this::upDateInventoryRecord);
-    offSet.addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
-      @Override public void onPropertyChanged(Observable sender, int propertyId) {
-        if (offSet.get() != null && offSet.get().length() > 0) {
-          try {
-            offSetInventory.set(Integer.valueOf(offSet.get()));
-          } catch (NumberFormatException e) {
 
-          }
-        } else {
-          offSetInventory.set(0);
-        }
-      }
-    });
   }
 
   public void setAction(int action) {
@@ -99,7 +84,7 @@ public class UpdateInventoryViewModel extends ShopBaseViewModel {
   private LiveData<Boolean> upDateInventoryRecord(String id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("action_type", action);
-    params.put("offset", Integer.valueOf(offSet.get()));
+    params.put("offset", offSetInventory.get());
     params.put("goods_id", id);
     return repository.qcUpdateInventoryRecord(loginStatus.staff_id(), params);
   }

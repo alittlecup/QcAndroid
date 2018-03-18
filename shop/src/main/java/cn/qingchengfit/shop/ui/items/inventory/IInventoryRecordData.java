@@ -6,5 +6,17 @@ package cn.qingchengfit.shop.ui.items.inventory;
 
 public interface IInventoryRecordData {
 
+  String getProductName();
 
+  String getGoodName();
+
+  String getCreateName();
+
+  String getCreateTime();
+
+  int getOperatorType();
+
+  int getOffset();
+
+  int getInventorCount();
 }

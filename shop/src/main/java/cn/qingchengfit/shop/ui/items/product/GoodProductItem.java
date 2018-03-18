@@ -126,7 +126,7 @@ public class GoodProductItem
     return isExpend;
   }
 
-  private abstract class AfterTextWatcher implements TextWatcher {
+  public abstract static class AfterTextWatcher implements TextWatcher {
 
     @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

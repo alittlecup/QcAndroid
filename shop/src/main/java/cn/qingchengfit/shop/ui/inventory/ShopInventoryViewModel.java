@@ -83,16 +83,16 @@ public class ShopInventoryViewModel
     params.putAll(gymWrapper.getParams());
     return Transformations.map(repository.qcLoadInventoryRecord(loginStatus.staff_id(), params),
         input -> {
-          StringBuilder stringBuilder = new StringBuilder("总库存：");
-          stringBuilder.append(input.total_inventory).append("");
-          if (input.stat != null && !input.stat.isEmpty()) {
-            for (Record.Stat stat : input.stat) {
-              stringBuilder.append(stat.getName());
-              stringBuilder.append("  ");
-              stringBuilder.append(stat.getInventory());
-            }
-          }
-          total_inventory.set(stringBuilder.toString());
+          //StringBuilder stringBuilder = new StringBuilder("总库存：");
+          //stringBuilder.append(input.total_inventory).append("");
+          //if (input.stat != null && !input.stat.isEmpty()) {
+          //  for (Record.Stat stat : input.stat) {
+          //    stringBuilder.append(stat.getName());
+          //    stringBuilder.append("  ");
+          //    stringBuilder.append(stat.getInventory());
+          //  }
+          //}
+          //total_inventory.set(stringBuilder.toString());
           return input.records;
         });
   }

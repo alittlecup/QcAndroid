@@ -54,7 +54,8 @@ public class ShopInventoryListPage
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setAdapter(adapter);
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    mBinding.recyclerview.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     adapter.addListener(this);
   }
 
@@ -80,7 +81,7 @@ public class ShopInventoryListPage
     InventoryListItem item = (InventoryListItem) adapter.getItem(position);
     if (item.getData() instanceof Product) {
       routeTo("/product/inventory",
-          new ProductInventoryPageParams().product((Product) item.getData()).build());
+          new ProductInventoryPageParams().productId(((Product) item.getData()).getId()).build());
     }
     return false;
   }

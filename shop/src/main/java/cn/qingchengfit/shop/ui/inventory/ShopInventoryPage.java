@@ -5,10 +5,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ import java.util.ArrayList;
   private void initRecyclerView() {
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
     mBinding.recyclerview.setAdapter(adapter);
   }
 

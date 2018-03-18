@@ -21,11 +21,27 @@
       android:layout_height="match_parent"
       android:orientation="vertical"
       >
-    <include
-        layout="@layout/common_simple_toolbar"
-        android:id="@+id/include_toolbar"
-        bind:toolbarModel="@{toolbarModel}"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <include
+          layout="@layout/common_simple_toolbar"
+          android:id="@+id/include_toolbar"
+          bind:toolbarModel="@{toolbarModel}"
+          />
+      <TextView
+          android:id="@+id/save"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="保存"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="15dp"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/primary"
+          />
+    </RelativeLayout>
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/product_name"
         android:layout_width="match_parent"
@@ -58,7 +74,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_common_input_60dp"
         android:layout_marginTop="14dp"
-        app:civ_content="@={viewModel.offSet}"
         app:civ_hint="@string/add_inventory_count_input"
         app:civ_inputnum="true"
         app:civ_lable="@string/add_inventory_count"

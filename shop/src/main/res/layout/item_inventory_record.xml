@@ -5,6 +5,7 @@
   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="80dp"
+      android:background="@color/white"
       android:orientation="vertical"
       >
     <TextView
@@ -65,14 +66,15 @@
         style="@style/QcTextStyleSmallDark"
         />
     <TextView
-        android:layout_width="29dp"
+        android:id="@+id/count_offset"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:layout_marginTop="22dp"
         android:layout_toLeftOf="@id/operator_way"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        tools:text="+3"
+        tools:text="+30"
         style="@style/QcTextStyleLargeDark"
         />
 

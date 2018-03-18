@@ -12,7 +12,6 @@ import io.reactivex.Flowable;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.FieldMap;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -70,7 +69,7 @@ public interface ShopApi {
    */
   @POST("/api/staffs/{staff_id}/mall/goods/inventory/records/")
   Flowable<QcDataResponse> qcUpdateInventoryRecord(@Path("staff_id") String staff_id,
-      @FieldMap HashMap<String, Object> params);
+      @Body HashMap<String, Object> params);
 
   /**
    * 获取商品规格信息

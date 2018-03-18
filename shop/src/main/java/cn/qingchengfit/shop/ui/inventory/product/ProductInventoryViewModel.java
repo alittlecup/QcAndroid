@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.inventory.product;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableField;
@@ -15,6 +16,8 @@ import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryRecordItem;
 import cn.qingchengfit.shop.vo.Good;
+import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ProductWrapper;
 import cn.qingchengfit.shop.vo.Record;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +33,7 @@ public class ProductInventoryViewModel
   public final ObservableField<String> total_inventory = new ObservableField<>();
 
   private final ActionLiveEvent addInventoryEvent = new ActionLiveEvent();
+  public MediatorLiveData<Product> loadProductResult = new MediatorLiveData();
 
   public final ActionLiveEvent getAddInventoryEvent() {
     return addInventoryEvent;
@@ -88,6 +92,15 @@ public class ProductInventoryViewModel
     }
   }
 
+  public void loadProduct(String id) {
+    LiveData<ProductWrapper> productLiveData =
+        repository.qcLoadProductInfo(loginStatus.staff_id(), id, gymWrapper.getParams());
+    loadProductResult.addSource(productLiveData, product1 -> {
+      loadProductResult.setValue(product1.product);
+      loadProductResult.removeSource(productLiveData);
+    });
+  }
+
   @Override public void loadSource(@NonNull HashMap<String, Object> map) {
     identifier.setValue(map);
   }
@@ -103,16 +116,16 @@ public class ProductInventoryViewModel
     params.putAll(gymWrapper.getParams());
     return Transformations.map(repository.qcLoadInventoryRecord(loginStatus.staff_id(), params),
         input -> {
-          StringBuilder stringBuilder = new StringBuilder("总库存：");
-          stringBuilder.append(input.total_inventory).append("  ");
-          if (input.stat != null && !input.stat.isEmpty()) {
-            for (Record.Stat stat : input.stat) {
-              stringBuilder.append(stat.getName());
-              stringBuilder.append("  ");
-              stringBuilder.append(stat.getInventory());
-            }
-          }
-          total_inventory.set(stringBuilder.toString());
+          //StringBuilder stringBuilder = new StringBuilder("总库存：");
+          //stringBuilder.append(input.total_inventory).append("  ");
+          //if (input.stat != null && !input.stat.isEmpty()) {
+          //  for (Record.Stat stat : input.stat) {
+          //    stringBuilder.append(stat.getName());
+          //    stringBuilder.append("  ");
+          //    stringBuilder.append(stat.getInventory());
+          //  }
+          //}
+          //total_inventory.set(stringBuilder.toString());
           return input.records;
         });
   }

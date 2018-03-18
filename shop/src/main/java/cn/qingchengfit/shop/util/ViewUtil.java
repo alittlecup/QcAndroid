@@ -1,10 +1,14 @@
 package cn.qingchengfit.shop.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.MainThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import cn.qingchengfit.shop.R;
+import cn.qingchengfit.shop.vo.RecordAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 /**
@@ -34,5 +38,27 @@ public final class ViewUtil {
         .positiveText(cn.qingchengfit.widgets.R.string.pickerview_submit)
         .onPositive(callback)
         .build();
+  }
+
+  public  static void setOperatorType(@RecordAction int action,TextView textView){
+    Resources resources = textView.getContext().getResources();
+    switch (action){
+      case  RecordAction.ADD:
+        textView.setText(resources.getString(R.string.inventory_add));
+        textView.setTextColor(resources.getColor(R.color.primary));
+        break;
+      case  RecordAction.REDUCE:
+        textView.setText(resources.getString(R.string.inventory_reduce));
+        textView.setTextColor(resources.getColor(R.color.inventory_reduce));
+        break;
+      case  RecordAction.SALED:
+        textView.setText(resources.getString(R.string.inventory_sale));
+        textView.setTextColor(resources.getColor(R.color.inventory_reduce));
+        break;
+      case  RecordAction.RETURN:
+        textView.setText(resources.getString(R.string.inventory_return));
+        textView.setTextColor(resources.getColor(R.color.primary));
+        break;
+    }
   }
 }

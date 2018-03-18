@@ -3,14 +3,20 @@ package cn.qingchengfit.shop.ui.inventory.product;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageUpdateInventoryBinding;
+import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -56,7 +62,7 @@ import java.util.ArrayList;
         picker.setListener(this);
       }
     });
-    mViewModel.getUpdateResult().observe(this ,aBoolean -> {
+    mViewModel.getUpdateResult().observe(this, aBoolean -> {
       ToastUtils.show("保存成功");
     });
   }
@@ -77,19 +83,22 @@ import java.util.ArrayList;
     mBinding.setViewModel(mViewModel);
     mViewModel.setAction(action);
     mViewModel.loadSource(productID);
-    initTest();
+    mBinding.offsetCount.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        String trim = s.toString().trim();
+        try {
+          if (!TextUtils.isEmpty(trim)) {
+            mViewModel.offSetInventory.set(Integer.valueOf(trim));
+          } else {
+            mViewModel.offSetInventory.set(0);
+          }
+        } catch (NumberFormatException exception) {
+          ToastUtils.show("请输入正确数字");
+          mBinding.offsetCount.setContent(s.subSequence(0, s.length() - 1).toString());
+        }
+      }
+    });
     return mBinding;
-  }
-
-  private void initTest() {
-    Good good = new Good();
-    good.setName("400ml");
-    good.setInventory(30);
-    Product product = new Product();
-    product.setName("水");
-    product.setUnit("瓶");
-    good.setProduct(product);
-    setCurGood(good);
   }
 
   private void initToolbar() {
@@ -99,20 +108,18 @@ import java.util.ArrayList;
     } else if (action == REDUCE) {
       title = getString(R.string.reduce_inventory);
     }
-    ToolbarModel toolbarModel = new ToolbarModel(title);
-    toolbarModel.setMenu(R.menu.menu_save);
-    toolbarModel.setListener(item -> {
-      mViewModel.postRecord(good_id);
-      return false;
-    });
     mBinding.setToolbarModel(new ToolbarModel(title));
     Toolbar toolbar = mBinding.includeToolbar.toolbar;
-    //toolbar.getMenu()
-    //    .getItem(0)
-    //    .setTitle(new SpanUtils().append(getString(R.string.common_save))
-    //        .setForegroundColor(getResources().getColor(R.color.colorPrimary))
-    //        .create());
-    // TODO: 2018/1/23 右侧按钮的点击状态
+
     initToolbar(toolbar);
+
+    if (!CompatUtils.less21()
+        && mBinding.save.getParent() instanceof ViewGroup
+        && isfitSystemPadding()) {
+      mBinding.save.setPadding(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0,
+          0);
+    }
+
+    mBinding.save.setOnClickListener(v -> mViewModel.postRecord(good_id));
   }
 }
