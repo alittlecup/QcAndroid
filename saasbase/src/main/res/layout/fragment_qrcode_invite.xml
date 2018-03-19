@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="46dp"
         android:gravity="center"
-        android:text="将二维码转发给方志恒，即可邀请TA加入你的健身房"
+        android:text="将二维码转发，即可邀请TA加入你的健身房"
         style="@style/QcTextStyleStandardDark"
         />
 

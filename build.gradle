@@ -6,10 +6,10 @@ ext {
                    compileVersion      : 27,
                    minSdk              : 15,
                    targetSdk           : 26,
-                   version_code        : 105, //缝10必更
-                   version_name        : "0.105.0",
-                   trainer_version_code: 164,
-                   trainer_version_name: "1.6.4"
+                   version_code        : 106, //缝10必更
+                   version_name        : "0.106.0",
+                   trainer_version_code: 165,
+                   trainer_version_name: "1.6.5"
 
   ]
 
@@ -92,8 +92,6 @@ allprojects {
     maven {
       url 'https://dl.bintray.com/zouyuhan/maven'
     }
-
-
 
     maven {
       url "https://s3.amazonaws.com/repo.commonsware.com"

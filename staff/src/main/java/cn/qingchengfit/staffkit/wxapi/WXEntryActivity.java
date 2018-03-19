@@ -17,7 +17,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
-import cn.qingchengfit.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -51,12 +50,12 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     }
 
     @Override public void onResp(BaseResp baseResp) {
-        ToastUtils.showS(baseResp.errStr);
+        //ToastUtils.showS(baseResp.errStr);
         LogUtil.d("errCode:"+"baseResp.errCode");
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK: {
                 if (baseResp.getType() == RETURN_MSG_TYPE_SHARE) {
-                    ToastUtils.showS("分享成功！");
+                    //ToastUtils.showS("分享成功！");
                     sensorTrack();
                 }else if (baseResp.getType() == RETURN_MSG_TYPE_LOGIN){
                     SendAuth.Resp auth = (SendAuth.Resp) baseResp;

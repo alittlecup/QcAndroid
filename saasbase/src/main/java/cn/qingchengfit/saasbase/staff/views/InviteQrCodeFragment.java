@@ -63,7 +63,7 @@ import timber.log.Timber;
     db.getToolbarModel().setListener(item -> {popBack();return true;});
     initToolbar(db.layoutToolbar.toolbar);
     db.btnSave.setOnClickListener(view -> {
-      if (bitmap != null) {
+      if (bitmap != null && !bitmap.isRecycled()) {
         BitmapUtils.saveImageToGallery(getContext(), bitmap);
         ToastUtils.showDefaultStyle("已保存到相册");
       }
@@ -73,7 +73,7 @@ import timber.log.Timber;
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          if (bitmap != null) {
+          if (bitmap != null && !bitmap.isRecycled()) {
             ShareDialogFragment.newInstance("邀请函", gymWrapper.name()+"邀请您加入", bitmap, url)
               .show(getFragmentManager(), "");
           }
