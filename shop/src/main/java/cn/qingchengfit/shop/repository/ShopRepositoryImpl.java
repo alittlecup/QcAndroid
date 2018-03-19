@@ -17,14 +17,14 @@ import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
  * Created by huangbaole on 2017/12/19.
  */
-@Singleton
-public class ShopRepositoryImpl implements ShopRepository {
+@Singleton public class ShopRepositoryImpl implements ShopRepository {
 
   @Inject ShopRemoteRepository remoteService;
   @Inject ICardModel cardModel;
@@ -128,6 +128,17 @@ public class ShopRepositoryImpl implements ShopRepository {
     }));
   }
 
+  @Override
+  public LiveData<Boolean> qcPutProductStatus(String staff_id, String product_id, Map<String,Object> status,
+      HashMap<String, Object> map) {
+
+    return toLiveData(remoteService.qcPutProductStatus(staff_id, product_id, status, map)
+        .map(qcDataResponse -> {
+          qcDataResponse.setData(qcDataResponse.getStatus() == 200);
+          return qcDataResponse;
+        }));
+  }
+
   @Override public LiveData<ProductWrapper> qcLoadProductInfo(String staff_id, String product_id,
       HashMap<String, Object> map) {
     return toLiveData(remoteService.qcLoadProductInfo(staff_id, map, product_id));
@@ -135,10 +146,8 @@ public class ShopRepositoryImpl implements ShopRepository {
 
   @Override
   public LiveData<List<ICardShopChooseItemData>> qcLoadCardTpls(String type, String isEnable) {
-    return Transformations.map(
-        LiveDataReactiveStreams.fromPublisher(cardModel.qcGetCardTpls(type, isEnable).compose(
-            RxHelper.schedulersTransformer())),
+    return Transformations.map(LiveDataReactiveStreams.fromPublisher(
+        cardModel.qcGetCardTpls(type, isEnable).compose(RxHelper.schedulersTransformer())),
         input -> new ArrayList<>(input.card_tpls));
-
   }
 }

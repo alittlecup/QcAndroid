@@ -39,12 +39,26 @@ import java.util.List;
     });
 
     mViewModel.getDeleteProductResult().observe(this, aBoolean -> {
-      ToastUtils.show("delete-->" + aBoolean);
+      if (aBoolean) {
+        ToastUtils.show("删除成功");
+        getActivity().onBackPressed();
+      }
+    });
+    mViewModel.putProductStatus.observe(this,aBoolean -> {
+      if (aBoolean) {
+        ToastUtils.show("操作成功");
+        getActivity().onBackPressed();
+      }
     });
     mViewModel.detailEvent.observe(this, aVoid -> {
       routeTo("/modify/detail",
           new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
               .build());
+    });
+    mViewModel.putProductResult.observe(this,aBoolean -> {
+      if (aBoolean) {
+        ToastUtils.show("保存成功");
+      }
     });
   }
 
@@ -97,12 +111,15 @@ import java.util.List;
   }
 
   private void initBottom() {
-    mBinding.buttonLeft.setText(getString(R.string.delete));
-    mBinding.buttonRight.setText("上架");
-    mBinding.buttonLeft.setOnClickListener(v -> mViewModel.deleteProduct(productId));
-    mBinding.buttonRight.setOnClickListener(v -> {
-      mViewModel.getProduct().setStatus(!productStatus);
-      mViewModel.saveProduct();
+    mBinding.llBottomContainer.setVisibility(View.GONE);
+    mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
+    mBinding.fabToCamera.setVisibility(View.GONE);
+
+    mBinding.buttonDelete.setText(getString(R.string.delete));
+    mBinding.buttonSale.setText(productStatus ? "下架" : "上架");
+    mBinding.buttonDelete.setOnClickListener(v -> mViewModel.deleteProduct(productId));
+    mBinding.buttonSale.setOnClickListener(v -> {
+      mViewModel.changeProductSaleStatus(!productStatus);
     });
   }
 
@@ -113,19 +130,41 @@ import java.util.List;
       if (item.getTitle().equals("编辑")) {
         item.setTitle("完成");
         mBinding.framelayoutClick.setVisibility(View.GONE);
+        mBinding.fabToCamera.setVisibility(View.VISIBLE);
+        mBinding.llBottomContainerModify.setVisibility(View.GONE);
       } else if (item.getTitle().equals("完成")) {
         item.setTitle("编辑");
         mBinding.framelayoutClick.setVisibility(View.VISIBLE);
+        mBinding.fabToCamera.setVisibility(View.GONE);
+        mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
         AppUtils.hideKeyboard(getActivity());
         View currentFocus = getActivity().getCurrentFocus();
         if (currentFocus != null) {
           currentFocus.clearFocus();
         }
-        mViewModel.saveProduct();
+       putProduct();
       }
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
     super.initToolBar();
+  }
+
+  private void putProduct() {
+    List<Good> goods = new ArrayList<>();
+    for (Object item : goodsAdapter.getMainItems()) {
+      if (item instanceof GoodProductItem) {
+        Good good = ((GoodProductItem) item).getGood();
+        // 移除会员卡价格
+        if (!mViewModel.getProduct().getSupport_card()) {
+          good.removeCardPrice();
+        }
+        goods.add(good);
+      }
+    }
+    mViewModel.getProduct().setGoods(goods);
+    if (checkProductInfo(mViewModel.getProduct())) {
+      mViewModel.putProduct();
+    }
   }
 }

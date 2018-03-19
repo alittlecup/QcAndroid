@@ -1,5 +1,6 @@
 package cn.qingchengfit.shop.common;
 
+import android.widget.TextView;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.saasbase.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -27,8 +28,10 @@ import java.util.List;
  */
 
 public class DoubleListFilterLeftItem extends FilterCommonLinearItem {
+  private String data;
   public DoubleListFilterLeftItem(String data) {
     super(data,false);
+    this.data=data;
   }
 
   public DoubleListFilterLeftItem(String data, boolean isShowState) {
@@ -37,7 +40,9 @@ public class DoubleListFilterLeftItem extends FilterCommonLinearItem {
 
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       FilterCommonLinearVH holder, int position, List payloads) {
-    super.bindViewHolder(adapter, holder, position, payloads);
+    if(holder.itemView instanceof TextView){
+      ((TextView) holder.itemView).setText(data);
+    }
     holder.itemView.setBackgroundResource(
         adapter.isSelected(position) ? R.color.white : R.color.bg_grey);
   }

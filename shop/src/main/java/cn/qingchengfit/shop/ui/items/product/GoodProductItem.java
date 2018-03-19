@@ -152,6 +152,7 @@ public class GoodProductItem
             ToastUtils.show("最多支持两位小数");
             change = true;
           }
+
         }
       } catch (NumberFormatException ex) {
         ToastUtils.show("请输入正确的价格");
@@ -159,6 +160,9 @@ public class GoodProductItem
       } finally {
         if (change) {
           format = price.subSequence(0, price.length() - 1).toString();
+        }
+        if(format.endsWith(".0")){
+          format.replaceAll("\\.0","");
         }
       }
     }

@@ -73,6 +73,9 @@ import java.util.ArrayList;
     mViewModel.productName.set(good.getProduct().getName());
     mViewModel.goodName.set(good.getName());
     good_id = good.getId();
+    if(TextUtils.isEmpty(good.getName())){
+      mBinding.goodName.setClickable(false);
+    }
   }
 
   @Override

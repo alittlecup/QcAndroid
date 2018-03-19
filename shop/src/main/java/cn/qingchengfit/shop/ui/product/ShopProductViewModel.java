@@ -12,6 +12,8 @@ import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
+import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 
 /**
@@ -34,6 +36,9 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   private MediatorLiveData<Boolean> postProductResult = new MediatorLiveData<>();
+  public  MediatorLiveData<Boolean> putProductResult = new MediatorLiveData<>();
+  public  MediatorLiveData<Boolean> putProductStatus = new MediatorLiveData<>();
+
 
   public MediatorLiveData<Boolean> getDeleteProductResult() {
     return deleteProductResult;
@@ -114,7 +119,24 @@ public class ShopProductViewModel extends ShopBaseViewModel {
       postProductResult.removeSource(booleanLiveData);
     });
   }
-
+  public void putProduct() {
+    LiveData<Boolean> booleanLiveData =
+        repository.qcPutProduct(loginStatus.staff_id(), product.get(), gymWrapper.getParams());
+    putProductResult.addSource(booleanLiveData, aBoolean -> {
+      putProductResult.setValue(aBoolean);
+      putProductResult.removeSource(booleanLiveData);
+    });
+  }
+  public void changeProductSaleStatus(boolean status){
+    Map<String, Object> statusParams = new HashMap<>();
+    statusParams.put("status", status);
+    LiveData<Boolean> booleanLiveData =
+        repository.qcPutProductStatus(loginStatus.staff_id(),product.get().getProductId(),statusParams, gymWrapper.getParams());
+    putProductStatus.addSource(booleanLiveData, aBoolean -> {
+      putProductStatus.setValue(aBoolean);
+      putProductStatus.removeSource(booleanLiveData);
+    });
+  }
   public void deleteProduct(String id) {
     LiveData<Boolean> booleanLiveData =
         repository.qcDeleteProduct(loginStatus.staff_id(), id, gymWrapper.getParams());

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.reactivex.Flowable;
 import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
@@ -102,7 +103,15 @@ import retrofit2.http.QueryMap;
   @Override
   public Flowable<QcDataResponse> qcPutProduct(String staff_id, HashMap<String, Object> params,
       Product json) {
-    return shopApi.qcPutProduct(staff_id, params, json);
+    Gson gson=new Gson();
+    Product product = gson.fromJson(gson.toJson(json), Product.class);
+    product.setId(null);
+    return shopApi.qcPutProduct(staff_id,json.getProductId(), params, product);
+  }
+
+  @Override public Flowable<QcDataResponse> qcPutProductStatus(String staff_id, String product_id,
+      Map<String,Object> status, HashMap<String, Object> params) {
+    return shopApi.qcPutProductStatus(staff_id,product_id,params,status);
   }
 
   @Override public Flowable<QcDataResponse<ProductWrapper>> qcLoadProductInfo(String staff_id,

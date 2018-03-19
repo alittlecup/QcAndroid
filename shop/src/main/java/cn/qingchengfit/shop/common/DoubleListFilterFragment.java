@@ -4,16 +4,18 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ViewDoubleListBinding;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +39,10 @@ public class DoubleListFilterFragment extends Fragment {
     adapterRight.setMode(SelectableAdapter.Mode.SINGLE);
     mBinding.rvLeft.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.rvRight.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(
-        cn.qingchengfit.saasbase.R.drawable.divider_qc_base_line).withBottomEdge(true));
-    mBinding.rvRight.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(
-        cn.qingchengfit.saasbase.R.drawable.divider_grey_left_margin).withBottomEdge(true));
+    mBinding.rvLeft.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+    mBinding.rvRight.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
     mBinding.rvLeft.setAdapter(adapterLeft);
     mBinding.rvRight.setAdapter(adapterRight);
     updateLeftUI(datas);
@@ -70,7 +72,9 @@ public class DoubleListFilterFragment extends Fragment {
     adapterRight.clearSelection();
     List<FilterCommonLinearItem> items = new ArrayList<>();
     for (String data : datas) {
-      items.add(new FilterCommonLinearItem(data));
+      if (!TextUtils.isEmpty(data)) {
+        items.add(new FilterCommonLinearItem(data));
+      }
     }
     adapterRight.updateDataSet(items);
   }
@@ -79,7 +83,7 @@ public class DoubleListFilterFragment extends Fragment {
       new FlexibleAdapter.OnItemClickListener() {
         @Override public boolean onItemClick(int position) {
           adapterLeft.toggleSelection(position);
-          adapterLeft.notifyItemChanged(position);
+          adapterLeft.notifyDataSetChanged();
           updateRightUI(datas.get(position).getChildText());
           return true;
         }
@@ -89,16 +93,7 @@ public class DoubleListFilterFragment extends Fragment {
         @Override public boolean onItemClick(int position) {
           adapterRight.toggleSelection(position);
           adapterRight.notifyDataSetChanged();
-          //int x = 0;
-          //try {
-          //  x = adapterLeft.getSelectedPositions().get(0);
-          //} catch (Exception e) {
-          //
-          //}
-          //IFlexible item = adapterRight.getItem(position);
-          //if (item instanceof FilterCommonLinearItem) {
-          //  RxBus.getBus().post(mAllDatas.get(cardCategory[x]).get(position));
-          //}
+
           if (doubleListSelect != null) {
             doubleListSelect.onPositionSelected(adapterLeft.getSelectedPositions().get(0),
                 adapterRight.getSelectedPositions().get(0));

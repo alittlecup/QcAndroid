@@ -6,11 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import cn.qingchengfit.items.FilterCommonLinearItem;
-import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.FilterFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +25,16 @@ public class FilterListStringFragment extends FilterFragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    commonFlexAdapter = new CommonFlexAdapter(new ArrayList());
+    if (commonFlexAdapter == null) {
+      commonFlexAdapter = new CommonFlexAdapter(new ArrayList());
+    }
     return super.onCreateView(inflater, container, savedInstanceState);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     rlPopWindowCommon.addItemDecoration(
-        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
-            .withOffset(1)
-            .withBottomEdge(true));
+        new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
   }
 
   public void setStrings(@NonNull String[] strings) {
@@ -43,7 +43,10 @@ public class FilterListStringFragment extends FilterFragment {
     for (String msg : strings) {
       items.add(new FilterCommonLinearItem(msg));
     }
-    setItemList(items);
+    if (!items.isEmpty()) {
+      if(commonFlexAdapter==null)commonFlexAdapter=new CommonFlexAdapter(items);
+      commonFlexAdapter.updateDataSet(items);
+    }
   }
 
   public int getItemCount() {

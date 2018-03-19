@@ -3,6 +3,7 @@ package cn.qingchengfit.shop.ui.inventory;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,10 +32,8 @@ public class ShopInventoryViewModel
   public final ObservableField<String> total_inventory = new ObservableField<>();
 
   public final MutableLiveData<Integer> indexEvent = new MutableLiveData<>();
-  public final MutableLiveData<Boolean> fragVisible = new MutableLiveData<>();
-  private final ActionLiveEvent allProductClick = new
-
-      ActionLiveEvent();
+  public ObservableBoolean filterVisible = new ObservableBoolean(false);
+  public final ActionLiveEvent allProductClick = new  ActionLiveEvent();
 
   public HashMap<String, Object> getParams() {
     return params;
@@ -52,20 +51,15 @@ public class ShopInventoryViewModel
   @Inject ShopRepository repository;
 
   @Inject public ShopInventoryViewModel() {
-    indexEvent.setValue(0);
-    fragVisible.setValue(false);
     products = Transformations.switchMap(allProductClick, index -> loadAllProductGoods());
   }
 
   public void onShowFragmentByIndex(boolean isChecked, Integer index) {
     if (isChecked) {
-      fragVisible.setValue(true);
+      filterVisible.set(true);
       indexEvent.setValue(index);
-      if (index == 0) {
-        allProductClick.call();
-      }
     } else {
-      fragVisible.setValue(false);
+      filterVisible.set(false);
     }
   }
 
@@ -82,19 +76,7 @@ public class ShopInventoryViewModel
   protected LiveData<List<Record>> getSource(@NonNull HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
     return Transformations.map(repository.qcLoadInventoryRecord(loginStatus.staff_id(), params),
-        input -> {
-          //StringBuilder stringBuilder = new StringBuilder("总库存：");
-          //stringBuilder.append(input.total_inventory).append("");
-          //if (input.stat != null && !input.stat.isEmpty()) {
-          //  for (Record.Stat stat : input.stat) {
-          //    stringBuilder.append(stat.getName());
-          //    stringBuilder.append("  ");
-          //    stringBuilder.append(stat.getInventory());
-          //  }
-          //}
-          //total_inventory.set(stringBuilder.toString());
-          return input.records;
-        });
+        input -> input.records);
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Record> inventories) {

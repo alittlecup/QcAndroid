@@ -57,10 +57,10 @@
                 android:layout_margin="18dp"
                 android:clickable="@{viewModel.isEdit}"
                 android:onClick="@{view->viewModel.chooseImageClick()}"
+                android:visibility="gone"
                 app:backgroundTint="@color/colorPrimary"
                 app:elevation="4dp"
                 app:fabSize="normal"
-                android:visibility="gone"
                 app:rippleColor="@color/colorPrimary"
                 app:srcCompat="@drawable/ic_product_camera"
                 />
@@ -181,8 +181,8 @@
               android:layout_marginTop="14dp"
               android:background="@color/colorPrimary"
               android:enabled="@{viewModel.isEdit}"
-              app:civ_hint=""
               android:onClick="@{(view)->viewModel.toProductDesc()}"
+              app:civ_hint=""
               app:civ_lable="@string/product_desc"
               app:civ_showright="@{viewModel.isEdit}"
               app:enable="@{viewModel.isEdit}"
@@ -239,7 +239,6 @@
               android:layout_marginRight="15dp"
               android:layout_marginTop="26dp"
               android:orientation="horizontal"
-              app:visibleGone="@{viewModel.isEdit}"
               >
             <Button
                 android:id="@+id/button_left"
@@ -274,6 +273,41 @@
             android:visibility="gone"
             />
       </FrameLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_bottom_container_modify"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="37dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:layout_marginTop="26dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_only_save"
+            style="@style/QcBtnPrimaryFrame"
+            />
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="1dp"
+            />
+
+        <Button
+            android:id="@+id/button_sale"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_save_sale"
+            style="@style/QcBtnPrimary"
+            />
+      </LinearLayout>
+
     </LinearLayout>
   </ScrollView>
 </layout>

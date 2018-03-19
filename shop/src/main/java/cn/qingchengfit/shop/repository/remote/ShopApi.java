@@ -10,6 +10,7 @@ import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
+import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -102,8 +103,15 @@ public interface ShopApi {
   /**
    * 修改商品
    */
-  @PUT("api/staffs/{staff_id}/mall/products/") Flowable<QcDataResponse> qcPutProduct(
-      @Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params, @Body Product json);
+  @PUT("api/staffs/{staff_id}/mall/products/{product_id}/") Flowable<QcDataResponse> qcPutProduct(
+      @Path("staff_id") String staff_id,@Path("product_id")String product_id,@QueryMap HashMap<String, Object> params, @Body Product json);
+
+  /**
+   * 修改商品上下架状态
+   */
+  @PUT("api/staffs/{staff_id}/mall/products/{product_id}/") Flowable<QcDataResponse> qcPutProductStatus(
+      @Path("staff_id") String staff_id,@Path("product_id")String product_id,@QueryMap HashMap<String, Object> params, @Body
+      Map<String,Object> status);
 
   /**
    * 获取商品信息

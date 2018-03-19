@@ -36,6 +36,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:showDividers="middle"
+        app:clearCheck="@{!viewModel.filterVisible}"
         >
       <cn.qingchengfit.widgets.QcFilterToggle
           android:id="@+id/qft_product"
@@ -44,8 +45,8 @@
           android:layout_weight="1"
           android:background="@drawable/bg_click"
           android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),0)}"
-          app:ft_text_off="@string/all_product_inventory"
           app:ft_color_on="@color/primary"
+          app:ft_text_off="@string/all_product_inventory"
           app:ft_text_on="@string/all_product_inventory"
           style="@style/QcFilterStyle"
           />
@@ -57,12 +58,14 @@
           android:layout_weight="1"
           android:background="@drawable/bg_click"
           android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),1)}"
-          app:ft_text_off="@string/date"
           app:ft_color_on="@color/primary"
+          app:ft_text_off="@string/date"
           app:ft_text_on="@string/date"
           style="@style/QcFilterStyle"
           />
     </cn.qingchengfit.widgets.QcRadioGroup>
+    <include layout="@layout/divider_grey"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,10 +82,12 @@
             android:layout_height="37dp"
             android:paddingLeft="11dp"
             android:paddingTop="7dp"
-            android:textColor="@color/primary"
             android:text="@{viewModel.total_inventory}"
+            android:textColor="@color/primary"
             tools:text="总库存： 1232131231"
             />
+        <include layout="@layout/divider_grey"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
@@ -96,7 +101,7 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:background="@color/halftrans_background"
-          android:visibility="gone"
+          app:visibleGone="@{viewModel.filterVisible}"
           />
     </FrameLayout>
 

@@ -30,12 +30,6 @@ import java.util.ArrayList;
     mViewModel.indexEvent.observe(this, index -> {
       filterView.showPage(index);
     });
-    mViewModel.fragVisible.observe(this, aBoolean -> {
-      mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
-      if(!aBoolean){
-        mBinding.qcRadioGroup.clearCheck();
-      }
-    });
   }
 
   @Override
@@ -47,14 +41,16 @@ import java.util.ArrayList;
     initRecyclerView();
     mBinding.setViewModel(mViewModel);
     mViewModel.loadSource(mViewModel.getParams());
+    mBinding.inventoryContent.setVisibility(View.GONE);
+    mViewModel.allProductClick.call();
     return mBinding;
   }
 
   private void initRecyclerView() {
     adapter = new CommonFlexAdapter(new ArrayList());
+    mBinding.recyclerview.setAdapter(adapter);
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
-    mBinding.recyclerview.setAdapter(adapter);
   }
 
   private void initToolbar() {

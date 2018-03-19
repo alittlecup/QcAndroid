@@ -10,6 +10,7 @@ import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by huangbaole on 2017/12/19.
@@ -47,7 +48,7 @@ public interface ShopRemoteRepository {
 
   Flowable<QcDataResponse> qcPutProduct(String staff_id, HashMap<String, Object> params,
       Product json);
-
+  Flowable<QcDataResponse> qcPutProductStatus(String staff_id,String product_id,Map<String,Object> status, HashMap<String, Object> params);
   Flowable<QcDataResponse<ProductWrapper>> qcLoadProductInfo(String staff_id,
       HashMap<String, Object> params, String product_id);
 }

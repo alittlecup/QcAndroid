@@ -1,5 +1,6 @@
 package cn.qingchengfit.shop.ui.items.inventory;
 
+import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemInventoryRecordBinding;
@@ -39,22 +40,26 @@ public class InventoryRecordItem
       DataBindingViewHolder<ItemInventoryRecordBinding> holder, int position, List payloads) {
     ItemInventoryRecordBinding dataBinding = holder.getDataBinding();
     dataBinding.productName.setText(data.getProductName());
-    dataBinding.goodName.setText("("+data.getGoodName()+")");
+    if (!TextUtils.isEmpty(data.getGoodName())) {
+      dataBinding.goodName.setText("(" + data.getGoodName() + ")");
+    }
     dataBinding.operatorDate.setText(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDDHHmm(
         cn.qingchengfit.utils.DateUtils.formatDateFromServer(data.getCreateTime())));
     dataBinding.operatorName.setText(data.getCreateName());
-    ViewUtil.setOperatorType(data.getOperatorType(),dataBinding.operatorWay);
-    dataBinding.inventoryCount.setText("当前库存为:"+data.getInventorCount());
-    switch (data.getOperatorType()){
+    ViewUtil.setOperatorType(data.getOperatorType(), dataBinding.operatorWay);
+    dataBinding.inventoryCount.setText("当前库存为:" + data.getInventorCount());
+    switch (data.getOperatorType()) {
       case RecordAction.ADD:
       case RecordAction.RETURN:
-        dataBinding.countOffset.setText("+"+data.getOffset());
-        dataBinding.countOffset.setTextColor(dataBinding.countOffset.getContext().getColor(R.color.primary));
+        dataBinding.countOffset.setText("+" + data.getOffset());
+        dataBinding.countOffset.setTextColor(
+            dataBinding.countOffset.getContext().getColor(R.color.primary));
         break;
       case RecordAction.SALED:
       case RecordAction.REDUCE:
-        dataBinding.countOffset.setText("—"+data.getOffset());
-        dataBinding.countOffset.setTextColor(dataBinding.countOffset.getContext().getColor(R.color.inventory_reduce));
+        dataBinding.countOffset.setText("—" + data.getOffset());
+        dataBinding.countOffset.setTextColor(
+            dataBinding.countOffset.getContext().getColor(R.color.inventory_reduce));
         break;
     }
   }

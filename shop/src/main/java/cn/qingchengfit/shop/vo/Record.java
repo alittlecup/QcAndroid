@@ -6,7 +6,7 @@ import cn.qingchengfit.shop.ui.items.inventory.IInventoryRecordData;
  * Created by huangbaole on 2018/1/22.
  */
 
-public class Record implements IInventoryRecordData{
+public class Record implements IInventoryRecordData {
   /**
    * "records": [
    * {
@@ -44,7 +44,16 @@ public class Record implements IInventoryRecordData{
   private int inventory;
   private String created_at;
   private CreateBy created_by;
-  //private List<Good> goods;
+
+  public Good getGoods() {
+    return goods;
+  }
+
+  public void setGoods(Good goods) {
+    this.goods = goods;
+  }
+
+  private Good goods;
   private int goods_id;
 
   public int getId() {
@@ -56,11 +65,18 @@ public class Record implements IInventoryRecordData{
   }
 
   @Override public String getProductName() {
-    return "水";
+    if(goods==null||goods.getProduct()==null){
+      return "没有对应数据";
+    }
+
+    return goods.getProduct().getProductName();
   }
 
   @Override public String getGoodName() {
-    return "大";
+    if(goods==null){
+      return "没有对应数据";
+    }
+    return goods.getName();
   }
 
   @Override public String getCreateName() {
@@ -119,13 +135,7 @@ public class Record implements IInventoryRecordData{
     this.created_by = created_by;
   }
 
-  //public List<Good> getGoods() {
-  //  return goods;
-  //}
-  //
-  //public void setGoods(List<Good> goods) {
-  //  this.goods = goods;
-  //}
+
 
   public int getGoods_id() {
     return goods_id;

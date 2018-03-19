@@ -41,13 +41,17 @@ public class InventoryFilterView extends BaseFilterFragment {
     productsListFragment.setDoubleListSelectListener((leftPos, rightPos) -> {
       if (leftPos != 0) {
         viewModel.getParams().put("product_id", mProducts.get(leftPos - 1).getId());
+      }else if(viewModel.getParams().containsKey("product_id")){
+        viewModel.getParams().remove("product_id");
       }
       if (rightPos != 0) {
         viewModel.getParams()
             .put("goods_id", mProducts.get(leftPos - 1).getGoods().get(rightPos - 1).getId());
+      }else if(viewModel.getParams().containsKey("goods_id")){
+        viewModel.getParams().remove("goods_id");
       }
       viewModel.loadSource(viewModel.getParams());
-      viewModel.fragVisible.setValue(false);
+      viewModel.filterVisible.set(false);
     });
 
     filterTimesFragment = FilterTimesFragment.getInstance(1, 30);
@@ -55,12 +59,12 @@ public class InventoryFilterView extends BaseFilterFragment {
       viewModel.getParams().put("start", s);
       viewModel.getParams().put("end", s2);
       viewModel.loadSource(viewModel.getParams());
-      viewModel.fragVisible.setValue(false);
+      viewModel.filterVisible.set(false);
     });
   }
 
   @Override public void dismiss() {
-    viewModel.fragVisible.setValue(false);
+    viewModel.filterVisible.set(false);
   }
 
   private List<DoubleListFilterFragment.IDoubleListData> addMoreData(List<Product> products) {
@@ -88,7 +92,7 @@ public class InventoryFilterView extends BaseFilterFragment {
   }
 
   @Override protected String[] getTags() {
-    return new String[] { "products", "date" };
+    return new String[] { "products", "day" };
   }
 
   @Override protected Fragment getFragmentByTag(String tag) {

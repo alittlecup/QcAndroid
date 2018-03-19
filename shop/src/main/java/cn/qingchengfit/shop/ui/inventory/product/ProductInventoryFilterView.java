@@ -11,7 +11,6 @@ import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import java.util.ArrayList;
 import java.util.List;
-import rx.functions.Action3;
 
 /**
  * Created by huangbaole on 2017/12/19.
@@ -31,10 +30,15 @@ public class ProductInventoryFilterView extends BaseFilterFragment {
     initFragment();
   }
 
+  @Override public void dismiss() {
+    viewModel.fragVisible.setValue(false);
+  }
+
   private void initFragment() {
     goodsListFragment = new FilterListStringFragment();
     viewModel.getGoodNames().observe(this, goods -> {
       List<String> goodNames = new ArrayList<>();
+      goodNames.add("全部规格");
       if (goods != null && !goods.isEmpty()) {
         for (Good good : goods) {
           goodNames.add(good.getName());
@@ -46,22 +50,30 @@ public class ProductInventoryFilterView extends BaseFilterFragment {
     });
 
     goodsListFragment.setOnSelectListener(position -> {
-      Good good = goods.get(position);
-      viewModel.getParams().put("goods_id", good.getId());
-      viewModel.loadSource(viewModel.getParams());
-    });
-    filterTimesFragment = FilterTimesFragment.getInstance(1, 30);
-    filterTimesFragment.setSelectDayAction(new Action3<String, String, String>() {
-      @Override public void call(String s, String s2, String s3) {
-        viewModel.getParams().put("start", s);
-        viewModel.getParams().put("end", s2);
-        viewModel.loadSource(viewModel.getParams());
+      if (position == 0) {
+        if (viewModel.getParams().containsKey("goods_id")) {
+          viewModel.getParams().remove("goods_id");
+        }
+      } else {
+        Good good = goods.get(position - 1);
+        viewModel.getParams().put("goods_id", good.getId());
       }
+      viewModel.loadSource(viewModel.getParams());
+      dismiss();
+    });
+
+    filterTimesFragment = FilterTimesFragment.getInstance(1, 30);
+
+    filterTimesFragment.setSelectDayAction((s, s2, s3) -> {
+      viewModel.getParams().put("start", s);
+      viewModel.getParams().put("end", s2);
+      viewModel.loadSource(viewModel.getParams());
+      dismiss();
     });
   }
 
   @Override protected String[] getTags() {
-    return new String[] { "goods", "date" };
+    return new String[] { "goods", "day" };
   }
 
   @Override protected Fragment getFragmentByTag(String tag) {

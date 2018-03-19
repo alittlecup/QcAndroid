@@ -9,6 +9,7 @@ import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -39,6 +40,8 @@ public interface ShopRepository {
   LiveData<Boolean> qcDeleteProduct(String staff_id, String product_id,HashMap<String, Object> map);
 
   LiveData<Boolean> qcPutProduct(String staff_id, Product json,HashMap<String, Object> map);
+
+  LiveData<Boolean> qcPutProductStatus(String staff_id,String product_id, Map<String,Object> status,HashMap<String, Object> map);
 
   LiveData<ProductWrapper> qcLoadProductInfo(String staff_id, String product_id,HashMap<String, Object> map);
 

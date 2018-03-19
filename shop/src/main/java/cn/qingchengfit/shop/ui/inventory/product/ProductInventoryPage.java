@@ -43,12 +43,15 @@ import java.util.ArrayList;
       mViewModel.items.set(item);
       hideLoadingTrans();
     });
-    mViewModel.fragVisible.observe(this,
-        aBoolean -> mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE));
+    mViewModel.fragVisible.observe(this, aBoolean -> {
+      mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+      if(!aBoolean){
+        mBinding.qcRadioGroup.clearCheck();
+      }
+    });
 
     mViewModel.indexEvent.observe(this, index -> {
       filterView.showPage(index);
-      mViewModel.loadGoodName(productId);
     });
 
     mViewModel.loadProductResult.observe(this, product1 -> {
@@ -66,6 +69,7 @@ import java.util.ArrayList;
     mBinding.setViewModel(mViewModel);
     mViewModel.loadProduct(productId);
     loadSource();
+    mViewModel.loadGoodName(productId);
     initToolbar(mBinding.includeToolbar.toolbar);
     return mBinding;
   }
@@ -80,8 +84,8 @@ import java.util.ArrayList;
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setAdapter(adapter);
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
-
+    mBinding.recyclerview.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
   }
 
   private void initToolbar(String title) {

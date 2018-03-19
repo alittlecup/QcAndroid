@@ -9,8 +9,12 @@ import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
+import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.productdetail.ShopProductDetailPageParams;
+import cn.qingchengfit.shop.vo.Good;
 import com.anbillon.flabellum.annotations.Leaf;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2018/1/31.
@@ -30,6 +34,23 @@ import com.anbillon.flabellum.annotations.Leaf;
       toOtherFragmentForBack(uri,
           new ShopProductDetailPageParams().content(mViewModel.getProduct().getDesc()).build(),
           TO_PRODUCT_DETAIL);
+    });
+    mViewModel.saveProductEvent.observe(this, aVoid -> {
+      List<Good> goods = new ArrayList<>();
+      for (Object item : goodsAdapter.getMainItems()) {
+        if (item instanceof GoodProductItem) {
+          Good good = ((GoodProductItem) item).getGood();
+          // 移除会员卡价格
+          if (!mViewModel.getProduct().getSupport_card()) {
+            good.removeCardPrice();
+          }
+          goods.add(good);
+        }
+      }
+      mViewModel.getProduct().setGoods(goods);
+      if (checkProductInfo(mViewModel.getProduct())) {
+        mViewModel.saveProduct();
+      }
     });
   }
 

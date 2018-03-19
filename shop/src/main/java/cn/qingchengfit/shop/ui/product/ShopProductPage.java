@@ -87,25 +87,8 @@ import java.util.List;
       }
     });
 
-    mViewModel.saveProductEvent.observe(this, aVoid -> {
-      List<Good> goods = new ArrayList<>();
-      for (Object item : goodsAdapter.getMainItems()) {
-        if (item instanceof GoodProductItem) {
-          Good good = ((GoodProductItem) item).getGood();
-          // 移除会员卡价格
-          if (!mViewModel.getProduct().getSupport_card()) {
-            good.removeCardPrice();
-          }
-          goods.add(good);
-        }
-      }
-      mViewModel.getProduct().setGoods(goods);
-      if (checkProductInfo(mViewModel.getProduct())) {
-        mViewModel.saveProduct();
-      }
-    });
+
     mViewModel.getPostProductResult().observe(this, aBoolean -> {
-      ToastUtils.show(aBoolean ? "success" : "error");
       if (aBoolean) {
         routeTo("/add/success",
             new ProductAddSuccessPageParams().status(mViewModel.getProduct().getProductStatus())
@@ -115,7 +98,7 @@ import java.util.List;
     });
   }
 
-  private boolean checkProductInfo(Product product) {
+  protected boolean checkProductInfo(Product product) {
     if (TextUtils.isEmpty(product.getName())) {
       ToastUtils.show("请输入商品名称");
       return false;
