@@ -15,7 +15,9 @@ import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.category.CategoryListItem;
 import cn.qingchengfit.shop.ui.items.category.ICategotyItemData;
 import cn.qingchengfit.shop.vo.Category;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 /**
@@ -23,7 +25,7 @@ import javax.inject.Inject;
  */
 
 public class ShopCategoryListViewModel
-    extends FlexibleViewModel<List<Category>, CategoryListItem, String>
+    extends FlexibleViewModel<List<Category>, CategoryListItem, Map<String,Object>>
     implements CategotyItemClickListener {
 
   public final ObservableField<List<CategoryListItem>> items = new ObservableField<>();
@@ -62,13 +64,14 @@ public class ShopCategoryListViewModel
     updateEvent.setValue(category);
   }
 
-  @NonNull @Override protected LiveData<List<Category>> getSource(@NonNull String s) {
-
-    return repository.qcLoadCategories(loginStatus.staff_id(), gymWrapper.getParams());
+  @NonNull @Override protected LiveData<List<Category>> getSource(@NonNull Map<String,Object> map) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.putAll(map);
+    return repository.qcLoadCategories(loginStatus.staff_id(), params);
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Category> categories) {
-    return categories != null && !categories.isEmpty();
+    return categories != null;
   }
 
   @Override protected List<CategoryListItem> map(@NonNull List<Category> categories) {
@@ -99,7 +102,7 @@ public class ShopCategoryListViewModel
     }
   }
 
-  @Override public void loadSource(@NonNull String s) {
+  @Override public void loadSource(@NonNull Map<String,Object> s) {
     identifier.setValue(s);
   }
 }

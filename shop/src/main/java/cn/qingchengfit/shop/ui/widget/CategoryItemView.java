@@ -56,7 +56,6 @@ public class CategoryItemView extends LinearLayout {
   }
 
   public void setDeleteVisible(boolean visible) {
-    // TODO: 2017/12/28 要不要加动画
     if (visible) {
       binding.imDelete.setVisibility(VISIBLE);
     } else {

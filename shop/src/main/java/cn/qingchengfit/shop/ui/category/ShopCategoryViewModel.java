@@ -51,7 +51,6 @@ public class ShopCategoryViewModel extends BaseViewModel {
   }
 
   public void addShopCategory(Category category) {
-    // TODO: 2017/12/19 添加分类
     category.setId(null);
     LiveData<Boolean> booleanLiveData = repository.qcPostCategory(loginStatus.staff_id(), category,gymWrapper.getParams());
     addResult.addSource(booleanLiveData, aBoolean -> {
@@ -61,7 +60,6 @@ public class ShopCategoryViewModel extends BaseViewModel {
   }
 
   public void updateShopCategory(Category category) {
-    // TODO: 2017/12/19 更新分类
     LiveData<Boolean> booleanLiveData = repository.qcPutCategory(loginStatus.staff_id(), category.getId(),category,gymWrapper.getParams());
     putResult.addSource(booleanLiveData, aBoolean -> {
       putResult.setValue(aBoolean);
@@ -70,7 +68,6 @@ public class ShopCategoryViewModel extends BaseViewModel {
   }
 
   public void deleteShopCategory(String id) {
-    // TODO: 2017/12/19 删除分类
     LiveData<Boolean> booleanLiveData = repository.qcDeleteCategory(loginStatus.staff_id(),id,gymWrapper.getParams());
     deleteResult.addSource(booleanLiveData, aBoolean -> {
       deleteResult.setValue(aBoolean);

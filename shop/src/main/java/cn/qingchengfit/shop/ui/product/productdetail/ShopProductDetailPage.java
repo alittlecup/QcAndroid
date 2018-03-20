@@ -76,7 +76,6 @@ import org.w3c.dom.Text;
       choosePictureFragmentDialog.show(getChildFragmentManager(), "");
     });
     mBinding.btnComfirm.setOnClickListener(v -> {
-      // TODO: 2018/3/16 返回商品描述信息
       if (richTxtFragment != null) {
         String content = richTxtFragment.getContent();
         Intent intent = new Intent();

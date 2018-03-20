@@ -16,6 +16,44 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+      <RelativeLayout
+          android:id="@+id/rl_search"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/backgroud_grey"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:padding="10dp"
+          app:layout_scrollFlags="scroll|enterAlways"
+          >
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_allotsale_search_hight"
+            android:background="@drawable/bg_rect_allotsale_search"
+            android:drawableLeft="@drawable/ic_allotsale_search"
+            android:drawablePadding="10dp"
+            android:hint="@string/search_product"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:textSize="@dimen/min_font"
+            />
+
+        <ImageView
+            android:id="@+id/img_search_clear"
+            android:layout_width="@dimen/qc_allotsale_search_hight"
+            android:layout_height="@dimen/qc_allotsale_search_hight"
+            android:layout_alignEnd="@+id/et_search"
+            android:layout_alignRight="@+id/et_search"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|right"
+            android:padding="9dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_cancel_grey_16dp"
+            />
+      </RelativeLayout>
+
       <android.support.v4.widget.SwipeRefreshLayout
           android:id="@+id/swipe_refresh"
           android:layout_width="match_parent"

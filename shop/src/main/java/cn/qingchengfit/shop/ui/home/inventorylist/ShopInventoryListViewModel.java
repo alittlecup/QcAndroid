@@ -53,7 +53,7 @@ public class ShopInventoryListViewModel
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Product> product) {
-    return product != null && !product.isEmpty();
+    return product != null ;
   }
 
   @Override protected List<InventoryListItem> map(@NonNull List<Product> product) {

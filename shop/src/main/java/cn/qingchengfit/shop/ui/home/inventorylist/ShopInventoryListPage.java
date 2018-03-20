@@ -43,11 +43,28 @@ public class ShopInventoryListPage
       routeTo("/shop/inventory", null);
     });
     mViewModel.getLiveItems().observe(this, items -> {
-      List<AbstractFlexibleItem> item = new ArrayList<>();
-      item.add(new InventorySingleTextItem());
-      item.addAll(items);
-      mViewModel.items.set(item);
+      if (items == null || items.isEmpty()) {
+        setEmptyView();
+      } else {
+        List<AbstractFlexibleItem> item = new ArrayList<>();
+        item.add(new InventorySingleTextItem());
+        item.addAll(items);
+        mViewModel.items.set(item);
+      }
     });
+  }
+
+  private void setEmptyView() {
+    String hintString = "";
+    if (mViewModel.getParams().containsKey("q")) {
+      hintString = "未找到相关结果";
+    } else {
+      hintString = "暂无库存商品，赶快去添加吧～";
+    }
+    CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
+    List<AbstractFlexibleItem> items = new ArrayList<>();
+    items.add(item);
+    adapter.updateDataSet(items);
   }
 
   @Override
@@ -61,7 +78,7 @@ public class ShopInventoryListPage
       mViewModel.loadSource(mViewModel.getParams());
     } else {
       List<CommonNoDataItem> items = new ArrayList<>();
-      items.add(new CommonNoDataItem(R.drawable.ic_no_permission, getString(R.string.no_access),
+      items.add(new CommonNoDataItem(R.drawable.ic_403, getString(R.string.no_access),
           getString(R.string.no_current_page_permission)));
       adapter.updateDataSet(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
@@ -83,15 +100,15 @@ public class ShopInventoryListPage
         .debounce(500, TimeUnit.MILLISECONDS)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(event -> {
-          String key = event.toString().trim();
+          String key = event.editable().toString().trim();
           if (!TextUtils.isEmpty(key)) {
             mViewModel.getParams().put("q", key);
             mViewModel.loadSource(mViewModel.getParams());
           } else {
             if (mViewModel.getParams().containsKey("q")) {
               mViewModel.getParams().remove("q");
-              mViewModel.loadSource(mViewModel.getParams());
             }
+            mViewModel.loadSource(mViewModel.getParams());
           }
         });
   }

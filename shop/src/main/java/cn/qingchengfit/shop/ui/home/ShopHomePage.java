@@ -72,7 +72,6 @@ import javax.inject.Inject;
   public List<Pair<String, Fragment>> getFragmentList() {
     if (fragmentList == null) {
       fragmentList = new ArrayList<>();
-      // TODO: 2017/12/18 确定viewpager的itemFragment
       fragmentList.add(
           new Pair<>(getString(R.string.on_sale), ShopProductsListPage.newInstance(1)));
       fragmentList.add(

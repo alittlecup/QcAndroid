@@ -35,11 +35,11 @@
           android:id="@+id/save"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="保存"
+          android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
           android:layout_marginRight="15dp"
-          android:layout_alignParentRight="true"
-          android:textColor="@color/primary"
+          android:text="保存"
+          android:textColor="@color/text_primary_select"
           />
     </RelativeLayout>
     <cn.qingchengfit.widgets.CommonInputView
@@ -68,30 +68,38 @@
         app:civ_text_color="@color/text_dark"
         />
 
-
-    <cn.qingchengfit.widgets.CommonInputView
-        android:id="@+id/offset_count"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_common_input_60dp"
-        android:layout_marginTop="14dp"
-        app:civ_hint="@string/add_inventory_count_input"
-        app:civ_inputnum="true"
-        app:civ_lable="@string/add_inventory_count"
-        app:civ_right_icon="@color/transparent"
-        app:civ_showright="true"
-        app:civ_text_color="@color/text_dark"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
         >
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/offset_count"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:layout_weight="1"
+          app:civ_hint="@string/add_inventory_count_input"
+          app:civ_inputnum="true"
+          app:civ_lable="@string/add_inventory_count"
+          app:civ_right_icon="@color/transparent"
+          app:civ_showright="false"
+          app:civ_text_color="@color/text_dark"
+          />
+
       <TextView
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
+          android:layout_height="match_parent"
+          android:layout_gravity="center_vertical"
           android:layout_marginRight="15dp"
+          android:gravity="center"
           android:text="@{viewModel.unit}"
           android:textSize="14sp"
+          tools:text="测个"
           style="@style/QcTextStyleLargeDark"
           />
-    </cn.qingchengfit.widgets.CommonInputView>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

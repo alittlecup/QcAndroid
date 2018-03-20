@@ -52,6 +52,7 @@ import java.util.ArrayList;
       }
     });
     mViewModel.chooseGoodEvent.observe(this, aVoid -> {
+      // TODO: 2018/3/20  有取消的buttom selector
       SimpleScrollPicker picker = new SimpleScrollPicker(getContext());
       ArrayList<String> dataList = new ArrayList<>();
       if (mViewModel.getGoods().getValue() != null && !mViewModel.getGoods().getValue().isEmpty()) {
@@ -64,6 +65,7 @@ import java.util.ArrayList;
     });
     mViewModel.getUpdateResult().observe(this, aBoolean -> {
       ToastUtils.show("保存成功");
+      getActivity().onBackPressed();
     });
   }
 
@@ -73,7 +75,7 @@ import java.util.ArrayList;
     mViewModel.productName.set(good.getProduct().getName());
     mViewModel.goodName.set(good.getName());
     good_id = good.getId();
-    if(TextUtils.isEmpty(good.getName())){
+    if (TextUtils.isEmpty(good.getName())) {
       mBinding.goodName.setClickable(false);
     }
   }
@@ -86,17 +88,21 @@ import java.util.ArrayList;
     mBinding.setViewModel(mViewModel);
     mViewModel.setAction(action);
     mViewModel.loadSource(productID);
+    mBinding.save.setEnabled(false);
     mBinding.offsetCount.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();
         try {
           if (!TextUtils.isEmpty(trim)) {
             mViewModel.offSetInventory.set(Integer.valueOf(trim));
+            mBinding.save.setEnabled(true);
           } else {
             mViewModel.offSetInventory.set(0);
+            mBinding.save.setEnabled(false);
           }
         } catch (NumberFormatException exception) {
           ToastUtils.show("请输入正确数字");
+          mBinding.save.setEnabled(false);
           mBinding.offsetCount.setContent(s.subSequence(0, s.length() - 1).toString());
         }
       }
@@ -119,10 +125,12 @@ import java.util.ArrayList;
     if (!CompatUtils.less21()
         && mBinding.save.getParent() instanceof ViewGroup
         && isfitSystemPadding()) {
-      mBinding.save.setPadding(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0,
-          0);
+      mBinding.save.setPadding(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
     }
 
-    mBinding.save.setOnClickListener(v -> mViewModel.postRecord(good_id));
+    mBinding.save.setOnClickListener(v -> {
+      // TODO: 2018/3/20 数据检查
+      mViewModel.postRecord(good_id);
+    });
   }
 }

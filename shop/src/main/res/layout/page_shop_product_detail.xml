@@ -46,6 +46,7 @@
           android:layout_weight="1"
           android:background="@drawable/bg_click"
           android:gravity="center"
+          android:drawableLeft="@drawable/ic_pic"
           android:text="插入图片"
           style="@style/QcTextStyleLargeDark"
           />

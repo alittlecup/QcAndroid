@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.productdetail.ShopProductDetailPageParams;
+import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Good;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
@@ -65,6 +67,11 @@ import java.util.List;
   @Override protected void initToolBar() {
     mBinding.setToolbarModel(new ToolbarModel(getString(R.string.add_product)));
     super.initToolBar();
+    Toolbar toolbar=mBinding.includeToolbar.toolbar;
+    toolbar.setNavigationOnClickListener(
+        v -> ViewUtil.instanceDelDialog(getContext(), "确定要放弃添加商品么？", (dialog, which) -> {
+          getActivity().onBackPressed();
+        }).show());
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -93,7 +93,7 @@ public class ShopProductsViewModel
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Product> product) {
-    return product != null && !product.isEmpty();
+    return product != null;
   }
 
   @Override protected List<ProductListItem> map(@NonNull List<Product> products) {

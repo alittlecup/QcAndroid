@@ -69,7 +69,7 @@ public class ShopProductsListPage
     mViewModel.getProductEvent().observe(this, aVoid -> {
       if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_WRITE)) {
         routeTo("/product/add", null);
-      }else{
+      } else {
         showAlert(getString(R.string.sorry_for_no_permission));
       }
     });
@@ -85,7 +85,7 @@ public class ShopProductsListPage
       loadData();
     } else {
       List<CommonNoDataItem> items = new ArrayList<>();
-      items.add(new CommonNoDataItem(R.drawable.ic_no_permission, getString(R.string.no_access),
+      items.add(new CommonNoDataItem(R.drawable.ic_403, getString(R.string.no_access),
           getString(R.string.no_current_page_permission)));
       adapter.updateDataSet(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
@@ -108,8 +108,8 @@ public class ShopProductsListPage
             } else {
               if (mViewModel.getParams().containsKey("q")) {
                 mViewModel.getParams().remove("q");
-                mViewModel.loadSource(mViewModel.getParams());
               }
+              mViewModel.loadSource(mViewModel.getParams());
             }
           }
         });
@@ -124,8 +124,13 @@ public class ShopProductsListPage
   }
 
   private void setEmptyView() {
-    CommonNoDataItem item =
-        new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无出售中商品，赶快去添加吧～");
+    String hintString = "";
+    if (mViewModel.getParams().containsKey("q")) {
+      hintString = "未找到相关结果";
+    } else {
+      hintString = status ? "暂无出售中商品，赶快去添加吧～" : "暂无已下架商品，赶快去添加吧～";
+    }
+    CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
     List<AbstractFlexibleItem> items = new ArrayList<>();
     items.add(item);
     adapter.updateDataSet(items);

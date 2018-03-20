@@ -114,7 +114,6 @@ import javax.inject.Inject;
     return view;
   }
 
-
   private void initBottom() {
     mBinding.llBottomContainer.setVisibility(View.GONE);
     mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
@@ -127,7 +126,9 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
-      mViewModel.deleteProduct(productId);
+      ViewUtil.instanceDelDialog(getContext(), "确定删除商品？", (dialog, which) -> {
+        mViewModel.deleteProduct(productId);
+      }).show();
     });
     mBinding.buttonSale.setOnClickListener(v -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {

@@ -109,7 +109,6 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
     loadData();
     mViewModel.cancelEvent.observe(this, aVoid -> dismiss());
     mViewModel.confimEvent.observe(this, aVoid -> {
-      // TODO: 2018/1/27 回传数据
       dismiss();
       Integer integer = adapter.getSelectedPositions().get(0);
       CategoryChooseItem item = (CategoryChooseItem) adapter.getItem(integer);
