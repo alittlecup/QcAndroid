@@ -51,6 +51,7 @@ import java.util.List;
       shopBottomCategoryFragment.setConfimAction(data -> {
         if (data instanceof Category) {
           mViewModel.getProduct().setCategory((Category) data);
+          mViewModel.getProduct().setCategory_id(data.getId());
           mBinding.productCetegory.setContent(mViewModel.getProduct().getCategory().getName());
         }
       });

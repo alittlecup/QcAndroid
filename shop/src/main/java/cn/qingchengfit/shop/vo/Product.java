@@ -75,6 +75,16 @@ public class Product
   private String unit;
   private String desc;
   private Category category;
+  private String category_id;
+
+  public String getCategory_id() {
+    return category_id;
+  }
+
+  public void setCategory_id(String category_id) {
+    this.category_id = category_id;
+  }
+
   private List<Good> goods;
   private Boolean is_free;
   private List<String> channels;
@@ -371,6 +381,9 @@ public class Product
     return childNames;
   }
 
+  public Product() {
+  }
+
   @Override public int describeContents() {
     return 0;
   }
@@ -387,7 +400,8 @@ public class Product
     dest.writeString(this.unit);
     dest.writeString(this.desc);
     dest.writeParcelable(this.category, flags);
-    dest.writeList(this.goods);
+    dest.writeString(this.category_id);
+    dest.writeTypedList(this.goods);
     dest.writeValue(this.is_free);
     dest.writeStringList(this.channels);
     dest.writeString(this.name);
@@ -398,9 +412,6 @@ public class Product
     dest.writeValue(this.priority);
     dest.writeList(this.card_tpl_ids);
     dest.writeByte(this.support_card ? (byte) 1 : (byte) 0);
-  }
-
-  public Product() {
   }
 
   protected Product(Parcel in) {
@@ -416,8 +427,8 @@ public class Product
     this.unit = in.readString();
     this.desc = in.readString();
     this.category = in.readParcelable(Category.class.getClassLoader());
-    this.goods = new ArrayList<Good>();
-    in.readList(this.goods, Good.class.getClassLoader());
+    this.category_id = in.readString();
+    this.goods = in.createTypedArrayList(Good.CREATOR);
     this.is_free = (Boolean) in.readValue(Boolean.class.getClassLoader());
     this.channels = in.createStringArrayList();
     this.name = in.readString();
@@ -426,11 +437,12 @@ public class Product
     this.month_sales = (Integer) in.readValue(Integer.class.getClassLoader());
     this.total_sales = (Integer) in.readValue(Integer.class.getClassLoader());
     this.priority = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.card_tpl_ids = new ArrayList<Integer>();
     in.readList(this.card_tpl_ids, Integer.class.getClassLoader());
     this.support_card = in.readByte() != 0;
   }
 
-  public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+  public static final Creator<Product> CREATOR = new Creator<Product>() {
     @Override public Product createFromParcel(Parcel source) {
       return new Product(source);
     }
