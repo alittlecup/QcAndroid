@@ -28,17 +28,8 @@
           android:id="@+id/include_toolbar"
           bind:toolbarModel="@{toolbarModel}"
           />
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:focusable="true"
-          android:focusableInTouchMode="true"
-          >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+
+
           <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -94,6 +85,17 @@
             </RelativeLayout>
 
           </FrameLayout>
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
           <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/product_name"

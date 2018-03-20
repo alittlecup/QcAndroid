@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
+import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageProductInventoryBinding;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -16,6 +18,7 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -25,15 +28,24 @@ import java.util.ArrayList;
   private ProductInventoryFilterView filterView;
   CommonFlexAdapter adapter;
   @Need String productId;
+  @Inject IPermissionModel permissionModel;
   Product product;
 
   @Override protected void subscribeUI() {
     mViewModel.getAddInventoryEvent().observe(this, aVoid -> {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTOPRY_CAN_CHANGE)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       routeTo("/update/inventory", new UpdateInventoryPageParams().action(UpdateInventoryPage.ADD)
           .productID(product.getId())
           .build());
     });
     mViewModel.getReduceInventoryEvent().observe(this, aVoid -> {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTOPRY_CAN_CHANGE)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       routeTo("/update/inventory",
           new UpdateInventoryPageParams().action(UpdateInventoryPage.REDUCE)
               .productID(product.getId())
@@ -45,7 +57,7 @@ import java.util.ArrayList;
     });
     mViewModel.fragVisible.observe(this, aBoolean -> {
       mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
-      if(!aBoolean){
+      if (!aBoolean) {
         mBinding.qcRadioGroup.clearCheck();
       }
     });

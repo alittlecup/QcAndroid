@@ -71,7 +71,7 @@ public class Good extends BaseObservable implements Parcelable {
         if (this.inventory > 9999) {
           this.inventory =
               Integer.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
-          ToastUtils.show("库存最多为9999");
+          ToastUtils.show("库存数量不能大于9999");
         }
       } catch (NumberFormatException ex) {
         this.inventory =

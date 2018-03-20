@@ -7,11 +7,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
+import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
@@ -26,6 +29,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -38,6 +42,7 @@ public class ShopProductsListPage
     extends ShopBaseFragment<PageProductListBinding, ShopProductsViewModel>
     implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
   CommonFlexAdapter adapter;
+  @Inject IPermissionModel permissionModel;
 
   /**
    * 0 已下架
@@ -62,7 +67,11 @@ public class ShopProductsListPage
     });
 
     mViewModel.getProductEvent().observe(this, aVoid -> {
-      routeTo("/product/add", null);
+      if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_WRITE)) {
+        routeTo("/product/add", null);
+      }else{
+        showAlert(getString(R.string.sorry_for_no_permission));
+      }
     });
   }
 
@@ -72,17 +81,17 @@ public class ShopProductsListPage
     mBinding = PageProductListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
-    loadData();
+    if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST)) {
+      loadData();
+    } else {
+      List<CommonNoDataItem> items = new ArrayList<>();
+      items.add(new CommonNoDataItem(R.drawable.ic_no_permission, getString(R.string.no_access),
+          getString(R.string.no_current_page_permission)));
+      adapter.updateDataSet(items);
+      mBinding.fragmentMark.setVisibility(View.VISIBLE);
+    }
     initRxbus();
     initSearchProduct();
-    //mBinding.addOnRebindCallback(new OnRebindCallback() {
-    //  @Override public void onBound(ViewDataBinding binding) {
-    //    if (adapter.isEmpty()) {
-    //      Log.d("TAG", "onBound: ");
-    //      setEmptyView();
-    //    }
-    //  }
-    //});
     return mBinding;
   }
 
@@ -139,7 +148,8 @@ public class ShopProductsListPage
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter);
-    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    mBinding.recyclerview.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     adapter.addListener(this);
   }
 

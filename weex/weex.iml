@@ -126,12 +126,12 @@
     <orderEntry type="library" name="com.jakewharton:butterknife-annotations:9.0.0-SNAPSHOT@jar" level="project" />
     <orderEntry type="library" name="com.android.support:exifinterface-25.3.1" level="project" />
     <orderEntry type="library" name="com.google.android:flexbox-0.3.0-alpha3" level="project" />
+    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.31" level="project" />
     <orderEntry type="library" name="com.android.support:support-vector-drawable-27.0.0" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" name="com.tbruyelle.rxpermissions:rxpermissions-0.9.3" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:runtime-1.0.3" level="project" />
-    <orderEntry type="library" name="com.zhihu.android:matisse-0.5.0-alpha4" level="project" />
     <orderEntry type="library" name="me.gujun.android.taggroup:library-1.4" level="project" />
     <orderEntry type="library" name="com.dlazaro66.qrcodereaderview:qrcodereaderview-1.0.0" level="project" />
     <orderEntry type="library" name="eu.davidea:flexible-adapter-5.0.0-rc3" level="project" />
@@ -148,6 +148,7 @@
     <orderEntry type="library" name="com.android.support:support-compat-27.0.2" level="project" />
     <orderEntry type="library" name="com.android.support:percent-27.0.0" level="project" />
     <orderEntry type="library" name="com.google.dagger:dagger-android-support-2.11" level="project" />
+    <orderEntry type="library" name="cn.qingchengfit.imagepicker:matisse-1.0.2" level="project" />
     <orderEntry type="library" name="com.airbnb.android:lottie-2.0.0" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.1.8@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-media-compat-27.0.0" level="project" />
@@ -157,7 +158,6 @@
     <orderEntry type="library" name="com.android.support:support-v4-27.0.0" level="project" />
     <orderEntry type="library" name="org.greenrobot:eventbus:3.0.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-fragment-27.0.0" level="project" />
-    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.25" level="project" />
     <orderEntry type="library" name="com.upyun:upyun-android-sdk-2.0.1" level="project" />
     <orderEntry type="library" name="org.weex.plugin:annotation:1.0.0@jar" level="project" />
     <orderEntry type="library" name="android.arch.core:runtime-1.0.0" level="project" />

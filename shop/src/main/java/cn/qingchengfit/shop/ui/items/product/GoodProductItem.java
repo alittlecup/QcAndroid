@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.items.product;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -55,7 +56,7 @@ public class GoodProductItem
         .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
     dataBinding.categoryPriceCard.getEditText()
         .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
+    dataBinding.categoryName.getEditText().setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
     dataBinding.imDelete.setVisibility(View.VISIBLE);
     dataBinding.categoryName.setVisibility(View.VISIBLE);
 
@@ -144,12 +145,12 @@ public class GoodProductItem
       try {
         Double doubleprice = Double.valueOf(price);
         if ((doubleprice > 999999)) {
-          ToastUtils.show("商品价格最大值为999999");
+          ToastUtils.show("商品价格不能大于999999");
           change = true;
         } else {
           int i = price.lastIndexOf(".");
           if (i != -1 && price.length() - i > 3) {
-            ToastUtils.show("最多支持两位小数");
+            ToastUtils.show("商品价格最多支持两位小数");
             change = true;
           }
 

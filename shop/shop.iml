@@ -120,6 +120,7 @@
     <orderEntry type="library" name="com.github.akarnokd:rxjava2-interop:0.11.5@jar" level="project" />
     <orderEntry type="library" name="io.reactivex:rxandroid-1.2.1" level="project" />
     <orderEntry type="library" name="com.google.android:flexbox-0.3.0-alpha3" level="project" />
+    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.31" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:reactivestreams-1.0.0" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.1.9@jar" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:runtime-1.0.3" level="project" />
@@ -202,7 +203,6 @@
     <orderEntry type="library" name="javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="com.android.databinding:adapters-3.1.0-alpha09" level="project" />
     <orderEntry type="library" name="com.squareup.phrase:phrase:1.1.0@jar" level="project" />
-    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.25.3" level="project" />
     <orderEntry type="library" name="com.taobao.android:weex_sdk-0.17.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-27.0.0" level="project" />
     <orderEntry type="library" name="android.arch.persistence:db-1.0.0" level="project" />

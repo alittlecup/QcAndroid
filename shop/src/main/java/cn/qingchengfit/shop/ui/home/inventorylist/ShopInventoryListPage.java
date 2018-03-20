@@ -1,22 +1,31 @@
 package cn.qingchengfit.shop.ui.home.inventorylist;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
+import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageInventoryListBinding;
 import cn.qingchengfit.shop.ui.inventory.product.ProductInventoryPageParams;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryListItem;
+import cn.qingchengfit.shop.ui.items.inventory.InventorySingleTextItem;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -27,13 +36,17 @@ public class ShopInventoryListPage
     extends ShopBaseFragment<PageInventoryListBinding, ShopInventoryListViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     mViewModel.getShowAllRecord().observe(this, aVoid -> {
       routeTo("/shop/inventory", null);
     });
     mViewModel.getLiveItems().observe(this, items -> {
-      mViewModel.items.set(items);
+      List<AbstractFlexibleItem> item = new ArrayList<>();
+      item.add(new InventorySingleTextItem());
+      item.addAll(items);
+      mViewModel.items.set(item);
     });
   }
 
@@ -44,9 +57,15 @@ public class ShopInventoryListPage
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
     initSearchProduct();
-    mViewModel.loadSource(mViewModel.getParams());
-    mBinding.allInventoryRecord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
-    mBinding.allInventoryRecord.getPaint().setAntiAlias(true);
+    if (permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTOPRY)) {
+      mViewModel.loadSource(mViewModel.getParams());
+    } else {
+      List<CommonNoDataItem> items = new ArrayList<>();
+      items.add(new CommonNoDataItem(R.drawable.ic_no_permission, getString(R.string.no_access),
+          getString(R.string.no_current_page_permission)));
+      adapter.updateDataSet(items);
+      mBinding.fragmentMark.setVisibility(View.VISIBLE);
+    }
     return mBinding;
   }
 
@@ -78,10 +97,14 @@ public class ShopInventoryListPage
   }
 
   @Override public boolean onItemClick(int position) {
-    InventoryListItem item = (InventoryListItem) adapter.getItem(position);
-    if (item.getData() instanceof Product) {
-      routeTo("/product/inventory",
-          new ProductInventoryPageParams().productId(((Product) item.getData()).getId()).build());
+    IFlexible item = adapter.getItem(position);
+    if (item instanceof InventoryListItem) {
+      if (((InventoryListItem) item).getData() instanceof Product) {
+        routeTo("/product/inventory", new ProductInventoryPageParams().productId(
+            ((Product) ((InventoryListItem) item).getData()).getId()).build());
+      }
+    } else if (item instanceof InventorySingleTextItem) {
+      mViewModel.getShowAllRecord().call();
     }
     return false;
   }

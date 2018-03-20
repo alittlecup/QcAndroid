@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopCategoryBinding;
 import cn.qingchengfit.shop.vo.Category;
@@ -23,6 +26,7 @@ import com.anbillon.flabellum.annotations.Need;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -69,7 +73,8 @@ import javax.inject.Inject;
 
   private Observer<Boolean> result = new Observer<Boolean>() {
     @Override public void onChanged(@Nullable Boolean aBoolean) {
-      ToastUtils.show("操作成功");
+      RxBus.getBus().post(ShopCategoryPage.class,aBoolean);
+      ToastUtils.show(aBoolean?"操作成功":"操作失败");
       dismiss();
     }
   };
@@ -96,46 +101,13 @@ import javax.inject.Inject;
       case 0:
         mBinding.categoryTitle.setText(getString(R.string.add_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
-          Category category = new Category();
-          String prority = mBinding.categoryWeight.getText().toString();
-          String name = mBinding.categoryName.getText().toString();
-          if (!TextUtils.isEmpty(name)) {
-            category.setName(name);
-          } else {
-            ToastUtils.show("分类名称不能为空");
-          }
-          if (!TextUtils.isEmpty(prority)) {
-            try {
-              category.setPriority(Integer.valueOf(mBinding.categoryWeight.getText().toString()));
-              mViewModel.addShopCategory(category);
-            } catch (NumberFormatException e) {
-              ToastUtils.show("请输入数字");
-            }
-          } else {
-            ToastUtils.show("分类权重不能为空");
-          }
+          checkUpCategory(category,category1 -> mViewModel.addShopCategory(category1));
         });
         break;
       case 1:
         mBinding.categoryTitle.setText(getString(R.string.update_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
-          String prority = mBinding.categoryWeight.getText().toString();
-          String name = mBinding.categoryName.getText().toString();
-          if (!TextUtils.isEmpty(name)) {
-            category.setName(name);
-          } else {
-            ToastUtils.show("分类名称不能为空");
-          }
-          if (!TextUtils.isEmpty(prority)) {
-            try {
-              category.setPriority(Integer.valueOf(mBinding.categoryWeight.getText().toString()));
-              mViewModel.updateShopCategory(category);
-            } catch (NumberFormatException e) {
-              ToastUtils.show("请输入数字");
-            }
-          } else {
-            ToastUtils.show("分类权重不能为空");
-          }
+          checkUpCategory(category,category1 -> mViewModel.updateShopCategory(category1));
         });
         break;
       case 2:
@@ -147,11 +119,39 @@ import javax.inject.Inject;
         });
         break;
     }
+    mBinding.categoryName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(12) });
+    mBinding.categoryWeight.setInputType(InputType.TYPE_CLASS_NUMBER);
     mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
-    if(!TextUtils.isEmpty(category.getName())){
+    if (!TextUtils.isEmpty(category.getName())) {
       mBinding.categoryName.setText(category.getName());
     }
     return mBinding;
+  }
+
+  private void checkUpCategory(Category category,Action1<Category> action) {
+    String prority = mBinding.categoryWeight.getText().toString();
+    String name = mBinding.categoryName.getText().toString();
+    if (!TextUtils.isEmpty(name)) {
+      category.setName(name);
+    } else {
+      ToastUtils.show("分类名称不能为空");
+      return;
+    }
+    if (!TextUtils.isEmpty(prority)) {
+      try {
+        int integer = Integer.valueOf(mBinding.categoryWeight.getText().toString());
+        if (integer > 10000000) {
+          ToastUtils.show("权重不能超过10000000");
+        } else {
+          category.setPriority(integer);
+          action.call(category);
+        }
+      } catch (NumberFormatException e) {
+        ToastUtils.show("请输入数字");
+      }
+    } else {
+      ToastUtils.show("分类权重不能为空");
+    }
   }
 
   @Override public void onStart() {

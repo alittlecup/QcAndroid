@@ -7,14 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
+import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageShopProductBinding;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.addsuccess.ProductAddSuccessPageParams;
@@ -33,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -41,12 +45,17 @@ import java.util.List;
     extends ShopBaseFragment<PageShopProductBinding, ShopProductViewModel> {
   private static final int TO_DELIVER_CODE = 101;
   private static final int TO_CARD_CODE = 102;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     mViewModel.payChannelEvent.observe(this, aVoid -> {
       routeTo("/product/paychannel", null);
     });
     mViewModel.addToCategory.observe(this, aVoid -> {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       ShopBottomCategoryFragment shopBottomCategoryFragment = new ShopBottomCategoryFragment();
       shopBottomCategoryFragment.setConfimAction(data -> {
         if (data instanceof Category) {
@@ -87,7 +96,6 @@ import java.util.List;
         toOtherFragmentForBack(uri, null, TO_CARD_CODE);
       }
     });
-
 
     mViewModel.getPostProductResult().observe(this, aBoolean -> {
       if (aBoolean) {
@@ -181,12 +189,23 @@ import java.util.List;
         mViewModel.getProduct().setPriority(0);
       } else {
         try {
-          mViewModel.getProduct().setPriority(Integer.valueOf(s));
+          int weight = Integer.valueOf(s);
+          if (weight > 10000000) {
+            ToastUtils.show("权重不能超过10000000");
+            mBinding.productWeight.setContent(s.substring(0,s.length()-1));
+            return;
+          } else {
+            mViewModel.getProduct().setPriority(weight);
+          }
         } catch (NumberFormatException e) {
           ToastUtils.show("请输入正确数字");
         }
       }
     });
+    mBinding.productName.getEditText()
+        .setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
+    mBinding.productUnit.getEditText()
+        .setFilters(new InputFilter[] { new InputFilter.LengthFilter(10) });
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

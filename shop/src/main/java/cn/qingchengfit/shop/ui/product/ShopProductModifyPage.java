@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
+import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.productdetail.ShopProductModifyDetailPageParams;
 import cn.qingchengfit.shop.util.ViewUtil;
@@ -18,6 +20,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2018/2/1.
@@ -26,6 +29,7 @@ import java.util.List;
     extends ShopProductPage {
   @Need String productId;
   @Need Boolean productStatus;//true 出售中，false 已下架
+  @Inject IPermissionModel permissionModel;
 
   @Override protected Class<ShopProductViewModel> getVMClass() {
     return ShopProductViewModel.class;
@@ -44,7 +48,7 @@ import java.util.List;
         getActivity().onBackPressed();
       }
     });
-    mViewModel.putProductStatus.observe(this,aBoolean -> {
+    mViewModel.putProductStatus.observe(this, aBoolean -> {
       if (aBoolean) {
         ToastUtils.show("操作成功");
         getActivity().onBackPressed();
@@ -55,7 +59,7 @@ import java.util.List;
           new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
               .build());
     });
-    mViewModel.putProductResult.observe(this,aBoolean -> {
+    mViewModel.putProductResult.observe(this, aBoolean -> {
       if (aBoolean) {
         ToastUtils.show("保存成功");
       }
@@ -110,6 +114,7 @@ import java.util.List;
     return view;
   }
 
+
   private void initBottom() {
     mBinding.llBottomContainer.setVisibility(View.GONE);
     mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
@@ -117,8 +122,18 @@ import java.util.List;
 
     mBinding.buttonDelete.setText(getString(R.string.delete));
     mBinding.buttonSale.setText(productStatus ? "下架" : "上架");
-    mBinding.buttonDelete.setOnClickListener(v -> mViewModel.deleteProduct(productId));
+    mBinding.buttonDelete.setOnClickListener(v -> {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_DELETE)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
+      mViewModel.deleteProduct(productId);
+    });
     mBinding.buttonSale.setOnClickListener(v -> {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       mViewModel.changeProductSaleStatus(!productStatus);
     });
   }
@@ -127,6 +142,10 @@ import java.util.List;
     ToolbarModel toolbarModel = new ToolbarModel(getString(R.string.product_detail));
     toolbarModel.setMenu(R.menu.menu_edit);
     toolbarModel.setListener(item -> {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return false;
+      }
       if (item.getTitle().equals("编辑")) {
         item.setTitle("完成");
         mBinding.framelayoutClick.setVisibility(View.GONE);
@@ -142,7 +161,7 @@ import java.util.List;
         if (currentFocus != null) {
           currentFocus.clearFocus();
         }
-       putProduct();
+        putProduct();
       }
       return false;
     });

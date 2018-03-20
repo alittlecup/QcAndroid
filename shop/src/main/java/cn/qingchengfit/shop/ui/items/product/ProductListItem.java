@@ -9,8 +9,8 @@ import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductListBinding;
 import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -63,6 +63,6 @@ public class ProductListItem
         .getString(R.string.product_detail_format, data.getProductSales(),
             data.getProductInventory(), data.getProductPriority()));
     dataBinding.imageMask.setVisibility(data.getProductStatus() ? View.GONE : View.VISIBLE);
-    PhotoUtils.smallCornner4dp(dataBinding.productImage, data.getProductImage());
+    ViewUtil.smallCornner4dp(dataBinding.productImage, data.getProductImage());
   }
 }

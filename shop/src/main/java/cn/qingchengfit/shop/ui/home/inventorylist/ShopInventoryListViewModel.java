@@ -13,6 +13,7 @@ import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryListItem;
 import cn.qingchengfit.shop.vo.Product;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -24,7 +25,7 @@ import javax.inject.Inject;
 public class ShopInventoryListViewModel
     extends FlexibleViewModel<List<Product>, InventoryListItem, HashMap<String, Object>> {
 
-  public final ObservableField<List<InventoryListItem>> items = new ObservableField<>();
+  public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
 
   public final ActionLiveEvent getShowAllRecord() {
     return showAllRecord;
@@ -44,9 +45,6 @@ public class ShopInventoryListViewModel
     params.put("show_all", 1);
   }
 
-  public void onAllInventoryListClick() {
-    showAllRecord.call();
-  }
 
   @NonNull @Override
   protected LiveData<List<Product>> getSource(@NonNull HashMap<String, Object> params) {

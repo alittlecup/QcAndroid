@@ -80,7 +80,6 @@ import javax.inject.Inject;
       fragmentList.add(new Pair<>(getString(R.string.category_manage), new ShopCategoryListPage()));
       fragmentList.add(
           new Pair<>(getString(R.string.inventory_manage), new ShopInventoryListPage()));
-      fragmentList.add(new Pair<>("weex", new WeexSplashPage()));
     }
     return fragmentList;
   }

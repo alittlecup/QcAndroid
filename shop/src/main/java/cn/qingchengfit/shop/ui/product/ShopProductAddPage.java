@@ -44,6 +44,9 @@ import java.util.List;
           if (!mViewModel.getProduct().getSupport_card()) {
             good.removeCardPrice();
           }
+          if(goodsAdapter.getItemCount()==1&&!((GoodProductItem) item).isExpend()){
+            good.setName("");
+          }
           goods.add(good);
         }
       }

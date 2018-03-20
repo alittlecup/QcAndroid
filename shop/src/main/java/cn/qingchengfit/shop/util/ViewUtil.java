@@ -6,10 +6,14 @@ import android.support.annotation.MainThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.shop.R;
+import cn.qingchengfit.shop.ui.widget.Corner4dpImgWrapper;
 import cn.qingchengfit.shop.vo.RecordAction;
+import cn.qingchengfit.utils.PhotoUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 
 /**
  * Created by huangbaole on 2018/1/29.
@@ -61,4 +65,13 @@ public final class ViewUtil {
         break;
     }
   }
+  public static void smallCornner4dp(ImageView v, String url){
+    Glide.with(v.getContext())
+        .load(PhotoUtils.getSmall(url))
+        .asBitmap()
+        .placeholder(cn.qingchengfit.widgets.R.drawable.img_loadingimage)
+        .error(cn.qingchengfit.widgets.R.drawable.img_loadingimage)
+        .into(new Corner4dpImgWrapper(v, v.getContext()));
+  }
+
 }

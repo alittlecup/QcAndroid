@@ -38,13 +38,14 @@ import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindLoginActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
+import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
-import cn.qingchengfit.staff.di.BindStaffStudentActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -304,7 +305,7 @@ import dagger.multibindings.IntoMap;
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
   BindGymConfigAcitivty.class,BindSaasCommonActivity.class,
-  BindUserActivity.class, BindLoginActivity.class,
+  BindUserActivity.class, BindLoginActivity.class, BindShopActivity.class, BindStudentActivity.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
