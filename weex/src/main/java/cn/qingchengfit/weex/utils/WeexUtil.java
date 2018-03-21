@@ -3,8 +3,8 @@ package cn.qingchengfit.weex.utils;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
-import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpResponse;
@@ -13,7 +13,13 @@ import cn.qingchengfit.weex.https.WXRequestListener;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.WXEnvironment;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -166,12 +172,14 @@ public final class WeexUtil {
                     .map(new Func1<String, Boolean>() {
                       @Override public Boolean call(String s) {
                         try {
-                          FileUtils.saveCache("weex-js-json",
-                              new String(task.response.data, "utf-8"));
+                          //FileUtils.saveCache("weex-js-json",
+                          //    new String(task.response.data, "utf-8"));
+                          return writeFileFromString("weex-js-json",
+                              new String(task.response.data, "utf-8"), true);
                         } catch (UnsupportedEncodingException e) {
                           e.printStackTrace();
                         }
-                        return isExistsCache("weex-js-json");
+                        return false;
                       }
                     })
                     .subscribeOn(Schedulers.io())
@@ -208,5 +216,74 @@ public final class WeexUtil {
             + key;
     File f1 = new File(path);
     return f1.exists();
+  }
+
+  public static boolean writeFileFromString(final String key, final String content,
+      final boolean append) {
+    if (TextUtils.isEmpty(key) || TextUtils.isEmpty(content)) return false;
+    String path =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()
+            + "/"
+            + key;
+    File file = new File(path);
+    if (file.exists()) {
+      file.delete();
+    }
+    file = new File(path);
+    BufferedWriter bw = null;
+    try {
+      bw = new BufferedWriter(new FileWriter(file, append));
+      bw.write(content);
+      return true;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      if (bw != null) {
+        try {
+          bw.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+
+  private static final String LINE_SEP = System.getProperty("line.separator");
+
+  public static String readFile2String(final String key, final String charsetName) {
+    if (TextUtils.isEmpty(key) || TextUtils.isEmpty(charsetName)) return "";
+    String path =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()
+            + "/"
+            + key;
+    File file = new File(path);
+    if (!file.exists()) return "";
+    BufferedReader reader = null;
+    try {
+      StringBuilder sb = new StringBuilder();
+
+      reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName));
+
+      String line;
+      if ((line = reader.readLine()) != null) {
+        sb.append(line);
+        while ((line = reader.readLine()) != null) {
+          sb.append(LINE_SEP).append(line);
+        }
+      }
+      return sb.toString();
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 }

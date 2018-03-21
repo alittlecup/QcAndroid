@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpTask;
 import cn.qingchengfit.weex.https.WXRequestListener;
@@ -73,7 +72,7 @@ public final class WeexLoadView {
    */
   public void loadUri(Uri mUri, Context context, ViewGroup viewGroup) {
     if (WeexUtil.isExistsCache("weex-js-json")) {
-      loadWXfromFile("weex-js-json", mUri.toString());
+      loadWXfromFile("weex-js-json", mUri.toString(),context,viewGroup);
     } else if (TextUtils.equals("http", mUri.getScheme()) || TextUtils.equals("https",
         mUri.getScheme())) {
       loadWXfromService(mUri.toString(), context, viewGroup);
@@ -82,8 +81,10 @@ public final class WeexLoadView {
     }
   }
 
-  private void loadWXfromFile(String key, String url) {
-    String s = FileUtils.readCache(key);
+  private void loadWXfromFile(String key, String url,Context context,ViewGroup rootView) {
+    this.rootView = rootView;
+    createWXSDKInstance(context, rootView);
+    String s = WeexUtil.readFile2String(key,"utf-8");
     mConfigMap.put("bundleUrl", WeexUtil.makeBundleUri(Uri.parse(url)));
     mWXSDKInstance.render("TAG", s, mConfigMap, null, WXRenderStrategy.APPEND_ASYNC);
   }
