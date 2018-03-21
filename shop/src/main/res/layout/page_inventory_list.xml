@@ -54,7 +54,21 @@
             app:srcCompat="@drawable/ic_cancel_grey_16dp"
             />
       </RelativeLayout>
-
+      <TextView
+          android:id="@+id/all_inventory_record"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:background="@color/backgroud_grey"
+          android:gravity="center"
+          android:paddingBottom="10dp"
+          android:paddingTop="17dp"
+          android:visibility="gone"
+          android:text="@string/all_inventory_list"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/txt_14sp"
+          >
+      </TextView>
       <android.support.v7.widget.RecyclerView
           android:id="@+id/recyclerview"
           android:layout_width="match_parent"

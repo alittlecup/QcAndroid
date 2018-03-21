@@ -2,6 +2,7 @@ package cn.qingchengfit.weex.utils;
 
 import android.app.Application;
 import cn.qingchengfit.weex.adapter.ImageAdapter;
+import cn.qingchengfit.weex.component.QcQrCode;
 import cn.qingchengfit.weex.component.QcRichText;
 import cn.qingchengfit.weex.module.QcAnimationModule;
 import cn.qingchengfit.weex.module.QcNavigatorModule;
@@ -63,6 +64,7 @@ public class WeexDelegate {
   private static void initComponents() {
     try {
       WXSDKEngine.registerComponent("qc-rich-text", QcRichText.class);
+      WXSDKEngine.registerComponent("qc-qr-code", QcQrCode.class);
     } catch (WXException e) {
       e.printStackTrace();
     }

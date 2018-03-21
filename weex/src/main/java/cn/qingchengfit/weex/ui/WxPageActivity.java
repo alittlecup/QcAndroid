@@ -35,7 +35,7 @@ public class WxPageActivity extends WxBaseActivity {
       String uri = host
           + "/shop/"
           + gymWrapper.getCoachService().getShop_id()
-          + "/mobile/staff/commodity/?"+data.getQuery();
+          + "/mobile/staff/commodity/?"+data.getQuery()+"&hide_nav=1";
       LogUtil.d("TAG", "onCreate: " + uri);
       WebActivity.startWeb(uri, this);
       finish();

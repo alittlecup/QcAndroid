@@ -2,7 +2,10 @@ package cn.qingchengfit.weex.utils;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
+import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpResponse;
 import cn.qingchengfit.weex.https.WXHttpTask;
@@ -10,10 +13,16 @@ import cn.qingchengfit.weex.https.WXRequestListener;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.WXEnvironment;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import static android.content.Intent.ACTION_VIEW;
 
@@ -27,11 +36,9 @@ public final class WeexUtil {
 
   /**
    * 获取本地asset下uri对应的文件名
-   * @param uri
-   * @return
    */
   public static String assembleFilePath(Uri uri) {
-    if (uri != null && uri.getPath() != null&&"file".equals(uri.getScheme())) {
+    if (uri != null && uri.getPath() != null && "file".equals(uri.getScheme())) {
       return uri.getPath().replaceFirst("/", "");
     }
     return "";
@@ -39,15 +46,13 @@ public final class WeexUtil {
 
   /**
    * 获取传入的url是否有对应的配置文件中的路径
-   * @param url
-   * @return
    */
   public static String checkUri(String url) {
     Set<String> keySet = WeexUtil.jsMap.keySet();
     Iterator<String> iterator = keySet.iterator();
-    while (iterator.hasNext()){
+    while (iterator.hasNext()) {
       String next = iterator.next();
-      if(url.contains(next)){
+      if (url.contains(next)) {
         return WeexUtil.jsMap.get(next);
       }
     }
@@ -56,7 +61,6 @@ public final class WeexUtil {
 
   /**
    * 根据加载的地址获取需要给JS端的BundleURL,主要目的是去除远端js路径的hash值
-   *
    *
    * @param uri https://qcfile.b0.upaiyun.com/qc-commodity-weex/commodity_list.a5edc2d0468d4df8541811b307654dd2.js
    * @return https://qcfile.b0.upaiyun.com/qc-commodity-weex/commodity_list.js
@@ -88,7 +92,6 @@ public final class WeexUtil {
 
   /**
    * 开启新的界面
-   * @param url
    */
 
   public static void openWeexActivity(String url) {
@@ -112,9 +115,9 @@ public final class WeexUtil {
             String data = new String(response.data, "utf-8");
             JSONObject jsonObject = JSON.parseObject(data);
             Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
-            if(!weex_enabled){
+            if (!weex_enabled) {
               String string = jsonObject.getString("proxy_commodity.js");
-              openWeexActivity(string+"/?weex_enable=false");
+              openWeexActivity(string + "/?weex_enable=false");
               return;
             }
             Set<String> keySet = jsonObject.keySet();
@@ -137,5 +140,73 @@ public final class WeexUtil {
       }
     };
     WXHttpManager.getInstance().sendRequest(task);
+  }
+
+  public static void loadAndSaveData() {
+    LogUtil.d("load weex  json");
+    WXHttpTask task = new WXHttpTask();
+    task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+    task.requestListener = new WXRequestListener() {
+      @Override public void onSuccess(WXHttpTask task) {
+        WXHttpResponse response = task.response;
+        if (response != null) {
+          try {
+            String data = new String(response.data, "utf-8");
+            JSONObject jsonObject = JSON.parseObject(data);
+            Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
+            if (!weex_enabled) {
+              return;
+            }
+            task.url = jsonObject.getString("proxy_commodity.js");
+            task.requestListener = new WXRequestListener() {
+
+              @Override public void onSuccess(final WXHttpTask task) {
+                LogUtil.d("load weex  json  end");
+                Observable.just("weex-js-json")
+                    .map(new Func1<String, Boolean>() {
+                      @Override public Boolean call(String s) {
+                        try {
+                          FileUtils.saveCache("weex-js-json",
+                              new String(task.response.data, "utf-8"));
+                        } catch (UnsupportedEncodingException e) {
+                          e.printStackTrace();
+                        }
+                        return isExistsCache("weex-js-json");
+                      }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Boolean>() {
+                      @Override public void call(Boolean aBoolean) {
+                        LogUtil.d("weex js -save" + aBoolean);
+                      }
+                    });
+              }
+
+              @Override public void onError(WXHttpTask task) {
+              }
+            };
+
+            WXHttpManager.getInstance().sendRequest(task);
+          } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+
+      @Override public void onError(WXHttpTask task) {
+        Log.d("TAG", "onError: " + task);
+      }
+    };
+    WXHttpManager.getInstance().sendRequest(task);
+  }
+
+  public static boolean isExistsCache(String key) {
+    String path =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()
+            + "/"
+            + key;
+    File f1 = new File(path);
+    return f1.exists();
   }
 }

@@ -1,5 +1,6 @@
 package cn.qingchengfit.shop.ui.home.inventorylist;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -50,6 +51,7 @@ public class ShopInventoryListPage
         item.add(new InventorySingleTextItem());
         item.addAll(items);
         mViewModel.items.set(item);
+        mBinding.allInventoryRecord.setVisibility(View.GONE);
       }
     });
   }
@@ -63,9 +65,9 @@ public class ShopInventoryListPage
     }
     CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
     List<AbstractFlexibleItem> items = new ArrayList<>();
-    items.add(new InventorySingleTextItem());
     items.add(item);
     adapter.updateDataSet(items);
+    mBinding.allInventoryRecord.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -77,13 +79,18 @@ public class ShopInventoryListPage
     initSearchProduct();
     if (permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY)) {
       mViewModel.loadSource(mViewModel.getParams());
+      mBinding.allInventoryRecord.setVisibility(View.GONE);
+
     } else {
       List<CommonNoDataItem> items = new ArrayList<>();
+      mBinding.allInventoryRecord.setVisibility(View.VISIBLE);
       items.add(new CommonNoDataItem(R.drawable.ic_403, getString(R.string.no_access),
           getString(R.string.no_current_page_permission)));
       adapter.updateDataSet(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
     }
+    mBinding.allInventoryRecord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+    mBinding.allInventoryRecord.getPaint().setAntiAlias(true);
     return mBinding;
   }
 

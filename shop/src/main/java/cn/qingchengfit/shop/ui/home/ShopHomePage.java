@@ -43,7 +43,7 @@ import javax.inject.Inject;
     mBinding.setViewModel(mViewModel);
     mBinding.showWebPreview.setOnClickListener(v -> {
       String url = gymWrapper.getCoachService().getHost()
-          + "shop/"
+          + "/shop/"
           + gymWrapper.shop_id()
           + "/mobile/user/commodity/";
       WebActivity.startWeb(url, getActivity());

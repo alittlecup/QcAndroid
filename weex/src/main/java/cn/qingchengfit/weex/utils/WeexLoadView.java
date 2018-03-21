@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpTask;
 import cn.qingchengfit.weex.https.WXRequestListener;
@@ -33,7 +34,10 @@ public final class WeexLoadView {
   private static class SingletonHolder {
     private static final WeexLoadView INSTANCE = new WeexLoadView();
   }
-  private WeexLoadView (){}
+
+  private WeexLoadView() {
+  }
+
   public static final WeexLoadView getInstance() {
     return SingletonHolder.INSTANCE;
   }
@@ -68,12 +72,20 @@ public final class WeexLoadView {
    * @param viewGroup 需要展示的view
    */
   public void loadUri(Uri mUri, Context context, ViewGroup viewGroup) {
-
-    if (TextUtils.equals("http", mUri.getScheme()) || TextUtils.equals("https", mUri.getScheme())) {
+    if (WeexUtil.isExistsCache("weex-js-json")) {
+      loadWXfromFile("weex-js-json", mUri.toString());
+    } else if (TextUtils.equals("http", mUri.getScheme()) || TextUtils.equals("https",
+        mUri.getScheme())) {
       loadWXfromService(mUri.toString(), context, viewGroup);
     } else {
       loadWXfromLocal(mUri.toString(), context, viewGroup);
     }
+  }
+
+  private void loadWXfromFile(String key, String url) {
+    String s = FileUtils.readCache(key);
+    mConfigMap.put("bundleUrl", WeexUtil.makeBundleUri(Uri.parse(url)));
+    mWXSDKInstance.render("TAG", s, mConfigMap, null, WXRenderStrategy.APPEND_ASYNC);
   }
 
   /**

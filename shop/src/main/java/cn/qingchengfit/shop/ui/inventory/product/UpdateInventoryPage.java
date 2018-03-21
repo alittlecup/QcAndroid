@@ -96,6 +96,13 @@ import java.util.ArrayList;
         try {
           if (!TextUtils.isEmpty(trim)) {
             mViewModel.offSetInventory.set(Integer.valueOf(trim));
+            if(action==ADD){
+              if(mViewModel.curInventory.get()+mViewModel.offSetInventory.get()>9999){
+                ToastUtils.show("商品库存不能大于9999");
+                mBinding.offsetCount.setContent(s.subSequence(0, s.length() - 1).toString());
+                return;
+              }
+            }
             mBinding.save.setEnabled(true);
           } else {
             mViewModel.offSetInventory.set(0);
