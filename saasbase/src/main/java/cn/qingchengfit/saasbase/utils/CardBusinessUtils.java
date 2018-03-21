@@ -10,6 +10,7 @@ import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.utils.CmStringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * power by
@@ -43,14 +44,15 @@ public class CardBusinessUtils {
         return context.getResources().getStringArray(R.array.cardtype_category)[0];
     }
   }
+
   public static String getCardTypeCategoryStrHead(int type, Context context) {
     switch (type) {
       case 2:
-        return context.getResources().getStringArray(R.array.cardtype_category)[1].substring(0,1);
+        return context.getResources().getStringArray(R.array.cardtype_category)[1].substring(0, 1);
       case 3:
-        return context.getResources().getStringArray(R.array.cardtype_category)[2].substring(0,1);
+        return context.getResources().getStringArray(R.array.cardtype_category)[2].substring(0, 1);
       default:
-        return context.getResources().getStringArray(R.array.cardtype_category)[0].substring(0,1);
+        return context.getResources().getStringArray(R.array.cardtype_category)[0].substring(0, 1);
     }
   }
 
@@ -76,9 +78,11 @@ public class CardBusinessUtils {
   public static String getCardBlance(Card card) {
     switch (card.getType()) {
       case 2:
-        return ((Float) card.getBalance()).intValue() + "次";
+        return ((((Float) card.getBalance()).intValue() == card.getBalance())
+          ? ((Float) card.getBalance()).intValue() :String.format(Locale.CHINA,"%.1f",card.getBalance()))+ "次";
       case 3:
-        return (((Float) card.getBalance()).intValue() < 0 ? 0 : ((Float) card.getBalance()).intValue()) + "天";
+        return (((Float) card.getBalance()).intValue() < 0 ? 0
+          : ((Float) card.getBalance()).intValue()) + "天";
       default:
         return CmStringUtils.getFloatDot2(card.getBalance()) + "元";
     }
@@ -100,19 +104,18 @@ public class CardBusinessUtils {
     o.can_charge = body.can_charge;
     o.can_create = body.can_create;
     o.limit_days = body.limit_days;
-    o.days       = body.days;
-    o.charge     = body.charge;
-    o.for_staff  = body.for_staff;
-    o.price      = TextUtils.isEmpty(body.price) ? 0f : Float.parseFloat(body.price);
-    o.id         = body.id;
+    o.days = body.days;
+    o.charge = body.charge;
+    o.for_staff = body.for_staff;
+    o.price = TextUtils.isEmpty(body.price) ? 0f : Float.parseFloat(body.price);
+    o.id = body.id;
     return o;
   }
 
-  public static String supportChargeAndCreate(boolean charge,boolean create){
+  public static String supportChargeAndCreate(boolean charge, boolean create) {
     List<String> ret = new ArrayList<>();
     if (charge) ret.add("充值");
     if (create) ret.add("购卡");
     return CmStringUtils.List2StrChinese(ret);
   }
-
 }
