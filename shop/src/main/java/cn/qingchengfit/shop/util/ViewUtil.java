@@ -43,6 +43,18 @@ public final class ViewUtil {
         .onPositive(callback)
         .build();
   }
+  public static MaterialDialog instanceDelDialog(Context context, String content,
+      MaterialDialog.SingleButtonCallback poscallback,MaterialDialog.SingleButtonCallback navcallback) {
+    return new MaterialDialog.Builder(context).content(content)
+        .autoDismiss(true)
+        .positiveColorRes(cn.qingchengfit.saasbase.R.color.primary)
+        .negativeColorRes(cn.qingchengfit.widgets.R.color.text_color_gray)
+        .negativeText(cn.qingchengfit.widgets.R.string.pickerview_cancel)
+        .positiveText(cn.qingchengfit.widgets.R.string.pickerview_submit)
+        .onPositive(poscallback)
+        .onNegative(navcallback)
+        .build();
+  }
 
   public  static void setOperatorType(@RecordAction int action,TextView textView){
     Resources resources = textView.getContext().getResources();

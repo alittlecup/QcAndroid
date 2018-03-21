@@ -76,7 +76,7 @@ import java.util.ArrayList;
     mViewModel.goodName.set(good.getName());
     good_id = good.getId();
     if (TextUtils.isEmpty(good.getName())) {
-      mBinding.goodName.setClickable(false);
+      mBinding.goodName.setVisibility(View.GONE);
     }
   }
 
@@ -89,6 +89,7 @@ import java.util.ArrayList;
     mViewModel.setAction(action);
     mViewModel.loadSource(productID);
     mBinding.save.setEnabled(false);
+    mBinding.productName.setEnable(false);
     mBinding.offsetCount.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();

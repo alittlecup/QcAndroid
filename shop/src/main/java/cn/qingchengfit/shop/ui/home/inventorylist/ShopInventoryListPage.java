@@ -63,6 +63,7 @@ public class ShopInventoryListPage
     }
     CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
     List<AbstractFlexibleItem> items = new ArrayList<>();
+    items.add(new InventorySingleTextItem());
     items.add(item);
     adapter.updateDataSet(items);
   }
@@ -74,7 +75,7 @@ public class ShopInventoryListPage
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
     initSearchProduct();
-    if (permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTOPRY)) {
+    if (permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY)) {
       mViewModel.loadSource(mViewModel.getParams());
     } else {
       List<CommonNoDataItem> items = new ArrayList<>();

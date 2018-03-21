@@ -102,6 +102,9 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
                 mBinding.recyclerview.setLayoutParams(layoutParams);
               }, 50);
             }
+            mBinding.confirm.setEnabled(true);
+          }else {
+            mBinding.confirm.setEnabled(false);
           }
         });
   }

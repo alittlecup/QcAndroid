@@ -113,6 +113,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_WORKSPACE_GROUP = "/group/order";
     public static final String MODULE_WORKSPACE_PRIVATE = "/private/order";
     public static final String MODULE_WORKSPACE_ORDER_SIGNIN = "/checkin/help";
+    public static final String MODULE_WORKSPACE_COMMODITY_LIST = "/commodity/list";
 
     /**
      * 健身房服务
@@ -120,7 +121,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_SERVICE_GROUP = "/teamarrange/calendar2";
     public static final String MODULE_SERVICE_PRIVATE = "/priarrange/calendar2";
     public static final String MODULE_SERVICE_FREE = "/checkin/setting";
-    public static final String MODULE_SERVICE_SHOP = "/commodity/list";
+    public static final String MODULE_SERVICE_SHOP = "/commodity/manage";
     /**
      * 会员
      */
@@ -289,6 +290,8 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
             case MODULE_SERVICE_PRIVATE:
                 return "private_course_arrange_calendar";
             case MODULE_SERVICE_SHOP:
+                return "commodity_manage";
+            case MODULE_WORKSPACE_COMMODITY_LIST:
                 return "commodity_list";
 
             case MODULE_WARDROBE:

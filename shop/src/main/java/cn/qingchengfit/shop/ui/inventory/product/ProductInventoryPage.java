@@ -33,7 +33,7 @@ import javax.inject.Inject;
 
   @Override protected void subscribeUI() {
     mViewModel.getAddInventoryEvent().observe(this, aVoid -> {
-      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTOPRY_CAN_CHANGE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
@@ -42,7 +42,7 @@ import javax.inject.Inject;
           .build());
     });
     mViewModel.getReduceInventoryEvent().observe(this, aVoid -> {
-      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTOPRY_CAN_CHANGE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }

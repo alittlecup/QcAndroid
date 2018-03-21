@@ -38,19 +38,25 @@
         android:orientation="horizontal"
         android:showDividers="middle"
         >
-
-      <cn.qingchengfit.support.widgets.CompatTextView
+      <FrameLayout
           android:id="@+id/btn_insert_img"
           android:layout_width="0dp"
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
-          android:gravity="center"
-          android:drawableLeft="@drawable/ic_pic"
-          android:text="插入图片"
-          style="@style/QcTextStyleLargeDark"
-          />
+          >
 
+        <cn.qingchengfit.support.widgets.CompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_pic"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="插入图片"
+            style="@style/QcTextStyleLargeDark"
+            />
+      </FrameLayout>
       <TextView
           android:id="@+id/btn_comfirm"
           android:layout_width="0dp"

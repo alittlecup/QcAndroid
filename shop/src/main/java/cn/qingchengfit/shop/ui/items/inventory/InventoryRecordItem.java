@@ -56,9 +56,10 @@ public class InventoryRecordItem
             dataBinding.countOffset.getContext().getColor(R.color.primary));
         break;
       case RecordAction.SALED:
-        dataBinding.countOffset.setText( data.getOffset());
+        dataBinding.countOffset.setText(""+data.getOffset());
         dataBinding.countOffset.setTextColor(
             dataBinding.countOffset.getContext().getColor(R.color.inventory_reduce));
+        break;
       case RecordAction.REDUCE:
         dataBinding.countOffset.setText("—" + data.getOffset());
         dataBinding.countOffset.setTextColor(

@@ -80,7 +80,7 @@ public class ShopInventoryViewModel
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Record> inventories) {
-    return inventories != null && !inventories.isEmpty();
+    return inventories != null;
   }
 
   @Override protected List<InventoryRecordItem> map(@NonNull List<Record> inventories) {

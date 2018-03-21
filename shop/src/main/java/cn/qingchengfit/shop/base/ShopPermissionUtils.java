@@ -26,8 +26,8 @@ public final class ShopPermissionUtils {
   public final static String COMMODITY_LIST_CAN_CHANGE="commodity_list_can_change";
   public final static String COMMODITY_LIST_CAN_DELETE="commodity_list_can_delete";
 
-  public final static String COMMODITY_INVENTOPRY="commodity_inventory";
-  public final static String COMMODITY_INVENTOPRY_CAN_CHANGE="commodity_inventory_can_change";
+  public final static String COMMODITY_INVENTORY="commodity_inventory";
+  public final static String COMMODITY_INVENTORY_CAN_CHANGE="commodity_inventory_can_change";
 
   public final static String COMMODITY_CATEGORY="commodity_category";
   public final static String COMMODITY_CATEGORY_CAN_WRITE="commodity_category_can_write";

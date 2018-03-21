@@ -77,13 +77,17 @@ import org.w3c.dom.Text;
     });
     mBinding.btnComfirm.setOnClickListener(v -> {
       if (richTxtFragment != null) {
-        String content = richTxtFragment.getContent();
-        Intent intent = new Intent();
-        intent.putExtra("detail", content);
-        getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().onBackPressed();
+        sendBack();
       }
     });
+  }
+
+  private void sendBack() {
+    String content = richTxtFragment.getContent();
+    Intent intent = new Intent();
+    intent.putExtra("detail", content);
+    getActivity().setResult(Activity.RESULT_OK, intent);
+    getActivity().onBackPressed();
   }
 
   private void initToolbar() {
@@ -91,8 +95,12 @@ import org.w3c.dom.Text;
     Toolbar toolbar = mBinding.includeToolbar.toolbar;
     initToolbar(toolbar);
     toolbar.setNavigationOnClickListener(v -> {
-      ViewUtil.instanceDelDialog(getContext(), "确定放弃所做修改",
-          (dialog, which) -> getActivity().onBackPressed()).show();
+      if (!TextUtils.isEmpty(content) && TextUtils.isEmpty(richTxtFragment.getContent())) {
+        ViewUtil.instanceDelDialog(getContext(), "确定清空当前内容", (dialog, which) ->sendBack(),(dialog,which)->getActivity().onBackPressed()).show();
+      } else {
+        ViewUtil.instanceDelDialog(getContext(), "确定放弃所做修改",
+            (dialog, which) -> getActivity().onBackPressed()).show();
+      }
     });
   }
 }

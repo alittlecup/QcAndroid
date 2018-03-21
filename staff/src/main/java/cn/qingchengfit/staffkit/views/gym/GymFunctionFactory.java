@@ -117,6 +117,9 @@ public class GymFunctionFactory {
                 return R.drawable.moudule_service_private;
             case MODULE_SERVICE_SHOP:
                 return R.drawable.moudule_service_shop;
+            // TODO: 2018/3/20
+            case MODULE_WORKSPACE_COMMODITY_LIST:
+                return R.drawable.commodity_management;
 
             case MODULE_WARDROBE:
                 return R.drawable.moudule_gym_wardrobe;
@@ -163,6 +166,7 @@ public class GymFunctionFactory {
             case MODULE_OPERTAT_KOUBEI:
             case MODULE_OPERATE_SCORE:
             case MODULE_SERVICE_SHOP:
+            case MODULE_WORKSPACE_COMMODITY_LIST:
             case MODULE_WECHAT:
             case MODULE_GYM_SITE:
                 return 1;
@@ -243,6 +247,11 @@ public class GymFunctionFactory {
                 return R.string.module_service_private;
             case MODULE_SERVICE_SHOP:
                 return R.string.module_service_shop;
+            case MODULE_WORKSPACE_COMMODITY_LIST:
+                return R.string.module_service_commodity_list;
+
+
+
 
             case MODULE_WARDROBE:
                 return R.string.module_gym_wardrobe;
@@ -312,6 +321,15 @@ public class GymFunctionFactory {
                 fragment.startActivity(toSignInConfigs);
                 return;
             case MODULE_SERVICE_SHOP:
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COMMODITY_INVENTORY)) {
+                    DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+                    return;
+                }
+                //goQrScan(fragment, module, null, coachService);
+                fragment.routeTo("shop","/shop/home",null);
+                return;
+            case MODULE_WORKSPACE_COMMODITY_LIST:
+                // TODO: 2018/3/20 商品销售入口页
                 if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COMMODITY_INVENTORY)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;

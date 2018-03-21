@@ -37,7 +37,7 @@ public class ShopCategoryListPage
 
   @Override protected void subscribeUI() {
     mViewModel.getAddEvent().observe(this, aVoid -> {
-      if (permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_WRITE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_WRITE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
@@ -45,7 +45,7 @@ public class ShopCategoryListPage
           .show(getChildFragmentManager(), "");
     });
     mViewModel.getDeleteEvent().observe(this, category -> {
-      if (permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_DELETE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_DELETE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
@@ -53,7 +53,7 @@ public class ShopCategoryListPage
           .show(getChildFragmentManager(), "");
     });
     mViewModel.getUpdateEvent().observe(this, category -> {
-      if (permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }

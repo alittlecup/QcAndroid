@@ -6,14 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
+import cn.qingchengfit.shop.ui.items.inventory.InventorySingleTextItem;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -25,11 +29,24 @@ import java.util.ArrayList;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, item -> {
-      mViewModel.items.set(item);
+      if (item == null || item.isEmpty()) {
+        setEmptyView();
+      } else {
+        mViewModel.items.set(item);
+      }
     });
     mViewModel.indexEvent.observe(this, index -> {
       filterView.showPage(index);
     });
+  }
+
+  private void setEmptyView() {
+    String hintString = "暂无库存商品，赶快去添加吧～";
+
+    CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
+    List<AbstractFlexibleItem> items = new ArrayList<>();
+    items.add(item);
+    adapter.updateDataSet(items);
   }
 
   @Override
@@ -50,7 +67,8 @@ import java.util.ArrayList;
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setAdapter(adapter);
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+    mBinding.recyclerview.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
   }
 
   private void initToolbar() {
