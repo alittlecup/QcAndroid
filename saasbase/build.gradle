@@ -96,13 +96,13 @@ dependencies {
 
 
 group 'cn.qingchengfit.saas'
-version '1.0'
+version '1.0.5'
 
 uploadArchives {
 
     repositories {
         mavenDeployer {
-            repository(url: uri('../../repo'))
+            repository(url: uri('../repo'))
             pom.artifactId = 'sass'
         }
     }

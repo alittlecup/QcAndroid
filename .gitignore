@@ -6,6 +6,7 @@ lt application files
 *.dex
 /jiagu
 /output
+/repo
 # Java class files
 *.class
 
