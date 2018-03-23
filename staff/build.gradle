@@ -252,13 +252,8 @@ task buildWithAP (dependsOn: build) {}
 
 
 dependencies {
-  if (isTask("DevDebug")){
-    println("DevDebug")
     implementation project(path: ':saasbase')
-  }else {
-    println("not DevDebug")
-    implementation 'cn.qingchengfit.saas:sass:1.0.5'
-  }
+//    implementation 'cn.qingchengfit.saas:sass:1.0.5'
 //  implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')

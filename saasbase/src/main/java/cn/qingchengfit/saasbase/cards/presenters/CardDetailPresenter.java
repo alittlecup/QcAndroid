@@ -11,7 +11,6 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
@@ -43,6 +42,7 @@ public class CardDetailPresenter extends BasePresenter {
   }
 
   @Inject public CardDetailPresenter() {
+
   }
 
   @Override public void onNewSps() {
@@ -61,14 +61,7 @@ public class CardDetailPresenter extends BasePresenter {
     /*
      * 修改绑定会员
      */
-    RxBusAdd(EventSelectedStudent.class)
-      .onBackpressureBuffer()
-      .throttleLast(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<EventSelectedStudent>() {
-        @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
-         editCardStudents(eventSelectedStudent.getIdStr());
-        }
-      });
+
 
 
   }

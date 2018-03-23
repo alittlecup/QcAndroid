@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -10,15 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.events.EventSelectedStudent;
+import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -40,34 +47,28 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/29.
  */
+@Leaf(module = "card",path = "/bind/students/")
+public class CardBindStudentsFragment extends BaseListFragment implements
+  SwipeRefreshLayout.OnRefreshListener{
 
-public class CardBindStudentsFragment extends BaseListFragment {
+   Toolbar toolbar;
+  TextView toolbarTitle;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  //@BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-  //@BindView(R.id.tb_searchview_et) EditText tbSearchviewEt;
-  //@BindView(R.id.tb_searchview_clear) ImageView tbSearchviewClear;
-  //@BindView(R.id.tb_searchview_cancle) Button tbSearchviewCancle;
-  //@BindView(R.id.searchview) LinearLayout searchview;
-  //@BindView(R.id.layout_root) LinearLayout layoutRoot;
-
-  private cn.qingchengfit.saasbase.cards.bean.Card card;
-
-  public static CardBindStudentsFragment newInstance(
-      cn.qingchengfit.saasbase.cards.bean.Card card) {
-    Bundle args = new Bundle();
-    args.putParcelable("card",card);
-    CardBindStudentsFragment fragment = new CardBindStudentsFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+  @Need
+  public Card card;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null){
-      card = getArguments().getParcelable("card");
-    }
+    SaasbaseParamsInjector.inject(this);
+    RxBus.getBus().register(EventSelectedStudent.class)
+      .compose(bindToLifecycle())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventSelectedStudent>() {
+        @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+          card.setUsers(eventSelectedStudent.getStudents());
+          initData();
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,9 +77,11 @@ public class CardBindStudentsFragment extends BaseListFragment {
         (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container, container, false);
     View v = super.onCreateView(inflater, container, savedInstanceState);
     ll.addView(v, 1);
-    unbinder = ButterKnife.bind(this, ll);
+    toolbar = ll.findViewById(R.id.toolbar);
+    toolbarTitle = ll.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
     initData();
+    initListener(this);
     return ll;
   }
 
@@ -90,16 +93,18 @@ public class CardBindStudentsFragment extends BaseListFragment {
     setDatas(studentItems,1);
   }
 
+
+
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText(R.string.t_card_bind_student);
     toolbar.getMenu().clear();
     toolbar.getMenu().add("修改").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        // TODO: 2017/9/29 绑定会员
-        return true;
-      }
+    toolbar.setOnMenuItemClickListener(item -> {
+      routeTo("student","/choose/student/",new ChooseAndSearchStudentParams()
+        .studentIdList((ArrayList<String>) card.getUserIds())
+        .build());
+      return true;
     });
   }
 
@@ -113,5 +118,9 @@ public class CardBindStudentsFragment extends BaseListFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+  }
+
+  @Override public void onRefresh() {
+    stopRefresh();
   }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.ActionDescItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
@@ -23,9 +24,9 @@ import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.cards.views.offday.OffDayListParams;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordParams;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.DialogSheet;
@@ -34,12 +35,14 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -81,6 +84,16 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SaasbaseParamsInjector.inject(this);
+    RxBus.getBus().register(EventSelectedStudent.class)
+      .onBackpressureBuffer()
+      .throttleLast(500, TimeUnit.MILLISECONDS)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSelectedStudent>() {
+        @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+          presenter.editCardStudents(eventSelectedStudent.getIdStr());
+        }
+      });
   }
 
   @Inject CardDetailPresenter presenter;
@@ -200,9 +213,7 @@ import javax.inject.Inject;
             showAlert(R.string.alert_permission_forbid);
             return false;
           }
-          routeTo(AppUtils.getRouterUri(getContext(),"/student/choose/student/"),new ChooseAndSearchStudentParams()
-            .studentIdList((ArrayList<String>) presenter.getmCard().getUserIds())
-            .build());
+          routeTo("/bind/students/",CardBindStudentsParams.builder().card(mCard).build());
           break;
         case 2://适用场馆
           break;
