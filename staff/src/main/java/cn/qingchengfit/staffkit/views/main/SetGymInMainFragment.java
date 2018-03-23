@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventAddress;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Shop;
@@ -190,12 +191,11 @@ import rx.schedulers.Schedulers;
                                     List<CoachService> coachServices = new ArrayList<>();
                                     coachServices.add(qcResponseSystenInit.data);
                                     gymBaseInfoAction.writeGyms(coachServices);
-
                                     //记录创建场馆动作
                                     SensorsUtils.track("QcSaasCreateShop")
                                       .addProperty("qc_brand_shops_count","0")
                                       .commit(getContext());
-
+                                    RxBus.getBus().post(new EventLoginChange());
                                 }
                             } else {
                                 ToastUtils.showDefaultStyle(qcResponseSystenInit.getMsg());
