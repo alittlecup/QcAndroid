@@ -127,7 +127,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
       @Override public void onUploadComplete(String s, String s1) {
         PhotoUtils.smallCircle(db.headerImg, s1);
-        presenter.editUser(EditUserBody.newBuilder().build());
+        presenter.editUser(EditUserBody.newBuilder().avatar(s1).build());
       }
     });
     chooseAvatar.show(getChildFragmentManager(), "");
