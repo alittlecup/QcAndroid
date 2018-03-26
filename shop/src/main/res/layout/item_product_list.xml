@@ -4,8 +4,10 @@
   </data>
   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
-      android:layout_height="90dp"
+      android:layout_height="wrap_content"
       android:background="@color/white"
+      android:paddingBottom="15dp"
+      android:paddingTop="15dp"
       >
     <FrameLayout
         android:id="@+id/product_image_container"
@@ -34,12 +36,15 @@
     </FrameLayout>
     <TextView
         android:id="@+id/product_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/product_image_container"
         android:layout_marginLeft="17dp"
+        android:layout_marginRight="100dp"
         android:layout_toRightOf="@+id/product_image_container"
-        tools:text="玉米"
+        android:ellipsize="end"
+        android:lines="1"
+        tools:text="玉米玉米玉米玉米玉米玉米玉米玉米"
         style="@style/QcTextStyleLargeDark"
         />
     <TextView
@@ -48,7 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/product_name"
         android:layout_below="@+id/product_name"
-        tools:text="销量：20 权重：300 库存：100"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/product_price"
+        tools:text="销量：20 权重：300 库存：1000"
         style="@style/QcTextStyleSmallGrey"
         />
     <TextView
@@ -57,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/product_name"
         android:layout_below="@+id/product_detail"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:textSize="@dimen/txt_12sp"
         tools:text="添加时间：2015-12-23 12:11:11"
         style="@style/QcTextStyleSmallGrey"

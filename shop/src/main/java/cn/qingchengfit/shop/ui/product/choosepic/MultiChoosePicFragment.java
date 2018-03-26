@@ -101,6 +101,7 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
         .countable(true)
         .capture(true)
         .dragable(true)
+        .itemUris(null)
         .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
         .maxSelectable(5)
         .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))

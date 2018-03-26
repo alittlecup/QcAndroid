@@ -96,10 +96,15 @@ import java.util.ArrayList;
         try {
           if (!TextUtils.isEmpty(trim)) {
             mViewModel.offSetInventory.set(Integer.valueOf(trim));
-            if(action==ADD){
-              if(mViewModel.curInventory.get()+mViewModel.offSetInventory.get()>9999){
+            if (action == ADD) {
+              if (mViewModel.curInventory.get() + mViewModel.offSetInventory.get() > 9999) {
                 ToastUtils.show("商品库存不能大于9999");
                 mBinding.offsetCount.setContent(s.subSequence(0, s.length() - 1).toString());
+                return;
+              }
+            }else if(action==REDUCE){
+              if (mViewModel.curInventory.get() - mViewModel.offSetInventory.get() <0) {
+                mBinding.save.setEnabled(false);
                 return;
               }
             }
@@ -122,8 +127,12 @@ import java.util.ArrayList;
     String title = "";
     if (action == ADD) {
       title = getString(R.string.add_inventory);
+      mBinding.offsetCount.setLabel(getString(R.string.add_inventory_count));
+      mBinding.offsetCount.setHint(getString(R.string.add_inventory_count_input));
     } else if (action == REDUCE) {
       title = getString(R.string.reduce_inventory);
+      mBinding.offsetCount.setLabel(getString(R.string.reduce_inventory_count));
+      mBinding.offsetCount.setHint(getString(R.string.reduce_inventory_count_input));
     }
     mBinding.setToolbarModel(new ToolbarModel(title));
     Toolbar toolbar = mBinding.includeToolbar.toolbar;

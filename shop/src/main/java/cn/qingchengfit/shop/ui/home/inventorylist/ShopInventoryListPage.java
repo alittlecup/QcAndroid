@@ -91,6 +91,11 @@ public class ShopInventoryListPage
     }
     mBinding.allInventoryRecord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
     mBinding.allInventoryRecord.getPaint().setAntiAlias(true);
+    mBinding.allInventoryRecord.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        mViewModel.getShowAllRecord().call();
+      }
+    });
     return mBinding;
   }
 

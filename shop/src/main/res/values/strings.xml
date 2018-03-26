@@ -14,7 +14,7 @@
   <string name="price">价格</string>
   <string name="weight">权重</string>
   <string name="category">分类</string>
-  <string name="shop_type">型号</string>
+  <string name="shop_type">规格</string>
   <string name="inventory">库存</string>
   <string name="total_count">总共</string>
   <string name="category_default">常规</string>
@@ -34,8 +34,8 @@
   <string name="input_product_unit">请填写商品单位</string>
   <string name="input_product_price">请填写商品价格</string>
   <string name="input_product_inventory">请填写商品库存</string>
-  <string name="input_product_category">请填写商品型号</string>
-  <string name="add_product_category">添加商品型号</string>
+  <string name="input_product_category">请填写商品规格</string>
+  <string name="add_product_category">添加商品规格</string>
   <string name="product_desc">商品描述</string>
   <string name="category_to">分类至</string>
   <string name="not_category">未分类</string>

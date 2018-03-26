@@ -73,8 +73,8 @@ import rx.functions.Action1;
 
   private Observer<Boolean> result = new Observer<Boolean>() {
     @Override public void onChanged(@Nullable Boolean aBoolean) {
-      RxBus.getBus().post(ShopCategoryPage.class,aBoolean);
-      ToastUtils.show(aBoolean?"操作成功":"操作失败");
+      RxBus.getBus().post(ShopCategoryPage.class, aBoolean);
+      ToastUtils.show(aBoolean ? "操作成功" : "操作失败");
       dismiss();
     }
   };
@@ -101,13 +101,13 @@ import rx.functions.Action1;
       case 0:
         mBinding.categoryTitle.setText(getString(R.string.add_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
-          checkUpCategory(category,category1 -> mViewModel.addShopCategory(category1));
+          checkUpCategory(category, category1 -> mViewModel.addShopCategory(category1));
         });
         break;
       case 1:
         mBinding.categoryTitle.setText(getString(R.string.update_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
-          checkUpCategory(category,category1 -> mViewModel.updateShopCategory(category1));
+          checkUpCategory(category, category1 -> mViewModel.updateShopCategory(category1));
         });
         break;
       case 2:
@@ -124,13 +124,18 @@ import rx.functions.Action1;
     mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
     if (!TextUtils.isEmpty(category.getName())) {
       mBinding.categoryName.setText(category.getName());
+      mBinding.categoryName.setSelection(mBinding.categoryName.getText().length());
     }
+    if (category.getCategoryPriority() != 0) {
+      mBinding.categoryWeight.setText(category.getCategoryPriority() + "");
+    }
+
     return mBinding;
   }
 
-  private void checkUpCategory(Category category,Action1<Category> action) {
-    String prority = mBinding.categoryWeight.getText().toString();
-    String name = mBinding.categoryName.getText().toString();
+  private void checkUpCategory(Category category, Action1<Category> action) {
+    String prority = mBinding.categoryWeight.getText().toString().trim();
+    String name = mBinding.categoryName.getText().toString().trim();
     if (!TextUtils.isEmpty(name)) {
       category.setName(name);
     } else {

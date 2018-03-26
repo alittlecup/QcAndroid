@@ -26,6 +26,8 @@ public class GoodProductItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemCategoryBinding>> {
   public static final int SHOW_CARD_PRICE = 2;
   private boolean isExpend = false;
+  public  static final  String HIDE_DELETE_KEY="hideDeleteKey";
+
   private Good good;
 
   public GoodProductItem(Good good) {
@@ -113,6 +115,11 @@ public class GoodProductItem
         }
       }
     });
+
+    Boolean hide = (Boolean) ((CommonFlexAdapter) adapter).getTag(HIDE_DELETE_KEY);
+    if(hide!=null&&hide){
+      dataBinding.imDelete.setVisibility(View.GONE);
+    }
   }
 
   public Good getGood() {

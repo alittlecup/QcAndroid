@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -108,6 +109,10 @@ import javax.inject.Inject;
   }
 
   protected boolean checkProductInfo(Product product) {
+    if (product.getImages()==null||product.getImages().isEmpty()) {
+      ToastUtils.show("请添加商品图片");
+      return false;
+    }
     if (TextUtils.isEmpty(product.getName())) {
       ToastUtils.show("请输入商品名称");
       return false;
@@ -125,7 +130,7 @@ import javax.inject.Inject;
     if (product.getGoods() != null && !product.getGoods().isEmpty()) {
       for (Good good : product.getGoods()) {
         if (TextUtils.isEmpty(good.getRmbPrices())) {
-          ToastUtils.show("请输入型号价格");
+          ToastUtils.show("请输入商品价格");
           return false;
         }
 
@@ -134,22 +139,22 @@ import javax.inject.Inject;
             if (goodsAdapter.getItem(0) instanceof GoodProductItem) {
               boolean isExpend = ((GoodProductItem) goodsAdapter.getItem(0)).isExpend();
               if (isExpend) {
-                ToastUtils.show("请输入型号名称");
+                ToastUtils.show("请输入规格名称");
                 return false;
               }
             }
           } else {
-            ToastUtils.show("请输入型号名称");
+            ToastUtils.show("请输入规格名称");
             return false;
           }
         }
 
         if (good.getInventory() == null) {
-          ToastUtils.show("请输入型号库存");
+          ToastUtils.show("请输入规格库存");
           return false;
         }
         if (product.getSupport_card() && TextUtils.isEmpty(good.getCardPrices())) {
-          ToastUtils.show("请输入型号会员卡价格");
+          ToastUtils.show("请输入规格会员卡价格");
           return false;
         }
       }
@@ -192,7 +197,7 @@ import javax.inject.Inject;
           int weight = Integer.valueOf(s);
           if (weight > 10000000) {
             ToastUtils.show("权重不能超过10000000");
-            mBinding.productWeight.setContent(s.substring(0,s.length()-1));
+            mBinding.productWeight.setContent(s.substring(0, s.length() - 1));
             return;
           } else {
             mViewModel.getProduct().setPriority(weight);
@@ -206,6 +211,33 @@ import javax.inject.Inject;
         .setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
     mBinding.productUnit.getEditText()
         .setFilters(new InputFilter[] { new InputFilter.LengthFilter(10) });
+
+    mBinding.productName.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+
+      }
+
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        super.beforeTextChanged(s, start, count, after);
+        String trim = s.toString().trim();
+        if (trim.length() > 20) {
+          ToastUtils.show("商品名称不能大于20个字符");
+        }
+      }
+    });
+    mBinding.productUnit.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+
+      }
+
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        super.beforeTextChanged(s, start, count, after);
+        String trim = s.toString().trim();
+        if (trim.length() > 10) {
+          ToastUtils.show("商品名称不能大于个10字符");
+        }
+      }
+    });
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

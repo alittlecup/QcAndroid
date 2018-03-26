@@ -68,6 +68,7 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
     subscribeUI();
     mBinding.setViewModel(mViewModel);
     initRxbus();
+    mBinding.confirm.setEnabled(false);
     return mBinding.getRoot();
   }
 
@@ -85,7 +86,7 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
         });
   }
 
-  private void loadData(){
+  private void loadData() {
     mViewModel.loadCategoryList(repository, loginStatus.staff_id(), gymWrapper.getParams())
         .observe(this, items -> {
           if (items != null && !items.isEmpty()) {
@@ -102,12 +103,10 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
                 mBinding.recyclerview.setLayoutParams(layoutParams);
               }, 50);
             }
-            mBinding.confirm.setEnabled(true);
-          }else {
-            mBinding.confirm.setEnabled(false);
           }
         });
   }
+
   private void subscribeUI() {
     loadData();
     mViewModel.cancelEvent.observe(this, aVoid -> dismiss());
@@ -155,6 +154,11 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
   @Override public boolean onItemClick(int position) {
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
+    if (adapter.getSelectedItemCount() == 0) {
+      mBinding.confirm.setEnabled(false);
+    } else {
+      mBinding.confirm.setEnabled(true);
+    }
     return false;
   }
 

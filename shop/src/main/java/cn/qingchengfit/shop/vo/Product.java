@@ -3,7 +3,7 @@ package cn.qingchengfit.shop.vo;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.ui.items.inventory.IInventoryItemData;
 import cn.qingchengfit.shop.ui.items.product.IProductItemData;
@@ -254,18 +254,17 @@ public class Product
   }
 
   private CharSequence getGoodsDetail() {
-    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("");
+    SpanUtils spanUtils = new SpanUtils();
     for (Good good : goods) {
-      spannableStringBuilder = new SpanUtils().append(good.getInventory() + "")
+      spanUtils.append(good.getInventory() + "")
           .setFontSize(14, true)
-          .append("/" + unit)
+          .append(unit)
           .setFontSize(12, true)
-          .append("(" + good.getName() + ")")
+          .append("(" + (TextUtils.isEmpty(good.getName()) ? "常规" : good.getName()) + ")")
           .setFontSize(10, true)
-          .setForegroundColor(Color.rgb(204, 204, 204))
-          .create();
+          .setForegroundColor(Color.rgb(204, 204, 204));
     }
-    return spannableStringBuilder;
+    return spanUtils.create();
   }
 
   public void setName(String name) {

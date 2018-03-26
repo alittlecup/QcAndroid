@@ -2,6 +2,7 @@ package cn.qingchengfit.shop.ui.product;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,9 @@ import javax.inject.Inject;
     mViewModel.putProductResult.observe(this, aBoolean -> {
       if (aBoolean) {
         ToastUtils.show("保存成功");
+        hide();
+        Toolbar toolbar = mBinding.includeToolbar.toolbar;
+        toolbar.getMenu().getItem(0).setTitle("编辑");
       }
     });
   }
@@ -94,6 +98,11 @@ import javax.inject.Inject;
     List<GoodProductItem> items = new ArrayList<>();
     for (Good good : goods) {
       items.add(new GoodProductItem(good));
+    }
+    if(inUpdate){
+      goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY,false);
+    }else{
+      goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY,true);
     }
     goodsAdapter.updateDataSet(items);
     mBinding.goodsRecyclerview.postDelayed(new Runnable() {
@@ -139,6 +148,7 @@ import javax.inject.Inject;
     });
   }
 
+  private  boolean inUpdate=false;
   @Override protected void initToolBar() {
     ToolbarModel toolbarModel = new ToolbarModel(getString(R.string.product_detail));
     toolbarModel.setMenu(R.menu.menu_edit);
@@ -149,25 +159,31 @@ import javax.inject.Inject;
       }
       if (item.getTitle().equals("编辑")) {
         item.setTitle("完成");
+        inUpdate=true;
         mBinding.framelayoutClick.setVisibility(View.GONE);
         mBinding.fabToCamera.setVisibility(View.VISIBLE);
         mBinding.llBottomContainerModify.setVisibility(View.GONE);
+        goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY,false);
+        goodsAdapter.notifyDataSetChanged();
       } else if (item.getTitle().equals("完成")) {
-        item.setTitle("编辑");
-        mBinding.framelayoutClick.setVisibility(View.VISIBLE);
-        mBinding.fabToCamera.setVisibility(View.GONE);
-        mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
-        AppUtils.hideKeyboard(getActivity());
-        View currentFocus = getActivity().getCurrentFocus();
-        if (currentFocus != null) {
-          currentFocus.clearFocus();
-        }
         putProduct();
       }
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
     super.initToolBar();
+  }
+
+  private void hide() {
+    mBinding.framelayoutClick.setVisibility(View.VISIBLE);
+    mBinding.fabToCamera.setVisibility(View.GONE);
+    mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
+    inUpdate=false;
+    AppUtils.hideKeyboard(getActivity());
+    View currentFocus = getActivity().getCurrentFocus();
+    if (currentFocus != null) {
+      currentFocus.clearFocus();
+    }
   }
 
   private void putProduct() {

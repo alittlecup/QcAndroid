@@ -48,12 +48,14 @@ public class InventoryListItem
     dataBinding.productName.setText(data.getName());
     dataBinding.productSaleStatus.setText(
         context.getString(data.getProductStatus() ? R.string.on_sale : R.string.off_sale));
+
     ViewUtil.smallCornner4dp(dataBinding.productImage, data.getImageUri());
     dataBinding.goodsContent.setText(data.getCategoryDetail());
+
     SpannableStringBuilder spannableStringBuilder = new SpanUtils().append(data.getInventoryCount())
         .setFontSize(18, true)
         .setForegroundColor(context.getColor(R.color.colorPrimary))
-        .append("/" + data.getProductUnit())
+        .append(data.getProductUnit())
         .setFontSize(10, true)
         .setForegroundColor(context.getColor(R.color.colorPrimary))
         .append("(总共)")

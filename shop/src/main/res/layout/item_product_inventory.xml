@@ -15,42 +15,52 @@
         android:layout_marginTop="15dp"
         android:src="@color/colorPrimary"
         />
-    <TextView
-        android:id="@+id/product_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:layout_marginTop="24dp"
+        android:paddingTop="24dp"
         android:layout_toRightOf="@+id/product_image"
-        tools:text="玉米"
-        style="@style/QcTextStyleLargeDark"
-        />
-    <TextView
-        android:id="@+id/product_sale_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/product_name"
-        android:layout_marginLeft="4dp"
-        android:layout_toRightOf="@+id/product_name"
-        tools:text="出售中"
-        style="@style/QcTextStyleSmallGrey"
-        />
-    <TextView
-        android:id="@+id/inventory_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="24dp"
-        tools:text="12/个(总共)"
-        />
+        android:gravity="end"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:id="@+id/product_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:lines="1"
+          android:maxLength="10"
+          tools:text="玉米玉米玉米玉米玉玉玉米玉米玉玉玉米玉米玉玉玉米玉米玉玉玉米玉米玉玉玉米玉米玉玉玉玉"
+          style="@style/QcTextStyleLargeDark"
+          />
+      <TextView
+          android:id="@+id/product_sale_status"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_marginLeft="5dp"
+          android:minWidth="75dp"
+          tools:text="出售中"
+          style="@style/QcTextStyleSmallGrey"
+          />
+      <TextView
+          android:id="@+id/inventory_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="10dp"
+          tools:text="12/个(总共)"
+          />
+    </LinearLayout>
     <TextView
         android:id="@+id/goods_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/product_name"
-        android:layout_below="@+id/product_name"
         android:layout_marginBottom="12dp"
+android:layout_below="@id/ll_container"
+        android:layout_alignLeft="@+id/ll_container"
         android:layout_marginRight="10dp"
         android:layout_marginTop="6dp"
         android:textSize="14sp"
