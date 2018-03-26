@@ -82,6 +82,11 @@ allprojects {
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
     }
+    
+    maven {
+      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/aws/'
+    }
+
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
     maven { url "https://jitpack.io" }

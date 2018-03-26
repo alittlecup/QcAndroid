@@ -21,13 +21,14 @@ pipeline:
       - LICENB
     volumes:
       - /cache:/cache/
+      - /data/gradle/gradle-4.6:/gradle/
 #    when:
 #      event: pull_request
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - /cache/gradle/gradle-4.1/bin/gradle -g gradle_cache assembleDevDebug --no-daemon
+      - /gradle/bin/gradle -g gradle_cache assembleDevDebug --no-daemon
       - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
@@ -38,11 +39,14 @@ pipeline:
       - LICENB
     when:
       branch: develop
+    volumes:
+      - /cache:/cache/
+      - /data/gradle/gradle-4.6:/gradle/
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - ./gradlew -g gradle_cache assembleProductRelease --no-daemon
+      - /gradle/bin/gradle -g gradle_cache assembleProductRelease --no-daemon
       - fir publish staff/build/outputs/apk/product/release/staff-product-release.apk -T $PRO
 #      - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
 
