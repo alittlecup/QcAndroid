@@ -215,7 +215,7 @@ public class MainMsgFragment extends BaseFragment
   }
   public void refresh() {
     if (loginStatus.isLogined()) {
-      presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
+      presenter.querySimpleList(ConstantNotification.getNotiQueryJson(getContext()));
       loginIM();
     } else {
       refresh.setRefreshing(false);
@@ -288,7 +288,7 @@ public class MainMsgFragment extends BaseFragment
     if (getActivity() instanceof MainActivity) {
       ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
     }
-    presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
+    presenter.querySimpleList(ConstantNotification.getNotiQueryJson(getContext()));
   }
 
   @Override public void onLoginFailed(TLSErrInfo tlsErrInfo) {
@@ -414,7 +414,7 @@ public class MainMsgFragment extends BaseFragment
             getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       } else {
         presenter.clearNoti(
-            ConstantNotification.getCategloreStr(ConstantNotification.COMMENT_NOTIFICATION_STR));
+            ConstantNotification.getCategloreStr(getContext(),ConstantNotification.COMMENT_NOTIFICATION_STR));
         ContainerActivity.router(QRActivity.MODULE_ARTICLE_COMMENT_REPLY, getContext());
       }
     }
@@ -435,7 +435,7 @@ public class MainMsgFragment extends BaseFragment
                 PreferenceUtils.setPrefString(getContext(), loginStatus.staff_id() + "dele_noti",
                     new Gson().toJson(notificationDeleted, NotificationDeleted.class));
               }
-              presenter.clearNoti(ConstantNotification.getCategloreStr(type));
+              presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),type));
               adapter.removeItem(i);
               checkNoInfo();
             }

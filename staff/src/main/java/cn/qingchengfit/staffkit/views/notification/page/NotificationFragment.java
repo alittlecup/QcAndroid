@@ -156,14 +156,14 @@ public class NotificationFragment extends BaseFragment
         toolbar.inflateMenu(R.menu.menu_all_read);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                presenter.clearNoti(ConstantNotification.getCategloreStr(type));
+                presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),type));
                 return true;
             }
         });
     }
 
     public void refresh() {
-        presenter.refresh(ConstantNotification.getCategloreStr(type));
+        presenter.refresh(ConstantNotification.getCategloreStr(getContext(),type));
     }
 
     @Override public String getFragmentName() {
@@ -345,6 +345,6 @@ public class NotificationFragment extends BaseFragment
     }
 
     @Override public void onLoadMore(int i, int i1) {
-        presenter.loadMore(App.staffId, ConstantNotification.getCategloreStr(type));
+        presenter.loadMore(App.staffId, ConstantNotification.getCategloreStr(getContext(),type));
     }
 }
