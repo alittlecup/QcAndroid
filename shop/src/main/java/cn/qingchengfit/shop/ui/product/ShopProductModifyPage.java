@@ -1,5 +1,6 @@
 package cn.qingchengfit.shop.ui.product;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -56,16 +57,17 @@ import javax.inject.Inject;
       }
     });
     mViewModel.detailEvent.observe(this, aVoid -> {
-      routeTo("/modify/detail",
-          new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
-              .build());
+      Uri uri=Uri.parse("qcstaff://shop/modify/detail");
+      toOtherFragmentForBack(uri,new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
+          .build(),202);
     });
     mViewModel.putProductResult.observe(this, aBoolean -> {
       if (aBoolean) {
         ToastUtils.show("保存成功");
-        hide();
         Toolbar toolbar = mBinding.includeToolbar.toolbar;
         toolbar.getMenu().getItem(0).setTitle("编辑");
+        inUpdate = false;
+        setCurPageStatus(false);
       }
     });
   }
@@ -99,10 +101,10 @@ import javax.inject.Inject;
     for (Good good : goods) {
       items.add(new GoodProductItem(good));
     }
-    if(inUpdate){
-      goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY,false);
-    }else{
-      goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY,true);
+    if (inUpdate) {
+      goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY, false);
+    } else {
+      goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY, true);
     }
     goodsAdapter.updateDataSet(items);
     mBinding.goodsRecyclerview.postDelayed(new Runnable() {
@@ -148,7 +150,8 @@ import javax.inject.Inject;
     });
   }
 
-  private  boolean inUpdate=false;
+  private boolean inUpdate = false;
+
   @Override protected void initToolBar() {
     ToolbarModel toolbarModel = new ToolbarModel(getString(R.string.product_detail));
     toolbarModel.setMenu(R.menu.menu_edit);
@@ -159,31 +162,41 @@ import javax.inject.Inject;
       }
       if (item.getTitle().equals("编辑")) {
         item.setTitle("完成");
-        inUpdate=true;
-        mBinding.framelayoutClick.setVisibility(View.GONE);
-        mBinding.fabToCamera.setVisibility(View.VISIBLE);
-        mBinding.llBottomContainerModify.setVisibility(View.GONE);
-        goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY,false);
-        goodsAdapter.notifyDataSetChanged();
+        inUpdate = true;
+        setCurPageStatus(inUpdate);
       } else if (item.getTitle().equals("完成")) {
         putProduct();
+        inUpdate=false;
       }
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
     super.initToolBar();
+    Toolbar toolbar = mBinding.includeToolbar.toolbar;
+    toolbar.setNavigationOnClickListener(v -> {
+      if (inUpdate) {
+        ViewUtil.instanceDelDialog(getContext(), "确定要放弃当前修改么？", (dialog, which) -> {
+          getActivity().onBackPressed();
+        }).show();
+      } else {
+        getActivity().onBackPressed();
+      }
+    });
   }
 
-  private void hide() {
-    mBinding.framelayoutClick.setVisibility(View.VISIBLE);
-    mBinding.fabToCamera.setVisibility(View.GONE);
-    mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
-    inUpdate=false;
-    AppUtils.hideKeyboard(getActivity());
-    View currentFocus = getActivity().getCurrentFocus();
-    if (currentFocus != null) {
-      currentFocus.clearFocus();
+  private void setCurPageStatus(boolean inUpdate) {
+    mBinding.framelayoutClick.setVisibility(inUpdate ? View.GONE : View.VISIBLE);
+    mBinding.fabToCamera.setVisibility(inUpdate ? View.VISIBLE : View.GONE);
+    mBinding.llBottomContainerModify.setVisibility(inUpdate ? View.GONE : View.VISIBLE);
+    if (!inUpdate) {
+      AppUtils.hideKeyboard(getActivity());
+      View currentFocus = getActivity().getCurrentFocus();
+      if (currentFocus != null) {
+        currentFocus.clearFocus();
+      }
     }
+    goodsAdapter.setTag(GoodProductItem.HIDE_DELETE_KEY, !inUpdate);
+    goodsAdapter.notifyDataSetChanged();
   }
 
   private void putProduct() {

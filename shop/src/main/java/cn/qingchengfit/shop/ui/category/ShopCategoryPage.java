@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.InputFilter;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopCategoryBinding;
+import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
@@ -119,7 +120,6 @@ import rx.functions.Action1;
         });
         break;
     }
-    mBinding.categoryName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(12) });
     mBinding.categoryWeight.setInputType(InputType.TYPE_CLASS_NUMBER);
     mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
     if (!TextUtils.isEmpty(category.getName())) {
@@ -129,6 +129,27 @@ import rx.functions.Action1;
     if (category.getCategoryPriority() != 0) {
       mBinding.categoryWeight.setText(category.getCategoryPriority() + "");
     }
+    mBinding.categoryName.addTextChangedListener(new GoodProductItem.AfterTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        String trim = s.toString().trim();
+        if (!TextUtils.isEmpty(trim) && trim.length() > 12) {
+          ToastUtils.show("分类名称不能大于12个字符");
+          mBinding.categoryName.setText(trim.substring(0,12));
+          mBinding.categoryName.setSelection(mBinding.categoryName.getText().length());
+        }
+      }
+    });
+    mBinding.categoryWeight.addTextChangedListener(new GoodProductItem.AfterTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        String trim = s.toString().trim();
+        if (!TextUtils.isEmpty(trim) && trim.length() > 7) {
+          ToastUtils.show("权重不能超过10000000");
+          mBinding.categoryWeight.setText(trim.substring(0, 7));
+          mBinding.categoryWeight.setSelection(mBinding.categoryWeight.getText().length());
+
+        }
+      }
+    });
 
     return mBinding;
   }

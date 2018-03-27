@@ -26,7 +26,7 @@ public class GoodProductItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemCategoryBinding>> {
   public static final int SHOW_CARD_PRICE = 2;
   private boolean isExpend = false;
-  public  static final  String HIDE_DELETE_KEY="hideDeleteKey";
+  public static final String HIDE_DELETE_KEY = "hideDeleteKey";
 
   private Good good;
 
@@ -58,7 +58,8 @@ public class GoodProductItem
         .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
     dataBinding.categoryPriceCard.getEditText()
         .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-    dataBinding.categoryName.getEditText().setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
+    dataBinding.categoryName.getEditText()
+        .setFilters(new InputFilter[] { new InputFilter.LengthFilter(12) });
     dataBinding.imDelete.setVisibility(View.VISIBLE);
     dataBinding.categoryName.setVisibility(View.VISIBLE);
 
@@ -75,6 +76,7 @@ public class GoodProductItem
         dataBinding.categoryPriceCard.setVisibility(View.GONE);
       }
     }
+
     if (isExpend) {
       dataBinding.imDelete.setVisibility(View.VISIBLE);
       dataBinding.categoryName.setVisibility(View.VISIBLE);
@@ -85,6 +87,7 @@ public class GoodProductItem
         dataBinding.imDelete.setVisibility(View.GONE);
         dataBinding.categoryName.setVisibility(View.GONE);
         ((GoodProductItem) adapter.getItem(0)).setExpend(false);
+        good.setName("");
       } else {
         adapter.removeItem(position);
         adapter.notifyDataSetChanged();
@@ -98,9 +101,9 @@ public class GoodProductItem
     dataBinding.categoryPrice.addTextWatcher(new AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         if (s != null) {
-          String price = checkPrice(s.toString());
+          String price = checkPrice(s.toString(), Channel.RMB);
           good.setPrice(price, Channel.RMB);
-          if(price.equals(s.toString()))return;
+          if (price.equals(s.toString())) return;
           dataBinding.categoryPrice.setContent(price);
         }
       }
@@ -108,17 +111,25 @@ public class GoodProductItem
     dataBinding.categoryPriceCard.addTextWatcher(new AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         if (s != null) {
-          String price = checkPrice(s.toString());
+          String price = checkPrice(s.toString(), Channel.CARD);
           good.setPrice(price, Channel.CARD);
-          if(price.equals(s.toString()))return;
+          if (price.equals(s.toString())) return;
           dataBinding.categoryPriceCard.setContent(price);
         }
       }
     });
 
     Boolean hide = (Boolean) ((CommonFlexAdapter) adapter).getTag(HIDE_DELETE_KEY);
-    if(hide!=null&&hide){
+    if (hide != null && hide) {
       dataBinding.imDelete.setVisibility(View.GONE);
+    } else if (!(!isExpend && adapter.getItemCount() == 1)) {
+      dataBinding.imDelete.setVisibility(View.VISIBLE);
+    } else if (adapter.getItemCount() == 1 && !TextUtils.isEmpty(good.getName())) {
+      dataBinding.imDelete.setVisibility(View.VISIBLE);
+    }
+
+    if (!TextUtils.isEmpty(good.getName())) {
+      dataBinding.categoryName.setVisibility(View.VISIBLE);
     }
   }
 
@@ -145,14 +156,19 @@ public class GoodProductItem
     }
   }
 
-  private String checkPrice(String price) {
+  private String checkPrice(String price, String type) {
     String format = price;
     if (!TextUtils.isEmpty(price)) {
       boolean change = false;
       try {
         Double doubleprice = Double.valueOf(price);
         if ((doubleprice > 999999)) {
-          ToastUtils.show("商品价格不能大于999999");
+          if (type.equals(Channel.CARD)) {
+            ToastUtils.show("会员卡支付价格不能大于999999");
+          } else {
+
+            ToastUtils.show("商品价格不能大于999999");
+          }
           change = true;
         } else {
           int i = price.lastIndexOf(".");
@@ -160,7 +176,6 @@ public class GoodProductItem
             ToastUtils.show("商品价格最多支持两位小数");
             change = true;
           }
-
         }
       } catch (NumberFormatException ex) {
         ToastUtils.show("请输入正确的价格");
@@ -169,8 +184,8 @@ public class GoodProductItem
         if (change) {
           format = price.subSequence(0, price.length() - 1).toString();
         }
-        if(format.endsWith(".0")){
-          format.replaceAll("\\.0","");
+        if (format.endsWith(".0")) {
+          format.replaceAll("\\.0", "");
         }
       }
     }

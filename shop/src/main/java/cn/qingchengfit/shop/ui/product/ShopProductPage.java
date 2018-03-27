@@ -109,7 +109,7 @@ import javax.inject.Inject;
   }
 
   protected boolean checkProductInfo(Product product) {
-    if (product.getImages()==null||product.getImages().isEmpty()) {
+    if (product.getImages() == null || product.getImages().isEmpty()) {
       ToastUtils.show("请添加商品图片");
       return false;
     }
@@ -154,7 +154,7 @@ import javax.inject.Inject;
           return false;
         }
         if (product.getSupport_card() && TextUtils.isEmpty(good.getCardPrices())) {
-          ToastUtils.show("请输入规格会员卡价格");
+          ToastUtils.show("请输入会员卡支付价格");
           return false;
         }
       }
@@ -207,34 +207,22 @@ import javax.inject.Inject;
         }
       }
     });
-    mBinding.productName.getEditText()
-        .setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
-    mBinding.productUnit.getEditText()
-        .setFilters(new InputFilter[] { new InputFilter.LengthFilter(10) });
 
     mBinding.productName.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
-
-      }
-
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        super.beforeTextChanged(s, start, count, after);
         String trim = s.toString().trim();
         if (trim.length() > 20) {
           ToastUtils.show("商品名称不能大于20个字符");
+          mBinding.productName.setContent(trim.substring(0, 20));
         }
       }
     });
     mBinding.productUnit.addTextWatcher(new GoodProductItem.AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
-
-      }
-
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        super.beforeTextChanged(s, start, count, after);
         String trim = s.toString().trim();
         if (trim.length() > 10) {
-          ToastUtils.show("商品名称不能大于个10字符");
+          ToastUtils.show("商品单位不能大于个10字符");
+          mBinding.productUnit.setContent(trim.substring(0, 10));
         }
       }
     });

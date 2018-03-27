@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.product.CardSwitchItem;
@@ -27,7 +28,7 @@ public class ProductPayViewModel
 
   @NonNull @Override
   protected LiveData<List<ICardShopChooseItemData>> getSource(@NonNull String s) {
-    return repository.qcLoadCardTpls(null, s);
+    return repository.qcLoadCardTpls(Configs.CATEGORY_VALUE+"", s);
   }
 
   @Override

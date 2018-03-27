@@ -52,7 +52,7 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
-    return posApi.qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), null, isEnable);
+    return posApi.qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), type, isEnable);
   }
 
   @Deprecated @Override

@@ -116,10 +116,10 @@ public class GymFunctionFactory {
       case MODULE_SERVICE_PRIVATE:
         return R.drawable.moudule_service_private;
       case MODULE_SERVICE_SHOP:
-        return R.drawable.moudule_service_shop;
+        return R.drawable.commodity_management;
       // TODO: 2018/3/20
       case MODULE_WORKSPACE_COMMODITY_LIST:
-        return R.drawable.commodity_management;
+        return R.drawable.module_service_shop;
 
       case MODULE_WARDROBE:
         return R.drawable.moudule_gym_wardrobe;

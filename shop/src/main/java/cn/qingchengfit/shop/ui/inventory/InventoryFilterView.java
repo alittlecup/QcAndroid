@@ -80,7 +80,7 @@ public class InventoryFilterView extends BaseFilterFragment {
         return list;
       }
     });
-    if (null == products && products.isEmpty()) return datas;
+    if (null == products || products.isEmpty()) return datas;
     for (Product product : products) {
       Good good = new Good();
       good.setName("全部" + product.getName() + "规格");

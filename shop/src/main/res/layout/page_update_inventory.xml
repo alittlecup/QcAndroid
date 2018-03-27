@@ -126,7 +126,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="10dp"
           android:text="@{@string/reduce_inventory_detail(viewModel.curInventory-viewModel.offSetInventory)}"
-          app:visibleGone="@{(!viewModel.isAdd)&amp;&amp;((viewModel.curInventory-viewModel.offSetInventory)&gt;0)&amp;&amp;(viewModel.offSetInventory&gt;0)}"
+          app:visibleGone="@{(!viewModel.isAdd)&amp;&amp;!((viewModel.curInventory-viewModel.offSetInventory)&lt;0)&amp;&amp;(viewModel.offSetInventory&gt;0)}"
           tools:text="增加库存：30"
           />
 

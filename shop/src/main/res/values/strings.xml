@@ -45,7 +45,7 @@
   <string name="product_pay_online">线上支付</string>
   <string name="product_pay_offline">线下支付</string>
   <string name="product_pay_card">会员卡支付</string>
-  <string name="product_pay_card_price">会员卡支付</string>
+  <string name="product_pay_card_price">会员卡支付价格</string>
   <string name="choose_product_pay_channel">选择支付方式</string>
   <string name="choose_product_pay_card">选择会员卡</string>
 
