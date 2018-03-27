@@ -121,11 +121,11 @@ public final class WeexUtil {
             String data = new String(response.data, "utf-8");
             JSONObject jsonObject = JSON.parseObject(data);
             Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
-            if (!weex_enabled) {
-              String string = jsonObject.getString("proxy_commodity.js");
-              openWeexActivity(string + "/?weex_enable=false");
-              return;
-            }
+            //if (!weex_enabled) {
+            //  String string = jsonObject.getString("proxy_commodity.js");
+            //  openWeexActivity(string + "/?weex_enable=false");
+            //  return;
+            //}
             Set<String> keySet = jsonObject.keySet();
             Iterator<String> iterator = keySet.iterator();
             while (iterator.hasNext()) {
@@ -227,8 +227,10 @@ public final class WeexUtil {
             + key;
     File file = new File(path);
     if (file.exists()) {
+      LogUtil.d("delete file");
       file.delete();
     }
+    LogUtil.d("file -js:"+readFile2String("weex-js-json","utf-8"));
     file = new File(path);
     BufferedWriter bw = null;
     try {
