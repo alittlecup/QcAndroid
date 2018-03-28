@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -57,9 +59,10 @@ import javax.inject.Inject;
       }
     });
     mViewModel.detailEvent.observe(this, aVoid -> {
-      Uri uri=Uri.parse("qcstaff://shop/modify/detail");
-      toOtherFragmentForBack(uri,new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
-          .build(),202);
+      Uri uri = Uri.parse("qcstaff://shop/modify/detail");
+      toOtherFragmentForBack(uri,
+          new ShopProductModifyDetailPageParams().content(mViewModel.getProduct().getDesc())
+              .build(), 202);
     });
     mViewModel.putProductResult.observe(this, aBoolean -> {
       if (aBoolean) {
@@ -93,6 +96,14 @@ import javax.inject.Inject;
 
     mBinding.productName.setContent(mViewModel.getProduct().getName());
     mBinding.productUnit.setContent(mViewModel.getProduct().getUnit());
+
+    if (!TextUtils.isEmpty(product.getDesc())) {
+      if (!product.getDesc().contains("<p>")) {
+        mBinding.productDesc.setContent("图片");
+      } else {
+        mBinding.productDesc.setContent(CmStringUtils.delHTMLTag(product.getDesc()));
+      }
+    }
   }
 
   private void updateGoodList() {
@@ -166,7 +177,6 @@ import javax.inject.Inject;
         setCurPageStatus(inUpdate);
       } else if (item.getTitle().equals("完成")) {
         putProduct();
-        inUpdate=false;
       }
       return false;
     });

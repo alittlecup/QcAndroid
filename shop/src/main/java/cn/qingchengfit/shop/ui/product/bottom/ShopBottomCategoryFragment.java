@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,14 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
   @Inject IPermissionModel permissionModel;
   Subscription subscribe;
 
+  public static ShopBottomCategoryFragment newInstance(String id) {
+    ShopBottomCategoryFragment fragment = new ShopBottomCategoryFragment();
+    Bundle bundle = new Bundle();
+    bundle.putString("curId", id);
+    fragment.setArguments(bundle);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     AndroidSupportInjection.inject(this);
@@ -63,6 +72,12 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
     mBinding =
         DataBindingUtil.inflate(inflater, R.layout.view_bottom_shop_category, container, false);
     initRecyclerView();
+    if (getArguments() != null) {
+      String curId = getArguments().getString("curId");
+      if (!TextUtils.isEmpty(curId)) {
+        curAddCategoryId = curId;
+      }
+    }
     mViewModel = ViewModelProviders.of(this, new ViewModelProvider.NewInstanceFactory())
         .get(ShopBottomCategoryViewModel.class);
     subscribeUI();
@@ -72,16 +87,17 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
     return mBinding.getRoot();
   }
 
+  private String curAddCategoryId = "";
+
   private void initRxbus() {
     subscribe = RxBus.getBus()
-        .register(ShopCategoryPage.class, Boolean.class)
+        .register(ShopCategoryPage.class, String.class)
         .subscribeOn(rx.schedulers.Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<Boolean>() {
-          @Override public void call(Boolean aBoolean) {
-            if (aBoolean) {
-              loadData();
-            }
+        .subscribe(new Action1<String>() {
+          @Override public void call(String id) {
+            curAddCategoryId = id;
+            loadData();
           }
         });
   }
@@ -102,6 +118,16 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
                 layoutParams.height = height * 4;
                 mBinding.recyclerview.setLayoutParams(layoutParams);
               }, 50);
+            }
+            adapter.clearSelection();
+            for (int i = 0; i < mViewModel.items.get().size(); i++) {
+              CategoryChooseItem item = mViewModel.items.get().get(i);
+              if (!TextUtils.isEmpty(curAddCategoryId)) {
+                if (curAddCategoryId.equals(item.getData().getId())) {
+                  adapter.addSelection(i);
+                  adapter.notifyItemChanged(i);
+                }
+              }
             }
           }
         });

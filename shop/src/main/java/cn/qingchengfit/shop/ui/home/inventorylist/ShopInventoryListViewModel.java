@@ -45,6 +45,9 @@ public class ShopInventoryListViewModel
     params.put("show_all", 1);
   }
 
+  @Override public void loadSource(@NonNull HashMap<String, Object> map) {
+    identifier.setValue(map);
+  }
 
   @NonNull @Override
   protected LiveData<List<Product>> getSource(@NonNull HashMap<String, Object> params) {
@@ -53,7 +56,7 @@ public class ShopInventoryListViewModel
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Product> product) {
-    return product != null ;
+    return product != null;
   }
 
   @Override protected List<InventoryListItem> map(@NonNull List<Product> product) {

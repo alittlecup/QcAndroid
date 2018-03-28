@@ -166,7 +166,7 @@
     <orderEntry type="library" name="io.socket:engine.io-client:0.9.0@jar" level="project" />
     <orderEntry type="library" name="org.threeten:threetenbp:1.3:no-tzdb@jar" level="project" />
     <orderEntry type="library" name="android.arch.persistence.room:rxjava2-1.0.0" level="project" />
-    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.31.1" level="project" />
+    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.31.2" level="project" />
     <orderEntry type="library" name="io.socket:socket.io-client:0.9.0@jar" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:extensions-1.0.0" level="project" />
     <orderEntry type="library" name="com.trello:rxlifecycle:1.0@jar" level="project" />

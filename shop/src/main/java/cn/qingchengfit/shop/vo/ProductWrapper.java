@@ -5,5 +5,5 @@ package cn.qingchengfit.shop.vo;
  */
 
 public class ProductWrapper {
-public   Product product;
+  public Product product;
 }

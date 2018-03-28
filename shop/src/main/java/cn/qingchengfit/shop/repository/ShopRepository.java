@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.CategoryWrapper;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
@@ -20,7 +21,7 @@ public interface ShopRepository {
 
   LiveData<List<Category>> qcLoadCategories(String staff_id, HashMap<String, Object> map);
 
-  LiveData<Boolean> qcPostCategory(String staff_id, Category category,HashMap<String, Object> map);
+  LiveData<CategoryWrapper> qcPostCategory(String staff_id, Category category,HashMap<String, Object> map);
 
   LiveData<Boolean> qcDeleteCategory(String staff_id, String category_id,HashMap<String, Object> map);
 

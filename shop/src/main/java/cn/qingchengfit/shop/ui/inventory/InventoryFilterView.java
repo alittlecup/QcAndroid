@@ -46,7 +46,7 @@ public class InventoryFilterView extends BaseFilterFragment {
       }
       if (rightPos != 0) {
         viewModel.getParams()
-            .put("goods_id", mProducts.get(leftPos - 1).getGoods().get(rightPos - 1).getId());
+            .put("goods_id", mProducts.get(leftPos - 1).getGoods().get(rightPos).getId());
       }else if(viewModel.getParams().containsKey("goods_id")){
         viewModel.getParams().remove("goods_id");
       }

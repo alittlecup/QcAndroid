@@ -8,6 +8,7 @@ import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.CategoryWrapper;
 import javax.inject.Inject;
 
 /**
@@ -29,7 +30,7 @@ public class ShopCategoryViewModel extends BaseViewModel {
 
   private final ActionLiveEvent actionEvent = new ActionLiveEvent();
 
-  public MediatorLiveData<Boolean> getAddResult() {
+  public MediatorLiveData<Category> getAddResult() {
     return addResult;
   }
 
@@ -41,7 +42,7 @@ public class ShopCategoryViewModel extends BaseViewModel {
     return putResult;
   }
 
-  private final MediatorLiveData<Boolean> addResult = new MediatorLiveData<>();
+  private final MediatorLiveData<Category> addResult = new MediatorLiveData<>();
   private final MediatorLiveData<Boolean> deleteResult = new MediatorLiveData<>();
   private final MediatorLiveData<Boolean> putResult = new MediatorLiveData<>();
 
@@ -52,15 +53,18 @@ public class ShopCategoryViewModel extends BaseViewModel {
 
   public void addShopCategory(Category category) {
     category.setId(null);
-    LiveData<Boolean> booleanLiveData = repository.qcPostCategory(loginStatus.staff_id(), category,gymWrapper.getParams());
-    addResult.addSource(booleanLiveData, aBoolean -> {
-      addResult.setValue(aBoolean);
+    LiveData<CategoryWrapper> booleanLiveData =
+        repository.qcPostCategory(loginStatus.staff_id(), category, gymWrapper.getParams());
+    addResult.addSource(booleanLiveData, categoryWrapper -> {
+      addResult.setValue(categoryWrapper.category);
       addResult.removeSource(booleanLiveData);
     });
   }
 
   public void updateShopCategory(Category category) {
-    LiveData<Boolean> booleanLiveData = repository.qcPutCategory(loginStatus.staff_id(), category.getId(),category,gymWrapper.getParams());
+    LiveData<Boolean> booleanLiveData =
+        repository.qcPutCategory(loginStatus.staff_id(), category.getId(), category,
+            gymWrapper.getParams());
     putResult.addSource(booleanLiveData, aBoolean -> {
       putResult.setValue(aBoolean);
       putResult.removeSource(booleanLiveData);
@@ -68,7 +72,8 @@ public class ShopCategoryViewModel extends BaseViewModel {
   }
 
   public void deleteShopCategory(String id) {
-    LiveData<Boolean> booleanLiveData = repository.qcDeleteCategory(loginStatus.staff_id(),id,gymWrapper.getParams());
+    LiveData<Boolean> booleanLiveData =
+        repository.qcDeleteCategory(loginStatus.staff_id(), id, gymWrapper.getParams());
     deleteResult.addSource(booleanLiveData, aBoolean -> {
       deleteResult.setValue(aBoolean);
       deleteResult.removeSource(booleanLiveData);

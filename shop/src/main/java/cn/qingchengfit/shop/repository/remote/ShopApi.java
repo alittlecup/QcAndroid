@@ -6,6 +6,7 @@ import cn.qingchengfit.shop.repository.response.GoodListResponse;
 import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.CategoryWrapper;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
@@ -41,7 +42,7 @@ public interface ShopApi {
   /**
    * 新增分类
    */
-  @POST("/api/staffs/{staff_id}/mall/category/") Flowable<QcDataResponse> qcPostCategory(
+  @POST("/api/staffs/{staff_id}/mall/category/") Flowable<QcDataResponse<CategoryWrapper>> qcPostCategory(
       @Path("staff_id") String staff_id, @Body Category category,@QueryMap HashMap<String, Object> params);
 
   /**

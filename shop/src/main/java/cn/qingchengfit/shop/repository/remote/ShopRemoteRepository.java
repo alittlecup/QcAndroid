@@ -6,6 +6,7 @@ import cn.qingchengfit.shop.repository.response.GoodListResponse;
 import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.CategoryWrapper;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
 import io.reactivex.Flowable;
@@ -23,7 +24,7 @@ public interface ShopRemoteRepository {
   Flowable<QcDataResponse<CategoryListResponse>> qcLoadCategories(String staff_id,
       HashMap<String, Object> map);
 
-  Flowable<QcDataResponse> qcPostCategory(String staff_id, Category category,HashMap<String, Object> params);
+  Flowable<QcDataResponse<CategoryWrapper>> qcPostCategory(String staff_id, Category category,HashMap<String, Object> params);
 
   Flowable<QcDataResponse> qcDeleteCategory(String staff_id, String category_id,HashMap<String, Object> params);
 

@@ -17,6 +17,8 @@ import cn.qingchengfit.shop.vo.Good;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by huangbaole on 2018/1/31.
@@ -46,7 +48,7 @@ import java.util.List;
           if (!mViewModel.getProduct().getSupport_card()) {
             good.removeCardPrice();
           }
-          if(goodsAdapter.getItemCount()==1&&!((GoodProductItem) item).isExpend()){
+          if (goodsAdapter.getItemCount() == 1 && !((GoodProductItem) item).isExpend()) {
             good.setName("");
           }
           goods.add(good);
@@ -67,7 +69,7 @@ import java.util.List;
   @Override protected void initToolBar() {
     mBinding.setToolbarModel(new ToolbarModel(getString(R.string.add_product)));
     super.initToolBar();
-    Toolbar toolbar=mBinding.includeToolbar.toolbar;
+    Toolbar toolbar = mBinding.includeToolbar.toolbar;
     toolbar.setNavigationOnClickListener(
         v -> ViewUtil.instanceDelDialog(getContext(), "确定要放弃添加商品么？", (dialog, which) -> {
           getActivity().onBackPressed();
@@ -80,13 +82,29 @@ import java.util.List;
       if (requestCode == TO_PRODUCT_DETAIL) {
         String detail = data.getStringExtra("detail");
         if (!TextUtils.isEmpty(detail)) {
+          if (!detail.contains("<p>")) {
+            mBinding.productDesc.setContent("图片");
+          } else {
+            mBinding.productDesc.setContent(delHtml(detail));
+          }
           mViewModel.getProduct().setDesc(detail);
-          mBinding.productDesc.setContent("已填写");
-        }else {
+        } else {
           mViewModel.getProduct().setDesc("");
           mBinding.productDesc.setContent("");
         }
       }
     }
+  }
+
+  private String delHtml(String content) {
+    String regEx_html = "<p>(.*?)</p>";
+
+    Pattern p_html = Pattern.compile(regEx_html);
+    Matcher m_html = p_html.matcher(content);
+    StringBuilder stringBuilder = new StringBuilder();
+    while (m_html.find()) {
+      stringBuilder.append(m_html.group(1));
+    }
+    return stringBuilder.toString();
   }
 }

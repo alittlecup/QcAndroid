@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -71,11 +73,11 @@ public class ShopCategoryListPage
   }
 
   private void setEmptyView() {
-    String hintString="";
-    if(!TextUtils.isEmpty(mBinding.etSearch.getText().toString().trim())){
-      hintString="未找到相关结果";
-    }else{
-      hintString="暂无分类，赶快去添加吧～";
+    String hintString = "";
+    if (!TextUtils.isEmpty(mBinding.etSearch.getText().toString().trim())) {
+      hintString = "未找到相关结果";
+    } else {
+      hintString = "暂无分类，赶快去添加吧～";
     }
     CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
     List<AbstractFlexibleItem> items = new ArrayList<>();
@@ -99,7 +101,20 @@ public class ShopCategoryListPage
       adapter.updateDataSet(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
     }
+    initRxbus();
     return mBinding;
+  }
+
+  private void initRxbus() {
+    RxRegiste(RxBus.getBus()
+        .register(ShopCategoryPage.class, String.class)
+        .subscribeOn(rx.schedulers.Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<String>() {
+          @Override public void call(String aBoolean) {
+            mViewModel.loadSource(new HashMap<>());
+          }
+        }));
   }
 
   private void initSearchProduct() {

@@ -10,6 +10,7 @@ import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.CategoryWrapper;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
@@ -49,13 +50,11 @@ import javax.inject.Singleton;
         input -> input.categories);
   }
 
-  @Override public LiveData<Boolean> qcPostCategory(String staff_id, Category category,
+  @Override public LiveData<CategoryWrapper> qcPostCategory(String staff_id, Category category,
       HashMap<String, Object> map) {
-    return toLiveData(remoteService.qcPostCategory(staff_id, category, map).map(qcDataResponse -> {
-      qcDataResponse.setData(qcDataResponse.getStatus() == 200);
-      return qcDataResponse;
-    }));
+    return toLiveData(remoteService.qcPostCategory(staff_id, category, map));
   }
+
 
   @Override public LiveData<Boolean> qcDeleteCategory(String staff_id, String category_id,
       HashMap<String, Object> map) {
@@ -128,12 +127,11 @@ import javax.inject.Singleton;
     }));
   }
 
-  @Override
-  public LiveData<Boolean> qcPutProductStatus(String staff_id, String product_id, Map<String,Object> status,
-      HashMap<String, Object> map) {
+  @Override public LiveData<Boolean> qcPutProductStatus(String staff_id, String product_id,
+      Map<String, Object> status, HashMap<String, Object> map) {
 
-    return toLiveData(remoteService.qcPutProductStatus(staff_id, product_id, status, map)
-        .map(qcDataResponse -> {
+    return toLiveData(
+        remoteService.qcPutProductStatus(staff_id, product_id, status, map).map(qcDataResponse -> {
           qcDataResponse.setData(qcDataResponse.getStatus() == 200);
           return qcDataResponse;
         }));

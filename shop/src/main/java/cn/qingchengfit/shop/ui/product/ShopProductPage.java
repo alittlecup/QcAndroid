@@ -57,7 +57,7 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
-      ShopBottomCategoryFragment shopBottomCategoryFragment = new ShopBottomCategoryFragment();
+      ShopBottomCategoryFragment shopBottomCategoryFragment = ShopBottomCategoryFragment.newInstance(mViewModel.getProduct().getCategory_id());
       shopBottomCategoryFragment.setConfimAction(data -> {
         if (data instanceof Category) {
           mViewModel.getProduct().setCategory((Category) data);

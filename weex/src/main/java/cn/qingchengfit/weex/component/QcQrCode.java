@@ -56,7 +56,8 @@ public class QcQrCode extends WXImage {
 
   private int size = 500;
 
-  @WXComponentProp(name = "size") public void setQcSize(Integer value) {
+  @WXComponentProp(name = "size") public void setQcSize(String str) {
+    int value = Integer.valueOf(str);
     ViewGroup.LayoutParams layoutParams = getHostView().getLayoutParams();
     layoutParams.width = value;
     layoutParams.height = value;

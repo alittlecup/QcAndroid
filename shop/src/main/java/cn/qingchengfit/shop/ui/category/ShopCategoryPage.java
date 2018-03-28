@@ -67,14 +67,17 @@ import rx.functions.Action1;
     mViewModel.getActionEvent().observe(this, aVoid -> {
       dismiss();
     });
-    mViewModel.getAddResult().observe(this, result);
+    mViewModel.getAddResult().observe(this, category1 -> {
+      ToastUtils.show("操作成功");
+      RxBus.getBus().post(ShopCategoryPage.class, category1.getId());
+      dismiss();
+    });
     mViewModel.getDeleteResult().observe(this, result);
     mViewModel.getPutResult().observe(this, result);
   }
 
   private Observer<Boolean> result = new Observer<Boolean>() {
     @Override public void onChanged(@Nullable Boolean aBoolean) {
-      RxBus.getBus().post(ShopCategoryPage.class, aBoolean);
       ToastUtils.show(aBoolean ? "操作成功" : "操作失败");
       dismiss();
     }
@@ -134,7 +137,7 @@ import rx.functions.Action1;
         String trim = s.toString().trim();
         if (!TextUtils.isEmpty(trim) && trim.length() > 12) {
           ToastUtils.show("分类名称不能大于12个字符");
-          mBinding.categoryName.setText(trim.substring(0,12));
+          mBinding.categoryName.setText(trim.substring(0, 12));
           mBinding.categoryName.setSelection(mBinding.categoryName.getText().length());
         }
       }
@@ -146,7 +149,6 @@ import rx.functions.Action1;
           ToastUtils.show("权重不能超过10000000");
           mBinding.categoryWeight.setText(trim.substring(0, 7));
           mBinding.categoryWeight.setSelection(mBinding.categoryWeight.getText().length());
-
         }
       }
     });

@@ -7,6 +7,7 @@ import cn.qingchengfit.shop.repository.response.GoodListResponse;
 import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.CategoryWrapper;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
 import com.google.gson.Gson;
@@ -50,7 +51,7 @@ import retrofit2.http.QueryMap;
     return shopApi.qcLoadCategories(staff_id, map);
   }
 
-  @Override public Flowable<QcDataResponse> qcPostCategory(String staff_id, Category category,
+  @Override public Flowable<QcDataResponse<CategoryWrapper>> qcPostCategory(String staff_id, Category category,
       HashMap<String, Object> params) {
     return shopApi.qcPostCategory(staff_id, category, params);
   }

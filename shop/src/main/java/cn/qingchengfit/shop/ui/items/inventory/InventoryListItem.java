@@ -52,15 +52,13 @@ public class InventoryListItem
     ViewUtil.smallCornner4dp(dataBinding.productImage, data.getImageUri());
     dataBinding.goodsContent.setText(data.getCategoryDetail());
 
-    SpannableStringBuilder spannableStringBuilder = new SpanUtils().append(data.getInventoryCount())
+    SpannableStringBuilder spannableStringBuilder = new SpanUtils()
+        .append(data.getInventoryCount())
         .setFontSize(18, true)
         .setForegroundColor(context.getColor(R.color.colorPrimary))
         .append(data.getProductUnit())
         .setFontSize(10, true)
         .setForegroundColor(context.getColor(R.color.colorPrimary))
-        .append("(总共)")
-        .setFontSize(10, true)
-        .setForegroundColor(context.getColor(R.color.text_color_gray))
         .create();
     dataBinding.inventoryCount.setText(spannableStringBuilder);
   }
