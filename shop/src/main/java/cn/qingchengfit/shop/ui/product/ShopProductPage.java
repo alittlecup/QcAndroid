@@ -30,9 +30,11 @@ import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.bigkoo.pickerview.lib.DensityUtil;
 import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.ArrayList;
@@ -57,7 +59,8 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
-      ShopBottomCategoryFragment shopBottomCategoryFragment = ShopBottomCategoryFragment.newInstance(mViewModel.getProduct().getCategory_id());
+      ShopBottomCategoryFragment shopBottomCategoryFragment =
+          ShopBottomCategoryFragment.newInstance(mViewModel.getProduct().getCategory_id());
       shopBottomCategoryFragment.setConfimAction(data -> {
         if (data instanceof Category) {
           mViewModel.getProduct().setCategory((Category) data);
@@ -183,7 +186,7 @@ import javax.inject.Inject;
     initGoodRecyclerView();
     initEditListener();
     mBinding.setViewModel(mViewModel);
-
+    mBinding.productName.getEditText().setMaxWidth(DensityUtil.dip2px(getContext(), 500));
     return mBinding;
   }
 

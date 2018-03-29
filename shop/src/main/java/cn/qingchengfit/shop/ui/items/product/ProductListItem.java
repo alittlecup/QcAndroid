@@ -1,14 +1,11 @@
 package cn.qingchengfit.shop.ui.items.product;
 
 import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductListBinding;
 import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.shop.util.SpanUtils;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -48,16 +45,17 @@ public class ProductListItem
       DataBindingViewHolder<ItemProductListBinding> holder, int position, List payloads) {
     ItemProductListBinding dataBinding = holder.getDataBinding();
     dataBinding.productName.setText(data.getProductName());
-    dataBinding.productAddDate.setText("添加时间："+DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(data.getProductAddTime())));
-    SpannableString spannableString = new SpannableString("￥" + data.getProductPrices() + "起");
-    spannableString.setSpan(new AbsoluteSizeSpan(12, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-    spannableString.setSpan(new AbsoluteSizeSpan(18, true), 1, spannableString.length() - 1,
-        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-    spannableString.setSpan(new AbsoluteSizeSpan(12, true), spannableString.length() - 1,
-        spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-    spannableString.setSpan(new ForegroundColorSpan(Color.RED), 0, spannableString.length(),
-        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-    dataBinding.productPrice.setText(spannableString);
+    dataBinding.productAddDate.setText("添加时间：" + DateUtils.Date2YYYYMMDDHHmm(
+        DateUtils.formatDateFromServer(data.getProductAddTime())));
+    SpanUtils spanUtils = new SpanUtils().append("￥")
+        .setFontSize(12, true)
+        .append(data.getProductPrices())
+        .setFontSize(18, true);
+    if (!data.isSinglePrices()) {
+      spanUtils.append("起").setFontSize(12, true);
+    }
+    dataBinding.productPrice.setText(spanUtils.create());
+    dataBinding.productPrice.setTextColor(Color.RED);
     dataBinding.productDetail.setText(dataBinding.getRoot()
         .getContext()
         .getString(R.string.product_detail_format, data.getProductSales(),

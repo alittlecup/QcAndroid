@@ -2,11 +2,13 @@ package cn.qingchengfit.shop.ui.home.inventorylist;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
@@ -28,6 +30,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -52,9 +55,22 @@ public class ShopInventoryListPage
         item.addAll(items);
         mViewModel.items.set(item);
         mBinding.allInventoryRecord.setVisibility(View.GONE);
+        mBinding.swipeRefresh.setRefreshing(false);
       }
     });
   }
+  private void initRxbus() {
+    RxRegiste(RxBus.getBus()
+        .register(SwipeRefreshLayout.class, Boolean.class)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(aBoolean -> {
+          if(!aBoolean){
+            mBinding.swipeRefresh.setRefreshing(false);
+          }
+        }));
+  }
+
 
   private void setEmptyView() {
     String hintString = "";
@@ -80,7 +96,6 @@ public class ShopInventoryListPage
     if (permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY)) {
       mViewModel.loadSource(mViewModel.getParams());
       mBinding.allInventoryRecord.setVisibility(View.GONE);
-
     } else {
       List<CommonNoDataItem> items = new ArrayList<>();
       mBinding.allInventoryRecord.setVisibility(View.VISIBLE);
@@ -88,6 +103,7 @@ public class ShopInventoryListPage
           getString(R.string.no_current_page_permission)));
       adapter.updateDataSet(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
+      mBinding.swipeRefresh.setEnabled(false);
     }
     mBinding.allInventoryRecord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
     mBinding.allInventoryRecord.getPaint().setAntiAlias(true);
@@ -96,6 +112,7 @@ public class ShopInventoryListPage
         mViewModel.getShowAllRecord().call();
       }
     });
+    initRxbus();
     return mBinding;
   }
 
@@ -106,6 +123,7 @@ public class ShopInventoryListPage
     mBinding.recyclerview.addItemDecoration(
         new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     adapter.addListener(this);
+    mBinding.swipeRefresh.setOnRefreshListener(() -> mViewModel.loadSource(mViewModel.getParams()));
   }
 
   private void initSearchProduct() {

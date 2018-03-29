@@ -340,6 +340,24 @@ public class Product
     return String.valueOf(min == Integer.MAX_VALUE ? 0 : min);
   }
 
+  @Override public boolean isSinglePrices() {
+    double prices = -1d;
+    if (goods != null && !goods.isEmpty()) {
+      for (Good good : goods) {
+        if (good.getRule() != null && !good.getRule().isEmpty()) {
+          for (Good.Rule rule : good.getRule()) {
+            Double aDouble = Double.valueOf(rule.getCost());
+            if (prices != -1d && prices != aDouble) {
+              return false;
+            }
+            prices = aDouble;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   @Override public String getProductId() {
     return id;
   }

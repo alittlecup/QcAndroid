@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.home.categorylist;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -113,6 +115,15 @@ public class ShopCategoryListPage
         .subscribe(new Action1<String>() {
           @Override public void call(String aBoolean) {
             mViewModel.loadSource(new HashMap<>());
+          }
+        }));
+    RxRegiste(RxBus.getBus()
+        .register(SwipeRefreshLayout.class, Boolean.class)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(aBoolean -> {
+          if (!aBoolean) {
+            mBinding.swipeRefresh.setRefreshing(false);
           }
         }));
   }

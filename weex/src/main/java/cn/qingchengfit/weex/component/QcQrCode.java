@@ -12,6 +12,7 @@ import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXImage;
 import com.taobao.weex.ui.component.WXVContainer;
+import com.taobao.weex.utils.WXViewUtils;
 import java.lang.ref.SoftReference;
 
 /**
@@ -59,10 +60,11 @@ public class QcQrCode extends WXImage {
   @WXComponentProp(name = "size") public void setQcSize(String str) {
     int value = Integer.valueOf(str);
     ViewGroup.LayoutParams layoutParams = getHostView().getLayoutParams();
-    layoutParams.width = value;
-    layoutParams.height = value;
+    int px = WXViewUtils.getRealPxByWidth2(value, 750);
+    layoutParams.width = px;
+    layoutParams.height = px;
     getHostView().setLayoutParams(layoutParams);
-    this.size = value;
+    this.size = px;
   }
 
   Bitmap encodeAsBitmap(String str, int width, int height) throws WriterException {

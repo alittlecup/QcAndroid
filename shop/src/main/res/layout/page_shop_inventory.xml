@@ -44,6 +44,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
+          android:ellipsize="end"
           android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),0)}"
           app:ft_color_on="@color/primary"
           app:ft_text_off="@string/all_product_inventory"

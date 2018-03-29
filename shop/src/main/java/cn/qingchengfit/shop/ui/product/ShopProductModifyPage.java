@@ -48,13 +48,13 @@ import javax.inject.Inject;
 
     mViewModel.getDeleteProductResult().observe(this, aBoolean -> {
       if (aBoolean) {
-        ToastUtils.show("删除成功");
+        ToastUtils.show(R.drawable.vd_success_tick_white, "删除成功");
         getActivity().onBackPressed();
       }
     });
     mViewModel.putProductStatus.observe(this, aBoolean -> {
       if (aBoolean) {
-        ToastUtils.show("操作成功");
+        ToastUtils.show(R.drawable.vd_success_tick_white, "操作成功");
         getActivity().onBackPressed();
       }
     });
@@ -66,7 +66,7 @@ import javax.inject.Inject;
     });
     mViewModel.putProductResult.observe(this, aBoolean -> {
       if (aBoolean) {
-        ToastUtils.show("保存成功");
+        ToastUtils.show(R.drawable.vd_success_tick_white, "保存成功");
         Toolbar toolbar = mBinding.includeToolbar.toolbar;
         toolbar.getMenu().getItem(0).setTitle("编辑");
         inUpdate = false;

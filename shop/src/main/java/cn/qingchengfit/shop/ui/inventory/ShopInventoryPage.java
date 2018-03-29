@@ -1,15 +1,19 @@
 package cn.qingchengfit.shop.ui.inventory;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
+import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
 import cn.qingchengfit.shop.ui.items.inventory.InventorySingleTextItem;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -18,6 +22,8 @@ import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -60,7 +66,29 @@ import java.util.List;
     mViewModel.loadSource(mViewModel.getParams());
     mBinding.inventoryContent.setVisibility(View.GONE);
     mViewModel.allProductClick.call();
+    initRxbus();
     return mBinding;
+  }
+
+  private void initRxbus() {
+    RxRegiste(RxBus.getBus()
+        .register(DoubleListFilterFragment.class, String.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(s -> {
+          mBinding.qftProduct.setText(s);
+          mBinding.qftProduct.setColorOff(getResources().getColor(R.color.primary));
+          mBinding.qftProduct.setTextColorRes(R.color.primary);
+        }));
+    RxRegiste(RxBus.getBus()
+        .register(FilterTimesFragment.class, String.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(s -> {
+          mBinding.qftDate.setText(s);
+          mBinding.qftDate.setColorOff(getResources().getColor(R.color.primary));
+          mBinding.qftDate.setTextColorRes(R.color.primary);
+
+
+        }));
   }
 
   private void initRecyclerView() {

@@ -12,6 +12,7 @@ public interface IProductItemData {
   String getProductAddTime();
 
   String getProductPrices();
+  boolean isSinglePrices();
 
   String getProductId();
 

@@ -63,19 +63,27 @@
           android:gravity="center"
           android:paddingBottom="10dp"
           android:paddingTop="17dp"
-          android:visibility="gone"
           android:text="@string/all_inventory_list"
           android:textColor="@color/colorPrimary"
           android:textSize="@dimen/txt_14sp"
+          android:visibility="gone"
           >
       </TextView>
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/recyclerview"
-          android:background="@color/backgroud_grey"
+      <android.support.v4.widget.SwipeRefreshLayout
+          android:id="@+id/swipe_refresh"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:items="@{viewModel.items}"
-          />
+
+          >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroud_grey"
+            app:items="@{viewModel.items}"
+            />
+      </android.support.v4.widget.SwipeRefreshLayout>
+
       <FrameLayout
           android:id="@+id/fragment_mark"
           android:layout_width="match_parent"
