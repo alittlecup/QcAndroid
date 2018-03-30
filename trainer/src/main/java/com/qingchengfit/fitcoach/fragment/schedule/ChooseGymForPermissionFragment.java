@@ -45,6 +45,7 @@ import rx.schedulers.Schedulers;
 @FragmentWithArgs public class ChooseGymForPermissionFragment extends ChooseGymDialogFragment {
     @Arg int action;
     @Arg @Nullable CoachService mCoachService;
+    @Arg @Nullable int from;
     private Subscription sp;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ import rx.schedulers.Schedulers;
             if (mCoachService == null) {
                 s = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid);
             } else {
-                RxBus.getBus().post(new EventScheduleAction(mCoachService, action));
+                RxBus.getBus().post(new EventScheduleAction(mCoachService, action,from));
                 dismiss();
                 return;
             }
@@ -92,7 +93,7 @@ import rx.schedulers.Schedulers;
                     List<CoachService> services = qcCoachServiceResponse.data.services;
                     if (services != null) {
                         if (services.size() == 1) {
-                            RxBus.getBus().post(new EventScheduleAction(services.get(0), action));
+                            RxBus.getBus().post(new EventScheduleAction(services.get(0), action,from));
                             dismiss();
                             return;
                         }
@@ -117,7 +118,7 @@ import rx.schedulers.Schedulers;
     @Override public boolean onItemClick(int position) {
         if (mAdapter.getItem(position) instanceof GymItem) {
             GymItem gymItem = (GymItem) mAdapter.getItem(position);
-            RxBus.getBus().post(new EventScheduleAction(gymItem.coachService, action));
+            RxBus.getBus().post(new EventScheduleAction(gymItem.coachService, action,from));
             dismiss();
         }
         return true;
