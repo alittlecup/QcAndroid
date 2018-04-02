@@ -61,7 +61,11 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
   }
 
   @Override public boolean equals(Object o) {
-    return batchModel.equals(o);
+    return o instanceof BatchItem && ((BatchItem) o).batchModel.equals(batchModel);
+  }
+
+  @Override public int hashCode() {
+    return super.hashCode();
   }
 
   public interface BatchItemModel {

@@ -200,6 +200,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     if (srl != null) srl.setRefreshing(false);
     mDatas.clear();
     mOutdateDatas.clear();
+    commonFlexAdapter.clear();
     boolean isOutofDate = false;
     int pos = -1;
     for (int i = 0; i < batch.size(); i++) {
