@@ -1,6 +1,8 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import android.content.Context;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventCloseApp;
 import com.baidu.android.pushservice.PushManager;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
@@ -68,8 +70,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      */
     @Override public void uncaughtException(Thread thread, Throwable ex) {
         if (!BuildConfig.DEBUG) MobclickAgent.reportError(App.AppContex, ex);
-        // TODO: 2018/2/12 关闭App
-        //RxBus.getBus().post(new RxCloseAppEvent());
+        RxBus.getBus().post(new EventCloseApp());
         PushManager.stopWork(mContext);
     }
 

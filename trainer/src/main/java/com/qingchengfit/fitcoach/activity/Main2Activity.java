@@ -300,8 +300,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     tabview.setupTabView(mIconSelect,mIconNormal);
     tabview.setPoint(1);
     tabview.setListener(pos -> {
-      if (pos == 1) {
-        tabview.clearPoint(1);
+      if (pos == 1 || pos == 2) {
+        tabview.clearPoint(pos);
       }
       showPage(pos);
     });
