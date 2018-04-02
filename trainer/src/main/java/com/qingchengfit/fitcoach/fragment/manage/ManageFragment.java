@@ -314,8 +314,7 @@ public class ManageFragment extends BaseFragment
         case R.drawable.moudule_service_group://排课
           if (CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR)
-              || CurentPermissions.newInstance()
-              .queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)) {
+             ) {
 
             routeTo("course","/batch/list/", BatchListTrainerSpanParams.builder().mType(0).build());
           } else {
@@ -324,9 +323,8 @@ public class ManageFragment extends BaseFragment
 
           break;
         case R.drawable.moudule_service_private://课程种类
-          if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMSETTING)
-              || CurentPermissions.newInstance()
-              .queryPermission(PermissionServerUtils.PRISETTING)) {
+          if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)
+              ) {
 
             routeTo("course","/batch/list/",BatchListTrainerSpanParams.builder().mType(1).build());
           } else {
