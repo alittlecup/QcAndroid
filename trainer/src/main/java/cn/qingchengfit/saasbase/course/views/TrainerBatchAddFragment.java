@@ -37,6 +37,7 @@ public class TrainerBatchAddFragment extends AddBatchFragment {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof BatchDetailCommonView) {
       batchBaseFragment.setTrainer(loginStatus.getLoginUser());
+
     }
   }
 

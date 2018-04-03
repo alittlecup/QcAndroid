@@ -160,8 +160,9 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse> qcCheckBatch(boolean isPrivate,
     ArrangeBatchBody body) {
-    body.teacher_id = null;
-    return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "private" : "group", body,
+    ArrangeBatchBody b = (ArrangeBatchBody) body.clone();
+    b.teacher_id = null;
+    return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "private" : "group", b,
       gymWrapper.getParams());
   }
 
@@ -169,8 +170,9 @@ public class CourseModel implements ICourseModel {
    * 排课
    */
   @Override public Observable<QcDataResponse> qcArrangeBatch(ArrangeBatchBody body) {
-    body.teacher_id = null;
-    return api.qcArrangeBatch(loginStatus.staff_id(), body, gymWrapper.getParams());
+    ArrangeBatchBody b = (ArrangeBatchBody) body.clone();
+    b.teacher_id = null;
+    return api.qcArrangeBatch(loginStatus.staff_id(), b, gymWrapper.getParams());
   }
 
   /**

@@ -21,6 +21,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
@@ -95,6 +96,7 @@ public class ManageFragment extends BaseFragment
 
   @Inject GymWrapper gymWrapper;
   @Inject RepoCoachServiceImpl repoCoachService;
+  @Inject LoginStatus loginStatus;
 
   private CommonFlexAdapter mAdapter;
   private Unbinder unbinder;
@@ -232,7 +234,8 @@ public class ManageFragment extends BaseFragment
     addressPhone.setText(coachService.getName());
     HashMap<String, Object> params = gymWrapper.getParams();
     showLoading();
-    RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+    if (loginStatus.isLogined()) {
+      RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -248,6 +251,7 @@ public class ManageFragment extends BaseFragment
             }
           }
         }, new NetWorkThrowable()));
+    }
   }
 
   public void updatePermission(QcResponsePermission.Data data) {
@@ -310,8 +314,7 @@ public class ManageFragment extends BaseFragment
         case R.drawable.moudule_service_group://排课
           if (CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR)
-              || CurentPermissions.newInstance()
-              .queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)) {
+             ) {
 
             routeTo("course","/batch/list/", BatchListTrainerSpanParams.builder().mType(0).build());
           } else {
@@ -320,9 +323,8 @@ public class ManageFragment extends BaseFragment
 
           break;
         case R.drawable.moudule_service_private://课程种类
-          if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMSETTING)
-              || CurentPermissions.newInstance()
-              .queryPermission(PermissionServerUtils.PRISETTING)) {
+          if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)
+              ) {
 
             routeTo("course","/batch/list/",BatchListTrainerSpanParams.builder().mType(1).build());
           } else {

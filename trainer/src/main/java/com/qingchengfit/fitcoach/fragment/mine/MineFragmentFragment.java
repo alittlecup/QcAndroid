@@ -84,7 +84,7 @@ public class MineFragmentFragment extends BaseFragment {
         toolbarTitle.setText(R.string.mine);
 
         RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> checkLogin());
-        checkLogin();
+        //checkLogin();
         return view;
     }
 
@@ -125,6 +125,7 @@ public class MineFragmentFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
+        checkLogin();
     }
 
     @Override protected void onVisible() {

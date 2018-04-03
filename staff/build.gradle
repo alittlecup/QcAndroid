@@ -1,13 +1,52 @@
 apply plugin: 'com.android.application'
-apply plugin: 'idea'
-
+//apply plugin: 'idea'
+//apply plugin: 'fastdex.app'
 def libs = rootProject.ext.libraries;
-def config = rootProject.ext.configuration;
-idea {
-  module {
-    excludeDirs.add(file('build'))
+def config = rootProject.ext.configuration
+/**
+ *  打印超过50ms的任务
+ */
+public class BuildTimeListener implements TaskExecutionListener, BuildListener {
+  private Date clock
+  private times = []
+
+  @Override
+  void beforeExecute(Task task) {
+    clock = new Date()
   }
+
+  @Override
+  void afterExecute(Task task, TaskState taskState) {
+    def ms = new Date().time-clock.time
+    times.add([ms, task.path])
+
+    //task.project.logger.warn "${task.path} spend ${ms}ms"
+  }
+
+  @Override
+  void buildFinished(BuildResult result) {
+    println "Task spend time:"
+    for (time in times) {
+      if (time[0] >= 50) {
+        printf "%7sms  %s\n", time
+      }
+    }
+  }
+  @Override
+  void buildStarted(Gradle gradle) {}
+  @Override
+  void projectsEvaluated(Gradle gradle) {}
+  @Override
+  void projectsLoaded(Gradle gradle) {}
+  @Override
+  void settingsEvaluated(Settings settings) {}
 }
+
+project.gradle.addListener(new BuildTimeListener())
+/**
+ *  打印超过50ms的任务  END
+ */
+
 
 android {
 
@@ -25,7 +64,7 @@ android {
 
   defaultConfig {
     applicationId "cn.qingchengfit.staffkit"
-    minSdkVersion 16
+    minSdkVersion 21
     targetSdkVersion 25
     versionCode config.version_code
     versionName "${config.version_name}"
@@ -74,7 +113,6 @@ android {
   flavorDimensions "qc"
   productFlavors {
     dev {
-      minSdkVersion 21
 //      applicationId "cn.qingchengfit.staffkit.internaltest"
 //      manifestPlaceholders = [APP_NAME          : "内部测试",
 //                              APP_SCHAME        : "qcstaff",
@@ -205,13 +243,17 @@ gradle.projectsEvaluated {
 }
 
 
-ext.isTask = { name -> return project.gradle.startParameter.taskNames.contains(name) }
+ext.isTask = { name ->
+  println project.gradle.startParameter.taskNames
+  return project.gradle.startParameter.taskNames.contains(name) }
 
 task buildWithAP (dependsOn: build) {}
+//task fastDebug (dependsOn: fastdex) {}
+
 
 dependencies {
-  implementation project(path: ':saasbase')
-//  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
+    implementation project(path: ':saasbase')
+//    implementation 'cn.qingchengfit.saas:sass:1.0.5'
 //  implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -251,17 +293,7 @@ dependencies {
   implementation('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.2@aar') {
     transitive = true
   }
-  //若使用annotation需要单独引用,对于tinker的其他库都无需再引用
-//  provided "com.tencent.tinker:tinker-android-anno:${libs.tinker}"
-//  compile "com.tinkerpatch.sdk:tinkerpatch-android-sdk:${libs.tinkerpatch}"
   implementation 'com.jakewharton.threetenabp:threetenabp:1.0.2'
-  //  testCompile 'junit:junit:4.12'
-  //  testCompile 'org.mockito:mockito-core:2.0.57-beta'
-  //  testCompile 'org.robolectric:robolectric:3.1'
-  //  testCompile "com.google.dagger:dagger:${libs.dagger}"
-//  debugCompile 'io.github.skyhacker2:sqliteonweb:1.0.1'
-//  productCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-//  releaseCompile 'io.github.skyhacker2:sqliteonweb-no-op:1.0.2'
   testImplementation 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'

@@ -57,6 +57,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     protected void delegatePresenter(Presenter presenter, PView pView) {
         delegate = new PresenterDelegate(presenter);
         delegate.attachView(pView);
+        delegate.onNewSps();
     }
 
     @Override public void setUserVisibleHint(boolean isVisibleToUser) {

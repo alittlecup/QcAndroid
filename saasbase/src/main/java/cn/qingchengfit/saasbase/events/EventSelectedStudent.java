@@ -43,6 +43,11 @@ public class EventSelectedStudent {
     this.students = students;
     this.src = src;
   }
+
+  public List<QcStudentBean> getStudents() {
+    return students;
+  }
+
   public String getIdFirst(){
     if (students != null && students.size()>0) {
       return students.get(0).getId();

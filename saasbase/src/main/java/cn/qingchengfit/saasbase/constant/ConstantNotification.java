@@ -1,9 +1,11 @@
 package cn.qingchengfit.saasbase.constant;
 
+import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.utils.AppUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -73,12 +75,20 @@ public class ConstantNotification {
     TYPE_FITNESS_SELLER_CHANGED, TYPE_FITNESS_WITHOUT_SELLER, TYPE_FITNESS_REMIND_CARD_BALANCE,
     TYPE_FITNESS_AFTER_CARD_ORDER_DONE,
   };
+  public static final int[] GYM_NOTIFICATION_TRAINER = {
+    TYPE_FITNESS_ORDER, TYPE_FITNESS_ORDER_CANCEL, TYPE_FITNESS_SCORE, TYPE_FITNESS_TEAM_ERROR, TYPE_FITNESS_COACH,
+    TYPE_FITNESS_ASK_PHOTO, TYPE_FITNESS_COACH_REST, TYPE_FITNESS_TRAINER_CHANGED,
+  };
+
   /*
      系统通知
    */
   public static final String SYSTEM_NOTIFICATION_STR = "system";
   public static final int[] SYSTEM_NOTIFICATION =
     { TYPE_CLOUD_MESSAGE_STAFF, TYPE_CLOUD_JOB_FAIR_CHECK, TYPE_CLOUD_JOB_FAIR_ADD_GYM };
+  public static final int[] SYSTEM_NOTIFICATION_TRAINER =
+    { TYPE_CLOUD_MESSAGE_COACH, TYPE_CLOUD_JOB_FAIR_CHECK, TYPE_CLOUD_JOB_FAIR_ADD_GYM };
+
   /*
    *学习培训
    */
@@ -88,6 +98,12 @@ public class ConstantNotification {
     TYPE_MEETING_SCHEDULE_CANCEL, TYPE_MEETING_CERTIFICATES, TYPE_MEETING_PAY_CHECK,
     TYPE_MEETING_PAY_CHECK_FAIL, TYPE_MEETING_TICKET_REFUND, TYPE_MEETING_TRADE_REFUND
   };
+
+  public static final int[] STUDY_TRAIN_NOTIFICATION_TRAINER = {
+    TYPE_MEETING_PAY, TYPE_MEETING_TICKET, TYPE_MEETING_PAY_CERTIFICATES, TYPE_MEETING_SCHEDULE, TYPE_MEETING_SCHEDULE_CANCEL,
+    TYPE_MEETING_CERTIFICATES, TYPE_MEETING_PAY_CHECK, TYPE_MEETING_PAY_CHECK_FAIL,TYPE_MEETING_TICKET_REFUND,TYPE_MEETING_TRADE_REFUND
+  };
+
   /*
    * 签到处理
    */
@@ -96,6 +112,9 @@ public class ConstantNotification {
     TYPE_FITNESS_CHECK_IN, TYPE_FITNESS_CHECK_OUT, TYPE_FITNESS_CHECK_IN_CONFIRM,
     TYPE_FITNESS_CHECK_OUT_CONFIRM
   };
+  public static final int[] CHECKIN_NOTIFICATION_TRAINER =
+    { TYPE_FITNESS_CHECK_IN, TYPE_FITNESS_CHECK_OUT, TYPE_FITNESS_CHECK_IN_CONFIRM, TYPE_FITNESS_CHECK_OUT_CONFIRM };
+
   /**
    * 赛事训练营
    */
@@ -107,21 +126,39 @@ public class ConstantNotification {
    */
   public static final String COMMENT_NOTIFICATION_STR = "comment";
   public static final int[] COMMENT_NOTIFICATION = { TYPE_CLOUD_COMMENT };
+
+
+
+
   public static final String JOB_NOTIFICATION_STR = "job";
   public static final String[] NOTISORDERS = {
     GYM_NOTIFICATION_STR, SYSTEM_NOTIFICATION_STR, STUDY_TRAIN_NOTIFICATION_STR, CHECKIN_NOTI_STR,
     COMPETITION_NOTI_STR, COMMENT_NOTIFICATION_STR
   };
+  public static final String[] NOTISORDERS_TRAINER = {
+    GYM_NOTIFICATION_STR, SYSTEM_NOTIFICATION_STR, STUDY_TRAIN_NOTIFICATION_STR, CHECKIN_NOTI_STR, COMMENT_NOTIFICATION_STR
+  };
 
-  public static String getNotiQueryJson() {
+
+  public static String getNotiQueryJson(Context context) {
     try {
+      int apptype =  AppUtils.getCurApp(context); //0 是教练App
       JSONObject jsonObject = new JSONObject();
-      jsonObject.put(GYM_NOTIFICATION_STR, getArray(GYM_NOTIFICATION));
-      jsonObject.put(SYSTEM_NOTIFICATION_STR, getArray(SYSTEM_NOTIFICATION));
-      jsonObject.put(STUDY_TRAIN_NOTIFICATION_STR, getArray(STUDY_TRAIN_NOTIFICATION));
-      jsonObject.put(CHECKIN_NOTI_STR, getArray(CHECKIN_NOTIFICATION));
-      jsonObject.put(COMPETITION_NOTI_STR, getArray(COMPETITION_NOTIFICATION));
-      jsonObject.put(COMMENT_NOTIFICATION_STR, getArray(COMMENT_NOTIFICATION));
+      if (apptype == 0){
+        jsonObject.put(GYM_NOTIFICATION_STR, getArray(GYM_NOTIFICATION_TRAINER));
+        jsonObject.put(SYSTEM_NOTIFICATION_STR, getArray(SYSTEM_NOTIFICATION_TRAINER));
+        jsonObject.put(STUDY_TRAIN_NOTIFICATION_STR, getArray(STUDY_TRAIN_NOTIFICATION_TRAINER));
+        //jsonObject.put(CHECKIN_NOTI_STR,getArray(CHECKIN_NOTIFICATION));
+        jsonObject.put(COMMENT_NOTIFICATION_STR, getArray(COMMENT_NOTIFICATION));
+
+      }else {
+        jsonObject.put(GYM_NOTIFICATION_STR, getArray(GYM_NOTIFICATION));
+        jsonObject.put(SYSTEM_NOTIFICATION_STR, getArray(SYSTEM_NOTIFICATION));
+        jsonObject.put(STUDY_TRAIN_NOTIFICATION_STR, getArray(STUDY_TRAIN_NOTIFICATION));
+        jsonObject.put(CHECKIN_NOTI_STR, getArray(CHECKIN_NOTIFICATION));
+        jsonObject.put(COMPETITION_NOTI_STR, getArray(COMPETITION_NOTIFICATION));
+        jsonObject.put(COMMENT_NOTIFICATION_STR, getArray(COMMENT_NOTIFICATION));
+      }
       return jsonObject.toString();
     } catch (Exception e) {
       return "";
@@ -172,20 +209,21 @@ public class ConstantNotification {
     }
   }
 
-  public static String getCategloreStr(String type) {
+  public static String getCategloreStr(Context context,String type) {
+    int appType = AppUtils.getCurApp(context);
     switch (type) {
       case SYSTEM_NOTIFICATION_STR:
-        return StringUtils.array2str(SYSTEM_NOTIFICATION);
+        return StringUtils.array2str(appType == 0?SYSTEM_NOTIFICATION_TRAINER: SYSTEM_NOTIFICATION);
       case STUDY_TRAIN_NOTIFICATION_STR:
-        return StringUtils.array2str(STUDY_TRAIN_NOTIFICATION);
+        return StringUtils.array2str(appType == 0?STUDY_TRAIN_NOTIFICATION_TRAINER:STUDY_TRAIN_NOTIFICATION);
       case CHECKIN_NOTI_STR:
-        return StringUtils.array2str(CHECKIN_NOTIFICATION);
+        return StringUtils.array2str(appType == 0?CHECKIN_NOTIFICATION_TRAINER:CHECKIN_NOTIFICATION);
       case COMPETITION_NOTI_STR:
         return StringUtils.array2str(COMPETITION_NOTIFICATION);
       case COMMENT_NOTIFICATION_STR:
         return StringUtils.array2str(COMMENT_NOTIFICATION);
       default:
-        return StringUtils.array2str(GYM_NOTIFICATION);
+        return StringUtils.array2str(appType == 0?GYM_NOTIFICATION_TRAINER:GYM_NOTIFICATION);
     }
   }
 }

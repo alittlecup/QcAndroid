@@ -359,9 +359,6 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
             return;
         }
         routeTo("card","/brand/cardtpl/list/",null);
-
-        //Intent toCardType = new Intent(getActivity(), CardTypeActivity.class);
-        //goActivity(toCardType);
     }
 
     /**

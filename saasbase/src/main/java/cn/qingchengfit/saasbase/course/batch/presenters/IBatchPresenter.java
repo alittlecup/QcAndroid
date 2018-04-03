@@ -10,7 +10,6 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventBatchLooperConfict;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -52,7 +51,6 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
   @Inject GymWrapper gymWrapper;
   @Inject ICourseModel courseApi;
 
-  protected Staff mTeacher;
   protected BatchCourse mCourse;
   protected ArrangeBatchBody body = new ArrangeBatchBody();
 

@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.bean.CoursePlan;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
@@ -32,16 +33,13 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import cn.qingchengfit.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -94,13 +92,11 @@ public class MyCoursePlanFragment extends BaseFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mGymAdapter = new GymsAdapter(adapterData);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        mGymAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                Intent toWeb = new Intent(getContext(), WebActivity.class);
-                //toWeb.putExtra("url",Configs.ServerIp + "/fitness/redirect/plantpl/detail/?model="+mCoachService.getModel() +"&id="+mCoachService.getId()+"&plan_id="+ adapterData.get(pos).getId());
-                toWeb.putExtra("url", adapterData.get(pos).getUrl());
-                startActivityForResult(toWeb, pos);
-            }
+        mGymAdapter.setListener((v, pos) -> {
+            Intent toWeb = new Intent(getContext(), WebActivity.class);
+            //toWeb.putExtra("url",Configs.ServerIp + "/fitness/redirect/plantpl/detail/?model="+mCoachService.getModel() +"&id="+mCoachService.getId()+"&plan_id="+ adapterData.get(pos).getId());
+            toWeb.putExtra("url", adapterData.get(pos).getUrl());
+            startActivityForResult(toWeb, pos);
         });
         recyclerview.setAdapter(mGymAdapter);
       //        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).onBackpressureBuffer().subscribeOn(Schedulers.io())
@@ -119,11 +115,7 @@ public class MyCoursePlanFragment extends BaseFragment {
         //                });
         freshData();
         refresh.setColorSchemeResources(R.color.primary);
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
-                freshData();
-            }
-        });
+        refresh.setOnRefreshListener(() -> freshData());
         return view;
     }
 
@@ -144,21 +136,19 @@ public class MyCoursePlanFragment extends BaseFragment {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcAllCoursePlanResponse>() {
-                    @Override public void call(QcAllCoursePlanResponse qcAllCoursePlanResponse) {
-                        if (ResponseConstant.checkSuccess(qcAllCoursePlanResponse)) {
-                            adapterData.clear();
-                            adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                            if (adapterData.size() == 0) {
-                                refresh.setVisibility(View.GONE);
-                                noData.setVisibility(View.VISIBLE);
-                            } else {
-                                noData.setVisibility(View.GONE);
-                                refresh.setVisibility(View.VISIBLE);
-                                mGymAdapter.notifyDataSetChanged();
-                            }
-                            refresh.setRefreshing(false);
+                .subscribe(qcAllCoursePlanResponse -> {
+                    if (ResponseConstant.checkSuccess(qcAllCoursePlanResponse)) {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        if (adapterData.size() == 0) {
+                            refresh.setVisibility(View.GONE);
+                            noData.setVisibility(View.VISIBLE);
+                        } else {
+                            noData.setVisibility(View.GONE);
+                            refresh.setVisibility(View.VISIBLE);
+                            mGymAdapter.notifyDataSetChanged();
                         }
+                        refresh.setRefreshing(false);
                     }
                 }, new NetWorkThrowable()));
         }
@@ -216,6 +206,7 @@ public class MyCoursePlanFragment extends BaseFragment {
         @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
         @BindView(R.id.qc_identify) ImageView itemIsPersonal;
         @BindView(R.id.item_gym_brand) TextView itemItemBrand;
+        @BindView(R.id.item_right) ImageView itemRight;
 
         public GymsVH(View itemView) {
             super(itemView);
@@ -264,6 +255,8 @@ public class MyCoursePlanFragment extends BaseFragment {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);
             }
             holder.itemGymHeader.setVisibility(View.GONE);
+            holder.itemRight.setVisibility(View.GONE);
+
         }
 
         @Override public int getItemCount() {

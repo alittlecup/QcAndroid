@@ -33,14 +33,12 @@ import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -103,13 +101,11 @@ import rx.functions.Action1;
     initToolbar(toolbar);
     RxTextView.afterTextChangeEvents(etSearch)
         .throttleLast(1000, TimeUnit.MILLISECONDS)
-        .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-          @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-            if (chooseStudentListFragment != null
-                && chooseStudentListFragment.isAdded()
-                && etSearch != null) {
-              chooseStudentListFragment.filter(etSearch.getText().toString());
-            }
+        .subscribe(textViewAfterTextChangeEvent -> {
+          if (chooseStudentListFragment != null
+              && chooseStudentListFragment.isAdded()
+              && etSearch != null) {
+            chooseStudentListFragment.filter(etSearch.getText().toString());
           }
         });
 

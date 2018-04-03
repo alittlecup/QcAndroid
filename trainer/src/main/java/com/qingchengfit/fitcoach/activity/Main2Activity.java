@@ -19,6 +19,7 @@ import android.widget.Toast;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.UpdateVersion;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventCloseApp;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.model.base.User;
@@ -27,6 +28,7 @@ import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -56,6 +58,7 @@ import com.qingchengfit.fitcoach.reciever.PushReciever;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.qcloud.sdk.Constant;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
@@ -65,6 +68,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import javax.inject.Inject;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -117,7 +121,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   private boolean isShowFindRed = true;
   private DiskLruCache diskLruCache;
   private TabViewNoVp tabview;
-
+  int curPageIndex = 0;//当前显示的页面
   //@BindView(R.id.order_studnet) View orderStudnet;
   //@BindView(R.id.web_position) View webPosition;
   TextView tvNotiCount;
@@ -131,7 +135,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   public void setChooseDate(Date chooseDate) {
     mChooseDate = chooseDate;
   }
-
+  MyApplication mChatApplication;
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main2);
@@ -139,6 +143,14 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     layoutFrag = findViewById(R.id.frag_main);
     tvNotiCount = findViewById(R.id.tv_noti_count);
     initRouter();
+    RxBus.getBus().register(EventCloseApp.class)
+      .onBackpressureDrop()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventCloseApp>() {
+        @Override public void onNext(EventCloseApp eventCloseApp) {
+          closeApp();
+        }
+      });
 
     new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
       .subscribe(aBoolean -> {
@@ -205,29 +217,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         }
       }
     });
-    //viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-    //  @Override
-    //  public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    //
-    //  }
-    //
-    //  @Override public void onPageSelected(int position) {
-    //    if (position != 0 && gw != null) {
-    //      gw.dismiss();
-    //      PreferenceUtils.setPrefBoolean(Main2Activity.this, "guide_3", true);
-    //    }
-    //
-    //    if (position == 2) {
-    //      tabview.setPointStatu(2, false);
-    //      isShowFindRed = false;
-    //    }
-    //  }
-    //
-    //  @Override public void onPageScrollStateChanged(int state) {
-    //
-    //  }
-    //});
-
 
     if (getIntent() != null && getIntent().getScheme() != null && getIntent().getScheme()
       .equals("qccoach")) {
@@ -256,6 +245,9 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   }
 
   private void loginIM(){
+    //聊天系统初始化
+    mChatApplication = new MyApplication(getApplication());
+
     if (loginStatus.isLogined()){
       try {
         Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
@@ -304,23 +296,27 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   }
 
   private void setupVp() {
-    //viewpager.setOffscreenPageLimit(5);
-    //viewpager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), Main2Activity.this));
-    //tabview.setViewPager(viewpager);
     //默认设置发现页面有红点
     tabview.setupTabView(mIconSelect,mIconNormal);
     tabview.setPoint(1);
     tabview.setListener(pos -> {
-      if (pos == 1) {
-        tabview.clearPoint(1);
+      if (pos == 1 || pos == 2) {
+        tabview.clearPoint(pos);
       }
       showPage(pos);
     });
     showPage(0);
-
     tabview.setPointStatu(2, isShowFindRed);
+    getSupportFragmentManager().registerFragmentLifecycleCallbacks(new android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks() {
+      @Override
+      public void onFragmentViewCreated(android.support.v4.app.FragmentManager fm, Fragment f,
+        View v, Bundle savedInstanceState) {
+        super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+        beginTranste = false;
+      }
+    },false);
   }
-
+  boolean beginTranste = false;//切换页面
   @Override public void onfinish() {
 
   }
@@ -331,12 +327,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
    *
    */
   public int getCurrrentPage() {
-    // TODO: 2018/2/12 暂时取消实现
-    //if (viewpager != null) {
-    //  return viewpager.getCurrentItem();
-    //} else {
-      return -1;
-    //}
+      return curPageIndex;
   }
 
   @Override protected void onResume() {
@@ -358,11 +349,9 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   }
 
   @Override public void onBackPressed() {
-    // TODO: 2018/2/12 如果不是第一页 先回到第一页
-    //if (viewpager != null && viewpager.getCurrentItem() > 0) {
-    //  viewpager.setCurrentItem(0);
-    //  return;
-    //}
+
+    if (getCurrrentPage() != 0)
+      tabview.setCurrentItem(0);
 
     if (!logoutDialog.isShowing()) {
       logoutDialog.show();
@@ -515,7 +504,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         JSONObject properties = new JSONObject();
         properties.put("qc_app_name", "Trainer");
         properties.put("qc_user_id", user.id);
-        properties.put("qc_user_phone", user.phone);
+        //properties.put("qc_user_phone", user.phone);
         SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
       } catch (JSONException e) {
         e.printStackTrace();
@@ -596,12 +585,34 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   };
 
 
+  //private void showPage(int position) {
+  //  Flowable.just(position)
+  //    .throttleFirst(800, TimeUnit.MILLISECONDS)
+  //    .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+  //    .subscribe(pos -> {
+  //      curPageIndex = pos;
+  //      String[] tags = getResources().getStringArray(R.array.home_tab);
+  //      FragmentTransaction ts = getSupportFragmentManager().beginTransaction();
+  //      Fragment f = fragments.get(tags[pos]);
+  //      if (f == null) {
+  //        f = generateFragment(pos);
+  //        fragments.put(tags[pos],f);
+  //      }
+  //      ts.setCustomAnimations(R.anim.anim_fade_in,R.anim.anim_fade_out);
+  //      if (f.isAdded())
+  //        ts.remove(f);
+  //      ts.replace(R.id.frag_main, f, tags[pos]);
+  //      ts.commitNowAllowingStateLoss();
+  //    },throwable -> {});
+  //
+  //}
+
   private void showPage(int pos) {
     String[] tags = getResources().getStringArray(R.array.home_tab);
     FragmentTransaction ts = getSupportFragmentManager().beginTransaction();
+    ts.setCustomAnimations(R.anim.anim_fade_in,R.anim.anim_fade_out);
     for (int i = 0; i < tags.length; i++) {
       Fragment f = getSupportFragmentManager().findFragmentByTag(tags[i]);
-
       if (i == pos) {
         if (f == null) {
           f = generateFragment(pos);
@@ -611,9 +622,11 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         if (f != null) ts.hide(f);
       }
     }
-    ts.commitNowAllowingStateLoss();
+    ts.commit();
   }
 
+
+  HashMap<String,Fragment> fragments = new HashMap<>();
   public Fragment generateFragment(int position){
     if (position == 0) {
       return new UnLoginHomeFragment();

@@ -296,28 +296,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
                 f.show(getFragmentManager(), "");
                 break;
             case R.id.btn_save:
-                //if (TextUtils.isEmpty(civName.getContent())) {
-                //    ToastUtils.show("请填写学员姓名");
-                //    return;
-                //}
-                //user.setUsername(civName.getContent());
-                //user.setAddress(civAddress.getContent());
-                //user.setRemarks(remarks);
-                //user.setRecommend_by_id(referrerBean == null ? null : referrerBean.id);
-                //user.setOrigin(sourceBean == null ? null : sourceBean.name);
-                //List<String> idList = new ArrayList<>();
-                //for (CoachBean coachBean : coaches) {
-                //    idList.add(coachBean.id);
-                //}
-                //user.setCoach_ids(idList);
-                //if (phoneNum.checkPhoneNum()) {
-                //    user.setPhone(phoneNum.getPhoneNum());
-                //    user.setArea_code(phoneNum.getDistrictInt());
-                //} else {
-                //    ToastUtils.show("请填写正确的电话");
-                //    return;
-                //}
-                //saveStudentInfo();
+
                 break;
         }
     }
@@ -448,11 +427,8 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     }
 
     @OnClick(R.id.civ_remark) public void onRemarkClick() {
-        // TODO: 2017/11/6
         routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-            new CommonInputParams().title("填写备注信息").hint(remarks).build());
-        //Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
-        //startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
+            new CommonInputParams().title("填写备注信息").hint(remarks).content(user.getRemarks()).build());
     }
 
     /**

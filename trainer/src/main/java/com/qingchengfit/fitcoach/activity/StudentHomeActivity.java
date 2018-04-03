@@ -18,6 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.BaseInfoBean;
+import cn.qingchengfit.bean.CurentPermissions;
+import cn.qingchengfit.bean.StatementBean;
+import cn.qingchengfit.bean.StudentCardBean;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
@@ -31,10 +35,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import cn.qingchengfit.bean.BaseInfoBean;
-import cn.qingchengfit.bean.CurentPermissions;
-import cn.qingchengfit.bean.StatementBean;
-import cn.qingchengfit.bean.StudentCardBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.StudentBaseInfoFragment;
 import com.qingchengfit.fitcoach.fragment.StudentBodyTestListFragment;
@@ -162,7 +162,9 @@ public class StudentHomeActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) {
             this.finish();
         } else if (item.getItemId() == R.id.action_delete) {
-            delStudent();
+            if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_DELETE)){
+                delStudent();
+            }else showAlert(R.string.permission_forbid_del);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -370,7 +372,7 @@ public class StudentHomeActivity extends BaseActivity {
         if (mStudentViewPager.getCurrentItem() == 1) {
             goGroup();
         } else {
-            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_WRITE)) {
                 showAlert(R.string.alert_permission_forbid);
                 return;
             }

@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-    api "cn.qingchengfit.widgets:qcbase:1.0.30"
+    api "cn.qingchengfit.widgets:qcbase:1.0.34"
     api "cn.qingchengfit.recruit:recruit:1.1.0"
     api "cn.qingchengfit.chat:sdk:1.1.0"
     api "cn.qingchengfit.chat:qcim:1.1.0"
@@ -96,13 +96,13 @@ dependencies {
 
 
 group 'cn.qingchengfit.saas'
-version '1.0'
+version '1.0.5'
 
 uploadArchives {
 
     repositories {
         mavenDeployer {
-            repository(url: uri('../../repo'))
+            repository(url: uri('../repo'))
             pom.artifactId = 'sass'
         }
     }

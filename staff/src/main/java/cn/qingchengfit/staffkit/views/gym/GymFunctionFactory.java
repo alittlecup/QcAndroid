@@ -299,7 +299,7 @@ public class GymFunctionFactory {
                 return;
 
             case MODULE_SERVICE_FREE:
-                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SETTING)
                     && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
                     && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
@@ -340,8 +340,6 @@ public class GymFunctionFactory {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                //Intent toCard = new Intent(fragment.getActivity(), CardActivity.class);
-                //fragment.startActivity(toCard);
                 fragment.routeTo("card","/list/home/",null);
                 return;
             case MODULE_STUDENT_BODY_TEST:

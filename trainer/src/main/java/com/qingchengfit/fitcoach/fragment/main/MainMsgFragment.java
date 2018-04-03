@@ -201,7 +201,7 @@ public class MainMsgFragment extends BaseFragment
 
   public void refresh() {
     if (loginStatus.isLogined()) {
-      presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
+      presenter.querySimpleList(ConstantNotification.getNotiQueryJson(getContext()));
       loginIM();
     } else {
       refresh.setRefreshing(false);
@@ -280,7 +280,7 @@ public class MainMsgFragment extends BaseFragment
     if (getActivity() instanceof Main2Activity) {
       ((Main2Activity) getActivity()).freshNotiCount(getUnredCount());
     }
-    presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
+    presenter.querySimpleList(ConstantNotification.getNotiQueryJson(getContext()));
   }
 
   @Override public void onLoginFailed(TLSErrInfo tlsErrInfo) {
@@ -356,7 +356,8 @@ public class MainMsgFragment extends BaseFragment
       }
       NotificationGlance recruitNoty = new NotificationGlance();
       NotificationMsg recruitMsg = new NotificationMsg();
-      recruitMsg.setDescription("点击查看简历投递和职位邀约详细消息");
+      //recruitMsg.setDescription("点击查看简历投递和职位邀约详细消息");
+      recruitMsg.setTitle("点击查看简历投递和职位邀约详细消息");
       recruitMsg.setId(0x11L);
       recruitNoty.notification = recruitMsg;
       items.add(new SystemMsgItem(ConstantNotification.JOB_NOTIFICATION_STR, recruitNoty));
@@ -398,7 +399,7 @@ public class MainMsgFragment extends BaseFragment
             getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       } else {
         presenter.clearNoti(
-            ConstantNotification.getCategloreStr(ConstantNotification.COMMENT_NOTIFICATION_STR));
+            ConstantNotification.getCategloreStr(getContext(),ConstantNotification.COMMENT_NOTIFICATION_STR));
         ContainerActivity.router("/replies", getContext());
       }
     }
@@ -416,7 +417,7 @@ public class MainMsgFragment extends BaseFragment
           PreferenceUtils.setPrefString(getContext(), loginStatus.staff_id() + "dele_noti",
               new Gson().toJson(notificationDeleted, NotificationDeleted.class));
         }
-        presenter.clearNoti(ConstantNotification.getCategloreStr(type));
+        presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),type));
         adapter.removeItem(i);
         checkNoInfo();
         if (getActivity() instanceof Main2Activity) {

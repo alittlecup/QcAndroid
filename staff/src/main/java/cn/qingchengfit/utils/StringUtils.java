@@ -121,18 +121,18 @@ public class StringUtils {
 
             if (hasX) {
                 float f = fo;
-                if (f / 10000f >= 1) {
-                    return String.format(Locale.CHINA, "%.1fW", f / 10000);
-                } else {
+                //if (f / 10000f >= 1) {
+                //    return String.format(Locale.CHINA, "%.1fW", f / 10000);
+                //} else {
                     return String.format(Locale.CHINA, "%.2f", f);
-                }
+                //}
             } else {
                 Integer i = (int) fo;
-                if (i / 10000 > 0) {
-                    return String.format(Locale.CHINA, "%.1fW", ((float) i / 10000f));
-                } else {
+                //if (i / 10000 > 0) {
+                //    return String.format(Locale.CHINA, "%.1fW", ((float) i / 10000f));
+                //} else {
                     return String.format(Locale.CHINA, "%d", i);
-                }
+                //}
             }
         } catch (Exception e) {
 

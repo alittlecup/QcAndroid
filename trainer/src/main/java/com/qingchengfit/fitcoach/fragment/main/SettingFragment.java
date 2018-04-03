@@ -38,7 +38,6 @@ import javax.inject.Inject;
 public class SettingFragment extends BaseSettingFragment {
 
     @BindView(R.id.settting_modifyinfo) RelativeLayout setttingModifyinfo;
-    @BindView(R.id.setting_modifypw) RelativeLayout settingModifypw;
     @BindView(R.id.setting_advice) RelativeLayout settingAdvice;
     @BindView(R.id.setting_aboutus) RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
@@ -76,13 +75,10 @@ public class SettingFragment extends BaseSettingFragment {
     }
 
     @OnClick({
-        R.id.setting_aboutus, R.id.setting_advice, R.id.setting_modifypw, R.id.settting_modifyinfo, R.id.setting_comfirm,
-        R.id.setting_workexpe, R.id.setting_logout, R.id.setting_modifyphone, R.id.setting_calsync
+        R.id.setting_aboutus, R.id.setting_advice, R.id.settting_modifyinfo, R.id.setting_comfirm,
+        R.id.setting_workexpe, R.id.setting_logout,  R.id.setting_calsync
     }) public void onClickUs(View view) {
         switch (view.getId()) {
-            case R.id.setting_modifypw:
-                //fragmentCallBack.onFragmentChange(ModifyPwFragment.newInstance("", ""));
-                break;
             case R.id.setting_advice:
                 fragmentCallBack.onFragmentChange(new AdviceFragment());
                 break;
@@ -90,9 +86,6 @@ public class SettingFragment extends BaseSettingFragment {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
                 toWeb.putExtra("url", Configs.Server + "/aboutus/?oem=" + getString(R.string.oem_tag));
                 startActivity(toWeb);
-                break;
-            case R.id.setting_modifyphone:
-                //fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
             case R.id.setting_calsync:
                 fragmentCallBack.onFragmentChange(CalSyncFragment.newInstance("", ""));

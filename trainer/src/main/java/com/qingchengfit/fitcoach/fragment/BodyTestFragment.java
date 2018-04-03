@@ -126,7 +126,7 @@ public class BodyTestFragment extends Fragment {
             }
         });
         toolbar.setTitle("体测数据");
-        if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_CHANGE)) {
+        if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_WRITE)) {
             toolbar.inflateMenu(R.menu.menu_text_edit);
         }
 

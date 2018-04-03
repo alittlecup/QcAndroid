@@ -49,6 +49,9 @@ public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
     }
 
     @Override public boolean equals(Object o) {
+        if (o instanceof ImageItem){
+            return ((ImageItem) o).getId().equalsIgnoreCase(id);
+        }
         return false;
     }
 

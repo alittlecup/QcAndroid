@@ -110,7 +110,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                         datas.clear();
                     }
                     datas.add(new ImageItem(qcResponeSingleImageWall.data.photo.photo, qcResponeSingleImageWall.data.photo.id));
-                    commonFlexAdapter.notifyDataSetChanged();
+                    commonFlexAdapter.updateDataSet(datas);
                     ToastUtils.show("上传成功");
                 } else {
                     ToastUtils.show("上传失败");
@@ -139,7 +139,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                             qcResponeSingleImageWall.data.photos.get(i).id));
                     }
                     if (datas.size() == 0) datas.add(new CommonNoDataItem(R.drawable.img_no_imgs, "暂无照片"));
-                    commonFlexAdapter.notifyDataSetChanged();
+                    commonFlexAdapter.updateDataSet(datas);
                 }
             }, throwable -> {
                 fragmentCallBack.hideLoading();
@@ -157,7 +157,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
             del.setVisibility(View.GONE);
             btnAdd.setVisibility(View.VISIBLE);
         }
-        commonFlexAdapter.notifyDataSetChanged();
+        commonFlexAdapter.updateDataSet(datas);
     }
 
     @OnClick(R.id.btn_add) void uploadImages() {

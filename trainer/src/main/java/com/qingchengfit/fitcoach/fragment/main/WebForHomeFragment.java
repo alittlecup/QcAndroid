@@ -54,6 +54,7 @@ public class WebForHomeFragment extends WebFragment {
         return fragment;
     }
 
+
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -134,5 +135,6 @@ public class WebForHomeFragment extends WebFragment {
      * 复写以屏蔽 web端对actionbar的控制
      */
     @Override public void setAction(ToolbarAction toolStr) {
+
     }
 }

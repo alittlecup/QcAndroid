@@ -175,10 +175,20 @@ import rx.android.schedulers.AndroidSchedulers;
    */
   public void onCivCourseTimeClicked() {
     //根据团课私教选择
-    if (isPrivate) {
-      if (timePeriodChooser == null) {
+      if (timeDialogWindow == null) {
+        timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS);
+        timeDialogWindow.setOnTimeSelectListener(date -> {
+          civCourseTime.setContent(DateUtils.Date2HHmm(date));
+        });
       }
-    }
+      Date d = null;
+      try {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
+        d = formatter.parse(civCourseTime.getContent());
+      }catch (Exception e){
+        d = new Date();
+      }
+      timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
 
   /**
@@ -245,7 +255,7 @@ import rx.android.schedulers.AndroidSchedulers;
   private void inflateBatchInfo(BatchDetail batchDetail) {
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
-    batchBaseFragment.openPayOnline(!batchDetail.is_free);
+    batchBaseFragment.openPay(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule,
       (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
@@ -280,12 +290,10 @@ import rx.android.schedulers.AndroidSchedulers;
   public void chooseOpenTime() {
     if (chooseOpenTimeDialog == null) {
       chooseOpenTimeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.ALL);
-      chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
-        @Override public void onTimeSelect(Date date) {
-          civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
-          presenter.setOpenRuleType(2);
-          presenter.setOpenRuleTime(DateUtils.Date2YYYYMMDDHHmmss(date), null);
-        }
+      chooseOpenTimeDialog.setOnTimeSelectListener(date -> {
+        civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+        presenter.setOpenRuleType(2);
+        presenter.setOpenRuleTime(DateUtils.Date2YYYYMMDDHHmmss(date), null);
       });
     }
     chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date()) - 1,

@@ -193,7 +193,7 @@ public class NotificationFragment extends BaseSettingFragment {
         toolbar.inflateMenu(R.menu.menu_clear_noti);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                RxRegiste(QcCloudClient.getApi().postApi.qcClearTypeNoti(new ClearNotiBody(ConstantNotification.getCategloreStr(type)))
+                RxRegiste(QcCloudClient.getApi().postApi.qcClearTypeNoti(new ClearNotiBody(ConstantNotification.getCategloreStr(getContext(),type)))
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -233,7 +233,7 @@ public class NotificationFragment extends BaseSettingFragment {
     public synchronized void onRefesh() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", curpage + "");
-        params.put("type__in", ConstantNotification.getCategloreStr(type));
+        params.put("type__in", ConstantNotification.getCategloreStr(getContext(),type));
         QcCloudClient.getApi().getApi.qcGetNotification(params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

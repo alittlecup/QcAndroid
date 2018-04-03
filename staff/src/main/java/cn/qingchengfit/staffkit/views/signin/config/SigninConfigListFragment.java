@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -94,14 +93,12 @@ public class SigninConfigListFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(zqPresenter, this);
     initToolbar(toolbar);
-    swOpen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (!isAutoOpen) presenter.putModuleConfigs(isChecked);
-        layoutSigninScreen.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-        layoutSigninType.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-        layoutSigninWardrobe.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-        isAutoOpen = false;
-      }
+    swOpen.setOnCheckedChangeListener((buttonView, isChecked) -> {
+      if (!isAutoOpen) presenter.putModuleConfigs(isChecked);
+      layoutSigninScreen.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+      layoutSigninType.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+      layoutSigninWardrobe.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+      isAutoOpen = false;
     });
     swOpen.getViewTreeObserver()
         .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -111,6 +108,7 @@ public class SigninConfigListFragment extends BaseFragment
             zqPresenter.getAccess();
           }
         });
+    swOpen.setEnabled(permissionModel.check(PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE));
 
     btnHowToUse.setCompoundDrawablesWithIntrinsicBounds(
         ContextCompat.getDrawable(getContext(), R.drawable.ic_vector_info_grey), null, null, null);

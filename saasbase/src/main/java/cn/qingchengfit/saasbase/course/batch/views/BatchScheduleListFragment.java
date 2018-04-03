@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -191,14 +192,19 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     srl.setRefreshing(false);
     try {
       List<IFlexible> datas = new ArrayList<>();
-      String curDay = "";
-      for (BatchSchedule batchSchedule : list) {
-        if (!curDay.equalsIgnoreCase(DateUtils.getYYMMfromServer(batchSchedule.start))){
-          curDay = DateUtils.getYYMMfromServer(batchSchedule.start);
-          datas.add(new StickerDateItem(curDay+"课程"));
+      if (list.size() == 0){
+        datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe,"暂无排期"));
+      }else {
+        String curDay = "";
+        for (BatchSchedule batchSchedule : list) {
+          if (!curDay.equalsIgnoreCase(DateUtils.getYYMMfromServer(batchSchedule.start))) {
+            curDay = DateUtils.getYYMMfromServer(batchSchedule.start);
+            datas.add(new StickerDateItem(curDay + "课程"));
+          }
+          datas.add(new BatchScheduleItem(batchSchedule, presenter.isPrivate()));
         }
-        datas.add(new BatchScheduleItem(batchSchedule,presenter.isPrivate()));
       }
+      adapter.clear();
       adapter.updateDataSet(datas ,true);
     }catch (Exception e){
       LogUtil.e(e.getMessage());

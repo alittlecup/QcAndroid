@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.event;
 
+import android.support.annotation.IntRange;
 import cn.qingchengfit.model.base.CoachService;
 
 /**
@@ -26,9 +27,11 @@ import cn.qingchengfit.model.base.CoachService;
 public class EventScheduleAction {
     public CoachService mCoachService;
     public int action;
-
-    public EventScheduleAction(CoachService coachService, int action) {
+    @IntRange(from = 0,to = 1)
+    public int from = 0; //0 是日视图，1是week
+       public EventScheduleAction(CoachService coachService, int action ,int from) {
         mCoachService = coachService;
         this.action = action;
+        this.from = from;
     }
 }

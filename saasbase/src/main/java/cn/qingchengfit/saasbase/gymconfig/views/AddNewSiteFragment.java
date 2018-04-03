@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -80,6 +81,11 @@ public class AddNewSiteFragment extends BaseDialogFragment {
         name.addTextWatcher(textChange);
         count.addTextWatcher(textChange);
         return view;
+    }
+
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
     @OnClick(R2.id.usage) public void onUseage() {

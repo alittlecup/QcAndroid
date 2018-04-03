@@ -143,8 +143,8 @@ public class BatchDetailCommonView extends BaseFragment {
       .filter(eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(eventCourse.getSrc()))
       .subscribe(new BusSubscribe<EventCourse>() {
         @Override public void onNext(EventCourse course) {
-          setCourse(course.getCourse());
           BatchDetailCommonView.this.course = course.getCourse();
+          setCourse(course.getCourse());
         }
       });
   }

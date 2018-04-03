@@ -29,7 +29,7 @@
   <string name="change_su">变更超级管理员</string>
   <string name="next_step">下一步</string>
   <string name="send_msg_to_sb_hint">向%s发送验证码</string>
-  <string name="login_resend_msg">%d秒后重新发送</string>
+  <string name="login_resend_msg" formatted="false">%d秒后重新发送</string>
   <string name="alert_remove_su">变更成功后，%s将自动从工作人员中移除，如有需要请重新添加</string>
   <string formatted="false" name="alert_change_su">确定将超级管理员身份从%s(%s)变更为%s(%s)？</string>
   <string name="common_cancel">取消</string>

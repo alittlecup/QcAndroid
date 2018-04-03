@@ -86,12 +86,12 @@ android {
   productFlavors {
     dev {
       minSdkVersion 21
-      applicationId "com.qingchengfit.fitcoach"
+      applicationId "com.qingchengfit.fitcoach.debug"
       manifestPlaceholders = [APP_NAME            : "内部测试"
                               , APP_SCHAME        : "qccoach"
                               , bdpush_authorities: "com.qingchengfit.fitcoach.debug.bdpush"
-                              , APP_PACKAGE       : "com.qingchengfit.fitcoach"
-                              , file_provider     : "com.qingchengfit.fitcoach.provider"
+                              , APP_PACKAGE       : "com.qingchengfit.fitcoach.debug"
+                              , file_provider     : "com.qingchengfit.fitcoach.debug.provider"
 
       ]
       ndk {
@@ -144,6 +144,25 @@ android {
   }
 }
 
+//自动加固
+afterEvaluate {
+  android.applicationVariants.all { variant ->
+    variant.assemble.doLast {
+      if (variant.buildType.name.contains('release')) {
+        variant.outputs.all {
+          output ->
+            def apkpath = output.outputFile as File
+            exec {
+              ignoreExitValue true
+              def rootFile = new File("output")
+              commandLine "sh", rootFile.absolutePath+"/../reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+            }
+        }
+
+      }
+    }
+  }
+}
 
 dependencies {
   implementation project(path: ':saasbase')

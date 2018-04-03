@@ -92,7 +92,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
   @BindView(R2.id.scroll_root) NestedScrollView scrollRoot;
   String[] arrayOpenTime;
-
+  boolean loadTemplate = false;
   @Inject AddBatchPresenter presenter;
 
   /**
@@ -436,7 +436,7 @@ import rx.android.schedulers.AndroidSchedulers;
    */
   @OnClick(R2.id.tv_clear_auto_batch) public void clearBatch() {
     commonFlexAdapter.clear();
-    tvBatchLoopHint.setText(presenter.isPrivate()?"":"课程周期");
+    tvBatchLoopHint.setText(presenter.isPrivate()?"课程周期":"课程周期");
     tvClearAutoBatch.setVisibility(View.GONE);
   }
 
@@ -478,8 +478,11 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   @Override public void onBatchTemple() {
-    if (batchBaseFragment != null && batchBaseFragment.isAdded() && batchBaseFragment.getRules().size() ==0 && commonFlexAdapter.getItemCount() ==0)
-      presenter.getBatchTemplete(presenter.isPrivate(),batchBaseFragment.getTrainerId(),batchBaseFragment.getCourseId());
+    if (!loadTemplate && batchBaseFragment != null && batchBaseFragment.isAdded() && batchBaseFragment.getRules().size() ==0 && commonFlexAdapter.getItemCount() ==0) {
+      presenter.getBatchTemplete(presenter.isPrivate(), batchBaseFragment.getTrainerId(),
+        batchBaseFragment.getCourseId());
+      loadTemplate = true;
+    }
   }
 
 }
