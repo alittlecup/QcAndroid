@@ -119,9 +119,9 @@
     <orderEntry type="library" name="com.android.support:support-core-utils-27.0.0" level="project" />
     <orderEntry type="library" name="com.github.akarnokd:rxjava2-interop:0.11.5@jar" level="project" />
     <orderEntry type="library" name="io.reactivex:rxandroid-1.2.1" level="project" />
-    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.33.2" level="project" />
     <orderEntry type="library" name="com.google.android:flexbox-0.3.0-alpha3" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:reactivestreams-1.0.0" level="project" />
+    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.35" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.1.9@jar" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:runtime-1.0.3" level="project" />
     <orderEntry type="library" name="me.gujun.android.taggroup:library-1.4" level="project" />
