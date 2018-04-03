@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,14 +17,10 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopProductDetailBinding;
 import cn.qingchengfit.shop.util.ViewUtil;
-import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.RichTxtFragment;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
-import org.w3c.dom.Text;
 
 /**
  * Created by huangbaole on 2018/3/15.
@@ -55,7 +50,7 @@ import org.w3c.dom.Text;
       Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RichTxtFragment) {
-      richTxtFragment.initContent(content, "请输入商品描述");
+      richTxtFragment.initContent(content, getString(R.string.input_product_desc));
     }
   }
 
@@ -91,14 +86,14 @@ import org.w3c.dom.Text;
   }
 
   private void initToolbar() {
-    mBinding.setToolbarModel(new ToolbarModel("商品描述详情"));
+    mBinding.setToolbarModel(new ToolbarModel(getString(R.string.product_desc_detail)));
     Toolbar toolbar = mBinding.includeToolbar.toolbar;
     initToolbar(toolbar);
     toolbar.setNavigationOnClickListener(v -> {
       if (!TextUtils.isEmpty(content) && TextUtils.isEmpty(richTxtFragment.getContent())) {
-        ViewUtil.instanceDelDialog(getContext(), "确定清空当前内容", (dialog, which) ->sendBack(),(dialog,which)->getActivity().onBackPressed()).show();
+        ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_clear_cur_content), (dialog, which) ->sendBack(),(dialog,which)->getActivity().onBackPressed()).show();
       } else {
-        ViewUtil.instanceDelDialog(getContext(), "确定放弃所做修改",
+        ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_modify),
             (dialog, which) -> getActivity().onBackPressed()).show();
       }
     });

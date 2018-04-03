@@ -126,6 +126,7 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
                 if (curAddCategoryId.equals(item.getData().getId())) {
                   adapter.addSelection(i);
                   adapter.notifyItemChanged(i);
+                  mBinding.confirm.setEnabled(true);
                 }
               }
             }

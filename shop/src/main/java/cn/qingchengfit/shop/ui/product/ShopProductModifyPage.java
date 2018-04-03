@@ -17,9 +17,12 @@ import cn.qingchengfit.shop.ui.product.productdetail.ShopProductModifyDetailPage
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
@@ -125,6 +128,8 @@ import javax.inject.Inject;
     }, 50);
   }
 
+  long startTime = 0;
+
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
@@ -133,7 +138,19 @@ import javax.inject.Inject;
     mBinding.framelayoutClick.setVisibility(View.VISIBLE);
     AppUtils.hideKeyboard(getActivity());
     initBottom();
+    startTime = System.currentTimeMillis() / 1000;
+    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_DETAIL_VISIT).commit(getContext());
     return view;
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    if (startTime > 0) {
+      SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_DETAIL_LEAVE)
+          .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
+              System.currentTimeMillis() / 1000 - startTime)
+          .commit(getContext());
+    }
   }
 
   private void initBottom() {
@@ -176,22 +193,39 @@ import javax.inject.Inject;
         inUpdate = true;
         setCurPageStatus(inUpdate);
       } else if (item.getTitle().equals("完成")) {
+        SensorsUtils.track(ShopSensorsConstants.SHOP_EDIT_COMMODITY_CONFIRM_BTN_CLICK)
+            .commit(getContext());
         putProduct();
       }
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
     super.initToolBar();
-    Toolbar toolbar = mBinding.includeToolbar.toolbar;
-    toolbar.setNavigationOnClickListener(v -> {
-      if (inUpdate) {
-        ViewUtil.instanceDelDialog(getContext(), "确定要放弃当前修改么？", (dialog, which) -> {
-          getActivity().onBackPressed();
-        }).show();
-      } else {
-        getActivity().onBackPressed();
-      }
-    });
+
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).setBackPress(this);
+    }
+  }
+
+  private boolean onback = true;
+
+  @Override public boolean onFragmentBackPress() {
+    if (!onback) {
+      return onback;
+    }
+    if (inUpdate) {
+      ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_modify),
+          (dialog, which) -> {
+            sensorsTrack(ShopSensorsConstants.SHOP_EDIT_COMMODITY_CANCEL_BTN_CLICK);
+            onback = false;
+            if (getActivity() instanceof BaseActivity) {
+              ((BaseActivity) getActivity()).setBackPress(null);
+            }
+            getActivity().onBackPressed();
+          }).show();
+      return onback;
+    }
+    return super.onFragmentBackPress();
   }
 
   private void setCurPageStatus(boolean inUpdate) {

@@ -16,10 +16,13 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
+import cn.qingchengfit.shop.listener.ShopHomePageTabStayListener;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
@@ -40,7 +43,8 @@ import rx.schedulers.Schedulers;
 
 public class ShopProductsListPage
     extends ShopBaseFragment<PageProductListBinding, ShopProductsViewModel>
-    implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
+    implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener,
+    ShopHomePageTabStayListener {
   CommonFlexAdapter adapter;
   @Inject IPermissionModel permissionModel;
 
@@ -80,6 +84,18 @@ public class ShopProductsListPage
       Bundle savedInstanceState) {
     mBinding = PageProductListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
+
+    if (getArguments() != null) {
+      int status = getArguments().getInt("status");
+      this.status = status == 1;
+      mViewModel.setStatus(status);
+      if (this.status) {
+        onVisit();
+      }
+    } else {
+      LogUtil.e("TAG", "loadData: cant find this current page status");
+    }
+
     initRecyclerView();
     if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST)) {
       loadData();
@@ -126,9 +142,10 @@ public class ShopProductsListPage
   private void setEmptyView() {
     String hintString = "";
     if (mViewModel.getParams().containsKey("q")) {
-      hintString = "未找到相关结果";
+      hintString = getString(R.string.not_found_match_result);
     } else {
-      hintString = status ? "暂无出售中商品，赶快去添加吧～" : "暂无已下架商品，赶快去添加吧～";
+      hintString =
+          getString(status ? R.string.product_empty_text : R.string.product_empty_offsale_text);
     }
     CommonNoDataItem item = new CommonNoDataItem(R.drawable.vd_img_empty_universe, hintString);
     List<AbstractFlexibleItem> items = new ArrayList<>();
@@ -139,13 +156,7 @@ public class ShopProductsListPage
   private boolean status;
 
   private void loadData() {
-    if (getArguments() != null) {
-      int status = getArguments().getInt("status");
-      this.status = status == 1;
-      mViewModel.setStatus(status);
-    } else {
-      LogUtil.e("TAG", "loadData: cant find this current page status");
-    }
+
     mViewModel.loadSource(mViewModel.getParams());
   }
 
@@ -181,6 +192,22 @@ public class ShopProductsListPage
     Integer page = (Integer) mViewModel.getParams().get("page");
     mViewModel.getParams().put("page", page + 1);
     mViewModel.loadSource(mViewModel.getParams());
+  }
+
+  long startTime = 0;
+
+  @Override public void onVisit() {
+    startTime = System.currentTimeMillis() / 1000;
+    SensorsUtils.track(status ? ShopSensorsConstants.SHOP_ACTIVED_COMMODITY_LIST_VISIT
+        : ShopSensorsConstants.SHOP_INACTIVED_COMMODITY_LIST_VISIT).commit(getContext());
+  }
+
+  @Override public void onLeave() {
+    SensorsUtils.track(status ? ShopSensorsConstants.SHOP_ACTIVED_COMMODITY_LIST_LEAVE
+        : ShopSensorsConstants.SHOP_INACTIVED_COMMODITY_LIST_LEAVE)
+        .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
+            System.currentTimeMillis() / 1000 - startTime)
+        .commit(getContext());
   }
 }
 

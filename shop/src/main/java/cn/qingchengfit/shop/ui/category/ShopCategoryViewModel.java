@@ -2,8 +2,10 @@ package cn.qingchengfit.shop.ui.category;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
@@ -42,6 +44,8 @@ public class ShopCategoryViewModel extends BaseViewModel {
     return putResult;
   }
 
+  public final MutableLiveData<String> theSameResponseResult = new MutableLiveData<>();
+
   private final MediatorLiveData<Category> addResult = new MediatorLiveData<>();
   private final MediatorLiveData<Boolean> deleteResult = new MediatorLiveData<>();
   private final MediatorLiveData<Boolean> putResult = new MediatorLiveData<>();
@@ -53,10 +57,16 @@ public class ShopCategoryViewModel extends BaseViewModel {
 
   public void addShopCategory(Category category) {
     category.setId(null);
-    LiveData<CategoryWrapper> booleanLiveData =
+    LiveData<QcDataResponse> booleanLiveData =
         repository.qcPostCategory(loginStatus.staff_id(), category, gymWrapper.getParams());
-    addResult.addSource(booleanLiveData, categoryWrapper -> {
-      addResult.setValue(categoryWrapper.category);
+    addResult.addSource(booleanLiveData, response -> {
+      if (response.getData() != null
+          && response.getStatus() == 200
+          && response.getData() instanceof CategoryWrapper) {
+        addResult.setValue(((CategoryWrapper) response.getData()).category);
+      } else if (response.getStatus() == 500) {
+        theSameResponseResult.setValue(response.getMsg());
+      }
       addResult.removeSource(booleanLiveData);
     });
   }

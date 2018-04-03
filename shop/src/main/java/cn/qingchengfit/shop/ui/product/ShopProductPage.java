@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,9 @@ import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -84,14 +85,14 @@ import javax.inject.Inject;
       multiChoosePicFragment.show(getChildFragmentManager(), "");
     });
     mViewModel.deliverChannelEvent.observe(this, aVoid -> {
-      Uri uri = Uri.parse("qcstaff://shop/product/deliver");
+      Uri uri = Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://shop/product/deliver");
 
       toOtherFragmentForBack(uri, new ProductDeliverPageParams().delivers(
           (ArrayList<Integer>) mViewModel.getProduct().getDelivery_types()).build(),
           TO_DELIVER_CODE);
     });
     mViewModel.chooseCardEvent.observe(this, aVoid -> {
-      Uri uri = Uri.parse("qcstaff://shop/product/paycard");
+      Uri uri = Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://shop/product/paycard");
       List<Integer> card_tpl_ids = mViewModel.getProduct().getCard_tpl_ids();
       if (card_tpl_ids != null && !card_tpl_ids.isEmpty()) {
         toOtherFragmentForBack(uri,
@@ -113,27 +114,27 @@ import javax.inject.Inject;
 
   protected boolean checkProductInfo(Product product) {
     if (product.getImages() == null || product.getImages().isEmpty()) {
-      ToastUtils.show("请添加商品图片");
+      ToastUtils.show(getString(R.string.add_product_image));
       return false;
     }
     if (TextUtils.isEmpty(product.getName())) {
-      ToastUtils.show("请输入商品名称");
+      ToastUtils.show(getString(R.string.input_product_name));
       return false;
     }
     if (TextUtils.isEmpty(product.getUnit())) {
-      ToastUtils.show("请输入商品单位");
+      ToastUtils.show(getString(R.string.input_product_unit));
       return false;
     }
     if (product.getSupport_card()) {
       if (product.getCard_tpl_ids() == null || product.getCard_tpl_ids().isEmpty()) {
-        ToastUtils.show("请选择支持的会员卡种类");
+        ToastUtils.show(getString(R.string.choose_product_support_card));
         return false;
       }
     }
     if (product.getGoods() != null && !product.getGoods().isEmpty()) {
       for (Good good : product.getGoods()) {
         if (TextUtils.isEmpty(good.getRmbPrices())) {
-          ToastUtils.show("请输入商品价格");
+          ToastUtils.show(getString(R.string.input_product_price));
           return false;
         }
 
@@ -142,28 +143,28 @@ import javax.inject.Inject;
             if (goodsAdapter.getItem(0) instanceof GoodProductItem) {
               boolean isExpend = ((GoodProductItem) goodsAdapter.getItem(0)).isExpend();
               if (isExpend) {
-                ToastUtils.show("请输入规格名称");
+                ToastUtils.show(getString(R.string.input_good_name));
                 return false;
               }
             }
           } else {
-            ToastUtils.show("请输入规格名称");
+            ToastUtils.show(getString(R.string.input_good_name));
             return false;
           }
         }
 
         if (good.getInventory() == null) {
-          ToastUtils.show("请输入规格库存");
+          ToastUtils.show(getString(R.string.input_product_good_inventory));
           return false;
         }
         if (product.getSupport_card() && TextUtils.isEmpty(good.getCardPrices())) {
-          ToastUtils.show("请输入会员卡支付价格");
+          ToastUtils.show(getString(R.string.input_product_card_prices));
           return false;
         }
       }
     }
     if (product.getDelivery_types() == null || product.getDelivery_types().isEmpty()) {
-      ToastUtils.show("请选择交货方式");
+      ToastUtils.show(getString(R.string.choose_product_deliver));
       return false;
     }
     return true;
@@ -199,14 +200,14 @@ import javax.inject.Inject;
         try {
           int weight = Integer.valueOf(s);
           if (weight > 10000000) {
-            ToastUtils.show("权重不能超过10000000");
+            ToastUtils.show(getString(R.string.weight_cant_over));
             mBinding.productWeight.setContent(s.substring(0, s.length() - 1));
             return;
           } else {
             mViewModel.getProduct().setPriority(weight);
           }
         } catch (NumberFormatException e) {
-          ToastUtils.show("请输入正确数字");
+          ToastUtils.show(getString(R.string.input_right_number));
         }
       }
     });
@@ -215,7 +216,7 @@ import javax.inject.Inject;
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();
         if (trim.length() > 20) {
-          ToastUtils.show("商品名称不能大于20个字符");
+          ToastUtils.show(getString(R.string.product_name_over_20));
           mBinding.productName.setContent(trim.substring(0, 20));
         }
       }
@@ -224,7 +225,7 @@ import javax.inject.Inject;
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();
         if (trim.length() > 10) {
-          ToastUtils.show("商品单位不能大于个10字符");
+          ToastUtils.show(getString(R.string.product_unit_over_10));
           mBinding.productUnit.setContent(trim.substring(0, 10));
         }
       }
@@ -303,6 +304,111 @@ import javax.inject.Inject;
 
   protected void initToolBar() {
     initToolbar(mBinding.includeToolbar.toolbar);
+  }
+
+  protected void sensorsTrack(String trackType) {
+    SensorsUtils.TrackBuilder trackBuilder = SensorsUtils.track(trackType)
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_HAS_IMAGE,
+            mViewModel.getProduct().getImages() != null && !mViewModel.getProduct()
+                .getImages()
+                .isEmpty())
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMDITY_NAME,
+            mViewModel.getProduct().getName())
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMDITY_UNIT,
+            mViewModel.getProduct().getUnit())
+
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMODITY_PRIORITY,
+            mViewModel.getProduct().getPriority())
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_CARD_PAY_SUPPORTED,
+            mViewModel.getProduct().getSupport_card())
+
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_IN_HOUSE_PURCHASE_ENABLED,
+            false)
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_SELF_PURCHASE_ENABLED, false)
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_DELIVERY_ENABLED, false)
+
+        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_HAS_DESC,
+            TextUtils.isEmpty(mViewModel.getProduct().getDesc()));
+
+    if (mViewModel.getProduct().getSupport_card()) {
+      if (mViewModel.getProduct().getCard_tpl_ids() != null) {
+        trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_SUPPORT_CARDS_COUNT,
+            mViewModel.getProduct().getCard_tpl_ids().size());
+      }
+    }
+    if (mViewModel.getProduct().getImages() != null) {
+      trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IMAGE_COUNT,
+          mViewModel.getProduct().getImages().size());
+    }
+    if (mViewModel.getProduct().getCategory() != null) {
+      trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMODITY_CATEGORY,
+          mViewModel.getProduct().getCategory().getName());
+    }
+
+    List<Good> goods = new ArrayList<>();
+    for (Object item : goodsAdapter.getMainItems()) {
+      if (item instanceof GoodProductItem) {
+        Good good = ((GoodProductItem) item).getGood();
+        // 移除会员卡价格
+        if (!mViewModel.getProduct().getSupport_card()) {
+          good.removeCardPrice();
+        }
+        if (goodsAdapter.getItemCount() == 1 && !((GoodProductItem) item).isExpend()) {
+          good.setName("");
+        }
+        goods.add(good);
+      }
+    }
+    mViewModel.getProduct().setGoods(goods);
+
+    if (mViewModel.getProduct().getGoods() != null) {
+
+      trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_OPTIONS_COUNT,
+          mViewModel.getProduct().getGoods().size());
+
+      for (int i = 1; i < mViewModel.getProduct().getGoods().size() + 1; i++) {
+        Good good = mViewModel.getProduct().getGoods().get(i - 1);
+        String rmbPrices = good.getRmbPrices();
+        if (!TextUtils.isEmpty(rmbPrices)) {
+          trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_PRICES + i,
+              Double.valueOf(good.getRmbPrices()));
+        }
+        Integer inventory = good.getInventory();
+        if (inventory != null) {
+          trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_INVENTORY + i,
+              Double.valueOf(good.getInventory()));
+        }
+        if (mViewModel.getProduct().getSupport_card()) {
+          String cardPrices = good.getCardPrices();
+          if (!TextUtils.isEmpty(cardPrices)) {
+            trackBuilder.addProperty(
+                ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_CARD_PRICES + i,
+                Double.valueOf(good.getCardPrices()));
+          }
+        }
+      }
+      if (mViewModel.getProduct().getDelivery_types() != null) {
+
+        for (Integer i : mViewModel.getProduct().getDelivery_types()) {
+          switch (i) {
+            case 1:
+              trackBuilder.addProperty(
+                  ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_IN_HOUSE_PURCHASE_ENABLED, true);
+              break;
+            case 2:
+              trackBuilder.addProperty(
+                  ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_SELF_PURCHASE_ENABLED, true);
+              break;
+            case 3:
+              trackBuilder.addProperty(
+                  ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_DELIVERY_ENABLED, true);
+              break;
+          }
+        }
+      }
+
+      trackBuilder.commit(getContext());
+    }
   }
 
   private PagerAdapter adapter;

@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.productdetail.ShopProductDetailPageParams;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Good;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +36,30 @@ import java.util.regex.Pattern;
     return ShopProductViewModel.class;
   }
 
+  long startTime = 0;
+
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    startTime = System.currentTimeMillis() / 1000;
+    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_ADD_VISIT).commit(getContext());
+    return super.onCreateView(inflater, container, savedInstanceState);
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    if (startTime > 0) {
+      SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_ADD_LEAVE)
+          .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
+              System.currentTimeMillis() / 1000 - startTime)
+          .commit(getContext());
+    }
+  }
+
   @Override protected void subscribeUI() {
     super.subscribeUI();
     mViewModel.detailEvent.observe(this, aVoid -> {
-      Uri uri = Uri.parse("qcstaff://shop/product/detail");
+      Uri uri = Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://shop/product/detail");
       toOtherFragmentForBack(uri,
           new ShopProductDetailPageParams().content(mViewModel.getProduct().getDesc()).build(),
           TO_PRODUCT_DETAIL);
@@ -57,8 +82,33 @@ import java.util.regex.Pattern;
       mViewModel.getProduct().setGoods(goods);
       if (checkProductInfo(mViewModel.getProduct())) {
         mViewModel.saveProduct();
+        if (mViewModel.getProduct().getProductStatus()) {
+          SensorsUtils.track(ShopSensorsConstants.SHOP_ADD_AND_ACTIVATE_COMMODITY_CANCEL_BTN_CLICK)
+              .commit(getContext());
+        } else {
+          SensorsUtils.track(ShopSensorsConstants.SHOP_ADD_COMMODITY_CONFIRM_BTN_CLICK)
+              .commit(getContext());
+        }
       }
     });
+  }
+
+  private boolean onback = true;
+
+  @Override public boolean onFragmentBackPress() {
+    if (!onback) {
+      return onback;
+    }
+    ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_add_product),
+        (dialog, which) -> {
+          sensorsTrack(ShopSensorsConstants.SHOP_ADD_COMMODITY_CANCEL_BTN_CLICK);
+          onback = false;
+          if (getActivity() instanceof BaseActivity) {
+            ((BaseActivity) getActivity()).setBackPress(null);
+          }
+          getActivity().onBackPressed();
+        }).show();
+    return onback;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -69,11 +119,9 @@ import java.util.regex.Pattern;
   @Override protected void initToolBar() {
     mBinding.setToolbarModel(new ToolbarModel(getString(R.string.add_product)));
     super.initToolBar();
-    Toolbar toolbar = mBinding.includeToolbar.toolbar;
-    toolbar.setNavigationOnClickListener(
-        v -> ViewUtil.instanceDelDialog(getContext(), "确定要放弃添加商品么？", (dialog, which) -> {
-          getActivity().onBackPressed();
-        }).show());
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).setBackPress(this);
+    }
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,6 +153,6 @@ import java.util.regex.Pattern;
     while (m_html.find()) {
       stringBuilder.append(m_html.group(1));
     }
-    return stringBuilder.toString();
+    return stringBuilder.toString().replace("<br/>", "");
   }
 }

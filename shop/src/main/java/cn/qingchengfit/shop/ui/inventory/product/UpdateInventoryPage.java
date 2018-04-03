@@ -14,7 +14,6 @@ import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageUpdateInventoryBinding;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.vo.Good;
-import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -98,7 +97,7 @@ import java.util.ArrayList;
             mViewModel.offSetInventory.set(Integer.valueOf(trim));
             if (action == ADD) {
               if (mViewModel.curInventory.get() + mViewModel.offSetInventory.get() > 9999) {
-                ToastUtils.show("商品库存不能大于9999");
+                ToastUtils.show(getString(R.string.product_inventor_over));
                 mBinding.offsetCount.setContent(s.subSequence(0, s.length() - 1).toString());
                 return;
               }
@@ -114,7 +113,7 @@ import java.util.ArrayList;
             mBinding.save.setEnabled(false);
           }
         } catch (NumberFormatException exception) {
-          ToastUtils.show("请输入正确数字");
+          ToastUtils.show(getString(R.string.input_right_number));
           mBinding.save.setEnabled(false);
           mBinding.offsetCount.setContent(s.subSequence(0, s.length() - 1).toString());
         }

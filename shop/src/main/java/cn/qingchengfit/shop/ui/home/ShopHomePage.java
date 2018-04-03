@@ -2,23 +2,25 @@ package cn.qingchengfit.shop.ui.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.utils.CompatUtils;
-import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.views.activity.WebActivity;
-import cn.qingchengfit.weex.ui.WeexSplashPage;
-import com.anbillon.flabellum.annotations.Leaf;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopHomeBinding;
+import cn.qingchengfit.shop.listener.ShopHomePageTabStayListener;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListPage;
 import cn.qingchengfit.shop.ui.home.inventorylist.ShopInventoryListPage;
 import cn.qingchengfit.shop.ui.home.productlist.ShopProductsListPage;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.views.activity.WebActivity;
+import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -47,25 +49,56 @@ import javax.inject.Inject;
           + gymWrapper.shop_id()
           + "/mobile/user/commodity/";
       WebActivity.startWeb(url, getActivity());
+      SensorsUtils.track(ShopSensorsConstants.SHOP_PREVIEW_MALL_BTN_CLICK).commit(getContext());
     });
     return mBinding;
   }
+
+  private int preIndex = 0;
 
   private void initView() {
     mBinding.viewpager.setOffscreenPageLimit(3);
     mBinding.viewpager.setAdapter(
         new ShopHomePageAdapter(getChildFragmentManager(), getFragmentList()));
     mBinding.tabview.setupWithViewPager(mBinding.viewpager);
+    mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+      }
+
+      @Override public void onPageSelected(int position) {
+        if (preIndex == position) return;
+        Fragment preFragment = getFragmentList().get(preIndex).second;
+        if (preFragment instanceof ShopHomePageTabStayListener) {
+          ((ShopHomePageTabStayListener) preFragment).onLeave();
+        }
+        Fragment curFragment = getFragmentList().get(position).second;
+        if (curFragment instanceof ShopHomePageTabStayListener) {
+          ((ShopHomePageTabStayListener) curFragment).onVisit();
+        }
+        preIndex = position;
+      }
+
+      @Override public void onPageScrollStateChanged(int state) {
+
+      }
+    });
+    Fragment first = getFragmentList().get(preIndex).second;
+    if (first instanceof ShopHomePageTabStayListener) {
+      ((ShopHomePageTabStayListener) first).onVisit();
+    }
   }
 
+
   private void initToolBar() {
-    mBinding.setToolbarModel(new ToolbarModel("商店"));
+    mBinding.setToolbarModel(new ToolbarModel(getString(R.string.shop)));
     initToolbar(mBinding.includeToolbar.toolbar);
     if (!CompatUtils.less21()
         && mBinding.showWebPreview.getParent() instanceof ViewGroup
         && isfitSystemPadding()) {
-      mBinding.showWebPreview.setPadding(0,
-          MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+      mBinding.showWebPreview.setPadding(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0,
+          0);
     }
   }
 

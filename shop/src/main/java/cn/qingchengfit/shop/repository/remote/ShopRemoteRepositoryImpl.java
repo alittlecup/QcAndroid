@@ -21,7 +21,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by huangbaole on 2017/12/19.
@@ -51,8 +50,9 @@ import retrofit2.http.QueryMap;
     return shopApi.qcLoadCategories(staff_id, map);
   }
 
-  @Override public Flowable<QcDataResponse<CategoryWrapper>> qcPostCategory(String staff_id, Category category,
-      HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<CategoryWrapper>> qcPostCategory(String staff_id,
+      Category category, HashMap<String, Object> params) {
+
     return shopApi.qcPostCategory(staff_id, category, params);
   }
 
@@ -61,9 +61,8 @@ import retrofit2.http.QueryMap;
     return shopApi.qcDeleteCategory(staff_id, category_id, params);
   }
 
-  @Override
-  public Flowable<QcDataResponse> qcPutCategory(String staff_id, String category_id, Category category,
-      @QueryMap HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse> qcPutCategory(String staff_id, String category_id,
+      Category category, HashMap<String, Object> params) {
     return shopApi.qcPutCategory(staff_id, category_id, category, params);
   }
 
@@ -104,15 +103,15 @@ import retrofit2.http.QueryMap;
   @Override
   public Flowable<QcDataResponse> qcPutProduct(String staff_id, HashMap<String, Object> params,
       Product json) {
-    Gson gson=new Gson();
+    Gson gson = new Gson();
     Product product = gson.fromJson(gson.toJson(json), Product.class);
     product.setId(null);
-    return shopApi.qcPutProduct(staff_id,json.getProductId(), params, product);
+    return shopApi.qcPutProduct(staff_id, json.getProductId(), params, product);
   }
 
   @Override public Flowable<QcDataResponse> qcPutProductStatus(String staff_id, String product_id,
-      Map<String,Object> status, HashMap<String, Object> params) {
-    return shopApi.qcPutProductStatus(staff_id,product_id,params,status);
+      Map<String, Object> status, HashMap<String, Object> params) {
+    return shopApi.qcPutProductStatus(staff_id, product_id, params, status);
   }
 
   @Override public Flowable<QcDataResponse<ProductWrapper>> qcLoadProductInfo(String staff_id,

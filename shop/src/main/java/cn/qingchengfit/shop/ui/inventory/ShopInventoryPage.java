@@ -1,7 +1,7 @@
 package cn.qingchengfit.shop.ui.inventory;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +15,15 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
-import cn.qingchengfit.shop.ui.items.inventory.InventorySingleTextItem;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.DividerItemDecoration;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -53,6 +53,27 @@ import rx.functions.Action1;
     List<AbstractFlexibleItem> items = new ArrayList<>();
     items.add(item);
     adapter.updateDataSet(items);
+  }
+
+  long startTime = 0;
+
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    startTime = System.currentTimeMillis() / 100;
+    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORT_RECORDS_VISIT)
+        .commit(getContext());
+    return super.onCreateView(inflater, container, savedInstanceState);
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    if (startTime > 0) {
+      SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORY_RECORDS_LEAVE)
+          .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
+              System.currentTimeMillis() / 1000 - startTime)
+          .commit(getContext());
+    }
   }
 
   @Override
@@ -86,8 +107,6 @@ import rx.functions.Action1;
           mBinding.qftDate.setText(s);
           mBinding.qftDate.setColorOff(getResources().getColor(R.color.primary));
           mBinding.qftDate.setTextColorRes(R.color.primary);
-
-
         }));
   }
 

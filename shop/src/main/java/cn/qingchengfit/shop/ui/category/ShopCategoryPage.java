@@ -20,6 +20,8 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopCategoryBinding;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.ShopSensorsConstants;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -68,17 +70,20 @@ import rx.functions.Action1;
       dismiss();
     });
     mViewModel.getAddResult().observe(this, category1 -> {
-      ToastUtils.show("操作成功");
-      RxBus.getBus().post(ShopCategoryPage.class, category1.getId());
+      ToastUtils.show(getString(R.string.operator_success));
+      if (category1 != null) {
+        RxBus.getBus().post(ShopCategoryPage.class, category1.getId());
+      }
       dismiss();
     });
     mViewModel.getDeleteResult().observe(this, result);
     mViewModel.getPutResult().observe(this, result);
+    mViewModel.theSameResponseResult.observe(this, this::showAlert);
   }
 
   private Observer<Boolean> result = new Observer<Boolean>() {
     @Override public void onChanged(@Nullable Boolean aBoolean) {
-      ToastUtils.show(aBoolean ? "操作成功" : "操作失败");
+      ToastUtils.show(getString(aBoolean ? R.string.operator_success : R.string.operator_fail));
       dismiss();
     }
   };
@@ -105,7 +110,16 @@ import rx.functions.Action1;
       case 0:
         mBinding.categoryTitle.setText(getString(R.string.add_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
-          checkUpCategory(category, category1 -> mViewModel.addShopCategory(category1));
+          checkUpCategory(category, category1 -> {
+            SensorsUtils.track(ShopSensorsConstants.SHOP_ADD_CATEGORY_CONFIRM_BTN_CLICK)
+                .commit(getContext());
+            mViewModel.addShopCategory(category1);
+          });
+        });
+        mBinding.includeBottom.cancel.setOnClickListener(v -> {
+          SensorsUtils.track(ShopSensorsConstants.SHOP_ADD_CATEGORY_CANCEL_BTN_CLICK)
+              .commit(getContext());
+          dismiss();
         });
         break;
       case 1:
@@ -113,6 +127,8 @@ import rx.functions.Action1;
         mBinding.includeBottom.postive.setOnClickListener(view -> {
           checkUpCategory(category, category1 -> mViewModel.updateShopCategory(category1));
         });
+        mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
+
         break;
       case 2:
         mBinding.categoryName.setVisibility(View.GONE);
@@ -121,10 +137,11 @@ import rx.functions.Action1;
         mBinding.includeBottom.postive.setOnClickListener(view -> {
           mViewModel.deleteShopCategory(category.getId());
         });
+        mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
+
         break;
     }
     mBinding.categoryWeight.setInputType(InputType.TYPE_CLASS_NUMBER);
-    mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
     if (!TextUtils.isEmpty(category.getName())) {
       mBinding.categoryName.setText(category.getName());
       mBinding.categoryName.setSelection(mBinding.categoryName.getText().length());
@@ -136,7 +153,7 @@ import rx.functions.Action1;
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();
         if (!TextUtils.isEmpty(trim) && trim.length() > 12) {
-          ToastUtils.show("分类名称不能大于12个字符");
+          ToastUtils.show(getString(R.string.category_name_limit));
           mBinding.categoryName.setText(trim.substring(0, 12));
           mBinding.categoryName.setSelection(mBinding.categoryName.getText().length());
         }
@@ -146,7 +163,7 @@ import rx.functions.Action1;
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();
         if (!TextUtils.isEmpty(trim) && trim.length() > 7) {
-          ToastUtils.show("权重不能超过10000000");
+          ToastUtils.show(getString(R.string.weight_cant_over));
           mBinding.categoryWeight.setText(trim.substring(0, 7));
           mBinding.categoryWeight.setSelection(mBinding.categoryWeight.getText().length());
         }
@@ -162,23 +179,23 @@ import rx.functions.Action1;
     if (!TextUtils.isEmpty(name)) {
       category.setName(name);
     } else {
-      ToastUtils.show("分类名称不能为空");
+      ToastUtils.show(getString(R.string.category_name_empty));
       return;
     }
     if (!TextUtils.isEmpty(prority)) {
       try {
         int integer = Integer.valueOf(mBinding.categoryWeight.getText().toString());
         if (integer > 10000000) {
-          ToastUtils.show("权重不能超过10000000");
+          ToastUtils.show(getString(R.string.weight_cant_over));
         } else {
           category.setPriority(integer);
           action.call(category);
         }
       } catch (NumberFormatException e) {
-        ToastUtils.show("请输入数字");
+        ToastUtils.show(getString(R.string.input_number));
       }
     } else {
-      ToastUtils.show("分类权重不能为空");
+      ToastUtils.show(getString(R.string.category_weight_empty));
     }
   }
 

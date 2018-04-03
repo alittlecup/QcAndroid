@@ -10,7 +10,6 @@ import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
-import cn.qingchengfit.shop.vo.CategoryWrapper;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ProductWrapper;
@@ -50,11 +49,15 @@ import javax.inject.Singleton;
         input -> input.categories);
   }
 
-  @Override public LiveData<CategoryWrapper> qcPostCategory(String staff_id, Category category,
+  @Override public LiveData<QcDataResponse> qcPostCategory(String staff_id, Category category,
       HashMap<String, Object> map) {
-    return toLiveData(remoteService.qcPostCategory(staff_id, category, map));
+    return toLiveData(remoteService.qcPostCategory(staff_id, category, map).map(response -> {
+      QcDataResponse<QcDataResponse> data=new QcDataResponse<>();
+      data.setStatus(200);
+      data.setData(response);
+      return data;
+    }));
   }
-
 
   @Override public LiveData<Boolean> qcDeleteCategory(String staff_id, String category_id,
       HashMap<String, Object> map) {

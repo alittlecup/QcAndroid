@@ -20,6 +20,7 @@
   <string name="category_default">常规</string>
   <string name="back_shop_home">回到首页</string>
   <string name="continue_add">继续添加</string>
+  <string name="not_found_match_result">未找到相关结果</string>
 
   <!--product-->
   <string name="product_detail_format">销量：%d 库存：%d 权重：%d</string>
@@ -30,6 +31,7 @@
   <string name="product_detail">商品详情</string>
   <string name="search_product">搜索店内商品</string>
   <string name="product_empty_text">暂无出售中商品，赶快去添加吧～</string>
+  <string name="product_empty_offsale_text">暂无已下架商品，赶快去添加吧～</string>
   <string name="input_product_name">请填写商品名称</string>
   <string name="input_product_unit">请填写商品单位</string>
   <string name="input_product_price">请填写商品价格</string>
@@ -95,6 +97,31 @@
   <string name="reduce_inventory_not_enough">当前库存不足扣除%d</string>
   <string name="add_inventory_count_input">输入增加的库存数</string>
   <string name="reduce_inventory_count_input">输入减少的库存数</string>
+  <string name="category_empty">暂无分类，赶快去添加吧～</string>
+  <string name="inventort_emptry">暂无库存商品，赶快去添加吧～</string>
+  <string name="category_name_limit">分类名称不能大于12个字符</string>
+  <string name="category_name_empty">分类名称不能为空</string>
+  <string name="input_number">请输入数字</string>
+  <string name="category_weight_empty">分类权重不能为空</string>
+  <string name="weight_cant_over">权重不能大于10000000</string>
+  <string name="operator_success">操作成功</string>
+  <string name="operator_fail">操作失败</string>
+  <string name="input_right_number">请输入正确数字</string>
+  <string name="product_inventor_over">商品库存不能大于9999</string>
+  <string name="product_desc_detail">商品描述详情</string>
+  <string name="sure_clear_cur_content">确定清空当前内容</string>
+  <string name="sure_give_up_modify">确定放弃所做修改</string>
+  <string name="input_product_desc">请输入商品描述</string>
+  <string name="sure_give_up_add_product">确定要放弃添加商品么？</string>
+  <string name="product_name_over_20">商品名称不能大于20个字符</string>
+  <string name="product_unit_over_10">商品单位不能大于个10字符</string>
+  <string name="add_prodcut_image">请添加商品图片</string>
+  <string name="choose_product_support_card">请选择支持的会员卡种类</string>
+  <string name="input_good_name">请输入规格名称</string>
+  <string name="input_product_good_inventory">请输入规格库存</string>
+  <string name="input_product_card_prices">请输入会员卡支付价格</string>
+  <string name="choose_product_deliver">请选择交货方式</string>
+  <string name="weight_not_below_zero">权重不能小于等于0</string>
 
 
 </resources>
