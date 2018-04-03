@@ -146,9 +146,7 @@ import rx.functions.Action1;
       mBinding.categoryName.setText(category.getName());
       mBinding.categoryName.setSelection(mBinding.categoryName.getText().length());
     }
-    if (category.getCategoryPriority() != 0) {
-      mBinding.categoryWeight.setText(category.getCategoryPriority() + "");
-    }
+    mBinding.categoryWeight.setText(category.getCategoryPriority() + "");
     mBinding.categoryName.addTextChangedListener(new GoodProductItem.AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         String trim = s.toString().trim();
@@ -195,7 +193,7 @@ import rx.functions.Action1;
         ToastUtils.show(getString(R.string.input_number));
       }
     } else {
-      ToastUtils.show(getString(R.string.category_weight_empty));
+      action.call(category);
     }
   }
 

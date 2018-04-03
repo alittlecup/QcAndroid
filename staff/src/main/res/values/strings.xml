@@ -560,8 +560,8 @@
   <string name="module_service_group">团课</string>
   <string name="module_service_private">私教</string>
   <string name="module_service_free">入场签到</string>
-  <string name="module_service_shop">商店</string>
-  <string name="module_service_commodity_list">商品代购</string>
+  <string name="module_service_shop">商品管理</string>
+  <string name="module_service_commodity_list">商店</string>
 
 
   <string name="module_student">会员</string>
