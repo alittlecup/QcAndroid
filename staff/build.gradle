@@ -113,19 +113,12 @@ android {
   flavorDimensions "qc"
   productFlavors {
     dev {
-//      applicationId "cn.qingchengfit.staffkit.internaltest"
-//      manifestPlaceholders = [APP_NAME          : "内部测试",
-//                              APP_SCHAME        : "qcstaff",
-//                              bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
-//                              APP_PACKAGE       : "cn.qingchengfit.staffkit.internaltest",
-//                              file_provider     : "cn.qingchengfit.staffkit.internaltest.provider"]
-      applicationId "cn.qingchengfit.staffkit"
-
+      applicationId "cn.qingchengfit.staffkit.internaltest"
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               APP_SCHAME        : "qcstaff",
-                              bdpush_authorities: "cn.qingchengfit.bdpush.internaltest.shop",
-                              APP_PACKAGE       : "cn.qingchengfit.staffkit",
-                              file_provider     : "cn.qingchengfit.staffkit.provider"]
+                              bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
+                              APP_PACKAGE       : "cn.qingchengfit.staffkit.internaltest",
+                              file_provider     : "cn.qingchengfit.staffkit.internaltest.provider"]
       ndk {
         abiFilter "armeabi"
       }
@@ -317,6 +310,7 @@ dependencies {
 //  println 'no processor'
 //  } else {
 //    println "skip to run annotation processors ..."
+//
 //
 //    // just add generated classes to the classpath
 //    // must be in else branch or multiple AP calls will collide!

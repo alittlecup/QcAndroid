@@ -94,7 +94,8 @@ import javax.inject.Inject;
       mBinding.productCetegory.setContent(product.getCategory().getName());
     }
     mBinding.productWeight.setContent(
-        product.getPriority() == null ? "" : product.getPriority().toString());
+        (product.getPriority() == null || product.getPriority() == 0) ? ""
+            : product.getPriority().toString());
     dealDeliverTypes(new ArrayList<>(product.getDelivery_types()));
 
     mBinding.productName.setContent(mViewModel.getProduct().getName());

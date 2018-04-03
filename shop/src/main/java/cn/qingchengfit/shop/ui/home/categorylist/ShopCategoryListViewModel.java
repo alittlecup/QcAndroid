@@ -25,7 +25,7 @@ import javax.inject.Inject;
  */
 
 public class ShopCategoryListViewModel
-    extends FlexibleViewModel<List<Category>, CategoryListItem, Map<String,Object>>
+    extends FlexibleViewModel<List<Category>, CategoryListItem, Map<String, Object>>
     implements CategotyItemClickListener {
 
   public final ObservableField<List<CategoryListItem>> items = new ObservableField<>();
@@ -64,9 +64,11 @@ public class ShopCategoryListViewModel
     updateEvent.setValue(category);
   }
 
-  @NonNull @Override protected LiveData<List<Category>> getSource(@NonNull Map<String,Object> map) {
+  @NonNull @Override
+  protected LiveData<List<Category>> getSource(@NonNull Map<String, Object> map) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.putAll(map);
+    params.put("show_all", 1);
     return repository.qcLoadCategories(loginStatus.staff_id(), params);
   }
 
@@ -86,7 +88,7 @@ public class ShopCategoryListViewModel
     }
 
     @NonNull @Override public CategoryListItem create(Category category) {
-      return new CategoryListItem(category,listener);
+      return new CategoryListItem(category, listener);
     }
   }
 
@@ -102,7 +104,7 @@ public class ShopCategoryListViewModel
     }
   }
 
-  @Override public void loadSource(@NonNull Map<String,Object> s) {
+  @Override public void loadSource(@NonNull Map<String, Object> s) {
     identifier.setValue(s);
   }
 }

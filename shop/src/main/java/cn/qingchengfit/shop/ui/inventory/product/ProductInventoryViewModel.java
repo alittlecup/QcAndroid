@@ -122,6 +122,7 @@ public class ProductInventoryViewModel
   @NonNull @Override
   protected LiveData<List<Record>> getSource(@NonNull HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
+    params.put("show_all", 1);
     return Transformations.map(repository.qcLoadInventoryRecord(loginStatus.staff_id(), params),
         input -> {
           StringBuilder stringBuilder = new StringBuilder();

@@ -33,7 +33,7 @@ public class ShopInventoryViewModel
 
   public final MutableLiveData<Integer> indexEvent = new MutableLiveData<>();
   public ObservableBoolean filterVisible = new ObservableBoolean(false);
-  public final ActionLiveEvent allProductClick = new  ActionLiveEvent();
+  public final ActionLiveEvent allProductClick = new ActionLiveEvent();
 
   public HashMap<String, Object> getParams() {
     return params;
@@ -75,6 +75,7 @@ public class ShopInventoryViewModel
   @NonNull @Override
   protected LiveData<List<Record>> getSource(@NonNull HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
+    params.put("show_all", 1);
     return Transformations.map(repository.qcLoadInventoryRecord(loginStatus.staff_id(), params),
         input -> input.records);
   }
