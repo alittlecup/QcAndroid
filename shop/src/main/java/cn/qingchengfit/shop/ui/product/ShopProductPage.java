@@ -107,6 +107,7 @@ import javax.inject.Inject;
         routeTo("/add/success",
             new ProductAddSuccessPageParams().status(mViewModel.getProduct().getProductStatus())
                 .build());
+        setBackPressNull();
         popBack();
       }
     });

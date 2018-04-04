@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+    setBackPressNull();
     if (startTime > 0) {
       SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_ADD_LEAVE)
           .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
@@ -93,22 +94,14 @@ import java.util.regex.Pattern;
     });
   }
 
-  private boolean onback = true;
-
   @Override public boolean onFragmentBackPress() {
-    if (!onback) {
-      return onback;
-    }
     ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_add_product),
         (dialog, which) -> {
           sensorsTrack(ShopSensorsConstants.SHOP_ADD_COMMODITY_CANCEL_BTN_CLICK);
-          onback = false;
-          if (getActivity() instanceof BaseActivity) {
-            ((BaseActivity) getActivity()).setBackPress(null);
-          }
+          setBackPressNull();
           getActivity().onBackPressed();
         }).show();
-    return onback;
+    return ((BaseActivity) getActivity()).getBackPress() != null;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -119,9 +112,7 @@ import java.util.regex.Pattern;
   @Override protected void initToolBar() {
     mBinding.setToolbarModel(new ToolbarModel(getString(R.string.add_product)));
     super.initToolBar();
-    if (getActivity() instanceof BaseActivity) {
-      ((BaseActivity) getActivity()).setBackPress(this);
-    }
+    setBackPress();
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -143,6 +134,7 @@ import java.util.regex.Pattern;
       }
     }
   }
+
 
   private String delHtml(String content) {
     String regEx_html = "<p>(.*?)</p>";

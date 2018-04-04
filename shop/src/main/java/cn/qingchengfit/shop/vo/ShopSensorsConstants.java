@@ -102,9 +102,9 @@ public final class ShopSensorsConstants {
       "is_card_pay_supported";
   public static final String SHOP_COMMODITY_PROPERTY_SUPPORT_CARDS_COUNT = "support_cards_count";
   public static final String SHOP_COMMODITY_PROPERTY_OPTIONS_COUNT = "commodity_options_count";
-  public static final String SHOP_COMMODITY_PROPERTY_GOOD_PRICES = "commodity_price_";
-  public static final String SHOP_COMMODITY_PROPERTY_GOOD_CARD_PRICES = "card_pay_price_";
-  public static final String SHOP_COMMODITY_PROPERTY_GOOD_INVENTORY = "commodity_inventory_";
+  public static final String SHOP_COMMODITY_PROPERTY_GOOD_PRICES = "fixed_commodity_price_";
+  public static final String SHOP_COMMODITY_PROPERTY_GOOD_CARD_PRICES = "fixed_card_pay_price_";
+  public static final String SHOP_COMMODITY_PROPERTY_GOOD_INVENTORY = "fixed_commodity_inventory_";
   public static final String SHOP_COMMODITY_PROPERTY_HAS_DESC = "commodity_has_desc";
 
   public static final String SHOP_ADD_CATEGORY_CONFIRM_BTN_CLICK =
