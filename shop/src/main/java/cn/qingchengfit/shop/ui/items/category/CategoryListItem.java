@@ -43,7 +43,11 @@ public class CategoryListItem
       DataBindingViewHolder<ItemCategotyListBinding> holder, int position, List payloads) {
     ItemCategotyListBinding dataBinding = holder.getDataBinding();
     dataBinding.categoryName.setText(data.getCategoryName());
-    dataBinding.categoryWeight.setText(String.valueOf(data.getCategoryPriority()));
+    if (data.getCategoryPriority() != 0) {
+      dataBinding.categoryWeight.setText("权重" + String.valueOf(data.getCategoryPriority()));
+    } else {
+      dataBinding.categoryWeight.setText("");
+    }
     dataBinding.categoryProductCount.setText(dataBinding.getRoot()
         .getContext()
         .getString(R.string.category_products, data.getCategoryProductCount()));
