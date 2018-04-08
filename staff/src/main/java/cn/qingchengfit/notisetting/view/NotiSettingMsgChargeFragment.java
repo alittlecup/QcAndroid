@@ -77,8 +77,7 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
     list.add(new NotiSettingChargeItem(2000, 40000));
     adapter = new CommonFlexAdapter(list, this);
     adapter.setMode(SelectableAdapter.Mode.SINGLE);
-    GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(getContext(),
-        getResources().getInteger(R.integer.grid_item_count));
+    GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(getContext(), 3);
     gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
       @Override public int getSpanSize(int position) {
         return 1;
