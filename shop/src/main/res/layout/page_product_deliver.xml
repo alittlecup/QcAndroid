@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     >
   <data>
     <variable
@@ -25,7 +25,7 @@
         android:background="@color/white"
         android:clickable="false"
         android:focusable="false"
-        app:sw_lable="馆内购买"
+        app:sw_lable="@string/deliver_onsale"
         app:sw_showdivier="true"
         app:sw_text_color="@color/qc_text_black"
         />
@@ -36,8 +36,9 @@
         android:background="@color/white"
         android:clickable="false"
         android:focusable="false"
-        app:sw_lable="自取"
+        app:sw_lable="@string/deliver_by_self"
         app:sw_showdivier="true"
+
         app:sw_text_color="@color/qc_text_black"
         />
     <cn.qingchengfit.widgets.SwitcherLayout
@@ -47,7 +48,7 @@
         android:background="@color/white"
         android:clickable="false"
         android:focusable="false"
-        app:sw_lable="配送"
+        app:sw_lable="@string/deliver_send"
         app:sw_showdivier="true"
         app:sw_text_color="@color/qc_text_black"
         />

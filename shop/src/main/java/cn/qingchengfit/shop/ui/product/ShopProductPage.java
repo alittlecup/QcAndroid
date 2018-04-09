@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
@@ -189,6 +190,10 @@ import javax.inject.Inject;
     initEditListener();
     mBinding.setViewModel(mViewModel);
     mBinding.productName.getEditText().setMaxWidth(DensityUtil.dip2px(getContext(), 500));
+    TextView text = mBinding.productCardTpl.findViewById(R.id.commoninput_lable);
+    if (text != null) {
+      text.setMaxWidth(Integer.MAX_VALUE);
+    }
     return mBinding;
   }
 

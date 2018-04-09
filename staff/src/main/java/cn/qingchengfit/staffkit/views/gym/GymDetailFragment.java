@@ -745,6 +745,7 @@ public class GymDetailFragment extends BaseFragment
       JSONObject properties = new JSONObject();
       properties.put("qc_shop_id", gymWrapper.shop_id());
       properties.put("qc_brand_id", gymWrapper.brand_id());
+      properties.put("qc_gym_id", gymWrapper.getGymId());
       SensorsDataAPI.sharedInstance(getContext()).registerSuperProperties(properties);
     } catch (JSONException e) {
       e.printStackTrace();
