@@ -69,7 +69,6 @@ import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.weex.utils.LoadJSFileService;
 import cn.qingchengfit.weex.utils.WeexUtil;
 import cn.qingchengfit.widgets.TabViewNoVp;
 import com.afollestad.materialdialogs.DialogAction;

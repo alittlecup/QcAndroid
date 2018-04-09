@@ -66,6 +66,15 @@ public class ExampleUnitTest {
     }
   }
 
+  @Test public void test() {
+    String uri = "https://fit00370.qingchengfit.cn/";
+    if (uri.lastIndexOf("/") == uri.length() - 1) {
+      String substring = uri.substring(0, uri.length() - 1);
+      assertEquals(substring, "https://fit00370.qingchengfit.cn");
+      System.out.println(substring);
+    }
+  }
+
   @Test public void testRxFlow() {
     Observable<String> a = Observable.just("a").map(new Function<String, String>() {
       @Override public String apply(String s) throws Exception {
@@ -86,15 +95,14 @@ public class ExampleUnitTest {
       }
     });
 
-    Observable.merge(a,b,c).subscribe(new Consumer<String>() {
+    Observable.merge(a, b, c).subscribe(new Consumer<String>() {
       @Override public void accept(String s) throws Exception {
         System.out.println(s);
       }
     });
     Observable.zip(a, b, c, new Function3<String, String, String, String>() {
       @Override public String apply(String s, String s2, String s3) throws Exception {
-        return s+s2+s3;
-
+        return s + s2 + s3;
       }
     }).subscribe(new Consumer<String>() {
       @Override public void accept(String s) throws Exception {

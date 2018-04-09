@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
-import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.weex.BuildConfig;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpResponse;
 import cn.qingchengfit.weex.https.WXHttpTask;
@@ -112,7 +112,12 @@ public final class WeexUtil {
    */
   public static void loadJsMap() {
     WXHttpTask task = new WXHttpTask();
-    task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+    if (BuildConfig.DEBUG) {
+      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+    } else {
+      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+    }
+
     task.requestListener = new WXRequestListener() {
       @Override public void onSuccess(WXHttpTask task) {
         WXHttpResponse response = task.response;
@@ -121,17 +126,18 @@ public final class WeexUtil {
             String data = new String(response.data, "utf-8");
             JSONObject jsonObject = JSON.parseObject(data);
             Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
-            //if (!weex_enabled) {
-            //  String string = jsonObject.getString("proxy_commodity.js");
-            //  openWeexActivity(string + "/?weex_enable=false");
-            //  return;
-            //}
+            if (!weex_enabled) {
+              String string = jsonObject.getString("proxy_commodity.js");
+              openWeexActivity(string + "/?weex_enable=false");
+              return;
+            }
             Set<String> keySet = jsonObject.keySet();
             Iterator<String> iterator = keySet.iterator();
             while (iterator.hasNext()) {
               String next = iterator.next();
               jsMap.put(next, jsonObject.getString(next));
             }
+            Log.d("TAG", "onSuccess: " + jsMap.toString());
             if (jsMap.containsKey("proxy_commodity.js")) {
               openWeexActivity(jsMap.get("proxy_commodity.js"));
             }
@@ -149,9 +155,13 @@ public final class WeexUtil {
   }
 
   public static void loadAndSaveData() {
-    LogUtil.d("load weex  json");
     WXHttpTask task = new WXHttpTask();
-    task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+    if (BuildConfig.DEBUG) {
+      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+    } else {
+      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+    }
+
     task.requestListener = new WXRequestListener() {
       @Override public void onSuccess(WXHttpTask task) {
         WXHttpResponse response = task.response;
@@ -167,13 +177,10 @@ public final class WeexUtil {
             task.requestListener = new WXRequestListener() {
 
               @Override public void onSuccess(final WXHttpTask task) {
-                LogUtil.d("load weex  json  end");
                 Observable.just("weex-js-json")
                     .map(new Func1<String, Boolean>() {
                       @Override public Boolean call(String s) {
                         try {
-                          //FileUtils.saveCache("weex-js-json",
-                          //    new String(task.response.data, "utf-8"));
                           return writeFileFromString("weex-js-json",
                               new String(task.response.data, "utf-8"), true);
                         } catch (UnsupportedEncodingException e) {
@@ -186,7 +193,6 @@ public final class WeexUtil {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Boolean>() {
                       @Override public void call(Boolean aBoolean) {
-                        LogUtil.d("weex js -save" + aBoolean);
                       }
                     });
               }
@@ -227,10 +233,8 @@ public final class WeexUtil {
             + key;
     File file = new File(path);
     if (file.exists()) {
-      LogUtil.d("delete file");
       file.delete();
     }
-    LogUtil.d("file -js:"+readFile2String("weex-js-json","utf-8"));
     file = new File(path);
     BufferedWriter bw = null;
     try {

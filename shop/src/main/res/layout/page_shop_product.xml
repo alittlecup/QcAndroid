@@ -149,6 +149,7 @@
                 android:visibility="gone"
                 app:civ_lable="@string/product_card"
                 app:civ_nonnull="true"
+                app:civ_hint="请选择储值卡"
                 app:enable="@{viewModel.isEdit}"
                 style="@style/QcCivClickStyle"
                 />
@@ -214,7 +215,7 @@
                 android:background="@color/colorPrimary"
                 app:civ_hint="@string/input_product_weight"
                 app:civ_inputnum="true"
-                app:civ_lable="@string/weight"
+                app:civ_lable="@string/show_weight"
                 app:civ_max_length="7"
                 app:enable="@{viewModel.isEdit}"
                 style="@style/QcCivInputStyle"

@@ -13,6 +13,7 @@
   <string name="goods">规格</string>
   <string name="price">价格</string>
   <string name="weight">权重</string>
+  <string name="show_weight">显示权重</string>
   <string name="category">分类</string>
   <string name="shop_type">规格</string>
   <string name="inventory">库存</string>
@@ -33,15 +34,15 @@
   <string name="product_empty_text">暂无出售中商品，赶快去添加吧～</string>
   <string name="product_empty_offsale_text">暂无已下架商品，赶快去添加吧～</string>
   <string name="input_product_name">请填写商品名称</string>
-  <string name="input_product_unit">请填写商品单位</string>
+  <string name="input_product_unit">例如：个、瓶</string>
   <string name="input_product_price">请填写商品价格</string>
-  <string name="input_product_inventory">请填写商品库存</string>
-  <string name="input_product_category">请填写商品规格</string>
+  <string name="input_product_inventory">请填写库存数量</string>
+  <string name="input_product_category">请填写规格名称</string>
   <string name="add_product_category">添加商品规格</string>
   <string name="product_desc">商品描述</string>
   <string name="category_to">分类至</string>
   <string name="not_category">未分类</string>
-  <string name="input_product_weight">请填写商品权重</string>
+  <string name="input_product_weight">数字越大越靠前</string>
 
   <string name="product_pay_channal">支付方式</string>
   <string name="product_pay_online">线上支付</string>
@@ -49,7 +50,7 @@
   <string name="product_pay_card">会员卡支付</string>
   <string name="product_pay_card_price">会员卡支付价格</string>
   <string name="choose_product_pay_channel">选择支付方式</string>
-  <string name="choose_product_pay_card">选择会员卡</string>
+  <string name="choose_product_pay_card">选择储值卡</string>
 
 
   <string name="product_pay_card_prices">会员卡支付价格</string>
@@ -67,10 +68,10 @@
   <string name="product_save_sale">保存并上架</string>
   <!--//TODO 修改命名-->
   <string name="product_deliver_channal">交货方式</string>
-  <string name="deliver_onsale">馆内购买</string>
-  <string name="deliver_by_self">自取</string>
-  <string name="deliver_send">配送</string>
-  <string name="product_card">会员卡</string>
+  <string name="deliver_onsale">现场购买</string>
+  <string name="deliver_by_self">到店自取</string>
+  <string name="deliver_send">快递</string>
+  <string name="product_card">会员卡(仅支持储值卡)</string>
 
 
   <!--category-->

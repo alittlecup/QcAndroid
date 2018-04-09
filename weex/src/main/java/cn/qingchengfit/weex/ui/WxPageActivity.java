@@ -2,6 +2,7 @@ package cn.qingchengfit.weex.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.utils.LogUtil;
@@ -10,7 +11,6 @@ import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.weex.R;
 import cn.qingchengfit.weex.utils.WeexLoadView;
 import com.alibaba.fastjson.JSONObject;
-import com.taobao.weex.WXSDKInstance;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
@@ -35,7 +35,9 @@ public class WxPageActivity extends WxBaseActivity {
       String uri = host
           + "/shop/"
           + gymWrapper.getCoachService().getShop_id()
-          + "/mobile/staff/commodity/?"+data.getQuery()+"&hide_nav=1";
+          + "/mobile/staff/commodity/?"
+          + data.getQuery()
+          + "&hide_nav=1";
       LogUtil.d("TAG", "onCreate: " + uri);
       WebActivity.startWeb(uri, this);
       finish();
@@ -45,9 +47,8 @@ public class WxPageActivity extends WxBaseActivity {
     mWeexLoadView = WeexLoadView.getInstance();
     prepareUserInfo(mWeexLoadView);
     mWeexLoadView.loadUri(data, this, (ViewGroup) findViewById(R.id.container));
+    Log.d("TAG", "onCreate: ");
   }
-
-
 
   private void prepareUserInfo(WeexLoadView loadView) {
     String g_shop_id = gymWrapper.getCoachService().getShop_id();
@@ -63,7 +64,7 @@ public class WxPageActivity extends WxBaseActivity {
     member.put("g_shop_logo", g_shop_logo);
     member.put("g_brand_id", g_brand_id);
     member.put("g_brand_name", g_brand_name);
-    member.put("g_fitness_host",gymWrapper.getCoachService().getHost());
+    member.put("g_fitness_host", subString(gymWrapper.getCoachService().getHost()));
     member.put("g_session_value", PreferenceUtils.getPrefString(this, "session_id", ""));
     member.put("g_session_key", PreferenceUtils.getPrefString(this, "session_key", ""));
     Map<String, Object> g_user = new HashMap<>();
@@ -72,11 +73,35 @@ public class WxPageActivity extends WxBaseActivity {
     loadView.mConfigMap.put("custom", jsonObject);
   }
 
-  @Override public WXSDKInstance getWXSDKInstance() {
-
-    if (mWeexLoadView != null && mWeexEnable) {
-      return mWeexLoadView.getmWXSDKInstance();
+  private String subString(String uri) {
+    if (uri.lastIndexOf("/") == uri.length() - 1) {
+      return uri.substring(0, uri.length() - 1);
     }
-    return null;
+    return uri;
+  }
+
+  @Override public void onBackPressed() {
+    Map<String, Object> params = new HashMap<>();
+    params.put("key", "value");
+    if (!isNativeBack()) {
+      mWeexLoadView.getmWXSDKInstance().fireGlobalEventCallback("beforeNavigatorChange", params);
+    } else {
+      super.onBackPressed();
+    }
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    if (mWeexLoadView != null) {
+      mWeexLoadView.destoryWXSDKInstance();
+      mWeexLoadView = null;
+    }
+  }
+
+  public boolean isNativeBack() {
+    if (mWeexLoadView != null && mWeexEnable && !mWeexLoadView.isRenderError()) {
+      return false;
+    }
+    return true;
   }
 }

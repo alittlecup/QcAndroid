@@ -164,8 +164,7 @@ public class GymFunctionFactory {
       case MODULE_OPERATE_REGIST:
       case MODULE_OPERTAT_KOUBEI:
       case MODULE_OPERATE_SCORE:
-      case MODULE_SERVICE_SHOP:
-      case MODULE_WORKSPACE_COMMODITY_LIST:
+
       case MODULE_WECHAT:
       case MODULE_GYM_SITE:
         return 1;
@@ -188,6 +187,8 @@ public class GymFunctionFactory {
       case MODULE_NONE:
       case MODULE_FINACE_ONLINE:
       case MODULE_FINANCE_COURSE:
+      case MODULE_SERVICE_SHOP:
+      case MODULE_WORKSPACE_COMMODITY_LIST:
       default:
         return 0;
     }

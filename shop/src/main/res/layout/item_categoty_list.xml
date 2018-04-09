@@ -43,8 +43,8 @@
         />
     <ImageView
         android:id="@+id/category_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/category_delete"
         android:layout_marginRight="33dp"
@@ -52,8 +52,8 @@
         />
     <ImageView
         android:id="@+id/category_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="27dp"

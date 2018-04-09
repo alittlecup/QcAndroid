@@ -152,8 +152,7 @@ public class QcWxModalUIModule extends DestroyableModule {
       final String cancelTitleFinal = TextUtils.isEmpty(cancelTitle) ? CANCEL : cancelTitle;
 
       MaterialDialog alertDialog =
-          new MaterialDialog.Builder(mWXSDKInstance.getContext())
-              .positiveText(okTitleFinal)
+          new MaterialDialog.Builder(mWXSDKInstance.getContext()).positiveText(okTitleFinal)
               .negativeText(cancelTitleFinal)
               .positiveColorRes(R.color.colorPrimary)
               .negativeColorRes(R.color.qc_text_grey)

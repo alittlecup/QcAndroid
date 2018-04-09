@@ -91,7 +91,6 @@
       android:id="@+id/reply_divider"
       android:layout_width="match_parent"
       android:layout_height="1px"
-      android:layout_alignLeft="@+id/tv_comment_content"
       android:layout_below="@+id/tv_reply_content"
       android:layout_marginTop="16dp"
       />

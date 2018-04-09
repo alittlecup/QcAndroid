@@ -592,7 +592,7 @@
   <string name="module_gym_info">场馆信息</string>
   <string name="module_gym_time">营业时间</string>
   <string name="module_gym_site">场地</string>
-  <string name="module_gym_msg">短信</string>
+  <string name="module_gym_msg">通知</string>
   <string name="module_gym_wardrobe">更衣柜</string>
   <string name="module_gym_homepage">会员端配置</string>
   <string name="module_gym_wechat">微信公众号</string>

@@ -35,6 +35,7 @@ import java.util.List;
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.items.set(items);
+      hideLoadingTrans();
       mBinding.recyclerview.post(new Runnable() {
         @Override public void run() {
           upDateSelectPosition(items);
@@ -63,6 +64,7 @@ import java.util.List;
     initToolbar();
     initRecyclerView();
     mViewModel.loadSource("1");
+    showLoadingTrans();
     mBinding.setViewModel(mViewModel);
     return mBinding;
   }

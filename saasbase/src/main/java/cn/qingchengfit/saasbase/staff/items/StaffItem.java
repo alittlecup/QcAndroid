@@ -18,7 +18,7 @@ import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implements IFilterable{
+public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implements IFilterable {
 
   Staff staff;
 
@@ -41,35 +41,37 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, StaffVH holder, int position, List payloads) {
-    PhotoUtils.smallCircle(holder.itemStudentHeader,staff.getAvatar());
+    PhotoUtils.smallCircle(holder.itemStudentHeader, staff.getAvatar());
     if (adapter.hasSearchText()) {
-      FlexibleUtils.highlightWords(holder.itemStudentName, staff.getUsername(), adapter.getSearchText());
-      FlexibleUtils.highlightWords(holder.itemStudentPhonenum, staff.getPhone(), adapter.getSearchText());
-    }else {
+      FlexibleUtils.highlightWords(holder.itemStudentName, staff.getUsername(),
+          adapter.getSearchText());
+      FlexibleUtils.highlightWords(holder.itemStudentPhonenum, staff.getPhone(),
+          adapter.getSearchText());
+    } else {
       holder.itemStudentName.setText(staff.getUsername());
       holder.itemStudentPhonenum.setText(staff.getPhone());
     }
-    holder.itemStudentGender.setImageResource(staff.gender == 0 ?R.drawable.ic_gender_signal_male:R.drawable.ic_gender_signal_female);
+    holder.itemStudentGender.setImageResource(
+        staff.gender == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
   }
-
-
 
   @Override public boolean equals(Object o) {
 
-    if (o instanceof StaffItem){
+    if (o instanceof StaffItem) {
       Staff tmp = ((StaffItem) o).getStaff();
-      if (tmp == null || tmp.id == null)
-        return false;
+      if (tmp == null || tmp.id == null) return false;
       return tmp.id.equalsIgnoreCase(staff.getId());
-    }else return false;
-
+    } else {
+      return false;
+    }
   }
 
   @Override public boolean filter(String constraint) {
-    if (staff == null || staff.username == null)
+    if (staff == null) {
       return false;
-    else {
-      return staff.phone.contains(constraint) || staff.username.contains(constraint) ;
+    } else {
+      return (staff.phone != null && staff.phone.contains(constraint)) || (staff.username != null
+          && staff.username.contains(constraint));
     }
   }
 
@@ -83,6 +85,7 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
     @BindView(R2.id.item_student_phonenum) TextView itemStudentPhonenum;
     @BindView(R2.id.item_student_gymname) TextView itemStudentGymname;
     @BindView(R2.id.icon_right) ImageView iconRight;
+
     public StaffVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);

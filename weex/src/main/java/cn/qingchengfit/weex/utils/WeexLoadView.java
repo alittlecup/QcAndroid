@@ -3,11 +3,16 @@ package cn.qingchengfit.weex.utils;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import cn.qingchengfit.weex.R;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpTask;
 import cn.qingchengfit.weex.https.WXRequestListener;
+import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.RenderContainer;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
@@ -21,7 +26,7 @@ import java.util.Map;
  * Created by huangbaole on 2018/1/10.
  */
 
-public final class WeexLoadView {
+public final class WeexLoadView implements IWXRenderListener {
   public WXSDKInstance getmWXSDKInstance() {
     return mWXSDKInstance;
   }
@@ -72,19 +77,20 @@ public final class WeexLoadView {
    */
   public void loadUri(Uri mUri, Context context, ViewGroup viewGroup) {
     if (WeexUtil.isExistsCache("weex-js-json")) {
-      loadWXfromFile("weex-js-json", mUri.toString(),context,viewGroup);
+      loadWXfromFile("weex-js-json", mUri.toString(), context, viewGroup);
     } else if (TextUtils.equals("http", mUri.getScheme()) || TextUtils.equals("https",
         mUri.getScheme())) {
       loadWXfromService(mUri.toString(), context, viewGroup);
     } else {
       loadWXfromLocal(mUri.toString(), context, viewGroup);
     }
+    Log.d("TAG", "loadUri: "+mUri);
   }
 
-  private void loadWXfromFile(String key, String url,Context context,ViewGroup rootView) {
+  private void loadWXfromFile(String key, String url, Context context, ViewGroup rootView) {
     this.rootView = rootView;
     createWXSDKInstance(context, rootView);
-    String s = WeexUtil.readFile2String(key,"utf-8");
+    String s = WeexUtil.readFile2String(key, "utf-8");
     mConfigMap.put("bundleUrl", WeexUtil.makeBundleUri(Uri.parse(url)));
     mWXSDKInstance.render("TAG", s, mConfigMap, null, WXRenderStrategy.APPEND_ASYNC);
   }
@@ -109,6 +115,7 @@ public final class WeexLoadView {
           mConfigMap.put("bundleUrl", WeexUtil.makeBundleUri(Uri.parse(url)));
           mWXSDKInstance.render("TAG", new String(task.response.data, "utf-8"), mConfigMap, null,
               WXRenderStrategy.APPEND_ASYNC);
+          Log.d("TAG", "onSuccess: oadWXfromService");
         } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
         }
@@ -122,7 +129,7 @@ public final class WeexLoadView {
     WXHttpManager.getInstance().sendRequest(httpTask);
   }
 
-  private void destoryWXSDKInstance() {
+  public void destoryWXSDKInstance() {
     if (mWXSDKInstance != null) {
       mWXSDKInstance.registerRenderListener(null);
       mWXSDKInstance.destroy();
@@ -134,13 +141,43 @@ public final class WeexLoadView {
   private void createWXSDKInstance(Context context, ViewGroup view) {
     destoryWXSDKInstance();
     RenderContainer renderContainer = new RenderContainer(context);
+    rootView.removeAllViews();
     rootView.addView(renderContainer,
         new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT));
     mWXSDKInstance = new WXSDKInstance(context);
     mWXSDKInstance.setRenderContainer(renderContainer);
-    //mWXSDKInstance.registerRenderListener(this);
+    mWXSDKInstance.registerRenderListener(this);
     //mWXSDKInstance.setNestedInstanceInterceptor(this);
     mWXSDKInstance.setTrackComponent(true);
+  }
+
+  @Override public void onViewCreated(WXSDKInstance instance, View view) {
+
+  }
+
+  @Override public void onRenderSuccess(WXSDKInstance instance, int width, int height) {
+
+  }
+
+  @Override public void onRefreshSuccess(WXSDKInstance instance, int width, int height) {
+
+  }
+
+  public boolean isRenderError() {
+    return renderError;
+  }
+
+  private boolean renderError = false;
+
+  @Override public void onException(WXSDKInstance instance, String errCode, String msg) {
+    if (rootView != null) {
+      View inflate =
+          LayoutInflater.from(rootView.getContext()).inflate(R.layout.net_error, rootView, false);
+      rootView.removeAllViews();
+      rootView.addView(inflate, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+          ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+    renderError = true;
   }
 }
