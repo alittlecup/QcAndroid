@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.weex.BuildConfig;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpResponse;
@@ -111,9 +112,32 @@ public final class WeexUtil {
    * 加载远程的js配置文件并保存至{@link WeexUtil {@link #jsMap}}
    */
   public static void loadJsMap() {
+    if (WeexUtil.isExistsCache("weex-version.json")) {
+      Observable.just("weex-version.json")
+          .map(new Func1<String, String>() {
+            @Override public String call(String s) {
+              return readFile2String(s, "utf-8");
+            }
+          })
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<String>() {
+            @Override public void call(String s) {
+              boolean isOpened = openString(s);
+              if (!isOpened) {
+                loadNetWork();
+              }
+            }
+          });
+    } else {
+      loadNetWork();
+    }
+  }
+
+  private static void loadNetWork() {
     WXHttpTask task = new WXHttpTask();
     if (BuildConfig.DEBUG) {
-      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
     } else {
       task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
     }
@@ -124,23 +148,7 @@ public final class WeexUtil {
         if (response != null) {
           try {
             String data = new String(response.data, "utf-8");
-            JSONObject jsonObject = JSON.parseObject(data);
-            Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
-            if (!weex_enabled) {
-              String string = jsonObject.getString("proxy_commodity.js");
-              openWeexActivity(string + "/?weex_enable=false");
-              return;
-            }
-            Set<String> keySet = jsonObject.keySet();
-            Iterator<String> iterator = keySet.iterator();
-            while (iterator.hasNext()) {
-              String next = iterator.next();
-              jsMap.put(next, jsonObject.getString(next));
-            }
-            Log.d("TAG", "onSuccess: " + jsMap.toString());
-            if (jsMap.containsKey("proxy_commodity.js")) {
-              openWeexActivity(jsMap.get("proxy_commodity.js"));
-            }
+            openString(data);
           } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
           }
@@ -148,16 +156,37 @@ public final class WeexUtil {
       }
 
       @Override public void onError(WXHttpTask task) {
-        Log.d("TAG", "onError: " + task);
+        ToastUtils.show("网络连接异常");
       }
     };
     WXHttpManager.getInstance().sendRequest(task);
   }
 
+  private static boolean openString(String content) {
+    JSONObject jsonObject = JSON.parseObject(content);
+    Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
+    if (!weex_enabled) {
+      String string = jsonObject.getString("proxy_commodity.js");
+      openWeexActivity(string + "/?weex_enable=false");
+      return true;
+    }
+    Set<String> keySet = jsonObject.keySet();
+    Iterator<String> iterator = keySet.iterator();
+    while (iterator.hasNext()) {
+      String next = iterator.next();
+      jsMap.put(next, jsonObject.getString(next));
+    }
+    if (jsMap.containsKey("proxy_commodity.js")) {
+      openWeexActivity(jsMap.get("proxy_commodity.js"));
+      return true;
+    }
+    return false;
+  }
+
   public static void loadAndSaveData() {
     WXHttpTask task = new WXHttpTask();
     if (BuildConfig.DEBUG) {
-      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
     } else {
       task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
     }
@@ -167,7 +196,19 @@ public final class WeexUtil {
         WXHttpResponse response = task.response;
         if (response != null) {
           try {
-            String data = new String(response.data, "utf-8");
+            final String data = new String(response.data, "utf-8");
+            Observable.just("weex-version.json")
+                .map(new Func1<String, Boolean>() {
+                  @Override public Boolean call(String s) {
+                    return writeFileFromString(s, data, true);
+                  }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                  @Override public void call(Boolean aBoolean) {
+                  }
+                });
             JSONObject jsonObject = JSON.parseObject(data);
             Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
             if (!weex_enabled) {
@@ -181,8 +222,8 @@ public final class WeexUtil {
                     .map(new Func1<String, Boolean>() {
                       @Override public Boolean call(String s) {
                         try {
-                          return writeFileFromString("weex-js-json",
-                              new String(task.response.data, "utf-8"), true);
+                          return writeFileFromString(s, new String(task.response.data, "utf-8"),
+                              true);
                         } catch (UnsupportedEncodingException e) {
                           e.printStackTrace();
                         }

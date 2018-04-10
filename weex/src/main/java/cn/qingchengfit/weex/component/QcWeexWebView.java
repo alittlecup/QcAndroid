@@ -97,6 +97,10 @@ public class QcWeexWebView implements IWebView {
     getWebView().loadUrl(url);
   }
 
+  @Override public void loadDataWithBaseURL(String source) {
+
+  }
+
   @Override public void reload() {
     if (getWebView() == null) return;
     getWebView().reload();
@@ -112,6 +116,9 @@ public class QcWeexWebView implements IWebView {
     getWebView().goForward();
   }
 
+  @Override public void postMessage(Object msg) {
+
+  }
 
   @JavascriptInterface public void sendDocumentHeight(final String hei, final String wid) {
     root.post(new Runnable() {
@@ -137,6 +144,10 @@ public class QcWeexWebView implements IWebView {
 
   @Override public void setOnPageListener(OnPageListener listener) {
     mOnPageListener = listener;
+  }
+
+  @Override public void setOnMessageListener(OnMessageListener listener) {
+
   }
 
   private void showProgressBar(boolean shown) {

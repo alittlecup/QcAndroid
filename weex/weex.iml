@@ -134,6 +134,7 @@
     <orderEntry type="library" name="cn.qingchengfit.imagepicker:matisse-1.0.2" level="project" />
     <orderEntry type="library" name="com.airbnb.android:lottie-2.0.0" level="project" />
     <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.1.8@jar" level="project" />
+    <orderEntry type="library" name="com.taobao.android:weex_sdk-0.18.0-beta-3" level="project" />
     <orderEntry type="library" name="com.android.support:support-media-compat-27.0.0" level="project" />
     <orderEntry type="library" name="com.amap.api:map2d:5.2.0@jar" level="project" />
     <orderEntry type="library" name="com.jakewharton.threetenabp:threetenabp-1.0.2" level="project" />
@@ -160,7 +161,6 @@
     <orderEntry type="library" name="com.squareup.phrase:phrase:1.1.0@jar" level="project" />
     <orderEntry type="library" name="com.android.databinding:library-3.1.0-alpha09" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.8.1@jar" level="project" />
-    <orderEntry type="library" name="com.taobao.android:weex_sdk-0.17.0" level="project" />
     <orderEntry type="library" name="android.arch.persistence.room:runtime-1.0.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-27.0.0" level="project" />
     <orderEntry type="library" name="android.arch.persistence:db-1.0.0" level="project" />

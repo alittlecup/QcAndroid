@@ -172,6 +172,7 @@
     <orderEntry type="library" name="android.arch.persistence:db-framework-1.0.0" level="project" />
     <orderEntry type="library" name="com.google.dagger:dagger-android-support-2.11" level="project" />
     <orderEntry type="library" name="cn.qingchengfit.imagepicker:matisse-1.0.2" level="project" />
+    <orderEntry type="library" name="com.taobao.android:weex_sdk-0.18.0-beta-3" level="project" />
     <orderEntry type="library" name="com.amap.api:map2d:5.2.0@jar" level="project" />
     <orderEntry type="library" name="org.greenrobot:eventbus:3.0.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-fragment-27.0.0" level="project" />
@@ -187,7 +188,6 @@
     <orderEntry type="library" name="javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="com.android.databinding:adapters-3.1.0-alpha09" level="project" />
     <orderEntry type="library" name="com.squareup.phrase:phrase:1.1.0@jar" level="project" />
-    <orderEntry type="library" name="com.taobao.android:weex_sdk-0.17.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-27.0.0" level="project" />
     <orderEntry type="library" name="android.arch.persistence:db-1.0.0" level="project" />
     <orderEntry type="library" name="com.google.dagger:dagger:2.11@jar" level="project" />
