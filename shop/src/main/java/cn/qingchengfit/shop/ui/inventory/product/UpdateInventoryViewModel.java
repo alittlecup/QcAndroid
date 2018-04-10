@@ -6,6 +6,7 @@ import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.databinding.ObservableLong;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
@@ -27,7 +28,7 @@ public class UpdateInventoryViewModel extends ShopBaseViewModel {
 
   public final ObservableField<String> unit = new ObservableField<>();
   public final ObservableBoolean isAdd = new ObservableBoolean(true);
-  public final ObservableInt curInventory = new ObservableInt(0);
+  public final ObservableLong curInventory = new ObservableLong(0);
   public final ObservableInt offSetInventory = new ObservableInt(0);
   public final ObservableField<String> productName = new ObservableField<>();
   public final ObservableField<String> goodName = new ObservableField<>();

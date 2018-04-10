@@ -126,14 +126,14 @@ public class ProductInventoryViewModel
     return Transformations.map(repository.qcLoadInventoryRecord(loginStatus.staff_id(), params),
         input -> {
           StringBuilder stringBuilder = new StringBuilder();
-          int total_count = 0;
+          long total_count = 0;
           if (input.stat != null && !input.stat.isEmpty()) {
             for (Record.Stat stat : input.stat) {
               stringBuilder.append(stat.getName());
               stringBuilder.append(":");
               stringBuilder.append(stat.getInventory());
               stringBuilder.append("  ");
-              total_count += Integer.valueOf(stat.getInventory());
+              total_count += Long.valueOf(stat.getInventory());
             }
           }
           total_inventory.set("总库存:" + total_count + "  " + stringBuilder.toString());

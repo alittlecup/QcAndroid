@@ -61,8 +61,13 @@ import java.util.regex.Pattern;
     super.subscribeUI();
     mViewModel.detailEvent.observe(this, aVoid -> {
       Uri uri = Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://shop/product/detail");
-      toOtherFragmentForBack(uri,
-          new ShopProductDetailPageParams().content(mViewModel.getProduct().getDesc()).build(),
+      String desc = mViewModel.getProduct().getDesc();
+      if (!TextUtils.isEmpty(desc)) {
+        if (!desc.contains("<p>")) {
+          desc = desc + "<p> </p>";
+        }
+      }
+      toOtherFragmentForBack(uri, new ShopProductDetailPageParams().content(desc).build(),
           TO_PRODUCT_DETAIL);
     });
     mViewModel.saveProductEvent.observe(this, aVoid -> {
@@ -124,7 +129,16 @@ import java.util.regex.Pattern;
           if (!detail.contains("<p>")) {
             mBinding.productDesc.setContent("图片");
           } else {
-            mBinding.productDesc.setContent(delHtml(detail));
+            String s = delHtml(detail);
+            if (TextUtils.isEmpty(s)) {
+              mBinding.productDesc.setContent("图片");
+            } else {
+              if (s.length() > 5) {
+                mBinding.productDesc.setContent(s.substring(0, 5) + "...");
+              } else {
+                mBinding.productDesc.setContent(s);
+              }
+            }
           }
           mViewModel.getProduct().setDesc(detail);
         } else {
@@ -134,7 +148,6 @@ import java.util.regex.Pattern;
       }
     }
   }
-
 
   private String delHtml(String content) {
     String regEx_html = "<p>(.*?)</p>";

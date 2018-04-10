@@ -18,5 +18,5 @@ public interface IInventoryRecordData {
 
   int getOffset();
 
-  int getInventorCount();
+  long getInventorCount();
 }

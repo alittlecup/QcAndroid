@@ -366,12 +366,12 @@ public class Product
     return total_sales;
   }
 
-  @Override public int getProductInventory() {
+  @Override public long getProductInventory() {
     return getTotalInvetoryCount();
   }
 
-  private int getTotalInvetoryCount() {
-    int total = 0;
+  private long getTotalInvetoryCount() {
+    long total = 0;
     if (goods != null && !goods.isEmpty()) {
       for (Good good : goods) {
         total += good.getInventory();

@@ -62,7 +62,7 @@ public class WxPageActivity extends WxBaseActivity {
     member.put("g_shop_name", g_shop_name);
     member.put("g_shop_phone", g_shop_phone);
     member.put("g_shop_logo", g_shop_logo);
-    member.put("g_brand_id", g_brand_id);
+    member.put("g_cloud_brand_id", g_brand_id);
     member.put("g_brand_name", g_brand_name);
     member.put("g_fitness_host", subString(gymWrapper.getCoachService().getHost()));
     member.put("g_session_value", PreferenceUtils.getPrefString(this, "session_id", ""));

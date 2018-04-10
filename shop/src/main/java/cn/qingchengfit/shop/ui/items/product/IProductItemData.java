@@ -18,7 +18,7 @@ public interface IProductItemData {
 
   int getProductSales();
 
-  int getProductInventory();
+  long getProductInventory();
 
   int getProductPriority();
 

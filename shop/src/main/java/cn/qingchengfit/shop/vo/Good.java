@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Good extends BaseObservable implements Parcelable {
   private String id;
-  private Integer inventory;
+  private Long inventory;
   private String created_at;
   private String name;
   private List<Rule> rule;
@@ -50,7 +50,7 @@ public class Good extends BaseObservable implements Parcelable {
     this.id = id;
   }
 
-  public Integer getInventory() {
+  public Long getInventory() {
     return inventory;
   }
 
@@ -58,7 +58,7 @@ public class Good extends BaseObservable implements Parcelable {
     return String.valueOf(inventory == null ? "" : inventory);
   }
 
-  public void setInventory(Integer inventory) {
+  public void setInventory(Long inventory) {
     this.inventory = inventory;
   }
 
@@ -67,15 +67,14 @@ public class Good extends BaseObservable implements Parcelable {
     if (!StringUtils.isEmpty(inventory)) {
       try {
         if (getInventoryStr().equals(inventory)) return;
-        this.inventory = Integer.valueOf(inventory);
+        this.inventory = Long.valueOf(inventory);
         if (this.inventory > 9999) {
           this.inventory =
-              Integer.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
+              Long.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
           ToastUtils.show("库存数量不能大于9999");
         }
       } catch (NumberFormatException ex) {
-        this.inventory =
-            Integer.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
+        this.inventory = Long.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
         ToastUtils.show("请输入正确整数库存");
       }
       notifyPropertyChanged(BR.inventoryStr);
@@ -215,7 +214,7 @@ public class Good extends BaseObservable implements Parcelable {
 
   protected Good(Parcel in) {
     this.id = in.readString();
-    this.inventory = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.inventory = (Long) in.readValue(Long.class.getClassLoader());
     this.created_at = in.readString();
     this.name = in.readString();
     this.rule = new ArrayList<Rule>();

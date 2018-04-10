@@ -41,7 +41,7 @@ public class Record implements IInventoryRecordData {
   private int id;
   private int offset;
   @RecordAction private int action_type;
-  private int inventory;
+  private long inventory;
   private String created_at;
   private CreateBy created_by;
 
@@ -95,7 +95,7 @@ public class Record implements IInventoryRecordData {
     return offset;
   }
 
-  @Override public int getInventorCount() {
+  @Override public long getInventorCount() {
     return inventory;
   }
 
@@ -111,11 +111,11 @@ public class Record implements IInventoryRecordData {
     this.action_type = action_type;
   }
 
-  public int getInventory() {
+  public long getInventory() {
     return inventory;
   }
 
-  public void setInventory(int inventory) {
+  public void setInventory(long inventory) {
     this.inventory = inventory;
   }
 

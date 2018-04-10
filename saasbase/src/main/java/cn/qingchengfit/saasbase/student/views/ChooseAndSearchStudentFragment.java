@@ -159,7 +159,7 @@ import javax.inject.Inject;
    */
   @OnClick(R2.id.btn_add_student) public void onBtnAddStudentClicked() {
     if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-      routeTo(AppUtils.getRouterUri(getContext(), "student/add/"), null);
+      routeTo(AppUtils.getRouterUri(getContext(), "staff/add/"), null);
     }else{
       DialogUtils.showAlert(getContext(), getResources().getString(R.string.alert_permission_forbid));
     }

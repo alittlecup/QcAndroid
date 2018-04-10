@@ -914,22 +914,12 @@
     </activity>
 
 
-    <activity
-        android:name=".student.StaffStudentActivity"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
+    <!--<activity-->
+        <!--android:name=".student.StaffStudentActivity"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--&gt;-->
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data
-            android:host="student"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
+    <!--</activity>-->
 
   </application>
 

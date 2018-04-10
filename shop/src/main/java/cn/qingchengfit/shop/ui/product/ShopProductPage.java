@@ -379,7 +379,7 @@ import javax.inject.Inject;
           trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_PRICES + i,
               Double.valueOf(good.getRmbPrices()));
         }
-        Integer inventory = good.getInventory();
+        Long inventory = good.getInventory();
         if (inventory != null) {
           trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_INVENTORY + i,
               Double.valueOf(good.getInventory()));

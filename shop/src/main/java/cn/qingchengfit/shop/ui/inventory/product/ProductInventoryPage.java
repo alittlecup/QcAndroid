@@ -101,6 +101,9 @@ import javax.inject.Inject;
   }
 
   private void initToolbar(String title) {
+    if (title.length() > 5) {
+      title = title.substring(0, 5) + "...";
+    }
     mBinding.setToolbarModel(new ToolbarModel(title));
   }
 

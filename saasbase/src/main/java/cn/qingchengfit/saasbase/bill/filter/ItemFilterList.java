@@ -131,6 +131,7 @@ public class ItemFilterList extends AbstractFlexibleItem<ItemFilterList.FilterLi
         }
       }
     } else {
+      itemList.clear();
       for (Content content : filterModel.content) {
         itemList.add(new ItemFilterSale(content.extra.user));
       }
