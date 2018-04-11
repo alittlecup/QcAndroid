@@ -171,7 +171,7 @@ import javax.inject.Inject;
       }).show();
     });
     mBinding.buttonSale.setOnClickListener(v -> {
-      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
@@ -185,7 +185,7 @@ import javax.inject.Inject;
     ToolbarModel toolbarModel = new ToolbarModel(getString(R.string.product_detail));
     toolbarModel.setMenu(R.menu.menu_edit);
     toolbarModel.setListener(item -> {
-      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
+      if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return false;
       }

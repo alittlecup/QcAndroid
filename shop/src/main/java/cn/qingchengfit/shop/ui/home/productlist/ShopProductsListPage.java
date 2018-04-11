@@ -66,7 +66,7 @@ public class ShopProductsListPage
       if (items == null || items.isEmpty()) {
         setEmptyView();
       } else {
-        mViewModel.items.set(items);
+        mViewModel.items.set(new ArrayList<>(items));
       }
     });
 
@@ -99,15 +99,16 @@ public class ShopProductsListPage
     initRecyclerView();
     if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST)) {
       loadData();
+      initRxbus();
+      initSearchProduct();
     } else {
-      List<CommonNoDataItem> items = new ArrayList<>();
+      List<AbstractFlexibleItem> items = new ArrayList<>();
       items.add(new CommonNoDataItem(R.drawable.ic_403, getString(R.string.no_access),
           getString(R.string.no_current_page_permission)));
-      adapter.updateDataSet(items);
+      mViewModel.items.set(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
     }
-    initRxbus();
-    initSearchProduct();
+
     return mBinding;
   }
 

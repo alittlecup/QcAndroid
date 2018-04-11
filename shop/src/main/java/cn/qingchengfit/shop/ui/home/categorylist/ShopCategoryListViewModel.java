@@ -15,6 +15,7 @@ import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.category.CategoryListItem;
 import cn.qingchengfit.shop.ui.items.category.ICategotyItemData;
 import cn.qingchengfit.shop.vo.Category;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class ShopCategoryListViewModel
     extends FlexibleViewModel<List<Category>, CategoryListItem, Map<String, Object>>
     implements CategotyItemClickListener {
 
-  public final ObservableField<List<CategoryListItem>> items = new ObservableField<>();
+  public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
   private final ActionLiveEvent addEvent = new ActionLiveEvent();
   private final MutableLiveData<Category> deleteEvent = new MutableLiveData<>();
 

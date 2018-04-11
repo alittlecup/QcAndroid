@@ -95,27 +95,24 @@ public class ShopInventoryListPage
     mBinding = PageInventoryListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
-    initSearchProduct();
     if (permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY)) {
       mViewModel.loadSource(mViewModel.getParams());
       mBinding.allInventoryRecord.setVisibility(View.GONE);
+      initSearchProduct();
+      initRxbus();
     } else {
-      List<CommonNoDataItem> items = new ArrayList<>();
+      List<AbstractFlexibleItem> items = new ArrayList<>();
       mBinding.allInventoryRecord.setVisibility(View.VISIBLE);
-      items.add(new CommonNoDataItem(R.drawable.ic_403, getString(R.string.no_access),
-          getString(R.string.no_current_page_permission)));
-      adapter.updateDataSet(items);
+      items.add(
+          new CommonNoDataItem(R.drawable.vd_img_empty_universe, getString(R.string.no_access),
+              getString(R.string.no_current_page_permission)));
+      mViewModel.items.set(items);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
       mBinding.swipeRefresh.setEnabled(false);
     }
     mBinding.allInventoryRecord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
     mBinding.allInventoryRecord.getPaint().setAntiAlias(true);
-    mBinding.allInventoryRecord.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        mViewModel.getShowAllRecord().call();
-      }
-    });
-    initRxbus();
+    mBinding.allInventoryRecord.setOnClickListener(v -> mViewModel.getShowAllRecord().call());
     return mBinding;
   }
 
@@ -170,6 +167,7 @@ public class ShopInventoryListPage
   @Override public void onLeave() {
     SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORY_LEAVE)
         .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-            System.currentTimeMillis() / 1000 - startTime).commit(getContext());
+            System.currentTimeMillis() / 1000 - startTime)
+        .commit(getContext());
   }
 }

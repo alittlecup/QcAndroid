@@ -72,7 +72,7 @@ public class ShopCategoryListPage
       if (items == null || items.isEmpty()) {
         setEmptyView();
       } else {
-        mViewModel.items.set(items);
+        mViewModel.items.set(new ArrayList<>(items));
         mBinding.swipeRefresh.setRefreshing(false);
       }
     });
@@ -96,18 +96,20 @@ public class ShopCategoryListPage
       Bundle savedInstanceState) {
     mBinding = PageCategoryListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
-    initSearchProduct();
     initRecyclerView();
     if (permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY)) {
       mViewModel.loadSource(new HashMap<>());
+      initSearchProduct();
+      initRxbus();
     } else {
-      List<CommonNoDataItem> items = new ArrayList<>();
-      items.add(new CommonNoDataItem(R.drawable.ic_403, getString(R.string.no_access),
-          getString(R.string.no_current_page_permission)));
-      adapter.updateDataSet(items);
+      List<AbstractFlexibleItem> items = new ArrayList<>();
+      items.add(
+          new CommonNoDataItem(R.drawable.vd_img_empty_universe, getString(R.string.no_access),
+              getString(R.string.no_current_page_permission)));
+      mViewModel.items.set(items);
+      mBinding.recyclerview.setBackgroundResource(R.color.bg_white);
       mBinding.fragmentMark.setVisibility(View.VISIBLE);
     }
-    initRxbus();
     return mBinding;
   }
 
@@ -167,6 +169,7 @@ public class ShopCategoryListPage
   @Override public void onLeave() {
     SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_CATEGORY_LEAVE)
         .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-            System.currentTimeMillis() / 1000 - startTime).commit(getContext());
+            System.currentTimeMillis() / 1000 - startTime)
+        .commit(getContext());
   }
 }

@@ -16,6 +16,7 @@ import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ShopOrderBy;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ public class ShopProductsViewModel
   }
   public final ObservableBoolean isLoading=new ObservableBoolean(false);
   private final ActionLiveEvent productEvent = new ActionLiveEvent();
-  public final ObservableField<List<ProductListItem>> items = new ObservableField<>();
+  public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;

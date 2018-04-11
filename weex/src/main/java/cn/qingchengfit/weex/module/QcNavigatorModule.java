@@ -24,6 +24,7 @@ public class QcNavigatorModule extends WXNavigatorModule {
   }
   @JSMethod(uiThread = true)
   public void go(String path,String options, JSCallback callback) {
+    // TODO: 2018/4/11 直接传路径
     String schema= AppUtils.getCurAppSchema(mWXSDKInstance.getContext());
     if("select_member".equals(path)){
       JSONObject jsonObject = JSON.parseObject(options);
@@ -69,8 +70,7 @@ public class QcNavigatorModule extends WXNavigatorModule {
           });
     }
     curCallback=callback;
-
-
   }
+  
 
 }

@@ -134,6 +134,7 @@ public final class WeexUtil {
     }
   }
 
+  // TODO: 2018/4/11 修改路径和需要加载的js文件的key 外部传入
   private static void loadNetWork() {
     WXHttpTask task = new WXHttpTask();
     if (BuildConfig.DEBUG) {
