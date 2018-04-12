@@ -26,8 +26,7 @@ import com.taobao.weex.common.WXException;
 
 public class WeexDelegate {
   private static InitConfig defaultInitConfig =
-      new InitConfig.Builder().setImgAdapter(new ImageAdapter())
-          .build();
+      new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
   private static IActivityNavBarSetter activityNavBarSetter = new WxActivityNavBarSetter();
 
   /**

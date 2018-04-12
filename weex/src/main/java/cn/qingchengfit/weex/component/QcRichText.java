@@ -28,11 +28,13 @@ import com.taobao.weex.adapter.URIAdapter;
 import com.taobao.weex.annotation.Component;
 import com.taobao.weex.common.Constants;
 import com.taobao.weex.dom.WXDomObject;
+import com.taobao.weex.ui.ComponentCreator;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
 import com.taobao.weex.ui.view.IWebView;
 import com.taobao.weex.utils.WXUtils;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,25 +46,24 @@ public class QcRichText extends WXComponent {
   public static final String GO_FORWARD = "goForward";
   public static final String RELOAD = "reload";
   protected IWebView mWebView;
-  private WXVContainer mParent;
 
-  @Deprecated
-  public QcRichText(WXSDKInstance instance, WXDomObject dom, WXVContainer parent, String instanceId,
-      boolean isLazy) {
-    this(instance, dom, parent, isLazy);
+  public QcRichText(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
+    super(instance, dom, parent);
+  }
+  public static class Ceator implements ComponentCreator {
+    public WXComponent createInstance(WXSDKInstance instance, WXDomObject node, WXVContainer parent) throws IllegalAccessException,
+        InvocationTargetException, InstantiationException {
+      return new QcRichText(instance,node,parent);
+    }
   }
 
-  public QcRichText(WXSDKInstance instance, WXDomObject dom, WXVContainer parent, boolean isLazy) {
-    super(instance, dom, parent, isLazy);
-    mParent = parent;
-    createWebView();
-  }
 
   protected void createWebView() {
     mWebView = new QcWeexWebView(getContext());
   }
 
   @Override protected View initComponentHostView(@NonNull Context context) {
+    createWebView();
     mWebView.setOnErrorListener(new IWebView.OnErrorListener() {
       @Override public void onError(String type, Object message) {
         fireEvent(type, message);
