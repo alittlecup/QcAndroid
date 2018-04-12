@@ -34,7 +34,7 @@ import javax.inject.Inject;
   @Override protected void subscribeUI() {
     mViewModel.getAddInventoryEvent().observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission);
+        showAlert(R.string.sorry_for_no_permission_shop);
         return;
       }
       routeTo("/update/inventory", new UpdateInventoryPageParams().action(UpdateInventoryPage.ADD)
@@ -43,7 +43,7 @@ import javax.inject.Inject;
     });
     mViewModel.getReduceInventoryEvent().observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission);
+        showAlert(R.string.sorry_for_no_permission_shop);
         return;
       }
       routeTo("/update/inventory",

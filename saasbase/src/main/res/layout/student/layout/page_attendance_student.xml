@@ -84,7 +84,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    app:data='@{StudentBusinessUtils.transformBean2DataByType(viewModel.datas,viewModel.offDay)}'
                     app:markViewUnit='@{"人次"}' />
 
                 <include layout="@layout/divider_grey_margin" />

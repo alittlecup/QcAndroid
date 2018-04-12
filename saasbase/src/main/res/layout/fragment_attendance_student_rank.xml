@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/qc_text_black"
                     android:textSize="12dp"
-                    android:text="@{fragment.typeToString(fragment.sortype.get())}"
+                    android:text="@{fragment.typeToString(fragment.sortype)}"
                     tools:text="出勤天数" />
 
                 <ImageView
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:src="@{fragment.revert.get()?@drawable/ic_arrow_upward_black_24dp:@drawable/ic_arrow_downward_black}" />
+                    android:src="@{fragment.revert?@drawable/ic_arrow_upward_black_24dp:@drawable/ic_arrow_downward_black}" />
 
             </LinearLayout>
         </LinearLayout>

@@ -90,6 +90,7 @@
             android:id="@+id/lineChar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:datas="@{StudentBusinessUtils.transformBean2DataByType(viewModel.datas,viewModel.getOffSetDays(),viewModel.getDataType())}" />
+            app:datas="@{viewModel.lineData}"
+            />
     </LinearLayout>
 </layout>

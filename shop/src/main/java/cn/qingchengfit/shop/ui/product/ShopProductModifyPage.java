@@ -163,7 +163,7 @@ import javax.inject.Inject;
     mBinding.buttonSale.setText(productStatus ? "下架" : "上架");
     mBinding.buttonDelete.setOnClickListener(v -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_DELETE)) {
-        showAlert(R.string.sorry_for_no_permission);
+        showAlert(R.string.sorry_for_no_permission_shop);
         return;
       }
       ViewUtil.instanceDelDialog(getContext(), "确定删除商品？", (dialog, which) -> {
@@ -172,7 +172,7 @@ import javax.inject.Inject;
     });
     mBinding.buttonSale.setOnClickListener(v -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission);
+        showAlert(R.string.sorry_for_no_permission_shop);
         return;
       }
       mViewModel.changeProductSaleStatus(!productStatus);
@@ -186,7 +186,7 @@ import javax.inject.Inject;
     toolbarModel.setMenu(R.menu.menu_edit);
     toolbarModel.setListener(item -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission);
+        showAlert(R.string.sorry_for_no_permission_shop);
         return false;
       }
       if (item.getTitle().equals("编辑")) {

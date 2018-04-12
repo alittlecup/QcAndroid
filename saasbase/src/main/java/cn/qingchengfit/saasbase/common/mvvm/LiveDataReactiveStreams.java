@@ -103,9 +103,9 @@ public class LiveDataReactiveStreams {
             ToastUtils.show(ex.getMessage());
           }
         } else {
-          ToastUtils.show(ex.getMessage());
+          ToastUtils.show("网络异常");
         }
-        RxBus.getBus().post(SwipeRefreshLayout.class,false);
+        RxBus.getBus().post(SwipeRefreshLayout.class, false);
       }
 
       @Override public void onComplete() {
