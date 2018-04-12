@@ -9,6 +9,7 @@ import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
+import cn.qingchengfit.utils.ToastUtils;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -74,7 +75,7 @@ public class SiteDetailPresenter extends BasePresenter {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     view.onDelSucceed();
                 } else {
-                    // ToastUtils.logHttp(qcResponse);
+                     ToastUtils.show(qcResponse.getMsg());
                     view.onFailed();
                 }
             }
@@ -90,7 +91,7 @@ public class SiteDetailPresenter extends BasePresenter {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     view.onFixSucceed();
                 } else {
-                    // ToastUtils.logHttp(qcResponse);
+                    ToastUtils.show(qcResponse.getMsg());
                     view.onFailed();
                 }
             }
