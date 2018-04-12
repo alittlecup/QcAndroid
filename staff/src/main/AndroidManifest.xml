@@ -59,13 +59,13 @@
 
   <application
       android:name=".App"
-      android:allowBackup="true"
+      android:allowBackup="false"
       android:icon="@mipmap/ic_launcher"
       android:label="${APP_NAME}"
       android:screenOrientation="portrait"
       android:supportsRtl="true"
       android:theme="@style/QcAppTheme"
-      tools:replace="android:label"
+      tools:replace="label,allowBackup"
       android:taskAffinity="cn.qingchengfit.staff"
       >
     <meta-data

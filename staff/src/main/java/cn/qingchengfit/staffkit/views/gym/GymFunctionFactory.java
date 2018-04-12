@@ -493,6 +493,11 @@ public class GymFunctionFactory {
       case MODULE_MSG:
         break;
       case MODULE_GYM_INFO:
+        if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
+            PermissionServerUtils.STUDIO_LIST)) {
+          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+          return;
+        }
         Intent toGymInfo = new Intent(fragment.getActivity(), GymActivity.class);
         toGymInfo.putExtra(GymActivity.GYM_TO, GymActivity.GYM_INFO);
         fragment.startActivity(toGymInfo);
