@@ -98,9 +98,10 @@ public class BatchDetailCommonView extends BaseFragment {
   private boolean numHasChange = false;//人数已经修改
   private String mSource;
   private boolean hasOrder;
-  private boolean isPrivate = true;
+  private boolean isPrivate = true; //true -私教，false-团课
 
-  public static BatchDetailCommonView newInstance(Course course, Staff trainer,String source, boolean isPrivate) {
+  public static BatchDetailCommonView newInstance(Course course, Staff trainer, String source,
+      boolean isPrivate) {
     Bundle args = new Bundle();
     args.putParcelable("course", course);
     args.putParcelable("trainer", trainer);
@@ -125,65 +126,67 @@ public class BatchDetailCommonView extends BaseFragment {
       }
     }
     RxBus.getBus()
-      .register(EventPayOnline.class)
-      .compose(bindToLifecycle())
-      .compose(doWhen(FragmentEvent.CREATE_VIEW))
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventPayOnline>() {
-        @Override public void onNext(EventPayOnline e) {
-          payOnlineRule = e.getRule();
-          openPayOnline(e.getRule() != null);
-        }
-      });
+        .register(EventPayOnline.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventPayOnline>() {
+          @Override public void onNext(EventPayOnline e) {
+            payOnlineRule = e.getRule();
+            openPayOnline(e.getRule() != null);
+          }
+        });
     RxBus.getBus()
-      .register(EventCourse.class)
-      .compose(bindToLifecycle())
-      .compose(doWhen(FragmentEvent.CREATE_VIEW))
-      .observeOn(AndroidSchedulers.mainThread())
-      .filter(eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(eventCourse.getSrc()))
-      .subscribe(new BusSubscribe<EventCourse>() {
-        @Override public void onNext(EventCourse course) {
-          BatchDetailCommonView.this.course = course.getCourse();
-          setCourse(course.getCourse());
-        }
-      });
+        .register(EventCourse.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(
+            eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(
+                eventCourse.getSrc()))
+        .subscribe(new BusSubscribe<EventCourse>() {
+          @Override public void onNext(EventCourse course) {
+            BatchDetailCommonView.this.course = course.getCourse();
+            setCourse(course.getCourse());
+          }
+        });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(isPrivate ? R.layout.fragment_batch_detail_common_private
-      : R.layout.fragment_batch_detail_common_group, container, false);
+        : R.layout.fragment_batch_detail_common_group, container, false);
     unbinder = ButterKnife.bind(this, view);
     setCourse(course);
     setTrainer(trainer);
     RxBusAdd(EventBatchPayCard.class).onBackpressureBuffer()
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventBatchPayCard>() {
-        @Override public void onNext(EventBatchPayCard eventBatchPayCard) {
-          numHasChange = false;
-          setCardRule(eventBatchPayCard.getRules(), null);
-        }
-      });
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventBatchPayCard>() {
+          @Override public void onNext(EventBatchPayCard eventBatchPayCard) {
+            numHasChange = false;
+            setCardRule(eventBatchPayCard.getRules(), null);
+          }
+        });
     RxBusAdd(EventStaffWrap.class).onBackpressureDrop()
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventStaffWrap>() {
-        @Override public void onNext(EventStaffWrap eventStaffWrap) {
-          setTrainer(eventStaffWrap.getStaff());
-        }
-      });
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventStaffWrap>() {
+          @Override public void onNext(EventStaffWrap eventStaffWrap) {
+            setTrainer(eventStaffWrap.getStaff());
+          }
+        });
     RxBusAdd(EventSiteSelected.class).onBackpressureDrop()
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventSiteSelected>() {
-        @Override public void onNext(EventSiteSelected eventSiteSelected) {
-          setSpace(eventSiteSelected.getSpaces());
-        }
-      });
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventSiteSelected>() {
+          @Override public void onNext(EventSiteSelected eventSiteSelected) {
+            setSpace(eventSiteSelected.getSpaces());
+          }
+        });
 
     elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
     elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
       //if (b && getOrderStudentCount() > 1){
 
-        payCard.setContent(b?"已开启多人支持，请重新设置":"已关闭多人支持，请重新设置");
+      payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
       //}
     });
     elPay.setOnHeaderTouchListener((view1, motionEvent) -> {
@@ -193,16 +196,21 @@ public class BatchDetailCommonView extends BaseFragment {
             if (hasOrder) {
               showAlert(R.string.alert_batch_has_ordered);
               return true;
-            } else return false;
+            } else {
+              return false;
+            }
           } else {
-            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey("course_batch_pay")).show(getFragmentManager(), "");
+            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey("course_batch_pay"))
+                .show(getFragmentManager(), "");
             return true;
           }
-        }else {// 教练App
-          UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(),"");
+        } else {// 教练App
+          UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
           return true;
         }
-      }else return false;
+      } else {
+        return false;
+      }
     });
     return view;
   }
@@ -250,9 +258,14 @@ public class BatchDetailCommonView extends BaseFragment {
     coach.setContent(staff.getUsername());
     queryTemple();
   }
-  protected void queryTemple(){
-    if (trainer != null  && this.course != null && !CmStringUtils.isEmpty(this.course.getId()) && listener != null)
+
+  protected void queryTemple() {
+    if (trainer != null
+        && this.course != null
+        && !CmStringUtils.isEmpty(this.course.getId())
+        && listener != null) {
       listener.onBatchTemple();
+    }
   }
 
   public String getTrainerId() {
@@ -277,10 +290,11 @@ public class BatchDetailCommonView extends BaseFragment {
     if (orderSutdentCount != null) orderSutdentCount.setContent(Integer.toString(x));
   }
 
-  public void setMutlSupport(boolean support){
+  public void setMutlSupport(boolean support) {
     elMultiSupport.setExpanded(support);
     numHasChange = false;
   }
+
   public boolean mutilSupportble() {
     return elMultiSupport != null && elMultiSupport.isExpanded();
   }
@@ -322,7 +336,7 @@ public class BatchDetailCommonView extends BaseFragment {
       rulesPayCards.addAll(rules);
       List<String> cardids = new ArrayList<>();
       for (Rule rule : rules) {
-        if (!cardids.contains(rule.card_tpl_id)){
+        if (!cardids.contains(rule.card_tpl_id)) {
           cardids.add(rule.card_tpl_id);
         }
       }
@@ -360,7 +374,8 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改课程
    */
   @OnClick(R2.id.course_layout) public void onCourseLayoutClicked() {
-    routeTo("course", "/choose/", CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
+    routeTo("course", "/choose/",
+        CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
   }
 
   /**
@@ -369,18 +384,16 @@ public class BatchDetailCommonView extends BaseFragment {
   @OnClick(R2.id.coach) public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0) return;
     routeTo("staff", "/trainer/choose/",
-      new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
+        new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
   }
-
-
 
   /**
    * 更改场地
    */
   @OnClick(R2.id.space) public void onSpaceClicked() {
     routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(isPrivate)
-      .selectIds(ListUtils.getIdList(spaces))
-      .build());
+        .selectIds(ListUtils.getIdList(spaces))
+        .build());
   }
 
   /**
@@ -388,22 +401,22 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   @OnClick(R2.id.order_sutdent_count) public void onOrderSutdentCountClicked() {
     new DialogList(getContext()).list(
-      isPrivate ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
-      (parent, view, position, id) -> {
-        int before = 8;
-        try {
-          before = Integer.parseInt(orderSutdentCount.getContent());
-        } catch (Exception e) {
-          LogUtil.e("排课时上课人数不为int类型");
-        }
-        if (before != (position + 1)) {
-          orderSutdentCount.setContent(Integer.toString(position + 1));
-          if (mutilSupportble()) {
-            numHasChange = true;
-            payCard.setContent("已修改可约人数，请重新设置");
+        isPrivate ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
+        (parent, view, position, id) -> {
+          int before = 8;
+          try {
+            before = Integer.parseInt(orderSutdentCount.getContent());
+          } catch (Exception e) {
+            LogUtil.e("排课时上课人数不为int类型");
           }
-        }
-      }).title("选择人数").show();
+          if (before != (position + 1)) {
+            orderSutdentCount.setContent(Integer.toString(position + 1));
+            if (mutilSupportble()) {
+              numHasChange = true;
+              payCard.setContent("已修改可约人数，请重新设置");
+            }
+          }
+        }).title("选择人数").show();
   }
 
   /**
@@ -411,21 +424,29 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   @OnClick(R2.id.pay_online) public void onPayOnlineClicked() {
     routeTo("/batch/pay/online/",
-      new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
-        .maxPeople(getOrderStudentCount())
-        .multiPrice(elMultiSupport.isExpanded())
-        .build());
+        new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
+            .maxPeople(getOrderStudentCount())
+            .multiPrice(elMultiSupport.isExpanded())
+            .build());
   }
 
   /**
    * 卡支付设置
    */
   @OnClick(R2.id.pay_card) public void onPayCardClicked() {
+    boolean isAdd ;
+    if (mSource != null && mSource.contains("add")) {
+      isAdd = true;
+    } else {
+      isAdd = false;
+    }
     routeTo("card", "/card/batch/choose/", new BatchPayCardParams().rules(rulesPayCards)
-      .cardTplBatchShips(cardtplships)
-      .multiPrice(mutilSupportble())
-      .maxCount(getOrderStudentCount())
-      .build());
+        .isPrivate(isPrivate)
+        .isAdd(isAdd)
+        .cardTplBatchShips(cardtplships)
+        .multiPrice(mutilSupportble())
+        .maxCount(getOrderStudentCount())
+        .build());
   }
 
   public void onPayCardRules(int size) {
@@ -463,7 +484,7 @@ public class BatchDetailCommonView extends BaseFragment {
     this.listener = listener;
   }
 
-  public interface BatchTempleListener{
+  public interface BatchTempleListener {
     public void onBatchTemple();
   }
 }

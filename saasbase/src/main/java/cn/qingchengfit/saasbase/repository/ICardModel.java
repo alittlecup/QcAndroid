@@ -62,7 +62,7 @@ public interface ICardModel {
   /**
    * 购卡时 使用不被权限控制的卡
    */
-  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission();
+  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(HashMap<String,Object> params);
 
   /**
    * 获取卡种类详情

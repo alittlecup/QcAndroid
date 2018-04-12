@@ -56,8 +56,9 @@ public class CardModel implements ICardModel {
   }
 
   @Deprecated @Override
-  public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
-    return null;
+  public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(HashMap<String,Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return posApi.qcGetCardTplsNoPermission(loginStatus.staff_id(),params);
   }
 
   @Override public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {

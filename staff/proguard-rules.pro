@@ -658,3 +658,5 @@
     }
 -keep class com.taobao.weex.view.**{*;}
 -keep class com.taobao.weex.module.**{*;}
+-keep public class * extends com.taobao.weex.common.WXModule{*;}
+-keep class * implements com.taobao.weex.ui.IExternalComponentGetter{*;}

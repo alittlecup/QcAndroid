@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -11,6 +12,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,9 +32,10 @@ public class CardTypeListPresenter extends BasePresenter {
 
   /**
    * 选择某个卡种类
+   *
    * @param cardTpl 选择某个卡种类
    */
-  public void chooseOneCardTpl(CardTpl cardTpl){
+  public void chooseOneCardTpl(CardTpl cardTpl) {
     selectedData.cardcategory = cardTpl.type;
     selectedData.cardtplId = cardTpl.id;
   }
@@ -92,10 +95,27 @@ public class CardTypeListPresenter extends BasePresenter {
           }
         }, new NetWorkThrowable()));
   }
-  public void queryCardTypeNoNeedPermission(){
-    queryCardtypeList();//todo 切换成method接口
-  }
 
+  public void queryCardTypeNoNeedPermission(boolean isPrivate, boolean isAdd) {
+    HashMap<String, Object> params = new HashMap<>();
+
+    params.put("method", isAdd ? "post" : "put");//add -post ，edit= put
+    params.put("key", isPrivate ? PermissionServerUtils.PRIARRANGE_CALENDAR
+        : PermissionServerUtils.TEAMARRANGE_CALENDAR); //isprivate PRIARRANGE_CALENDAR， false  =TEAMARRANGE_CALENDAR
+    RxRegiste(cardModel.qcGetCardTplsPermission(params)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(qcResponse -> {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            cardTpls.clear();
+            cardTpls.addAll(qcResponse.data.card_tpls);
+            view.onDoneCardtplList();
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        }, new NetWorkThrowable()));
+  }
 
   public interface MVPView extends CView {
     void onDoneCardtplList();

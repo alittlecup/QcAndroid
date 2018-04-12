@@ -46,6 +46,8 @@ import javax.inject.Inject;
   @Need ArrayList<CardTplBatchShip> cardTplBatchShips;
   @Need Integer maxCount = 1;
   @Need Boolean multiPrice;
+  @Need Boolean isPrivate;//true- 私教， false 团课
+  @Need Boolean isAdd; //true -添加，false 编辑
 
   TextView toolbarTitile;
   Toolbar toolbar;
@@ -306,6 +308,6 @@ import javax.inject.Inject;
   }
 
   @Override public void onRefresh() {
-    presenter.queryCardTypeNoNeedPermission();
+    presenter.queryCardTypeNoNeedPermission(isPrivate,isAdd);
   }
 }
