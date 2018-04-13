@@ -109,6 +109,7 @@ public class MainMsgFragment extends BaseFragment
   private ConversationFragment conversationFragment;
   private int unReadNoti = 0;
   private boolean init = false;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     String ds =
@@ -213,6 +214,7 @@ public class MainMsgFragment extends BaseFragment
       addConversation.setVisibility(View.GONE);
     }
   }
+
   public void refresh() {
     if (loginStatus.isLogined()) {
       presenter.querySimpleList(ConstantNotification.getNotiQueryJson(getContext()));
@@ -267,8 +269,8 @@ public class MainMsgFragment extends BaseFragment
                         @NonNull DialogAction which) {
                       conversationFragment.deleteConversationItem(i);
                       checkNoInfo();
-              ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
-            }
+                      ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
+                    }
                   }).show();
             }
 
@@ -282,7 +284,9 @@ public class MainMsgFragment extends BaseFragment
           .replace(R.id.frame_chat, conversationFragment, "chat")
           .commitAllowingStateLoss();
     } else {
-      getChildFragmentManager().beginTransaction().show(conversationFragment).commitAllowingStateLoss();
+      getChildFragmentManager().beginTransaction()
+          .show(conversationFragment)
+          .commitAllowingStateLoss();
     }
 
     if (getActivity() instanceof MainActivity) {
@@ -352,13 +356,12 @@ public class MainMsgFragment extends BaseFragment
       unReadNoti = 0;
       for (int i = 0; i < list.size(); i++) {
         NotificationMsg msg = list.get(i).notification != null ? list.get(i).notification : null;
-        if (list.get(i).unread > 0 && msg !=null ) unReadNoti++;
+        if (list.get(i).unread > 0 && msg != null) unReadNoti++;
         if (msg == null || (msg.getId() != null && notificationDeleted.contains(
             Long.toString(msg.getId())))) {
           //如果被删除 就不展示4
         } else {
-          items.add(new SystemMsgItem(list.get(i).key,
-              list.get(i)));
+          items.add(new SystemMsgItem(list.get(i).key, list.get(i)));
         }
       }
       NotificationGlance recruitNoty = new NotificationGlance();
@@ -403,18 +406,20 @@ public class MainMsgFragment extends BaseFragment
   }
 
   @Override public boolean onItemClick(int i) {
+    if (items.isEmpty()) return false;
     if (items.get(i) instanceof SystemMsgItem) {
       String type = ((SystemMsgItem) items.get(i)).getType();
-      if (!TextUtils.equals(type,ConstantNotification.COMMENT_NOTIFICATION_STR) && !TextUtils.equals(type,ConstantNotification.JOB_NOTIFICATION_STR)) {
+      if (!TextUtils.equals(type, ConstantNotification.COMMENT_NOTIFICATION_STR)
+          && !TextUtils.equals(type, ConstantNotification.JOB_NOTIFICATION_STR)) {
         Intent toNoti = new Intent(getActivity(), NotificationActivity.class);
         toNoti.putExtra("type", type);
         startActivity(toNoti);
-      } else if (TextUtils.equals(type,ConstantNotification.COMMENT_NOTIFICATION_STR)) {
+      } else if (TextUtils.equals(type, ConstantNotification.COMMENT_NOTIFICATION_STR)) {
         ContainerActivity.router(QRActivity.RECRUIT_MESSAGE_LIST, getContext(),
             getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       } else {
-        presenter.clearNoti(
-            ConstantNotification.getCategloreStr(getContext(),ConstantNotification.COMMENT_NOTIFICATION_STR));
+        presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),
+            ConstantNotification.COMMENT_NOTIFICATION_STR));
         ContainerActivity.router(QRActivity.MODULE_ARTICLE_COMMENT_REPLY, getContext());
       }
     }
@@ -422,6 +427,7 @@ public class MainMsgFragment extends BaseFragment
   }
 
   @Override public void onItemLongClick(final int i) {
+    if (items.isEmpty()) return;
     if (items.get(i) instanceof SystemMsgItem) {
       final NotificationMsg msg =
           ((SystemMsgItem) items.get(i)).getNotificationGlance().notification;
@@ -435,7 +441,7 @@ public class MainMsgFragment extends BaseFragment
                 PreferenceUtils.setPrefString(getContext(), loginStatus.staff_id() + "dele_noti",
                     new Gson().toJson(notificationDeleted, NotificationDeleted.class));
               }
-              presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),type));
+              presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(), type));
               adapter.removeItem(i);
               checkNoInfo();
             }
