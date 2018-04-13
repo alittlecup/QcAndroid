@@ -57,7 +57,7 @@ import com.anbillon.flabellum.annotations.Trunk;
   InviteLinkFragment.class, TrainerHomeFragment.class, TrainerTabInviteListFragment.class,
   TrainerTabLeaveListFragment.class, TrainerTabListFragment.class, TrainerAddFragment.class,
   SuFragment.class, SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
-  StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class
+  StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class,
 
 })
 public class StaffStaffActivity extends StaffActivity  {

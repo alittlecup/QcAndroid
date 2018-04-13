@@ -13,8 +13,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class ViewModelFactory implements ViewModelProvider.Factory {
-    private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
 
+    private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
     @Inject
     public ViewModelFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
         this.creators = creators;

@@ -54,6 +54,15 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
       holder.cb.setVisibility(View.GONE);
     }
     PhotoUtils.smallCircle(holder.itemStudentHeader, user.getAvatar());
+
+    holder.tvSubTitle.setVisibility(TextUtils.isEmpty(user.getSubTitle()) ? View.GONE : View.VISIBLE);
+    holder.tvSubContent.setVisibility(TextUtils.isEmpty(user.getContent()) ? View.GONE : View.VISIBLE);
+
+    holder.tvSubContent.setVisibility(View.GONE);
+    if (user.getId().equalsIgnoreCase("0")){
+      holder.tvTitle.setText(user.getTitle());
+      return;
+    }
     holder.tvEnd.setText(user.getRight());
     holder.tvEnd.setTextColor(ContextCompat.getColor(holder.tvEnd.getContext(),
       user.getRightColor() > 0 ? user.getRightColor() : R.color.text_dark));
@@ -61,6 +70,7 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
       ContextCompat.getDrawable(holder.tvTitle.getContext(),
         user.getGender() == 0 ? R.drawable.ic_gender_signal_male
           : R.drawable.ic_gender_signal_female), null);
+
     if (CmStringUtils.isEmpty(adapter.getSearchText())) {
       holder.tvTitle.setText(user.getTitle());
       holder.tvSubTitle.setText(user.getSubTitle());

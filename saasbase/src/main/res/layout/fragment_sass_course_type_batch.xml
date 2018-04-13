@@ -26,17 +26,47 @@
           />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/add_batch_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:scaleType="fitXY"
-        app:fabSize="normal"
         app:srcCompat="@drawable/vd_add_batch"
-        />
+        app:menu_colorRipple="@color/colorPrimary"
+        app:menu_colorNormal="@color/colorPrimary"
+        app:menu_colorPressed="@color/colorPrimaryDark"
+        app:menu_labels_position="left"
+        app:menu_labels_ellipsize="end"
+        app:menu_fab_size="normal"
+        app:menu_backgroundColor="#ccffffff"
+        >
+
+      <com.github.clans.fab.FloatingActionButton
+          android:id="@+id/fab_muti_batch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:fabSize="mini"
+          app:menu_colorNormal="@color/purple"
+          app:menu_colorPressed="@color/purple"
+          app:menu_labels_position="left"
+          app:fab_label="批量排期"
+          />
+
+      <com.github.clans.fab.FloatingActionButton
+          android:id="@+id/fab_copy_batch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:menu_colorNormal="@color/shamrock_green"
+          app:menu_labels_position="left"
+          app:menu_colorPressed="@color/shamrock_green"
+          app:fabSize="mini"
+          app:fab_label="批量排期"
+          />
+
+    </com.github.clans.fab.FloatingActionMenu>
   </FrameLayout>
 </LinearLayout>

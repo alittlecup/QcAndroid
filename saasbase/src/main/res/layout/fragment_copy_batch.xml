@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <import type="cn.qingchengfit.utils.DateUtils"/>
+    <variable
+        name="copyViewModel"
+        type="cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel"/>
+    <variable
+        name="adapter"
+        type="cn.qingchengfit.saasbase.db.utils.CommonInputViewAdapter"/>
+  </data>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <include layout="@layout/common_simple_toolbar"/>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:gravity="center_vertical"
+          android:paddingLeft="15dp"
+          android:text="@string/title_copy_batch_course"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_start"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          app:civ_clickable="true"
+          app:civ_hint="@string/err_no_start_date"
+          app:civ_lable="@string/start_day"
+          app:civ_showright="true"
+          app:civ_content="@{copyViewModel.startTime}"
+          android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.startTime)}"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_end"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          app:civ_clickable="true"
+          app:civ_hint="@string/err_no_end_date"
+          app:civ_lable="@string/end_day"
+          app:civ_showright="true"
+          app:civ_content="@{copyViewModel.endTime}"
+          android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.endTime)}"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          app:civ_clickable="true"
+          app:civ_hint="@string/all_coach"
+          app:civ_lable="@string/coach"
+          app:civ_showright="true"
+          app:civ_content="@{copyViewModel.coach.get().username}"
+          android:onClick="@{(view) -> copyViewModel.onCoach(view)}"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_copy_start"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          app:civ_clickable="true"
+          app:civ_hint="@string/all_course"
+          app:civ_lable="@string/course"
+          app:civ_showright="true"
+          app:civ_content="@{copyViewModel.course.get().name}"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:gravity="center_vertical"
+          android:paddingLeft="15dp"
+          android:text="@string/title_copy_batch_to"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_copy_end"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          app:civ_clickable="true"
+          app:civ_hint="@string/err_no_start_date"
+          app:civ_lable="@string/start_day"
+          app:civ_showright="true"
+          app:civ_content="@={copyViewModel.startCopyTime}"
+          android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.startCopyTime)}"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          app:civ_clickable="true"
+          app:civ_hint="@string/err_no_end_date"
+          app:civ_lable="@string/end_day"
+          app:civ_showright="true"
+          app:civ_content="@{copyViewModel.endCopyTime}"
+          android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.endCopyTime)}"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:gravity="center_vertical"
+          android:paddingLeft="15dp"
+          tools:text="占位符占位符占位符占位符占位符占位符占位符占位符"
+          style="@style/QcTextStyleSmallWarm"
+          android:text=""
+          />
+
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_margin="15dp"
+          android:gravity="center"
+          style="@style/QcBtnPrimary"
+          android:text="@string/button_copy_batch_sure"
+          android:textColor="@color/white"
+          android:onClick="@{() -> copyViewModel.onSureClick()}"
+          />
+
+    </LinearLayout>
+  </ScrollView>
+</layout>
