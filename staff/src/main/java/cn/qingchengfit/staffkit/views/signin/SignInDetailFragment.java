@@ -38,8 +38,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static cn.qingchengfit.staffkit.R.id.img_signout_item_face;
-
 /**
  * 签到详情页面
  * Created by yangming on 16/8/30.
@@ -47,7 +45,7 @@ import static cn.qingchengfit.staffkit.R.id.img_signout_item_face;
 public class SignInDetailFragment extends BaseFragment implements SignInDetailPresenter.SignInDetailView {
 
     @Inject SignInDetailPresenter presenter;
-    @BindView(img_signout_item_face) ImageView imgSignoutItemFace;
+    @BindView(R.id.img_signout_item_face) ImageView imgSignoutItemFace;
     @BindView(R.id.tv_signout_item_name) TextView tvSignoutItemName;
     @BindView(R.id.iv_signout_item_gender) ImageView ivSignoutItemGender;
     @BindView(R.id.tv_signout_item_phone) TextView tvSignoutItemPhone;
@@ -140,7 +138,7 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
         super.onDestroyView();
     }
 
-    @OnClick(img_signout_item_face) public void onClickFace() {
+    @OnClick(R.id.img_signout_item_face) public void onClickFace() {
         if (mSignInTask != null) {
             if (StringUtils.isEmpty(mSignInTask.getCheckinAvatar())) {
                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {

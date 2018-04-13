@@ -34,6 +34,8 @@ atest/atest.iml
 recruit/recruit.iml
 saasbase/saasbase.iml
 staff/staff.iml
+shop/shop.iml
+weex/weex.iml
 qcbase/qcbase.iml
 trainer/trainer.iml
 widgets/widgets.iml
