@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="54dp"
+      >
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="取消"
+        android:textSize="@dimen/txt_15sp"
+        style="@style/QcTextStyleMediumGrey"
+        />
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:background="@color/divider_grey"
+        />
+    <TextView
+        android:id="@+id/postive"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/txt_15sp"
+        style="@style/QcTextStyleMediumGrey"
+        />
+
+  </LinearLayout>
+</layout>

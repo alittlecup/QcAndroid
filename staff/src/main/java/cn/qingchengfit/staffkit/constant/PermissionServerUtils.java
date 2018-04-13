@@ -113,6 +113,8 @@ public class PermissionServerUtils {
     public static final String ACTIVITY_SETTING_CAN_WRITE = "activity_setting_can_write";
     public static final String ACTIVITY_SETTING_CAN_CHANGE = "activity_setting_can_change";
     public static final String COMMODITY_LIST = "commodity_list";
+    public static final String COMMODITY_CATEGORY = "commodity_category";
+    public static final String COMMODITY_MARKET = "commodity_market";//商品销售
     public static final String COMMODITY_LIST_CAN_WRITE = "commodity_list_can_write";
     public static final String COMMODITY_INVENTORY = "commodity_inventory";
     public static final String COMMODITY_INVENTORY_CAN_WRITE = "commodity_inventory_can_write";

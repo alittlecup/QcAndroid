@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/all_inventory_record"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:background="@color/backgroud_grey"
+      android:gravity="center"
+      android:paddingBottom="10dp"
+      android:paddingTop="17dp"
+      android:text="@string/all_inventory_list"
+      android:textColor="@color/colorPrimary"
+      android:textSize="@dimen/txt_14sp"
+      >
+  </TextView>
+</layout>

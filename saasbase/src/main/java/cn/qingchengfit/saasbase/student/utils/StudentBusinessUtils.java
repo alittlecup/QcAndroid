@@ -2,27 +2,21 @@ package cn.qingchengfit.saasbase.student.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Pair;
-
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
+import cn.qingchengfit.saasbase.student.views.followup.FollowUpHomeFragment;
+import cn.qingchengfit.saasbase.student.widget.CircleView;
+import cn.qingchengfit.utils.DateUtils;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
-import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.saasbase.student.views.followup.FollowUpHomeFragment;
-import cn.qingchengfit.utils.DateUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,22 +46,20 @@ import java.util.Locale;
 
 public class StudentBusinessUtils {
     public static Drawable getStudentStatusDrawable(Context context, int x) {
-        Drawable drawable = new ShapeDrawable(new OvalShape());
+        Drawable drawable;
         switch (x) {
             case 1:
-                drawable.setColorFilter(ContextCompat.getColor(context, R.color.red),
-                        PorterDuff.Mode.CLEAR);
+                drawable=new CircleView(ContextCompat.getColor(context, R.color.qc_student_status_1));
                 break;
             case 2:
-                drawable.setColorFilter(ContextCompat.getColor(context, R.color.orange),
-                        PorterDuff.Mode.CLEAR);
+                drawable=new CircleView(ContextCompat.getColor(context, R.color.qc_student_status_2));
+
                 break;
             default:
-                drawable.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary),
-                        PorterDuff.Mode.CLEAR);
+                drawable=new CircleView(ContextCompat.getColor(context, R.color.qc_student_status_0));
                 break;
         }
-        drawable.setBounds(26, 26, 26, 26);
+        drawable.setBounds(0, 0, 26, 26);
         return drawable;
     }
 

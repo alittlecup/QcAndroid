@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jakewharton.butterknife'
-//apply plugin: "com.squareup.sqldelight"
-//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
@@ -28,6 +26,8 @@ android {
             }
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [APP_SCHAME        : "qcstaff"]
+
     }
     buildTypes {
         release {
@@ -50,19 +50,23 @@ android {
         resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
         resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
     }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                'src/main/res/layout/student',
+                'src/main/res'
+            ]
+        }
+    }
 }
 
 dependencies {
-    api "cn.qingchengfit.widgets:qcbase:1.0.34"
+    api "cn.qingchengfit.widgets:qcbase:1.0.35"
     api "cn.qingchengfit.recruit:recruit:1.1.0"
     api "cn.qingchengfit.chat:sdk:1.1.0"
     api "cn.qingchengfit.chat:qcim:1.1.0"
-//    implementation project(path: ":recruit")
-//    api project(path: ':recruit')
 
-    //    api ('cn.qingchengfit.recruit:recruit:1.0.1', {
-//        exclude group: 'cn.qingchengfit.widgets', module: 'qcbase'
-//    })
+  api project(path: ':weex')
 
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
     annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"

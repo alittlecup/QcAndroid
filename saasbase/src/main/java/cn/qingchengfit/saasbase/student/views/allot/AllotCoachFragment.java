@@ -8,23 +8,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.anbillon.flabellum.annotations.Leaf;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentAllotListBinding;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.student.items.AllotCoachItem;
-import cn.qingchengfit.saasbase.student.items.AllotStaffItem;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponse;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -90,7 +85,7 @@ public class AllotCoachFragment extends SaasBaseFragment implements SwipeRefresh
     @Override
     public boolean onItemClick(int i) {
         if(listFragment.getDatas().get(i) instanceof AllotCoachItem){
-            Uri uri=Uri.parse("student://student/coach/detail");
+            Uri uri=Uri.parse("qcstaff://student/coach/detail");
             routeTo(uri,new cn.qingchengfit.saasbase.student.views.allot.CoachDetailParams().trainer(((AllotCoachItem) listFragment.getDatas().get(i)).data.getSeller()).build());
         }
         return false;

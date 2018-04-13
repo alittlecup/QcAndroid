@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+
+def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+android {
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+  dataBinding {
+    enabled true
+  }
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    vectorDrawables.useSupportLibrary true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true',
+                     packageName                   : 'cn.qingchengfit.shop']
+      }
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  buildToolsVersion '27.0.1'
+}
+
+dependencies {
+  testImplementation 'junit:junit:4.12'
+  implementation (project(':saasbase'))
+
+
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+
+  implementation "com.github.akarnokd:rxjava2-interop:0.11.5"
+
+  api "io.reactivex.rxjava2:rxjava:2.1.8"
+  api "io.reactivex.rxjava2:rxandroid:2.0.1"
+  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+}

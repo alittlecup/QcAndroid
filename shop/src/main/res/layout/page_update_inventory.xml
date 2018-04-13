@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <import type="android.view.View"/>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryViewModel"
+        />
+
+
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <include
+          layout="@layout/common_simple_toolbar"
+          android:id="@+id/include_toolbar"
+          bind:toolbarModel="@{toolbarModel}"
+          />
+      <TextView
+          android:id="@+id/save"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="15dp"
+          android:text="保存"
+          android:textColor="@color/text_primary_select"
+          />
+    </RelativeLayout>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/product_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        android:layout_marginTop="12dp"
+        android:focusable="false"
+        app:civ_content="@{viewModel.productName}"
+        app:civ_hint="水"
+        app:civ_lable="@string/product"
+        app:civ_showright="false"
+        app:civ_text_color="@color/text_dark"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/good_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        android:onClick="@{view->viewModel.onChooseGoodClick()}"
+        app:civ_clickable="true"
+        app:civ_content="@={viewModel.goodName}"
+        app:civ_lable="@string/goods"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/offset_count"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:layout_weight="1"
+          app:civ_hint="@string/add_inventory_count_input"
+          app:civ_inputnum="true"
+          app:civ_lable="@string/add_inventory_count"
+          app:civ_right_icon="@color/transparent"
+          app:civ_showright="false"
+          app:civ_text_color="@color/text_dark"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="center_vertical"
+          android:layout_marginRight="15dp"
+          android:gravity="center"
+          android:text="@{viewModel.unit}"
+          android:textSize="14sp"
+          tools:text="测个"
+          style="@style/QcTextStyleLargeDark"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="9dp"
+        android:orientation="horizontal"
+        >
+      <TextView
+          android:id="@+id/product_good_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text='@{"当前库存："+viewModel.curInventory}'
+          tools:text="当前库存：20"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:text="@{@string/add_inventoty_detail(viewModel.curInventory+viewModel.offSetInventory)}"
+          app:visibleGone="@{viewModel.isAdd&amp;&amp;(viewModel.offSetInventory&gt;0)}"
+          tools:text="增加库存：30"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:text="@{@string/reduce_inventory_detail(viewModel.curInventory-viewModel.offSetInventory)}"
+          app:visibleGone="@{(!viewModel.isAdd)&amp;&amp;!((viewModel.curInventory-viewModel.offSetInventory)&lt;0)&amp;&amp;(viewModel.offSetInventory&gt;0)}"
+          tools:text="增加库存：30"
+          />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/update_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="2dp"
+        android:text="@{@string/reduce_inventory_not_enough(viewModel.offSetInventory)}"
+        android:textColor="@color/danger_red_normal"
+        app:visibleGone="@{(!viewModel.isAdd)&amp;&amp;((viewModel.curInventory-viewModel.offSetInventory) &lt; 0)}"
+        tools:text="当前库存不足扣除10"
+
+        />
+
+
+  </LinearLayout>
+</layout>

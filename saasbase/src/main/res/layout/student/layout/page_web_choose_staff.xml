@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.saasbase.mvvm_student.view.webchoose.ChooseStaffViewModel"
+        />
+
+  </data>
+
+  <cn.qingchengfit.saasbase.student.other.MyDrawerLayout
+      android:id="@+id/drawer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+
+          android:orientation="vertical"
+          >
+
+        <include
+            layout="@layout/common_simple_toolbar"
+            android:id="@+id/include_toolbar"
+            bind:toolbarModel="@{toolbarModel}"
+            />
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/scroll_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+          <android.support.design.widget.AppBarLayout
+              android:id="@+id/myhome_appBar"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/bg_grey"
+              android:fitsSystemWindows="true"
+              app:elevation="0dp"
+              >
+
+            <RelativeLayout
+                android:id="@+id/rl_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                >
+
+              <EditText
+                  android:id="@+id/et_search"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/qc_allotsale_search_hight"
+                  android:background="@drawable/bg_rect_allotsale_search"
+                  android:drawableLeft="@drawable/ic_allotsale_search"
+                  android:drawablePadding="10dp"
+                  android:hint="@string/qc_allotsale_search_hint"
+                  android:paddingLeft="10dp"
+                  android:paddingStart="10dp"
+                  android:textSize="@dimen/min_font"
+                  app:afterTextChanged="@{(str)->viewModel.onEditTextChange(str)}"
+                  />
+
+              <ImageView
+                  android:id="@+id/img_search_clear"
+                  android:layout_width="@dimen/qc_allotsale_search_hight"
+                  android:layout_height="@dimen/qc_allotsale_search_hight"
+                  android:layout_alignEnd="@+id/et_search"
+                  android:layout_alignRight="@+id/et_search"
+                  android:layout_centerVertical="true"
+                  android:layout_gravity="center_vertical|right"
+                  android:padding="9dp"
+                  android:visibility="gone"
+                  app:srcCompat="@drawable/ic_cancel_grey_16dp"
+                  />
+
+            </RelativeLayout>
+
+            <include layout="@layout/divider_grey"/>
+
+            <include
+                layout="@layout/view_layout_filter"
+                android:id="@+id/include_filter"
+                />
+
+            <include layout="@layout/divider_grey"/>
+          </android.support.design.widget.AppBarLayout>
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              >
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:onRefreshListener="@{()->viewModel.refresh()}"
+                app:refreshing="@{viewModel.isLoading}"
+                >
+
+              <android.support.v7.widget.RecyclerView
+                  android:id="@+id/recyclerview"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  app:items="@{viewModel.items}"
+                  />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller
+                android:id="@+id/fast_scroller"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                app:enable="@{!viewModel.getSortViewModel().latestChecked}"
+                app:fastScrollerAutoHideDelayInMillis="50"
+                app:fastScrollerAutoHideEnabled="false"
+                app:fastScrollerBubbleEnabled="true"
+                app:fastScrollerBubblePosition="center"
+                app:visibleGone="@{!viewModel.getSortViewModel().latestChecked}"
+                />
+          </RelativeLayout>
+        </android.support.design.widget.CoordinatorLayout>
+      </LinearLayout>
+
+      <include
+          layout="@layout/divider_grey"
+          android:id="@+id/ll_divider_bottom"
+          android:layout_width="match_parent"
+          android:layout_above="@+id/ll_bottom"
+          android:layout_height="1px"
+
+          />
+
+      <LinearLayout
+          android:id="@+id/ll_bottom"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_alignParentBottom="true"
+          android:background="@color/bg_grey"
+          android:orientation="horizontal"
+          >
+
+        <LinearLayout
+            android:id="@+id/ll_show_select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.onBottomShowSelected()}"
+            android:orientation="horizontal"
+            >
+
+          <TextView
+              android:id="@+id/tv_allotsale_select_count"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:layout_marginLeft="@dimen/activity_horizontal_margin"
+              android:layout_marginStart="@dimen/activity_horizontal_margin"
+              android:background="@drawable/circle_allotsale_green"
+              android:gravity="center"
+              android:text='@{viewModel.bottomTextCount>99?"...":viewModel.bottomTextCount+""}'
+              android:textColor="@color/white"
+              android:textSize="@dimen/min_font"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="3dp"
+              android:layout_marginStart="3dp"
+              android:gravity="center"
+              android:text="@string/qc_allotsale_checked"
+              android:textColor="@color/qc_text_black"
+              android:textSize="@dimen/min_font"
+              />
+
+          <ImageView
+              android:id="@+id/img_down"
+              android:layout_width="12dp"
+              android:layout_height="12dp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="5dp"
+              android:layout_marginStart="5dp"
+              android:gravity="center"
+              app:srcCompat="@drawable/ic_common_arrow_up"
+              />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_space"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0000"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_modify_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_rect_allot_green"
+            >
+
+          <Button
+              android:id="@+id/btn_modify_sale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="?android:attr/selectableItemBackground"
+              android:gravity="center"
+              android:onClick="@{()->viewModel.onComplete()}"
+              android:text="完成"
+              android:textColor="@color/qc_allotsale_green"
+              android:textSize="@dimen/min_font"
+              />
+        </LinearLayout>
+
+      </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_student_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        />
+  </cn.qingchengfit.saasbase.student.other.MyDrawerLayout>
+</layout>

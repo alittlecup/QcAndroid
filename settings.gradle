@@ -1,9 +1,9 @@
 include  ':saasbase',
-    ':trainer',
+//    ':trainer',
 //    ':atest',
-    ':staff'
+    ':staff',
 //    ':student',
 //':qcbase'
-//    ':trainer'
-//
+':shop',
+    ':weex'
 

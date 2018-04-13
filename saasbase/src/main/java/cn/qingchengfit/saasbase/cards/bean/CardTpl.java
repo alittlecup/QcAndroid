@@ -29,7 +29,7 @@ import java.util.List;
  * Created by Paper on 2017/8/14.
  */
 
-public class CardTpl implements Parcelable {
+public class CardTpl implements Parcelable ,ICardShopChooseItemData{
   public String name;
   public String type_name;
   public int type; //1 是储值卡 2次卡 3期限卡
@@ -60,6 +60,9 @@ public class CardTpl implements Parcelable {
   public CardTpl() {
   }
 
+
+
+
   public CardTpl(String name, int type, String description, String id, String limit) {
     this.name = name;
     this.type = type;
@@ -67,6 +70,7 @@ public class CardTpl implements Parcelable {
     this.id = id;
     this.limit = limit;
   }
+
 
   private CardTpl(Builder builder) {
     setName(builder.name);
@@ -285,6 +289,16 @@ public class CardTpl implements Parcelable {
 
   public void setBuy_limit(int buy_limit) {
     this.buy_limit = buy_limit;
+  }
+
+
+
+  @Override public String getShopCardTplId() {
+    return id;
+  }
+
+  @Override public String getShopCardTplName() {
+    return name;
   }
 
   public static final class Builder {

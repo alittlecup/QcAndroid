@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <data>
+    <import type="cn.qingchengfit.shop.ui.widget.QcShopToogleButton"/>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.shop.ui.home.productlist.ShopProductsViewModel"
+        />
+  </data>
+  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+      <RelativeLayout
+          android:id="@+id/rl_search"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/backgroud_grey"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:padding="10dp"
+          app:layout_scrollFlags="scroll|enterAlways"
+          >
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_allotsale_search_hight"
+            android:background="@drawable/bg_rect_allotsale_search"
+            android:drawableLeft="@drawable/ic_allotsale_search"
+            android:drawablePadding="10dp"
+            android:hint="@string/search_product"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:textSize="@dimen/min_font"
+            />
+
+        <ImageView
+            android:id="@+id/img_search_clear"
+            android:layout_width="@dimen/qc_allotsale_search_hight"
+            android:layout_height="@dimen/qc_allotsale_search_hight"
+            android:layout_alignEnd="@+id/et_search"
+            android:layout_alignRight="@+id/et_search"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|right"
+            android:padding="9dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_cancel_grey_16dp"
+            />
+      </RelativeLayout>
+      <include layout="@layout/divider_grey"/>
+      <cn.qingchengfit.widgets.QcRadioGroup
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:orientation="horizontal"
+          >
+        <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+            android:id="@+id/qc_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="@{(view)->viewModel.onWeightClick(((QcShopToogleButton)view).isArrowUp())}"
+            app:checked_text="@string/weight"
+            app:chekced="true"
+            app:unchecked_text="@string/weight"
+            style="@style/QcShopToogleItem"
+            />
+        <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+            android:id="@+id/qc_sales"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="@{(view)->viewModel.onSalesClick(((QcShopToogleButton)view).isArrowUp())}"
+            app:checked_text="@string/sale_count"
+            app:unchecked_text="@string/sale_count"
+            style="@style/QcShopToogleItem"
+            />
+        <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+            android:id="@+id/qc_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="@{(view)->viewModel.onInventoryClick(((QcShopToogleButton)view).isArrowUp())}"
+            app:checked_text="@string/inventory"
+            app:unchecked_text="@string/inventory"
+            style="@style/QcShopToogleItem"
+            />
+
+        <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+            android:id="@+id/qc_add_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="@{(view)->viewModel.onAdddDateClick(((QcShopToogleButton)view).isArrowUp())}"
+            app:checked_text="@string/add_product_time"
+            app:unchecked_text="@string/add_product_time"
+            style="@style/QcShopToogleItem"
+            />
+      </cn.qingchengfit.widgets.QcRadioGroup>
+      <include layout="@layout/divider_grey"/>
+      <android.support.v4.widget.SwipeRefreshLayout
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:background="@color/backgroud_grey"
+          app:onRefreshListener="@{()->viewModel.refresh()}"
+          app:refreshing="@{viewModel.isLoading}"
+          >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:emptyDrawable="@{@drawable/vd_img_empty_universe}"
+            app:emptyTitle="@{@string/product_empty_text}"
+            app:items="@{viewModel.items}"
+            />
+      </android.support.v4.widget.SwipeRefreshLayout>
+
+      <include layout="@layout/divider_grey"/>
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{()->viewModel.onAddProductCall()}"
+          >
+        <TextView
+            android:id="@+id/add_product"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/product_add"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:text="@string/add_product"
+            android:textColor="@color/colorPrimary"
+            style="@style/QcTextStyleLargeDark"
+            />
+      </FrameLayout>
+      <FrameLayout
+          android:id="@+id/fragment_mark"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:clickable="true"
+          android:visibility="gone"
+          />
+
+
+    </LinearLayout>
+  </FrameLayout>
+</layout>

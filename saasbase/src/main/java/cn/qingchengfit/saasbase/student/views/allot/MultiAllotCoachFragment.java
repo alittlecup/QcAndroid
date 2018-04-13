@@ -187,7 +187,7 @@ public class MultiAllotCoachFragment extends SaasBaseFragment implements SwipeRe
 
     public void onAllotBtnClick(View view) {
         // REFACTOR: 2017/11/2 分配或者更改
-        Uri uri = Uri.parse("student://student/choose/coach");
+        Uri uri = Uri.parse("qcstaff://student/choose/coach");
         routeTo(uri, new ChooseStaffParams()
                 .title(((TextView) view).getText().toString())
                 .curId(trainer.id)

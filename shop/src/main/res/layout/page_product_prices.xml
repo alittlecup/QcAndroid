@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        style="@style/QcCivInputStyle"
+        app:civ_lable="@string/product_pay_card_prices"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        style="@style/QcCivInputStyle"
+        app:civ_lable="@string/product_pay_online_prices"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        style="@style/QcCivInputStyle"
+        app:civ_lable="@string/product_pay_offline_prices"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        />
+
+
+
+  </LinearLayout>
+</layout>

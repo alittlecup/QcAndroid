@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="primary">#00CED8</color>// 32 191 189
+  <color name="accent">@color/primary</color>
+  <color name="primary_dark">#006f74</color>
+  <color name="primary_light">#00f1fc</color>
+  <color name="colorPrimarytrans">#1100c8d1</color>
+  <color name="colorPrimary">@color/primary</color>
+  <color name="colorAccent">@color/primary</color>
+  <color name="colorPrimaryLight">@color/primary</color>
+  <color name="colorPrimaryDark">#006f74</color>
+  <color name="toolbar">#232428</color>
+
+  <color name="qc_text_grey">#9d9d9d</color>
+
+</resources>

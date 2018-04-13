@@ -88,17 +88,17 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
     }
 
     public void toStudentAbsentce(View v) {
-        Uri uri = Uri.parse("student://student/student/absentce");
+        Uri uri = Uri.parse("qcstaff://student/student/absentce");
         routeTo(uri, null);
     }
 
     public void toStudentRank() {
-        Uri uri = Uri.parse("student://student/attendance/rank");
+        Uri uri = Uri.parse("qcstaff://student/attendance/rank");
         routeTo(uri, null);
     }
 
     public void toStudentNosign() {
-        Uri uri = Uri.parse("student://student/attendance/nosign");
+        Uri uri = Uri.parse("qcstaff://student/attendance/nosign");
         routeTo(uri, null);
     }
 }

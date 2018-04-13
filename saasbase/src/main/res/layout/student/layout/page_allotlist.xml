@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemClickListener"
+            type="eu.davidea.flexibleadapter.FlexibleAdapter.OnItemClickListener" />
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+        <variable
+            name="viewModel"
+            type="cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotListViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/common_simple_toolbar"
+            bind:toolbarModel="@{toolbarModel}" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onRefreshListener="@{() -> viewModel.refresh()}"
+            app:refreshing="@{viewModel.isLoading}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:items="@{viewModel.items}"
+                app:itemClickListenter="@{itemClickListener}"
+                 />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</layout>

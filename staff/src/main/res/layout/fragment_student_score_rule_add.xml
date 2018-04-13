@@ -68,6 +68,7 @@
         android:inputType="number"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        android:maxLength="8"
         android:textColor="@color/qc_text_black"
         android:textColorHint="@color/qc_text_grey_less"
         android:textSize="@dimen/min_font"

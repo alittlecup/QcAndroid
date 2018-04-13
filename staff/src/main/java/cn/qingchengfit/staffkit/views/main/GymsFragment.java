@@ -32,6 +32,7 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.google.gson.Gson;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -54,110 +55,117 @@ import rx.Observable;
  * <p/>
  * Created by Paper on 16/2/16 2016.
  */
-public class GymsFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, GymListPresenter.GymListView {
+public class GymsFragment extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener, GymListPresenter.GymListView {
 
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+  @BindView(R.id.recycleview) RecyclerView recycleview;
 
-    @Inject GymListPresenter gymListPresenter;
-    @Inject GymWrapper gymWrapper;
+  @Inject GymListPresenter gymListPresenter;
+  @Inject GymWrapper gymWrapper;
 
-    private List<AbstractFlexibleItem> adapterDatas = new ArrayList<>();
-    private CommonFlexAdapter mAdapter;
+  private List<AbstractFlexibleItem> adapterDatas = new ArrayList<>();
+  private CommonFlexAdapter mAdapter;
   private Observable<EventFreshGyms> mFreshOb;
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gyms, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initDI();
-        initView();
-      mFreshOb = RxBus.getBus().register(EventFreshGyms.class);
-      mFreshOb
-        .throttleFirst(1000, TimeUnit.MILLISECONDS)
-        .subscribe(eventFreshGyms -> refresh());
-        return view;
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_gyms, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    initDI();
+    initView();
+    mFreshOb = RxBus.getBus().register(EventFreshGyms.class);
+    mFreshOb.throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe(eventFreshGyms -> refresh());
+    return view;
+  }
+
+  private void initDI() {
+    delegatePresenter(gymListPresenter, this);
+  }
+
+  public void refresh() {
+    gymListPresenter.loadData();
+  }
+
+  private void initView() {
+
+    mAdapter = new CommonFlexAdapter(adapterDatas, this);
+    recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+    recycleview.setHasFixedSize(true);
+    recycleview.setNestedScrollingEnabled(false);
+    recycleview.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    recycleview.setAdapter(mAdapter);
+    /**
+     * 订阅品牌
+     */
+    gymListPresenter.subscribeGymsByBrandId();
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    gymWrapper.setCoachService(null);
+    SensorsDataAPI sensorsDataAPI = SensorsDataAPI.sharedInstance(getContext());
+    if (sensorsDataAPI != null) {
+      sensorsDataAPI.unregisterSuperProperty("qc_gym_id");
     }
+  }
 
-    private void initDI() {
-        delegatePresenter(gymListPresenter, this);
-    }
+  @Override public void onDestroyView() {
+    RxBus.getBus().unregister(EventFreshGyms.class.getName(), mFreshOb);
+    super.onDestroyView();
+  }
 
-    public void refresh() {
-        gymListPresenter.loadData();
-    }
+  @Override public String getFragmentName() {
+    return GymsFragment.class.getName();
+  }
 
-    private void initView() {
-
-        mAdapter = new CommonFlexAdapter(adapterDatas, this);
-        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycleview.setHasFixedSize(true);
-        recycleview.setNestedScrollingEnabled(false);
-        recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        recycleview.setAdapter(mAdapter);
-        /**
-         * 订阅品牌
-         */
-        gymListPresenter.subscribeGymsByBrandId();
-    }
-
-    @Override public void onResume() {
-        super.onResume();
-        gymWrapper.setCoachService(null);
-    }
-
-    @Override public void onDestroyView() {
-      RxBus.getBus().unregister(EventFreshGyms.class.getName(), mFreshOb);
-        super.onDestroyView();
-    }
-
-    @Override public String getFragmentName() {
-        return GymsFragment.class.getName();
-    }
-
-    @Override public boolean onItemClick(int position) {
-        if (adapterDatas.get(position) instanceof CoachServiceItem) {
-            gymWrapper.setCoachService(((CoachServiceItem) adapterDatas.get(position)).getCoachService());
-            Intent toGymdetail = new Intent(getActivity(), GymActivity.class);
-            toGymdetail.putExtra(GymActivity.GYM_TO, GymActivity.GYM_DETAIL);
-            startActivity(toGymdetail);
-        } else if (adapterDatas.get(position) instanceof ListAddItem) {
-            if (gymWrapper.getBrand().has_add_permission) {
-                SystemInitBody body;
-                if (TextUtils.isEmpty(PreferenceUtils.getPrefString(getContext(), "init", ""))) {
-                    body = new SystemInitBody();
-                } else {
-                    body = new Gson().fromJson(PreferenceUtils.getPrefString(getContext(), "init", ""), SystemInitBody.class);
-                }
-                App.caches.put("init", body);
-                Intent toGuide = new Intent(getActivity(), GuideActivity.class);
-                toGuide.putExtra(Configs.EXTRA_BRAND, gymWrapper.getBrand());
-                toGuide.putExtra("isAdd", true);
-                startActivity(toGuide);
-            } else {
-                ToastUtils.show(String.format(Locale.CHINA, getString(R.string.no_permission_brand),
-                    gymWrapper.getBrand().getCreated_by() == null || gymWrapper.getBrand().getCreated_by().getUsername() == null ? ""
-                        : gymWrapper.getBrand().getCreated_by().getUsername()));
-            }
+  @Override public boolean onItemClick(int position) {
+    if (adapterDatas.get(position) instanceof CoachServiceItem) {
+      gymWrapper.setCoachService(((CoachServiceItem) adapterDatas.get(position)).getCoachService());
+      Intent toGymdetail = new Intent(getActivity(), GymActivity.class);
+      toGymdetail.putExtra(GymActivity.GYM_TO, GymActivity.GYM_DETAIL);
+      startActivity(toGymdetail);
+    } else if (adapterDatas.get(position) instanceof ListAddItem) {
+      if (gymWrapper.getBrand().has_add_permission) {
+        SystemInitBody body;
+        if (TextUtils.isEmpty(PreferenceUtils.getPrefString(getContext(), "init", ""))) {
+          body = new SystemInitBody();
+        } else {
+          body = new Gson().fromJson(PreferenceUtils.getPrefString(getContext(), "init", ""),
+              SystemInitBody.class);
         }
-        return true;
+        App.caches.put("init", body);
+        Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+        toGuide.putExtra(Configs.EXTRA_BRAND, gymWrapper.getBrand());
+        toGuide.putExtra("isAdd", true);
+        startActivity(toGuide);
+      } else {
+        ToastUtils.show(String.format(Locale.CHINA, getString(R.string.no_permission_brand),
+            gymWrapper.getBrand().getCreated_by() == null
+                || gymWrapper.getBrand().getCreated_by().getUsername() == null ? ""
+                : gymWrapper.getBrand().getCreated_by().getUsername()));
+      }
     }
+    return true;
+  }
 
-    @Override public void onServiceList(List<CoachService> list) {
-        adapterDatas.clear();
-        for (int i = 0; i < list.size(); i++) {
-            adapterDatas.add(new CoachServiceItem(list.get(i), true));
-        }
-        if (adapterDatas.size() == 0) {
-            adapterDatas.add(new SimpleTextItemItem("该品牌下暂无场馆", Gravity.CENTER));
-            adapterDatas.add(new ListAddItem("添加场馆"));
-        }
-        mAdapter.updateDataSet(adapterDatas);
+  @Override public void onServiceList(List<CoachService> list) {
+    adapterDatas.clear();
+    for (int i = 0; i < list.size(); i++) {
+      adapterDatas.add(new CoachServiceItem(list.get(i), true));
     }
+    if (adapterDatas.size() == 0) {
+      adapterDatas.add(new SimpleTextItemItem("该品牌下暂无场馆", Gravity.CENTER));
+      adapterDatas.add(new ListAddItem("添加场馆"));
+    }
+    mAdapter.updateDataSet(adapterDatas);
+  }
 
-    @Override public void onShowError(String e) {
-        ToastUtils.show(e);
-    }
+  @Override public void onShowError(String e) {
+    ToastUtils.show(e);
+  }
 
-    @Override public void onShowError(@StringRes int e) {
-        onShowError(getString(e));
-    }
+  @Override public void onShowError(@StringRes int e) {
+    onShowError(getString(e));
+  }
 }

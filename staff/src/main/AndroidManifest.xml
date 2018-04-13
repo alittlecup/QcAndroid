@@ -59,13 +59,13 @@
 
   <application
       android:name=".App"
-      android:allowBackup="true"
+      android:allowBackup="false"
       android:icon="@mipmap/ic_launcher"
       android:label="${APP_NAME}"
       android:screenOrientation="portrait"
       android:supportsRtl="true"
       android:theme="@style/QcAppTheme"
-      tools:replace="android:label"
+      tools:replace="label,allowBackup"
       android:taskAffinity="cn.qingchengfit.staff"
       >
     <meta-data
@@ -914,22 +914,12 @@
     </activity>
 
 
-    <activity
-        android:name=".student.StaffStudentActivity"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
+    <!--<activity-->
+        <!--android:name=".student.StaffStudentActivity"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--&gt;-->
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data
-            android:host="student"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
+    <!--</activity>-->
 
   </application>
 

@@ -102,7 +102,7 @@ public class AllotSellerFragment extends SaasBaseFragment
     @Override
     public boolean onItemClick(int i) {
         if(listFragment.getDatas().get(i) instanceof AllotStaffItem){
-            Uri uri=Uri.parse("student://student/sale/detail");
+            Uri uri=Uri.parse("qcstaff://student/sale/detail");
             routeTo(uri,new SaleDetailParams().staff(((AllotStaffItem) listFragment.getDatas().get(i)).data.getSeller()).build());
         }
         return false;

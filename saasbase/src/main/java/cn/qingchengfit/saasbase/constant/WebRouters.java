@@ -29,6 +29,7 @@ public class WebRouters {
   public static final String MODULE_WORKSPACE_GROUP = "/group/order";
   public static final String MODULE_WORKSPACE_PRIVATE = "/private/order";
   public static final String MODULE_WORKSPACE_ORDER_SIGNIN = "/checkin/help";
+  public static final String MODULE_WORKSPACE_COMMODITY_LIST = "/commodity/list";
 
   /**
    * 健身房服务
@@ -36,7 +37,7 @@ public class WebRouters {
   public static final String MODULE_SERVICE_GROUP = "/teamarrange/calendar2";
   public static final String MODULE_SERVICE_PRIVATE = "/priarrange/calendar2";
   public static final String MODULE_SERVICE_FREE = "/checkin/setting";
-  public static final String MODULE_SERVICE_SHOP = "/commodity/list";
+  public static final String MODULE_SERVICE_SHOP = "/commodity/manage";
   /**
    * 会员
    */

@@ -1,5 +1,8 @@
 package cn.qingchengfit.staffkit.card;
 
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.CardActivity;
 import cn.qingchengfit.saasbase.cards.views.AutoNotifySettingFragment;
@@ -30,9 +33,13 @@ import cn.qingchengfit.saasbase.cards.views.offday.AheadOffDayFragment;
 import cn.qingchengfit.saasbase.cards.views.offday.OffDayListFragment;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordFragment;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordListFragment;
+import cn.qingchengfit.staff.routers.StaffRouterCenter;
+import cn.qingchengfit.staff.routers.cardImpl;
 import cn.qingchengfit.staffkit.card.view.StaffCardBuyFragment;
 import cn.qingchengfit.staffkit.card.view.StaffCardChargeFragment;
 import cn.qingchengfit.staffkit.card.view.StaffCardListHomeFragment;
+import cn.qingchengfit.staffkit.card.view.WebCardChargeFragment;
+import cn.qingchengfit.staffkit.card.view.WebChargeFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
@@ -49,5 +56,14 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen
     AheadOffDayFragment.class, OffDayListFragment.class, CardFixValidDayFragment.class,
     StaffCardChargeFragment.class, StaffCardListHomeFragment.class, CardTplDetailInBrandFragment.class,
     CardListFragment.class, SpendRecordFragment.class, SpendRecordListFragment.class,
+    WebCardChargeFragment.class, WebChargeFragment.class
 }) public class StaffCardActivity extends CardActivity {
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    Fragment fragment = new StaffRouterCenter().registe(new cardImpl())
+        .getFragment(intent.getData(), intent.getExtras());
+    if(fragment instanceof SaasBaseFragment){
+      return fragment;
+    }
+    return super.getRouterFragment(intent);
+  }
 }

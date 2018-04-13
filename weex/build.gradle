@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+
+android {
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+
+    /**
+     * 必须加，否则64位手机无法加载so文件*/
+    ndk {
+      abiFilters "armeabi"
+    }
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  buildToolsVersion '27.0.1'
+}
+
+dependencies {
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  api 'com.taobao.android:weex_sdk:0.17.0'
+  implementation "cn.qingchengfit.widgets:qcbase:1.0.31"
+
+
+
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+  implementation 'com.alibaba:fastjson:1.1.46'
+  implementation 'org.weex.plugin:plugin-loader:1.0.0'
+
+
+  implementation 'com.alibaba.android:bindingx-core:1.0.1'
+  implementation 'com.alibaba.android:bindingx_weex_plugin:1.0.1'
+
+  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+}

@@ -1,5 +1,6 @@
 package cn.qingchengfit.inject.moudle;
 
+import android.app.Application;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.CardModel;
@@ -129,6 +130,9 @@ import java.util.List;
   }
 
   @Provides App provideApplicationContext() {
+    return app;
+  }
+  @Provides Application provideApplication() {
     return app;
   }
 

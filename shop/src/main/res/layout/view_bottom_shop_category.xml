@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryViewModel"
+        />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="17dp"
+        android:gravity="bottom"
+        android:text="@string/product_add_category"
+        tools:text="分类至（按分类展示商品，方便买家筛选）"
+        style="@style/QcTextStyleMediumGrey"
+        />
+    <include layout="@layout/divider_grey"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        app:items="@{viewModel.items}"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+      <TextView
+          android:id="@+id/add_category"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:drawableLeft="@drawable/product_add"
+          android:drawablePadding="7dp"
+          android:gravity="center"
+          android:onClick="@{view->viewModel.onAddCategoryClick()}"
+          android:text="@string/add_category"
+          android:textColor="@color/colorPrimary"
+          style="@style/QcTextStyleLargeDark"
+          />
+    </FrameLayout>
+    <include layout="@layout/divider_grey"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+      <TextView
+          android:id="@+id/cancel"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:onClick="@{(view)-> viewModel.onCancelClick()}"
+
+          android:text="@string/cancel"
+          android:textColor="@color/colorPrimary"
+          android:textSize="15sp"
+          />
+      <TextView
+          android:id="@+id/confirm"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_margin="12dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:onClick="@{(view)-> viewModel.onConfimClick()}"
+          android:text="@string/confirm"
+          android:textSize="15sp"
+          style="@style/QcBtnPrimary"
+          />
+    </LinearLayout>
+  </LinearLayout>
+</layout>

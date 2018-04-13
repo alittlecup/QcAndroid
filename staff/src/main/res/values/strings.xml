@@ -560,7 +560,8 @@
   <string name="module_service_group">团课</string>
   <string name="module_service_private">私教</string>
   <string name="module_service_free">入场签到</string>
-  <string name="module_service_shop">商店</string>
+  <string name="module_service_shop">商品管理</string>
+  <string name="module_service_commodity_list">商店</string>
 
 
   <string name="module_student">会员</string>
@@ -591,7 +592,7 @@
   <string name="module_gym_info">场馆信息</string>
   <string name="module_gym_time">营业时间</string>
   <string name="module_gym_site">场地</string>
-  <string name="module_gym_msg">短信</string>
+  <string name="module_gym_msg">通知</string>
   <string name="module_gym_wardrobe">更衣柜</string>
   <string name="module_gym_homepage">会员端配置</string>
   <string name="module_gym_wechat">微信公众号</string>

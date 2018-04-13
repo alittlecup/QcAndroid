@@ -5,15 +5,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.repository.IStudentModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
-import cn.qingchengfit.saasbase.routers.studentImpl;
-import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Named;
-import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * power by
@@ -35,120 +31,101 @@ import javax.inject.Singleton;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/31.
  */
-@Module
-public class TestModule {
+@Module public class TestModule {
+  private LoginStatus loginStatus;
+  private GymWrapper gymWrapper;
+  private TestApp app;
+  private BaseRouter router;
+  private QcRestRepository restRepository;
+
+  private TestModule(Builder builder) {
+    loginStatus = builder.loginStatus;
+    gymWrapper = builder.gymWrapper;
+    app = builder.app;
+    router = builder.router;
+    restRepository = builder.restRepository;
+  }
+
+  @Provides public LoginStatus provideLoginStatus() {
+    return loginStatus;
+  }
+
+  @Provides public GymWrapper provideGym() {
+    return gymWrapper;
+  }
+
+  @Provides public Application provideApp() {
+    return app;
+  }
+
+  @Provides public BaseRouter provideRouter() {
+    return router;
+  }
+
+  @Provides public QcRestRepository provideRepository() {
+    return restRepository;
+  }
+
+  @Provides public SaasbaseRouterCenter providesSaasbaseRouterConter() {
+    return null;
+  }
+
+  @Provides public IPermissionModel providesIpermissionModel(){
+    return new IPermissionModel() {
+      @Override public boolean check(String permission) {
+        return true;
+      }
+
+      @Override public boolean checkInBrand(String permission) {
+        return true;
+      }
+
+      @Override public boolean check(String permission, List<String> shopids) {
+        return true;
+      }
+    };
+  }
+  public static final class Builder {
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;
     private TestApp app;
     private BaseRouter router;
     private QcRestRepository restRepository;
 
-    private TestModule(Builder builder) {
-        loginStatus = builder.loginStatus;
-        gymWrapper = builder.gymWrapper;
-        app = builder.app;
-        router = builder.router;
-        restRepository = builder.restRepository;
+    public Builder() {
     }
 
-    @Provides
-    public LoginStatus provideLoginStatus() {
-        return loginStatus;
+    public Builder loginStatus(LoginStatus val) {
+      loginStatus = val;
+      return this;
     }
 
-    @Provides
-    public GymWrapper provideGym() {
-        return gymWrapper;
+    public Builder gymWrapper(GymWrapper val) {
+      gymWrapper = val;
+      return this;
     }
 
-    @Provides
-    public Application provideApp() {
-        return app;
+    public Builder app(TestApp val) {
+      app = val;
+      return this;
     }
 
-    @Provides
-    public BaseRouter provideRouter() {
-        return router;
+    public Builder router(BaseRouter val) {
+      router = val;
+      return this;
     }
 
-    @Provides
-    public QcRestRepository provideRepository() {
-        return restRepository;
+    public Builder restRepository(QcRestRepository val) {
+      restRepository = val;
+      return this;
     }
 
-    @Provides
-    SaasbaseRouterCenter providesSaasbaseRouterCenter() {
-        return new SaasbaseRouterCenter(null, null, null, null, null, null, null, new studentImpl());
+    public TestModule build() {
+      return new TestModule(this);
     }
-
-    @Singleton
-    @Provides
-    FollowUpFilterModel providesFollowUpFilterModel() {
-        return new FollowUpFilterModel();
-    }
-
-    @Named("commonFilter")
-    @Singleton
-    @Provides
-    StudentFilter providesStudentFilter() {
-        return new StudentFilter();
-    }
-
-
-    @Named("topFilter")
-    @Singleton
-    @Provides
-    StudentFilter providesTopStudentFilter() {
-        return new StudentFilter();
-    }
-
-    @Provides
-    public IStudentModel provideStudentModel(QcRestRepository restRepository) {
-        return new StudentModel(restRepository);
-    }
-
-
-    public static final class Builder {
-        private LoginStatus loginStatus;
-        private GymWrapper gymWrapper;
-        private TestApp app;
-        private BaseRouter router;
-        private QcRestRepository restRepository;
-
-        public Builder() {
-        }
-
-        public Builder loginStatus(LoginStatus val) {
-            loginStatus = val;
-            return this;
-        }
-
-        public Builder gymWrapper(GymWrapper val) {
-            gymWrapper = val;
-            return this;
-        }
-
-        public Builder app(TestApp val) {
-            app = val;
-            return this;
-        }
-
-        public Builder router(BaseRouter val) {
-            router = val;
-            return this;
-        }
-
-        public Builder restRepository(QcRestRepository val) {
-            restRepository = val;
-            return this;
-        }
-
-        public TestModule build() {
-            return new TestModule(this);
-        }
-    }
-//@Provides
-//public <T> Map<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>> providerMap(){
-//    return new HashMap<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>>();
-//}
+  }
+  //@Provides
+  //public <T> Map<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>> providerMap(){
+  //    return new HashMap<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>>();
+  //}
 }

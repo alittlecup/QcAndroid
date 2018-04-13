@@ -15,7 +15,9 @@
   <string name="edit">编辑</string>
 
   <!--提示-->
-  <string name="sorry_for_no_permission">抱歉，您没有该功能权限</string>
+  <string name="sorry_for_no_permission_shop">抱歉，您没有该功能权限</string>
+  <string name="no_access">禁止访问</string>
+  <string name="no_current_page_permission">您没有当前页面的访问权限</string>
 
   <!--工作人员列表、教练列表-->
   <string name="su_manager">超级管理员</string>

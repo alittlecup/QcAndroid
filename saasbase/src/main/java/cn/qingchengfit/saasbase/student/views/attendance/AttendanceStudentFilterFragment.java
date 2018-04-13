@@ -2,26 +2,18 @@ package cn.qingchengfit.saasbase.student.views.attendance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.student.views.filtertime.FilterCustomFragment;
 import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
 import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
-import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.views.fragments.BaseFilterFragment;
-import rx.functions.Action0;
+import java.util.ArrayList;
+import java.util.List;
 import rx.functions.Action3;
 
 /**

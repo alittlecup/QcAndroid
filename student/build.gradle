@@ -44,6 +44,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+  buildToolsVersion '27.0.1'
 }
 
 dependencies {

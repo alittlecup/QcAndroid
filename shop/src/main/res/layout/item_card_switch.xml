@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+  <data>
+  </data>
+  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <cn.qingchengfit.widgets.SwitcherLayout
+        android:id="@+id/card_tpl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:background="@color/white"
+        android:clickable="false"
+        android:focusable="false"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+  </FrameLayout>
+</layout>

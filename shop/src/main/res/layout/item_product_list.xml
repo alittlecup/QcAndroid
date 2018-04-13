@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+  <data>
+  </data>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingBottom="15dp"
+      android:paddingTop="15dp"
+      >
+    <FrameLayout
+        android:id="@+id/product_image_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        >
+      <ImageView
+          android:id="@+id/product_image"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:src="@color/colorPrimary"
+          />
+      <TextView
+          android:id="@+id/image_mask"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:alpha="0.5"
+          android:background="@color/warm_grey"
+          android:gravity="center"
+          android:text="@string/off_sale"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/product_image_container"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="100dp"
+        android:layout_toRightOf="@+id/product_image_container"
+        android:ellipsize="end"
+        android:lines="1"
+        tools:text="玉米玉米玉米玉米玉米玉米玉米玉米"
+        style="@style/QcTextStyleLargeDark"
+        />
+    <TextView
+        android:id="@+id/product_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/product_name"
+        android:layout_below="@+id/product_name"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/product_price"
+        tools:text="销量：20 权重：300 库存：1000"
+        style="@style/QcTextStyleSmallGrey"
+        />
+    <TextView
+        android:id="@+id/product_add_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/product_name"
+        android:layout_below="@+id/product_detail"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/txt_12sp"
+        tools:text="添加时间：2015-12-23 12:11:11"
+        style="@style/QcTextStyleSmallGrey"
+        />
+    <TextView
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="28dp"
+        tools:text="$ 10"
+        />
+
+  </RelativeLayout>
+</layout>
