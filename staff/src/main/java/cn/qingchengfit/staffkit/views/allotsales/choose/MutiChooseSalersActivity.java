@@ -36,8 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-import static cn.qingchengfit.staffkit.R.id.recyclerview;
-
 public class MutiChooseSalersActivity extends BaseActivity
     implements MutiChooseSalersPresenterPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
     public static final String INPUT_STUDENT = "mutichoosesalers_input_student";
@@ -50,7 +48,7 @@ public class MutiChooseSalersActivity extends BaseActivity
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.toolbar_title) TextView mToolbarTitile;
-    @BindView(recyclerview) RecyclerView mRecyclerview;
+    @BindView(R.id.recyclerview) RecyclerView mRecyclerview;
     @Inject MutiChooseSalersPresenterPresenter mPresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
