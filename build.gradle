@@ -7,7 +7,7 @@ ext {
                    minSdk              : 15,
                    targetSdk           : 26,
                    version_code        : 106, //缝10必更
-                   version_name        : "0.106.0",
+                   version_name        : "0.107.0",
                    trainer_version_code: 165,
                    trainer_version_name: "1.6.5"
 
