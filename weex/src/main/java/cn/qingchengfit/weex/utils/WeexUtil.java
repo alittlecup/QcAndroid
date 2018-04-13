@@ -12,6 +12,7 @@ import cn.qingchengfit.weex.https.WXHttpResponse;
 import cn.qingchengfit.weex.https.WXHttpTask;
 import cn.qingchengfit.weex.https.WXRequestListener;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.WXEnvironment;
 import java.io.BufferedReader;
@@ -105,6 +106,7 @@ public final class WeexUtil {
     Intent intent = new Intent(ACTION_VIEW);
     intent.addCategory("cn.qingchengfit.android.intent.category.WEEX");
     intent.putExtra("url", url);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     WXEnvironment.getApplication().startActivity(intent);
   }
 
@@ -164,22 +166,26 @@ public final class WeexUtil {
   }
 
   private static boolean openString(String content) {
-    JSONObject jsonObject = JSON.parseObject(content);
-    Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
-    if (!weex_enabled) {
-      String string = jsonObject.getString("proxy_commodity.js");
-      openWeexActivity(string + "/?weex_enable=false");
-      return true;
-    }
-    Set<String> keySet = jsonObject.keySet();
-    Iterator<String> iterator = keySet.iterator();
-    while (iterator.hasNext()) {
-      String next = iterator.next();
-      jsMap.put(next, jsonObject.getString(next));
-    }
-    if (jsMap.containsKey("proxy_commodity.js")) {
-      openWeexActivity(jsMap.get("proxy_commodity.js"));
-      return true;
+    try {
+      JSONObject jsonObject = JSON.parseObject(content);
+      Boolean weex_enabled = jsonObject.getBoolean("weex_enabled");
+      if (!weex_enabled) {
+        String string = jsonObject.getString("proxy_commodity.js");
+        openWeexActivity(string + "/?weex_enable=false");
+        return true;
+      }
+      Set<String> keySet = jsonObject.keySet();
+      Iterator<String> iterator = keySet.iterator();
+      while (iterator.hasNext()) {
+        String next = iterator.next();
+        jsMap.put(next, jsonObject.getString(next));
+      }
+      if (jsMap.containsKey("proxy_commodity.js")) {
+        openWeexActivity(jsMap.get("proxy_commodity.js"));
+        return true;
+      }
+    } catch (JSONException e) {
+
     }
     return false;
   }
@@ -246,6 +252,8 @@ public final class WeexUtil {
             WXHttpManager.getInstance().sendRequest(task);
           } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+          } catch (JSONException e) {
+
           }
         }
       }
