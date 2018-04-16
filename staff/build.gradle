@@ -1,53 +1,11 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'idea'
-//apply plugin: 'fastdex.app'
-def libs = rootProject.ext.libraries;
+def libs = rootProject.ext.libraries
 def config = rootProject.ext.configuration
-/**
- *  打印超过50ms的任务*/
-public class BuildTimeListener implements TaskExecutionListener, BuildListener {
-  private Date clock
-  private times = []
 
-  @Override
-  void beforeExecute(Task task) {
-    clock = new Date()
-  }
-
-  @Override
-  void afterExecute(Task task, TaskState taskState) {
-    def ms = new Date().time - clock.time
-    times.add([ms, task.path])
-
-    //task.project.logger.warn "${task.path} spend ${ms}ms"
-  }
-
-  @Override
-  void buildFinished(BuildResult result) {
-    println "Task spend time:"
-    for (time in times) {
-      if (time[0] >= 50) {
-        printf "%7sms  %s\n", time
-      }
-    }
-  }
-
-  @Override
-  void buildStarted(Gradle gradle) {}
-
-  @Override
-  void projectsEvaluated(Gradle gradle) {}
-
-  @Override
-  void projectsLoaded(Gradle gradle) {}
-
-  @Override
-  void settingsEvaluated(Settings settings) {}
-}
-
-project.gradle.addListener(new BuildTimeListener())
 /**
  *  打印超过50ms的任务  END*/
+project.gradle.addListener(rootProject.ext.buildTimeListener)
+
 
 
 android {
@@ -55,15 +13,8 @@ android {
   dataBinding {
     enabled true
   }
-
-  //  freeline {
-  //    hack true
-  //    productFlavor 'internaltest'
-  //  }
-
   compileSdkVersion config.compileVersion
   buildToolsVersion config.buildToolsVersion
-
   defaultConfig {
     applicationId "cn.qingchengfit.staffkit"
     minSdkVersion 16
@@ -71,7 +22,6 @@ android {
     versionCode config.version_code
     versionName "${config.version_name}"
     multiDexEnabled true
-
     vectorDrawables.useSupportLibrary = true
     javaCompileOptions {
       annotationProcessorOptions {
@@ -104,7 +54,6 @@ android {
       signingConfig signingConfigs.release
       minifyEnabled false
       shrinkResources false
-      //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       debuggable true
       debug {
         ext.enableCrashlytics = false
@@ -139,14 +88,17 @@ android {
     }
 
 
-    //    less21 {
-    //      applicationId "cn.qingchengfit.staffkit.self"
-    //      manifestPlaceholders = [APP_NAME   : "SELF测试", bdpush_authorities: "cn.qingchengfit.bdpush.self",
-    //                              APP_PACKAGE: "cn.qingchengfit.staffkit.self", file_provider: "cn.qingchengfit.staffkit.self.provider",]
-    //      ndk {
-    //        abiFilter "armeabi-v7a"
-    //      }
-    //    }
+
+    //动态修改配置
+    applicationVariants.all { variant ->
+      if (variant.buildType.name == "release") {
+        println(rootProject.ext.today)
+        variant.outputs.all { output ->
+          output.setVersionNameOverride("1." + rootProject.ext.today)
+          output.setVersionCodeOverride(rootProject.ext.today)
+        }
+      }
+    }
   }
 
 
@@ -163,6 +115,7 @@ android {
     exclude 'assets/soconfig.cfg'
     exclude 'assets/jni.ini'
   }
+
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -190,25 +143,16 @@ android {
     resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
     resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
   }
-
-  configurations.all {
-    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
-    resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
-  }
 }
 
+
+//完成编译后
 afterEvaluate {
   android.applicationVariants.all { variant ->
     variant.assemble.doLast {
       if (variant.buildType.name.contains('release')) {
         variant.outputs.all { output ->
+          //加固 签名apk后输出到./output 下
           def apkpath = output.outputFile as File
           exec {
             ignoreExitValue true
@@ -221,6 +165,7 @@ afterEvaluate {
     }
   }
 }
+
 tasks.withType(Test) {
   systemProperty "robolectric.logging", "stdout"
 }
@@ -267,12 +212,7 @@ dependencies {
   }
   //支持左滑菜单的recyclerview
   implementation 'com.tubb.smrv:swipemenu-recyclerview:5.3.0'
-  //图片选择库
-  //  implementation 'com.zhihu.android:matisse:0.5.0-alpha4'
-  //activity intent 传参数
-  //  implementation 'se.emilsjolander:intentbuilder-compiler:0.14.0'
-  //  annotationProcessor 'se.emilsjolander:intentbuilder-compiler:0.14.0'
-  //fragment 传参数
+
   // recyclerview 分组 header view
   implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
   implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
@@ -305,41 +245,4 @@ dependencies {
   annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
   annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
-  //  }
-  //  println 'no processor'
-  //  } else {
-  //    println "skip to run annotation processors ..."
-  //
-  //
-  //    // just add generated classes to the classpath
-  //    // must be in else branch or multiple AP calls will collide!
-  //    println "sourseset"
-  //
-  //    android.sourceSets.main.java.srcDirs += projectDir.absolutePath + "/build/generated/source/apt"
-  //    println android.sourceSets.dev.java.srcDirs
-  //
-  //  }
-
-  //  compile project(path: ':trainer')
 }
-//afterEvaluate {
-//  android.applicationVariants.all { variant ->
-//    variant.assemble.doLast {
-//      if (variant.buildType.name.contains('debug')) {
-//        variant.outputs.all {
-//          output ->
-//            def apkpath = output.outputFile as File
-//            exec {
-//              ignoreExitValue true
-//              def rootFile = new File("output")
-//              commandLine "mv", projectDir.absolutePath + "/build/generated/source/apt/dev/debug", rootFile.absolutePath
-//            }
-//        }
-//
-//      }
-//    }
-//  }
-//}
-
-//apply from: 'tinkerpatch.gradle'
-//apply plugin: 'com.antfortune.freeline'
