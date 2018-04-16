@@ -2,7 +2,7 @@
 
 ext {
   configuration = [package             : "cn.qingchengfit.staffkit",
-                   buildToolsVersion   : "27.0.1",
+                   buildToolsVersion   : "27.0.3",
                    compileVersion      : 27,
                    minSdk              : 15,
                    targetSdk           : 26,
@@ -85,6 +85,7 @@ buildscript {
     maven { url "https://maven.google.com" }
     jcenter()
         mavenCentral()
+      maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
@@ -92,11 +93,11 @@ buildscript {
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
     }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+      google()
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.1'
+    classpath 'com.android.tools.build:gradle:3.1.0'
     //        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
 //    classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
     classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
@@ -115,7 +116,9 @@ allprojects {
   repositories {
     maven { url "https://maven.google.com" }
     jcenter()
-    maven {
+      maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+
+      maven {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
     maven {
@@ -129,7 +132,6 @@ allprojects {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/aws/'
     }
 
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
     maven { url "https://jitpack.io" }
     maven {
