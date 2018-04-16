@@ -31,14 +31,56 @@ ext {
   bakPath = "tinkeroutput/"
   chat_version = "1.0.0"
   recruit_version = "1.0.1"
+  buildTimeListener =new BuildTimeListener()
+  today = new Date().format('yyMMdd').toInteger()
+  ticktime = System.currentTimeMillis()/1000
 //    isApInvalidated = { -> return hasAnyFileRelatedToApChanged() }
 }
+/**
+ *  打印超过50ms的任务*/
+public class BuildTimeListener implements TaskExecutionListener, BuildListener {
+  private Date clock
+  private times = []
 
+  @Override
+  void beforeExecute(Task task) {
+    clock = new Date()
+  }
 
+  @Override
+  void afterExecute(Task task, TaskState taskState) {
+    def ms = new Date().time - clock.time
+    times.add([ms, task.path])
 
+    //task.project.logger.warn "${task.path} spend ${ms}ms"
+  }
+
+  @Override
+  void buildFinished(BuildResult result) {
+    println "Task spend time:"
+    for (time in times) {
+      if (time[0] >= 50) {
+        printf "%7sms  %s\n", time
+      }
+    }
+  }
+
+  @Override
+  void buildStarted(Gradle gradle) {}
+
+  @Override
+  void projectsEvaluated(Gradle gradle) {}
+
+  @Override
+  void projectsLoaded(Gradle gradle) {}
+
+  @Override
+  void settingsEvaluated(Settings settings) {}
+}
 
 buildscript {
   ext.kotlin_version = '1.2.21'
+
   repositories {
     maven { url "https://maven.google.com" }
     jcenter()
@@ -100,5 +142,9 @@ allprojects {
     maven {
       url "https://s3.amazonaws.com/repo.commonsware.com"
     }
+
+
+
   }
+
 }
