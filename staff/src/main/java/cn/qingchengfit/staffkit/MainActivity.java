@@ -24,6 +24,23 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.baidu.android.pushservice.PushManager;
+import com.google.gson.Gson;
+import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.TIMManager;
+import com.tencent.qcloud.sdk.Constant;
+import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.common.AppData;
+import com.xiaomi.mipush.sdk.MiPushClient;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,21 +88,8 @@ import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.weex.utils.WeexUtil;
 import cn.qingchengfit.widgets.TabViewNoVp;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.baidu.android.pushservice.PushManager;
-import com.google.gson.Gson;
-import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.TIMManager;
-import com.tencent.qcloud.sdk.Constant;
-import com.tencent.qcloud.timchat.MyApplication;
-import com.tencent.qcloud.timchat.common.AppData;
-import com.xiaomi.mipush.sdk.MiPushClient;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -275,7 +279,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   public Fragment generateFragment(int pos) {
     switch (pos) {
       case 1:
-        return QcVipFragment.newInstance(Configs.URL_QC_FIND);
+        return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http","https"));
       case 2:
         return new MainMsgFragment();
       case 3:
