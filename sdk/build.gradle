@@ -34,14 +34,14 @@ dependencies {
 }
 
 group 'cn.qingchengfit.chat'
-//version rootProject.ext.chat_version
-//uploadArchives{
-//    repositories {
-//        mavenDeployer {
-//            repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
-//                authentication(userName: "admin", password: "admin123")
-//            }
-//            pom.artifactId = 'sdk'
-//        }
-//    }
-//}
+version rootProject.ext.ver
+uploadArchives{
+    repositories {
+        mavenDeployer {
+            repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.artifactId = 'sdk'
+        }
+    }
+}

@@ -8,7 +8,7 @@ android {
   compileSdkVersion 26
   defaultConfig {
     applicationId "cn.qingchengfit.qcrecruit"
-    minSdkVersion 16
+    minSdkVersion 21
     targetSdkVersion 26
     versionCode 1
     versionName "1.0"
@@ -20,13 +20,27 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+//    configurations.all {
+//        resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+//        resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
+//        resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
+//        resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
+//        resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+//        resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
+//        resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
+//        resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+//    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {
   api project(path: ':recruit')
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-  implementation 'com.android.support:appcompat-v7:26.1.0'
+  implementation 'com.android.support:appcompat-v7:27.0.2'
   implementation 'com.android.support.constraint:constraint-layout:1.0.2'
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.1'
