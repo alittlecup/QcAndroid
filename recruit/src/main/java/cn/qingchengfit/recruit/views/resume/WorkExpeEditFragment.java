@@ -16,6 +16,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
+import com.bumptech.glide.Glide;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,16 +51,6 @@ import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.TimeDialogWindow;
-import com.bigkoo.pickerview.TimePopupWindow;
-import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -267,8 +271,8 @@ import static android.text.TextUtils.isEmpty;
     }
     if (swPrivate.isExpanded()) {
       try {
-        body.private_course(Integer.parseInt(groupCount));
-        body.private_user(Integer.parseInt(groupNum));
+        body.private_course(Integer.parseInt(privateClass));
+        body.private_user(Integer.parseInt(privateNum));
       } catch (Exception e) {
         showAlert("请填写私教业绩");
         return;
