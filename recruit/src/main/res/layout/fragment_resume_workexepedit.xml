@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingBottom="100dp"
         >
 
 
@@ -237,7 +238,8 @@
               app:civ_hint="@string/please_input"
               app:civ_inputnum="true"
               app:civ_lable="私教数量(节)"
-              >
+              app:civ_text_color="@color/text_dark"
+          >
           </cn.qingchengfit.widgets.CommonInputView>
 
           <cn.qingchengfit.widgets.CommonInputView

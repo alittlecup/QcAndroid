@@ -10,6 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.QcRestRepository;
@@ -26,9 +32,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
 
 /**
  * power by
@@ -85,9 +88,8 @@ public class RecruitGymDetailFragment extends BaseFragment
   FragmentRecruitCompanyDetailBinding db;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    //super.onCreateView(inflater,container,savedInstanceState);
+    super.onCreateView(inflater,container,savedInstanceState);
     db  = FragmentRecruitCompanyDetailBinding.inflate(inflater,container,false);
-    //db = FragmentRecruitCompanyDetailBinding.bind(view);
     delegatePresenter(presenter, this);
     initToolbar(db.layoutToolbar.toolbar);
     return db.getRoot();

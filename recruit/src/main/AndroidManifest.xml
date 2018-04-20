@@ -6,7 +6,9 @@
   <application android:allowBackup="true"
       >
 
-    <activity android:name=".views.JobSearchChatActivity"/>
+    <activity android:name=".views.JobSearchChatActivity"
+        android:windowSoftInputMode="stateVisible|adjustResize"
+    />
   </application>
 
 </manifest>

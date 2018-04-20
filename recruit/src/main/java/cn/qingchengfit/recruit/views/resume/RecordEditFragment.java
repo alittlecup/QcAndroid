@@ -18,6 +18,22 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,18 +56,6 @@ import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.widgets.CommonInputView;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.TimeDialogWindow;
-import com.bigkoo.pickerview.TimePopupWindow;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -278,7 +282,7 @@ import rx.schedulers.Schedulers;
   @OnClick(R2.id.recordedit_comfirm_btn) public void onComplete() {
 
     if (TextUtils.isEmpty(recordEditName.getContent())) {
-      Toast.makeText(getContext(), "请填写认证名称", Toast.LENGTH_SHORT).show();
+      Toast.makeText(getContext(), "请填写培训名称", Toast.LENGTH_SHORT).show();
       return;
     }
     if (TextUtils.isEmpty(recordeditDate.getContent())) {

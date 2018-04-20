@@ -53,7 +53,6 @@ import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static android.text.TextUtils.isEmpty;
@@ -297,22 +296,18 @@ import static android.text.TextUtils.isEmpty;
     RxRegiste(ob.observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
-        .subscribe(new Action1<QcResponse>() {
-          @Override public void call(QcResponse qcResponse) {
-            hideLoading();
-            if (qcResponse.status == 200) {
-              RxBus.getBus().post(new EventResumeFresh());
-              ToastUtils.show(workExp == null ? "添加成功" : "修改成功");
-              getActivity().onBackPressed();
-            } else {
-              ToastUtils.show(qcResponse.getMsg());
-            }
+        .subscribe(qcResponse -> {
+          hideLoading();
+          if (qcResponse.status == 200) {
+            RxBus.getBus().post(new EventResumeFresh());
+            ToastUtils.show(workExp == null ? "添加成功" : "修改成功");
+            getActivity().onBackPressed();
+          } else {
+            ToastUtils.show(qcResponse.getMsg());
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            hideLoading();
-            ToastUtils.show(throwable.getMessage());
-          }
+        }, throwable -> {
+          hideLoading();
+          ToastUtils.show(throwable.getMessage());
         }));
   }
 
