@@ -89,7 +89,7 @@
       android:icon="@mipmap/ic_launcher"
       android:label="${APP_NAME}"
       android:theme="@style/QcAppTheme"
-      tools:replace="android:label"
+      tools:replace="android:label,android:allowBackup"
       >
     <meta-data
         android:name="UMENG_APPKEY"

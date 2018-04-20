@@ -11,6 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,11 +37,6 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
-import com.bigkoo.pickerview.TimeDialogWindow;
-import com.bigkoo.pickerview.TimePopupWindow;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -71,7 +74,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
         mFilterUsers = getIntent().getParcelableArrayListExtra("user");
         mStart = getIntent().getStringExtra("start");
         mEnd = getIntent().getStringExtra("end");
-        toolbar.setNavigationIcon(R.drawable.ic_cross_blace);
+        toolbar.setNavigationIcon(R.drawable.vd_close_grey_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onBackPressed();

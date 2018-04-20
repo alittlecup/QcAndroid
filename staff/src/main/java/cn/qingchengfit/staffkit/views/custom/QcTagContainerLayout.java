@@ -17,20 +17,23 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.MeasureUtils;
 import co.hkm.soltag.ColorFactory;
 import co.hkm.soltag.LayouMode;
 import co.hkm.soltag.TagView;
 import co.hkm.soltag.helper;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * MM.:  .:'   `:::  .:`MMMMMMMMMMM|`MMM'|MMMMMMMMMMM':  .:'   `:::  .:'.MM
+ * MM.:  .:'   `:::  .:`MMMMMMMMMMM|`MM
+ * M'|MMMMMMMMMMM':  .:'   `:::  .:'.MM
  * MMMM.     :          `MMMMMMMMMM  :*'  MMMMMMMMMM'        :        .MMMM
  * MMMMM.    ::    .     `MMMMMMMM'  ::   `MMMMMMMM'   .     ::   .  .MMMMM
  * MMMMMM. :   :: ::'  :   :: ::'  :   :: ::'      :: ::'  :   :: ::.MMMMMM
