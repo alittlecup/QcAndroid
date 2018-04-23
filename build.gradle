@@ -30,7 +30,7 @@ ext {
   ]
   bakPath = "tinkeroutput/"
   chat_version = "1.0.0"
-  recruit_version = "1.0.1"
+  recruit_version = "1.1.1"
   buildTimeListener =new BuildTimeListener()
   today = new Date().format('yyMMdd').toInteger()
   ticktime = System.currentTimeMillis()/1000
@@ -82,6 +82,9 @@ buildscript {
   ext.kotlin_version = '1.2.21'
 
   repositories {
+      maven {
+          url "../repo/"
+      }
     maven { url "https://maven.google.com" }
     jcenter()
         mavenCentral()
@@ -114,6 +117,9 @@ buildscript {
 
 allprojects {
   repositories {
+      maven {
+          url "../../repo/"
+      }
     maven { url "https://maven.google.com" }
     jcenter()
       maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
@@ -122,21 +128,11 @@ allprojects {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
     maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
+      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/all/'
     }
-    maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
-    }
-    
-    maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/aws/'
-    }
-
 
     maven { url "https://jitpack.io" }
-    maven {
-      url "../repo"
-    }
+
     maven {
       url 'https://dl.bintray.com/zouyuhan/maven'
     }
