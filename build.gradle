@@ -120,6 +120,9 @@ allprojects {
       maven {
           url "../../repo/"
       }
+      flatDir {
+          dirs '../aars'
+      }
     maven { url "https://maven.google.com" }
     jcenter()
       maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
