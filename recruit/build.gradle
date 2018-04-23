@@ -38,11 +38,10 @@ android {
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  implementation 'cn.qingchengfit.widgets:qcbase:1.0.10'
+  implementation 'cn.qingchengfit.widgets:qcbase:1.0.35'
   api project(path: ':qcim')
   annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
   annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
@@ -58,11 +57,18 @@ group 'cn.qingchengfit.recruit'
 version rootProject.ext.ver
 uploadArchives{
   repositories {
-    mavenDeployer {
-      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
-        authentication(userName: "admin", password: "admin123")
+//    mavenDeployer {
+//      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+//        authentication(userName: "admin", password: "admin123")
+//      }
+//      pom.artifactId = 'recruit'
+//    }
+
+      mavenDeployer {
+          repository(url: uri('../../repo')){
+              authentication(userName: "admin", password: "admin123")
+          }
+          pom.artifactId = 'recruit'
       }
-      pom.artifactId = 'recruit'
-    }
   }
 }

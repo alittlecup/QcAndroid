@@ -102,45 +102,6 @@ import static android.text.TextUtils.isEmpty;
   private MaterialDialog delDialog;
   private DialogSheet mDialogSheet;
 
-  private void showDialog() {
-    if (delDialog == null) {
-      delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
-          .content("删除此条工作经历?")
-          .positiveText("确定")
-          .negativeText("取消")
-          .callback(new MaterialDialog.ButtonCallback() {
-            @Override public void onPositive(MaterialDialog dialog) {
-              super.onPositive(dialog);
-              //fragmentCallBack.ShowLoading("请稍后");
-              //QcCloudClient.getApi().postApi.qcDelExperience(workExp.getId())
-              //    .onBackpressureBuffer().subscribeOn(Schedulers.io())
-              //    .observeOn(AndroidSchedulers.mainThread())
-              //    .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
-              //    .subscribe(aBoolean -> {
-              //        fragmentCallBack.hideLoading();
-              //        if (aBoolean) {
-              //            getActivity().onBackPressed();
-              //            Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
-              //        } else {
-              //            Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
-              //        }
-              //    }, throwable -> {
-              //    }, () -> {
-              //    });
-              dialog.dismiss();
-            }
-
-            @Override public void onNegative(MaterialDialog dialog) {
-              super.onNegative(dialog);
-              dialog.dismiss();
-            }
-          })
-          .cancelable(false)
-          .build();
-    }
-    delDialog.show();
-  }
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     WorkExpeEditFragmentBuilder.injectArguments(this);
@@ -323,23 +284,21 @@ import static android.text.TextUtils.isEmpty;
 
   @OnClick(R2.id.workexpedit_start_time) public void onStartTime() {
     pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
-    pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
-      @Override public void onTimeSelect(Date date) {
-        if (date.getTime() > new Date().getTime()) {
-          Toast.makeText(getContext(), "起始时间不能晚于今天", Toast.LENGTH_SHORT).show();
-          return;
-        }
-
-        if (!TextUtils.equals("至今", workexpeditStartEnd.getContent())
-            && DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime()
-            < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
-          Toast.makeText(getContext(), "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
-          return;
-        }
-
-        workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(date));
-        pwTime.dismiss();
+    pwTime.setOnTimeSelectListener(date -> {
+      if (date.getTime() > new Date().getTime()) {
+        Toast.makeText(getContext(), "起始时间不能晚于今天", Toast.LENGTH_SHORT).show();
+        return;
       }
+
+      if (!TextUtils.equals("至今", workexpeditStartEnd.getContent())
+          && DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime()
+          < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
+        Toast.makeText(getContext(), "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
+        return;
+      }
+
+      workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(date));
+      pwTime.dismiss();
     });
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
   }
@@ -351,24 +310,20 @@ import static android.text.TextUtils.isEmpty;
           mDialogSheet.dismiss();
           workexpeditStartEnd.setContent("至今");
         }
-      }).addButton("选择日期", new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          mDialogSheet.dismiss();
-          pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
-          pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
-            @Override public void onTimeSelect(Date date) {
-              if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(
-                  workexpeditStartTime.getContent()).getTime()) {
-                Toast.makeText(getContext(), "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
-                return;
-              }
-              workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(date));
-              pwTime.dismiss();
-            }
-          });
-          pwTime.setRange(1900, 2100);
-          pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
-        }
+      }).addButton("选择日期", v -> {
+        mDialogSheet.dismiss();
+        pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
+        pwTime.setOnTimeSelectListener(date -> {
+          if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(
+              workexpeditStartTime.getContent()).getTime()) {
+            Toast.makeText(getContext(), "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
+            return;
+          }
+          workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(date));
+          pwTime.dismiss();
+        });
+        pwTime.setRange(1900, 2100);
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
       });
     }
     mDialogSheet.show();
