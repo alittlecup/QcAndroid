@@ -1,5 +1,10 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
+import java.util.HashMap;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -11,9 +16,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import java.util.HashMap;
-import java.util.List;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -48,11 +50,7 @@ public class NotificationPresenter extends BasePresenter {
                         view.onShowError(qcResponseNotification.getMsg());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
+            }, throwable -> view.onShowError(throwable.getMessage())));
     }
 
     void loadMore(String staffid, String type) {
