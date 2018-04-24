@@ -11,19 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.saasbase.login.LoginActivity;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.BaseActivity;
+
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
@@ -38,13 +26,31 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import io.reactivex.Maybe;
+import com.tencent.smtt.sdk.QbSdk;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
+import io.reactivex.Maybe;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -89,6 +95,8 @@ public class SplashActivity extends BaseActivity {
     }
     setContentView(R.layout.activity_splash);
     ButterKnife.bind(this);
+    initX5();
+
     Glide.with(this)
         .load(R.mipmap.qc_logo)
         .dontAnimate()
@@ -213,6 +221,16 @@ public class SplashActivity extends BaseActivity {
         },throwable -> {});
 
     }
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+  }
+
+  private void initX5() {
+    // 初始化腾讯X5内核
+    QbSdk.initX5Environment(this, null);
   }
 
   public void goSplashViewpager() {

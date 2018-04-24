@@ -41,14 +41,12 @@ public class NotificationPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcDataResponse<Notification>>() {
-                @Override public void call(QcDataResponse<Notification> qcResponseNotification) {
-                    if (ResponseConstant.checkSuccess(qcResponseNotification)) {
-                        totalpage = qcResponseNotification.data.pages;
-                        view.onRefresh(qcResponseNotification.data.notifications, qcResponseNotification.data.unread_count);
-                    } else {
-                        view.onShowError(qcResponseNotification.getMsg());
-                    }
+            .subscribe(qcResponseNotification -> {
+                if (ResponseConstant.checkSuccess(qcResponseNotification)) {
+                    totalpage = qcResponseNotification.data.pages;
+                    view.onRefresh(qcResponseNotification.data.notifications, qcResponseNotification.data.unread_count);
+                } else {
+                    view.onShowError(qcResponseNotification.getMsg());
                 }
             }, throwable -> view.onShowError(throwable.getMessage())));
     }
