@@ -152,10 +152,6 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
-                //gymComponent = DaggerGymComponent.builder()
-                //        .appComponent(((App) getApplication()).getAppCompoent())
-                //        .gymMoudle(new GymMoudle(new CoachService(), brand, new GymStatus.Builder().isGuide(true).build()))
-                //        .build();
                 this.gymWrapper.getBrand().setId(brand.getId());
                 this.gymWrapper.getBrand().setName(brand.getName());
                 this.gymWrapper.getBrand().setPhoto(brand.getPhoto());
@@ -169,10 +165,6 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frag, new SetGymFragment()).commit();
             } else if (requestCode == 2) {
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
-                //gymComponent = DaggerGymComponent.builder()
-                //        .appComponent(((App) getApplication()).getAppCompoent())
-                //        .gymMoudle(new GymMoudle(new CoachService(), brand, new GymStatus.Builder().isGuide(true).build()))
-                //        .build();
 
                 this.gymWrapper.getBrand().setId(brand.getId());
                 this.gymWrapper.getBrand().setName(brand.getName());
@@ -187,10 +179,6 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frag, new SetGymFragment()).commit();
             } else if (requestCode == 3) {
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
-                //gymComponent = DaggerGymComponent.builder()
-                //        .appComponent(((App) getApplication()).getAppCompoent())
-                //        .gymMoudle(new GymMoudle(new CoachService(), brand, new GymStatus.Builder().isGuide(true).build()))
-                //        .build();
                 this.gymWrapper.getBrand().setId(brand.getId());
                 this.gymWrapper.getBrand().setName(brand.getName());
                 this.gymWrapper.getBrand().setPhoto(brand.getPhoto());

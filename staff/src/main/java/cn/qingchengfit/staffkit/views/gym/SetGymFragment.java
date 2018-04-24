@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,6 +39,8 @@ import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
+import cn.qingchengfit.staffkit.views.GuideActivity;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -46,12 +49,15 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static cn.qingchengfit.staffkit.views.gym.GymActivity.GYM_TO;
@@ -117,6 +123,13 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(mSetGymPresenter, this);
         initToolbar(toolbar);
+        RxView.clicks(comfirm).throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new BusSubscribe<Void>() {
+                @Override public void onNext(Void aVoid) {
+                    onComfirm();
+                }
+            });
 
         guideStep1.setVisibility(View.GONE);
         mCallbackActivity.setToolbar(getString(R.string.title_setting_gym), false, null, 0, null);
@@ -163,7 +176,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
         startActivity(toAddress);
     }
 
-    @OnClick(R.id.comfirm) public void onComfirm() {
+    public void onComfirm() {
 
         if (phone.getContent().length() != 11) {
             ToastUtils.show("请填写正确的手机号码");
@@ -234,27 +247,6 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
     }
 
     @Override public void onBrandList(final List<Brand> brands) {
-        //        final List<String> stringList = new ArrayList<>();
-        //        for (Brand b : brands) {
-        //            stringList.add(b.getName());
-        //        }
-        //        stringList.add("新增品牌");
-        //        final DialogList list = new DialogList(getContext());
-        //        list.list(stringList, new AdapterView.OnItemClickListener() {
-        //            @Override
-        //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //                list.dismiss();
-        //                if (position == stringList.size() - 1) {
-        //                    AddBrandFragment.start(SetGymFragment.this, 3, brand.getText().toString());
-        //                } else {
-        //                    if (position < brands.size()) {
-        //                        brand.setText(brands.get(position).getName());
-        //                        gymBody.brand_id = brands.get(position).getId();
-        //                    }
-        //                }
-        //            }
-        //        });
-        //        list.show();
 
     }
 
@@ -269,6 +261,11 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
             List<CoachService> coachServices = new ArrayList<>();
             coachServices.add(coachService);
             gymBaseInfoAction.writeGyms(coachServices);
+        }else if (getActivity() instanceof GuideActivity){
+            Intent r = new Intent();
+            r.putExtra("gym", coachService);
+            getActivity().setResult(Activity.RESULT_OK, r);
+            getActivity().finish();
         } else {
             RxBus.getBus().post(new EventFreshGyms());//通知健身房列表刷新
             RxBus.getBus().post(new RxCompleteGuideEvent());//通知单店模式

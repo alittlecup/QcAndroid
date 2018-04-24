@@ -19,12 +19,13 @@ public class GuideChooseBrandAcitivity extends ChooseBrandActivity {
 
     public void queryData() {
         if (sp != null) sp.unsubscribe();
-
+        showLoadingTransparent();
         sp = restRepository.getGet_api()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
                 @Override public void call(final QcDataResponse<BrandsResponse> qcResponseBrands) {
+                    hideLoadingTransparent();
                     if (ResponseConstant.checkSuccess(qcResponseBrands)) {
                         datas.clear();
                         datas.addAll(qcResponseBrands.data.brands);
@@ -98,7 +99,7 @@ public class GuideChooseBrandAcitivity extends ChooseBrandActivity {
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
-
+                    hideLoadingTransparent();
                 }
             });
     }
