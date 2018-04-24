@@ -38,9 +38,12 @@ version rootProject.ext.ver
 uploadArchives{
     repositories {
         mavenDeployer {
-            repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
-                authentication(userName: "admin", password: "admin123")
-            }
+//            repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+//                authentication(userName: "admin", password: "admin123")
+//            }
+          repository(url: uri('../../repo')){
+            authentication(userName: "admin", password: "admin123")
+          }
             pom.artifactId = 'sdk'
         }
     }

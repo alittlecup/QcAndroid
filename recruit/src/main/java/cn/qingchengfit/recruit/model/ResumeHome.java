@@ -145,6 +145,7 @@ public class ResumeHome extends Resume implements Parcelable {
         && height != 0
         && weight != 0
         && gd_district != null
+        && work_year != null
         && work_year != -1
         && !CmStringUtils.isEmpty(brief_description)
         && min_salary != null

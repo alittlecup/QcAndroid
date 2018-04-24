@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMElemType;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
@@ -371,6 +372,7 @@ public class ChatActivity extends AppCompatActivity
     } else {
       final Message mMessage = MessageFactory.getMessage(message);
       if (mMessage != null) {
+        if (mMessage.getMessage()==null || mMessage.getMessage().getElement(0).getType() == TIMElemType.Invalid) return;
         if (mMessage instanceof CustomMessage) {
           CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
           switch (messageType) {
@@ -583,10 +585,11 @@ public class ChatActivity extends AppCompatActivity
     //reSortList(messages);
     for (int i = 0; i < messages.size(); ++i) {
       final Message mMessage = MessageFactory.getMessage(messages.get(i));
-      if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) continue;
+      if (mMessage == null || mMessage.getMessage().getElement(0).getType() == TIMElemType.Invalid) continue;
+      if (messages.get(i).status() == TIMMessageStatus.HasDeleted) continue;
       if (mMessage instanceof CustomMessage && (((CustomMessage) mMessage).getType()
           == CustomMessage.Type.TYPING
-          || ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID)) {
+          || ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID) ) {
         continue;
       }
       ++newMsgNum;
