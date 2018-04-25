@@ -235,15 +235,13 @@ public class ChatActivity extends AppCompatActivity
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
     listView.setNestedScrollingEnabled(false);
     listView.setAdapter(flexibleAdapter);
-    listView.setOnTouchListener(new View.OnTouchListener() {
-      @Override public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-          case MotionEvent.ACTION_DOWN:
-            input.setInputMode(ChatInput.InputMode.NONE);
-            break;
-        }
-        return false;
+    listView.setOnTouchListener((v, event) -> {
+      switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+          input.setInputMode(ChatInput.InputMode.NONE);
+          break;
       }
+      return false;
     });
     listView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -779,43 +777,6 @@ public class ChatActivity extends AppCompatActivity
     presenter.sendMessage(message.getMessage());
   }
 
-  //    @Override
-  //    public void onCreateContextMenu(ContextMenu menu, View v,
-  //                                    ContextMenu.ContextMenuInfo menuInfo) {
-  //        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-  //        Message message = itemList.get(info.position).getData();
-  //        menu.add(0, 1, Menu.NONE, getString(R.string.chat_del));
-  //        if (message.isSendFail()) {
-  //            menu.add(0, 2, Menu.NONE, getString(R.string.chat_resend));
-  //        }
-  //        if (message instanceof ImageMessage || message instanceof FileMessage) {
-  //            menu.add(0, 3, Menu.NONE, getString(R.string.chat_save));
-  //        }
-  //    }
-  //
-  //
-  //    @Override
-  //    public boolean onContextItemSelected(MenuItem item) {
-  //        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-  //        Message message = itemList.get(info.position).getData();
-  //        switch (item.getItemId()) {
-  //            case 1:
-  //                message.remove();
-  //                flexibleAdapter.removeItem(info.position);
-  //                flexibleAdapter.notifyDataSetChanged();
-  //                break;
-  //            case 2:
-  ////                messageList.remove(message);
-  ////                presenter.sendMessage(message.getMessage());
-  //                break;
-  //            case 3:
-  //                message.save();
-  //                break;
-  //            default:
-  //                break;
-  //        }
-  //        return super.onContextItemSelected(item);
-  //    }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {

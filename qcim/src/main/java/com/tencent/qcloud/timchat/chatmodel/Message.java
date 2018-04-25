@@ -28,7 +28,11 @@ public abstract class Message {
     public TIMMessage getMessage() {
         return message;
     }
-
+    public String getId(){
+      if (message != null){
+        return message.getMsgId();
+      }else return "";
+    }
 
     /**
      * 显示消息

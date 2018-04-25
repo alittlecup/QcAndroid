@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import com.tencent.open.utils.Util;
 import com.tencent.qcloud.timchat.R;
 
 /**
@@ -37,19 +38,26 @@ public class CustomShapeTransformation extends BitmapTransformation {
   public Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
     // 获取到形状资源的Drawable对象
     Drawable shape = ContextCompat.getDrawable(mContext, mShapeRes);
-    float shapeWidth = shape.getMinimumWidth(); // 形状的宽
-    float shapeHeight = shape.getMinimumHeight(); // 形状的高
-
-    int width = toTransform.getWidth(); // 图片的宽
-    int height = toTransform.getHeight(); // 图片的高
-
-    if (width > height) {
+//    float shapeWidth = shape.getMinimumWidth(); // 形状的宽
+//    float shapeHeight = shape.getMinimumHeight(); // 形状的高
+//    int width = toTransform.getWidth(); // 图片的宽
+//    int height = toTransform.getHeight(); // 图片的高
+//
+//    if (width > height) {
+//      width = com.tencent.qcloud.timchat.common.Util.dpToPx(300f,mContext.getResources());
+//      height = com.tencent.qcloud.timchat.common.Util.dpToPx(200f,mContext.getResources());
       // 如果图片的宽大于高，则以高为基准，以形状的宽高比重新设置宽度
-      width = (int) (height * (shapeWidth / shapeHeight) * 1.5);
-    } else {
+//      width = (int) (height * (shapeWidth / shapeHeight) * 1);
+//    } else {
+//      width = com.tencent.qcloud.timchat.common.Util.dpToPx(200f,mContext.getResources());
+//      height = com.tencent.qcloud.timchat.common.Util.dpToPx(300f,mContext.getResources());
+
       // 如果图片的宽小于等于高，则以宽为基准，以形状的宽高比重新设置高度度
-      height = (int) (width * (shapeHeight / shapeWidth) * 1.5);
-    }
+//      height = (int) (width * (shapeHeight / shapeWidth) * 1);
+//    }
+
+    int width = com.tencent.qcloud.timchat.common.Util.dpToPx(150,mContext.getResources());
+    int height = com.tencent.qcloud.timchat.common.Util.dpToPx(200,mContext.getResources());
 
     // 居中裁剪图片，调用Glide库中TransformationUtils类的centerCrop()方法完成裁剪，保证图片居中且填满
     final Bitmap toReuse = pool.get(width, height, toTransform.getConfig() != null

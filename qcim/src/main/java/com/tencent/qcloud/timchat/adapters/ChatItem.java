@@ -61,26 +61,6 @@ public class ChatItem<T extends ChatItem.ViewHolder> extends AbstractFlexibleIte
     @Override
     public T createViewHolder(final View view, FlexibleAdapter adapter) {
         T vh = (T) new ViewHolder(view, adapter);
-        //leftMessage.setOnLongClickListener(new View.OnLongClickListener() {
-        //    @Override
-        //    public boolean onLongClick(View view) {
-        //        int pos = adapter.;
-        //        if (onDeleteMessageItem != null){
-        //            onDeleteMessageItem.onDelete(pos);
-        //        }
-        //        return false;
-        //    }
-        //});
-        //rightMessage.setOnLongClickListener(new View.OnLongClickListener() {
-        //    @Override
-        //    public boolean onLongClick(View view) {
-        //        int pos = getAdapterPosition();
-        //        if (onDeleteMessageItem != null){
-        //            onDeleteMessageItem.onDelete(pos);
-        //        }
-        //        return false;
-        //    }
-        //});
         return vh;
     }
 
@@ -110,7 +90,8 @@ public class ChatItem<T extends ChatItem.ViewHolder> extends AbstractFlexibleIte
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        return o instanceof ChatItem &&((ChatItem) o).getData() != null &&((ChatItem) o).getData().getMessage()!=null
+            && getData() != null && getData().getMessage() !=null && ((ChatItem) o).getData().getMessage().getMsgUniqueId() == getData().getMessage().getMsgUniqueId();
     }
 
     public static class ViewHolder extends FlexibleViewHolder{

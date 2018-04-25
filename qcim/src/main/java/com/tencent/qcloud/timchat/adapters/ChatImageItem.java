@@ -5,14 +5,21 @@ import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.tencent.TIMImageElem;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.R2;
 import com.tencent.qcloud.timchat.chatmodel.ImageMessage;
 import com.tencent.qcloud.timchat.chatmodel.Message;
+import com.tencent.qcloud.timchat.common.Util;
 import com.tencent.qcloud.timchat.widget.ChatImageView;
 import com.tencent.qcloud.timchat.widget.CustomShapeTransformation;
+import com.tencent.qcloud.timchat.widget.PhotoUtils;
 
 import java.util.List;
 
@@ -58,17 +65,15 @@ public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH>
         Glide.with(context)
             .load(e.getImageList().size() > 0 ? e.getImageList().get(0).getUrl() : e.getPath())
             .asBitmap()
-            .override(368, 368)
-            .fitCenter()
             .transform(new CustomShapeTransformation(context, R.drawable.chat_bubble_green))
+            .animate(R.anim.fade_in)
             .into(holder.rightImageMessage);
       } else {
         Glide.with(context)
             .load(e.getImageList().get(0).getUrl())
             .asBitmap()
-            .override(400, 400)
-            .centerCrop()
             .transform(new CustomShapeTransformation(context, R.drawable.chat_bubble_grey))
+            .animate(R.anim.fade_in)
             .into(holder.leftImageMessage);
       }
       imageMessage.showStatus(holder);
@@ -92,9 +97,7 @@ public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH>
   @Override public void onClick(View view) {
     TIMImageElem elem = (TIMImageElem) imageMessage.getMessage().getElement(0);
     if (elem.getImageList() != null && elem.getImageList().size() > 0) {
-      //for (TIMImage image : elem.getImageList()){
       imageMessage.navToImageview(elem.getImageList().get(0), context);
-      //}
     }
   }
 

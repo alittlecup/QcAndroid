@@ -46,26 +46,6 @@
             />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frame_detail_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/chat_send_resume"
-        android:visibility="visible"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        >
-
-        <include android:id="@+id/layout_recruit"
-            layout="@layout/item_recruit"
-            android:visibility="visible"/>
-
-        <include
-            android:id="@+id/layout_resume"
-            layout="@layout/layout_resume_top"
-            android:visibility="gone"/>
-
-    </FrameLayout>
 
     <com.tencent.qcloud.timchat.widget.ChatInput
         android:id="@+id/input_panel"
@@ -88,26 +68,72 @@
         android:background="@color/divider_grey"
         android:layout_above="@id/input_panel"/>
 
-    <LinearLayout
-        android:id="@+id/chat_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/frame_detail_layout"
-        android:layout_above="@id/divider"
-        android:gravity="top"
+    <!--<android.support.design.widget.CoordinatorLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/chat_list"-->
+        <!--android:background="@color/bg_grey"-->
+        <!--android:layout_below="@id/chat_send_resume"-->
+        <!--android:layout_above="@id/divider"-->
+    <!--&gt;-->
+        <LinearLayout
+            android:id="@+id/chat_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/chat_send_resume"
+            android:layout_above="@id/divider"
+            android:orientation="vertical"
         >
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_grey"
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:background="#fff"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        android:layout_marginTop="20dp"
-        android:clipToPadding="false"/>
-    </LinearLayout>
+        >
+            <FrameLayout
+                android:id="@+id/frame_detail_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chat_send_resume"
+                android:visibility="visible"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+            >
+
+                <include android:id="@+id/layout_recruit"
+                         layout="@layout/item_recruit"
+                         app:layout_scrollFlags="scroll"
+                         android:visibility="visible"/>
+
+                <include
+                    android:id="@+id/layout_resume"
+                    layout="@layout/layout_resume_top"
+                    app:layout_scrollFlags="scroll"
+                    android:visibility="gone"/>
+
+            </FrameLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:background="#fff"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:paddingBottom="20dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:clipToPadding="false"/>
+        </LinearLayout>
+
+    <!--</android.support.design.widget.CoordinatorLayout>-->
 
     <com.tencent.qcloud.timchat.widget.VoiceSendingView
         android:id="@+id/voice_sending"

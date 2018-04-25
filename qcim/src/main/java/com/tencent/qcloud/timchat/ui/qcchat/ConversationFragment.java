@@ -85,7 +85,7 @@ public class ConversationFragment extends Fragment
       listView.setItemAnimator(new DefaultItemAnimator());
       listView.addItemDecoration(
           new FlexibleItemDecoration(getContext())
-            .withDefaultDivider(R.layout.item_conversation)
+//            .withDivider(R.drawable.divider_chat_list,R.layout.item_conversation)
             .withOffset(1).withBottomEdge(true));
       listView.setNestedScrollingEnabled(false);
       flexibleAdapter = new FlexibleAdapter(flexItemList, this);
