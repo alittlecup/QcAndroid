@@ -8,7 +8,7 @@
          android:launchMode="standard">
       <intent-filter>
         <action android:name="cn.qignchengfit.android.intent.action.WEEX"/>
-
+        <action android:name="${APP_PACKAGE}"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="cn.qingchengfit.android.intent.category.WEEX"/>
         <action android:name="android.intent.action.VIEW"/>

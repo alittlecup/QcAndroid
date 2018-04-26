@@ -1,5 +1,10 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
+import java.util.HashMap;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -11,9 +16,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import java.util.HashMap;
-import java.util.List;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -39,20 +41,14 @@ public class NotificationPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcDataResponse<Notification>>() {
-                @Override public void call(QcDataResponse<Notification> qcResponseNotification) {
-                    if (ResponseConstant.checkSuccess(qcResponseNotification)) {
-                        totalpage = qcResponseNotification.data.pages;
-                        view.onRefresh(qcResponseNotification.data.notifications, qcResponseNotification.data.unread_count);
-                    } else {
-                        view.onShowError(qcResponseNotification.getMsg());
-                    }
+            .subscribe(qcResponseNotification -> {
+                if (ResponseConstant.checkSuccess(qcResponseNotification)) {
+                    totalpage = qcResponseNotification.data.pages;
+                    view.onRefresh(qcResponseNotification.data.notifications, qcResponseNotification.data.unread_count);
+                } else {
+                    view.onShowError(qcResponseNotification.getMsg());
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
+            }, throwable -> view.onShowError(throwable.getMessage())));
     }
 
     void loadMore(String staffid, String type) {

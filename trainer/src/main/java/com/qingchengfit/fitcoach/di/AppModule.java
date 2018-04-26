@@ -1,8 +1,22 @@
 package com.qingchengfit.fitcoach.di;
 
+import com.google.gson.JsonObject;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.routers.CourseRouter;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.util.HashMap;
+import java.util.List;
+
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.CourseModel;
+import cn.qingchengfit.model.GymConfigModel;
 import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
@@ -30,8 +44,6 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
-import cn.qingchengfit.model.CourseModel;
-import cn.qingchengfit.model.GymConfigModel;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.login.ILoginModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
@@ -62,18 +74,8 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
 import cn.qingchengfit.saasbase.user.IUserModel;
-import com.google.gson.JsonObject;
-import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.routers.CourseRouter;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
 import dagger.Provides;
-import java.util.HashMap;
-import java.util.List;
 import rx.Observable;
 
 /**
@@ -422,9 +424,11 @@ import rx.Observable;
             return null;
         }
 
-        @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
+        @Override
+        public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(HashMap<String, Object> params) {
             return null;
         }
+
 
         @Override
         public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {

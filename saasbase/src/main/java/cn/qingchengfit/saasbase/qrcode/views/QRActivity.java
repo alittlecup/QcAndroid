@@ -6,12 +6,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,10 +37,6 @@ import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
-import com.afollestad.materialdialogs.AlertDialogWrapper;
-import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-import com.tbruyelle.rxpermissions.RxPermissions;
-import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -216,7 +219,6 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @BindView(R2.id.root) LinearLayout root;
     @BindView(R2.id.root_view) RelativeLayout rootView;
     private Subscription sp;
-    private AlertDialogWrapper dialog;
     @Inject GymWrapper gymWrapper;
     @Inject QcRestRepository restRepository;
 
@@ -389,9 +391,6 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
             url = getIntent().getStringExtra(LINK_URL);
         }
         sp = restRepository.createPostApi(PostApi.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
-            //                .module(getIntent().getStringExtra(LINK_MODULE))
-            //                .brand_id(getIntent().getStringExtra("brand_id"))
-            //                .shop_id(getIntent().getStringExtra("shop_id"))
             .build())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -411,7 +410,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
                     toolbarTitile.setText("扫码成功");
                     RxBus.getBus().post(new OnBackEvent());
                 } else {
-                    new AlertDialogWrapper.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
+                    new AlertDialog.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
                         .setPositiveButton(R.string.common_comfirm, new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface dialogInterface, int i) {
                                 if (qrdecoderview != null) {

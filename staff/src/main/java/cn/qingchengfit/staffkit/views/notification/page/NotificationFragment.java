@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -17,6 +16,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
@@ -26,17 +33,17 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
+import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
@@ -51,11 +58,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -134,11 +136,7 @@ public class NotificationFragment extends BaseFragment
         rv.setItemAnimator(new FadeInUpItemAnimator());
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.setAdapter(mAdatper);
-        rv.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
-                refresh();
-            }
-        });
+        rv.setOnRefreshListener(() -> refresh());
         refresh();
         RxBusAdd(EventClearAllNoti.class).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<EventClearAllNoti>() {
             @Override public void call(EventClearAllNoti eventClearAllNoti) {
@@ -289,8 +287,9 @@ public class NotificationFragment extends BaseFragment
                 }
             }
         }
-        mAdatper.clear();
+//        mAdatper.clear();
         mAdatper.updateDataSet(mData,true);
+//        mAdatper.notifyDataSetChanged();
         if (mfirstUnread > 0) {
             RxBus.getBus()
                 .post(new EventLatestNoti(DateUtils.formatDateFromServer(data.get(mfirstUnread).getCreated_at()).getTime(),

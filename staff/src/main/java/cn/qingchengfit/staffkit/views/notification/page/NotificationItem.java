@@ -4,16 +4,19 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.tencent.qcloud.timchat.widget.PhotoUtils;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.staffkit.R;
-import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
-import java.util.List;
 
 public class NotificationItem extends AbstractFlexibleItem<NotificationItem.NotificationVH> {
 
@@ -59,7 +62,7 @@ public class NotificationItem extends AbstractFlexibleItem<NotificationItem.Noti
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        return o instanceof NotificationItem && ((NotificationItem) o).getMsg() != null && ((NotificationItem) o).getMsg().getId().equals(getMsg().getId());
     }
 
     public class NotificationVH extends FlexibleViewHolder {

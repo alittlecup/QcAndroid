@@ -17,6 +17,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
+import com.qingchengfit.fitcoach.BuildConfig;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.ChooseActivity;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
+import com.qingchengfit.fitcoach.activity.NotificationActivity;
+import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.tencent.qcloud.sdk.Constant;
+import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.common.AppData;
+import com.tencent.qcloud.timchat.ui.qcchat.AddConversationProcessor;
+import com.tencent.qcloud.timchat.ui.qcchat.ConversationFragment;
+import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,29 +64,9 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.BuildConfig;
-import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.ChooseActivity;
-import com.qingchengfit.fitcoach.activity.Main2Activity;
-import com.qingchengfit.fitcoach.activity.NotificationActivity;
-import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import com.tencent.qcloud.sdk.Constant;
-import com.tencent.qcloud.timchat.MyApplication;
-import com.tencent.qcloud.timchat.common.AppData;
-import com.tencent.qcloud.timchat.ui.qcchat.AddConversationProcessor;
-import com.tencent.qcloud.timchat.ui.qcchat.ConversationFragment;
-import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import tencent.tls.platform.TLSErrInfo;
 
@@ -395,12 +399,12 @@ public class MainMsgFragment extends BaseFragment
         toNoti.putExtra("type", type);
         startActivity(toNoti);
       } else if (TextUtils.equals(type,ConstantNotification.COMMENT_NOTIFICATION_STR)) {
-        ContainerActivity.router("/recruit/message_list", getContext(),
-            getString(R.string.chat_user_id_header, loginStatus.getUserId()));
+          presenter.clearNoti(
+                  ConstantNotification.getCategloreStr(getContext(),ConstantNotification.COMMENT_NOTIFICATION_STR));
+          ContainerActivity.router("/replies", getContext());
       } else {
-        presenter.clearNoti(
-            ConstantNotification.getCategloreStr(getContext(),ConstantNotification.COMMENT_NOTIFICATION_STR));
-        ContainerActivity.router("/replies", getContext());
+          ContainerActivity.router("/recruit/message_list", getContext(),
+                  getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       }
     }
     return false;

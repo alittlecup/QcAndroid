@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
+import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
 import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
 import cn.qingchengfit.saasbase.chat.ChatChooseInGymFragment;
@@ -96,6 +97,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.ChooseGymTrainerFragmentModule.class,
     AppComponent.MyCoursePlanFragmentModule.class,
   AppComponent.ChooseModule.class,
+  AppComponent.JobSearchChatModule.class,
     AppComponent.ConversationFriendsFragmentModule.class,
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class,
@@ -433,6 +435,16 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
             ChooseSubcomponent.Builder builder);
     }
+
+   @Subcomponent() public interface JobSearchChatSubcomponent extends AndroidInjector<JobSearchChatActivity> {
+       @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobSearchChatActivity> {
+       }
+   }
+
+   @Module(subcomponents = JobSearchChatSubcomponent.class) abstract class JobSearchChatModule {
+       @Binds @IntoMap @ActivityKey(JobSearchChatActivity.class)
+       abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(JobSearchChatSubcomponent.Builder builder);
+   }
 
   @Module(subcomponents = RecruitMessageListFragmentSubcomponent.class)
   abstract class RecruitMessageListFragmentModule {

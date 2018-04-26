@@ -31,14 +31,22 @@ android {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
     }
+      debug {
+          minifyEnabled false
+          shrinkResources false
+          debuggable true
+          debug {
+              ext.enableCrashlytics = false
+          }
+      }
+
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
-  buildToolsVersion '27.0.1'
+  buildToolsVersion '27.0.3'
 }
 
 dependencies {

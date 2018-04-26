@@ -415,12 +415,12 @@ public class MainMsgFragment extends BaseFragment
         toNoti.putExtra("type", type);
         startActivity(toNoti);
       } else if (TextUtils.equals(type, ConstantNotification.COMMENT_NOTIFICATION_STR)) {
-        ContainerActivity.router(QRActivity.RECRUIT_MESSAGE_LIST, getContext(),
-            getString(R.string.chat_user_id_header, loginStatus.getUserId()));
+          presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),
+                  ConstantNotification.COMMENT_NOTIFICATION_STR));
+          ContainerActivity.router(QRActivity.MODULE_ARTICLE_COMMENT_REPLY, getContext());
       } else {
-        presenter.clearNoti(ConstantNotification.getCategloreStr(getContext(),
-            ConstantNotification.COMMENT_NOTIFICATION_STR));
-        ContainerActivity.router(QRActivity.MODULE_ARTICLE_COMMENT_REPLY, getContext());
+          ContainerActivity.router(QRActivity.RECRUIT_MESSAGE_LIST, getContext(),
+                  getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       }
     }
     return false;

@@ -22,6 +22,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
+import com.tencent.qcloud.timchat.widget.PhotoUtils;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,18 +70,6 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.TypeUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
-import com.tencent.qcloud.timchat.widget.PhotoUtils;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -582,40 +586,6 @@ public class StatementDetailFragment extends BaseFragment implements StatementDe
 
         indicator.setViewPager(viewpager);
         fragmentAdapter.notifyDataSetChanged();
-        //viewpager.setOnTouchListener(new View.OnTouchListener() {
-        //
-        //    int dragthreshold = 30;
-        //    int downX;
-        //    int downY;
-        //
-        //    @Override public boolean onTouch(View v, MotionEvent event) {
-        //        if (viewpager != null && scrollRoot != null) {
-        //            switch (event.getAction()) {
-        //                case MotionEvent.ACTION_DOWN:
-        //                    downX = (int) event.getRawX();
-        //                    downY = (int) event.getRawY();
-        //                    break;
-        //                case MotionEvent.ACTION_MOVE:
-        //                    int distanceX = Math.abs((int) event.getRawX() - downX);
-        //                    int distanceY = Math.abs((int) event.getRawY() - downY);
-        //
-        //                    if (distanceY > distanceX && distanceY > dragthreshold) {
-        //                        viewpager.getParent().requestDisallowInterceptTouchEvent(false);
-        //                        scrollRoot.getParent().requestDisallowInterceptTouchEvent(true);
-        //                    } else if (distanceX > distanceY && distanceX > dragthreshold) {
-        //                        viewpager.getParent().requestDisallowInterceptTouchEvent(true);
-        //                        scrollRoot.getParent().requestDisallowInterceptTouchEvent(false);
-        //                    }
-        //                    break;
-        //                case MotionEvent.ACTION_UP:
-        //                    scrollRoot.getParent().requestDisallowInterceptTouchEvent(false);
-        //                    viewpager.getParent().requestDisallowInterceptTouchEvent(false);
-        //                    break;
-        //            }
-        //        }
-        //        return false;
-        //    }
-        //});
         mStatementDetailAdapter.notifyDataSetChanged();
         recyclerview.setNoData(statementBeans.size() == 0);
     }

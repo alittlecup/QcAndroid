@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -22,7 +24,6 @@ import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import java.util.LinkedList;
 import rx.functions.Action1;
 
 public class BrandManageActivity extends BaseActivity implements FragCallBack {
@@ -32,19 +33,14 @@ public class BrandManageActivity extends BaseActivity implements FragCallBack {
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
+  private Unbinder unbinder;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_manage);
-        ButterKnife.bind(this);
-        //component = DaggerBrandManageComponent.builder().appComponent(((App)getApplication()).getAppCompoent()).build();
+        unbinder = ButterKnife.bind(this);
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
         if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
             ((ViewGroup) toolbar.getParent()).setPadding(0,
               MeasureUtils.getStatusBarHeight(this), 0, 0);
@@ -65,7 +61,6 @@ public class BrandManageActivity extends BaseActivity implements FragCallBack {
     @Override public void setToolbar(String title, boolean showRight, View.OnClickListener titleClick, @MenuRes int menu,
         Toolbar.OnMenuItemClickListener listener) {
         ToolbarBean bean = new ToolbarBean(title, showRight, titleClick, menu, listener);
-        //        toolbarList.add(bean);
         setBar(bean);
     }
 
@@ -96,12 +91,10 @@ public class BrandManageActivity extends BaseActivity implements FragCallBack {
         }
     }
 
-    @Override public void onBackPressed() {
-        //        if (toolbarList.size() > 1) {
-        //            toolbarList.removeLast();
-        //            setBar(toolbarList.getLast());
-        //        }
-
-        super.onBackPressed();
-    }
+  @Override
+  protected void onDestroy() {
+    if (unbinder != null)
+      unbinder.unbind();
+    super.onDestroy();
+  }
 }

@@ -159,16 +159,18 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
                 @Override public void call(List<CoachService> coachServices) {
                     if (coachServices != null && coachServices.size() > 0) {
                         adapter.clear();
+                        datas.clear();
                         for (int i = 0; i < coachServices.size(); i++) {
                             datas.add(new ChooseGymItem(coachServices.get(i)));
                         }
-                        adapter.notifyDataSetChanged();
+                        adapter.updateDataSet(datas,true);
                         //layoutHint.setVisibility(View.VISIBLE);
                         btnAddGym.setVisibility(View.VISIBLE);
                     } else {//无场馆
                         adapter.clear();
-                        adapter.addItem(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
-                        adapter.notifyDataSetChanged();
+                        datas.clear();
+                        datas.add(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
+                        adapter.updateDataSet(datas,true);
                         //layoutHint.setVisibility(View.GONE);
                         btnAddGym.setVisibility(View.GONE);
                     }
