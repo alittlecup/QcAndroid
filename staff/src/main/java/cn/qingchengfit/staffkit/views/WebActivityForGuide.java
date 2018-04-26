@@ -175,7 +175,7 @@ public class WebActivityForGuide extends BaseActivity implements FragCallBack {
              */
             case R.id.btn_help:
                 DialogUtils.showAlert(this, getString(R.string.alert_title_what_is_home_page),
-                    getString(R.string.alert_content_what_is_home_page));
+                    getString(R.string.alert_content_what_is_home_page),null);
                 break;
             /**
              * 配置主页
