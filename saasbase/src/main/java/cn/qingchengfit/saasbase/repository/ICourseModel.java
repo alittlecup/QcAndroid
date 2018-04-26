@@ -1,8 +1,10 @@
 package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
+import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCourseListWrap;
@@ -20,6 +22,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -161,4 +164,10 @@ public interface ICourseModel {
 
   @GET("/api/v2/staffs/{staff_id}/courses/photos/")
   rx.Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket(@Query("course_id") String course_id);
+
+  rx.Observable<QcDataResponse> qcCheckBatchConflict(@Body BatchCopyBody body);
+
+  rx.Observable<QcDataResponse> qcSureCopyBatch(@Body BatchCopyBody body);
+
+  rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(HashMap<String, Object> params);
 }

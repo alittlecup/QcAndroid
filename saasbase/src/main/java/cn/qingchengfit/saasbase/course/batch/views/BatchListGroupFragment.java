@@ -1,21 +1,25 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.items.StickerDateItem;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
+import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -52,6 +56,8 @@ import javax.inject.Inject;
 
   @Inject BatchListGroupPresenter privatePresenter;
   @Inject IPermissionModel permissionModel;
+  @Inject QcRestRepository restRepository;
+  @Inject GymWrapper gymWrapper;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -84,6 +90,15 @@ import javax.inject.Inject;
     routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(false).src(TARGET).build());
   }
 
+  @Override public void clickCopyBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+    routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), new BatchCopyParams().isPrivate(
+        Boolean.FALSE).build());
+  }
+
   @Override public void onRefresh() {
     srl.setRefreshing(true);
     privatePresenter.getBatchList();
@@ -106,12 +121,19 @@ import javax.inject.Inject;
     srl.setRefreshing(false);
     if (course != null) {
       List<AbstractFlexibleItem> data = new ArrayList<>();
-      data.add(new StickerDateItem(course.size() + "节团课"));
+      data.add(new BatchCopyItem(course.size() + "节团课", this));
       for (BatchCourse coach : course) {
         data.add(new BatchItem(coach));
       }
       data.add(new TitleHintItem("如何添加团课排期"));
       commonFlexAdapter.updateDataSet(data);
     }
+  }
+
+  @SuppressLint("StringFormatMatches")
+  @Override public void clickPrint() {
+    WebActivity.startWeb(
+        getResources().getString(R.string.copy_batch_print_url, restRepository.getHost(),
+            gymWrapper.shop_id(), "type=group"), getContext());
   }
 }

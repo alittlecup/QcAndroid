@@ -39,6 +39,16 @@ public class CommonInputViewAdapter {
     v.setContent(content);
   }
 
+  @BindingAdapter(value = { "civ_showright" })
+  public static void setCommonInputViewShowRight(CommonInputView inputView, Boolean showRight) {
+    inputView.setShowRight(showRight);
+  }
+
+  @BindingAdapter(value = { "civ_lable" }) public static void setCommonInputView(
+      CommonInputView inputView, String label) {
+    inputView.setLabel(label);
+  }
+
   @BindingAdapter(value = {"civ_contentAttrChanged"}, requireAll = false)
   public static void setCivContentChanged(CommonInputView view, InverseBindingListener bindingListener){
 

@@ -1,7 +1,11 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
@@ -11,8 +15,10 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseSchedule;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
+import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -52,6 +58,13 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
   private Course course;
   @Inject IPermissionModel permissionModel;
 
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    return view;
+  }
+
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("团课排期");
@@ -88,6 +101,27 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
       }));
   }
 
+  @Override public void onClickAddBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+    fabMutiBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
+    fabMutiBatch.setLabelTextColor(R.color.white);
+    if (course != null ) {
+
+      routeTo("/batch/add/", null);
+    }
+  }
+
+  @Override public void onClickCopyBatch() {
+    CourseType courseType = new CourseType();
+    courseType.id = course.id;
+    courseType.name = course.name;
+    routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"),
+        BatchCopyParams.builder().isPrivate(Boolean.FALSE).course(courseType).build());
+  }
+
   @Override public boolean onItemClick(int i) {
     if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)){
       showAlert(R.string.sorry_for_no_permission);
@@ -106,12 +140,6 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
   }
 
   @Override public void onClickFab() {
-    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
-      showAlert(R.string.sorry_for_no_permission);
-      return;
-    }
-    if (course != null ) {
-      routeTo("/batch/add/", AddBatchParams.builder().mCourse(course).build());
-    }
+
   }
 }

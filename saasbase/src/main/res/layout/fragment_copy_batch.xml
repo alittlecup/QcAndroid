@@ -5,13 +5,14 @@
     >
 
   <data>
-    <import type="cn.qingchengfit.utils.DateUtils"/>
+    <import type="android.text.TextUtils"/>
     <variable
         name="copyViewModel"
         type="cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel"/>
     <variable
-        name="adapter"
-        type="cn.qingchengfit.saasbase.db.utils.CommonInputViewAdapter"/>
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"/>
+
   </data>
 
   <ScrollView
@@ -25,7 +26,10 @@
         android:orientation="vertical"
         >
 
-      <include layout="@layout/common_simple_toolbar"/>
+      <include
+          android:id="@+id/include_layout_toolbar"
+          layout="@layout/common_simple_toolbar"
+          app:toolbarModel="@{toolbarModel}"/>
 
       <TextView
           android:layout_width="match_parent"
@@ -45,7 +49,9 @@
           app:civ_hint="@string/err_no_start_date"
           app:civ_lable="@string/start_day"
           app:civ_showright="true"
-          app:civ_content="@{copyViewModel.startTime}"
+          app:civ_content="@={copyViewModel.startTime}"
+          app:civ_text_color="@color/text_dark"
+          app:civ_content_color="@color/text_dark"
           android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.startTime)}"
           />
 
@@ -58,32 +64,40 @@
           app:civ_hint="@string/err_no_end_date"
           app:civ_lable="@string/end_day"
           app:civ_showright="true"
-          app:civ_content="@{copyViewModel.endTime}"
+          app:civ_content="@={copyViewModel.endTime}"
+          app:civ_text_color="@color/text_dark"
+          app:civ_content_color="@color/text_dark"
           android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.endTime)}"
           />
 
       <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_coach"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height_new"
           android:background="@color/white"
           app:civ_clickable="true"
-          app:civ_hint="@string/all_coach"
-          app:civ_lable="@string/coach"
+          app:civ_hint="@string/text_coach_copy_batch_hint"
           app:civ_showright="true"
+          app:civ_lable="@string/coach"
           app:civ_content="@{copyViewModel.coach.get().username}"
+          app:civ_text_color="@color/text_dark"
+          app:civ_content_color="@color/text_dark"
           android:onClick="@{(view) -> copyViewModel.onCoach(view)}"
           />
 
       <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/input_copy_start"
+          android:id="@+id/input_course"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height_new"
           android:background="@color/white"
           app:civ_clickable="true"
-          app:civ_hint="@string/all_course"
+          app:civ_hint="@string/text_course_copy_batch_hint"
           app:civ_lable="@string/course"
           app:civ_showright="true"
-          app:civ_content="@{copyViewModel.course.get().name}"
+          app:civ_text_color="@color/text_dark"
+          app:civ_content="@{copyViewModel.courseValue.get().name}"
+          app:civ_content_color="@color/text_dark"
+          android:onClick="@{(view) -> copyViewModel.onCourse(view)}"
           />
 
       <TextView
@@ -96,7 +110,7 @@
           />
 
       <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/input_copy_end"
+          android:id="@+id/input_copy_start"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height_new"
           android:background="@color/white"
@@ -105,19 +119,23 @@
           app:civ_lable="@string/start_day"
           app:civ_showright="true"
           app:civ_content="@={copyViewModel.startCopyTime}"
+          app:civ_content_color="@color/text_dark"
+          app:civ_text_color="@color/text_dark"
           android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.startCopyTime)}"
           />
 
       <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_copy_end"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height_new"
           android:background="@color/white"
           app:civ_clickable="true"
-          app:civ_hint="@string/err_no_end_date"
+          app:civ_hint="@string/text_auto_calculate_date"
           app:civ_lable="@string/end_day"
-          app:civ_showright="true"
+          app:civ_showright="false"
           app:civ_content="@{copyViewModel.endCopyTime}"
-          android:onClick="@{(view) -> copyViewModel.onTimeStart(view, copyViewModel.endCopyTime)}"
+          app:civ_text_color="@color/text_dark"
+          app:civ_content_color="@color/text_warm"
           />
 
       <TextView
@@ -127,7 +145,7 @@
           android:paddingLeft="15dp"
           tools:text="占位符占位符占位符占位符占位符占位符占位符占位符"
           style="@style/QcTextStyleSmallWarm"
-          android:text=""
+          android:text='@{@string/description_copy_batch(TextUtils.isEmpty(copyViewModel.startTime) ? "- -" : copyViewModel.startTime,TextUtils.isEmpty(copyViewModel.endTime) ? "- -" : copyViewModel.endTime,copyViewModel.coach.get().username == null ? "- -" : copyViewModel.coach.get().username,copyViewModel.courseValue.get().name == null ? "- -" : copyViewModel.courseValue.get().name , TextUtils.isEmpty(copyViewModel.startCopyTime) ? "- -" : copyViewModel.startCopyTime, TextUtils.isEmpty(copyViewModel.endCopyTime) ? "- -" : copyViewModel.endCopyTime)}'
           />
 
       <Button
@@ -138,7 +156,7 @@
           style="@style/QcBtnPrimary"
           android:text="@string/button_copy_batch_sure"
           android:textColor="@color/white"
-          android:onClick="@{() -> copyViewModel.onSureClick()}"
+          android:onClick="@{(view) -> copyViewModel.onSureClick(view)}"
           />
 
     </LinearLayout>

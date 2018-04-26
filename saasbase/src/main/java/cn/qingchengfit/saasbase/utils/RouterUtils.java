@@ -41,7 +41,7 @@ public class RouterUtils {
 
   public static void routeTo(Context context, Uri uri, Bundle bd,Intent to) {
     try {
-      to.setAction(Intent.ACTION_VIEW);
+      to.setAction(context.getPackageName());
       to.setData(uri);
       to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       if (bd != null) {

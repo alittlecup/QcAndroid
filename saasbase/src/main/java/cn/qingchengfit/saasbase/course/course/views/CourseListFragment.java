@@ -14,7 +14,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -63,17 +62,18 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/8/2.
  */
 @Leaf(module = "course", path = "/list/") public class CourseListFragment extends SaasBaseFragment
-  implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,TitleFragment {
+  implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,TitleFragment,
+    FlexibleAdapter.OnUpdateListener {
 
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Inject IPermissionModel serPermisAction;
-  @Inject ICourseModel courseApi;
+  @Inject public ICourseModel courseApi;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) ViewGroup toolbarLayout;
   @BindView(R2.id.rv) RecyclerView rv;
-  @BindView(R2.id.srl) SwipeRefreshLayout srl;
+  @BindView(R2.id.srl) public SwipeRefreshLayout srl;
 
   protected CommonFlexAdapter commonFlexAdapter;
   @Need public Boolean mIsPrivate = false;
@@ -91,7 +91,6 @@ import rx.schedulers.Schedulers;
     if (getArguments() != null && getArguments().containsKey("p")){
       mIsPrivate = getArguments().getBoolean("p",true);
     }
-
   }
 
   @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -111,7 +110,6 @@ import rx.schedulers.Schedulers;
     }
 
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
-    rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
@@ -195,5 +193,9 @@ import rx.schedulers.Schedulers;
 
   @Override public String getTitle() {
     return (getArguments() != null && getArguments().getBoolean("p")) ? "私教课程" : "团课课程";
+  }
+
+  @Override public void onUpdateEmptyView(int size) {
+
   }
 }

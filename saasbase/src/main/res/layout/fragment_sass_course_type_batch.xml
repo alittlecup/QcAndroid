@@ -41,6 +41,8 @@
         app:menu_colorPressed="@color/colorPrimaryDark"
         app:menu_labels_position="left"
         app:menu_labels_ellipsize="end"
+        app:menu_labels_textColor="@color/text_dark"
+        app:menu_labels_colorNormal="@color/white"
         app:menu_fab_size="normal"
         app:menu_backgroundColor="#ccffffff"
         >
@@ -49,9 +51,10 @@
           android:id="@+id/fab_muti_batch"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:background="@color/registe_fill_color"
           app:fabSize="mini"
-          app:menu_colorNormal="@color/purple"
-          app:menu_colorPressed="@color/purple"
+          app:menu_colorNormal="@color/registe_fill_color"
+          app:menu_colorPressed="@color/registe_fill_color"
           app:menu_labels_position="left"
           app:fab_label="批量排期"
           />
@@ -60,11 +63,12 @@
           android:id="@+id/fab_copy_batch"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          app:menu_colorNormal="@color/shamrock_green"
+          android:background="@color/fab_button_purple"
+          app:menu_colorNormal="@color/fab_button_purple"
           app:menu_labels_position="left"
-          app:menu_colorPressed="@color/shamrock_green"
+          app:menu_colorPressed="@color/fab_button_purple"
           app:fabSize="mini"
-          app:fab_label="批量排期"
+          app:fab_label="复制排期"
           />
 
     </com.github.clans.fab.FloatingActionMenu>

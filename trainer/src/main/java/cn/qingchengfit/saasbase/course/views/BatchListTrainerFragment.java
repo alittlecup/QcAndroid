@@ -9,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
+import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
+import cn.qingchengfit.saasbase.course.batch.views.BatchCopyParams;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanFragment;
 import cn.qingchengfit.saasbase.course.batch.views.EditBatchParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
@@ -20,8 +25,10 @@ import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.course.presenters.CourseBatchDetailPresenter;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.DialogSheet;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -43,6 +50,8 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   @Inject GymWrapper gymWrapper;
   @Inject CourseBatchDetailPresenter presenter;
   @Inject IPermissionModel permissionModel;
+  @Inject LoginStatus loginStatus;
+  @Inject QcRestRepository restRepository;
 
   List<AbstractFlexibleItem> mDatas = new ArrayList<>();
   List<AbstractFlexibleItem> mOutdateDatas = new ArrayList<>();
@@ -139,6 +148,19 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     }
   }
 
+  @Override public void clickCopyBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(cn.qingchengfit.saasbase.R.string.sorry_for_no_permission);
+      return;
+    }
+    BatchCopyCoach coach = new BatchCopyCoach();
+    coach.setName(loginStatus.staff_name());
+    coach.setId(loginStatus.staff_id());
+    coach.setGender(0);
+    routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), new BatchCopyParams().isPrivate(
+        Boolean.FALSE).coach(coach).build());
+  }
+
   /**
    * 添加课程排期
    */
@@ -196,6 +218,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
 
   }
 
+
   @Override public void onBatchList(List<QcResponsePrivateDetail.PrivateBatch> batch) {
     if (srl != null) srl.setRefreshing(false);
     mDatas.clear();
@@ -216,6 +239,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
           pos = mDatas.size() - 1;
           mOutdateDatas.add(new BatchItem(batch.get(i)));
         } else {
+          mDatas.add(new BatchCopyItem(batch.size() + "节课", this));
           mDatas.add(new BatchItem(batch.get(i)));
         }
       } else {
@@ -234,6 +258,12 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       mDatas.addAll(mOutdateDatas);
     }
     commonFlexAdapter.updateDataSet(mDatas);
+  }
+
+  @Override public void clickPrint() {
+    WebActivity.startWeb(
+        getResources().getString(cn.qingchengfit.saasbase.R.string.copy_batch_print_url, restRepository.getHost(),
+            gymWrapper.shop_id(), (mType  != 1? "":"type=private") + "coach_id=" + loginStatus.staff_id()), getContext());
   }
 
   @Override public void onRefresh() {

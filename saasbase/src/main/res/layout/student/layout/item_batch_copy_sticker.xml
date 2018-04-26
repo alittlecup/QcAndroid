@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical"
+    android:paddingRight="15dp"
+    android:background="@color/bg_grey"
+    >
+
+  <TextView
+      android:id="@+id/tv_sticker_content"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      style="@style/TextTitleHint"
+      tools:text="我才草哦草"
+      />
+
+  <android.support.v4.widget.Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      />
+
+  <TextView
+      android:id="@+id/tv_print"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="打印课表"
+      android:textColor="@color/colorPrimary"
+      android:textSize="12sp"
+      android:padding="3dp"
+      />
+
+</LinearLayout>

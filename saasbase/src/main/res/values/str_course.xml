@@ -125,4 +125,15 @@
   <string name="text_group_limit_cancel">团课取消预约限制</string>
   <string name="text_private_limit_cancel">私教取消预约限制</string>
 
+  <string name="text_select_start_date">请选择开始日期</string>
+  <string name="text_select_end_date">请选择结束日期</string>
+  <string name="text_auto_calculate_date">根据开始日期自动计算</string>
+
+  <string name="text_coach_copy_batch_hint">请选择教练</string>
+  <string name="text_course_copy_batch_hint">请选择课程</string>
+  <string name="text_coach_copy_batch_error">所选时间段内暂无教练</string>
+  <string name="text_course_copy_batch_error">所选时间段内暂无课程</string>
+  <string name="text_copy_batch_error" formatted="false" >%s至%s之间，%s没有「%s」排期，请重新选择</string>
+  <string name="copy_batch_print_url" formatted="false"> %\sshop/%s/m/schedule/printer/?%s</string>
+
 </resources>

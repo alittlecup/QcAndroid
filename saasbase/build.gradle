@@ -8,6 +8,7 @@ def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 
 android {
+<<<<<<< HEAD
     compileSdkVersion cfg.compileVersion
     dataBinding {
         enabled true
@@ -57,18 +58,60 @@ android {
         resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
         resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
         resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+=======
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+  dataBinding {
+    enabled true
+  }
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+    vectorDrawables.useSupportLibrary true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true',
+                     packageName                   : 'cn.qingchengfit.saasbase',]
+      }
     }
-    sourceSets {
-        main {
-            res.srcDirs = [
-                'src/main/res/layout/student',
-                'src/main/res'
-            ]
-        }
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    manifestPlaceholders = [APP_SCHAME: "qcstaff"]
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+>>>>>>> 复制排期
     }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  configurations.all {
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+    resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+  }
+  sourceSets {
+    main {
+      res.srcDirs = ['src/main/res/layout/student',
+                     'src/main/res']
+    }
+  }
 }
 
 dependencies {
+<<<<<<< HEAD
 //<<<<<<< HEAD
 //    api "cn.qingchengfit.widgets:qcbase:1.0.180426"
     api "cn.qingchengfit.recruit:recruit:1.1.2"
@@ -101,16 +144,53 @@ dependencies {
     }
     api "android.arch.lifecycle:reactivestreams:1.0.0"
     api "io.reactivex:rxjava-reactive-streams:1.2.1"
+=======
 
-    annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+  if (!isDependenceLocal.toBoolean()) {
+    api "cn.qingchengfit.widgets:qcbase:1.0.34"
+  } else {
+    api "cn.qingchengfit.widgets:qcbase:1.0.36"
+  }
+  api "cn.qingchengfit.recruit:recruit:1.1.0"
+  api "cn.qingchengfit.chat:sdk:1.1.0"
+  if (!isDependenceLocal.toBoolean()) {
+    api "cn.qingchengfit.chat:qcim:1.1.0"
+  }else{
+    api "cn.qingchengfit.chat:qcim:1.1.1"
+  }
+  //    implementation project(path: ":recruit")
+  //    api project(path: ':recruit')
 
-    api 'me.gujun.android.taggroup:library:1.4@aar'
+  api project(path: ':weex')
 
-    api "android.arch.lifecycle:common-java8:1.0.0"
-//    // Room
-    api "android.arch.persistence.room:runtime:1.0.0"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
+    exclude group: 'com.google.googlejavaformat'
+  }
+  api('com.hkm.taglib:tag:1.6.0') {
+    exclude group: 'com.android.support'
+  }
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+  api("android.arch.lifecycle:extensions:1.0.0") {
+    exclude group: 'android.arch.lifecycle', module: 'runtime'
+  }
+  api "android.arch.lifecycle:reactivestreams:1.0.0"
+  api "io.reactivex:rxjava-reactive-streams:1.2.1"
+>>>>>>> 复制排期
+
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+
+  api 'me.gujun.android.taggroup:library:1.4@aar'
+
+  api "android.arch.lifecycle:common-java8:1.0.0"
+  //    // Room
+  api "android.arch.persistence.room:runtime:1.0.0"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+  api 'io.reactivex.rxjava2:rxandroid:2.0.1'
   api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
@@ -120,12 +200,12 @@ version '1.0.5'
 
 uploadArchives {
 
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-            pom.artifactId = 'sass'
-        }
+  repositories {
+    mavenDeployer {
+      repository(url: uri('../repo'))
+      pom.artifactId = 'sass'
     }
+  }
 }
 repositories {
   mavenCentral()

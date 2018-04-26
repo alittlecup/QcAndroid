@@ -74,8 +74,18 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import com.google.gson.JsonObject;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.routers.CourseRouter;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
 import dagger.Provides;
+import java.util.HashMap;
+import java.util.List;
 import rx.Observable;
 
 /**
@@ -424,11 +434,10 @@ import rx.Observable;
             return null;
         }
 
-        @Override
-        public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(HashMap<String, Object> params) {
+        @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(
+            HashMap<String, Object> params) {
             return null;
         }
-
 
         @Override
         public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {

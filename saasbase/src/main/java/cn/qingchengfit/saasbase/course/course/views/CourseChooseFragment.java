@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.course.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
@@ -33,7 +34,8 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 @Leaf(module = "course", path = "/choose/")
 public class CourseChooseFragment extends CourseListFragment {
 
-  @Need String src;
+  @Need public String src;
+  @Need public String courseId;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -50,4 +52,22 @@ public class CourseChooseFragment extends CourseListFragment {
     }
     return true;
   }
+
+  @Override public void onUpdateEmptyView(int size) {
+    if (commonFlexAdapter != null) {
+      for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+        IFlexible item = commonFlexAdapter.getItem(i);
+        if (item instanceof CourseItem) {
+          if (TextUtils.isEmpty(courseId)
+              && ((CourseItem) item).getCourse() != null
+              && TextUtils.equals(courseId, ((CourseItem) item).getCourse().id)) {
+            commonFlexAdapter.addSelection(i);
+            commonFlexAdapter.notifyItemChanged(i);
+            break;
+          }
+        }
+      }
+    }
+  }
+
 }

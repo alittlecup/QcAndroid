@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
@@ -27,7 +29,6 @@ import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitParams;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.github.clans.fab.FloatingActionButton;
@@ -64,7 +65,8 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 @SensorsDataTrackFragmentAppViewScreen public abstract class BatchListFragment
     extends SaasBaseFragment
-    implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+    implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,
+    BatchCopyItem.OnClickPrintListener {
 
   @BindView(R2.id.toolbar_title) protected TextView toolbarTitile;
   @BindView(R2.id.toolbar) protected Toolbar toolbar;
@@ -144,6 +146,11 @@ import rx.android.schedulers.AndroidSchedulers;
         }
         QRActivity.start(getContext(), QRActivity.PLANS_SETTING_GROUP);
         break;
+      case 4: //打印课表
+        /**
+         * 打印课表
+         */
+        break;
       default://课程种类
         routeTo("/list/", new CourseListParams().mIsPrivate(isPrivate).build());
         break;
@@ -174,17 +181,23 @@ import rx.android.schedulers.AndroidSchedulers;
     addBatchBtn.getMenuIconView().setImageResource(R.drawable.vd_add_batch);
 
     fabMutiBatch.setLabelText("批量排期");
-    fabMutiBatch.setImageResource(R.drawable.vd_add_grey_40dp);
-    fabCopyBatch.setLabelColors(R.color.divider_grey, R.color.divider_grey, R.color.divider_grey);
-    fabCopyBatch.setLabelTextColor(R.color.text_dark);
+    fabMutiBatch.setImageResource(R.drawable.fab_add);
+    //fabMutiBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
+    //fabMutiBatch.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    //fabMutiBatch.setLabelTextColor(R.color.text_dark);
     fabMutiBatch.setOnClickListener(v -> clickAddBatch());
 
     fabCopyBatch.setLabelText("复制排期");
-    fabCopyBatch.setLabelColors(R.color.divider_grey, R.color.divider_grey, R.color.divider_grey);
-    fabCopyBatch.setLabelTextColor(R.color.text_dark);
-    fabCopyBatch.setImageResource(R.drawable.vd_add_cardtpl);
-    fabMutiBatch.setOnClickListener(v -> {
-      routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), null);
+    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.purple));
+    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.purple));
+    //fabCopyBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
+    //fabCopyBatch.setLabelTextColor(R.color.text_dark);
+    //fabCopyBatch.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple));
+    fabCopyBatch.setImageResource(R.drawable.ic_copy);
+    fabCopyBatch.setOnClickListener(v -> {
+      clickCopyBatch();
     });
 
     addBatchBtn.setClosedOnTouchOutside(true);
@@ -225,6 +238,18 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @OnClick(R2.id.add_batch_btn) public void clickAddBatch() {
 
+  }
+
+  public void clickCopyBatch(){
+
+  }
+
+  public void clickPrint(){
+
+  }
+
+  @Override public void onPrint() {
+    clickPrint();
   }
 
   @Override public String getFragmentName() {

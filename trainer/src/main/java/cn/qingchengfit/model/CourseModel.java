@@ -6,8 +6,10 @@ import cn.qingchengfit.api.CourseApi;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
+import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
@@ -28,6 +30,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import com.qingchengfit.fitcoach.App;
+import java.util.HashMap;
 import rx.Observable;
 
 /**
@@ -282,5 +285,19 @@ public class CourseModel implements ICourseModel {
 
   @Override public Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket(String course_id) {
     return api.qcGetJacket(loginStatus.staff_id(), course_id, gymWrapper.getParams());
+  }
+
+  @Override public rx.Observable<QcDataResponse> qcCheckBatchConflict(BatchCopyBody body) {
+    return api.qcCheckBatchConflict(loginStatus.staff_id(), body, gymWrapper.getParams());
+  }
+
+  @Override public rx.Observable<QcDataResponse> qcSureCopyBatch(BatchCopyBody body) {
+    return api.qcSureCopyBatch(loginStatus.staff_id(), body, gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(
+      HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return api.qcBatchCopySchedule(loginStatus.staff_id(), params);
   }
 }

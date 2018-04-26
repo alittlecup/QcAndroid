@@ -4,6 +4,7 @@ import cn.qingchengfit.saasbase.cards.views.MutiChooseGymFragment;
 import cn.qingchengfit.saasbase.course.CourseActivity;
 import cn.qingchengfit.saasbase.course.batch.views.AddBatchFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchCopyFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchCourseChooseFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchDetailCommonView;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryGroupFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateFragment;
@@ -56,7 +57,7 @@ import com.anbillon.flabellum.annotations.Trunk;
   AddCourseFragment.class, CoachCommentListFragment.class, CourseHomeInBrandFragment.class,
   CourseImagesFragment.class, BatchDetailCommonView.class,
     MutiChooseGymFragment.class,ChooseCoursePlanFragment.class, BatchCopyFragment.class,
-    BatchTrainChooseFragment.class,
+    BatchTrainChooseFragment.class, BatchCourseChooseFragment.class,
 })
 public class StaffCourseActivity extends CourseActivity {
 

@@ -83,6 +83,9 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
   }
 
   @Override public boolean equals(Object o) {
+    if (o instanceof CommonUserItem && ((CommonUserItem) o).getUser() == null){
+      return true;
+    }
     return o instanceof CommonUserItem && TextUtils.equals(((CommonUserItem) o).getUser().getId(),
       getUser().getId());
   }

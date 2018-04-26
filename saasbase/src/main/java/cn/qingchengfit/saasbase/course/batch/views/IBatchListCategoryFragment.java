@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.github.clans.fab.FloatingActionButton;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -48,6 +52,10 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
 
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
+
+  FloatingActionButton fabMutiBatch;
+  FloatingActionButton fabCopyBatch;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SaasbaseParamsInjector.inject(this);
@@ -71,6 +79,7 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     toolbar = parent.findViewById(R.id.toolbar);
     toolbarTitle = parent.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
+    initFloatButton();
     return parent;
   }
 
@@ -89,6 +98,65 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     if (srl != null)
       srl.setRefreshing(true);
     onRefresh();
+  }
+
+  private void initFloatButton() {
+
+    fabCopyBatch = new FloatingActionButton(getContext());
+    fabMutiBatch = new FloatingActionButton(getContext());
+
+    fabMutiBatch.setLabelText("批量排期");
+    fabCopyBatch.setLabelText("复制排期");
+
+    fab.addMenuButton(fabMutiBatch);
+    fab.addMenuButton(fabCopyBatch);
+
+    fabMutiBatch.setImageResource(R.drawable.fab_add);
+    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    fabMutiBatch.setOnClickListener(v -> {
+      onClickAddBatch();
+    });
+
+    fabCopyBatch.setImageResource(R.drawable.ic_copy);
+    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.purple));
+    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.purple));
+    fabCopyBatch.setOnClickListener(v -> {
+      onClickCopyBatch();
+    });
+    //fabCopyBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
+    //fabCopyBatch.setLabelTextColor(R.color.white);
+
+    fab.setClosedOnTouchOutside(true);
+    fab.setIconAnimated(false);
+
+    ObjectAnimator
+        scaleOutX = ObjectAnimator.ofFloat(fab.getMenuIconView(), "scaleX", 1f, 0.6f);
+    scaleOutX.setDuration(50);
+    ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(fab.getMenuIconView(), "scaleY", 1f, 0.6f);
+    scaleOutY.setDuration(50);
+
+    ObjectAnimator scaleInX = ObjectAnimator.ofFloat(fab.getMenuIconView(), "scaleX", 0.6f, 1f);
+    scaleInX.setDuration(50);
+    ObjectAnimator scaleInY = ObjectAnimator.ofFloat(fab.getMenuIconView(), "scaleY", 0.6f, 1f);
+    scaleInY.setDuration(50);
+
+    AnimatorSet animatorSet = new AnimatorSet();
+    animatorSet.play(scaleOutX).with(scaleOutY);
+    animatorSet.play(scaleInX).with(scaleInY).after(scaleOutX);
+
+    fab.setOnMenuButtonClickListener(v -> {
+      animatorSet.start();
+      fab.toggle(true);
+    });
+  }
+
+  public void onClickAddBatch(){
+
+  }
+
+  public void onClickCopyBatch(){
+
   }
 
   @Override public int getFbIcon() {

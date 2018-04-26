@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="82dp"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_click"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     >
 
   <ImageView
@@ -14,7 +17,6 @@
       android:layout_width="40dp"
       android:layout_height="match_parent"
       android:scaleType="centerInside"
-      android:src="@drawable/ic_item_delete"
       android:visibility="gone"
       />
 
@@ -22,7 +24,6 @@
       android:layout_width="51dp"
       android:layout_height="51dp"
       android:layout_marginLeft="@dimen/activity_horizontal_margin"
-      android:background="@drawable/bg_rect_black"
       android:padding="1dp"
       >
 
@@ -41,6 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        tools:src=""
         />
 
   </RelativeLayout>
@@ -73,9 +75,10 @@
   </LinearLayout>
 
   <ImageView
-      android:layout_width="40dp"
-      android:layout_height="match_parent"
+      android:id="@+id/img_course_status_right"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
       android:scaleType="centerInside"
-      android:src="@drawable/ic_arrow_right"
+      app:srcCompat="@drawable/vd_triangle_right_grey"
       />
 </LinearLayout>
