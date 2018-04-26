@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
 import cn.qingchengfit.inject.model.StudentWrapper;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -53,6 +54,9 @@ public class StudentsDetailActivity extends BaseActivity implements FragCallBack
         setContentView(R.layout.activity_frag);
         ButterKnife.bind(this);
         StudentBean studentBean = getIntent().getParcelableExtra("student");
+        QcStudentBean qcStudentBean = getIntent().getParcelableExtra("qcstudent");
+        if (qcStudentBean != null)
+            studentBean = qcStudentBean.toStudentBean("","","");
         if (studentBean != null) {
             studentWrapper.setStudentBean(studentBean);
         }

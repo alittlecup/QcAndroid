@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.qingchengfit.saasbase.student.items.StudentNoStatusItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -99,7 +100,7 @@ public class CardBindStudentsFragment extends BaseListFragment implements
     private void initData() {
         List<StudentItem> studentItems = new ArrayList<>();
         for (QcStudentBean qcStudentBean : card.getUsers()) {
-            studentItems.add(new StudentItem(qcStudentBean));
+            studentItems.add(new StudentNoStatusItem(qcStudentBean));
         }
         setDatas(studentItems, 1);
     }
@@ -149,7 +150,7 @@ public class CardBindStudentsFragment extends BaseListFragment implements
                     // TODO: 2018/4/16 这里需要会员模块解耦
                     Intent it = new Intent("android.intent.action.VIEW", Uri.parse(AppUtils.getCurAppSchema(getContext())+"://studentdetail"));
                     it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    it.putExtra("student", ((StudentItem) item).getQcStudentBean());
+                    it.putExtra("qcstudent", ((StudentItem) item).getQcStudentBean());
                     startActivity(it);
                 }catch (Exception e){
 
