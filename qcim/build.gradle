@@ -34,15 +34,25 @@ dependencies {
 }
 
 group 'cn.qingchengfit.chat'
-version rootProject.ext.chat_version
+version "1.1.$today"
+def ci = "$isCI".endsWith("true")
 uploadArchives {
-  repositories {
-    mavenDeployer {
-//      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
-//        authentication(userName: "admin", password: "admin123")
-//      }
-      repository(url: uri('../../repo'))
-      pom.artifactId = 'qcim'
+  if (ci) {
+    repositories {
+      mavenDeployer {
+        repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
+          authentication(userName: "admin", password: "admin123")
+        }
+//      repository(url: uri('../../repo'))
+        pom.artifactId = 'qcim'
+      }
+    }
+  }else{
+    repositories {
+      mavenDeployer {
+        repository(url: uri('../../repo'))
+        pom.artifactId = 'qcim'
+      }
     }
   }
 }
