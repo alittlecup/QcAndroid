@@ -146,11 +146,6 @@ import rx.android.schedulers.AndroidSchedulers;
         }
         QRActivity.start(getContext(), QRActivity.PLANS_SETTING_GROUP);
         break;
-      case 4: //打印课表
-        /**
-         * 打印课表
-         */
-        break;
       default://课程种类
         routeTo("/list/", new CourseListParams().mIsPrivate(isPrivate).build());
         break;
@@ -184,14 +179,14 @@ import rx.android.schedulers.AndroidSchedulers;
     fabMutiBatch.setImageResource(R.drawable.fab_add);
     //fabMutiBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
     //fabMutiBatch.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
+    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
     //fabMutiBatch.setLabelTextColor(R.color.text_dark);
     fabMutiBatch.setOnClickListener(v -> clickAddBatch());
 
     fabCopyBatch.setLabelText("复制排期");
-    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.purple));
-    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.purple));
+    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
+    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
     //fabCopyBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
     //fabCopyBatch.setLabelTextColor(R.color.text_dark);
     //fabCopyBatch.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple));

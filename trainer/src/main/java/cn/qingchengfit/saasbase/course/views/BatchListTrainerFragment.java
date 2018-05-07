@@ -239,7 +239,6 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
           pos = mDatas.size() - 1;
           mOutdateDatas.add(new BatchItem(batch.get(i)));
         } else {
-          mDatas.add(new BatchCopyItem(batch.size() + "节课", this));
           mDatas.add(new BatchItem(batch.get(i)));
         }
       } else {
@@ -250,6 +249,8 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       mDatas.add(new CommonNoDataItem(R.drawable.no_batch,
         mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
           : getString(R.string.hint_no_group_course)));
+    }else{
+      mDatas.add(0, new BatchCopyItem(batch.size() + "节课", this));
     }
 
     commonFlexAdapter.notifyDataSetChanged();
@@ -262,7 +263,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
 
   @Override public void clickPrint() {
     WebActivity.startWeb(
-        getResources().getString(cn.qingchengfit.saasbase.R.string.copy_batch_print_url, restRepository.getHost(),
+        getResources().getString(cn.qingchengfit.saasbase.R.string.copy_batch_print_url, gymWrapper.getCoachService().host,
             gymWrapper.shop_id(), (mType  != 1? "":"type=private") + "coach_id=" + loginStatus.staff_id()), getContext());
   }
 

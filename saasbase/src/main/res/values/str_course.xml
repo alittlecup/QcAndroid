@@ -134,6 +134,6 @@
   <string name="text_coach_copy_batch_error">所选时间段内暂无教练</string>
   <string name="text_course_copy_batch_error">所选时间段内暂无课程</string>
   <string name="text_copy_batch_error" formatted="false" >%s至%s之间，%s没有「%s」排期，请重新选择</string>
-  <string name="copy_batch_print_url" formatted="false"> %\sshop/%s/m/schedule/printer/?%s</string>
+  <string name="copy_batch_print_url" formatted="false"> %s/shop/%s/m/schedule/printer/?%s</string>
 
 </resources>

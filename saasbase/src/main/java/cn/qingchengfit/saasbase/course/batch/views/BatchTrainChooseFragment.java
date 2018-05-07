@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.event.BatchCoachEvent;
-import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
 import cn.qingchengfit.utils.CrashUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -32,12 +30,11 @@ import javax.inject.Inject;
   @Need public String end;
 
   @Inject ViewModelProvider.Factory factory;
-  private BatchCopyViewModel viewModel;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    viewModel = ViewModelProviders.of(this, factory).get(BatchCopyViewModel.class);
-    return super.onCreateView(inflater, container, savedInstanceState);
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    return view;
   }
 
   @Override public void initData() {

@@ -16,6 +16,7 @@ import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.bean.CopySchedule;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
+import cn.qingchengfit.saasbase.course.batch.views.BatchCourseChooseParams;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.db.utils.CommonInputViewAdapter;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
@@ -68,7 +69,7 @@ public class BatchCopyViewModel extends BaseViewModel {
 
         if (!TextUtils.isEmpty(startTime.get())
             && !TextUtils.isEmpty(endTime.get())) {
-          if (DateUtils.interval(startTime.get(), endTime.get()) > 31) {
+          if (DateUtils.interval(startTime.get(), endTime.get()) > 30) {
             endTime.set("");
             ToastUtils.show("所选日期不能超过31天");
             return;
@@ -79,10 +80,12 @@ public class BatchCopyViewModel extends BaseViewModel {
           }
         }
         if (!TextUtils.isEmpty(startTime.get()) && !TextUtils.isEmpty(endTime.get())) {
+          resetData();
           getData();
         }
       }
     };
+
 
     startTime.addOnPropertyChangedCallback(callback);
     endTime.addOnPropertyChangedCallback(callback);
@@ -104,6 +107,8 @@ public class BatchCopyViewModel extends BaseViewModel {
   private boolean is_coach_all = true;
   private HashMap<String, List<String>> coachCourseMap = new HashMap<>();
   public ObservableField<Boolean> isLoading = new ObservableField();
+  private boolean isFirstCoachHave = false;
+  private boolean isFirstCourseHave = false;
 
   public void setPrivate(boolean aPrivate) {
     isPrivate = aPrivate;
@@ -125,6 +130,30 @@ public class BatchCopyViewModel extends BaseViewModel {
 
   public void setIs_coach_all(boolean is_coach_all) {
     this.is_coach_all = is_coach_all;
+  }
+
+  public void setFirstCoachHave(boolean firstCoachHave) {
+    isFirstCoachHave = firstCoachHave;
+  }
+
+  public void setFirstCourseHave(boolean firstCourseHave) {
+    isFirstCourseHave = firstCourseHave;
+  }
+
+  private void resetData(){
+    coachCourseMap.clear();
+    coachListValue.clear();
+    courseListValue.clear();
+    if (!isFirstCoachHave) {
+      coach.set(null);
+      mCoach = null;
+    }
+    if (!isFirstCourseHave) {
+      courseValue.set(null);
+      mCourseType = null;
+    }
+    is_coach_all = false;
+    is_course_all = false;
   }
 
   public void onSureClick(View view) {
@@ -150,15 +179,6 @@ public class BatchCopyViewModel extends BaseViewModel {
           DialogUtils.showAlert(view.getContext(), "没有可复制的有效排期", view.getContext()
               .getString(R.string.text_copy_batch_error, startTime.get(), endTime.get(), coach.get().username, courseValue.get().name));
           return;
-        }
-      }else{
-        for (int i = 1; i < courseListValue.size(); i++) {
-          if (!coachCourseMap.get(coach.get().id).contains(courseListValue.get(i).id)) {
-            DialogUtils.showAlert(view.getContext(), "没有可复制的有效排期", view.getContext()
-                .getString(R.string.text_copy_batch_error, startTime.get(), endTime.get(),
-                    coach.get().username, courseListValue.get(i).name));
-            return;
-          }
         }
       }
     }
@@ -288,9 +308,13 @@ public class BatchCopyViewModel extends BaseViewModel {
       ToastUtils.show("请先选择结束日期");
       return;
     }
-    Bundle b = new Bundle();
-    b.putParcelableArrayList("courseList", courseListValue);
-    routeTo(view.getContext(), "course", "/batch/choose/course", b, new Intent());
+    //Bundle b = new Bundle();
+    //b.putParcelableArrayList("courseList", courseListValue);
+    routeTo(view.getContext(), "course", "/batch/choose/course",
+        new BatchCourseChooseParams().dataList(courseListValue)
+            .courseId(courseValue.get() != null ? courseValue.get().getId() : "")
+            .isPrivate(isPrivate)
+            .build(), new Intent());
   }
 
   public void onTimeStart(View view, String date) {

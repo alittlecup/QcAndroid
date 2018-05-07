@@ -133,7 +133,7 @@ import javax.inject.Inject;
   @SuppressLint("StringFormatMatches")
   @Override public void clickPrint() {
     WebActivity.startWeb(
-        getResources().getString(R.string.copy_batch_print_url, restRepository.getHost(),
+        getResources().getString(R.string.copy_batch_print_url, gymWrapper.getCoachService().host,
             gymWrapper.shop_id(), "type=group"), getContext());
   }
 }

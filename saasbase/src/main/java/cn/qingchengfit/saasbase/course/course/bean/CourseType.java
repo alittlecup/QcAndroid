@@ -49,6 +49,8 @@ public class CourseType extends Course implements Cloneable {
     public String edit_url;
     public boolean random_show_photos;
 
+
+
     public CourseType() {
     }
 

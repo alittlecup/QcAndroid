@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.course.course.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -70,13 +71,14 @@ import rx.schedulers.Schedulers;
   @Inject IPermissionModel serPermisAction;
   @Inject public ICourseModel courseApi;
   @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.toolbar_title) public TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) ViewGroup toolbarLayout;
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.srl) public SwipeRefreshLayout srl;
+  @BindView(R2.id.add_course_btn) public FloatingActionButton floatingActionButton;
+  @Need public Boolean mIsPrivate = false;
 
   protected CommonFlexAdapter commonFlexAdapter;
-  @Need public Boolean mIsPrivate = false;
 
   public static CourseListFragment newInstance(boolean isPrivate) {
     Bundle args = new Bundle();

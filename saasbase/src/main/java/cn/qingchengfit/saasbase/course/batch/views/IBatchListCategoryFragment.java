@@ -112,15 +112,15 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     fab.addMenuButton(fabCopyBatch);
 
     fabMutiBatch.setImageResource(R.drawable.fab_add);
-    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
+    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
     fabMutiBatch.setOnClickListener(v -> {
       onClickAddBatch();
     });
 
     fabCopyBatch.setImageResource(R.drawable.ic_copy);
-    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.purple));
-    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.purple));
+    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
+    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
     fabCopyBatch.setOnClickListener(v -> {
       onClickCopyBatch();
     });

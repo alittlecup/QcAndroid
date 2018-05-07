@@ -13,6 +13,7 @@ import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseFragment;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +27,15 @@ import javax.inject.Inject;
     extends CourseChooseFragment {
 
   @Inject ViewModelProvider.Factory factory;
+  @Need ArrayList<CourseType> dataList;
+  @Need Boolean isPrivate;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return super.onCreateView(inflater, container, savedInstanceState);
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    toolbarTitle.setText(isPrivate ? "选择私教课":"选择团课");
+    floatingActionButton.setVisibility(View.GONE);
+    return view;
   }
 
   @Override public void onRefresh() {
@@ -38,13 +44,9 @@ import javax.inject.Inject;
     //    new Observable.OnPropertyChangedCallback() {
     //      @Override public void onPropertyChanged(Observable sender, int propertyId) {
     List<AbstractFlexibleItem> datas = new ArrayList();
-    if (getArguments().get("courseList") == null) {
-      datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
-      return;
-    }
-    ArrayList<CourseType> dataList = (ArrayList<CourseType>) getArguments().get("courseList");
+    //ArrayList<CourseType> dataList = (ArrayList<CourseType>) getArguments().get("courseList");
     srl.setRefreshing(false);
-    if (dataList.size() == 0) {
+    if (dataList == null || dataList.size() == 0) {
       datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
     } else {
       for (CourseType course : dataList) {

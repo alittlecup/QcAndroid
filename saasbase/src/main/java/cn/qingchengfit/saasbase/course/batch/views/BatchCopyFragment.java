@@ -61,11 +61,13 @@ public class BatchCopyFragment extends SaasBaseFragment{
     //binding.inputCopyEnd.setOnEditNoClick(false);
     if (course != null) {
       viewModel.setCourseCategory(course);
+      viewModel.setFirstCourseHave(true);
       binding.inputCourse.setOnEditNoClick(false);
       //binding.inputCourse.setEnable(false);
     }
     if (coach != null) {
       viewModel.setCoachValue(coach);
+      viewModel.setFirstCoachHave(true);
       binding.inputCoach.setOnEditNoClick(false);
       //binding.inputCoach.setEnable(false);
     }
@@ -81,7 +83,7 @@ public class BatchCopyFragment extends SaasBaseFragment{
       @Override public void onPropertyChanged(Observable sender, int propertyId) {
         if (binding.getCopyViewModel().coach.get() == null){
           binding.inputCoach.setContent(getResources().getString(R.string.text_coach_copy_batch_error));
-          binding.inputCoach.setOnEditNoClick(false);
+          //binding.inputCoach.setOnEditNoClick(false);
           //binding.inputCoach.setEnable(false);
         }
       }
@@ -90,7 +92,7 @@ public class BatchCopyFragment extends SaasBaseFragment{
       @Override public void onPropertyChanged(Observable sender, int propertyId) {
         if (binding.getCopyViewModel().courseValue.get() == null){
           binding.inputCourse.setContent(getResources().getString(R.string.text_course_copy_batch_error));
-          binding.inputCourse.setOnEditNoClick(false);
+          //binding.inputCourse.setOnEditNoClick(false);
           //binding.inputCourse.setEnable(false);
         }
       }

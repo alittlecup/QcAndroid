@@ -58,7 +58,7 @@ public class CourseChooseFragment extends CourseListFragment {
       for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
         IFlexible item = commonFlexAdapter.getItem(i);
         if (item instanceof CourseItem) {
-          if (TextUtils.isEmpty(courseId)
+          if (!TextUtils.isEmpty(courseId)
               && ((CourseItem) item).getCourse() != null
               && TextUtils.equals(courseId, ((CourseItem) item).getCourse().id)) {
             commonFlexAdapter.addSelection(i);
