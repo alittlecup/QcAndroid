@@ -102,6 +102,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/packagedAssets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/packaged_res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/public_res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/publish-proguard" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
@@ -113,9 +114,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.180508" level="project" />
     <orderEntry type="library" name="org.aspectj:aspectjrt:1.8.10@jar" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-27.0.0" level="project" />
-    <orderEntry type="library" name="cn.qingchengfit.widgets:qcbase-1.0.180504" level="project" />
     <orderEntry type="library" name="com.github.afollestad.material-dialogs:core-0.8.5.5" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-utils-27.0.0" level="project" />
     <orderEntry type="library" name="com.github.akarnokd:rxjava2-interop:0.11.5@jar" level="project" />

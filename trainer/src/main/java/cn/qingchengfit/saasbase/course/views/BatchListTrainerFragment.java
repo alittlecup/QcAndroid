@@ -158,7 +158,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     coach.setId(loginStatus.staff_id());
     coach.setGender(0);
     routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), new BatchCopyParams().isPrivate(
-        Boolean.FALSE).coach(coach).build());
+        mType != 1? Boolean.FALSE : Boolean.TRUE).coach(coach).build());
   }
 
   /**
@@ -264,7 +264,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   @Override public void clickPrint() {
     WebActivity.startWeb(
         getResources().getString(cn.qingchengfit.saasbase.R.string.copy_batch_print_url, gymWrapper.getCoachService().host,
-            gymWrapper.shop_id(), (mType  != 1? "":"type=private") + "coach_id=" + loginStatus.staff_id()), getContext());
+            gymWrapper.shop_id(), (mType  != 1? "type=group":"type=private") + "&coach_id=" + loginStatus.staff_id()), getContext());
   }
 
   @Override public void onRefresh() {
