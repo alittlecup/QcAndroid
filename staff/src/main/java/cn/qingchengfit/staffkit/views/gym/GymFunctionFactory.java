@@ -346,7 +346,8 @@ public class GymFunctionFactory {
         }
         //goQrScan(fragment, module, null, coachService);
         //fragment.routeTo("shop","/shop/home",null);
-        WeexUtil.loadJsMap();
+        WeexUtil.loadJsMap(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
+            Configs.WEEX_PAGE_INDEX);
         return;
 
       /**会员管理

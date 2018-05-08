@@ -73,8 +73,8 @@ android {
     api "cn.qingchengfit.recruit:recruit:1.1.2"
     api "cn.qingchengfit.chat:sdk:1.1.2"
     api "cn.qingchengfit.chat:qcim:1.1.2"
+    api "cn.qingchengfit.weex:weex:1.0.180508"
 
-    api project(path: ':weex')
 
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
     annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
