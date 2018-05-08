@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.qrcode.views;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -33,10 +32,14 @@ import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.repository.PostApi;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -410,16 +413,16 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
                     toolbarTitile.setText("扫码成功");
                     RxBus.getBus().post(new OnBackEvent());
                 } else {
-                    new AlertDialog.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
-                        .setPositiveButton(R.string.common_comfirm, new DialogInterface.OnClickListener() {
-                            @Override public void onClick(DialogInterface dialogInterface, int i) {
-                                if (qrdecoderview != null) {
-                                    qrdecoderview.getCameraManager().startPreview();
-                                    toolbarTitile.setText("扫码二维码");
-                                }
+                    DialogUtils.showAlert(QRActivity.this, R.string.err_sacn_qrcode, new MaterialDialog.SingleButtonCallback() {
+                        @Override public void onClick(MaterialDialog materialDialog,
+                            DialogAction dialogAction) {
+                            materialDialog.dismiss();
+                            if (qrdecoderview != null) {
+                                qrdecoderview.getCameraManager().startPreview();
+                                toolbarTitile.setText("扫码二维码");
                             }
-                        })
-                        .show();
+                        }
+                    });
                 }
             }
         });

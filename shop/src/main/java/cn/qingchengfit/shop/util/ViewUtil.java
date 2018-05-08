@@ -11,6 +11,7 @@ import android.widget.TextView;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.ui.widget.Corner4dpImgWrapper;
 import cn.qingchengfit.shop.vo.RecordAction;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -34,27 +35,9 @@ public final class ViewUtil {
 
   public static MaterialDialog instanceDelDialog(Context context, String content,
       MaterialDialog.SingleButtonCallback callback) {
-    return new MaterialDialog.Builder(context).content(content)
-        .autoDismiss(true)
-        .positiveColorRes(cn.qingchengfit.saasbase.R.color.primary)
-        .negativeColorRes(cn.qingchengfit.widgets.R.color.text_color_gray)
-        .negativeText(cn.qingchengfit.widgets.R.string.pickerview_cancel)
-        .positiveText(cn.qingchengfit.widgets.R.string.pickerview_submit)
-        .onPositive(callback)
-        .build();
+    return DialogUtils.initConfirmDialog(context,"",content,callback);
   }
-  public static MaterialDialog instanceDelDialog(Context context, String content,
-      MaterialDialog.SingleButtonCallback poscallback,MaterialDialog.SingleButtonCallback navcallback) {
-    return new MaterialDialog.Builder(context).content(content)
-        .autoDismiss(true)
-        .positiveColorRes(cn.qingchengfit.saasbase.R.color.primary)
-        .negativeColorRes(cn.qingchengfit.widgets.R.color.text_color_gray)
-        .negativeText(cn.qingchengfit.widgets.R.string.pickerview_cancel)
-        .positiveText(cn.qingchengfit.widgets.R.string.pickerview_submit)
-        .onPositive(poscallback)
-        .onNegative(navcallback)
-        .build();
-  }
+
 
   public  static void setOperatorType(@RecordAction int action,TextView textView){
     Resources resources = textView.getContext().getResources();

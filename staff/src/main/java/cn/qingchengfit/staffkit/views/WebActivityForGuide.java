@@ -175,7 +175,11 @@ public class WebActivityForGuide extends BaseActivity implements FragCallBack {
              */
             case R.id.btn_help:
                 DialogUtils.showAlert(this, getString(R.string.alert_title_what_is_home_page),
+<<<<<<< Updated upstream
                     getString(R.string.alert_content_what_is_home_page),null);
+=======
+                    getString(R.string.alert_content_what_is_home_page),(dialog,action)->dialog.dismiss());
+>>>>>>> Stashed changes
                 break;
             /**
              * 配置主页

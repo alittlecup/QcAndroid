@@ -48,6 +48,7 @@ import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -402,9 +403,10 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
                 .content("是否删除此条体测信息?")
                 .positiveText("确定")
                 .negativeText("取消")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        materialDialog.dismiss();
                         showLoading();
                         presenter.delBodyTest(measureId);
                     }

@@ -195,9 +195,7 @@ dependencies {
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
-    transitive = true
-  }
+
   //  compile files('libs/java-sdk-3.1.jar')//包含 到了chat sdk  这个得改
   implementation files('libs/pinyin4j-2.5.0.jar')
   implementation 'com.android.support:multidex:1.0.1'
