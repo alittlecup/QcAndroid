@@ -3,10 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/QcRecruit.iml" filepath="$PROJECT_DIR$/QcRecruit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/QcRecuit.iml" filepath="$PROJECT_DIR$/QcRecuit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/qcim/qcim.iml" filepath="$PROJECT_DIR$/qcim/qcim.iml" />
       <module fileurl="file://$PROJECT_DIR$/recruit/recruit.iml" filepath="$PROJECT_DIR$/recruit/recruit.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdk/sdk.iml" filepath="$PROJECT_DIR$/sdk/sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/weex/weex.iml" filepath="$PROJECT_DIR$/weex/weex.iml" />
     </modules>
   </component>
 </project>
