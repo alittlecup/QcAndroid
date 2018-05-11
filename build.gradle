@@ -8,8 +8,8 @@ ext {
                    targetSdk           : 26,
                    version_code        : 108, //缝10必更
                    version_name        : "0.108.0",
-                   trainer_version_code: 165,
-                   trainer_version_name: "1.6.5"
+                   trainer_version_code: 167,
+                   trainer_version_name: "1.6.7"
 
   ]
 

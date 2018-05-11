@@ -3,9 +3,11 @@ package cn.qingchengfit.saasbase.course.batch.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
@@ -51,13 +53,12 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/11/29.
  */
-@Leaf(module = "course",path = "/batch/cate/group/")
-public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
+@Leaf(module = "course", path = "/batch/cate/group/") public class BatchListCategoryGroupFragment
+    extends IBatchListCategoryFragment {
 
   @Need String course_id;
   private Course course;
   @Inject IPermissionModel permissionModel;
-
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -72,43 +73,47 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
 
   @Override public void onRefresh() {
     RxRegiste(courseModel.qcGetGroupCourses(course_id)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<GroupCourseScheduleDetail>>() {
-        @Override public void onNext(QcDataResponse<GroupCourseScheduleDetail> qcResponse) {
-          stopRefresh();
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            if (qcResponse.data.batches != null){
-              List<AbstractFlexibleItem> datas = new ArrayList<>();
-              datas.add(new BatchItem(qcResponse.data.course));
-              course = qcResponse.data.course;
-              for (GroupCourseSchedule coach : qcResponse.data.batches) {
-                try {
-                  datas.add(new BatchCateItem(DateUtils.getDuringFromServer(coach.from_date,coach.to_date)
-                    ,coach.teacher.getUsername(),coach.id,coach.teacher.getAvatar()
-                  ));
-                }catch (Exception e){
-                  CrashUtils.sendCrash(e);
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<GroupCourseScheduleDetail>>() {
+          @Override public void onNext(QcDataResponse<GroupCourseScheduleDetail> qcResponse) {
+            stopRefresh();
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.batches != null) {
+                //qcResponse.data.batches.add(create());
+                List<AbstractFlexibleItem> datas = new ArrayList<>();
+                datas.add(new BatchItem(qcResponse.data.course));
+                course = qcResponse.data.course;
+                for (GroupCourseSchedule coach : qcResponse.data.batches) {
+                  try {
+                    datas.add(new BatchCateItem(
+                        DateUtils.getDuringFromServer(coach.from_date, coach.to_date),
+                        coach.teacher.getUsername(), coach.id,
+                        TextUtils.isEmpty(coach.teacher.getAvatar()) ? (coach.teacher.gender == 0
+                            ? Constants.AVATAR_COACH_FEMALE : Constants.AVATAR_COACH_MALE)
+                            : coach.teacher.getAvatar()));
+                  } catch (Exception e) {
+                    CrashUtils.sendCrash(e);
+                  }
                 }
+                setDatas(datas, 1);
               }
-              setDatas(datas,1);
+            } else {
+              onShowError(qcResponse.getMsg());
             }
-          } else {
-            onShowError(qcResponse.getMsg());
           }
-        }
-      }));
+        }));
   }
 
   @Override public void onClickAddBatch() {
-    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+    if (!permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
     }
     fabMutiBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
     fabMutiBatch.setLabelTextColor(R.color.white);
-    if (course != null ) {
+    if (course != null) {
 
       routeTo("/batch/add/", null);
     }
@@ -123,18 +128,16 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
   }
 
   @Override public boolean onItemClick(int i) {
-    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)){
+    if (!permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) {
       showAlert(R.string.sorry_for_no_permission);
       return true;
     }
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item == null) return true;
-    if (item instanceof BatchCateItem){
-      routeTo("/batch/edit/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
-        .batchId(((BatchCateItem) item).getId())
-        .isPrvite(false)
-        .build()
-      );
+    if (item instanceof BatchCateItem) {
+      routeTo("/batch/edit/",
+          new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams().batchId(
+              ((BatchCateItem) item).getId()).isPrvite(false).build());
     }
     return true;
   }

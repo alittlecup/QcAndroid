@@ -43,6 +43,7 @@ import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -308,7 +309,7 @@ import dagger.multibindings.IntoMap;
     BindStaffStaffActivity.class, BindGymConfigAcitivty.class, BindSaasCommonActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
-    //BindShopActivity.class,
+    BindShopActivity.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,

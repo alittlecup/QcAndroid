@@ -12,6 +12,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.bean.CurentPermissions;
+import cn.qingchengfit.bean.SpinnerBean;
+import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.AppUtils;
@@ -43,9 +48,6 @@ import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
-import cn.qingchengfit.bean.CurentPermissions;
-import cn.qingchengfit.bean.SpinnerBean;
-import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -210,6 +212,10 @@ public class MyStudentFragment extends BaseFragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     public void freshData() {

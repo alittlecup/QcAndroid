@@ -23,6 +23,7 @@ import cn.qingchengfit.staffkit.views.wardrobe.WardrobeBaseInfoFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobePayBottomFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -179,8 +180,18 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
                     }
                     if (mPayMode > 0) {
                         body.put("deal_mode", mPayMode + "");
-                        if (mChooseCard != null) body.put("card_id", mChooseCard.getId());
-                        if (!cvCost.isEmpty()) body.put("cost", cvCost.getContent());
+                        if (mChooseCard != null) {
+                            body.put("card_id", mChooseCard.getId());
+                        }else{
+                            DialogUtils.showAlert(getContext(), "请完善续租信息");
+                        }
+                        if (!cvCost.isEmpty()){
+                            body.put("cost", cvCost.getContent());
+                        }else{
+                            DialogUtils.showAlert(getContext(), "请完善续租信息");
+                        }
+                    }else{
+                        DialogUtils.showAlert(getContext(), "请完善续租信息");
                     }
                     mPresenter.comfirContinue(App.staffId, body);
                 } catch (Exception e) {

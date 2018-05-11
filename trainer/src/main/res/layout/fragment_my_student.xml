@@ -15,11 +15,6 @@
       android:background="@color/primary"
       android:gravity="center"
       android:minHeight="?attr/actionBarSize"
-
-      app:popupTheme="@style/ToolbarStyle.Overflow"
-      app:theme="@style/Qc.toolbarStyle"
-      app:titleTextAppearance="@style/ToolbarStyle"
-
       >
 
     <Spinner
@@ -28,6 +23,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/Qc.toolbarStyle"
         android:visibility="gone"
+        tools:visibility="visible"
         />
   </android.support.v7.widget.Toolbar>
 
