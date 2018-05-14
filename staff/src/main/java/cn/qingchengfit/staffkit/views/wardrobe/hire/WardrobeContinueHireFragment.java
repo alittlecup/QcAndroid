@@ -184,14 +184,17 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
                             body.put("card_id", mChooseCard.getId());
                         }else{
                             DialogUtils.showAlert(getContext(), "请完善续租信息");
+                            return;
                         }
                         if (!cvCost.isEmpty()){
                             body.put("cost", cvCost.getContent());
                         }else{
                             DialogUtils.showAlert(getContext(), "请完善续租信息");
+                            return;
                         }
                     }else{
                         DialogUtils.showAlert(getContext(), "请完善续租信息");
+                        return;
                     }
                     mPresenter.comfirContinue(App.staffId, body);
                 } catch (Exception e) {
