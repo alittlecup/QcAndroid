@@ -115,6 +115,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   TimeDialogWindow chooseOpenTimeDialog;
   private DialogList openDialog;
   private String[] arrayOpenTime;
+  private int courseLength;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -222,6 +223,10 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   }
 
   @Override public void onBatchDetail(BatchDetail batchDetail) {
+    if (batchDetail == null){
+      return;
+    }
+    courseLength = batchDetail.course.length;
     if (batchBaseFragment == null) {
       batchBaseFragment =
           BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher, "editbatch",
@@ -469,6 +474,14 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
           if (((CmLRTxtItem) item).getData() instanceof Time_repeat) {
             Time_repeat tr = (Time_repeat) ((CmLRTxtItem) item).getData();
             tr.setStart(DateUtils.getTimeHHMM(date));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int curD = calendar.get(Calendar.DATE);
+            calendar.add(Calendar.SECOND, courseLength);
+            tr.setEnd(DateUtils.getTimeHHMM(calendar.getTime()));
+            if (calendar.get(Calendar.DATE) > curD) {
+              tr.setIs_cross(true);
+            }
             ((CmLRTxtItem) item).setCmLRTxt(tr);
             commonFlexAdapter.notifyItemChanged(position);
           }

@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.mvvm_student.usercase;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.text.TextUtils;
@@ -32,7 +31,7 @@ import rx.Observable;
 
 @Singleton
 public class FilterUserCase {
-    @Inject Application application;
+    //@Inject Application application;
     @Inject
     StudentRespository studentRespository;
 
@@ -84,7 +83,7 @@ public class FilterUserCase {
 
         Observable<List<FilterModel>> filter =
             Observable.just("filter.json").map(s -> new Gson().fromJson(
-                FileUtils.getJsonFromAssert("filter.json", application), FilterWrapper.class).filters);
+                FileUtils.getJsonFromAssert("filter.json", null), FilterWrapper.class).filters);
 
         Observable<SalerUserListWrap> salers =
             remoteService.qcGetTrackStudentsRecommends(id, params)

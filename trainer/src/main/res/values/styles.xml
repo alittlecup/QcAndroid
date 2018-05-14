@@ -21,12 +21,12 @@
     <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
     <item name="editTextStyle">@style/Qc.EditTextStyle</item>
     <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
-    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+    <item name="android:textViewStyle">@style/CustomText</item>
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+    <!--<item name="android:actionOverflowMenuStyle">@style/CustomOverFlow</item>-->
   </style>
 
   <style name="QcChatStyle" parent="QcAppTheme">
-
   </style>
 
   <style name="QcAppThemeForWeb" parent="Theme.AppCompat.Light.NoActionBar">
@@ -70,6 +70,10 @@
     <item name="android:windowIsTranslucent">false</item>
     <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+  </style>
+
+  <style name="CustomText" parent="Qc.TextCommonGrey">
+    <item name="android:textColor">@color/text_dark</item>
   </style>
 
   <style name="Qc.SplashTheme" parent="@style/QcAppTheme">

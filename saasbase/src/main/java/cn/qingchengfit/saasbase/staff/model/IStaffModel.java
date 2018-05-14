@@ -60,6 +60,7 @@ public interface IStaffModel {
   rx.Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid, HashMap<String, Object> params);
 
   rx.Observable<QcDataResponse<StaffShipsListWrap>> getTrainers();
+  rx.Observable<QcDataResponse<StaffShipsListWrap>> getTrainersWithParams(HashMap<String, Object> params);
   rx.Observable<QcDataResponse<StaffShipsListWrap>> getLeaveTrainers();
   rx.Observable<QcDataResponse<InvitationListWrap>> getInvitedTrainers();
   rx.Observable<QcDataResponse<InvitationWrap>> inviteTrainer(InvitationBody body);

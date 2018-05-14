@@ -1,93 +1,95 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jakewharton.butterknife'
+//apply plugin: "com.squareup.sqldelight"
+//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 
 android {
-    compileSdkVersion cfg.compileVersion
-    dataBinding {
-        enabled true
+//  <<<<<<< HEAD
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+  dataBinding {
+    enabled true
+  }
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+    vectorDrawables.useSupportLibrary true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true',
+                     packageName                   : 'cn.qingchengfit.saasbase',]
+      }
     }
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-        vectorDrawables.useSupportLibrary true
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [fragmentArgsLib               : 'true',
-                             fragmentArgsSupportAnnotations: 'true',
-                             packageName                   : 'cn.qingchengfit.saasbase',
-                ]
-            }
-        }
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        manifestPlaceholders = [APP_SCHAME        : "qcstaff"]
-
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    //        manifestPlaceholders = [APP_SCHAME        : "qcstaff"]
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-            shrinkResources false
-            debuggable true
-            debug {
-                ext.enableCrashlytics = false
-            }
-        }
+    debug {
+      minifyEnabled false
+      shrinkResources false
+      debuggable true
+      debug {
+        ext.enableCrashlytics = false
+      }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    configurations.all {
-        resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
-        resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
-        resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  configurations.all {
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+    resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
     }
     sourceSets {
-        main {
-            res.srcDirs = [
-                'src/main/res/layout/student',
-                'src/main/res'
-            ]
-        }
+      main {
+        res.srcDirs = ['src/main/res/layout/student',
+                       'src/main/res']
+      }
     }
-}
+  }
 
-dependencies {
-    api "cn.qingchengfit.widgets:qcbase:1.0.180426"
+  dependencies {
+
+    api "cn.qingchengfit.widgets:qcbase:1.0.180511"
     api "cn.qingchengfit.recruit:recruit:1.1.2"
     api "cn.qingchengfit.chat:sdk:1.1.2"
     api "cn.qingchengfit.chat:qcim:1.1.2"
 
-  api project(path: ':weex')
+    api project(path: ':weex')
 
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
     annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
     annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
     api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
-        exclude group: 'com.google.googlejavaformat'
+      exclude group: 'com.google.googlejavaformat'
     }
-    api ('com.hkm.taglib:tag:1.6.0'){
-        exclude group: 'com.android.support'
+    api('com.hkm.taglib:tag:1.6.0') {
+      exclude group: 'com.android.support'
     }
     annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
     annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
     api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-    api ("android.arch.lifecycle:extensions:1.0.0"){
-      exclude group:'android.arch.lifecycle', module:'runtime'
+    api("android.arch.lifecycle:extensions:1.0.0") {
+      exclude group: 'android.arch.lifecycle', module: 'runtime'
     }
     api "android.arch.lifecycle:reactivestreams:1.0.0"
     api "io.reactivex:rxjava-reactive-streams:1.2.1"
@@ -97,26 +99,27 @@ dependencies {
     api 'me.gujun.android.taggroup:library:1.4@aar'
 
     api "android.arch.lifecycle:common-java8:1.0.0"
-//    // Room
+    //    // Room
     api "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-  api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
+    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  }
 
 
-group 'cn.qingchengfit.saas'
-version '1.0.5'
+  group 'cn.qingchengfit.saas'
+  version '1.0.5'
 
-uploadArchives {
+  uploadArchives {
 
     repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-            pom.artifactId = 'sass'
-        }
+      mavenDeployer {
+        repository(url: uri('../repo'))
+        pom.artifactId = 'sass'
+      }
     }
-}
-repositories {
-  mavenCentral()
-}
+  }
+  repositories {
+    mavenCentral()
+  }
+

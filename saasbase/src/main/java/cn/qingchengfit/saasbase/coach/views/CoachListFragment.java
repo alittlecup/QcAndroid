@@ -47,7 +47,7 @@ import rx.schedulers.Schedulers;
 public class CoachListFragment extends BaseStaffListFragment {
 
   @Inject IPermissionModel serPermisAction;
-  @Inject IStaffModel staffModel;
+  @Inject public IStaffModel staffModel;
   @Inject LoginStatus loginStatus;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {

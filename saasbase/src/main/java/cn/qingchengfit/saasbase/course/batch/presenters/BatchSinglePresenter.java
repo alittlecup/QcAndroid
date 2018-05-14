@@ -111,7 +111,7 @@ public class BatchSinglePresenter extends BasePresenter<BatchSinglePresenter.MVP
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
             mvpView.onShowError("保存成功");
-            mvpView.popBack();
+            mvpView.popBack(3);
           } else {
             mvpView.onShowError("保存失败："+qcResponse.getMsg());
           }

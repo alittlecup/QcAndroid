@@ -31,7 +31,7 @@
   <string name="change_su">变更超级管理员</string>
   <string name="next_step">下一步</string>
   <string name="send_msg_to_sb_hint">向%s发送验证码</string>
-  <string name="login_resend_msg" formatted="false">%d秒后重新发送</string>
+  <string formatted="false" name="login_resend_msg">%d秒后重新发送</string>
   <string name="alert_remove_su">变更成功后，%s将自动从工作人员中移除，如有需要请重新添加</string>
   <string formatted="false" name="alert_change_su">确定将超级管理员身份从%s(%s)变更为%s(%s)？</string>
   <string name="common_cancel">取消</string>
@@ -58,7 +58,7 @@
   <string name="unit_yuan">元</string>
   <string name="unit_time">次</string>
   <string name="unit_day">天</string>
-  <string name="pay_money" formatted="false">￥%s</string>
+  <string formatted="false" name="pay_money">￥%s</string>
 
   <!--账单-->
 
@@ -88,9 +88,9 @@
   <string name="bill_setting_gym_detail_name">场馆名称</string>
   <string name="bill_setting_gym_detail_no">商户编号</string>
   <string formatted="false" name="bill_detail_item">%s - 尾号(%s)</string>
-  <string formatted="false" name="bill_detail_item_trade_type" >%s (%s)</string>
-  <string name="bill_count_indeed" formatted="false">%.2f</string>
-  <string name="bill_count_reduce" formatted="false">%.2f</string>
+  <string formatted="false" name="bill_detail_item_trade_type">%s (%s)</string>
+  <string formatted="false" name="bill_count_indeed">%.2f</string>
+  <string formatted="false" name="bill_count_reduce">%.2f</string>
   <string name="bill_no_data">本月无数据</string>
   <string name="bill_pay_origin_web">Web</string>
   <string name="bill_pay_origin_app">App</string>
@@ -121,7 +121,7 @@
   <string name="back_cash_way_weixin">微信支付原路返回</string>
   <string name="back_cash_way_ali">支付宝原路返回</string>
   <string name="back_cash_way_qq">QQ钱包原路返回</string>
-  <string name="back_cash_way_card" formatted="false">银行卡== %s (%s）</string>
+  <string formatted="false" name="back_cash_way_card">银行卡== %s (%s）</string>
 
   <!--交班-->
   <string formatted="false" name="exchange_staff_info">%s  (%s)</string>
@@ -165,8 +165,6 @@
   <string name="sign_in_log_title">签到记录</string>
 
 
-
-
   <!--评论相关-->
   <string name="activity_text_replay">回复</string>
   <string name="title_msg">消息</string>
@@ -183,10 +181,6 @@
   <string name="sign_up_group">分组</string>
 
 
-
-
-
-
   <!--签到-->
   <string name="qc_signin_select_card">请选择会员卡</string>
   <string name="qc_signin_cancel_confirm">确定要撤销签到么?</string>
@@ -198,20 +192,9 @@
   <string name="sign_in_config_cost">每人每次签到费用(%s)</string>
 
 
-
-
-
-
-
-
-
-
-
-
   <string formatted="false" name="sales_sb">销售: %s</string>
   <string name="has_send">已发送</string>
   <string name="draft">草稿</string>
-
 
 
   <string name="t_chat_chose_friend">选择联系人</string>
@@ -222,5 +205,13 @@
   <string name="no_more_loading">已经没有更多数据</string>
   <string name="qc_chat_friend_select">已选择%d名联系人</string>
 
+  <!--复制排期-->
+  <string name="title_copy_batch_course">复制课程</string>
+  <string name="title_copy_batch_to">复制到</string>
+  <string name="button_copy_batch_sure">确定复制</string>
+
+  <string name="warning_copy_batch_time_long">所选日期不能超过31天</string>
+  <string name="description_copy_batch" formatted="false">即：将%s至%s期间%s的%s，复制到%s至%s</string>
+  <string name="successed_copy_batch">复制排期成功</string>
 </resources>
 

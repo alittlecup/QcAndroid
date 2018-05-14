@@ -18,6 +18,7 @@ public class QcResponsePrivateDetail extends QcResponse {
     @SerializedName("users_count") public String users_count;
     @SerializedName("avatar") public String avatar;
     @SerializedName("id") public String id;
+    public int gender;
 
     @Override public String getId() {
       return id;
@@ -33,6 +34,10 @@ public class QcResponsePrivateDetail extends QcResponse {
 
     @Override public String getText() {
       return "累计"+course_count+"节, 服务"+users_count+"人次";
+    }
+
+    public int getGender(){
+      return gender;
     }
 
     @Override public boolean equals(Object o) {

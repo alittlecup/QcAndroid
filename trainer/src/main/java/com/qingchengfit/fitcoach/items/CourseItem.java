@@ -57,7 +57,7 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
     }
 
     @Override public int getLayoutRes() {
-        return R.layout.item_course;
+        return R.layout.item_course_saas;
     }
 
     @Override public CourseVh createViewHolder(View view, FlexibleAdapter adapter) {

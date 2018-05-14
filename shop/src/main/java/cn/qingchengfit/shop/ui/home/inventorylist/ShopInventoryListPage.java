@@ -45,6 +45,7 @@ public class ShopInventoryListPage
   CommonFlexAdapter adapter;
   @Inject IPermissionModel permissionModel;
 
+
   @Override protected void subscribeUI() {
     mViewModel.getShowAllRecord().observe(this, aVoid -> {
       routeTo("/shop/inventory", null);

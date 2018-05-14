@@ -120,6 +120,12 @@ public class StaffModel implements IStaffModel {
     return staffApi.qcGetGymCoaches(loginStatus.staff_id(),gymWrapper.getParams());
   }
 
+  @Override public Observable<QcDataResponse<StaffShipsListWrap>> getTrainersWithParams(
+      HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return staffApi.qcGetGymCoaches(loginStatus.staff_id(), params);
+  }
+
   @Override public Observable<QcDataResponse<StaffShipsListWrap>> getLeaveTrainers() {
     return staffApi.qcGetLeaveCoaches(loginStatus.staff_id(),gymWrapper.getParams(),null);
 

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
 import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
+import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespositoryImpl;
 import cn.qingchengfit.saasbase.mvvm_student.view.webchoose.ChooseStaffViewModel;
@@ -87,6 +88,9 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(FollowUpFilterViewModel.class)
   abstract ViewModel bindFollowUpFilterViewModel(FollowUpFilterViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(BatchCopyViewModel.class)
+  abstract ViewModel bindBatchCopyViewModel(BatchCopyViewModel model);
 
   @Named("commonFilter") @Singleton @Provides  static  StudentFilter providesStudentFilter() {
     return new StudentFilter();

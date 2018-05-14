@@ -146,7 +146,7 @@ public class WardrobeListFragment extends BaseFragment implements TitleFragment,
                 }
             }
         }
-        mAdatper.notifyDataSetChanged();
+        mAdatper.updateDataSet(mData);
     }
 
     @Override public String getFragmentName() {

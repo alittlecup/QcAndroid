@@ -7,11 +7,13 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -98,6 +100,30 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
           ((BatchCateItem) item).getId()).isPrvite(true).build());
     }
     return true;
+  }
+
+  @Override public void onClickAddBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+    Staff staff = new Staff();
+    staff.id = trainer_id;
+    if (mCoach != null) {
+      staff.username = mCoach.username;
+      staff.avatar = mCoach.avatar;
+    }
+    routeTo("/batch/add/", AddBatchParams.builder().mTeacher(staff).build());
+  }
+
+  @Override public void onClickCopyBatch() {
+    BatchCopyCoach coach = new BatchCopyCoach();
+    coach.setId(mCoach.getId());
+    coach.setAvatar(mCoach.getAvatar());
+    coach.setGender(mCoach.getGender());
+    coach.setName(mCoach.username);
+    routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"),
+        BatchCopyParams.builder().isPrivate(Boolean.TRUE).coach(coach).build());
   }
 
   @Override public void onClickFab() {

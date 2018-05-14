@@ -49,7 +49,7 @@ android {
   defaultConfig {
     applicationId "com.qingchengfit.fitcoach"
     minSdkVersion 15
-    targetSdkVersion 24
+    targetSdkVersion 26
     multiDexEnabled true
     versionCode cfg.trainer_version_code
     versionName cfg.trainer_version_name

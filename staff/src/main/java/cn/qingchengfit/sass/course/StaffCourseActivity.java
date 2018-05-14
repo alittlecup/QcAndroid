@@ -3,6 +3,8 @@ package cn.qingchengfit.sass.course;
 import cn.qingchengfit.saasbase.cards.views.MutiChooseGymFragment;
 import cn.qingchengfit.saasbase.course.CourseActivity;
 import cn.qingchengfit.saasbase.course.batch.views.AddBatchFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchCopyFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchCourseChooseFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchDetailCommonView;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryGroupFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateFragment;
@@ -10,6 +12,7 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchListGroupFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListPrivateFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchSingleFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchTrainChooseFragment;
 import cn.qingchengfit.saasbase.course.batch.views.EditBatchFragment;
 import cn.qingchengfit.saasbase.course.batch.views.IBatchListCategoryFragment;
 import cn.qingchengfit.saasbase.course.course.views.AddCourseFragment;
@@ -53,7 +56,8 @@ import com.anbillon.flabellum.annotations.Trunk;
   CourseChooseFragment.class, CourseListFragment.class,JacketManagerFragment.class,ShopCommentsFragment.class,
   AddCourseFragment.class, CoachCommentListFragment.class, CourseHomeInBrandFragment.class,
   CourseImagesFragment.class, BatchDetailCommonView.class,
-    MutiChooseGymFragment.class,ChooseCoursePlanFragment.class,
+    MutiChooseGymFragment.class,ChooseCoursePlanFragment.class, BatchCopyFragment.class,
+    BatchTrainChooseFragment.class, BatchCourseChooseFragment.class,
 })
 public class StaffCourseActivity extends CourseActivity {
 

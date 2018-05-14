@@ -32,6 +32,7 @@ import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -84,12 +85,13 @@ public class AddNewSiteFragment extends BaseDialogFragment {
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.QcAppTheme);
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_site, container, false);
         unbinder = ButterKnife.bind(this, view);
+
 
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -132,6 +134,14 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     }
 
     @SuppressWarnings("unused") @OnClick(R.id.btn) public void onComfirm() {
+        if (TextUtils.isEmpty(count.getContent()) || TextUtils.isEmpty(name.getContent())){
+            DialogUtils.showAlert(getContext(), "请完善信息");
+            return;
+        }
+        if (Integer.parseInt(count.getContent()) < 0){
+            DialogUtils.showAlert(getContext(), "可容纳人数不可为负数");
+            return;
+        }
         //是用户新建 还是
         if (getArguments().getInt("type") == Configs.INIT_TYPE_GUIDE) {
             SystemInitBody body = (SystemInitBody) App.caches.get("init");

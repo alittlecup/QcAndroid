@@ -4,6 +4,6 @@ include  ':saasbase',
     ':staff',
 //    ':student',
 //':qcbase'
-':shop',
+    ':shop',
     ':weex'
 

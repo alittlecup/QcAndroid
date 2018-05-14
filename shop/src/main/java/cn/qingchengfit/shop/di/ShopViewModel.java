@@ -1,9 +1,7 @@
 package cn.qingchengfit.shop.di;
 
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
-import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.repository.ShopRepositoryImpl;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
@@ -29,7 +27,7 @@ import dagger.multibindings.IntoMap;
  * Created by huangbaole on 2017/12/18.
  */
 @Module public abstract class ShopViewModel {
-  @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+  //@Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
   @Binds
   abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteRepository);

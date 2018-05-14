@@ -155,7 +155,9 @@ public class StudentListFragment extends FilterCommonFragment {
         super.onDrawerClosed(drawerView);
     }
 
-
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
 
     public void initToolBar() {
         super.initToolbar(toolbar);
@@ -285,7 +287,13 @@ public class StudentListFragment extends FilterCommonFragment {
         alphabetView.setOnTouchListener((v, event) -> {
             AppUtils.hideKeyboard(getActivity());
             if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
-            return true;
+            return false;
+        });
+
+        alphabetView.setOnAlphabetChange((position, s) -> {
+            if ("#".equals(s)) s = "~";
+            mLinearLayoutManager.scrollToPositionWithOffset(
+                studentAdapter.getPositionForSection(s.charAt(0)), 0);
         });
 
         setUpSeachView();

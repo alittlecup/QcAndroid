@@ -153,6 +153,17 @@ public class StudentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         StudentAdapter.isBindStudent = isBindStudent;
     }
 
+    public int getPositionForSection(char section) {
+        for (int i = 0; i < getItemCount() - 1; i++) {
+            String sortStr = datas.get(i).head;
+            char firstChar = sortStr.toUpperCase().charAt(0);
+            if (firstChar == section) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override public int getItemCount() {
         if (datas != null) {
             return datas.size() + 1;

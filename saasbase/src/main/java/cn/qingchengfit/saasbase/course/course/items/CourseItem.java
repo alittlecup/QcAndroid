@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.course.course.items;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 import java.util.Locale;
+
+import static android.view.View.GONE;
 
 /**
  * power by
@@ -38,83 +41,112 @@ import java.util.Locale;
  */
 public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
-    public CourseType courseDetail;
-    private boolean isEditable;
+  public CourseType courseDetail;
+  private boolean isEditable;
 
-    public CourseItem(CourseType courseDetail) {
-        this.courseDetail = courseDetail;
+  public CourseItem(CourseType courseDetail) {
+    this.courseDetail = courseDetail;
+  }
+
+  public Course getCourse() {
+    return new Course.Builder().capacity(courseDetail.capacity)
+        .id(courseDetail.id)
+        .is_private(courseDetail.is_private)
+        .length(courseDetail.length)
+        .name(courseDetail.name)
+        .photo(courseDetail.photo)
+        .build();
+  }
+
+  public CourseType getData(){
+    return courseDetail;
+  }
+
+  public boolean isEditable() {
+    return isEditable;
+  }
+
+  public void setEditable(boolean editable) {
+    isEditable = editable;
+  }
+
+  @Override public boolean equals(Object o) {
+    if (o instanceof CourseType) {
+      return ((CourseType) o).getId().equalsIgnoreCase(courseDetail.getId());
+    } else {
+      return false;
+    }
+  }
+
+  @Override public int getLayoutRes() {
+    return R.layout.item_course_saas;
+  }
+
+  @Override public CourseVh createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CourseVh(view, adapter);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter, CourseVh holder, int position,
+      List payloads) {
+    boolean isAll = courseDetail.id.equalsIgnoreCase("0");
+
+    holder.courseTypeImg.setVisibility(View.VISIBLE);
+    holder.courseLength.setText(
+        String.format(Locale.CHINA, "时长%d分钟", courseDetail.getLength() / 60));
+    holder.courseName.setText(courseDetail.getName());
+
+    holder.courseTypeImg.setImageResource(
+        courseDetail.is_private() ? R.drawable.vd_course_private_conner
+            : R.drawable.vd_course_group_conner);
+
+    Glide.with(adapter.getRecyclerView().getContext())
+        .load(courseDetail.getPhoto())
+        .placeholder(R.drawable.img_loadingimage)
+        .into(holder.courseImg);
+
+    if (isEditable) {
+      holder.del.setVisibility(View.VISIBLE);
+    } else {
+      holder.del.setVisibility(GONE);
     }
 
-    public Course getCourse(){
-        return new Course.Builder()
-          .capacity(courseDetail.capacity)
-          .id(courseDetail.id)
-          .is_private(courseDetail.is_private)
-          .length(courseDetail.length)
-          .name(courseDetail.name)
-          .photo(courseDetail.photo)
-          .build();
+    if (adapter.isSelected(position)) {
+      holder.imgCourseSelectRight.setImageResource(R.drawable.ic_green_right);
+    } else {
+      holder.imgCourseSelectRight.setImageResource(R.drawable.vd_triangle_right_grey);
     }
 
-    public boolean isEditable() {
-        return isEditable;
-    }
+    holder.courseLength.setVisibility(isAll ? GONE : View.VISIBLE);
+    holder.imgCourseSelectRight.setVisibility(isAll ? GONE : View.VISIBLE);
+    holder.courseTypeImg.setVisibility(isAll ? GONE : View.VISIBLE);
 
-    public void setEditable(boolean editable) {
-        isEditable = editable;
+    if (isAll) {
+      holder.courseImg.setBackgroundColor(
+          ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
     }
+  }
 
-    @Override public boolean equals(Object o) {
-        if (o instanceof  CourseType){
-            return ((CourseType) o).getId().equalsIgnoreCase(courseDetail.getId());
-        }else {
-            return false;
+  public static class CourseVh extends FlexibleViewHolder {
+
+    @BindView(R2.id.course_img) ImageView courseImg;
+    @BindView(R2.id.course_type_img) ImageView courseTypeImg;
+    @BindView(R2.id.course_name) TextView courseName;
+    @BindView(R2.id.course_length) TextView courseLength;
+    @BindView(R2.id.del) ImageView del;
+    @BindView(R2.id.img_course_status_right) ImageView imgCourseSelectRight;
+
+    public CourseVh(View view, final FlexibleAdapter adapter) {
+      super(view, adapter);
+      ButterKnife.bind(this, view);
+      del.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View view) {
+          if (mAdapter.getItem(getFlexibleAdapterPosition()) instanceof CourseItem) {
+            boolean isPrivate = ((CourseItem) mAdapter.getItem(
+                getFlexibleAdapterPosition())).courseDetail.is_private();
+            //RxBus.getBus().post(new DelCourseEvent(isPrivate, getFlexibleAdapterPosition())); todo 删除课程广播
+          }
         }
+      });
     }
-
-    @Override public int getLayoutRes() {
-        return R.layout.item_course;
-    }
-
-    @Override public CourseVh createViewHolder(View view, FlexibleAdapter adapter) {
-        return new CourseVh(view, adapter);
-    }
-
-    @Override public void bindViewHolder(FlexibleAdapter adapter, CourseVh holder, int position, List payloads) {
-        holder.courseLength.setText(String.format(Locale.CHINA, "时长%d分钟", courseDetail.getLength() / 60));
-        holder.courseName.setText(courseDetail.getName());
-        holder.courseTypeImg.setImageResource(
-            courseDetail.is_private() ? R.drawable.vd_course_private_conner : R.drawable.vd_course_group_conner);
-        Glide.with(adapter.getRecyclerView().getContext())
-            .load(courseDetail.getPhoto())
-            .placeholder(R.drawable.img_loadingimage)
-            .into(holder.courseImg);
-        if (isEditable) {
-            holder.del.setVisibility(View.VISIBLE);
-        } else {
-            holder.del.setVisibility(View.GONE);
-        }
-    }
-
-    public static class CourseVh extends FlexibleViewHolder {
-
-        @BindView(R2.id.course_img) ImageView courseImg;
-        @BindView(R2.id.course_type_img) ImageView courseTypeImg;
-        @BindView(R2.id.course_name) TextView courseName;
-        @BindView(R2.id.course_length) TextView courseLength;
-        @BindView(R2.id.del) ImageView del;
-
-        public CourseVh(View view, final FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
-            del.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View view) {
-                    if (mAdapter.getItem(getFlexibleAdapterPosition()) instanceof CourseItem) {
-                        boolean isPrivate = ((CourseItem) mAdapter.getItem(getFlexibleAdapterPosition())).courseDetail.is_private();
-                        //RxBus.getBus().post(new DelCourseEvent(isPrivate, getFlexibleAdapterPosition())); todo 删除课程广播
-                    }
-                }
-            });
-        }
-    }
+  }
 }

@@ -28,6 +28,7 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/7/29.
  * 课程种类详情
+ * 重写了hashCode, equals方法
  */
 public class CourseType extends Course implements Cloneable {
 
@@ -48,6 +49,8 @@ public class CourseType extends Course implements Cloneable {
     public String edit_url;
     public boolean random_show_photos;
 
+
+
     public CourseType() {
     }
 
@@ -62,8 +65,6 @@ public class CourseType extends Course implements Cloneable {
     public void setRandom_show_photos(boolean random_show_photos) {
         this.random_show_photos = random_show_photos;
     }
-
-
 
     public String getShopStr() {
         String ret = "";
@@ -261,4 +262,15 @@ public class CourseType extends Course implements Cloneable {
             return new CourseType[size];
         }
     };
+
+    @Override public boolean equals(Object obj) {
+        return (obj instanceof Course) && ((Course)obj).id.equals(id);
+    }
+
+    @Override public int hashCode() {
+        int result = Integer.parseInt(id);
+        result = result * 31 + name.hashCode();
+
+        return result;
+    }
 }

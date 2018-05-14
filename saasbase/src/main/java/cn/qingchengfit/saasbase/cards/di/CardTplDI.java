@@ -31,7 +31,7 @@ import dagger.multibindings.IntoMap;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/15.
  */
-public interface CardTplDI {
+public interface  CardTplDI {
 
 
   @Subcomponent() public interface CardTypesHomeInGymFragmentSubcomponent extends AndroidInjector<CardTplsHomeInGymFragment> {

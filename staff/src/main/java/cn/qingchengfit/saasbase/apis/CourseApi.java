@@ -5,8 +5,10 @@ import cn.qingchengfit.model.responese.QcResponseBtaches;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
+import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
@@ -211,5 +213,18 @@ public interface CourseApi {
 
   @PUT("api/staffs/{id}/{type}/{scheduleid}/") rx.Observable<QcDataResponse> qcUpdateBatchSchedule(@Path("id") String staff_id,
     @Path("type") String type, @Path("scheduleid") String scheduleid, @Body SingleBatchBody body,@QueryMap HashMap<String, Object> params);
+
+  //复制排期检查课程冲突
+  @POST("/api/staffs/{staff_id}/copy-batch/check/") rx.Observable<QcDataResponse> qcCheckBatchConflict(
+      @Path("staff_id") String staff_id, @Body BatchCopyBody body, @QueryMap HashMap<String, Object> params);
+
+  //复制排期
+  @POST("/api/staffs/{staff_id}/copy-batch/") rx.Observable<QcDataResponse> qcSureCopyBatch(
+      @Path("staff_id") String staff_id, @Body BatchCopyBody body, @QueryMap HashMap<String, Object> params);
+
+  //复制排期页拉取所有数据
+  @GET("api/staffs/{staff_id}/copy-batch/schedules/")
+  rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 
 }
