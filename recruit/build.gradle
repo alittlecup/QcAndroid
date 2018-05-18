@@ -64,14 +64,14 @@ uploadArchives {
           authentication(userName: "admin", password: "admin123")
         }
 //      repository(url: uri('../../repo'))
-        pom.artifactId = 'qcim'
+        pom.artifactId = 'recruit'
       }
     }
   }else{
     repositories {
       mavenDeployer {
         repository(url: uri('../../repo'))
-        pom.artifactId = 'qcim'
+        pom.artifactId = 'recruit'
       }
     }
   }
