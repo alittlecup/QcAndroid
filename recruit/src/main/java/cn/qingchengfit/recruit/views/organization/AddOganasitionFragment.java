@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -33,19 +33,19 @@ import rx.schedulers.Schedulers;
  */
 public class AddOganasitionFragment extends BaseFragment {
   public static final String TAG = AddOganasitionFragment.class.getName();
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.addgym_name) CommonInputView addgymName;
-  @BindView(R2.id.addgym_contact) CommonInputView addgymContact;
-  @BindView(R2.id.addgym_city) CommonInputView addgymCity;
-  @BindView(R2.id.workexpedit_descripe) EditText workexpeditDescripe;
-  @BindView(R2.id.addgym_addbtn) Button addgymAddbtn;
-  @BindView(R2.id.addgym_brand) CommonInputView addgymBrand;
+	Toolbar toolbar;
+	CommonInputView addgymName;
+	CommonInputView addgymContact;
+	CommonInputView addgymCity;
+	EditText workexpeditDescripe;
+	Button addgymAddbtn;
+	CommonInputView addgymBrand;
   @Inject QcRestRepository restRepository;
   private ArrayList<String> options1Items = new ArrayList<String>();
   private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
   private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
   private SearchInterface searchListener;
-  private Unbinder unbinder;
+
 
   public AddOganasitionFragment() {
   }
@@ -56,7 +56,24 @@ public class AddOganasitionFragment extends BaseFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_add_gym, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    addgymName = (CommonInputView) view.findViewById(R.id.addgym_name);
+    addgymContact = (CommonInputView) view.findViewById(R.id.addgym_contact);
+    addgymCity = (CommonInputView) view.findViewById(R.id.addgym_city);
+    workexpeditDescripe = (EditText) view.findViewById(R.id.workexpedit_descripe);
+    addgymAddbtn = (Button) view.findViewById(R.id.addgym_addbtn);
+    addgymBrand = (CommonInputView) view.findViewById(R.id.addgym_brand);
+    view.findViewById(R.id.decript_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDescripte();
+      }
+    });
+    view.findViewById(R.id.addgym_addbtn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickAdd();
+      }
+    });
+
     toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     toolbar.setTitle("添加主办机构");
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -80,11 +97,11 @@ public class AddOganasitionFragment extends BaseFragment {
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.decript_layout) public void onDescripte() {
+ public void onDescripte() {
     workexpeditDescripe.requestFocus();
   }
 
-  @OnClick(R2.id.addgym_addbtn) public void onClickAdd() {
+ public void onClickAdd() {
     if (addgymName.getContent().length() < 3) {
       Toast.makeText(getActivity(), "机构名称至少填写三个字", Toast.LENGTH_SHORT).show();
       return;

@@ -9,13 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventIntentCities;
 import cn.qingchengfit.views.Cities2Chooser;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -50,11 +50,11 @@ import java.util.List;
 
 @FragmentWithArgs public class ResumeIntentsCitiesFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.civ_first) CommonInputView civFirst;
-  @BindView(R2.id.civ_second) CommonInputView civSecond;
-  @BindView(R2.id.civ_third) CommonInputView civThird;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	CommonInputView civFirst;
+	CommonInputView civSecond;
+	CommonInputView civThird;
   Cities2Chooser cities2Chooser;
   @Arg ArrayList<CityBean> cityBeanList;
   private int chooseCityId1 = 0;
@@ -69,7 +69,27 @@ import java.util.List;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_intent_cities, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    civFirst = (CommonInputView) view.findViewById(R.id.civ_first);
+    civSecond = (CommonInputView) view.findViewById(R.id.civ_second);
+    civThird = (CommonInputView) view.findViewById(R.id.civ_third);
+    view.findViewById(R.id.civ_first).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivFirstClicked();
+      }
+    });
+    view.findViewById(R.id.civ_second).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivSecondClicked();
+      }
+    });
+    view.findViewById(R.id.civ_third).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivThirdClicked();
+      }
+    });
+
     initToolbar(toolbar);
     if (cityBeanList.size() > 0) {
       chooseCityId1 = cityBeanList.get(0).getId();
@@ -114,7 +134,7 @@ import java.util.List;
   /**
    * 第一期望城市
    */
-  @OnClick(R2.id.civ_first) public void onCivFirstClicked() {
+ public void onCivFirstClicked() {
     cities2Chooser.setOnCityChoosenListener(new Cities2Chooser.OnCityChoosenListener() {
       @Override public void onCityChoosen(String provice, String city, String district, int id) {
         civFirst.setContent(city);
@@ -127,7 +147,7 @@ import java.util.List;
   /**
    * 第二
    */
-  @OnClick(R2.id.civ_second) public void onCivSecondClicked() {
+ public void onCivSecondClicked() {
     cities2Chooser.setOnCityChoosenListener(new Cities2Chooser.OnCityChoosenListener() {
       @Override public void onCityChoosen(String provice, String city, String district, int id) {
         civSecond.setContent(city);
@@ -140,7 +160,7 @@ import java.util.List;
   /**
    * 第三
    */
-  @OnClick(R2.id.civ_third) public void onCivThirdClicked() {
+ public void onCivThirdClicked() {
     cities2Chooser.setOnCityChoosenListener(new Cities2Chooser.OnCityChoosenListener() {
       @Override public void onCityChoosen(String provice, String city, String district, int id) {
         civThird.setContent(city);

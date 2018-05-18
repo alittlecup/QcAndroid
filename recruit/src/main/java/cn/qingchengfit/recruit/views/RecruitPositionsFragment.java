@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.item.RecruitPositionItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.views.VpFragment;
@@ -48,7 +48,7 @@ import javax.inject.Inject;
 public class RecruitPositionsFragment extends VpFragment {
   @DrawableRes public int resNoData = R.drawable.vd_recruit_empty_job_invited;
   public String strNoData = "";
-  @BindView(R2.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
   CommonFlexAdapter commonFlexAdapter;
   List<AbstractFlexibleItem> items = new ArrayList<>();
   Object listener;
@@ -78,7 +78,8 @@ public class RecruitPositionsFragment extends VpFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_position_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
     recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
     recycleview.addItemDecoration(new cn.qingchengfit.utils.DividerItemDecoration(getContext(),
         LinearLayoutManager.VERTICAL));

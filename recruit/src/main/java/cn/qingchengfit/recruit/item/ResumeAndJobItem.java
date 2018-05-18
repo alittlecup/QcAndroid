@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -91,17 +91,24 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
   }
 
   public class ResumeAndJobVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_resume_completed) TextView tvResumeCompleted;
-    @BindView(R2.id.layout_my_resume) RelativeLayout layoutMyResume;
-    @BindView(R2.id.tv_job_fair) TextView tvJobFair;
-    @BindView(R2.id.layout_my_jobfair) RelativeLayout layoutMyJobfair;
-    @BindView(R2.id.img_my_resume) ImageView imgMyResume;
-    @BindView(R2.id.img_my_job_fair) ImageView imgMyJobFair;
-    @BindView(R2.id.tv_resume_completed_tip) TextView tvResumeCompletedTip;
+	TextView tvResumeCompleted;
+	RelativeLayout layoutMyResume;
+	TextView tvJobFair;
+	RelativeLayout layoutMyJobfair;
+	ImageView imgMyResume;
+	ImageView imgMyJobFair;
+	TextView tvResumeCompletedTip;
 
     public ResumeAndJobVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvResumeCompleted = (TextView) view.findViewById(R.id.tv_resume_completed);
+      layoutMyResume = (RelativeLayout) view.findViewById(R.id.layout_my_resume);
+      tvJobFair = (TextView) view.findViewById(R.id.tv_job_fair);
+      layoutMyJobfair = (RelativeLayout) view.findViewById(R.id.layout_my_jobfair);
+      imgMyResume = (ImageView) view.findViewById(R.id.img_my_resume);
+      imgMyJobFair = (ImageView) view.findViewById(R.id.img_my_job_fair);
+      tvResumeCompletedTip = (TextView) view.findViewById(R.id.tv_resume_completed_tip);
+
       layoutMyJobfair.setOnClickListener(this);
       layoutMyResume.setOnClickListener(this);
     }

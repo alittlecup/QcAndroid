@@ -4,12 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -49,14 +49,18 @@ public class MyJobsItem extends AbstractFlexibleItem<MyJobsItem.MyJobsVH> {
   }
 
   public class MyJobsVH extends FlexibleViewHolder {
-    @BindView(R2.id.layout_i_sent) RelativeLayout layoutISent;
-    @BindView(R2.id.v_has_invited) View vHasInvited;
-    @BindView(R2.id.layout_i_invited) RelativeLayout layoutIInvited;
-    @BindView(R2.id.layout_i_stared) RelativeLayout layoutIStared;
+	RelativeLayout layoutISent;
+	View vHasInvited;
+	RelativeLayout layoutIInvited;
+	RelativeLayout layoutIStared;
 
     public MyJobsVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      layoutISent = (RelativeLayout) view.findViewById(R.id.layout_i_sent);
+      vHasInvited = (View) view.findViewById(R.id.v_has_invited);
+      layoutIInvited = (RelativeLayout) view.findViewById(R.id.layout_i_invited);
+      layoutIStared = (RelativeLayout) view.findViewById(R.id.layout_i_stared);
+
       layoutIInvited.setOnClickListener(this);
       layoutISent.setOnClickListener(this);
       layoutIStared.setOnClickListener(this);

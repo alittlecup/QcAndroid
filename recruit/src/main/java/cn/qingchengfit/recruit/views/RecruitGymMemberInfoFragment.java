@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -41,10 +41,10 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   @Arg Integer memberNum;
   @Arg Integer trainerNum;
 
-  @BindView(R2.id.tv_gym_area) TextView tvGymArea;
-  @BindView(R2.id.tv_staff_num) TextView tvStaffNum;
-  @BindView(R2.id.tv_menber_num) TextView tvMenberNum;
-  @BindView(R2.id.tv_trainer_num) TextView tvTrainerNum;
+	TextView tvGymArea;
+	TextView tvStaffNum;
+	TextView tvMenberNum;
+	TextView tvTrainerNum;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -57,7 +57,11 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_member_info, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvGymArea = (TextView) view.findViewById(R.id.tv_gym_area);
+    tvStaffNum = (TextView) view.findViewById(R.id.tv_staff_num);
+    tvMenberNum = (TextView) view.findViewById(R.id.tv_menber_num);
+    tvTrainerNum = (TextView) view.findViewById(R.id.tv_trainer_num);
+
     int area = 0;
     try {
       area = (int) Float.parseFloat(strArea);

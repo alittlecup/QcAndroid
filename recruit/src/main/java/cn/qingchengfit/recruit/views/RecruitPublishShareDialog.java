@@ -17,9 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -50,7 +50,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
   private String mTitle, mText, mImg, mUrl;
   private Bitmap mBitmap;
   private boolean isImg;
-  private Unbinder unbinder;
+
   private String wechat_code;
 
   public static RecruitPublishShareDialog newInstance(String title, String text, String img, String url) {
@@ -111,8 +111,28 @@ public class RecruitPublishShareDialog extends DialogFragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.dialog_publish_successed, container, false);unbinder = ButterKnife
-        .bind(this, view);
+    View view = inflater.inflate(R.layout.dialog_publish_successed, container, false);
+    view.findViewById(R.id.wechat_friend).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clickFriend();
+      }
+    });
+    view.findViewById(R.id.wechat_circle).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clickCircle();
+      }
+    });
+    view.findViewById(R.id.copy_link).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clickCopy();
+      }
+    });
+    view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        close();
+      }
+    });
+
     api = WXAPIFactory.createWXAPI(getActivity(), wechat_code, true);
     api.registerApp(wechat_code);
     if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null)) {
@@ -131,14 +151,14 @@ public class RecruitPublishShareDialog extends DialogFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
+
   }
 
   public int getLayoutRes() {
     return cn.qingchengfit.widgets.R.layout.fragment_share;
   }
 
-  @OnClick(R2.id.wechat_friend) public void clickFriend() {
+ public void clickFriend() {
     Observable.create(new Observable.OnSubscribe<Boolean>() {
       @Override public void call(Subscriber<? super Boolean> subscriber) {
         sendToWx(true);
@@ -148,7 +168,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
     dismiss();
   }
 
-  @OnClick(R2.id.wechat_circle) public void clickCircle() {
+ public void clickCircle() {
     Observable.create(new Observable.OnSubscribe<Boolean>() {
       @Override public void call(Subscriber<? super Boolean> subscriber) {
         sendToWx(false);
@@ -158,7 +178,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
     dismiss();
   }
 
-  @OnClick(R2.id.copy_link) public void clickCopy() {
+ public void clickCopy() {
     ClipboardManager cmb =
         (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
     cmb.setPrimaryClip(ClipData.newPlainText("qingcheng", mUrl));
@@ -168,7 +188,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
     dismiss();
   }
 
-  @OnClick(R2.id.close) public void close(){
+ public void close(){
     dismiss();
   }
 

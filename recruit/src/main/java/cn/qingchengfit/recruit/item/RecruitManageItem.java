@@ -5,10 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -67,12 +67,13 @@ public class RecruitManageItem extends AbstractFlexibleItem<RecruitManageItem.Re
   }
 
   public class RecruitManageVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_red_dot) ImageView imgRedDot;
-    @BindView(R2.id.tv_publish_jobs) TextView tvPublishJobs;
+	ImageView imgRedDot;
+	TextView tvPublishJobs;
 
     public RecruitManageVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgRedDot = (ImageView) view.findViewById(R.id.img_red_dot);
+      tvPublishJobs = (TextView) view.findViewById(R.id.tv_publish_jobs);
     }
   }
 }

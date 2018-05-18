@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CmStringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -64,15 +64,19 @@ public class ResumeIntentItem extends AbstractFlexibleItem<ResumeIntentItem.Resu
   }
 
   public class ResumeIntentVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_position) TextView tvPosition;
-    @BindView(R2.id.tv_city) TextView tvCity;
-    @BindView(R2.id.tv_salary) TextView tvSalary;
-    @BindView(R2.id.layout_job_intent) LinearLayout layoutJobIntent;
-    @BindView(R2.id.tv_current_status) CompatTextView tvCurrentStatus;
+	TextView tvPosition;
+	TextView tvCity;
+	TextView tvSalary;
+	LinearLayout layoutJobIntent;
+	CompatTextView tvCurrentStatus;
 
     public ResumeIntentVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvPosition = (TextView) view.findViewById(R.id.tv_position);
+      tvCity = (TextView) view.findViewById(R.id.tv_city);
+      tvSalary = (TextView) view.findViewById(R.id.tv_salary);
+      layoutJobIntent = (LinearLayout) view.findViewById(R.id.layout_job_intent);
+      tvCurrentStatus = (CompatTextView) view.findViewById(R.id.tv_current_status);
     }
   }
 }

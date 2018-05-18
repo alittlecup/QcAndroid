@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventTabHeaderChange;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.MarkResumeBody;
@@ -59,12 +59,12 @@ import rx.functions.Action1;
   @Arg Job job;
   @Arg int type;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.tv_hint) TextView tvHint;
-  @BindView(R2.id.tab_strip) PagerSlidingTabImageStrip tabStrip;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView tvHint;
+	PagerSlidingTabImageStrip tabStrip;
   LinearLayout layoutMarkCancel;
-  @BindView(R2.id.vp) ViewPager vp;
+	ViewPager vp;
   @Inject MarkResumesPresenter presenter;
   @Inject ResumePermissionPresenter permissionPresenter;
   private List<ResumeHandleFragment> fragments = new ArrayList<>();
@@ -80,7 +80,12 @@ import rx.functions.Action1;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_handler_received_resume, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvHint = (TextView) view.findViewById(R.id.tv_hint);
+    tabStrip = (PagerSlidingTabImageStrip) view.findViewById(R.id.tab_strip);
+    vp = (ViewPager) view.findViewById(R.id.vp);
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     delegatePresenter(permissionPresenter, this);

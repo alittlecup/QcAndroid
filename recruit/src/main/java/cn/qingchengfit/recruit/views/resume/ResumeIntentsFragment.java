@@ -9,15 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventIntentCities;
 import cn.qingchengfit.recruit.event.EventIntentJobs;
@@ -65,12 +65,12 @@ import rx.schedulers.Schedulers;
 @FragmentWithArgs public class ResumeIntentsFragment extends BaseFragment {
   public static final int MIN_SALARY = 1;
   public static final int MAX_SALARY = 99;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.civ_intent_status) CommonInputView civIntentStatus;
-  @BindView(R2.id.civ_intent_postion) CommonInputView civIntentPostion;
-  @BindView(R2.id.civ_intent_city) CommonInputView civIntentCity;
-  @BindView(R2.id.civ_intent_salay) CommonInputView civIntentSalay;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	CommonInputView civIntentStatus;
+	CommonInputView civIntentPostion;
+	CommonInputView civIntentCity;
+	CommonInputView civIntentSalay;
   ArrayList<String> curStatusArray;
   @Inject RecruitRouter router;
   @Inject QcRestRepository qcRestRepository;
@@ -89,7 +89,33 @@ import rx.schedulers.Schedulers;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_intents, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    civIntentStatus = (CommonInputView) view.findViewById(R.id.civ_intent_status);
+    civIntentPostion = (CommonInputView) view.findViewById(R.id.civ_intent_postion);
+    civIntentCity = (CommonInputView) view.findViewById(R.id.civ_intent_city);
+    civIntentSalay = (CommonInputView) view.findViewById(R.id.civ_intent_salay);
+    view.findViewById(R.id.civ_intent_status).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivIntentStatusClicked();
+      }
+    });
+    view.findViewById(R.id.civ_intent_postion).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivIntentPostionClicked();
+      }
+    });
+    view.findViewById(R.id.civ_intent_city).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivIntentCityClicked();
+      }
+    });
+    view.findViewById(R.id.civ_intent_salay).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivIntentSalayClicked();
+      }
+    });
+
     initToolbar(toolbar);
     body = new ResumeBody.Builder().build();
     RxBusAdd(EventIntentCities.class).subscribe(new Action1<EventIntentCities>() {
@@ -207,7 +233,7 @@ import rx.schedulers.Schedulers;
   /**
    * 当前状态
    */
-  @OnClick(R2.id.civ_intent_status) public void onCivIntentStatusClicked() {
+ public void onCivIntentStatusClicked() {
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civIntentStatus.setContent(curStatusArray.get(pos));
@@ -221,21 +247,21 @@ import rx.schedulers.Schedulers;
   /**
    * 期望职位
    */
-  @OnClick(R2.id.civ_intent_postion) public void onCivIntentPostionClicked() {
+ public void onCivIntentPostionClicked() {
     router.toIntentPosition((body!= null && body.exp_jobs != null)?body.exp_jobs :  resumeHome.exp_jobs);
   }
 
   /**
    * 期望城市
    */
-  @OnClick(R2.id.civ_intent_city) public void onCivIntentCityClicked() {
+ public void onCivIntentCityClicked() {
     router.toIntentCities(resumeHome.exp_cities);
   }
 
   /**
    * 期望薪水
    */
-  @OnClick(R2.id.civ_intent_salay) public void onCivIntentSalayClicked() {
+ public void onCivIntentSalayClicked() {
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
         if (left == 0) {

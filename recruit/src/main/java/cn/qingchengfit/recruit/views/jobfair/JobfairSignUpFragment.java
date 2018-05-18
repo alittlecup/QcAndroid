@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseGym;
 import cn.qingchengfit.model.base.Gym;
@@ -22,7 +22,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.network.PostApi;
@@ -56,13 +56,13 @@ import rx.schedulers.Schedulers;
  */
 public class JobfairSignUpFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.tv_fair_name) TextView tvFairName;
-  @BindView(R2.id.civ_gym) CommonInputView civGym;
-  @BindView(R2.id.civ_name) CommonInputView civName;
-  @BindView(R2.id.civ_phone) CommonInputView civPhone;
-  @BindView(R2.id.btn_join) Button btnJoin;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView tvFairName;
+	CommonInputView civGym;
+	CommonInputView civName;
+	CommonInputView civPhone;
+	Button btnJoin;
   @Inject QcRestRepository qcRestRepository;
   @Inject RecruitRouter router;
   @Inject LoginStatus loginStatus;
@@ -100,7 +100,24 @@ public class JobfairSignUpFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_signup_job_fair, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvFairName = (TextView) view.findViewById(R.id.tv_fair_name);
+    civGym = (CommonInputView) view.findViewById(R.id.civ_gym);
+    civName = (CommonInputView) view.findViewById(R.id.civ_name);
+    civPhone = (CommonInputView) view.findViewById(R.id.civ_phone);
+    btnJoin = (Button) view.findViewById(R.id.btn_join);
+    view.findViewById(R.id.btn_join).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+    view.findViewById(R.id.civ_gym).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClickedGym();
+      }
+    });
+
     civName.addTextWatcher(tw);
     civPhone.addTextWatcher(tw);
     initToolbar(toolbar);
@@ -137,7 +154,7 @@ public class JobfairSignUpFragment extends BaseFragment {
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.btn_join) public void onViewClicked() {
+ public void onViewClicked() {
     HashMap<String, Object> p = new HashMap<>();
     p.put("fair_id", jobfair.id);
     p.put("gym_id", gym.getId());
@@ -170,7 +187,7 @@ public class JobfairSignUpFragment extends BaseFragment {
     }
   }
 
-  @OnClick(R2.id.civ_gym) public void onViewClickedGym() {
+ public void onViewClickedGym() {
     router.chooseGymForJobfair();
   }
 

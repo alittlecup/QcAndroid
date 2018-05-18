@@ -4,10 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -38,11 +38,11 @@ public class JobFairFooterItem extends AbstractFlexibleItem<JobFairFooterItem.Jo
   }
 
   public class JobFairFooterVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_total) TextView tvTotal;
+	TextView tvTotal;
 
     public JobFairFooterVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTotal = (TextView) view.findViewById(R.id.tv_total);
     }
   }
 }

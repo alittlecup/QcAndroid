@@ -16,14 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.PostApi;
@@ -71,26 +71,26 @@ import rx.schedulers.Schedulers;
  */
 @FragmentWithArgs public class WorkExpSyncDetailFragment extends BaseFragment {
 
-  @BindView(R2.id.host_img) ImageView hostImg;
-  @BindView(R2.id.host_qc_identify) ImageView hostQcIdentify;
-  @BindView(R2.id.workexpedit_gym_name) TextView workexpeditGymName;
-  @BindView(R2.id.host_address) TextView hostAddress;
-  @BindView(R2.id.host_layout) RelativeLayout hostLayout;
-  @BindView(R2.id.workexpedit_start_time) CommonInputView workexpeditStartTime;
-  @BindView(R2.id.workexpedit_start_end) CommonInputView workexpeditStartEnd;
-  @BindView(R2.id.workexpedit_city) CommonInputView workexpeditCity;
-  @BindView(R2.id.workexpedit_position) CommonInputView workexpeditPosition;
-  @BindView(R2.id.workexpedit_descripe) EditText workexpeditDescripe;
-  @BindView(R2.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
-  @BindView(R2.id.tv_group) TextView tvGroup;
-  @BindView(R2.id.sw_group) ExpandedLayout swGroup;
-  @BindView(R2.id.tv_private) TextView tvPrivate;
-  @BindView(R2.id.sw_private) ExpandedLayout swPrivate;
-  @BindView(R2.id.tv_sales) TextView tvSales;
-  @BindView(R2.id.sw_sale) ExpandedLayout swSale;
-  @BindView(R2.id.rootview) LinearLayout rootview;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	ImageView hostImg;
+	ImageView hostQcIdentify;
+	TextView workexpeditGymName;
+	TextView hostAddress;
+	RelativeLayout hostLayout;
+	CommonInputView workexpeditStartTime;
+	CommonInputView workexpeditStartEnd;
+	CommonInputView workexpeditCity;
+	CommonInputView workexpeditPosition;
+	EditText workexpeditDescripe;
+	LinearLayout workexpeditExpeLayout;
+	TextView tvGroup;
+	ExpandedLayout swGroup;
+	TextView tvPrivate;
+	ExpandedLayout swPrivate;
+	TextView tvSales;
+	ExpandedLayout swSale;
+	LinearLayout rootview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
   @Arg WorkExp experiencesEntity;
   @Inject QcRestRepository qcRestRepository;
@@ -104,7 +104,37 @@ import rx.schedulers.Schedulers;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_workexp_sync, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    hostImg = (ImageView) view.findViewById(R.id.host_img);
+    hostQcIdentify = (ImageView) view.findViewById(R.id.host_qc_identify);
+    workexpeditGymName = (TextView) view.findViewById(R.id.workexpedit_gym_name);
+    hostAddress = (TextView) view.findViewById(R.id.host_address);
+    hostLayout = (RelativeLayout) view.findViewById(R.id.host_layout);
+    workexpeditStartTime = (CommonInputView) view.findViewById(R.id.workexpedit_start_time);
+    workexpeditStartEnd = (CommonInputView) view.findViewById(R.id.workexpedit_start_end);
+    workexpeditCity = (CommonInputView) view.findViewById(R.id.workexpedit_city);
+    workexpeditPosition = (CommonInputView) view.findViewById(R.id.workexpedit_position);
+    workexpeditDescripe = (EditText) view.findViewById(R.id.workexpedit_descripe);
+    workexpeditExpeLayout = (LinearLayout) view.findViewById(R.id.workexpedit_expe_layout);
+    tvGroup = (TextView) view.findViewById(R.id.tv_group);
+    swGroup = (ExpandedLayout) view.findViewById(R.id.sw_group);
+    tvPrivate = (TextView) view.findViewById(R.id.tv_private);
+    swPrivate = (ExpandedLayout) view.findViewById(R.id.sw_private);
+    tvSales = (TextView) view.findViewById(R.id.tv_sales);
+    swSale = (ExpandedLayout) view.findViewById(R.id.sw_sale);
+    rootview = (LinearLayout) view.findViewById(R.id.rootview);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.workexpedit_start_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onStartTime();
+      }
+    });
+    view.findViewById(R.id.workexpedit_start_end).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onEndTime();
+      }
+    });
+
     initToolbar(toolbar);
     toolbarTitile.setText("工作经历详情");
     toolbar.inflateMenu(R.menu.menu_save);
@@ -176,7 +206,7 @@ import rx.schedulers.Schedulers;
         }));
   }
 
-  @OnClick(R2.id.workexpedit_start_time) public void onStartTime() {
+ public void onStartTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -202,7 +232,7 @@ import rx.schedulers.Schedulers;
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
   }
 
-  @OnClick(R2.id.workexpedit_start_end) public void onEndTime() {
+ public void onEndTime() {
     if (mDialogSheet == null) {
       mDialogSheet = DialogSheet.builder(getContext()).addButton("至今", new View.OnClickListener() {
         @Override public void onClick(View v) {

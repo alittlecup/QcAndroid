@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -51,14 +51,14 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
 
 @FragmentWithArgs public class RecruitRequireOfJobFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
-  @BindView(R2.id.civ_gender) CommonInputView civGender;
-  @BindView(R2.id.civ_age) CommonInputView civAge;
-  @BindView(R2.id.civ_education) CommonInputView civEducation;
-  @BindView(R2.id.civ_height) CommonInputView civHeight;
-  @BindView(R2.id.civ_weight) CommonInputView civWeight;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	CommonInputView civWorkExp;
+	CommonInputView civGender;
+	CommonInputView civAge;
+	CommonInputView civEducation;
+	CommonInputView civHeight;
+	CommonInputView civWeight;
 
   SimpleScrollPicker simpleScrollPicker;
   TwoScrollPicker twoScrollPicker;
@@ -74,7 +74,45 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_position_require, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    civWorkExp = (CommonInputView) view.findViewById(R.id.civ_work_exp);
+    civGender = (CommonInputView) view.findViewById(R.id.civ_gender);
+    civAge = (CommonInputView) view.findViewById(R.id.civ_age);
+    civEducation = (CommonInputView) view.findViewById(R.id.civ_education);
+    civHeight = (CommonInputView) view.findViewById(R.id.civ_height);
+    civWeight = (CommonInputView) view.findViewById(R.id.civ_weight);
+    view.findViewById(R.id.civ_work_exp).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivWorkExpClicked();
+      }
+    });
+    view.findViewById(R.id.civ_gender).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivGenderClicked();
+      }
+    });
+    view.findViewById(R.id.civ_age).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivAgeClicked();
+      }
+    });
+    view.findViewById(R.id.civ_education).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivEducationClicked();
+      }
+    });
+    view.findViewById(R.id.civ_height).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivHeightClicked();
+      }
+    });
+    view.findViewById(R.id.civ_weight).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivWeightClicked();
+      }
+    });
+
     return view;
   }
 
@@ -89,7 +127,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   /**
    * 工作经验
    */
-  @OnClick(R2.id.civ_work_exp) public void onCivWorkExpClicked() {
+ public void onCivWorkExpClicked() {
     final ArrayList<String> leftArray = new ArrayList<>();
     final ArrayList<String> rightArray = new ArrayList<>();
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
@@ -122,7 +160,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   /**
    * 性别
    */
-  @OnClick(R2.id.civ_gender) public void onCivGenderClicked() {
+ public void onCivGenderClicked() {
     final ArrayList<String> d = new ArrayList<>(
         Arrays.asList(getContext().getResources().getStringArray(R.array.gender_2)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
@@ -137,7 +175,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   /**
    * 年龄
    */
-  @OnClick(R2.id.civ_age) public void onCivAgeClicked() {
+ public void onCivAgeClicked() {
     final int min_year = 18, max_year = 100;
 
     final ArrayList<String> leftArray = new ArrayList<>();
@@ -163,7 +201,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   /**
    * 学历
    */
-  @OnClick(R2.id.civ_education) public void onCivEducationClicked() {
+ public void onCivEducationClicked() {
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(
         getContext().getResources().getStringArray(R.array.add_resume_education_degree)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
@@ -179,7 +217,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   /**
    * 身高
    */
-  @OnClick(R2.id.civ_height) public void onCivHeightClicked() {
+ public void onCivHeightClicked() {
     final ArrayList<String> leftArray = new ArrayList<>();
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
@@ -203,7 +241,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
   /**
    * 体重
    */
-  @OnClick(R2.id.civ_weight) public void onCivWeightClicked() {
+ public void onCivWeightClicked() {
     final ArrayList<String> leftArray = new ArrayList<>();
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {

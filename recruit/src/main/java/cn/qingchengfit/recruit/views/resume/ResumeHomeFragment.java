@@ -14,15 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventResumeFresh;
@@ -87,14 +87,14 @@ import rx.functions.Action1;
 public class ResumeHomeFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, ResumePresenter.MVPView, ResumePostPresenter.MVPView, ResumePermissionPresenter.MVPView {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.tv_resume_completed) TextView tvResumeCompleted;
-  @BindView(R2.id.tv_resume_open) TextView tvResumeOpen;
-  @BindView(R2.id.rv) RecyclerView rv;
-  @BindView(R2.id.btn_open_resume) Button btnOpen;
-  @BindView(R2.id.srl) SwipeRefreshLayout srl;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
+	TextView tvResumeCompleted;
+	TextView tvResumeOpen;
+	RecyclerView rv;
+	Button btnOpen;
+	SwipeRefreshLayout srl;
   CommonFlexAdapter commonFlexAdapter;
 
   @Inject ResumePresenter presenter;
@@ -108,7 +108,25 @@ public class ResumeHomeFragment extends BaseFragment
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvResumeCompleted = (TextView) view.findViewById(R.id.tv_resume_completed);
+    tvResumeOpen = (TextView) view.findViewById(R.id.tv_resume_open);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    btnOpen = (Button) view.findViewById(R.id.btn_open_resume);
+    srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    view.findViewById(R.id.btn_open_resume).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        openResume();
+      }
+    });
+    view.findViewById(R.id.btn_preview_resume).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        previewResume();
+      }
+    });
+
     delegatePresenter(presenter, this);
     delegatePresenter(postPresenter, this);
     delegatePresenter(permissionPresenter, this);
@@ -191,7 +209,7 @@ public class ResumeHomeFragment extends BaseFragment
   /**
    * 公开简历
    */
-  @OnClick(R2.id.btn_open_resume) public void openResume() {
+ public void openResume() {
     if (resumeHome.checkResumeCompleted())
       onCheckSuccess();
     else showResumeNotCompleted();
@@ -217,7 +235,7 @@ public class ResumeHomeFragment extends BaseFragment
   /**
    * 预览简历
    */
-  @OnClick(R2.id.btn_preview_resume) public void previewResume() {
+ public void previewResume() {
     BaseRouter.routerToWeb(qcRestRepository.getHost() + "mobile/resume/?id=" + resumeHome.id,
         getContext());
   }

@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.support.widgets.CompatTextView;
@@ -57,18 +57,25 @@ public class ResumeBaseInfoItem extends AbstractFlexibleItem<ResumeBaseInfoItem.
   }
 
   public class ResumeBaseInfoVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_avatar) ImageView imgAvatar;
-    @BindView(R2.id.tv_username) CompatTextView tvUsername;
-    @BindView(R2.id.tv_sign_word) TextView tvSignWord;
-    @BindView(R2.id.tv_work_year) CompatTextView tvWorkYear;
-    @BindView(R2.id.tv_age) CompatTextView tvAge;
-    @BindView(R2.id.tv_degree) CompatTextView tvDegree;
-    @BindView(R2.id.tv_height) CompatTextView tvHeight;
-    @BindView(R2.id.tv_weight) CompatTextView tvWeight;
+	ImageView imgAvatar;
+	CompatTextView tvUsername;
+	TextView tvSignWord;
+	CompatTextView tvWorkYear;
+	CompatTextView tvAge;
+	CompatTextView tvDegree;
+	CompatTextView tvHeight;
+	CompatTextView tvWeight;
 
     public ResumeBaseInfoVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+      tvUsername = (CompatTextView) view.findViewById(R.id.tv_username);
+      tvSignWord = (TextView) view.findViewById(R.id.tv_sign_word);
+      tvWorkYear = (CompatTextView) view.findViewById(R.id.tv_work_year);
+      tvAge = (CompatTextView) view.findViewById(R.id.tv_age);
+      tvDegree = (CompatTextView) view.findViewById(R.id.tv_degree);
+      tvHeight = (CompatTextView) view.findViewById(R.id.tv_height);
+      tvWeight = (CompatTextView) view.findViewById(R.id.tv_weight);
     }
   }
 }

@@ -4,10 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -52,13 +52,15 @@ public class ResumeEduExpItem extends AbstractFlexibleItem<ResumeEduExpItem.Resu
   }
 
   public class ResumeEduExpVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_university_name) TextView tvUniversityName;
-    @BindView(R2.id.tv_degree) TextView tvDegree;
-    @BindView(R2.id.tv_period) TextView tvPeriod;
+	TextView tvUniversityName;
+	TextView tvDegree;
+	TextView tvPeriod;
 
     public ResumeEduExpVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvUniversityName = (TextView) view.findViewById(R.id.tv_university_name);
+      tvDegree = (TextView) view.findViewById(R.id.tv_degree);
+      tvPeriod = (TextView) view.findViewById(R.id.tv_period);
     }
   }
 }

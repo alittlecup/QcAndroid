@@ -8,11 +8,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventDownlowdCertification;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.utils.DateUtils;
@@ -74,22 +74,35 @@ public class ResumeCertificateInListItem extends AbstractFlexibleItem<ResumeCert
   }
 
   public class ResumeCertificateVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_gym) ImageView imgGym;
-    @BindView(R2.id.tv_certificate_name) TextView tvCertificateName;
-    @BindView(R2.id.tv_meeting_start) TextView tvMeetingStart;
-    @BindView(R2.id.tv_certificate_organization) TextView tvCertificateOrganization;
-    @BindView(R2.id.tv_certificate_organization_address) TextView tvCertificateOrganizationAddress;
-    @BindView(R2.id.img_qc_comfirm) ImageView imgQcComfirm;
-    @BindView(R2.id.tv_certificate_card_name) TextView tvCertificateCardName;
-    @BindView(R2.id.tv_certificate_period) TextView tvCertificatePeriod;
-    @BindView(R2.id.img_certificate) ImageView imgCertificate;
-    @BindView(R2.id.layout_certificate_photo) LinearLayout layoutCertificatePhoto;
-    @BindView(R2.id.layout_sync_from_qc) LinearLayout layoutSyncFromQc;
-    @BindView(R2.id.btn_down) FrameLayout btnDownload;
+	ImageView imgGym;
+	TextView tvCertificateName;
+	TextView tvMeetingStart;
+	TextView tvCertificateOrganization;
+	TextView tvCertificateOrganizationAddress;
+	ImageView imgQcComfirm;
+	TextView tvCertificateCardName;
+	TextView tvCertificatePeriod;
+	ImageView imgCertificate;
+	LinearLayout layoutCertificatePhoto;
+	LinearLayout layoutSyncFromQc;
+	FrameLayout btnDownload;
 
     public ResumeCertificateVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgGym = (ImageView) view.findViewById(R.id.img_gym);
+      tvCertificateName = (TextView) view.findViewById(R.id.tv_certificate_name);
+      tvMeetingStart = (TextView) view.findViewById(R.id.tv_meeting_start);
+      tvCertificateOrganization = (TextView) view.findViewById(R.id.tv_certificate_organization);
+      tvCertificateOrganizationAddress =
+          (TextView) view.findViewById(R.id.tv_certificate_organization_address);
+      imgQcComfirm = (ImageView) view.findViewById(R.id.img_qc_comfirm);
+      tvCertificateCardName = (TextView) view.findViewById(R.id.tv_certificate_card_name);
+      tvCertificatePeriod = (TextView) view.findViewById(R.id.tv_certificate_period);
+      imgCertificate = (ImageView) view.findViewById(R.id.img_certificate);
+      layoutCertificatePhoto = (LinearLayout) view.findViewById(R.id.layout_certificate_photo);
+      layoutSyncFromQc = (LinearLayout) view.findViewById(R.id.layout_sync_from_qc);
+      btnDownload = (FrameLayout) view.findViewById(R.id.btn_down);
+
       btnDownload.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           IFlexible item = adapter.getItem(getAdapterPosition());

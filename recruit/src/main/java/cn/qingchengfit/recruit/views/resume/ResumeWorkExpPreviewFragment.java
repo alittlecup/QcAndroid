@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
@@ -20,7 +20,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.WorkExp;
@@ -64,27 +64,27 @@ import rx.schedulers.Schedulers;
  */
 public class ResumeWorkExpPreviewFragment extends BaseFragment {
 
-  @BindView(R2.id.gym_img) ImageView gymImg;
-  @BindView(R2.id.gym_time) TextView gymTime;
-  @BindView(R2.id.workexp_detail_hiden) TextView workexpDetailHiden;
-  @BindView(R2.id.workexp_detail_position) TextView workexpDetailPosition;
-  @BindView(R2.id.workexp_detail_desc) TextView workexpDetailDesc;
-  @BindView(R2.id.workexp_detail_group_count) TextView workexpDetailGroupCount;
-  @BindView(R2.id.workexp_detail_group_server) TextView workexpDetailGroupServer;
-  @BindView(R2.id.workexp_detail_group_layout) LinearLayout workexpDetailGroupLayout;
-  @BindView(R2.id.workexp_detail_private_count) TextView workexpDetailPrivateCount;
-  @BindView(R2.id.workexp_detail_private_server) TextView workexpDetailPrivateServer;
-  @BindView(R2.id.workexp_detail_private_layout) LinearLayout workexpDetailPrivateLayout;
-  @BindView(R2.id.workexp_detail_sale) TextView workexpDetailSale;
-  @BindView(R2.id.workexp_detail_sale_layout) LinearLayout workexpDetailSaleLayout;
-  @BindView(R2.id.gym_name) TextView gymName;
-  @BindView(R2.id.gym_address) TextView gymAddress;
-  @BindView(R2.id.gym_identify) ImageView gymIdentify;
+	ImageView gymImg;
+	TextView gymTime;
+	TextView workexpDetailHiden;
+	TextView workexpDetailPosition;
+	TextView workexpDetailDesc;
+	TextView workexpDetailGroupCount;
+	TextView workexpDetailGroupServer;
+	LinearLayout workexpDetailGroupLayout;
+	TextView workexpDetailPrivateCount;
+	TextView workexpDetailPrivateServer;
+	LinearLayout workexpDetailPrivateLayout;
+	TextView workexpDetailSale;
+	LinearLayout workexpDetailSaleLayout;
+	TextView gymName;
+	TextView gymAddress;
+	ImageView gymIdentify;
 
   @Inject QcRestRepository qcRestRepository;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
   @Inject RecruitRouter recruitRouter;
   WorkExp experiencesEntity;
   private String mExpId;
@@ -113,7 +113,26 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_work_exp_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    gymImg = (ImageView) view.findViewById(R.id.gym_img);
+    gymTime = (TextView) view.findViewById(R.id.gym_time);
+    workexpDetailHiden = (TextView) view.findViewById(R.id.workexp_detail_hiden);
+    workexpDetailPosition = (TextView) view.findViewById(R.id.workexp_detail_position);
+    workexpDetailDesc = (TextView) view.findViewById(R.id.workexp_detail_desc);
+    workexpDetailGroupCount = (TextView) view.findViewById(R.id.workexp_detail_group_count);
+    workexpDetailGroupServer = (TextView) view.findViewById(R.id.workexp_detail_group_server);
+    workexpDetailGroupLayout = (LinearLayout) view.findViewById(R.id.workexp_detail_group_layout);
+    workexpDetailPrivateCount = (TextView) view.findViewById(R.id.workexp_detail_private_count);
+    workexpDetailPrivateServer = (TextView) view.findViewById(R.id.workexp_detail_private_server);
+    workexpDetailPrivateLayout =
+        (LinearLayout) view.findViewById(R.id.workexp_detail_private_layout);
+    workexpDetailSale = (TextView) view.findViewById(R.id.workexp_detail_sale);
+    workexpDetailSaleLayout = (LinearLayout) view.findViewById(R.id.workexp_detail_sale_layout);
+    gymName = (TextView) view.findViewById(R.id.gym_name);
+    gymAddress = (TextView) view.findViewById(R.id.gym_address);
+    gymIdentify = (ImageView) view.findViewById(R.id.gym_identify);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
     initToolbar(toolbar);
     freshData();
     RxBusAdd(EventResumeFresh.class).observeOn(AndroidSchedulers.mainThread())

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CompoundButton;
-import butterknife.Unbinder;
+
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.databinding.DialogSendResumeBinding;
@@ -45,7 +45,7 @@ import javax.inject.Inject;
 public class DialogSendResumeFragment extends DialogFragment {
 
   @Inject RecruitRouter router;
-  Unbinder unbinder;
+
   private int completedPersent = 0;
   private OnSendResumeListener onSendResumeListener;
   DialogSendResumeBinding db;

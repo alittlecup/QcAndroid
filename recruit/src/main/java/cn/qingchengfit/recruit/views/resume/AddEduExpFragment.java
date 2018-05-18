@@ -11,15 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.network.PostApi;
@@ -63,13 +63,13 @@ import rx.schedulers.Schedulers;
 @FragmentWithArgs public class AddEduExpFragment extends BaseFragment {
   @Arg(required = false) Education education;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.civ_school_name) CommonInputView civSchoolName;
-  @BindView(R2.id.civ_speciality) CommonInputView civSpeciality;
-  @BindView(R2.id.civ_in_time) CommonInputView civInTime;
-  @BindView(R2.id.civ_out_time) CommonInputView civOutTime;
-  @BindView(R2.id.civ_degree) CommonInputView civDegree;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	CommonInputView civSchoolName;
+	CommonInputView civSpeciality;
+	CommonInputView civInTime;
+	CommonInputView civOutTime;
+	CommonInputView civDegree;
   @Inject QcRestRepository qcRestRepository;
   private SimpleScrollPicker simpleScrollPicker;
   private TimeDialogWindow timeDialogWindow;
@@ -84,7 +84,29 @@ import rx.schedulers.Schedulers;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_add_edu_exp, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    civSchoolName = (CommonInputView) view.findViewById(R.id.civ_school_name);
+    civSpeciality = (CommonInputView) view.findViewById(R.id.civ_speciality);
+    civInTime = (CommonInputView) view.findViewById(R.id.civ_in_time);
+    civOutTime = (CommonInputView) view.findViewById(R.id.civ_out_time);
+    civDegree = (CommonInputView) view.findViewById(R.id.civ_degree);
+    view.findViewById(R.id.civ_in_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivInTimeClicked();
+      }
+    });
+    view.findViewById(R.id.civ_out_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivOutTimeClicked();
+      }
+    });
+    view.findViewById(R.id.civ_degree).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivDegreeClicked();
+      }
+    });
+
     initToolbar(toolbar);
     initView();
     return view;
@@ -203,7 +225,7 @@ import rx.schedulers.Schedulers;
   /**
    * 入校时间
    */
-  @OnClick(R2.id.civ_in_time) public void onCivInTimeClicked() {
+ public void onCivInTimeClicked() {
     timeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         civInTime.setContent(DateUtils.Date2YYYYMM(date));
@@ -216,7 +238,7 @@ import rx.schedulers.Schedulers;
   /**
    * 毕业时间
    */
-  @OnClick(R2.id.civ_out_time) public void onCivOutTimeClicked() {
+ public void onCivOutTimeClicked() {
 
     timeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
@@ -230,7 +252,7 @@ import rx.schedulers.Schedulers;
   /**
    * 学位
    */
-  @OnClick(R2.id.civ_degree) public void onCivDegreeClicked() {
+ public void onCivDegreeClicked() {
     final ArrayList<String> d =
         new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.add_resume_education_degree)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {

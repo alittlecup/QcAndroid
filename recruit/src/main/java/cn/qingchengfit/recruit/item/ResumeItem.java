@@ -6,10 +6,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -65,16 +65,21 @@ public class ResumeItem extends AbstractFlexibleItem<ResumeItem.ResumeVH> {
   }
 
   public class ResumeVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_avatar) ImageView imgAvatar;
-    @BindView(R2.id.tv_name) TextView tvName;
-    @BindView(R2.id.img_gender) ImageView imgGender;
-    @BindView(R2.id.tv_requirement) TextView tvRequirement;
-    @BindView(R2.id.tv_except) TextView tvExcept;
-    @BindView(R2.id.cb_resume) CheckBox cbResume;
+	ImageView imgAvatar;
+	TextView tvName;
+	ImageView imgGender;
+	TextView tvRequirement;
+	TextView tvExcept;
+	CheckBox cbResume;
 
     public ResumeVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+      tvName = (TextView) view.findViewById(R.id.tv_name);
+      imgGender = (ImageView) view.findViewById(R.id.img_gender);
+      tvRequirement = (TextView) view.findViewById(R.id.tv_requirement);
+      tvExcept = (TextView) view.findViewById(R.id.tv_except);
+      cbResume = (CheckBox) view.findViewById(R.id.cb_resume);
     }
   }
 }

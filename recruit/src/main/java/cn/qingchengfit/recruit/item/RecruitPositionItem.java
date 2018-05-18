@@ -9,10 +9,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -69,22 +69,33 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
   }
 
   public class RecruitPositionVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_gym) ImageView imgGym;
-    @BindView(R2.id.tv_position_name) TextView tvPositionName;
-    @BindView(R2.id.tv_salary) TextView tvSalary;
-    @BindView(R2.id.tv_gym_info) TextView tvGymInfo;
-    @BindView(R2.id.layout_limit) LinearLayout layoutLimit;
-    @BindView(R2.id.tv_work_year) TextView tvWorkYear;
-    @BindView(R2.id.tv_gender) TextView tvGender;
-    @BindView(R2.id.tv_age) TextView tvAge;
-    @BindView(R2.id.tv_height) TextView tvHeight;
-    @Nullable @BindView(R2.id.cb_position) CheckBox checkBox;
-    @Nullable @BindView(R2.id.tv_has_undo) TextView tv_has_todo;
-    @Nullable @BindView(R2.id.img_right) ImageView imgRight;
+	ImageView imgGym;
+	TextView tvPositionName;
+	TextView tvSalary;
+	TextView tvGymInfo;
+	LinearLayout layoutLimit;
+	TextView tvWorkYear;
+	TextView tvGender;
+	TextView tvAge;
+	TextView tvHeight;
+	CheckBox checkBox;
+	TextView tv_has_todo;
+	ImageView imgRight;
 
     public RecruitPositionVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgGym = (ImageView) view.findViewById(R.id.img_gym);
+      tvPositionName = (TextView) view.findViewById(R.id.tv_position_name);
+      tvSalary = (TextView) view.findViewById(R.id.tv_salary);
+      tvGymInfo = (TextView) view.findViewById(R.id.tv_gym_info);
+      layoutLimit = (LinearLayout) view.findViewById(R.id.layout_limit);
+      tvWorkYear = (TextView) view.findViewById(R.id.tv_work_year);
+      tvGender = (TextView) view.findViewById(R.id.tv_gender);
+      tvAge = (TextView) view.findViewById(R.id.tv_age);
+      tvHeight = (TextView) view.findViewById(R.id.tv_height);
+      checkBox = (CheckBox) view.findViewById(R.id.cb_position);
+      tv_has_todo = (TextView) view.findViewById(R.id.tv_has_undo);
+      imgRight = (ImageView) view.findViewById(R.id.img_right);
     }
   }
 }

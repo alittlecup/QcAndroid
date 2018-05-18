@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.DateUtils;
@@ -62,13 +62,15 @@ public class ResumeWorkExpSimpleItem extends AbstractFlexibleItem<ResumeWorkExpS
   }
 
   public class ResumeWorkExpVH extends FlexibleViewHolder {
-    @BindView(R2.id.img) ImageView img;
-    @BindView(R2.id.tv_gym_name) CompatTextView tvGymName;
-    @BindView(R2.id.tv_during) TextView tvDuring;
+	ImageView img;
+	CompatTextView tvGymName;
+	TextView tvDuring;
 
     public ResumeWorkExpVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      img = (ImageView) view.findViewById(R.id.img);
+      tvGymName = (CompatTextView) view.findViewById(R.id.tv_gym_name);
+      tvDuring = (TextView) view.findViewById(R.id.tv_during);
     }
   }
 }

@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.RecruitPermission;
 import cn.qingchengfit.recruit.network.body.EditPermissionBody;
@@ -48,12 +48,12 @@ import javax.inject.Inject;
 public class RecruitPermissionFragment extends BaseFragment
     implements RecruitPermissionPresenter.MVPView {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.tv_pm_manage) TextView tvPmManage;
-  @BindView(R2.id.tv_handle_resume) TextView tvHandleResume;
-  @BindView(R2.id.tv_job_fair) TextView tvJobFair;
-  @BindView(R2.id.tv_pm_setting) TextView tvPmSetting;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView tvPmManage;
+	TextView tvHandleResume;
+	TextView tvJobFair;
+	TextView tvPmSetting;
   @Inject RecruitPermissionPresenter permissionPresenter;
   @Inject RecruitRouter router;
   String gymid;
@@ -76,7 +76,33 @@ public class RecruitPermissionFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_permission_setting, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvPmManage = (TextView) view.findViewById(R.id.tv_pm_manage);
+    tvHandleResume = (TextView) view.findViewById(R.id.tv_handle_resume);
+    tvJobFair = (TextView) view.findViewById(R.id.tv_job_fair);
+    tvPmSetting = (TextView) view.findViewById(R.id.tv_pm_setting);
+    view.findViewById(R.id.layout_pm_manage).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLayoutPmManageClicked();
+      }
+    });
+    view.findViewById(R.id.layout_handle_resume).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLayoutHandleResumeClicked();
+      }
+    });
+    view.findViewById(R.id.layout_job_fair).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLayoutJobFairClicked();
+      }
+    });
+    view.findViewById(R.id.layout_pm_setting).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLayoutPmSettingClicked();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(permissionPresenter, this);
     initData();
@@ -104,7 +130,7 @@ public class RecruitPermissionFragment extends BaseFragment
   /**
    * 职位管理
    */
-  @OnClick(R2.id.layout_pm_manage) public void onLayoutPmManageClicked() {
+ public void onLayoutPmManageClicked() {
     if (permissionPresenter.getPermissonUsers(0) != null) {
       permissionPresenter.chooseStaff(0);
     }
@@ -113,7 +139,7 @@ public class RecruitPermissionFragment extends BaseFragment
   /**
    * 处理简历
    */
-  @OnClick(R2.id.layout_handle_resume) public void onLayoutHandleResumeClicked() {
+ public void onLayoutHandleResumeClicked() {
     if (permissionPresenter.getPermissonUsers(1) != null) {
       permissionPresenter.chooseStaff(1);
     }
@@ -122,7 +148,7 @@ public class RecruitPermissionFragment extends BaseFragment
   /**
    * 报名参加招聘会
    */
-  @OnClick(R2.id.layout_job_fair) public void onLayoutJobFairClicked() {
+ public void onLayoutJobFairClicked() {
     if (permissionPresenter.getPermissonUsers(2) != null) {
       permissionPresenter.chooseStaff(2);
     }
@@ -131,7 +157,7 @@ public class RecruitPermissionFragment extends BaseFragment
   /**
    * 权限设置
    */
-  @OnClick(R2.id.layout_pm_setting) public void onLayoutPmSettingClicked() {
+ public void onLayoutPmSettingClicked() {
     if (permissionPresenter.getPermissonUsers(3) != null) {
       permissionPresenter.chooseStaff(3);
     }

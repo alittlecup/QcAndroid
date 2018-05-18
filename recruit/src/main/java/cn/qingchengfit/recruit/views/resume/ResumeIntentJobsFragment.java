@@ -11,11 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventIntentJobs;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TagInputFragment;
@@ -48,9 +48,9 @@ import java.util.List;
  */
 @FragmentWithArgs public class ResumeIntentJobsFragment extends BaseFragment {
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.tg_recomend) QcTagGroup tgRecomend;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	QcTagGroup tgRecomend;
 
     TagInputFragment tagInputFragment;
     @Arg ArrayList<String> jobs;
@@ -63,8 +63,11 @@ import java.util.List;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intent_jobs, container, false);
-        super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      tgRecomend = (QcTagGroup) view.findViewById(R.id.tg_recomend);
+      super.onCreateView(inflater, container, savedInstanceState);
+
         initToolbar(toolbar);
         tgRecomend.setOnTagClickListener(new QcTagGroup.OnTagClickListener() {
             @Override public void onTagClick(String tag) {

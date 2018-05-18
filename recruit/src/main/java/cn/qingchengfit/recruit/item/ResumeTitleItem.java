@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.support.widgets.CompatTextView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
@@ -55,12 +55,14 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
 
   public class ResumeTitleVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.btn_edit) CompatTextView btnEdit;
+	TextView tvTitle;
+	CompatTextView btnEdit;
 
     public ResumeTitleVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter,true);
-      ButterKnife.bind(this, view);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      btnEdit = (CompatTextView) view.findViewById(R.id.btn_edit);
+
       btnEdit.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           if (adapter.getItem(getAdapterPosition()) instanceof ResumeTitleItem) {

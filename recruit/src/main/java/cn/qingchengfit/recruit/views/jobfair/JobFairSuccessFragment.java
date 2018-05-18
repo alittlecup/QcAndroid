@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import javax.inject.Inject;
@@ -39,8 +39,8 @@ import javax.inject.Inject;
  */
 public class JobFairSuccessFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
   @Inject RecruitRouter router;
 
   private Gym gym;
@@ -56,7 +56,19 @@ public class JobFairSuccessFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_completed_join_fair, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.btn_my_jobfair).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnMyJobfairClicked();
+      }
+    });
+    view.findViewById(R.id.btn_jobfair_detail).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnJobfairDetailClicked();
+      }
+    });
+
     gym = getArguments().getParcelable("gym");
     initToolbar(toolbar);
     return view;
@@ -75,11 +87,11 @@ public class JobFairSuccessFragment extends BaseFragment {
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.btn_my_jobfair) public void onBtnMyJobfairClicked() {
+ public void onBtnMyJobfairClicked() {
     router.toGymdetailEmployerInitPage(gym, 2);
   }
 
-  @OnClick(R2.id.btn_jobfair_detail) public void onBtnJobfairDetailClicked() {
+ public void onBtnJobfairDetailClicked() {
     router.remove(this);
   }
 }

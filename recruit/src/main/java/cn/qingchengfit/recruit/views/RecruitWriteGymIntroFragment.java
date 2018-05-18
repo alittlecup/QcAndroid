@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.recruit.R;
@@ -27,6 +28,7 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -57,14 +59,14 @@ import rx.functions.Action1;
 @FragmentWithArgs public class RecruitWriteGymIntroFragment extends BaseFragment
     implements RecruitGymPresenter.MVPView {
 
-/*  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.civ_gym_area) CommonInputView civGymArea;
-  @BindView(R2.id.civ_gym_staff_count) CommonInputView civGymStaffCount;
-  @BindView(R2.id.civ_gym_trainer_count) CommonInputView civGymTrainerCount;
-  @BindView(R2.id.civ_gym_member_count) CommonInputView civGymMemberCount;
-  @BindView(R2.id.civ_gym_equip) CommonInputView civGymEquip;
-  @BindView(R2.id.civ_gym_intro) CommonInputView civGymIntro;*/
+	/*Toolbar toolbar;
+	TextView toolbarTitle;
+	CommonInputView civGymArea;
+	CommonInputView civGymStaffCount;
+	CommonInputView civGymTrainerCount;
+	CommonInputView civGymMemberCount;
+	CommonInputView civGymEquip;
+	CommonInputView civGymIntro;*/
 
   @Inject RecruitGymPresenter gymPresenter;
   @Inject RecruitRouter router;

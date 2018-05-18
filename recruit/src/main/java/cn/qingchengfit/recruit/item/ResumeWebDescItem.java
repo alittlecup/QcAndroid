@@ -4,10 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.utils.CmStringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -39,11 +39,11 @@ public class ResumeWebDescItem extends AbstractFlexibleItem<ResumeWebDescItem.Re
   }
 
   public class ResumeWebDescVH extends FlexibleViewHolder {
-    @BindView(R2.id.webview) WebView webview;
+	WebView webview;
 
     public ResumeWebDescVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      webview = (WebView) view.findViewById(R.id.webview);
     }
   }
 }

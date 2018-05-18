@@ -13,13 +13,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.presenter.ResumePostPresenter;
@@ -69,19 +69,19 @@ import javax.inject.Inject;
   public final static int MIN_HEIGHT = 0;
   public final static int MAX_HEIGHT = 200;
 
-  @BindView(R2.id.civ_header_pic) ImageView civHeaderPic;
-  @BindView(R2.id.civ_header_layout) LinearLayout civHeaderLayout;
-  @BindView(R2.id.civ_name) CommonInputView civName;
-  @BindView(R2.id.civ_gender) CommonInputView civGender;
-  @BindView(R2.id.civ_city) CommonInputView civCity;
-  @BindView(R2.id.civ_birthday) CommonInputView civBirthday;
-  @BindView(R2.id.civ_height) CommonInputView civHeight;
-  @BindView(R2.id.civ_weight) CommonInputView civWeight;
-  @BindView(R2.id.civ_workexp) CommonInputView civWorkexp;
-  @BindView(R2.id.et_sign_in) EditText etSignIn;
-  @BindView(R2.id.tv_word_count) TextView tvWordCount;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	ImageView civHeaderPic;
+	LinearLayout civHeaderLayout;
+	CommonInputView civName;
+	CommonInputView civGender;
+	CommonInputView civCity;
+	CommonInputView civBirthday;
+	CommonInputView civHeight;
+	CommonInputView civWeight;
+	CommonInputView civWorkexp;
+	EditText etSignIn;
+	TextView tvWordCount;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
   @Inject QcRestRepository qcRestRepository;
   @Inject ResumePostPresenter postPresenter;
@@ -101,7 +101,55 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_base_info, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    civHeaderPic = (ImageView) view.findViewById(R.id.civ_header_pic);
+    civHeaderLayout = (LinearLayout) view.findViewById(R.id.civ_header_layout);
+    civName = (CommonInputView) view.findViewById(R.id.civ_name);
+    civGender = (CommonInputView) view.findViewById(R.id.civ_gender);
+    civCity = (CommonInputView) view.findViewById(R.id.civ_city);
+    civBirthday = (CommonInputView) view.findViewById(R.id.civ_birthday);
+    civHeight = (CommonInputView) view.findViewById(R.id.civ_height);
+    civWeight = (CommonInputView) view.findViewById(R.id.civ_weight);
+    civWorkexp = (CommonInputView) view.findViewById(R.id.civ_workexp);
+    etSignIn = (EditText) view.findViewById(R.id.et_sign_in);
+    tvWordCount = (TextView) view.findViewById(R.id.tv_word_count);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.civ_header_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivHeaderLayoutClicked();
+      }
+    });
+    view.findViewById(R.id.civ_gender).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMofifyinfoGenderClicked();
+      }
+    });
+    view.findViewById(R.id.civ_city).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMofifyinfoCityClicked();
+      }
+    });
+    view.findViewById(R.id.civ_birthday).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMofifyinfoBirthdayClicked();
+      }
+    });
+    view.findViewById(R.id.civ_height).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMofifyinfoHeightClicked();
+      }
+    });
+    view.findViewById(R.id.civ_weight).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMofifyinfoWeightClicked();
+      }
+    });
+    view.findViewById(R.id.civ_workexp).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMofifyinfoWorkexpClicked();
+      }
+    });
+
     delegatePresenter(postPresenter, this);
     initToolbar(toolbar);
     initView();
@@ -156,7 +204,7 @@ import javax.inject.Inject;
   /**
    * 点击头像
    */
-  @OnClick(R2.id.civ_header_layout) public void onCivHeaderLayoutClicked() {
+ public void onCivHeaderLayoutClicked() {
     if (choosePictureFragmentNewDialog == null) {
       choosePictureFragmentNewDialog = ChoosePictureFragmentNewDialog.newInstance(true);
     }
@@ -175,7 +223,7 @@ import javax.inject.Inject;
   /**
    * 性别
    */
-  @OnClick(R2.id.civ_gender) public void onMofifyinfoGenderClicked() {
+ public void onMofifyinfoGenderClicked() {
     final ArrayList<String> d = new ArrayList<>(
         Arrays.asList(getContext().getResources().getStringArray(R.array.gender_2)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
@@ -190,7 +238,7 @@ import javax.inject.Inject;
   /**
    * 城市选择
    */
-  @OnClick(R2.id.civ_city) public void onMofifyinfoCityClicked() {
+ public void onMofifyinfoCityClicked() {
     if (citiesChooser == null) {
       citiesChooser = new CitiesChooser(getContext());
     }
@@ -206,7 +254,7 @@ import javax.inject.Inject;
   /**
    * 生日选择
    */
-  @OnClick(R2.id.civ_birthday) public void onMofifyinfoBirthdayClicked() {
+ public void onMofifyinfoBirthdayClicked() {
     if (timeDialogWindow == null) {
       timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH);
       int curYear = DateUtils.getYear(new Date());
@@ -226,7 +274,7 @@ import javax.inject.Inject;
   /**
    * 身高选择
    */
-  @OnClick(R2.id.civ_height) public void onMofifyinfoHeightClicked() {
+ public void onMofifyinfoHeightClicked() {
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civHeight.setContent(Integer.toString((MIN_HEIGHT + pos)));
@@ -246,7 +294,7 @@ import javax.inject.Inject;
   /**
    * 体重选择
    */
-  @OnClick(R2.id.civ_weight) public void onMofifyinfoWeightClicked() {
+ public void onMofifyinfoWeightClicked() {
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civWeight.setContent(Integer.toString((MIN_WEIGHT + pos)));
@@ -259,7 +307,7 @@ import javax.inject.Inject;
   /**
    * 工作经验
    */
-  @OnClick(R2.id.civ_workexp) public void onMofifyinfoWorkexpClicked() {
+ public void onMofifyinfoWorkexpClicked() {
     final ArrayList<String> d = new ArrayList<>(
         Arrays.asList(getContext().getResources().getStringArray(R.array.resume_work_exp)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {

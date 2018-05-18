@@ -30,15 +30,15 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.PostApi;
@@ -75,30 +75,30 @@ import static android.text.TextUtils.isEmpty;
   @Arg(required = false) WorkExp workExp;
   @Arg Gym curGym;
 
-  @BindView(R2.id.workexpedit_start_time) CommonInputView workexpeditStartTime;
-  @BindView(R2.id.workexpedit_start_end) CommonInputView workexpeditStartEnd;
-  @BindView(R2.id.workexpedit_city) CommonInputView workexpeditCity;
-  @BindView(R2.id.workexpedit_gym_name) TextView workexpeditGymName;
-  @BindView(R2.id.workexpedit_position) CommonInputView workexpeditPosition;
-  @BindView(R2.id.workexpedit_descripe) EditText workexpeditDescripe;
-  @BindView(R2.id.workexpedit_group_class) CommonInputView workexpeditGroupClass;
-  @BindView(R2.id.workexpedit_group_num) CommonInputView workexpeditGroupNum;
-  @BindView(R2.id.workexpedit_private_class) CommonInputView workexpeditPrivateClass;
-  @BindView(R2.id.workexpedit_private_num) CommonInputView workexpeditPrivateNum;
-  @BindView(R2.id.workexpedit_sale) CommonInputView workexpeditSale;
+	CommonInputView workexpeditStartTime;
+	CommonInputView workexpeditStartEnd;
+	CommonInputView workexpeditCity;
+	TextView workexpeditGymName;
+	CommonInputView workexpeditPosition;
+	EditText workexpeditDescripe;
+	CommonInputView workexpeditGroupClass;
+	CommonInputView workexpeditGroupNum;
+	CommonInputView workexpeditPrivateClass;
+	CommonInputView workexpeditPrivateNum;
+	CommonInputView workexpeditSale;
   //@BindView(R2.id.workexpedit_comfirm_btn) Button workexpeditComfirmBtn;
-  @BindView(R2.id.rootview) LinearLayout rootview;
-  @BindView(R2.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
-  @BindView(R2.id.host_img) ImageView hostImg;
-  @BindView(R2.id.host_qc_identify) ImageView hostQcIdentify;
-  @BindView(R2.id.host_address) TextView hostAddress;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	LinearLayout rootview;
+	LinearLayout workexpeditExpeLayout;
+	ImageView hostImg;
+	ImageView hostQcIdentify;
+	TextView hostAddress;
+	Toolbar toolbar;
+	TextView toolbarTitile;
   TimeDialogWindow pwTime;
   @Inject QcRestRepository restRepository;
-  @BindView(R2.id.sw_group) ExpandedLayout swGroup;
-  @BindView(R2.id.sw_private) ExpandedLayout swPrivate;
-  @BindView(R2.id.sw_sale) ExpandedLayout swSale;
+	ExpandedLayout swGroup;
+	ExpandedLayout swPrivate;
+	ExpandedLayout swSale;
   private MaterialDialog delDialog;
   private DialogSheet mDialogSheet;
 
@@ -111,7 +111,53 @@ import static android.text.TextUtils.isEmpty;
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_workexepedit, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    workexpeditStartTime = (CommonInputView) view.findViewById(R.id.workexpedit_start_time);
+    workexpeditStartEnd = (CommonInputView) view.findViewById(R.id.workexpedit_start_end);
+    workexpeditCity = (CommonInputView) view.findViewById(R.id.workexpedit_city);
+    workexpeditGymName = (TextView) view.findViewById(R.id.workexpedit_gym_name);
+    workexpeditPosition = (CommonInputView) view.findViewById(R.id.workexpedit_position);
+    workexpeditDescripe = (EditText) view.findViewById(R.id.workexpedit_descripe);
+    workexpeditGroupClass = (CommonInputView) view.findViewById(R.id.workexpedit_group_class);
+    workexpeditGroupNum = (CommonInputView) view.findViewById(R.id.workexpedit_group_num);
+    workexpeditPrivateClass = (CommonInputView) view.findViewById(R.id.workexpedit_private_class);
+    workexpeditPrivateNum = (CommonInputView) view.findViewById(R.id.workexpedit_private_num);
+    workexpeditSale = (CommonInputView) view.findViewById(R.id.workexpedit_sale);
+    rootview = (LinearLayout) view.findViewById(R.id.rootview);
+    workexpeditExpeLayout = (LinearLayout) view.findViewById(R.id.workexpedit_expe_layout);
+    hostImg = (ImageView) view.findViewById(R.id.host_img);
+    hostQcIdentify = (ImageView) view.findViewById(R.id.host_qc_identify);
+    hostAddress = (TextView) view.findViewById(R.id.host_address);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    swGroup = (ExpandedLayout) view.findViewById(R.id.sw_group);
+    swPrivate = (ExpandedLayout) view.findViewById(R.id.sw_private);
+    swSale = (ExpandedLayout) view.findViewById(R.id.sw_sale);
+    view.findViewById(R.id.workexpedit_expe_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDescripte();
+      }
+    });
+    view.findViewById(R.id.host_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickGym();
+      }
+    });
+    view.findViewById(R.id.workexpedit_start_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onStartTime();
+      }
+    });
+    view.findViewById(R.id.workexpedit_start_end).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onEndTime();
+      }
+    });
+    view.findViewById(R.id.workexpedit_city).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCityClick();
+      }
+    });
+
     initToolbar(toolbar);
     toolbarTitile.setText(workExp == null ? "添加工作经验" : "编辑工作经验");
 
@@ -272,17 +318,17 @@ import static android.text.TextUtils.isEmpty;
         }));
   }
 
-  @OnClick(R2.id.workexpedit_expe_layout) public void onDescripte() {
+ public void onDescripte() {
     workexpeditDescripe.requestFocus();
   }
 
-  @OnClick(R2.id.host_layout) public void onClickGym() {
+ public void onClickGym() {
     Intent toSearch = new Intent(getActivity(), SearchActivity.class);
     toSearch.putExtra("type", SearchFragment.TYPE_GYM);
     startActivityForResult(toSearch, 10010);
   }
 
-  @OnClick(R2.id.workexpedit_start_time) public void onStartTime() {
+ public void onStartTime() {
     pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
     pwTime.setOnTimeSelectListener(date -> {
       if (date.getTime() > new Date().getTime()) {
@@ -303,7 +349,7 @@ import static android.text.TextUtils.isEmpty;
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
   }
 
-  @OnClick(R2.id.workexpedit_start_end) public void onEndTime() {
+ public void onEndTime() {
     if (mDialogSheet == null) {
       mDialogSheet = DialogSheet.builder(getContext()).addButton("至今", new View.OnClickListener() {
         @Override public void onClick(View v) {
@@ -329,7 +375,7 @@ import static android.text.TextUtils.isEmpty;
     mDialogSheet.show();
   }
 
-  @OnClick(R2.id.workexpedit_city) public void onCityClick() {
+ public void onCityClick() {
   }
 
   @Override public void onDestroyView() {

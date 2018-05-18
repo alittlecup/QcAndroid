@@ -13,13 +13,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.RecruitPositionChooseItem;
@@ -58,16 +58,16 @@ import javax.inject.Inject;
     implements ResumePresenter.MVPView, JobPresenter.MVPView,
     BottomListFragment.ComfirmChooseListener, TipDialogFragment.OnDialogListener {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.img_stared) ImageView imgStared;
-  @BindView(R2.id.tv_starred) TextView tvStarred;
-  @BindView(R2.id.btn_starred) LinearLayout btnStarred;
-  @BindView(R2.id.btn_contact_him) Button btnContactHim;
-  @BindView(R2.id.btn_send_invite) Button btnSendInvite;
-  @BindView(R2.id.layout_employee_ctl) LinearLayout layoutEmployeeCtl;
-  @BindView(R2.id.frag_resume_layout) FrameLayout fragResumeLayout;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	ImageView imgStared;
+	TextView tvStarred;
+	LinearLayout btnStarred;
+	Button btnContactHim;
+	Button btnSendInvite;
+	LinearLayout layoutEmployeeCtl;
+	FrameLayout fragResumeLayout;
 
   @Inject ResumePresenter resumePresenter;
   @Inject JobPresenter jobPresenter;
@@ -92,7 +92,32 @@ import javax.inject.Inject;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    imgStared = (ImageView) view.findViewById(R.id.img_stared);
+    tvStarred = (TextView) view.findViewById(R.id.tv_starred);
+    btnStarred = (LinearLayout) view.findViewById(R.id.btn_starred);
+    btnContactHim = (Button) view.findViewById(R.id.btn_contact_him);
+    btnSendInvite = (Button) view.findViewById(R.id.btn_send_invite);
+    layoutEmployeeCtl = (LinearLayout) view.findViewById(R.id.layout_employee_ctl);
+    fragResumeLayout = (FrameLayout) view.findViewById(R.id.frag_resume_layout);
+    view.findViewById(R.id.btn_starred).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onStared();
+      }
+    });
+    view.findViewById(R.id.btn_contact_him).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onContact();
+      }
+    });
+    view.findViewById(R.id.btn_send_invite).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSendInvite();
+      }
+    });
+
     delegatePresenter(resumePresenter, this);
     delegatePresenter(jobPresenter, this);
     if (!toUrl.startsWith("http")) toUrl = "http://" + toUrl;
@@ -134,7 +159,7 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.btn_starred) public void onStared() {
+ public void onStared() {
     if (!loginStatus.isLogined()){
       BaseRouter.toLogin(this);
       return;
@@ -150,7 +175,7 @@ import javax.inject.Inject;
     }
   }
 
-  @OnClick(R2.id.btn_contact_him) public void onContact() {
+ public void onContact() {
     if (!loginStatus.isLogined()){
       BaseRouter.toLogin(this);
       return;
@@ -179,7 +204,7 @@ import javax.inject.Inject;
     startActivity(intent);
   }
 
-  @OnClick(R2.id.btn_send_invite) public void onSendInvite() {
+ public void onSendInvite() {
     if (!loginStatus.isLogined()){
       BaseRouter.toLogin(this);
       return;

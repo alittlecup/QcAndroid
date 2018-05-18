@@ -2,10 +2,10 @@ package cn.qingchengfit.recruit.item;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -39,11 +39,11 @@ public class ExpendedTextviewItem
   }
 
   public class item_expended_textviewVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv) TextView tv;
+	TextView tv;
 
     public item_expended_textviewVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tv = (TextView) view.findViewById(R.id.tv);
     }
   }
 }

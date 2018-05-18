@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.presenter.ResumePostPresenter;
@@ -51,8 +51,8 @@ import javax.inject.Inject;
   RichTxtFragment richTxtFragment;
   ChoosePictureFragmentNewDialog choosePictureFragmentDialog;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
   @Arg String content;
 
@@ -66,8 +66,20 @@ import javax.inject.Inject;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_edit_self_desc, container, false);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.btn_insert_img).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnInsertImgClicked();
+      }
+    });
+    view.findViewById(R.id.btn_comfirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnComfirmClicked();
+      }
+    });
     super.onCreateView(inflater, container, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
+
     delegatePresenter(postPresenter, this);
     initToolbar(toolbar);
     return view;
@@ -102,7 +114,7 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.btn_insert_img) public void onBtnInsertImgClicked() {
+ public void onBtnInsertImgClicked() {
     if (choosePictureFragmentDialog == null) choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
     choosePictureFragmentDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
       @Override public void onChoosefile(String filePath) {
@@ -116,7 +128,7 @@ import javax.inject.Inject;
     choosePictureFragmentDialog.show(getChildFragmentManager(), "");
   }
 
-  @OnClick(R2.id.btn_comfirm) public void onBtnComfirmClicked() {
+ public void onBtnComfirmClicked() {
     if (richTxtFragment != null) {
       String x = richTxtFragment.getContent();
       showLoading();

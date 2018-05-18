@@ -10,12 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.RectAddItem;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.item.Image120DelItem;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
@@ -58,9 +58,9 @@ import javax.inject.Inject;
     implements ResumePostPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
   @Arg ArrayList<String> phots;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.rv) RecyclerView rv;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecyclerView rv;
   @Inject ResumePostPresenter presenter;
   private CommonFlexAdapter commonFlexAdapter;
   private ChoosePictureFragmentNewDialog choosePictureFragmentNewDialog;
@@ -72,7 +72,10 @@ import javax.inject.Inject;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_show_imgs, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);

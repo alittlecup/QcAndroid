@@ -4,10 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -43,12 +43,14 @@ public class Image120DelItem extends AbstractFlexibleItem<Image120DelItem.Image1
   }
 
   public class Image140VH extends FlexibleViewHolder {
-    @BindView(R2.id.img) ImageView img;
-    @BindView(R2.id.btn_del) ImageView btnDel;
+	ImageView img;
+	ImageView btnDel;
 
     public Image140VH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      img = (ImageView) view.findViewById(R.id.img);
+      btnDel = (ImageView) view.findViewById(R.id.btn_del);
+
       btnDel.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           adapter.removeItem(getAdapterPosition());

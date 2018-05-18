@@ -5,10 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -42,12 +42,13 @@ public class RecruitDemandItem extends AbstractFlexibleItem<RecruitDemandItem.Re
   }
 
   public class RecruitDemandVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_recruit_demand) ImageView imgRecruitDemand;
-    @BindView(R2.id.tv_content) TextView tvContent;
+	ImageView imgRecruitDemand;
+	TextView tvContent;
 
     public RecruitDemandVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgRecruitDemand = (ImageView) view.findViewById(R.id.img_recruit_demand);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
     }
   }
 }

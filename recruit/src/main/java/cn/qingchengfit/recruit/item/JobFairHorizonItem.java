@@ -5,10 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -51,14 +51,17 @@ public class JobFairHorizonItem extends AbstractFlexibleItem<JobFairHorizonItem.
   }
 
   public class JobFairVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_bg) ImageView imgBg;
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_content) TextView tvContent;
-    @BindView(R2.id.tv_status) TextView tvStatus;
+	ImageView imgBg;
+	TextView tvTitle;
+	TextView tvContent;
+	TextView tvStatus;
 
     public JobFairVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgBg = (ImageView) view.findViewById(R.id.img_bg);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
+      tvStatus = (TextView) view.findViewById(R.id.tv_status);
     }
   }
 }

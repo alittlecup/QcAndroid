@@ -5,10 +5,10 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -50,10 +50,11 @@ public class FragmentListItem extends AbstractFlexibleItem<FragmentListItem.Resu
   }
 
   public class ResumeListVH extends FlexibleViewHolder {
-    @BindView(R2.id.frag_item_resume) NestedScrollView frameLayout;
+	NestedScrollView frameLayout;
     public ResumeListVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      frameLayout = (NestedScrollView) view.findViewById(R.id.frag_item_resume);
+
       //frameLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       //  @Override public void onGlobalLayout() {
       //    frameLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);

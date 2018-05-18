@@ -6,10 +6,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -62,11 +62,11 @@ public class ResumeIntentImgShowItem extends AbstractFlexibleItem<ResumeIntentIm
   }
 
   public class ResumeIntentImgShowVH extends FlexibleViewHolder {
-    @BindView(R2.id.item_rv) RecyclerView itemRv;
+	RecyclerView itemRv;
 
     public ResumeIntentImgShowVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      itemRv = (RecyclerView) view.findViewById(R.id.item_rv);
     }
   }
 }

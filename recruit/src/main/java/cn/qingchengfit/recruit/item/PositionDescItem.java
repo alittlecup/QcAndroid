@@ -4,10 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -41,12 +41,13 @@ public class PositionDescItem extends AbstractFlexibleItem<PositionDescItem.Posi
   }
 
   public class PositionDescVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_content) TextView tvContent;
+	TextView tvTitle;
+	TextView tvContent;
 
     public PositionDescVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
     }
   }
 }

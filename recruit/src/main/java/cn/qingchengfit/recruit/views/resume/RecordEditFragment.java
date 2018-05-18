@@ -34,15 +34,15 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Organization;
@@ -66,29 +66,29 @@ import rx.schedulers.Schedulers;
   public static final int TYPE_MEETING = 1;
   public static final int TYPE_COMFIRM = 2;
   public static final int TYPE_COMPETITION = 3;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.recordedit_score) CommonInputView recordeditScore;
-  @BindView(R2.id.recordedit_dateoff) CommonInputView recordeditDateoff;
-  @BindView(R2.id.recordedit_upimg) TextView recordeditUpimg;
-  @BindView(R2.id.recordedit_img) ImageView recordeditImg;
-  @BindView(R2.id.recordedit_comfirm_btn) Button recordeditComfirmBtn;
-  @BindView(R2.id.rootview) ScrollView rootview;
-  @BindView(R2.id.record_edit_name) CommonInputView recordEditName;
-  @BindView(R2.id.recordedit_datestart) CommonInputView recordeditDatestart;
-  @BindView(R2.id.host_img) ImageView hostImg;
-  @BindView(R2.id.host_qc_identify) ImageView hostQcIdentify;
-  @BindView(R2.id.host_name) TextView hostName;
-  @BindView(R2.id.host_address) TextView hostAddress;
-  @BindView(R2.id.comfirm_scroe_layout) RelativeLayout comfirmScroeLayout;
-  @BindView(R2.id.comfirm_has_certification) TextView comfirmHasCertification;
-  @BindView(R2.id.comfirm_certification_layout) RelativeLayout comfirmCertificationLayout;
-  @BindView(R2.id.recordedit_certificat_name) CommonInputView recordeditCertificatName;
-  @BindView(R2.id.host_layout) RelativeLayout hostLayout;
-  @BindView(R2.id.recordedit_date) CommonInputView recordeditDate;
-  @BindView(R2.id.comfirm_scroe_switch) Switch comfirmScroeSwitch;
-  @BindView(R2.id.comfirm_certification_switch) Switch comfirmCertificationSwitch;
-  @BindView(R2.id.recordedit_upimg_layout) RelativeLayout recordeditUpimgLayout;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	CommonInputView recordeditScore;
+	CommonInputView recordeditDateoff;
+	TextView recordeditUpimg;
+	ImageView recordeditImg;
+	Button recordeditComfirmBtn;
+	ScrollView rootview;
+	CommonInputView recordEditName;
+	CommonInputView recordeditDatestart;
+	ImageView hostImg;
+	ImageView hostQcIdentify;
+	TextView hostName;
+	TextView hostAddress;
+	RelativeLayout comfirmScroeLayout;
+	TextView comfirmHasCertification;
+	RelativeLayout comfirmCertificationLayout;
+	CommonInputView recordeditCertificatName;
+	RelativeLayout hostLayout;
+	CommonInputView recordeditDate;
+	Switch comfirmScroeSwitch;
+	Switch comfirmCertificationSwitch;
+	RelativeLayout recordeditUpimgLayout;
   TimeDialogWindow pwTime;
   @Inject QcRestRepository restRepository;
   @Arg int mType;
@@ -133,7 +133,72 @@ import rx.schedulers.Schedulers;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     View view = inflater.inflate(R.layout.fragment_resume_record_edit, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    recordeditScore = (CommonInputView) view.findViewById(R.id.recordedit_score);
+    recordeditDateoff = (CommonInputView) view.findViewById(R.id.recordedit_dateoff);
+    recordeditUpimg = (TextView) view.findViewById(R.id.recordedit_upimg);
+    recordeditImg = (ImageView) view.findViewById(R.id.recordedit_img);
+    recordeditComfirmBtn = (Button) view.findViewById(R.id.recordedit_comfirm_btn);
+    rootview = (ScrollView) view.findViewById(R.id.rootview);
+    recordEditName = (CommonInputView) view.findViewById(R.id.record_edit_name);
+    recordeditDatestart = (CommonInputView) view.findViewById(R.id.recordedit_datestart);
+    hostImg = (ImageView) view.findViewById(R.id.host_img);
+    hostQcIdentify = (ImageView) view.findViewById(R.id.host_qc_identify);
+    hostName = (TextView) view.findViewById(R.id.host_name);
+    hostAddress = (TextView) view.findViewById(R.id.host_address);
+    comfirmScroeLayout = (RelativeLayout) view.findViewById(R.id.comfirm_scroe_layout);
+    comfirmHasCertification = (TextView) view.findViewById(R.id.comfirm_has_certification);
+    comfirmCertificationLayout =
+        (RelativeLayout) view.findViewById(R.id.comfirm_certification_layout);
+    recordeditCertificatName = (CommonInputView) view.findViewById(R.id.recordedit_certificat_name);
+    hostLayout = (RelativeLayout) view.findViewById(R.id.host_layout);
+    recordeditDate = (CommonInputView) view.findViewById(R.id.recordedit_date);
+    comfirmScroeSwitch = (Switch) view.findViewById(R.id.comfirm_scroe_switch);
+    comfirmCertificationSwitch = (Switch) view.findViewById(R.id.comfirm_certification_switch);
+    recordeditUpimgLayout = (RelativeLayout) view.findViewById(R.id.recordedit_upimg_layout);
+    view.findViewById(R.id.comfirm_certification_layout)
+        .setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            onCertification();
+          }
+        });
+    view.findViewById(R.id.comfirm_scroe_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onScroelayout();
+      }
+    });
+    view.findViewById(R.id.host_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onHost();
+      }
+    });
+    view.findViewById(R.id.recordedit_comfirm_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onComplete();
+      }
+    });
+    view.findViewById(R.id.recordedit_datestart).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickStart();
+      }
+    });
+    view.findViewById(R.id.recordedit_date).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickDate();
+      }
+    });
+    view.findViewById(R.id.recordedit_dateoff).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickDateoff();
+      }
+    });
+    view.findViewById(R.id.recordedit_upimg_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onUpdatePic();
+      }
+    });
+
     initToolbar(toolbar);
     if (mType == 0) mType = 1;
     switch (mType) {
@@ -264,22 +329,22 @@ import rx.schedulers.Schedulers;
     return view;
   }
 
-  @OnClick(R2.id.comfirm_certification_layout) public void onCertification() {
+ public void onCertification() {
     comfirmCertificationSwitch.toggle();
   }
 
-  @OnClick(R2.id.comfirm_scroe_layout) public void onScroelayout() {
+ public void onScroelayout() {
     comfirmScroeSwitch.toggle();
   }
 
-  @OnClick(R2.id.host_layout) public void onHost() {
+ public void onHost() {
     //        fragmentCallBack.onFragmentChange(SearchFragment.newInstance(SearchFragment.TYPE_ORGANASITON));
     Intent toSearch = new Intent(getActivity(), SearchActivity.class);
     toSearch.putExtra("type", SearchFragment.TYPE_ORGANASITON);
     startActivityForResult(toSearch, 10010);
   }
 
-  @OnClick(R2.id.recordedit_comfirm_btn) public void onComplete() {
+ public void onComplete() {
 
     if (TextUtils.isEmpty(recordEditName.getContent())) {
       Toast.makeText(getContext(), "请填写培训名称", Toast.LENGTH_SHORT).show();
@@ -363,7 +428,7 @@ import rx.schedulers.Schedulers;
     }
   }
 
-  @OnClick(R2.id.recordedit_datestart) public void onClickStart() {
+ public void onClickStart() {
     if (!TextUtils.isEmpty(recordeditDatestart.getContent())) {
       pwTime.setTime(DateUtils.formatDateFromYYYYMMDD(recordeditDatestart.getContent()));
     }
@@ -383,7 +448,7 @@ import rx.schedulers.Schedulers;
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
   }
 
-  @OnClick(R2.id.recordedit_date) public void onClickDate() {
+ public void onClickDate() {
     if (!TextUtils.isEmpty(recordeditDate.getContent())) {
       pwTime.setTime(DateUtils.formatDateFromYYYYMMDD(recordeditDate.getContent()));
     }
@@ -396,7 +461,7 @@ import rx.schedulers.Schedulers;
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
   }
 
-  @OnClick(R2.id.recordedit_dateoff) public void onClickDateoff() {
+ public void onClickDateoff() {
     if (mDialogSheet == null) {
       mDialogSheet = DialogSheet.builder(getContext()).addButton("长期有效", new View.OnClickListener() {
         @Override public void onClick(View v) {
@@ -429,7 +494,7 @@ import rx.schedulers.Schedulers;
     mDialogSheet.show();
   }
 
-  @OnClick({ R2.id.recordedit_upimg_layout }) public void onUpdatePic() {
+ public void onUpdatePic() {
     if (choosePictureFragmentNewDialog == null) choosePictureFragmentNewDialog = ChoosePictureFragmentNewDialog.newInstance();
     choosePictureFragmentNewDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
       @Override public void onChoosefile(String filePath) {

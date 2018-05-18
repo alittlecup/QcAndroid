@@ -36,14 +36,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
@@ -66,23 +66,23 @@ public class SearchFragment extends BaseFragment {
   public String keyword;
   SearchResultAdapter adapter;
 
-  @BindView(R2.id.searchview_et)
+
   EditText searchviewEt;
-  @BindView(R2.id.searchview_clear)
+
   ImageView searchviewClear;
-  @BindView(R2.id.searchresult_btn)
+
   Button searchresultBtn;
-  @BindView(R2.id.searchresult_none)
+
   LinearLayout searchresultNone;
-  @BindView(R2.id.searchresult_rv)
+
   RecyclerView searchresultRv;
-  @BindView(R2.id.search_hottable)
+
   TextView searchHottable;
-  @BindView(R2.id.toolbar)
+
   Toolbar toolbar;
-  @BindView(R2.id.search_hint)
+
   TextView searchHint;
-  @BindView(R2.id.searchresult_hint)
+
   TextView searchresultHint;
   @Inject
   QcRestRepository restRepository;
@@ -115,7 +115,27 @@ public class SearchFragment extends BaseFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_search_recruit, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+    searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+    searchresultBtn = (Button) view.findViewById(R.id.searchresult_btn);
+    searchresultNone = (LinearLayout) view.findViewById(R.id.searchresult_none);
+    searchresultRv = (RecyclerView) view.findViewById(R.id.searchresult_rv);
+    searchHottable = (TextView) view.findViewById(R.id.search_hottable);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    searchHint = (TextView) view.findViewById(R.id.search_hint);
+    searchresultHint = (TextView) view.findViewById(R.id.searchresult_hint);
+
+    view.findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClear();
+      }
+    });
+    view.findViewById(R.id.searchresult_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onAdd();
+      }
+    });
+
     toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override
@@ -308,12 +328,12 @@ public class SearchFragment extends BaseFragment {
     }
   }
 
-  @OnClick(R2.id.searchview_clear)
+
   public void onClear() {
     searchviewEt.setText("");
   }
 
-  @OnClick(R2.id.searchresult_btn)
+
   public void onAdd() {
     if (type == TYPE_GYM) {
       try {
@@ -463,18 +483,21 @@ public class SearchFragment extends BaseFragment {
   }
 
   public static class SearchResultVH extends RecyclerView.ViewHolder {
-    @BindView(R2.id.item_text)
+
     TextView itemText;
-    @BindView(R2.id.item_img)
+
     ImageView imageView;
-    @BindView(R2.id.item_qc_identify)
+
     ImageView qcIdentify;
-    @BindView(R2.id.item_address)
+
     TextView itemAddress;
 
     public SearchResultVH(View itemView) {
       super(itemView);
-      ButterKnife.bind(this, itemView);
+      itemText = (TextView) itemView.findViewById(R.id.item_text);
+      imageView = (ImageView) itemView.findViewById(R.id.item_img);
+      qcIdentify = (ImageView) itemView.findViewById(R.id.item_qc_identify);
+      itemAddress = (TextView) itemView.findViewById(R.id.item_address);
     }
   }
 

@@ -13,7 +13,7 @@
 //import butterknife.ButterKnife;
 //import cn.qingchengfit.items.RectAddItem;
 //import cn.qingchengfit.recruit.R;
-//import cn.qingchengfit.recruit.R2;
+//
 //import cn.qingchengfit.recruit.item.Image120DelItem;
 //import cn.qingchengfit.views.fragments.BaseFragment;
 //import cn.qingchengfit.widgets.CommonFlexAdapter;

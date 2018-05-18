@@ -13,7 +13,7 @@
 //import butterknife.OnClick;
 //import cn.qingchengfit.model.base.Gym;
 //import cn.qingchengfit.recruit.R;
-//import cn.qingchengfit.recruit.R2;
+//
 //import cn.qingchengfit.recruit.RecruitRouter;
 //import cn.qingchengfit.recruit.presenter.RecruitGymPresenter;
 //import cn.qingchengfit.utils.CmStringUtils;

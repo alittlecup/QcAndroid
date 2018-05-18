@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -126,33 +126,56 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
   }
 
   public class ResumeWorkExpVH extends FlexibleViewHolder {
-    @BindView(R2.id.img_gym) ImageView imgGym;
-    @BindView(R2.id.short_divider) View short_divider;
-    @BindView(R2.id.tv_gym_brand) TextView tvGymBrand;
-    @BindView(R2.id.tv_gym_position) TextView tvGymPosition;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.img_qc_comfirm) ImageView imgQcComfirm;
-    @BindView(R2.id.indicator) View indicator;
-    @BindView(R2.id.tv_group_count) TextView tvGroupCount;
-    @BindView(R2.id.tv_group_menber) TextView tvGroupMenber;
-    @BindView(R2.id.layout_group_menber_info) LinearLayout layoutGroupMenberInfo;
-    @BindView(R2.id.tv_private_count) TextView tvPrivateCount;
-    @BindView(R2.id.tv_private_menber) TextView tvPrivateMenber;
-    @BindView(R2.id.layout_private_menber_info) LinearLayout layoutPrivateMenberInfo;
-    @BindView(R2.id.layout_sync_from_qc) LinearLayout layoutSyncFromQc;
-    @BindView(R2.id.layout_score) LinearLayout layoutScore;
-    @BindView(R2.id.tv_sale) TextView tvSale;
-    @BindView(R2.id.layout_sale_info) LinearLayout layoutSaleInfo;
-    @BindView(R2.id.tv_trainer_score) TextView tvTraierScore;
-    @BindView(R2.id.tv_course_score) TextView tvCourseScore;
-    @BindView(R2.id.fl_trainer_tags) QcTagGroup flTrainerTags;
-    @BindView(R2.id.tv_desc) TextView tvDesc;
-    @BindView(R2.id.tv_during) TextView tvDuring;
-    @BindView(R2.id.tv_show_all) CompatTextView tvShowAll;
+	ImageView imgGym;
+	View short_divider;
+	TextView tvGymBrand;
+	TextView tvGymPosition;
+	TextView tvGymName;
+	ImageView imgQcComfirm;
+	View indicator;
+	TextView tvGroupCount;
+	TextView tvGroupMenber;
+	LinearLayout layoutGroupMenberInfo;
+	TextView tvPrivateCount;
+	TextView tvPrivateMenber;
+	LinearLayout layoutPrivateMenberInfo;
+	LinearLayout layoutSyncFromQc;
+	LinearLayout layoutScore;
+	TextView tvSale;
+	LinearLayout layoutSaleInfo;
+	TextView tvTraierScore;
+	TextView tvCourseScore;
+	QcTagGroup flTrainerTags;
+	TextView tvDesc;
+	TextView tvDuring;
+	CompatTextView tvShowAll;
 
     public ResumeWorkExpVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgGym = (ImageView) view.findViewById(R.id.img_gym);
+      short_divider = (View) view.findViewById(R.id.short_divider);
+      tvGymBrand = (TextView) view.findViewById(R.id.tv_gym_brand);
+      tvGymPosition = (TextView) view.findViewById(R.id.tv_gym_position);
+      tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+      imgQcComfirm = (ImageView) view.findViewById(R.id.img_qc_comfirm);
+      indicator = (View) view.findViewById(R.id.indicator);
+      tvGroupCount = (TextView) view.findViewById(R.id.tv_group_count);
+      tvGroupMenber = (TextView) view.findViewById(R.id.tv_group_menber);
+      layoutGroupMenberInfo = (LinearLayout) view.findViewById(R.id.layout_group_menber_info);
+      tvPrivateCount = (TextView) view.findViewById(R.id.tv_private_count);
+      tvPrivateMenber = (TextView) view.findViewById(R.id.tv_private_menber);
+      layoutPrivateMenberInfo = (LinearLayout) view.findViewById(R.id.layout_private_menber_info);
+      layoutSyncFromQc = (LinearLayout) view.findViewById(R.id.layout_sync_from_qc);
+      layoutScore = (LinearLayout) view.findViewById(R.id.layout_score);
+      tvSale = (TextView) view.findViewById(R.id.tv_sale);
+      layoutSaleInfo = (LinearLayout) view.findViewById(R.id.layout_sale_info);
+      tvTraierScore = (TextView) view.findViewById(R.id.tv_trainer_score);
+      tvCourseScore = (TextView) view.findViewById(R.id.tv_course_score);
+      flTrainerTags = (QcTagGroup) view.findViewById(R.id.fl_trainer_tags);
+      tvDesc = (TextView) view.findViewById(R.id.tv_desc);
+      tvDuring = (TextView) view.findViewById(R.id.tv_during);
+      tvShowAll = (CompatTextView) view.findViewById(R.id.tv_show_all);
+
       tvShowAll.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           IFlexible item = adapter.getItem(getAdapterPosition());

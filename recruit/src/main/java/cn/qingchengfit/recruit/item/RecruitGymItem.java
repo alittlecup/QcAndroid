@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+
 import cn.qingchengfit.recruit.model.GymHasResume;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -61,16 +61,21 @@ public class RecruitGymItem extends AbstractFlexibleItem<RecruitGymItem.RecruitG
 
   public class RecruitGymVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.img_gym) ImageView imgGym;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.tv_address) TextView tvAddress;
-    @BindView(R2.id.img_right) ImageView imgRight;
-    @BindView(R2.id.layout_gym_info) LinearLayout layoutGymInfo;
-    @BindView(R2.id.tv_has_undo) TextView tv_has_todo;
+	ImageView imgGym;
+	TextView tvGymName;
+	TextView tvAddress;
+	ImageView imgRight;
+	LinearLayout layoutGymInfo;
+	TextView tv_has_todo;
 
     public RecruitGymVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgGym = (ImageView) view.findViewById(R.id.img_gym);
+      tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+      tvAddress = (TextView) view.findViewById(R.id.tv_address);
+      imgRight = (ImageView) view.findViewById(R.id.img_right);
+      layoutGymInfo = (LinearLayout) view.findViewById(R.id.layout_gym_info);
+      tv_has_todo = (TextView) view.findViewById(R.id.tv_has_undo);
     }
   }
 }
