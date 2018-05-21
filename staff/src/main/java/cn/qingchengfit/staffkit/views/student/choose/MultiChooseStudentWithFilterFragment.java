@@ -20,9 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -73,21 +73,21 @@ import rx.functions.Action1;
     implements DrawerLayout.DrawerListener, StudentListPresenter.MVPView {
   @Arg(required = false) boolean expandedChosen;
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.rb_select_all) CheckBox rbSelectAll;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.et_search) EditText etSearch;
-  @BindView(R.id.drawer) MyDrawerLayout drawer;
-  @BindView(R.id.tg_sort_alphabet) QcToggleButton tgSortAlphabet;
-  @BindView(R.id.tg_sort_regist) QcToggleButton tgSortRegist;
-  @BindView(R.id.tg_filter) QcToggleButton tgFilter;
-  @BindView(R.id.tv_allotsale_select_count) TextView tvAllotsaleSelectCount;
-  @BindView(R.id.search_clear) ImageView searchClear;
+	Toolbar toolbar;
+	CheckBox rbSelectAll;
+	TextView toolbarTitile;
+	EditText etSearch;
+	MyDrawerLayout drawer;
+	QcToggleButton tgSortAlphabet;
+	QcToggleButton tgSortRegist;
+	QcToggleButton tgFilter;
+	TextView tvAllotsaleSelectCount;
+	ImageView searchClear;
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject StudentListPresenter presenter;
-  @BindView(R.id.layout_multi_choose) LinearLayout layoutMultiChoose;
+	LinearLayout layoutMultiChoose;
 
   private StudentFilterWithBirthFragment filterFragment;
   private ChooseStudentListFragment chooseStudentListFragment;
@@ -102,7 +102,38 @@ import rx.functions.Action1;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_multi_choose_student, container, false);
-    unbinder = ButterKnife.bind(this, v);
+    toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+    rbSelectAll = (CheckBox) v.findViewById(R.id.rb_select_all);
+    toolbarTitile = (TextView) v.findViewById(R.id.toolbar_title);
+    etSearch = (EditText) v.findViewById(R.id.et_search);
+    drawer = (MyDrawerLayout) v.findViewById(R.id.drawer);
+    tgSortAlphabet = (QcToggleButton) v.findViewById(R.id.tg_sort_alphabet);
+    tgSortRegist = (QcToggleButton) v.findViewById(R.id.tg_sort_regist);
+    tgFilter = (QcToggleButton) v.findViewById(R.id.tg_filter);
+    tvAllotsaleSelectCount = (TextView) v.findViewById(R.id.tv_allotsale_select_count);
+    searchClear = (ImageView) v.findViewById(R.id.search_clear);
+    layoutMultiChoose = (LinearLayout) v.findViewById(R.id.layout_multi_choose);
+    v.findViewById(R.id.btn_modify_sale).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onComplete();
+      }
+    });
+    v.findViewById(R.id.tg_sort_alphabet).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSortChange(v);
+      }
+    });
+    v.findViewById(R.id.tg_sort_regist).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSortChange(v);
+      }
+    });
+    v.findViewById(R.id.ll_show_select).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showSelect();
+      }
+    });
+
     setToolbar(toolbar);
     delegatePresenter(presenter, this);
     etSearch.setCompoundDrawablesWithIntrinsicBounds(
@@ -188,7 +219,7 @@ import rx.functions.Action1;
     }
   }
 
-  @OnClick(R.id.btn_modify_sale) public void onComplete() {
+ public void onComplete() {
     Intent ret = new Intent();
     //DirtySender.studentList.clear();
     //DirtySender.studentList.addAll(chooseStudentListFragment.getSelectedStudents());
@@ -196,7 +227,7 @@ import rx.functions.Action1;
     getActivity().finish();
   }
 
-  @OnClick({ R.id.tg_sort_alphabet, R.id.tg_sort_regist }) public void onSortChange(View v) {
+ public void onSortChange(View v) {
     switch (v.getId()) {
       case R.id.tg_sort_alphabet:
         if (tgSortAlphabet.isChecked()) return;
@@ -276,7 +307,7 @@ import rx.functions.Action1;
     chooseStudentListFragment.setDatas(studentBeens, etSearch.getText().toString().trim());
   }
 
-  @OnClick(R.id.ll_show_select) public void showSelect() {
+ public void showSelect() {
     BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
     selectSutdentFragment.setListener(list -> {
       DirtySender.studentList.clear();

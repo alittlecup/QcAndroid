@@ -1,9 +1,6 @@
 package cn.qingchengfit.saasbase.cards.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -35,7 +32,7 @@ public class AddCardtplStantardItem
 
     public AddCardtplStantardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+
     }
   }
 }

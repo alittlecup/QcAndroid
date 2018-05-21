@@ -21,9 +21,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventFreshGyms;
@@ -79,16 +79,16 @@ import rx.functions.Action1;
  */
 public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.recycleview1) RecyclerView recycleview1;
-    @BindView(R.id.vp_charts) ViewPager vpCharts;
-    @BindView(R.id.indicator) CircleIndicator indicator;
-    @BindView(R.id.frag_choose_brand) FrameLayout fragChooseBrand;
-    @BindView(R.id.layout_brands) FrameLayout layoutBrands;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.tv_left) TextView tvLeft;
+	SwipeRefreshLayout refresh;
+	RecyclerView recycleview1;
+	ViewPager vpCharts;
+	CircleIndicator indicator;
+	FrameLayout fragChooseBrand;
+	FrameLayout layoutBrands;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	TextView tvLeft;
     HomeChartAdapter mHomeChartAdapter;
     GymsFragment gymsFragment;  //场馆列表
     @Inject GymWrapper gymWrapper;
@@ -106,8 +106,38 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      recycleview1 = (RecyclerView) view.findViewById(R.id.recycleview1);
+      vpCharts = (ViewPager) view.findViewById(R.id.vp_charts);
+      indicator = (CircleIndicator) view.findViewById(R.id.indicator);
+      fragChooseBrand = (FrameLayout) view.findViewById(R.id.frag_choose_brand);
+      layoutBrands = (FrameLayout) view.findViewById(R.id.layout_brands);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      down = (ImageView) view.findViewById(R.id.down);
+      tvLeft = (TextView) view.findViewById(R.id.tv_left);
+      view.findViewById(R.id.tv_left).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickBrandManage();
+        }
+      });
+      view.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+      view.findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+      view.findViewById(R.id.layout_brands).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBgClick();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(homePresenter, this);
         initView();
         isLoading = true;
@@ -122,7 +152,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
         tvLeft.setText(R.string.brand_manange);
     }
 
-    @OnClick(R.id.tv_left) public void clickBrandManage() {
+ public void clickBrandManage() {
         if (gymWrapper.inBrand()) {
             if (!gymWrapper.getBrand().has_add_permission) {
                 cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_no_manage_permission));
@@ -141,7 +171,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     /**
      * 点击选择品牌
      */
-    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
+ public void onClickTitle() {
         getChildFragmentManager().beginTransaction().replace(R.id.frag_choose_brand, new ChooseBrandFragment()).commit();
         ViewCompat.setPivotY(fragChooseBrand, 0);
         if (layoutBrands.getVisibility() == View.VISIBLE) {
@@ -156,7 +186,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     /**
      * 关闭选择品牌窗口
      */
-    @OnClick(R.id.layout_brands) public void onBgClick() {
+ public void onBgClick() {
         if (layoutBrands.getVisibility() == View.VISIBLE) {
             ViewCompat.animate(layoutBrands).alpha(0).setDuration(300).setListener(new ViewPropertyAnimatorListener() {
                 @Override public void onAnimationStart(View view) {

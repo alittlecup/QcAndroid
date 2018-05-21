@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.App;
@@ -127,26 +127,38 @@ public class SignOutItem extends AbstractFlexibleItem<SignOutItem.ItemViewHolder
 
     public static class ItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R.id.img_signout_item_face) ImageView img_signout_item_face;
-        @BindView(R.id.tv_signout_item_name) TextView tv_signout_item_name;
-        @BindView(R.id.tv_signout_item_phone) TextView tv_signout_item_phone;
-        @BindView(R.id.tv_signout_item_card) TextView tv_signout_item_card;
-        @BindView(R.id.tv_signout_item_fee) TextView tv_signout_item_fee;
-        @BindView(R.id.iv_signout_item_gender) ImageView iv_signout_item_gender;
+	ImageView img_signout_item_face;
+	TextView tv_signout_item_name;
+	TextView tv_signout_item_phone;
+	TextView tv_signout_item_card;
+	TextView tv_signout_item_fee;
+	ImageView iv_signout_item_gender;
 
-        @BindView(R.id.ll_signout_item_ignor) LinearLayout ll_signout_item_ignor;
-        @BindView(R.id.ll_signout_item_confirm) LinearLayout ll_signout_item_confirm;
+	LinearLayout ll_signout_item_ignor;
+	LinearLayout ll_signout_item_confirm;
 
-        @BindView(R.id.tv_signout_item_ignor) TextView tv_signout_item_ignor;
-        @BindView(R.id.tv_signout_item_confirm) TextView tv_signout_item_confirm;
+	TextView tv_signout_item_ignor;
+	TextView tv_signout_item_confirm;
 
-        @BindView(R.id.tv_signout_item_gui) TextView tv_signout_item_gui;
-        @BindView(R.id.tv_signout_item_time) TextView tv_signout_item_time;
+	TextView tv_signout_item_gui;
+	TextView tv_signout_item_time;
 
         public ItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            ll_signout_item_ignor.setOnClickListener(new View.OnClickListener() {
+          img_signout_item_face = (ImageView) view.findViewById(R.id.img_signout_item_face);
+          tv_signout_item_name = (TextView) view.findViewById(R.id.tv_signout_item_name);
+          tv_signout_item_phone = (TextView) view.findViewById(R.id.tv_signout_item_phone);
+          tv_signout_item_card = (TextView) view.findViewById(R.id.tv_signout_item_card);
+          tv_signout_item_fee = (TextView) view.findViewById(R.id.tv_signout_item_fee);
+          iv_signout_item_gender = (ImageView) view.findViewById(R.id.iv_signout_item_gender);
+          ll_signout_item_ignor = (LinearLayout) view.findViewById(R.id.ll_signout_item_ignor);
+          ll_signout_item_confirm = (LinearLayout) view.findViewById(R.id.ll_signout_item_confirm);
+          tv_signout_item_ignor = (TextView) view.findViewById(R.id.tv_signout_item_ignor);
+          tv_signout_item_confirm = (TextView) view.findViewById(R.id.tv_signout_item_confirm);
+          tv_signout_item_gui = (TextView) view.findViewById(R.id.tv_signout_item_gui);
+          tv_signout_item_time = (TextView) view.findViewById(R.id.tv_signout_item_time);
+
+          ll_signout_item_ignor.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     if (!PreferenceUtils.getPrefBoolean(App.context, "showNotice" + App.staffId, false)) {
                         ToastUtils.show("还没有设置进场签到设置,暂时无法操作");

@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.VpFragment;
@@ -31,10 +31,10 @@ import java.util.List;
  */
 public class CourseListFragment extends VpFragment {
 
-    @BindView(R.id.course_count) TextView courseCount;
-    @BindView(R.id.preview) TextView preview;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.no_data) LinearLayout noData;
+	TextView courseCount;
+	TextView preview;
+	RecyclerView recyclerview;
+	LinearLayout noData;
 
     private ImageThreeTextAdapter mImageTwoTextAdapter;
     private List<ImageThreeTextBean> datas = new ArrayList<>();
@@ -42,7 +42,7 @@ public class CourseListFragment extends VpFragment {
     private int mGymType = 1;//个人健身房 0是同步健身房
     private int course_count;
     private String toUrl;
-    private Unbinder unbinder;
+
 
     public CourseListFragment() {
 
@@ -88,8 +88,12 @@ public class CourseListFragment extends VpFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (mCourseType == Configs.TYPE_PRIVATE) {
+      courseCount = (TextView) view.findViewById(R.id.course_count);
+      preview = (TextView) view.findViewById(R.id.preview);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      noData = (LinearLayout) view.findViewById(R.id.no_data);
+
+      if (mCourseType == Configs.TYPE_PRIVATE) {
             courseCount.setText(course_count + "节私教课");
             preview.setText("会员私教页预览");
         } else {
@@ -141,7 +145,7 @@ public class CourseListFragment extends VpFragment {
     //    }
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public String getTitle() {

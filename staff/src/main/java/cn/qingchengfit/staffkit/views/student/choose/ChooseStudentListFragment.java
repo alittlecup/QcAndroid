@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
@@ -55,8 +55,8 @@ import java.util.List;
 public class ChooseStudentListFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.OnUpdateListener, IFilterable {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.layout_alphabet) AlphabetLessView layoutAlphabet;
+	RecyclerView recyclerview;
+	AlphabetLessView layoutAlphabet;
     List<QcStudentBean> originData;
     private CommonFlexAdapter adapter;
     private List<AbstractFlexibleItem> items = new ArrayList<>();
@@ -69,8 +69,10 @@ public class ChooseStudentListFragment extends BaseFragment
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_list_chosen, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        final LinearLayoutManager sm = new LinearLayoutManager(getContext());
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      layoutAlphabet = (AlphabetLessView) view.findViewById(R.id.layout_alphabet);
+
+      final LinearLayoutManager sm = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(sm);
         recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
           .withDivider(R.drawable.divider_horizon_left_44dp,R.layout.item_choose_student)

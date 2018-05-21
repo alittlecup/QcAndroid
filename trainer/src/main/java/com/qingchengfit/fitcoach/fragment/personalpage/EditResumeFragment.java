@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -48,13 +48,33 @@ import com.qingchengfit.fitcoach.fragment.RecordFragment;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_resume, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        fragmentCallBack.showToolbar();
+      view.findViewById(R.id.btn_base_info).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.btn_train_grow).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.btn_work_exp).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.btn_personal_intro).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+
+      fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, "编辑我的简历");
         return view;
     }
 
-    @OnClick({ R.id.btn_base_info, R.id.btn_train_grow, R.id.btn_work_exp, R.id.btn_personal_intro })
+
     public void onClickFunction(View view) {
         switch (view.getId()) {
             case R.id.btn_base_info:

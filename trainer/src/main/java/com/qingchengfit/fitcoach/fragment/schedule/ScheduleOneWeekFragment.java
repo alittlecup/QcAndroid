@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.ResponseConstant;
@@ -65,7 +65,7 @@ import rx.schedulers.Schedulers;
  */
 public class ScheduleOneWeekFragment extends BaseFragment {
 
-    @BindView(R.id.weekView) WeekView weekView;
+	WeekView weekView;
     List<WeekViewEvent> mEvents = new ArrayList<WeekViewEvent>();
     QcSchedulesResponse mQcSchedulesResponse;
     PopupWindow mPopupWindow;
@@ -94,9 +94,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_one_week, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      weekView = (WeekView) view.findViewById(R.id.weekView);
 
-        mPopupWindow = new PopupWindow(getContext());
+      mPopupWindow = new PopupWindow(getContext());
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         if (hour > 3) {

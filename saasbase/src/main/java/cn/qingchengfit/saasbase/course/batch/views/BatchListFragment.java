@@ -11,14 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
@@ -68,16 +68,16 @@ import rx.android.schedulers.AndroidSchedulers;
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,
     BatchCopyItem.OnClickPrintListener {
 
-  @BindView(R2.id.toolbar_title) protected TextView toolbarTitile;
-  @BindView(R2.id.toolbar) protected Toolbar toolbar;
-  @BindView(R2.id.srl) protected SwipeRefreshLayout srl;
-  @BindView(R2.id.rv_batch_list) RecyclerView rv;
-  @BindView(R2.id.add_batch_btn) FloatingActionMenu addBatchBtn;
+	protected TextView toolbarTitile;
+	protected Toolbar toolbar;
+	protected SwipeRefreshLayout srl;
+	RecyclerView rv;
+	FloatingActionMenu addBatchBtn;
 
   protected CommonFlexAdapter commonFlexAdapter;
   @Inject IPermissionModel serPermisAction;
-  @BindView(R2.id.fab_muti_batch) FloatingActionButton fabMutiBatch;
-  @BindView(R2.id.fab_copy_batch) FloatingActionButton fabCopyBatch;
+	FloatingActionButton fabMutiBatch;
+	FloatingActionButton fabCopyBatch;
   private LinearLayoutManager linearLayoutManager;
   protected final static String TARGET = "BatchListFragment";
 
@@ -155,7 +155,19 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_sass_course_type_batch, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    rv = (RecyclerView) view.findViewById(R.id.rv_batch_list);
+    addBatchBtn = (FloatingActionMenu) view.findViewById(R.id.add_batch_btn);
+    fabMutiBatch = (FloatingActionButton) view.findViewById(R.id.fab_muti_batch);
+    fabCopyBatch = (FloatingActionButton) view.findViewById(R.id.fab_copy_batch);
+    view.findViewById(R.id.add_batch_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clickAddBatch();
+      }
+    });
+
     initToolbar(toolbar);
     initFloatButton();
     linearLayoutManager = new LinearLayoutManager(getContext());
@@ -231,7 +243,7 @@ import rx.android.schedulers.AndroidSchedulers;
     onRefresh();
   }
 
-  @OnClick(R2.id.add_batch_btn) public void clickAddBatch() {
+ public void clickAddBatch() {
 
   }
 

@@ -5,8 +5,8 @@ import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
@@ -51,8 +51,13 @@ public class SignInCloseFragment extends BaseFragment implements SignInConfigPre
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_close, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      view.findViewById(R.id.btn_open).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickOpen();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         delegatePresenter(moduleConfigsPresenter, this);
         mCallbackActivity.setToolbar("入场签到", false, null, 0, null);
         return view;
@@ -62,7 +67,7 @@ public class SignInCloseFragment extends BaseFragment implements SignInConfigPre
         return SignInCloseFragment.class.getName();
     }
 
-    @OnClick(R.id.btn_open) public void onClickOpen() {
+ public void onClickOpen() {
         //presenter.getSignInConfigs();
         if (!serPermisAction.check(PermissionServerUtils.CHECKIN_SETTING)
             //                        || !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE)

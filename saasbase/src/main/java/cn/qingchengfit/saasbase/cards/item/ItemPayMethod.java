@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.cards.item;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.PayMethod;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -54,13 +54,15 @@ public class ItemPayMethod extends AbstractFlexibleItem<ItemPayMethod.PayMethodV
 
   class PayMethodVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.img_pay_method) ImageView imgPayMethod;
-    @BindView(R2.id.text_pay_name) TextView textPayName;
-    @BindView(R2.id.img_hook) ImageView imgHook;
+	ImageView imgPayMethod;
+	TextView textPayName;
+	ImageView imgHook;
 
     public PayMethodVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      imgPayMethod = (ImageView) view.findViewById(R.id.img_pay_method);
+      textPayName = (TextView) view.findViewById(R.id.text_pay_name);
+      imgHook = (ImageView) view.findViewById(R.id.img_hook);
     }
   }
 }

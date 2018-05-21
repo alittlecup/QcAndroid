@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.LoopView;
 import java.util.List;
@@ -27,66 +26,68 @@ import java.util.List;
  * Created by Paper on 15/10/10 2015.
  */
 public class QcSpinnerAdapter extends BaseAdapter {
-    List<SpinData> datas;
+  List<SpinData> datas;
 
-    public QcSpinnerAdapter(List d) {
-        this.datas = d;
+  public QcSpinnerAdapter(List d) {
+    this.datas = d;
+  }
+
+  @Override public int getCount() {
+    return datas.size();
+  }
+
+  @Override public Object getItem(int position) {
+    return datas.get(position);
+  }
+
+  @Override public long getItemId(int position) {
+    return position;
+  }
+
+  @Override public View getView(int position, View convertView, ViewGroup parent) {
+    ViewHolder viewHolder = null;
+    if (convertView == null) {
+      convertView =
+          LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+      viewHolder = new ViewHolder(convertView);
+      convertView.setTag(viewHolder);
+    } else {
+      viewHolder = (ViewHolder) convertView.getTag();
     }
-
-    @Override public int getCount() {
-        return datas.size();
+    SpinData spinData = datas.get(position);
+    viewHolder.spinnerTv.setText(spinData.text);
+    if (TextUtils.isEmpty(spinData.color)) {
+      viewHolder.spinnerIcon.setVisibility(View.GONE);
+    } else {
+      viewHolder.spinnerIcon.setVisibility(View.VISIBLE);
+      viewHolder.spinnerIcon.setImageDrawable(new LoopView(spinData.color));
     }
+    return convertView;
+  }
 
-    @Override public Object getItem(int position) {
-        return datas.get(position);
+  public static class SpinData {
+    public String color;
+    public String text;
+
+    public SpinData(String color, String text) {
+      this.color = color;
+      this.text = text;
     }
+  }
 
-    @Override public long getItemId(int position) {
-        return position;
+  /**
+   * This class contains all butterknife-injected Views & Layouts from layout file 'spinner_item.xml'
+   * for easy to all layout elements.
+   *
+   * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+   */
+  static class ViewHolder {
+    ImageView spinnerIcon;
+    TextView spinnerTv;
+
+    ViewHolder(View view) {
+      spinnerIcon = view.findViewById(R.id.spinner_icon);
+      spinnerTv = view.findViewById(R.id.spinner_tv);
     }
-
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-        SpinData spinData = datas.get(position);
-        viewHolder.spinnerTv.setText(spinData.text);
-        if (TextUtils.isEmpty(spinData.color)) {
-            viewHolder.spinnerIcon.setVisibility(View.GONE);
-        } else {
-            viewHolder.spinnerIcon.setVisibility(View.VISIBLE);
-            viewHolder.spinnerIcon.setImageDrawable(new LoopView(spinData.color));
-        }
-        return convertView;
-    }
-
-    public static class SpinData {
-        public String color;
-        public String text;
-
-        public SpinData(String color, String text) {
-            this.color = color;
-            this.text = text;
-        }
-    }
-
-    /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'spinner_item.xml'
-     * for easy to all layout elements.
-     *
-     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
-     */
-    static class ViewHolder {
-        @BindView(R.id.spinner_icon) ImageView spinnerIcon;
-        @BindView(R.id.spinner_tv) TextView spinnerTv;
-
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
+  }
 }

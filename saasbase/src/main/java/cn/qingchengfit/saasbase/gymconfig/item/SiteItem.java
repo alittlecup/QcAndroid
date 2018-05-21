@@ -4,11 +4,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -51,13 +51,17 @@ public class SiteItem extends AbstractFlexibleItem<SiteItem.SiteItemVH> {
   }
 
   public class SiteItemVH extends FlexibleViewHolder {
-    @BindView(R2.id.text1) TextView text1;
-    @BindView(R2.id.text2) TextView text2;
-    @BindView(R2.id.righticon) ImageView righticon;
-    @BindView(R2.id.cb) CheckBox cb;
+	TextView text1;
+	TextView text2;
+	ImageView righticon;
+	CheckBox cb;
     public SiteItemVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      text1 = (TextView) view.findViewById(R.id.text1);
+      text2 = (TextView) view.findViewById(R.id.text2);
+      righticon = (ImageView) view.findViewById(R.id.righticon);
+      cb = (CheckBox) view.findViewById(R.id.cb);
+
       cb.setClickable(false);
     }
   }

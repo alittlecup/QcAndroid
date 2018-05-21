@@ -1,13 +1,9 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
@@ -70,16 +66,21 @@ public class JackManageItem extends AbstractFlexibleItem<JackManageItem.JackMana
     }
 
     public static class JackManageVH extends FlexibleViewHolder {
-        @BindView(R.id.delete) ImageView delete;
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.drag_tag) ImageView dragTag;
-        @BindView(R.id.container) LinearLayout container;
-        @BindView(R.id.text) TextView textView;
+	ImageView delete;
+	ImageView img;
+	ImageView dragTag;
+	LinearLayout container;
+	TextView textView;
 
         public JackManageVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            if (adapter.isHandleDragEnabled()) {
+          delete = (ImageView) view.findViewById(R.id.delete);
+          img = (ImageView) view.findViewById(R.id.img);
+          dragTag = (ImageView) view.findViewById(R.id.drag_tag);
+          container = (LinearLayout) view.findViewById(R.id.container);
+          textView = (TextView) view.findViewById(R.id.text);
+
+          if (adapter.isHandleDragEnabled()) {
                 setDragHandleView(dragTag);
             }
             delete.setOnClickListener(new View.OnClickListener() {

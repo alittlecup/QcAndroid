@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -55,10 +55,10 @@ import rx.Subscriber;
  */
 public class MutiChooseSiteFragment extends BaseDialogFragment implements ChooseSiteView {
 
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
 
     @Inject LoginStatus loginStatus;
@@ -93,8 +93,17 @@ public class MutiChooseSiteFragment extends BaseDialogFragment implements Choose
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycleview, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickAdd();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initView();
         return view;
     }
@@ -207,7 +216,7 @@ public class MutiChooseSiteFragment extends BaseDialogFragment implements Choose
         });
     }
 
-    @OnClick(R.id.btn) public void onClickAdd() {
+ public void onClickAdd() {
         if (gymWrapper.getCoachService() != null && !serPermisAction.check(gymWrapper.shop_id(),
             PermissionServerUtils.STUDIO_LIST_CAN_WRITE)) {
             new MaterialDialog.Builder(getContext()).content("抱歉!您没有该权限")

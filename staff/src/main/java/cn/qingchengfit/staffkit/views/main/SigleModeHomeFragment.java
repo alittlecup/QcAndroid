@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
@@ -23,8 +23,8 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  */
 public class SigleModeHomeFragment extends BaseFragment {
 
-    @BindView(R.id.viewpager) ViewPager viewpager;
-    @BindView(R.id.tabview) TabView tabview;
+	ViewPager viewpager;
+	TabView tabview;
 
     private CoachService mCoachService;
     private Brand mBrand;
@@ -52,8 +52,10 @@ public class SigleModeHomeFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sigle_mode_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mCoachService = getArguments().getParcelable(Configs.EXTRA_GYM_SERVICE);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      tabview = (TabView) view.findViewById(R.id.tabview);
+
+      mCoachService = getArguments().getParcelable(Configs.EXTRA_GYM_SERVICE);
         mBrand = getArguments().getParcelable(Configs.EXTRA_BRAND);
         url = getArguments().getString("open_url");
         initTab();

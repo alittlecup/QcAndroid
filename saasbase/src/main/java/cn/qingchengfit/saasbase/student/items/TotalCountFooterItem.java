@@ -1,19 +1,12 @@
 package cn.qingchengfit.saasbase.student.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * Created by yangming on 16/9/1.
@@ -44,11 +37,11 @@ public class TotalCountFooterItem extends AbstractFlexibleItem<TotalCountFooterI
 
     public static class ItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R2.id.tv_total_count) TextView tvTotalCount;
+	TextView tvTotalCount;
 
         public ItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvTotalCount = (TextView) view.findViewById(R.id.tv_total_count);
         }
     }
 }

@@ -1,11 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -46,12 +42,13 @@ public class AttendanceRecordHeadItem extends AbstractFlexibleItem<AttendanceRec
     }
 
     public class AttendanceRecordHeadVH extends FlexibleViewHolder {
-        @BindView(R.id.classrecord_year) TextView classrecordYear;
-        @BindView(R.id.month_data) TextView monthData;
+	TextView classrecordYear;
+	TextView monthData;
 
         public AttendanceRecordHeadVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          classrecordYear = (TextView) view.findViewById(R.id.classrecord_year);
+          monthData = (TextView) view.findViewById(R.id.month_data);
         }
     }
 }

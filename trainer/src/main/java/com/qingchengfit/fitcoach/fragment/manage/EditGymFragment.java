@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.OnClick;
+
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -149,7 +149,12 @@ import rx.schedulers.Schedulers;
                 ((LinearLayout) view).addView(v, 0, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, actionBarHeight));
             }
         }
-        return view;
+      view.findViewById(R.id.next_step).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onNextStep();
+        }
+      });
+      return view;
     }
 
     @Override public void initData() {
@@ -179,7 +184,7 @@ import rx.schedulers.Schedulers;
             }, new NetWorkThrowable()));
     }
 
-    @OnClick(R.id.next_step) public void onNextStep() {
+ public void onNextStep() {
         showAlert(R.string.contact_gm);
     }
 }

@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseTeacher;
 import cn.qingchengfit.saasbase.utils.StringUtils;
@@ -18,10 +18,10 @@ import co.hkm.soltag.TagContainerLayout;
 
 public class CoachCommentDetailFragment extends SaasBaseFragment {
 
-    @BindView(R2.id.coach_score) TextView coachScore;
-    @BindView(R2.id.course_score) TextView courseScore;
-    @BindView(R2.id.server_score) TextView serverScore;
-    @BindView(R2.id.comments) TagContainerLayout comments;
+	TextView coachScore;
+	TextView courseScore;
+	TextView serverScore;
+	TagContainerLayout comments;
 
     private CourseTeacher mCourseTeacher;
 
@@ -43,9 +43,12 @@ public class CoachCommentDetailFragment extends SaasBaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_comment, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      coachScore = (TextView) view.findViewById(R.id.coach_score);
+      courseScore = (TextView) view.findViewById(R.id.course_score);
+      serverScore = (TextView) view.findViewById(R.id.server_score);
+      comments = (TagContainerLayout) view.findViewById(R.id.comments);
 
-        if (mCourseTeacher == null || mCourseTeacher.getImpressions() == null || mCourseTeacher.getImpressions().size() == 0) {
+      if (mCourseTeacher == null || mCourseTeacher.getImpressions() == null || mCourseTeacher.getImpressions().size() == 0) {
             comments.setVisibility(View.GONE);
         } else {
             comments.setVisibility(View.VISIBLE);

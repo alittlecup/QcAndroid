@@ -7,11 +7,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -95,18 +95,26 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
   }
 
   public class CommonUserVH extends FlexibleViewHolder {
-    @BindView(R2.id.cb) CheckBox cb;
-    @BindView(R2.id.item_student_header) ImageView itemStudentHeader;
-    @BindView(R2.id.item_student_header_loop) RelativeLayout itemStudentHeaderLoop;
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_sub_title) TextView tvSubTitle;
-    @BindView(R2.id.tv_sub_content) TextView tvSubContent;
-    @BindView(R2.id.tv_end) TextView tvEnd;
-    @BindView(R2.id.icon_right) ImageView iconRight;
+	CheckBox cb;
+	ImageView itemStudentHeader;
+	RelativeLayout itemStudentHeaderLoop;
+	TextView tvTitle;
+	TextView tvSubTitle;
+	TextView tvSubContent;
+	TextView tvEnd;
+	ImageView iconRight;
 
     public CommonUserVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      cb = (CheckBox) view.findViewById(R.id.cb);
+      itemStudentHeader = (ImageView) view.findViewById(R.id.item_student_header);
+      itemStudentHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_student_header_loop);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvSubTitle = (TextView) view.findViewById(R.id.tv_sub_title);
+      tvSubContent = (TextView) view.findViewById(R.id.tv_sub_content);
+      tvEnd = (TextView) view.findViewById(R.id.tv_end);
+      iconRight = (ImageView) view.findViewById(R.id.icon_right);
+
       cb.setClickable(false);
     }
   }

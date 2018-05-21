@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.common.PayEvent;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.OffDay;
@@ -61,17 +61,17 @@ import rx.functions.Action1;
   @Need String offDayId;
   @Need Card card;
 
-  @BindView(R2.id.tv_hint) TextView tvHint;
-  @BindView(R2.id.tv_origin_period) TextView tvOriginPeriod;
-  @BindView(R2.id.tv_after_period) TextView tvAfterPeriod;
-  @BindView(R2.id.civ_pay_method) CommonInputView civPayMethod;
-  @BindView(R2.id.civ_money) CommonInputView civMoney;
-  @BindView(R2.id.ep_money) ExpandedLayout epMoney;
-  @BindView(R2.id.layout_valid_info) LinearLayout layoutValidInfo;
+	TextView tvHint;
+	TextView tvOriginPeriod;
+	TextView tvAfterPeriod;
+	CommonInputView civPayMethod;
+	CommonInputView civMoney;
+	ExpandedLayout epMoney;
+	LinearLayout layoutValidInfo;
 
   @Inject OffDayListPresenter presenter;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
   private int pay_method;
 
@@ -83,7 +83,21 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_off_day_ahead, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvHint = (TextView) view.findViewById(R.id.tv_hint);
+    tvOriginPeriod = (TextView) view.findViewById(R.id.tv_origin_period);
+    tvAfterPeriod = (TextView) view.findViewById(R.id.tv_after_period);
+    civPayMethod = (CommonInputView) view.findViewById(R.id.civ_pay_method);
+    civMoney = (CommonInputView) view.findViewById(R.id.civ_money);
+    epMoney = (ExpandedLayout) view.findViewById(R.id.ep_money);
+    layoutValidInfo = (LinearLayout) view.findViewById(R.id.layout_valid_info);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.civ_pay_method).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onPayMethod();
+      }
+    });
+
     delegatePresenter(presenter, this);
     setToolbar();
     onInfo();
@@ -183,7 +197,7 @@ import rx.functions.Action1;
     }
   }
 
-  @OnClick(R2.id.civ_pay_method) public void onPayMethod() {
+ public void onPayMethod() {
     new PayMethodOfflineDialog().show(getChildFragmentManager(), null);
   }
 

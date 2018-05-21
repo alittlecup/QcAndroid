@@ -3,10 +3,7 @@ package cn.qingchengfit.saasbase.bill.filter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -138,13 +135,15 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
 
   class ItemFilterTimeVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.bill_filter_title) TextView billFilterTitle;
-    @BindView(R2.id.tv_student_filter_time_start) TextView tvStudentFilterTimeStart;
-    @BindView(R2.id.tv_student_filter_time_end) TextView tvStudentFilterTimeEnd;
+	TextView billFilterTitle;
+	TextView tvStudentFilterTimeStart;
+	TextView tvStudentFilterTimeEnd;
 
     public ItemFilterTimeVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      billFilterTitle = (TextView) view.findViewById(R.id.bill_filter_title);
+      tvStudentFilterTimeStart = (TextView) view.findViewById(R.id.tv_student_filter_time_start);
+      tvStudentFilterTimeEnd = (TextView) view.findViewById(R.id.tv_student_filter_time_end);
     }
   }
 

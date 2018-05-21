@@ -12,13 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -51,17 +52,17 @@ import rx.schedulers.Schedulers;
  */
 public class AddSelfGymFragment extends Fragment {
     public static final String TAG = AddSelfGymFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.addselfgym_name) CommonInputView addselfgymName;
-    @BindView(R.id.addselfgym_time) CommonInputView addselfgymTime;
-    @BindView(R.id.addselfgym_comfirm) Button addselfgymComfirm;
+	Toolbar toolbar;
+	CommonInputView addselfgymName;
+	CommonInputView addselfgymTime;
+	Button addselfgymComfirm;
     int id = -1;
     private QcPrivateGymReponse reponse;
     private PostPrivateGym postPrivateGym;
     private boolean mIsNew;
     private MaterialDialog delDialog;
     private MaterialDialog loadingDialog;
-    private Unbinder unbinder;
+
 
     public AddSelfGymFragment() {
     }
@@ -93,83 +94,59 @@ public class AddSelfGymFragment extends Fragment {
     }
 
     private void showDialog() {
-        if (delDialog == null) {
-            delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
-                .content("删除个人健身房?")
-                .positiveText("确定")
-                .negativeText("取消")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                        ShowLoading("正在删除,请稍后...");
-                        QcCloudClient.getApi().postApi.qcDelPrivateGym(App.coachid)
-                            .onBackpressureBuffer()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .flatMap(new Func1<QcResponse, Observable<QcCoachSystemResponse>>() {
-                                @Override public Observable<QcCoachSystemResponse> call(QcResponse qcResponse) {
-                                    if (qcResponse.status == ResponseResult.SUCCESS || getActivity() != null) {
-                                        return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
-                                            .onBackpressureBuffer()
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread());
-                                    } else {
-                                        return Observable.just(null);
-                                    }
-                                }
-                            }, new Func1<Throwable, Observable<? extends QcCoachSystemResponse>>() {
-                                @Override public Observable<? extends QcCoachSystemResponse> call(Throwable throwable) {
-                                    return Observable.just(null);
-                                }
-                            }, new Func0<Observable<? extends QcCoachSystemResponse>>() {
-                                @Override public Observable<? extends QcCoachSystemResponse> call() {
-                                    return Observable.just(null);
-                                }
-                            })
-                            .filter(new Func1<QcCoachSystemResponse, Boolean>() {
-                                @Override public Boolean call(QcCoachSystemResponse qcCoachSystemResponse) {
-                                    if (qcCoachSystemResponse == null) {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            })
-                            .subscribe(new Subscriber<QcCoachSystemResponse>() {
-                                @Override public void onCompleted() {
-
-                                }
-
-                                @Override public void onError(Throwable e) {
-                                    if (loadingDialog != null) loadingDialog.dismiss();
-                                    ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_failed));
-                                }
-
-                                @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                                    if (getActivity() != null) {
-                                        loadingDialog.dismiss();
-                                        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems",
-                                            new Gson().toJson(qcCoachSystemResponse));
-                                        ToastUtils.show("删除成功");
-                                        getActivity().finish();
-                                    }
-                                }
-                            });
-
-                        dialog.dismiss();
-                    }
-
-                    @Override public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        dialog.dismiss();
-                    }
-                })
-                .cancelable(false)
-                .build();
-        }
-        delDialog.show();
+        DialogUtils.showConfirm(getContext(),"","删除个人健身房?",(dialog,action)->{
+            dialog.dismiss();
+            switch (action){
+                case POSITIVE:deleteGym();break;
+            }
+        });
     }
 
+    private void deleteGym(){
+        ShowLoading("正在删除,请稍后...");
+        QcCloudClient.getApi().postApi.qcDelPrivateGym(App.coachid)
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .flatMap(
+                (Func1<QcResponse, Observable<QcCoachSystemResponse>>) qcResponse -> {
+                    if (qcResponse.status == ResponseResult.SUCCESS || getActivity() != null) {
+                        return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+                            .onBackpressureBuffer()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread());
+                    } else {
+                        return Observable.just(null);
+                    }
+                }, throwable -> Observable.just(null), () -> Observable.just(null))
+            .filter(qcCoachSystemResponse -> {
+                if (qcCoachSystemResponse == null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+            .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                @Override public void onCompleted() {
+
+                }
+
+                @Override public void onError(Throwable e) {
+                    if (loadingDialog != null) loadingDialog.dismiss();
+                    ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_failed));
+                }
+
+                @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                    if (getActivity() != null) {
+                        loadingDialog.dismiss();
+                        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems",
+                            new Gson().toJson(qcCoachSystemResponse));
+                        ToastUtils.show("删除成功");
+                        getActivity().finish();
+                    }
+                }
+            });
+    }
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -181,26 +158,29 @@ public class AddSelfGymFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_self_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      addselfgymName = (CommonInputView) view.findViewById(R.id.addselfgym_name);
+      addselfgymTime = (CommonInputView) view.findViewById(R.id.addselfgym_time);
+      addselfgymComfirm = (Button) view.findViewById(R.id.addselfgym_comfirm);
+      view.findViewById(R.id.addselfgym_comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      view.findViewById(R.id.addselfgym_time).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onChangeTime();
+        }
+      });
 
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         if (mIsNew) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     //展示不可回退
-                    new MaterialDialog.Builder(getContext()).content("设置好一个健身房后，就能开始使用「健身教练助手」了")
-                        .positiveColorRes(R.color.orange)
-                        .positiveText(R.string.common_i_konw)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                            }
-
-                            @Override public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                            }
-                        })
-                        .show();
+                    DialogUtils.showAlert(getContext(),"设置好一个健身房后，就能开始使用「健身教练助手」了",(dialog,action)->{
+                        dialog.dismiss();
+                    });
                 }
             });
         } else {
@@ -259,7 +239,7 @@ public class AddSelfGymFragment extends Fragment {
     //        startActivityForResult(toSearch, 10010);
     //    }
 
-    @OnClick(R.id.addselfgym_comfirm) public void onComfirm() {
+ public void onComfirm() {
         if (TextUtils.isEmpty(addselfgymName.getContent())) {
             Toast.makeText(App.AppContex, "健身房名称不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -390,7 +370,7 @@ public class AddSelfGymFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.addselfgym_time) public void onChangeTime() {
+ public void onChangeTime() {
         Intent it = new Intent(getActivity(), ChangeTimeActivity.class);
         it.putExtra("time", new Gson().toJson(reponse.data.system.openTimes));
         startActivityForResult(it, 222);
@@ -434,6 +414,6 @@ public class AddSelfGymFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

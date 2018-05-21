@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -40,11 +36,11 @@ public class AddCardStyleItem extends AbstractFlexibleItem<AddCardStyleItem.AddC
     }
 
     public class AddCardStyleVH extends FlexibleViewHolder {
-        @BindView(R.id.tv) TextView tv;
+	TextView tv;
 
         public AddCardStyleVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tv = (TextView) view.findViewById(R.id.tv);
         }
     }
 }

@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -70,10 +70,10 @@ import rx.schedulers.Schedulers;
     protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     protected CommonFlexAdapter mAdapter;
     @Arg @Nullable CoachService mCoachService;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.root_view) LinearLayout rootView;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	RecyclerView recyclerview;
+	LinearLayout rootView;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +82,12 @@ import rx.schedulers.Schedulers;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_schedule_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      rootView = (LinearLayout) view.findViewById(R.id.root_view);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
 
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();

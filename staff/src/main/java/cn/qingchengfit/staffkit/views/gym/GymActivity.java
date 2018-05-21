@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -50,13 +50,13 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
     public static final String GYM_TYPE = "gym_type";
     public static final String GYM_SINGLE = "gym_single";
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.frag) FrameLayout frag;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview) LinearLayout searchview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout frag;
+	ImageView down;
+	RelativeLayout toolbarLayout;
+	EditText searchviewEt;
+	LinearLayout searchview;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject SetGymPresenter setGymPresenter;
     @Inject GymWrapper gymWrapper;
@@ -73,8 +73,25 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym);
-        ButterKnife.bind(this);
-        //((App) getApplication()).getAppCompoent().inject(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      frag = (FrameLayout) findViewById(R.id.frag);
+      down = (ImageView) findViewById(R.id.down);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      searchviewEt = (EditText) findViewById(R.id.searchview_et);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSearch(v);
+        }
+      });
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSearch(v);
+        }
+      });
+
+      //((App) getApplication()).getAppCompoent().inject(this);
         toolbarLayout.setVisibility(View.GONE);
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -193,7 +210,7 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
         toolbarList.clear();
     }
 
-    @OnClick({ R.id.searchview_clear, R.id.searchview_cancle }) public void onSearch(View v) {
+ public void onSearch(View v) {
         switch (v.getId()) {
             case R.id.searchview_clear:
                 searchviewEt.setText("");

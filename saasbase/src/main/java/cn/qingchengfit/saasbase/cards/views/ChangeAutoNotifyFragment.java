@@ -12,10 +12,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.NotifyIsOpen;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.presenters.ChangeAutoNotifyPresenter;
@@ -37,17 +37,17 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
     private static String storeId, storeValueId;
     private static String secondId, secondValueId;
     private static String timeId, timeValueId;
-    @BindView(R2.id.sw_store_notify) SwitcherLayout swStoreNotify;
-    @BindView(R2.id.sw_second_notify) SwitcherLayout swSecondNotify;
-    @BindView(R2.id.sw_time_notify) SwitcherLayout swTimeNotify;
-    @BindView(R2.id.text_store_condition) EditText textStoreValue;
-    @BindView(R2.id.text_second_condition) EditText textSecondValue;
-    @BindView(R2.id.text_time_condition) EditText textTimeValue;
-    @BindView(R2.id.ll_store_condition) ViewGroup llStore;
-    @BindView(R2.id.ll_second) ViewGroup llSecond;
-    @BindView(R2.id.ll_time_condition) ViewGroup llTime;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	SwitcherLayout swStoreNotify;
+	SwitcherLayout swSecondNotify;
+	SwitcherLayout swTimeNotify;
+	EditText textStoreValue;
+	EditText textSecondValue;
+	EditText textTimeValue;
+	ViewGroup llStore;
+	ViewGroup llSecond;
+	ViewGroup llTime;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
     @Inject ChangeAutoNotifyPresenter changeAutoNotifyPresenter;
     private String storeValue;
@@ -64,8 +64,19 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_saas_change_notify, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(changeAutoNotifyPresenter,this);
+      swStoreNotify = (SwitcherLayout) view.findViewById(R.id.sw_store_notify);
+      swSecondNotify = (SwitcherLayout) view.findViewById(R.id.sw_second_notify);
+      swTimeNotify = (SwitcherLayout) view.findViewById(R.id.sw_time_notify);
+      textStoreValue = (EditText) view.findViewById(R.id.text_store_condition);
+      textSecondValue = (EditText) view.findViewById(R.id.text_second_condition);
+      textTimeValue = (EditText) view.findViewById(R.id.text_time_condition);
+      llStore = (ViewGroup) view.findViewById(R.id.ll_store_condition);
+      llSecond = (ViewGroup) view.findViewById(R.id.ll_second);
+      llTime = (ViewGroup) view.findViewById(R.id.ll_time_condition);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
+      delegatePresenter(changeAutoNotifyPresenter,this);
         initToolbar(toolbar);
         initData();
         initView();

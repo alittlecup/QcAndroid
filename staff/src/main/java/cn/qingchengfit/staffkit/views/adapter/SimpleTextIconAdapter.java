@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.ImageIconBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -69,12 +69,13 @@ public class SimpleTextIconAdapter extends RecyclerView.Adapter<SimpleTextIconAd
 
     public class SimpleTextVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageicon_text) TextView imageiconText;
-        @BindView(R.id.icon) ImageView icon;
+	TextView imageiconText;
+	ImageView icon;
 
         public SimpleTextVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          imageiconText = (TextView) itemView.findViewById(R.id.imageicon_text);
+          icon = (ImageView) itemView.findViewById(R.id.icon);
         }
     }
 }

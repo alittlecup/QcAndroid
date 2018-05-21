@@ -8,8 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -40,9 +40,9 @@ import rx.functions.Action1;
  * Created by Paper on 16/3/19 2016.
  */
 public class StudentsDetailActivity extends BaseActivity implements FragCallBack, HasSupportFragmentInjector {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject Provider<StudentWrapperComponent.Builder> requestComponentProvider;
     @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
@@ -52,8 +52,11 @@ public class StudentsDetailActivity extends BaseActivity implements FragCallBack
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
-        ButterKnife.bind(this);
-        StudentBean studentBean = getIntent().getParcelableExtra("student");
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+
+      StudentBean studentBean = getIntent().getParcelableExtra("student");
         QcStudentBean qcStudentBean = getIntent().getParcelableExtra("qcstudent");
         if (qcStudentBean != null)
             studentBean = qcStudentBean.toStudentBean("","","");

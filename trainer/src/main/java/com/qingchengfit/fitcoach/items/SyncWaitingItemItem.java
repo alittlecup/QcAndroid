@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.event.EventSyncDone;
@@ -37,13 +33,15 @@ public class SyncWaitingItemItem extends AbstractFlexibleItem<SyncWaitingItemIte
     }
 
     public class SyncWaitingItemVH extends FlexibleViewHolder {
-        @BindView(R.id.btn) Button btn;
-        @BindView(R.id.wait_hint) TextView waitHint;
+	Button btn;
+	TextView waitHint;
 
         public SyncWaitingItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            btn.setOnClickListener(new View.OnClickListener() {
+          btn = (Button) view.findViewById(R.id.btn);
+          waitHint = (TextView) view.findViewById(R.id.wait_hint);
+
+          btn.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     RxBus.getBus().post(new EventSyncDone());
                 }

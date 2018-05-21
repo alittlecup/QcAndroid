@@ -24,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -81,32 +81,32 @@ import static android.view.View.GONE;
     public static final int SORT_TYPE_REGISTER = 685;//最新注册时间排序
     public int sortType = SORT_TYPE_REGISTER;
     @Arg String coachId;
-    @BindView(R.id.swt_show_config) SwitcherLayout swtShowConfig;
-    @BindView(R.id.et_search) EditText etSearch;
-    @BindView(R.id.img_search_clear) ImageView imgSearchClear;
-    @BindView(R.id.add_student) ImageView addStudent;
-    @BindView(R.id.rl_search) RelativeLayout rlSearch;
-    @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-    @BindView(R.id.rv_student) RecyclerView rvStudent;
-    @BindView(R.id.alphaTextDialog) TextView alphaTextDialog;
-    @BindView(R.id.alphabetview) AlphabetView alphabetview;
-    @BindView(R.id.tv_allotsale_select_count) TextView tvAllotsaleSelectCount;
-    @BindView(R.id.img_down) ImageView imgDown;
-    @BindView(R.id.ll_show_select) LinearLayout llShowSelect;
-    @BindView(R.id.view_space) View viewSpace;
-    @BindView(R.id.ll_bottom) LinearLayout llBottom;
-    @BindView(R.id.scroll_root) CoordinatorLayout scrollRoot;
-    @BindView(R.id.drawer) MyDrawerLayout drawer;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.btn_change_coach) TextView btnChangeCoach;
-    @BindView(R.id.btn_remove) TextView btnRemove;
+	SwitcherLayout swtShowConfig;
+	EditText etSearch;
+	ImageView imgSearchClear;
+	ImageView addStudent;
+	RelativeLayout rlSearch;
+	AppBarLayout myhomeAppBar;
+	RecyclerView rvStudent;
+	TextView alphaTextDialog;
+	AlphabetView alphabetview;
+	TextView tvAllotsaleSelectCount;
+	ImageView imgDown;
+	LinearLayout llShowSelect;
+	View viewSpace;
+	LinearLayout llBottom;
+	CoordinatorLayout scrollRoot;
+	MyDrawerLayout drawer;
+	Toolbar toolbar;
+	TextView textToolbarRight;
+	TextView toolbarTitile;
+	TextView btnChangeCoach;
+	TextView btnRemove;
     @Inject OperationPresenter presenter;
-    @BindView(R.id.tv_sort_register) QcToggleButton tvSortRegister;
-    @BindView(R.id.tv_sort_alpha) QcToggleButton tvSortAlpha;
-    @BindView(R.id.tv_sort_filter) QcToggleButton tvSortFilter;
-    @BindView(R.id.clear_text) ImageView clearText;
+	QcToggleButton tvSortRegister;
+	QcToggleButton tvSortAlpha;
+	QcToggleButton tvSortFilter;
+	ImageView clearText;
     private List<CommonAllocateDetailItem> itemList = new ArrayList<>();
     private List<CommonAllocateDetailItem> stashList = new ArrayList<>();
     private CommonFlexAdapter adapter;
@@ -130,8 +130,48 @@ import static android.view.View.GONE;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_student_operation, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      swtShowConfig = (SwitcherLayout) view.findViewById(R.id.swt_show_config);
+      etSearch = (EditText) view.findViewById(R.id.et_search);
+      imgSearchClear = (ImageView) view.findViewById(R.id.img_search_clear);
+      addStudent = (ImageView) view.findViewById(R.id.add_student);
+      rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
+      myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+      rvStudent = (RecyclerView) view.findViewById(R.id.rv_student);
+      alphaTextDialog = (TextView) view.findViewById(R.id.alphaTextDialog);
+      alphabetview = (AlphabetView) view.findViewById(R.id.alphabetview);
+      tvAllotsaleSelectCount = (TextView) view.findViewById(R.id.tv_allotsale_select_count);
+      imgDown = (ImageView) view.findViewById(R.id.img_down);
+      llShowSelect = (LinearLayout) view.findViewById(R.id.ll_show_select);
+      viewSpace = (View) view.findViewById(R.id.view_space);
+      llBottom = (LinearLayout) view.findViewById(R.id.ll_bottom);
+      scrollRoot = (CoordinatorLayout) view.findViewById(R.id.scroll_root);
+      drawer = (MyDrawerLayout) view.findViewById(R.id.drawer);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      textToolbarRight = (TextView) view.findViewById(R.id.text_toolbar_right);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      btnChangeCoach = (TextView) view.findViewById(R.id.btn_change_coach);
+      btnRemove = (TextView) view.findViewById(R.id.btn_remove);
+      tvSortRegister = (QcToggleButton) view.findViewById(R.id.tv_sort_register);
+      tvSortAlpha = (QcToggleButton) view.findViewById(R.id.tv_sort_alpha);
+      tvSortFilter = (QcToggleButton) view.findViewById(R.id.tv_sort_filter);
+      clearText = (ImageView) view.findViewById(R.id.clear_text);
+      view.findViewById(R.id.clear_text).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      view.findViewById(R.id.ll_bottom).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          openSelectedBottom();
+        }
+      });
+      view.findViewById(R.id.add_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddStudent();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         if (getActivity() instanceof AllocateCoachActivity) {
             mFilter = ((AllocateCoachActivity) getActivity()).studentFilter;
         }
@@ -270,7 +310,7 @@ import static android.view.View.GONE;
         return -1;
     }
 
-    @OnClick(R.id.clear_text) public void onClear() {
+ public void onClear() {
         etSearch.setText("");
     }
 
@@ -406,7 +446,7 @@ import static android.view.View.GONE;
         refreshSortView();
     }
 
-    @OnClick(R.id.ll_bottom) public void openSelectedBottom() {
+ public void openSelectedBottom() {
         BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
         selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
             @Override public void onBottomStudents(List<Personage> list) {
@@ -440,7 +480,7 @@ import static android.view.View.GONE;
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.add_student) public void onAddStudent() {
+ public void onAddStudent() {
         EditStudentInfoFragment editStudentInfoFragment = new EditStudentInfoFragment();
         editStudentInfoFragment.isAdd = true;
         //新增学员

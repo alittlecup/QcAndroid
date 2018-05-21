@@ -3,10 +3,7 @@ package cn.qingchengfit.saasbase.bill.filter;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.bill.filter.model.Content;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -118,12 +115,14 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
   class ItemFilterVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.bill_filter_common) QcAutoLineRadioGroup billFilterCommon;
-    @BindView(R2.id.bill_filter_title) TextView billFilterTitle;
+	QcAutoLineRadioGroup billFilterCommon;
+	TextView billFilterTitle;
 
     public ItemFilterVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      billFilterCommon = (QcAutoLineRadioGroup) view.findViewById(R.id.bill_filter_common);
+      billFilterTitle = (TextView) view.findViewById(R.id.bill_filter_title);
+
       billFilterCommon.setSingleSelected(false);
       billFilterCommon.setOnCheckoutPositionListener(checkedList -> {
         IFlexible item = adapter.getItem(getAdapterPosition());

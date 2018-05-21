@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentBean;
@@ -32,16 +32,16 @@ import rx.functions.Action1;
  */
 public class SignInManualActivity extends BaseActivity implements FragCallBack {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    @BindView(R.id.student_frag) FrameLayout studentFrag;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
+	RelativeLayout toolbarLayout;
+	FrameLayout studentFrag;
     @Inject SignInManualFragment signInManualFragment;
     @Inject SignOutManualFragment signOutManualFragment;
     @Inject StudentWrapper studentWrapper;
@@ -50,9 +50,18 @@ public class SignInManualActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_toolbar);
-        ButterKnife.bind(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchviewEt = (EditText) findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      studentFrag = (FrameLayout) findViewById(R.id.student_frag);
 
-        StudentBean studentBean = getIntent().getParcelableExtra("student");
+      StudentBean studentBean = getIntent().getParcelableExtra("student");
 
         boolean isSignIn = getIntent().getBooleanExtra("isSignIn", true);
 

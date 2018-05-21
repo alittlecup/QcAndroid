@@ -19,9 +19,9 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.EventLatestNoti;
 import cn.qingchengfit.bean.EventNotiFresh;
@@ -56,22 +56,22 @@ public class NotificationFragment extends BaseSettingFragment {
     public static final String TAG = NotificationFragment.class.getName();
     public static final String[] TYPES = { "COACH_1", "COACH_2", "COACH_3" };
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
     NotifiAdapter adapter;
     //    List<QcNotificationResponse.DataEntity.MsgsEntity> list;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.refresh_nodata) SwipeRefreshLayout refreshNodata;
+	SwipeRefreshLayout refresh;
+	SwipeRefreshLayout refreshNodata;
     List<NotificationMsg> list = new ArrayList<>();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
     //    @BindView(R.id.pulltorefresh)
     //    PtrFrameLayout pulltorefresh;
     private int totalPage = 1;
     private int curpage = 1;
     private int unReadCount = 0;
     private LinearLayoutManager linearLayoutManager;
-    private Unbinder unbinder;
+
     private String type;
 
     public NotificationFragment() {
@@ -92,8 +92,15 @@ public class NotificationFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      refreshNodata = (SwipeRefreshLayout) view.findViewById(R.id.refresh_nodata);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
+
+      initToolbar(toolbar);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -280,7 +287,7 @@ public class NotificationFragment extends BaseSettingFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     public interface OnRecycleItemClickListener {
@@ -289,17 +296,24 @@ public class NotificationFragment extends BaseSettingFragment {
 
     public static class NotifiVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_noti_unread) ImageView itemNotiUnread;
-        @BindView(R.id.item_noti_icon) ImageView itemNotiIcon;
-        @BindView(R.id.item_noti_title) TextView itemNotiTitle;
-        @BindView(R.id.item_noti_time) TextView itemNotiTime;
-        @BindView(R.id.item_noti_sender) TextView itemNotiSender;
-        @BindView(R.id.item_noti_desc) TextView itemDesc;
-        @BindView(R.id.icon_right) ImageView iconRight;
+	ImageView itemNotiUnread;
+	ImageView itemNotiIcon;
+	TextView itemNotiTitle;
+	TextView itemNotiTime;
+	TextView itemNotiSender;
+	TextView itemDesc;
+	ImageView iconRight;
 
-        public NotifiVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public NotifiVH(View view) {
+            super(view);
+            itemNotiUnread = (ImageView) view.findViewById(R.id.item_noti_unread);
+            itemNotiIcon = (ImageView) view.findViewById(R.id.item_noti_icon);
+            itemNotiTitle = (TextView) view.findViewById(R.id.item_noti_title);
+            itemNotiTime = (TextView) view.findViewById(R.id.item_noti_time);
+            itemNotiSender = (TextView) view.findViewById(R.id.item_noti_sender);
+            itemDesc = (TextView) view.findViewById(R.id.item_noti_desc);
+            iconRight = (ImageView) view.findViewById(R.id.icon_right);
+
         }
     }
 

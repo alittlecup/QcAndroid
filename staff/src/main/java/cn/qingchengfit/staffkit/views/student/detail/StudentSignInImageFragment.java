@@ -15,9 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -71,19 +71,19 @@ import rx.schedulers.Schedulers;
  */
 public class StudentSignInImageFragment extends BaseFragment implements StudentSignInImagePresenter.MVPView {
     public static final String TAG = StudentSignInImageFragment.class.getSimpleName();
-    @BindView(R.id.fix_record_rv) RecyclerView fixRecordRv;
-    @BindView(R.id.cur_img) ImageView curImg;
-    @BindView(R.id.change_img) TextView changeImg;
-    @BindView(R.id.no_img_layout) LinearLayout noImgLayout;
-    @BindView(R.id.add_signin_hint) TextView addSigninHint;
-    @BindView(R.id.up_img) Button upImg;
+	RecyclerView fixRecordRv;
+	ImageView curImg;
+	TextView changeImg;
+	LinearLayout noImgLayout;
+	TextView addSigninHint;
+	Button upImg;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentSignInImagePresenter presenter;
     @Inject StudentWrapper studentBean;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
 
@@ -97,8 +97,31 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_img, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      fixRecordRv = (RecyclerView) view.findViewById(R.id.fix_record_rv);
+      curImg = (ImageView) view.findViewById(R.id.cur_img);
+      changeImg = (TextView) view.findViewById(R.id.change_img);
+      noImgLayout = (LinearLayout) view.findViewById(R.id.no_img_layout);
+      addSigninHint = (TextView) view.findViewById(R.id.add_signin_hint);
+      upImg = (Button) view.findViewById(R.id.up_img);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.change_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          changeImg();
+        }
+      });
+      view.findViewById(R.id.up_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          changeImg();
+        }
+      });
+      view.findViewById(R.id.cur_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickImg();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         fixRecordRv.setHasFixedSize(true);
         fixRecordRv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -153,7 +176,7 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.change_img, R.id.up_img }) public void changeImg() {
+ public void changeImg() {
         if (gymWrapper.inBrand()) {
             //            showAlert("请到场馆中修改会员照片");
             return;
@@ -162,7 +185,7 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
         dialog.show(getFragmentManager(), "");
     }
 
-    @OnClick(R.id.cur_img) public void onClickImg() {
+ public void onClickImg() {
         if (mData.size() > 0 && mData.get(0) instanceof SignInImageItem) {
             SimpleImgDialog.newInstance(((SignInImageItem) mData.get(0)).getSignInImg().photo).show(getFragmentManager(), "");
         }

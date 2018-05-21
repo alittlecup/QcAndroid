@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -28,18 +28,23 @@ import rx.functions.Action1;
 
 public class BrandManageActivity extends BaseActivity implements FragCallBack {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-  private Unbinder unbinder;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	RelativeLayout toolbarLayout;
+
 
   @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_manage);
-        unbinder = ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+    down = (ImageView) findViewById(R.id.down);
+    titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+    toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+
+    toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
             ((ViewGroup) toolbar.getParent()).setPadding(0,
@@ -91,10 +96,4 @@ public class BrandManageActivity extends BaseActivity implements FragCallBack {
         }
     }
 
-  @Override
-  protected void onDestroy() {
-    if (unbinder != null)
-      unbinder.unbind();
-    super.onDestroy();
-  }
 }

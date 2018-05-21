@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -39,26 +39,38 @@ public class MyHomeActivity extends AppCompatActivity {
         R.id.segmentbtn_01, R.id.segmentbtn_11, R.id.segmentbtn_21, R.id.segmentbtn_31, R.id.segmentbtn_41, R.id.segmentbtn_51,
         R.id.segmentbtn_61, R.id.segmentbtn_71, R.id.segmentbtn_81, R.id.segmentbtn_91,
     };
-    @BindView(R.id.header_icon) ImageView headerIcon;
-    @BindView(R.id.drawer_name) TextView drawerName;
-    @BindView(R.id.drawer_headerview) RelativeLayout drawerHeaderview;
-    @BindView(R.id.drawer_radiogroup) CustomSetmentLayout drawerRadiogroup;
-    @BindView(R.id.drawer_modules) LinearLayout drawerModules;
-    @BindView(R.id.main_drawerlayout) DrawerLayout mainDrawerlayout;
-    @BindView(R.id.oem_acts) LinearLayout oemActs;
+	ImageView headerIcon;
+	TextView drawerName;
+	RelativeLayout drawerHeaderview;
+	CustomSetmentLayout drawerRadiogroup;
+	LinearLayout drawerModules;
+	DrawerLayout mainDrawerlayout;
+	LinearLayout oemActs;
     private FragmentManager fragmentManager;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_home);
-        ButterKnife.bind(this);
-        fragmentManager = getSupportFragmentManager();
+      headerIcon = (ImageView) findViewById(R.id.header_icon);
+      drawerName = (TextView) findViewById(R.id.drawer_name);
+      drawerHeaderview = (RelativeLayout) findViewById(R.id.drawer_headerview);
+      drawerRadiogroup = (CustomSetmentLayout) findViewById(R.id.drawer_radiogroup);
+      drawerModules = (LinearLayout) findViewById(R.id.drawer_modules);
+      mainDrawerlayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
+      oemActs = (LinearLayout) findViewById(R.id.oem_acts);
+      findViewById(R.id.drawer_headerview).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MyHomeActivity.this.onClick();
+        }
+      });
+
+      fragmentManager = getSupportFragmentManager();
         //        fragmentManager.beginTransaction().replace(R.id.myhome_fraglayout, new MyHomeFragment()).commit();
         fragmentManager.beginTransaction().replace(R.id.myhome_fraglayout, new CoachHomeFragment()).commit();
         initDrawer();
     }
 
-    @OnClick(R.id.drawer_headerview) public void onClick() {
+ public void onClick() {
         mainDrawerlayout.closeDrawers();
     }
 

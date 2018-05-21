@@ -3,8 +3,8 @@ package com.qingchengfit.fitcoach.items;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -56,12 +56,13 @@ public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
     }
 
     public class ImageVH extends FlexibleViewHolder {
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.checkbox) CheckBox checkbox;
+	ImageView img;
+	CheckBox checkbox;
 
         public ImageVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          img = (ImageView) view.findViewById(R.id.img);
+          checkbox = (CheckBox) view.findViewById(R.id.checkbox);
         }
     }
 }

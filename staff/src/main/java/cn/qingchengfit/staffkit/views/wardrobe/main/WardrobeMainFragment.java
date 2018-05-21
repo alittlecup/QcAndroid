@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AllLockers;
@@ -79,20 +79,20 @@ import rx.schedulers.Schedulers;
 public class WardrobeMainFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R.id.strip) TabLayout strip;
-  @BindView(R.id.viewpager) ViewPager viewpager;
-  @BindView(R.id.all_region_rv) RecyclerView allRegionRv;
-  @BindView(R.id.all_region) LinearLayout allRegion;
-  @BindView(R.id.btn_show_all) AnimatedButton btnShowAll;
+	TabLayout strip;
+	ViewPager viewpager;
+	RecyclerView allRegionRv;
+	LinearLayout allRegion;
+	AnimatedButton btnShowAll;
   @Inject RestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
   HashMap<Long, List<Locker>> mLockers = new HashMap<>();
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R.id.layout_manage_district) FrameLayout layoutManageDistrict;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
+	FrameLayout layoutManageDistrict;
   private FragmentAdapter fragmentAdapter;
   private ArrayList<Fragment> chooseWardrobeListFragments = new ArrayList<>();
   private List<LockerRegion> regions = new ArrayList<>();
@@ -138,7 +138,26 @@ public class WardrobeMainFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_wardrobe_main, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    strip = (TabLayout) view.findViewById(R.id.strip);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    allRegionRv = (RecyclerView) view.findViewById(R.id.all_region_rv);
+    allRegion = (LinearLayout) view.findViewById(R.id.all_region);
+    btnShowAll = (AnimatedButton) view.findViewById(R.id.btn_show_all);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    layoutManageDistrict = (FrameLayout) view.findViewById(R.id.layout_manage_district);
+    view.findViewById(R.id.btn_show_all).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        WardrobeMainFragment.this.onClick();
+      }
+    });
+    view.findViewById(R.id.layout_manage_district).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onManageDistrict();
+      }
+    });
+
     initToolbar(toolbar);
     RxRegiste(restRepository.getGet_api()
         .qcGetAllRegion(App.staffId, gymWrapper.getParams())
@@ -366,7 +385,7 @@ public class WardrobeMainFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @OnClick(R.id.btn_show_all) public void onClick() {
+ public void onClick() {
     btnShowAll.toggle();
     if (allRegion.getVisibility() == View.VISIBLE) {
       allRegion.setVisibility(View.GONE);
@@ -375,7 +394,7 @@ public class WardrobeMainFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.layout_manage_district) public void onManageDistrict() {
+ public void onManageDistrict() {
     getFragmentManager().beginTransaction()
         .replace(mCallbackActivity.getFragId(), DistrictListFragment.newInstance())
         .addToBackStack(getFragmentName())

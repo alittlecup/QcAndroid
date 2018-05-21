@@ -41,9 +41,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -94,16 +94,16 @@ public class MainMsgFragment extends BaseFragment
     implements LoginProcessor.OnLoginListener, FlexibleAdapter.OnItemClickListener,
     SystemMsgPresenter.MVPView, FlexibleAdapter.OnItemLongClickListener {
 
-  @BindView(R.id.fab_add_conversation) FloatingActionButton addConversation;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.recyclerview) RecyclerView recyclerview;
-  @BindView(R.id.divider) View divider;
+	FloatingActionButton addConversation;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecyclerView recyclerview;
+	View divider;
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SystemMsgPresenter presenter;
-  @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+	SwipeRefreshLayout refresh;
   ConversationFragment conversationFragment;
   private List<AbstractFlexibleItem> items = new ArrayList<>();
   private CommonFlexAdapter adapter;
@@ -124,7 +124,17 @@ public class MainMsgFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main_msg, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    addConversation = (FloatingActionButton) view.findViewById(R.id.fab_add_conversation);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    divider = (View) view.findViewById(R.id.divider);
+    refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+    view.findViewById(R.id.fab_add_conversation).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        addCoversation();
+      }
+    });
 
     delegatePresenter(presenter, this);
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -291,7 +301,7 @@ public class MainMsgFragment extends BaseFragment
     //LogUtil.e("聊天系统登录失败：请重新打开应用  " + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
   }
 
-  @OnClick(R.id.fab_add_conversation) public void addCoversation() {
+ public void addCoversation() {
     Intent toChooseStaffs = new Intent(getContext(), ChooseActivity.class);
     toChooseStaffs.putExtra("to", ChooseActivity.CONVERSATION_FRIEND);
     startActivityForResult(toChooseStaffs, ChooseActivity.CONVERSATION_FRIEND);

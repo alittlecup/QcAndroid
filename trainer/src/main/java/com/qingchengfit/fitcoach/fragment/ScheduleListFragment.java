@@ -18,9 +18,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -61,12 +61,12 @@ import rx.schedulers.Schedulers;
  */
 public class ScheduleListFragment extends BaseFragment {
     public static final String TAG = ScheduleListFragment.class.getName();
-    @BindView(R.id.schedule_rv) RecyclerView scheduleRv;
-    @BindView(R.id.schedule_no_img) ImageView scheduleNoImg;
-    @BindView(R.id.schedule_no_tv) TextView scheduleNoTv;
-    @BindView(R.id.schedule_no_schedule) SwipeRefreshLayout scheduleNoSchedule;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.schedule_timeline) View scheduleTimeline;
+	RecyclerView scheduleRv;
+	ImageView scheduleNoImg;
+	TextView scheduleNoTv;
+	SwipeRefreshLayout scheduleNoSchedule;
+	SwipeRefreshLayout refresh;
+	View scheduleTimeline;
 
     private Date mCurDate;                              //当前日期
     private ArrayList<ScheduleBean> scheduleBeans = new ArrayList<>();      //列表数据
@@ -100,7 +100,7 @@ public class ScheduleListFragment extends BaseFragment {
             hasLoad = true;
         }
     };
-    private Unbinder unbinder;
+
     private boolean isInit = true;
 
     public ScheduleListFragment() {
@@ -132,8 +132,15 @@ public class ScheduleListFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        scheduesAdapter = new ScheduesAdapter(scheduleBeans);
+      scheduleRv = (RecyclerView) view.findViewById(R.id.schedule_rv);
+      scheduleNoImg = (ImageView) view.findViewById(R.id.schedule_no_img);
+      scheduleNoTv = (TextView) view.findViewById(R.id.schedule_no_tv);
+      scheduleNoSchedule = (SwipeRefreshLayout) view.findViewById(R.id.schedule_no_schedule);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      scheduleTimeline = (View) view.findViewById(R.id.schedule_timeline);
+
+
+      scheduesAdapter = new ScheduesAdapter(scheduleBeans);
         isInit = PreferenceUtils.getPrefBoolean(getContext(), "guide_3", false);
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 5f));
@@ -309,7 +316,7 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -324,19 +331,28 @@ public class ScheduleListFragment extends BaseFragment {
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_schedule_time) TextView itemScheduleTime;
-        @BindView(R.id.item_schedule_classname) TextView itemScheduleClassname;
-        @BindView(R.id.item_schedule_gymname) TextView itemScheduleGymname;
-        @BindView(R.id.item_schedule_num) TextView itemScheduleNum;
-        @BindView(R.id.item_schedule_classpic) ImageView itemScheduleClasspic;
-        @BindView(R.id.item_schedule_status) ImageView itemScheduleStatus;
-        @BindView(R.id.item_schedule_done) TextView getItemScheduleDone;
-        @BindView(R.id.item_schedule_conflict) TextView itemScheduleConflict;
-        @BindView(R.id.indicator) View indicator;
+	TextView itemScheduleTime;
+	TextView itemScheduleClassname;
+	TextView itemScheduleGymname;
+	TextView itemScheduleNum;
+	ImageView itemScheduleClasspic;
+	ImageView itemScheduleStatus;
+	TextView getItemScheduleDone;
+	TextView itemScheduleConflict;
+	View indicator;
 
-        public SchedulesVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public SchedulesVH(View view) {
+            super(view);
+            itemScheduleTime = (TextView) view.findViewById(R.id.item_schedule_time);
+            itemScheduleClassname = (TextView) view.findViewById(R.id.item_schedule_classname);
+            itemScheduleGymname = (TextView) view.findViewById(R.id.item_schedule_gymname);
+            itemScheduleNum = (TextView) view.findViewById(R.id.item_schedule_num);
+            itemScheduleClasspic = (ImageView) view.findViewById(R.id.item_schedule_classpic);
+            itemScheduleStatus = (ImageView) view.findViewById(R.id.item_schedule_status);
+            getItemScheduleDone = (TextView) view.findViewById(R.id.item_schedule_done);
+            itemScheduleConflict = (TextView) view.findViewById(R.id.item_schedule_conflict);
+            indicator = (View) view.findViewById(R.id.indicator);
+
         }
     }
 

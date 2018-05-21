@@ -21,9 +21,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.responese.StaffPosition;
@@ -69,24 +69,24 @@ import rx.functions.Action1;
  */
 public class StaffDetailFragment extends BaseFragment implements StaffDetailView {
 
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R.id.username) CommonInputView username;
-    @BindView(R.id.gender_male) RadioButton genderMale;
-    @BindView(R.id.gender_female) RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.gender_layout) RelativeLayout genderLayout;
-    @BindView(R.id.position) CommonInputView position;
-    @BindView(R.id.btn_del) RelativeLayout btnDel;
-    @BindView(R.id.btn_add) Button btnAdd;
-    @BindView(R.id.go_to_web) TextView goToWeb;
-    @BindView(R.id.deny_layout) View denyLayout;
+	ImageView headerImg;
+	RelativeLayout headerLayout;
+	CommonInputView username;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
+	CommonInputView position;
+	RelativeLayout btnDel;
+	Button btnAdd;
+	TextView goToWeb;
+	View denyLayout;
     @Inject StaffDetailPresenter presenter;
     @Inject GymFunctionFactory gymFunctionFactory;
     ManagerBody body = new ManagerBody();
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	PhoneEditText phoneNum;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     @Inject SerPermisAction serPermisAction;
     private boolean mIsAdd = true;
     private StaffShip mStaff;
@@ -142,8 +142,53 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_staff_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+      username = (CommonInputView) view.findViewById(R.id.username);
+      genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+      genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+      position = (CommonInputView) view.findViewById(R.id.position);
+      btnDel = (RelativeLayout) view.findViewById(R.id.btn_del);
+      btnAdd = (Button) view.findViewById(R.id.btn_add);
+      goToWeb = (TextView) view.findViewById(R.id.go_to_web);
+      denyLayout = (View) view.findViewById(R.id.deny_layout);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.deny_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDeny();
+        }
+      });
+      view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StaffDetailFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StaffDetailFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onHeader();
+        }
+      });
+      view.findViewById(R.id.position).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StaffDetailFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.go_to_web).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StaffDetailFragment.this.onClickGoWeb();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         if (mIsAdd) {
             mCallbackActivity.setToolbar("新增工作人员", false, null, 0, null);
@@ -234,7 +279,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         return view;
     }
 
-    @OnClick(R.id.deny_layout) public void onDeny() {
+ public void onDeny() {
         showAlert(R.string.alert_permission_forbid);
     }
 
@@ -246,7 +291,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.btn_del, R.id.btn_add }) public void onClick(View view) {
+ public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.btn_del:
@@ -284,7 +329,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         }
     }
 
-    @OnClick(R.id.header_layout) public void onHeader() {
+ public void onHeader() {
         ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
         dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
@@ -309,7 +354,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         dialog.show(getFragmentManager(), "");
     }
 
-    @OnClick(R.id.position) public void onClick() {
+ public void onClick() {
         if (mPositionStrList.size() > 0) {
             final DialogList dialogList = new DialogList(getContext());
             dialogList.list(mPositionStrList, new AdapterView.OnItemClickListener() {
@@ -368,7 +413,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         }
     }
 
-    @OnClick(R.id.go_to_web) public void onClickGoWeb() {
+ public void onClickGoWeb() {
         gymFunctionFactory.goQrScan(this, QRActivity.PERMISSION_STAFF, null, null);
 
 

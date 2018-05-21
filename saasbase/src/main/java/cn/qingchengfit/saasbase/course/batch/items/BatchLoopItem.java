@@ -3,11 +3,11 @@ package cn.qingchengfit.saasbase.course.batch.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -76,14 +76,18 @@ public class BatchLoopItem extends AbstractFlexibleItem<BatchLoopItem.BatchLoopV
 
   public class BatchLoopVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.delete) ImageView delete;
-    @BindView(R2.id.time) TextView time;
-    @BindView(R2.id.week) TextView week;
-    @BindView(R2.id.tv_slice) TextView tvSlice;
+	ImageView delete;
+	TextView time;
+	TextView week;
+	TextView tvSlice;
 
     public BatchLoopVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      delete = (ImageView) view.findViewById(R.id.delete);
+      time = (TextView) view.findViewById(R.id.time);
+      week = (TextView) view.findViewById(R.id.week);
+      tvSlice = (TextView) view.findViewById(R.id.tv_slice);
+
       delete.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           adapter.removeItem(getAdapterPosition());

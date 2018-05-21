@@ -1,15 +1,11 @@
 package cn.qingchengfit.items;
 
 import android.support.v4.widget.Space;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Staff;
 import com.bumptech.glide.Glide;
@@ -97,16 +93,21 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
     }
 
     public class ChooseStaffVH extends FlexibleViewHolder {
-        @BindView(R.id.space) Space space;
-        @BindView(R.id.checkbox) CheckBox checkbox;
-        @BindView(R.id.img_avatar) ImageView imgAvatar;
-        @BindView(R.id.tv_name) TextView tvName;
-        @BindView(R.id.tv_content) TextView tvContent;
+	Space space;
+	CheckBox checkbox;
+	ImageView imgAvatar;
+	TextView tvName;
+	TextView tvContent;
 
         public ChooseStaffVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+          space = (Space) view.findViewById(R.id.space);
+          checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+          imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+          tvName = (TextView) view.findViewById(R.id.tv_name);
+          tvContent = (TextView) view.findViewById(R.id.tv_content);
+
+          checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     checkbox.setActivated(b);
                 }

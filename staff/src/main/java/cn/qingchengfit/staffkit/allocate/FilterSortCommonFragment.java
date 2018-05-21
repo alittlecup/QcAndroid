@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
@@ -39,9 +39,9 @@ import rx.functions.Action1;
     public static final int SORT_TYPE_REGISTER = 685;//最新注册时间排序
     public int sortType = SORT_TYPE_REGISTER;
     @Arg(bundler = AllocateStudentArgsBundler.class) List<CommonAllocateDetailItem> datas = new ArrayList<>();
-    @BindView(R.id.tv_sort_register) QcToggleButton tvSortRegister;
-    @BindView(R.id.tv_sort_alpha) QcToggleButton tvSortAlpha;
-    @BindView(R.id.tv_sort_filter) QcToggleButton tvSortFilter;
+	QcToggleButton tvSortRegister;
+	QcToggleButton tvSortAlpha;
+	QcToggleButton tvSortFilter;
     private ArrayMap<String, Integer> alphabetSort = new ArrayMap<>();
 
     @Override public String getFragmentName() {
@@ -56,8 +56,11 @@ import rx.functions.Action1;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_fliter, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        sortData(datas);
+      tvSortRegister = (QcToggleButton) view.findViewById(R.id.tv_sort_register);
+      tvSortAlpha = (QcToggleButton) view.findViewById(R.id.tv_sort_alpha);
+      tvSortFilter = (QcToggleButton) view.findViewById(R.id.tv_sort_filter);
+
+      sortData(datas);
         initBus();
         return view;
     }

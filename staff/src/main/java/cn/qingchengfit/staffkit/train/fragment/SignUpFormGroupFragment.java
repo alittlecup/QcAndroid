@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.staffkit.R;
@@ -44,16 +44,16 @@ import rx.functions.Action1;
 public class SignUpFormGroupFragment extends BaseFragment
     implements TitleFragment, SignUpView<GroupListResponse>, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.et_search) EditText etSearch;
-    @BindView(R.id.text_sign_number) TextView textSignNumber;
-    @BindView(R.id.tv_create_group) TextView tvCreateGroup;
-    @BindView(R.id.recycle_sign_group) RecyclerView recyclerSignGroup;
+	EditText etSearch;
+	TextView textSignNumber;
+	TextView tvCreateGroup;
+	RecyclerView recyclerSignGroup;
     @Inject SignUpGroupListPresenter groupListPresenter;
 
     @Inject TrainIds trainIds;
-    @BindView(R.id.rl_group_search) RelativeLayout rlGroupSearch;
-    @BindView(R.id.divider) View divider;
-    @BindView(R.id.divider_top) View dividerTop;
+	RelativeLayout rlGroupSearch;
+	View divider;
+	View dividerTop;
 
     private CommonFlexAdapter flexAdapter;
     private List<SignUpGroupItem> signUpGroupItems = new ArrayList<>();
@@ -63,8 +63,20 @@ public class SignUpFormGroupFragment extends BaseFragment
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_group_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initBus();
+      etSearch = (EditText) view.findViewById(R.id.et_search);
+      textSignNumber = (TextView) view.findViewById(R.id.text_sign_number);
+      tvCreateGroup = (TextView) view.findViewById(R.id.tv_create_group);
+      recyclerSignGroup = (RecyclerView) view.findViewById(R.id.recycle_sign_group);
+      rlGroupSearch = (RelativeLayout) view.findViewById(R.id.rl_group_search);
+      divider = (View) view.findViewById(R.id.divider);
+      dividerTop = (View) view.findViewById(R.id.divider_top);
+      view.findViewById(R.id.tv_create_group).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCreateNewGroup();
+        }
+      });
+
+      initBus();
         delegatePresenter(groupListPresenter, this);
 
         getData();
@@ -105,7 +117,7 @@ public class SignUpFormGroupFragment extends BaseFragment
         });
     }
 
-    @OnClick(R.id.tv_create_group) void onCreateNewGroup() {
+ void onCreateNewGroup() {
         getActivity().getSupportFragmentManager()
             .beginTransaction()
             .replace(mCallbackActivity.getFragId(), new CreateGroupFragment())

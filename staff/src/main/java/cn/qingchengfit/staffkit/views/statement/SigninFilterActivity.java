@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.SigninFilter;
 import cn.qingchengfit.model.responese.SigninReportDetail;
@@ -48,14 +48,14 @@ public class SigninFilterActivity extends BaseActivity {
     public static final String START = "start";
     public static final String END = "end";
 
-    @BindView(R.id.signin_type) CommonInputView signinType;
-    @BindView(R.id.student) CommonInputView student;
-    @BindView(R.id.custom_statment_generate) Button customStatmentGenerate;
-    @BindView(R.id.rootview) LinearLayout rootview;
-    @BindView(R.id.start_day) CommonInputView startDay;
-    @BindView(R.id.end_day) CommonInputView endDay;
-    @BindView(R.id.card_type) CommonInputView cardType;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+	CommonInputView signinType;
+	CommonInputView student;
+	Button customStatmentGenerate;
+	LinearLayout rootview;
+	CommonInputView startDay;
+	CommonInputView endDay;
+	CommonInputView cardType;
+	Toolbar toolbar;
 
     private SigninFilter mSaleFilter;
     private String mStart;
@@ -73,8 +73,46 @@ public class SigninFilterActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_filter_signin);
-        ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_cross_blace);
+      signinType = (CommonInputView) findViewById(R.id.signin_type);
+      student = (CommonInputView) findViewById(R.id.student);
+      customStatmentGenerate = (Button) findViewById(R.id.custom_statment_generate);
+      rootview = (LinearLayout) findViewById(R.id.rootview);
+      startDay = (CommonInputView) findViewById(R.id.start_day);
+      endDay = (CommonInputView) findViewById(R.id.end_day);
+      cardType = (CommonInputView) findViewById(R.id.card_type);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      findViewById(R.id.start_day).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SigninFilterActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.end_day).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SigninFilterActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.card_type).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SigninFilterActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.signin_type).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SigninFilterActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SigninFilterActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.custom_statment_generate).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SigninFilterActivity.this.onClick(v);
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_cross_blace);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onBackPressed();
@@ -167,7 +205,7 @@ public class SigninFilterActivity extends BaseActivity {
         RxBus.getBus().unregister(CardTypeEvent.class.getName(), obCardType);
     }
 
-    @OnClick({ R.id.start_day, R.id.end_day, R.id.card_type, R.id.signin_type, R.id.student, R.id.custom_statment_generate })
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_day:

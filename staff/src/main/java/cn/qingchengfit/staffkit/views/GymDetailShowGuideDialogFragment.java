@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
@@ -26,8 +26,8 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 
 public class GymDetailShowGuideDialogFragment extends BaseFragment {
 
-    @BindView(R.id.student_preview) TextView studentPreview;
-    @BindView(R.id.bg) LinearLayout bg;
+	TextView studentPreview;
+	LinearLayout bg;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +37,15 @@ public class GymDetailShowGuideDialogFragment extends BaseFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gymdetail_guide, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //        this.getDialog().setCanceledOnTouchOutside(false);
+      studentPreview = (TextView) view.findViewById(R.id.student_preview);
+      bg = (LinearLayout) view.findViewById(R.id.bg);
+      view.findViewById(R.id.student_preview).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GymDetailShowGuideDialogFragment.this.onClick();
+        }
+      });
+
+      //        this.getDialog().setCanceledOnTouchOutside(false);
         //        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
         Drawable a = ContextCompat.getDrawable(getContext(), R.drawable.ic_circle_info);
         Drawable b = a.mutate();
@@ -66,7 +73,7 @@ public class GymDetailShowGuideDialogFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R.id.student_preview) public void onClick() {
+ public void onClick() {
         RxBus.getBus().post(new GoToGuideEvent());
         getFragmentManager().popBackStackImmediate();
     }

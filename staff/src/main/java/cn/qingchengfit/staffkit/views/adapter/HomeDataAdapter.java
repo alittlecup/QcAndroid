@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.HomeInfo;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -72,19 +72,27 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.HomeDa
     }
 
     public class HomeDataVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.info_titile_1) TextView infoTitile1;
-        @BindView(R.id.info_count_1) TextView infoCount1;
-        @BindView(R.id.order_today) LinearLayout orderToday;
-        @BindView(R.id.info_titile_2) TextView infoTitile2;
-        @BindView(R.id.info_count_2) TextView infoCount2;
-        @BindView(R.id.week_order) LinearLayout weekOrder;
-        @BindView(R.id.info_titile_3) TextView infoTitile3;
-        @BindView(R.id.info_count_3) TextView infoCount3;
-        @BindView(R.id.month_order) LinearLayout monthOrder;
+	TextView infoTitile1;
+	TextView infoCount1;
+	LinearLayout orderToday;
+	TextView infoTitile2;
+	TextView infoCount2;
+	LinearLayout weekOrder;
+	TextView infoTitile3;
+	TextView infoCount3;
+	LinearLayout monthOrder;
 
         public HomeDataVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          infoTitile1 = (TextView) itemView.findViewById(R.id.info_titile_1);
+          infoCount1 = (TextView) itemView.findViewById(R.id.info_count_1);
+          orderToday = (LinearLayout) itemView.findViewById(R.id.order_today);
+          infoTitile2 = (TextView) itemView.findViewById(R.id.info_titile_2);
+          infoCount2 = (TextView) itemView.findViewById(R.id.info_count_2);
+          weekOrder = (LinearLayout) itemView.findViewById(R.id.week_order);
+          infoTitile3 = (TextView) itemView.findViewById(R.id.info_titile_3);
+          infoCount3 = (TextView) itemView.findViewById(R.id.info_count_3);
+          monthOrder = (LinearLayout) itemView.findViewById(R.id.month_order);
         }
     }
 }

@@ -9,8 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventBackPress;
@@ -42,8 +42,8 @@ import rx.functions.Action1;
  */
 public class WardrobeDetailFragment extends BaseFragment {
 
-    @BindView(R.id.name) TextView name;
-    @BindView(R.id.region) TextView region;
+	TextView name;
+	TextView region;
     private Locker mLocker;
     private Fragment mCurFragment;
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
@@ -74,8 +74,10 @@ public class WardrobeDetailFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hire_wardrobe, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        name.setText(mLocker.name);
+      name = (TextView) view.findViewById(R.id.name);
+      region = (TextView) view.findViewById(R.id.region);
+
+      name.setText(mLocker.name);
         region.setText(mLocker.region.name);
         getChildFragmentManager().beginTransaction().replace(R.id.frag, WardrobeShortHireFragment.newInstance(mLocker)).commit();
         if (mCurFragment != null) {

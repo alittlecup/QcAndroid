@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.model.responese.SignInUrl;
 import cn.qingchengfit.staffkit.R;
@@ -30,12 +30,12 @@ import javax.inject.Inject;
 
 public class SignInCodeFragment extends BaseFragment implements SignInPresenter.SignInView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R.id.tab_code_sign) TabLayout tabCodeSign;
-  Unbinder unbinder;
-  @BindView(R.id.vp_sign_in_code) ViewPager vpSignInCode;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TabLayout tabCodeSign;
+
+	ViewPager vpSignInCode;
   @Inject SignInPresenter presenter;
   private ArrayList<Fragment> fragments = new ArrayList<>();
   private FragmentAdapter adapter;
@@ -44,7 +44,12 @@ public class SignInCodeFragment extends BaseFragment implements SignInPresenter.
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_code_sign, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tabCodeSign = (TabLayout) view.findViewById(R.id.tab_code_sign);
+    vpSignInCode = (ViewPager) view.findViewById(R.id.vp_sign_in_code);
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     presenter.getSigninUrl();
@@ -57,7 +62,7 @@ public class SignInCodeFragment extends BaseFragment implements SignInPresenter.
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
+
   }
 
   @Override public void onGetSignInConfig(List<SignInConfig.Config> signInConfig) {

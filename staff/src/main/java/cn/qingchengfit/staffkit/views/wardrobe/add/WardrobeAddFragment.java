@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.body.AddLockerBody;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.App;
@@ -47,18 +47,32 @@ import rx.functions.Action1;
 public class WardrobeAddFragment extends BaseFragment implements WardrobeAddPresenter.MVPView {
 
     @Inject WardrobeAddPresenter presenter;
-    @BindView(R.id.wardrobe_no) CommonInputView wardrobeNo;
-    @BindView(R.id.wardrobe_district) CommonInputView wardrobeDistrict;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	CommonInputView wardrobeNo;
+	CommonInputView wardrobeDistrict;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private Bundle saveState = new Bundle();
     private LockerRegion mChoseRegion;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_wardrobe, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      wardrobeNo = (CommonInputView) view.findViewById(R.id.wardrobe_no);
+      wardrobeDistrict = (CommonInputView) view.findViewById(R.id.wardrobe_district);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.wardrobe_district).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeAddFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_complete).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeAddFragment.this.onClick(v);
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
 
         RxBusAdd(LockerRegion.class).subscribe(new Action1<LockerRegion>() {
@@ -91,7 +105,7 @@ public class WardrobeAddFragment extends BaseFragment implements WardrobeAddPres
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.wardrobe_district, R.id.btn_complete }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.wardrobe_district:
                 saveState.putString("name", wardrobeNo.getContent());

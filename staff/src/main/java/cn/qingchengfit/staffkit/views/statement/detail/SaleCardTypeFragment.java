@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SaleCardForm;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -32,17 +32,17 @@ import java.util.Locale;
  */
 public class SaleCardTypeFragment extends BaseFragment {
 
-    @BindView(R.id.data_trade_times) TextView dataTradeTimes;
-    @BindView(R.id.data_charge) TextView dataCharge;
-    @BindView(R.id.data_real_income) TextView dataRealIncome;
-    @BindView(R.id.times_trade_times) TextView timesTradeTimes;
-    @BindView(R.id.times_charge) TextView timesCharge;
-    @BindView(R.id.times_real_incomes) TextView timesRealIncomes;
-    @BindView(R.id.value_trade_times) TextView valueTradeTimes;
-    @BindView(R.id.value_charge) TextView valueCharge;
-    @BindView(R.id.value_real_income) TextView valueRealIncome;
-    @BindView(R.id.total_server_num) TextView totalServerNum;
-    @BindView(R.id.total_real_income) TextView totalRealIncome;
+	TextView dataTradeTimes;
+	TextView dataCharge;
+	TextView dataRealIncome;
+	TextView timesTradeTimes;
+	TextView timesCharge;
+	TextView timesRealIncomes;
+	TextView valueTradeTimes;
+	TextView valueCharge;
+	TextView valueRealIncome;
+	TextView totalServerNum;
+	TextView totalRealIncome;
 
     public static SaleCardTypeFragment newInstance(List<SaleCardForm> t) {
 
@@ -56,8 +56,19 @@ public class SaleCardTypeFragment extends BaseFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sale_card_form, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (getArguments() != null) {
+      dataTradeTimes = (TextView) view.findViewById(R.id.data_trade_times);
+      dataCharge = (TextView) view.findViewById(R.id.data_charge);
+      dataRealIncome = (TextView) view.findViewById(R.id.data_real_income);
+      timesTradeTimes = (TextView) view.findViewById(R.id.times_trade_times);
+      timesCharge = (TextView) view.findViewById(R.id.times_charge);
+      timesRealIncomes = (TextView) view.findViewById(R.id.times_real_incomes);
+      valueTradeTimes = (TextView) view.findViewById(R.id.value_trade_times);
+      valueCharge = (TextView) view.findViewById(R.id.value_charge);
+      valueRealIncome = (TextView) view.findViewById(R.id.value_real_income);
+      totalServerNum = (TextView) view.findViewById(R.id.total_server_num);
+      totalRealIncome = (TextView) view.findViewById(R.id.total_real_income);
+
+      if (getArguments() != null) {
             ArrayList<SaleCardForm> type = getArguments().getParcelableArrayList("form");
             if (type != null) {
                 for (int i = 0; i < type.size(); i++) {

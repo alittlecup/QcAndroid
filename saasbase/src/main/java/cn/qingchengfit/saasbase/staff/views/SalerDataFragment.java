@@ -14,16 +14,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.beans.SalerData;
@@ -70,20 +70,20 @@ import rx.schedulers.Schedulers;
 @Leaf(module = "staff", path = "/saler/data/") public class SalerDataFragment
     extends SaasBaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.cb) CheckBox cb;
-  @BindView(R2.id.item_student_header) ImageView itemStudentHeader;
-  @BindView(R2.id.item_student_header_loop) RelativeLayout itemStudentHeaderLoop;
-  @BindView(R2.id.item_student_name) TextView itemStudentName;
-  @BindView(R2.id.item_student_gender) ImageView itemStudentGender;
-  @BindView(R2.id.item_tv_student_status) TextView itemTvStudentStatus;
-  @BindView(R2.id.item_student_phonenum) TextView itemStudentPhonenum;
-  @BindView(R2.id.item_student_gymname) TextView itemStudentGymname;
-  @BindView(R2.id.icon_right) ImageView iconRight;
-  @BindView(R2.id.rv) RecyclerView rv;
-  @BindView(R2.id.tv_hint) TextView tvHint;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	CheckBox cb;
+	ImageView itemStudentHeader;
+	RelativeLayout itemStudentHeaderLoop;
+	TextView itemStudentName;
+	ImageView itemStudentGender;
+	TextView itemTvStudentStatus;
+	TextView itemStudentPhonenum;
+	TextView itemStudentGymname;
+	ImageView iconRight;
+	RecyclerView rv;
+	TextView tvHint;
   CommonFlexAdapter commonFlexAdapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
 
@@ -95,7 +95,26 @@ import rx.schedulers.Schedulers;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saler_data, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    cb = (CheckBox) view.findViewById(R.id.cb);
+    itemStudentHeader = (ImageView) view.findViewById(R.id.item_student_header);
+    itemStudentHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_student_header_loop);
+    itemStudentName = (TextView) view.findViewById(R.id.item_student_name);
+    itemStudentGender = (ImageView) view.findViewById(R.id.item_student_gender);
+    itemTvStudentStatus = (TextView) view.findViewById(R.id.item_tv_student_status);
+    itemStudentPhonenum = (TextView) view.findViewById(R.id.item_student_phonenum);
+    itemStudentGymname = (TextView) view.findViewById(R.id.item_student_gymname);
+    iconRight = (ImageView) view.findViewById(R.id.icon_right);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    tvHint = (TextView) view.findViewById(R.id.tv_hint);
+    view.findViewById(R.id.tv_sale_bill).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSaleToBill();
+      }
+    });
+
     initToolbar(toolbar);
     iconRight.setVisibility(View.GONE);
     commonFlexAdapter = new CommonFlexAdapter(itemList, this);
@@ -162,7 +181,7 @@ import rx.schedulers.Schedulers;
         });
   }
 
-  @OnClick(R2.id.tv_sale_bill)
+
   public void onSaleToBill(){
     routeTo(AppUtils.getRouterUri(getContext(), "/bill/home/list/"), null);
   }

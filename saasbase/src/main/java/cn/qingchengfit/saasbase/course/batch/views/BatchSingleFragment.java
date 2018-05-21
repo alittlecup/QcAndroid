@@ -15,12 +15,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
@@ -81,17 +81,17 @@ import rx.android.schedulers.AndroidSchedulers;
   @Need public String scheduleId;
   @Need public Boolean isPrivate = false;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.frag_course_info) FrameLayout fragCourseInfo;
-  @BindView(R2.id.civ_date) CommonInputView civDate;
-  @BindView(R2.id.civ_course_time) CommonInputView civCourseTime;
-  @BindView(R2.id.civ_open_time) CommonInputView civOpenTime;
-  @BindView(R2.id.layout_private_time) ViewGroup lyPrivateTime;
-  @BindView(R2.id.tv_private_time) TextView tvPrivateTime;
-  @BindView(R2.id.btn_del) Button btnDel;
-  Unbinder unbinder;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	FrameLayout fragCourseInfo;
+	CommonInputView civDate;
+	CommonInputView civCourseTime;
+	CommonInputView civOpenTime;
+	ViewGroup lyPrivateTime;
+	TextView tvPrivateTime;
+	Button btnDel;
+
   private BatchDetailCommonView batchBaseFragment;
   private DialogList openDialog;
   private String[] arrayOpenTime;
@@ -114,7 +114,22 @@ import rx.android.schedulers.AndroidSchedulers;
     super.onCreateView(inflater, container, savedInstanceState);
     //db = DataBindingUtil.inflate(inflater, R.layout.fragment_saas_single_batch, container, false);
     View view = inflater.inflate(R.layout.fragment_saas_single_batch, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    fragCourseInfo = (FrameLayout) view.findViewById(R.id.frag_course_info);
+    civDate = (CommonInputView) view.findViewById(R.id.civ_date);
+    civCourseTime = (CommonInputView) view.findViewById(R.id.civ_course_time);
+    civOpenTime = (CommonInputView) view.findViewById(R.id.civ_open_time);
+    lyPrivateTime = (ViewGroup) view.findViewById(R.id.layout_private_time);
+    tvPrivateTime = (TextView) view.findViewById(R.id.tv_private_time);
+    btnDel = (Button) view.findViewById(R.id.btn_del);
+    view.findViewById(R.id.layout_private_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickPrivateTime();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     civOpenTime.setOnClickListener(v -> onOpenTime());
@@ -231,7 +246,7 @@ import rx.android.schedulers.AndroidSchedulers;
     onOpenRule(batchDetail.open_rule, DateUtils.formatDateFromServer(batchDetail.start));
   }
 
-  @OnClick(R2.id.layout_private_time) public void onClickPrivateTime() {
+ public void onClickPrivateTime() {
     EditPrivateOpenTimeFragment.newInstance(timeRepeat).show(getChildFragmentManager(), "");
   }
 

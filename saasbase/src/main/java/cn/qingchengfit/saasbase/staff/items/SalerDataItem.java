@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.staff.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.staff.beans.SalerData;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -48,14 +48,17 @@ public class SalerDataItem extends AbstractFlexibleItem<SalerDataItem.SalerDataV
 
   public class SalerDataVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.tv_time_tag) TextView tvTimeTag;
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_time) TextView tvTime;
-    @BindView(R2.id.tv_money) TextView tvMoney;
+	TextView tvTimeTag;
+	TextView tvTitle;
+	TextView tvTime;
+	TextView tvMoney;
 
     public SalerDataVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTimeTag = (TextView) view.findViewById(R.id.tv_time_tag);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvTime = (TextView) view.findViewById(R.id.tv_time);
+      tvMoney = (TextView) view.findViewById(R.id.tv_money);
     }
   }
 }

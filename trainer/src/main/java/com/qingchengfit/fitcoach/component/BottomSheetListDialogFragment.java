@@ -11,16 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static butterknife.ButterKnife.bind;
 
 /**
  * power by
@@ -37,102 +32,104 @@ import static butterknife.ButterKnife.bind;
  */
 public class BottomSheetListDialogFragment extends BottomSheetDialogFragment {
 
-    @BindView(R.id.recycleview) RecyclerView recycleview;
-    Unbinder unbinder;
-    private List<String> d;
+  RecyclerView recycleview;
 
-    public static void start(Fragment fragment, int requestCode, ArrayList<String> datas) {
-        BottomSheetListDialogFragment f = newInstance(datas);
-        f.setTargetFragment(fragment, requestCode);
-        f.show(fragment.getFragmentManager(), "");
+  private List<String> d;
+
+  public static void start(Fragment fragment, int requestCode, ArrayList<String> datas) {
+    BottomSheetListDialogFragment f = newInstance(datas);
+    f.setTargetFragment(fragment, requestCode);
+    f.show(fragment.getFragmentManager(), "");
+  }
+
+  public static void start(Fragment fragment, int requestCode, String[] datas) {
+    BottomSheetListDialogFragment f = newInstance(new ArrayList<String>(Arrays.asList(datas)));
+    f.setTargetFragment(fragment, requestCode);
+    f.show(fragment.getFragmentManager(), "");
+  }
+
+  public static BottomSheetListDialogFragment newInstance(ArrayList<String> datas) {
+    Bundle args = new Bundle();
+    args.putStringArrayList("datas", datas);
+    BottomSheetListDialogFragment fragment = new BottomSheetListDialogFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      d = getArguments().getStringArrayList("datas");
+    }
+  }
+
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.bottom_list, container, false);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+    BSAdapter adatper = new BSAdapter();
+    recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+    recycleview.setAdapter(adatper);
+    adatper.setListener(new OnRecycleItemClickListener() {
+      @Override public void onItemClick(View v, int pos) {
+        if (getTargetFragment() == null) {
+
+        } else {
+          getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
+              IntentUtils.instanceStringIntent(pos + ""));
+          BottomSheetListDialogFragment.this.dismiss();
+        }
+      }
+    });
+    return view;
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
+
+  class BSVH extends RecyclerView.ViewHolder {
+    TextView text;
+
+    public BSVH(View itemView) {
+      super(itemView);
+      text = (TextView) itemView.findViewById(R.id.item_text);
+    }
+  }
+
+  class BSAdapter extends RecyclerView.Adapter<BSVH> implements View.OnClickListener {
+    private OnRecycleItemClickListener listener;
+
+    public OnRecycleItemClickListener getListener() {
+      return listener;
     }
 
-    public static void start(Fragment fragment, int requestCode, String[] datas) {
-        BottomSheetListDialogFragment f = newInstance(new ArrayList<String>(Arrays.asList(datas)));
-        f.setTargetFragment(fragment, requestCode);
-        f.show(fragment.getFragmentManager(), "");
+    public void setListener(OnRecycleItemClickListener listener) {
+      this.listener = listener;
     }
 
-    public static BottomSheetListDialogFragment newInstance(ArrayList<String> datas) {
-        Bundle args = new Bundle();
-        args.putStringArrayList("datas", datas);
-        BottomSheetListDialogFragment fragment = new BottomSheetListDialogFragment();
-        fragment.setArguments(args);
-        return fragment;
+    @Override public BSVH onCreateViewHolder(ViewGroup parent, int viewType) {
+      View view = LayoutInflater.from(parent.getContext())
+          .inflate(R.layout.item_simple_text, parent, false);
+      BSVH b = new BSVH(view);
+      b.itemView.setOnClickListener(this);
+      return b;
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            d = getArguments().getStringArrayList("datas");
-        }
+    @Override public void onBindViewHolder(BSVH holder, int position) {
+      holder.itemView.setTag(position);
+      holder.text.setText(d.get(position));
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        BSAdapter adatper = new BSAdapter();
-        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycleview.setAdapter(adatper);
-        adatper.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                if (getTargetFragment() == null) {
-
-                } else {
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
-                        IntentUtils.instanceStringIntent(pos + ""));
-                    BottomSheetListDialogFragment.this.dismiss();
-                }
-            }
-        });
-        return view;
+    @Override public int getItemCount() {
+      return d.size();
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    @Override public void onClick(View v) {
+      if (listener != null) {
+        listener.onItemClick(v, (int) v.getTag());
+      }
     }
-
-    class BSVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_text) TextView text;
-
-        public BSVH(View itemView) {
-            super(itemView);
-            bind(this, itemView);
-        }
-    }
-
-    class BSAdapter extends RecyclerView.Adapter<BSVH> implements View.OnClickListener {
-        private OnRecycleItemClickListener listener;
-
-        public OnRecycleItemClickListener getListener() {
-            return listener;
-        }
-
-        public void setListener(OnRecycleItemClickListener listener) {
-            this.listener = listener;
-        }
-
-        @Override public BSVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_text, parent, false);
-            BSVH b = new BSVH(view);
-            b.itemView.setOnClickListener(this);
-            return b;
-        }
-
-        @Override public void onBindViewHolder(BSVH holder, int position) {
-            holder.itemView.setTag(position);
-            holder.text.setText(d.get(position));
-        }
-
-        @Override public int getItemCount() {
-            return d.size();
-        }
-
-        @Override public void onClick(View v) {
-            if (listener != null) {
-                listener.onItemClick(v, (int) v.getTag());
-            }
-        }
-    }
+  }
 }

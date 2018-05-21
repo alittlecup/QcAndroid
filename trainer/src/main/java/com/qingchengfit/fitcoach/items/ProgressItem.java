@@ -1,13 +1,9 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.LoadingPointerView;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -60,11 +56,11 @@ public class ProgressItem extends AbstractFlexibleItem<ProgressItem.ProgressVH> 
     }
 
     public static class ProgressVH extends FlexibleViewHolder {
-        @BindView(R.id.pointer) LoadingPointerView loadingPointerView;
+	LoadingPointerView loadingPointerView;
 
         public ProgressVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          loadingPointerView = (LoadingPointerView) view.findViewById(R.id.pointer);
         }
     }
 }

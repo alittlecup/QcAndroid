@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.R;
 import java.util.ArrayList;
@@ -56,14 +56,20 @@ public class SignInCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class CourseHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_signin_item_time) TextView tv_signin_item_time;
-        @BindView(R.id.tv_signin_item_course_name) TextView tv_signin_item_course_name;
-        @BindView(R.id.tv_signin_item_course_teacher) TextView tv_signin_item_course_teacher;
-        @BindView(R.id.tv_signin_item_course_room) TextView tv_signin_item_course_room;
+	TextView tv_signin_item_time;
+	TextView tv_signin_item_course_name;
+	TextView tv_signin_item_course_teacher;
+	TextView tv_signin_item_course_room;
 
         public CourseHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          tv_signin_item_time = (TextView) itemView.findViewById(R.id.tv_signin_item_time);
+          tv_signin_item_course_name =
+              (TextView) itemView.findViewById(R.id.tv_signin_item_course_name);
+          tv_signin_item_course_teacher =
+              (TextView) itemView.findViewById(R.id.tv_signin_item_course_teacher);
+          tv_signin_item_course_room =
+              (TextView) itemView.findViewById(R.id.tv_signin_item_course_room);
         }
     }
 }

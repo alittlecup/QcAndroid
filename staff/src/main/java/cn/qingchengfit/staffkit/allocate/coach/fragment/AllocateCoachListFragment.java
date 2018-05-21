@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.CommonAllocateItem;
 import cn.qingchengfit.staffkit.allocate.coach.AllocateCoachActivity;
@@ -31,11 +31,11 @@ import javax.inject.Inject;
 public class AllocateCoachListFragment extends BaseFragment
     implements AllocateCoachListPresenter.CoachListView, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recycler_coaches_list) RecyclerView list;
+	Toolbar toolbar;
+	RecyclerView list;
 
     @Inject AllocateCoachListPresenter presenter;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	TextView toolbarTitile;
 
     private List<CommonAllocateItem> itemList = new ArrayList<>();
     private CommonFlexAdapter adapter;
@@ -47,8 +47,11 @@ public class AllocateCoachListFragment extends BaseFragment
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coaches_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      list = (RecyclerView) view.findViewById(R.id.recycler_coaches_list);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      delegatePresenter(presenter, this);
         getData();
         setToolbar(toolbar);
 

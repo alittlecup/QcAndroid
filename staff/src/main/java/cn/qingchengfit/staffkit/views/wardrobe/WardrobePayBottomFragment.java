@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -67,7 +67,7 @@ import rx.schedulers.Schedulers;
  */
 public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.rv) RecyclerView rv;
+	RecyclerView rv;
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -95,8 +95,9 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_wardrobe_pay, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        rv.setHasFixedSize(true);
+      rv = (RecyclerView) view.findViewById(R.id.rv);
+
+      rv.setHasFixedSize(true);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         mAdapter = new CommonFlexAdapter(mDatas, this);
         mDatas.clear();

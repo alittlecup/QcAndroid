@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.CmBottomListChosenItem;
 import cn.qingchengfit.items.CmBottomListItem;
 import cn.qingchengfit.notisetting.presenter.NotiSettingChannelPresenter;
@@ -54,10 +54,10 @@ import javax.inject.Inject;
 public class SendChannelTabFragment extends VpFragment
     implements NotiSettingChannelPresenter.MVPView, TitleFragment {
 
-  @BindView(R.id.tv_msg_left) CompatTextView tvMsgLeft;
-  @BindView(R.id.tv_has_verify) CompatTextView tvHasVerify;
-  @BindView(R.id.civ_send_student) CommonInputView civSendStudent;
-  @BindView(R.id.civ_send_staff) CommonInputView civSendStaff;
+	CompatTextView tvMsgLeft;
+	CompatTextView tvHasVerify;
+	CommonInputView civSendStudent;
+	CommonInputView civSendStaff;
 
   @Inject NotiSettingChannelPresenter presenter;
   @Inject SerPermisAction serPermisAction;
@@ -76,7 +76,35 @@ public class SendChannelTabFragment extends VpFragment
 
     if (serPermisAction.check(PermissionServerUtils.MESSAGECHANNELS)) {
       view = inflater.inflate(R.layout.fragment_send_channel_tab, container, false);
-      unbinder = ButterKnife.bind(this, view);
+      tvMsgLeft = (CompatTextView) view.findViewById(R.id.tv_msg_left);
+      tvHasVerify = (CompatTextView) view.findViewById(R.id.tv_has_verify);
+      civSendStudent = (CommonInputView) view.findViewById(R.id.civ_send_student);
+      civSendStaff = (CommonInputView) view.findViewById(R.id.civ_send_staff);
+      view.findViewById(R.id.layout_channel_msg).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onLayoutChannelMsgClicked();
+        }
+      });
+      view.findViewById(R.id.layout_channel_wx).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onLayoutChannelWxClicked();
+        }
+      });
+      view.findViewById(R.id.layout_channel_app).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onLayoutChannelAppClicked();
+        }
+      });
+      view.findViewById(R.id.civ_send_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCivSendStudentClicked();
+        }
+      });
+      view.findViewById(R.id.civ_send_staff).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCivSendStaffClicked();
+        }
+      });
       delegatePresenter(presenter, this);
       presenter.queryCurSMSleft();
       presenter.querySendChannel();
@@ -97,7 +125,7 @@ public class SendChannelTabFragment extends VpFragment
     super.onDestroyView();
   }
 
-  @OnClick(R.id.layout_channel_msg) public void onLayoutChannelMsgClicked() {
+ public void onLayoutChannelMsgClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
@@ -105,7 +133,7 @@ public class SendChannelTabFragment extends VpFragment
     routeTo(new NotiSettingMsgChargeFragment());
   }
 
-  @OnClick(R.id.layout_channel_wx) public void onLayoutChannelWxClicked() {
+ public void onLayoutChannelWxClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
@@ -113,11 +141,11 @@ public class SendChannelTabFragment extends VpFragment
     routeTo(new NotiSettingWxTemplateFragment());
   }
 
-  @OnClick(R.id.layout_channel_app) public void onLayoutChannelAppClicked() {
+ public void onLayoutChannelAppClicked() {
     showAlert("通过「青橙健身APP」和「青橙健身教练APP」的推送消息通知工作人员和教练");
   }
 
-  @OnClick(R.id.civ_send_student) public void onCivSendStudentClicked() {
+ public void onCivSendStudentClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
@@ -137,7 +165,7 @@ public class SendChannelTabFragment extends VpFragment
     bottomListFragment.show(getChildFragmentManager(), "");
   }
 
-  @OnClick(R.id.civ_send_staff) public void onCivSendStaffClicked() {
+ public void onCivSendStaffClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;

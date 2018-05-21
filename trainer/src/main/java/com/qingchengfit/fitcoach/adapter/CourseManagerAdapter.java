@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -109,17 +109,23 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
     }
 
     public static class CourseManagerVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.month) TextView month;
-        @BindView(R.id.item_checkbox) CheckBox itemCheckbox;
-        @BindView(R.id.date) TextView date;
-        @BindView(R.id.weekday) TextView weekday;
-        @BindView(R.id.time) TextView time;
-        @BindView(R.id.outofdate) TextView outofdate;
-        @BindView(R.id.outofdatelayout) View view;
+	TextView month;
+	CheckBox itemCheckbox;
+	TextView date;
+	TextView weekday;
+	TextView time;
+	TextView outofdate;
+	View view;
 
         public CourseManagerVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          month = (TextView) itemView.findViewById(R.id.month);
+          itemCheckbox = (CheckBox) itemView.findViewById(R.id.item_checkbox);
+          date = (TextView) itemView.findViewById(R.id.date);
+          weekday = (TextView) itemView.findViewById(R.id.weekday);
+          time = (TextView) itemView.findViewById(R.id.time);
+          outofdate = (TextView) itemView.findViewById(R.id.outofdate);
+          view = (View) itemView.findViewById(R.id.outofdatelayout);
         }
     }
 }

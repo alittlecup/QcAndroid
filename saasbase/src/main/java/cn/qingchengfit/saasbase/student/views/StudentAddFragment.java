@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
@@ -55,11 +55,11 @@ import rx.schedulers.Schedulers;
 @Leaf(module = "student",path = "/add/")
 public class StudentAddFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.civ_name) CommonInputView civName;
-  @BindView(R2.id.civ_gender) CommonInputView civGender;
-  @BindView(R2.id.civ_phone) CommonInputView civPhone;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	CommonInputView civName;
+	CommonInputView civGender;
+	CommonInputView civPhone;
 
   @Inject IStudentModel studentModel;
 
@@ -68,7 +68,17 @@ public class StudentAddFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_student_add, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    civName = (CommonInputView) view.findViewById(R.id.civ_name);
+    civGender = (CommonInputView) view.findViewById(R.id.civ_gender);
+    civPhone = (CommonInputView) view.findViewById(R.id.civ_phone);
+    view.findViewById(R.id.civ_gender).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+
     initToolbar(toolbar);
     return view;
   }
@@ -118,7 +128,7 @@ public class StudentAddFragment extends BaseFragment {
     return StudentAddFragment.class.getName();
   }
 
-  @OnClick(R2.id.civ_gender) public void onViewClicked() {
+ public void onViewClicked() {
     new DialogList(getContext()).list(new String[] { "男", "女" },
       new AdapterView.OnItemClickListener() {
         @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

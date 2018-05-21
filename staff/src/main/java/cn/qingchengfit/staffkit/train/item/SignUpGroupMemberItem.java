@@ -1,12 +1,8 @@
 package cn.qingchengfit.staffkit.train.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import com.bumptech.glide.Glide;
@@ -77,15 +73,19 @@ public class SignUpGroupMemberItem extends AbstractFlexibleItem<SignUpGroupMembe
 
     class SignUpGroupMemberVH extends FlexibleViewHolder {
 
-        @BindView(R.id.head_group_member) ImageView headGroupMember;
-        @BindView(R.id.text_member_name) TextView textMemberName;
-        @BindView(R.id.image_member_gender) ImageView imageMemberGender;
-        @BindView(R.id.text_member_phone) TextView textMemberPhone;
-        @BindView(R.id.item_delete_member) ImageView itemDeleteMember;
+	ImageView headGroupMember;
+	TextView textMemberName;
+	ImageView imageMemberGender;
+	TextView textMemberPhone;
+	ImageView itemDeleteMember;
 
         public SignUpGroupMemberVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          headGroupMember = (ImageView) view.findViewById(R.id.head_group_member);
+          textMemberName = (TextView) view.findViewById(R.id.text_member_name);
+          imageMemberGender = (ImageView) view.findViewById(R.id.image_member_gender);
+          textMemberPhone = (TextView) view.findViewById(R.id.text_member_phone);
+          itemDeleteMember = (ImageView) view.findViewById(R.id.item_delete_member);
         }
     }
 }

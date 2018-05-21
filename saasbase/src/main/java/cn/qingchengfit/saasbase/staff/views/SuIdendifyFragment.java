@@ -14,11 +14,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
@@ -65,19 +65,19 @@ import rx.schedulers.Schedulers;
 public class SuIdendifyFragment extends SaasBaseFragment implements SuIdendifyPresenter.MVPView {
 
 
-    @BindView(R2.id.su_avatar) ImageView suAvatar;
-    @BindView(R2.id.su_name) TextView suName;
-    @BindView(R2.id.su_phone) TextView suPhone;
-    @BindView(R2.id.check_code) CommonInputView checkCode;
-    @BindView(R2.id.send_msg) TextView sendMsg;
-    @BindView(R2.id.btn_next) Button btnNext;
-    @BindView(R2.id.send_hint) TextView sendHint;
+	ImageView suAvatar;
+	TextView suName;
+	TextView suPhone;
+	CommonInputView checkCode;
+	TextView sendMsg;
+	Button btnNext;
+	TextView sendHint;
 
     @Inject SuIdendifyPresenter mSuIdendifyPresenter;
-    @BindView(R2.id.ret_hint) TextView retHint;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+	TextView retHint;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
 
     private Subscription mSendMsgSp;
     @Need StaffShip mStaff;
@@ -85,8 +85,29 @@ public class SuIdendifyFragment extends SaasBaseFragment implements SuIdendifyPr
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_check_identity, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(mSuIdendifyPresenter, this);
+      suAvatar = (ImageView) view.findViewById(R.id.su_avatar);
+      suName = (TextView) view.findViewById(R.id.su_name);
+      suPhone = (TextView) view.findViewById(R.id.su_phone);
+      checkCode = (CommonInputView) view.findViewById(R.id.check_code);
+      sendMsg = (TextView) view.findViewById(R.id.send_msg);
+      btnNext = (Button) view.findViewById(R.id.btn_next);
+      sendHint = (TextView) view.findViewById(R.id.send_hint);
+      retHint = (TextView) view.findViewById(R.id.ret_hint);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+      view.findViewById(R.id.send_msg).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSend();
+        }
+      });
+      view.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SuIdendifyFragment.this.onClick(v);
+        }
+      });
+
+      delegatePresenter(mSuIdendifyPresenter, this);
         initToolbar(toolbar);
         Glide.with(getContext())
             .load(PhotoUtils.getSmall(mStaff.getAvatar()))
@@ -125,12 +146,12 @@ public class SuIdendifyFragment extends SaasBaseFragment implements SuIdendifyPr
         return SuIdendifyFragment.class.getName();
     }
 
-    @OnClick(R2.id.send_msg)
+
     public void onSend(){
         mSuIdendifyPresenter.sendMsg(new GetCodeBody.Builder().phone(mStaff.getPhone()).area_code(mStaff.getArea_code()).build());
     }
 
-    @OnClick(R2.id.btn_next) public void onClick(View view) {
+ public void onClick(View view) {
         showLoading();
         mSuIdendifyPresenter.checkIdendify(new CheckCodeBody.Builder().phone(mStaff.getPhone())
             .code(checkCode.getContent())

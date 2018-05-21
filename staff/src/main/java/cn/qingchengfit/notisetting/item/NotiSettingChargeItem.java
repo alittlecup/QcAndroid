@@ -1,12 +1,8 @@
 package cn.qingchengfit.notisetting.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -48,13 +44,15 @@ public class NotiSettingChargeItem
   }
 
   public class NotiSettingChargeVH extends FlexibleViewHolder {
-    @BindView(R.id.tv_money) TextView tvMoney;
-    @BindView(R.id.tv_count) TextView tvCount;
-    @BindView(R.id.img_chosen) ImageView imgChosen;
+	TextView tvMoney;
+	TextView tvCount;
+	ImageView imgChosen;
 
     public NotiSettingChargeVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvMoney = (TextView) view.findViewById(R.id.tv_money);
+      tvCount = (TextView) view.findViewById(R.id.tv_count);
+      imgChosen = (ImageView) view.findViewById(R.id.img_chosen);
     }
   }
 }

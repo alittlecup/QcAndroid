@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.staff.beans.Invitation;
 import cn.qingchengfit.saasbase.staff.items.LinkShareItem;
@@ -55,13 +55,13 @@ import javax.inject.Inject;
 @Leaf(module = "staff", path = "/add/") public class StaffAddFragment extends SaasBaseFragment implements
   FlexibleAdapter.OnItemClickListener,StaffAddPresenter.MVPView{
   CommonFlexAdapter commonFlexAdapter;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.civ_name) CommonInputView civName;
-  @BindView(R2.id.civ_gender) CommonInputView civGender;
-  @BindView(R2.id.phone_num) PhoneEditText phoneNum;
-  @BindView(R2.id.civ_position) CommonInputView civPosition;
-  @BindView(R2.id.rv) RecyclerView rv;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	CommonInputView civName;
+	CommonInputView civGender;
+	PhoneEditText phoneNum;
+	CommonInputView civPosition;
+	RecyclerView rv;
 
   @Inject StaffAddPresenter presenter;
 
@@ -74,7 +74,29 @@ import javax.inject.Inject;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_staff_add, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    civName = (CommonInputView) view.findViewById(R.id.civ_name);
+    civGender = (CommonInputView) view.findViewById(R.id.civ_gender);
+    phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+    civPosition = (CommonInputView) view.findViewById(R.id.civ_position);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    view.findViewById(R.id.civ_gender).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivGenderClicked();
+      }
+    });
+    view.findViewById(R.id.civ_position).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivPositionClicked();
+      }
+    });
+    view.findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnDoneClicked();
+      }
+    });
+
     delegatePresenter(presenter,this);
     initToolbar(toolbar);
     initView();
@@ -114,7 +136,7 @@ import javax.inject.Inject;
   /**
    * 选择性别
    */
-  @OnClick(R2.id.civ_gender) public void onCivGenderClicked() {
+ public void onCivGenderClicked() {
     new DialogList(getContext()).list(getResources().getStringArray(R.array.gender_list), new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         presenter.setGender(position);
@@ -126,14 +148,14 @@ import javax.inject.Inject;
   /**
    * 选择职位
    */
-  @OnClick(R2.id.civ_position) public void onCivPositionClicked() {
+ public void onCivPositionClicked() {
     presenter.choosePosition();
   }
 
   /**
    * 完成
    */
-  @OnClick(R2.id.btn_done) public void onBtnDoneClicked() {
+ public void onBtnDoneClicked() {
     if(!phoneNum.checkPhoneNum())
       return;
     if (TextUtils.isEmpty(presenter.getBody().position_id)){

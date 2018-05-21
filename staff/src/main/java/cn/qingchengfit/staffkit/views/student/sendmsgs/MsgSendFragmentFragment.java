@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -67,13 +67,13 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
 @FragmentWithArgs public class MsgSendFragmentFragment extends BaseFragment implements ShortMsgPresentersPresenter.MVPView {
     @Arg(required = false) String msgid;
 
-    @BindView(R.id.layout_tags) QcTagContainerLayout layoutTags;
-    @BindView(R.id.et_content) EditText etContent;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.tv_left) TextView tvLeft;
-    @BindView(R.id.tv_sms_count) TextView tvSmsCount;
-    @BindView(R.id.layout_send_hint) RelativeLayout layoutSendHint;
+	QcTagContainerLayout layoutTags;
+	EditText etContent;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	TextView tvLeft;
+	TextView tvSmsCount;
+	RelativeLayout layoutSendHint;
 
     String smsBegin =
         "\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020";
@@ -90,8 +90,20 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_msg_send, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        setToolbar(toolbar);
+      layoutTags = (QcTagContainerLayout) view.findViewById(R.id.layout_tags);
+      etContent = (EditText) view.findViewById(R.id.et_content);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      tvLeft = (TextView) view.findViewById(R.id.tv_left);
+      tvSmsCount = (TextView) view.findViewById(R.id.tv_sms_count);
+      layoutSendHint = (RelativeLayout) view.findViewById(R.id.layout_send_hint);
+      view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickAdd();
+        }
+      });
+
+      setToolbar(toolbar);
         delegatePresenter(presenter, this);
         if (!TextUtils.isEmpty(msgid)) {
             showLoadingTrans();
@@ -197,7 +209,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
     /**
      * 点击添加学员
      */
-    @OnClick(R.id.btn_add) public void onClickAdd() {
+ public void onClickAdd() {
         Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
         toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
         //toChooseStudent.putExtra("")

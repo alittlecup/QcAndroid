@@ -9,14 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.VpFragment;
-import com.bumptech.glide.Glide;
 import com.google.zxing.WriterException;
 
 /**
@@ -25,10 +21,10 @@ import com.google.zxing.WriterException;
 
 public class SignInChildCodeFragment extends VpFragment implements TitleFragment {
 
-  @BindView(R.id.tv_code_sign) TextView tvCodeSign;
-  @BindView(R.id.tv_sign_introduction) TextView tvSignIntroduction;
-  @BindView(R.id.img_sign_code) ImageView imgSignCode;
-  Unbinder unbinder;
+	TextView tvCodeSign;
+	TextView tvSignIntroduction;
+	ImageView imgSignCode;
+
   private String url;
   private boolean isSignIn;
 
@@ -53,7 +49,10 @@ public class SignInChildCodeFragment extends VpFragment implements TitleFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_code_sign_in, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvCodeSign = (TextView) view.findViewById(R.id.tv_code_sign);
+    tvSignIntroduction = (TextView) view.findViewById(R.id.tv_sign_introduction);
+    imgSignCode = (ImageView) view.findViewById(R.id.img_sign_code);
+
     QRGEncoder qrgEncoder =
         new QRGEncoder(url, null, QRGContents.Type.TEXT, MeasureUtils.dpToPx(180f, getResources()));
     try {
@@ -70,7 +69,7 @@ public class SignInChildCodeFragment extends VpFragment implements TitleFragment
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
+
   }
 
   @Override public String getTitle() {

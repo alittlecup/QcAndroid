@@ -1,16 +1,10 @@
 package cn.qingchengfit.saasbase.bill.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.bill.beans.PayRequest;
 import cn.qingchengfit.saasbase.events.EventPayRequest;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -60,24 +54,42 @@ public class PayRequestItem extends AbstractFlexibleItem<PayRequestItem.PayReque
   }
 
   public class PayRequestVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_order_no) TextView tvOrderNo;
-    @BindView(R2.id.tv_status) TextView tvStatus;
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_content) TextView tvContent;
-    @BindView(R2.id.tv_pay_money) TextView tvPayMoney;
+	TextView tvOrderNo;
+	TextView tvStatus;
+	TextView tvTitle;
+	TextView tvContent;
+	TextView tvPayMoney;
     //@BindView(R2.id.tv_charge_money) TextView tvChargeMoney;
     //@BindView(R2.id.tv_valid_day) TextView tvValidDay;
-    @BindView(R2.id.tv_time) TextView tvTime;
-    @BindView(R2.id.tv_staff) TextView tvStaff;
-    @BindView(R2.id.btn_cancel) Button btnCancel;
-    @BindView(R2.id.btn_pay) Button btnPay;
+	TextView tvTime;
+	TextView tvStaff;
+	Button btnCancel;
+	Button btnPay;
 
     public PayRequestVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvOrderNo = (TextView) view.findViewById(R.id.tv_order_no);
+      tvStatus = (TextView) view.findViewById(R.id.tv_status);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
+      tvPayMoney = (TextView) view.findViewById(R.id.tv_pay_money);
+      tvTime = (TextView) view.findViewById(R.id.tv_time);
+      tvStaff = (TextView) view.findViewById(R.id.tv_staff);
+      btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+      btnPay = (Button) view.findViewById(R.id.btn_pay);
+      view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          cancleRequest();
+        }
+      });
+      view.findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          pay();
+        }
+      });
     }
 
-    @OnClick(R2.id.btn_cancel)
+
     public void cancleRequest(){
       IFlexible iFlexible = mAdapter.getItem(getAdapterPosition());
       if (iFlexible instanceof  PayRequestItem){
@@ -85,7 +97,7 @@ public class PayRequestItem extends AbstractFlexibleItem<PayRequestItem.PayReque
       }
     }
 
-    @OnClick(R2.id.btn_pay)
+
     public void pay(){
       IFlexible iFlexible = mAdapter.getItem(getAdapterPosition());
       if (iFlexible instanceof  PayRequestItem){

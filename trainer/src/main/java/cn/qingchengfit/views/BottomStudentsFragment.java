@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.items.DelStudentItem;
 import cn.qingchengfit.model.base.Personage;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
@@ -48,13 +48,13 @@ import java.util.List;
 @FragmentWithArgs public class BottomStudentsFragment extends BottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener {
     public static final int CHOOSE_STUDENT = 0;
     public static final int CHAT_FRIENDS = 1;
-  @BindView(R.id.tv_stud_count) protected TextView tvStudCount;
+	protected TextView tvStudCount;
   protected CommonFlexAdapter adapter;
     @Arg(required = false) int type;
-    @BindView(R.id.tv_clear_all) TextView tvClearAll;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	TextView tvClearAll;
+	RecyclerView recycleview;
     List<AbstractFlexibleItem> datas = new ArrayList<>();
-    Unbinder unbinder;
+
     private BottomStudentsListener listener;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,8 +65,16 @@ import java.util.List;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_allotsale_show_selected, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+      tvStudCount = (TextView) view.findViewById(R.id.tv_stud_count);
+      tvClearAll = (TextView) view.findViewById(R.id.tv_clear_all);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+      view.findViewById(R.id.tv_clear_all).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomStudentsFragment.this.onClick();
+        }
+      });
+
+      recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         //recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new CommonFlexAdapter(datas, this);
         recycleview.setAdapter(adapter);
@@ -107,7 +115,7 @@ import java.util.List;
         return true;
     }
 
-    @OnClick(R.id.tv_clear_all) public void onClick() {
+ public void onClick() {
         datas.clear();
         dismiss();
     }

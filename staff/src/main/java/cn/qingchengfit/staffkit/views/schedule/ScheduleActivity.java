@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -73,17 +73,17 @@ import rx.schedulers.Schedulers;
 public class ScheduleActivity extends BaseActivity implements FragCallBack {
 
     private static final int REQUEST_CHOOSE_GYM = 1;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.schedule_calendar_ic) ImageView scheduleCalendarIc;
-    @BindView(R.id.schedule_calendar) RelativeLayout scheduleCalendar;
-    @BindView(R.id.schedule_tab) PagerSlidingTabStrip scheduleTab;
-    @BindView(R.id.schedule_calendar_header) LinearLayout scheduleCalendarHeader;
-    @BindView(R.id.schedule_expend_view) LinearLayout scheduleExpendView;
-    @BindView(R.id.schedule_vp) ViewPager scheduleVp;
-    @BindView(R.id.schedule_floatbg) LinearLayout scheduleFloatbg;
-    @BindView(R.id.web_floatbtn) FloatingActionsMenu webFloatbtn;
-    @BindView(R.id.half_bg) View halfBg;
+	TextView toolbarTitle;
+	Toolbar toolbar;
+	ImageView scheduleCalendarIc;
+	RelativeLayout scheduleCalendar;
+	PagerSlidingTabStrip scheduleTab;
+	LinearLayout scheduleCalendarHeader;
+	LinearLayout scheduleExpendView;
+	ViewPager scheduleVp;
+	LinearLayout scheduleFloatbg;
+	FloatingActionsMenu webFloatbtn;
+	View halfBg;
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -96,8 +96,29 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        ButterKnife.bind(this);
-        initView();
+      toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      scheduleCalendarIc = (ImageView) findViewById(R.id.schedule_calendar_ic);
+      scheduleCalendar = (RelativeLayout) findViewById(R.id.schedule_calendar);
+      scheduleTab = (PagerSlidingTabStrip) findViewById(R.id.schedule_tab);
+      scheduleCalendarHeader = (LinearLayout) findViewById(R.id.schedule_calendar_header);
+      scheduleExpendView = (LinearLayout) findViewById(R.id.schedule_expend_view);
+      scheduleVp = (ViewPager) findViewById(R.id.schedule_vp);
+      scheduleFloatbg = (LinearLayout) findViewById(R.id.schedule_floatbg);
+      webFloatbtn = (FloatingActionsMenu) findViewById(R.id.web_floatbtn);
+      halfBg = (View) findViewById(R.id.half_bg);
+      findViewById(R.id.half_bg).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBgClick();
+        }
+      });
+      findViewById(R.id.schedule_calendar).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCalendar();
+        }
+      });
+
+      initView();
     }
 
     private void initView() {
@@ -168,7 +189,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
         }
     }
 
-    @OnClick(R.id.half_bg) public void onBgClick() {
+ public void onBgClick() {
         webFloatbtn.collapse();
     }
 
@@ -251,7 +272,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
             });
     }
 
-    @OnClick(R.id.schedule_calendar) public void onCalendar() {
+ public void onCalendar() {
         scheduleCalendar.setClickable(false);
         if (mDatePicker == null) {
             mDatePicker = new DatePicker(this);

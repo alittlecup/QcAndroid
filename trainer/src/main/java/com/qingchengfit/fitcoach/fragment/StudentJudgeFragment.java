@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -31,16 +31,16 @@ public class StudentJudgeFragment extends BaseFragment {
     public static final String TAGS = "tags";
     public static final String EVALUATE = "EvaluateEntitys";
     QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity mEntityls;
-    @BindView(R.id.tag_group) TagGroup tagGroup;
-    @BindView(R.id.student_judge_coach_score) TextView studentJudgeCoachScore;
-    @BindView(R.id.student_judge_coach_star) RatingBar studentJudgeCoachStar;
-    @BindView(R.id.student_judge_course_score) TextView studentJudgeCourseScore;
-    @BindView(R.id.student_judge_course_star) RatingBar studentJudgeCourseStar;
-    @BindView(R.id.student_judge_text) TextView studentJudgeText;
-    @BindView(R.id.student_judge_tag_count) TextView studentJudgeTagCount;
-    @BindView(R.id.student_judge_goodat_tv) TextView studentJudgeGoodatTv;
+	TagGroup tagGroup;
+	TextView studentJudgeCoachScore;
+	RatingBar studentJudgeCoachStar;
+	TextView studentJudgeCourseScore;
+	RatingBar studentJudgeCourseStar;
+	TextView studentJudgeText;
+	TextView studentJudgeTagCount;
+	TextView studentJudgeGoodatTv;
     private String[] mTags;
-    private Unbinder unbinder;
+
 
     public StudentJudgeFragment() {
         // Required empty public constructor
@@ -67,8 +67,16 @@ public class StudentJudgeFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_judge, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        isPrepared = true;
+      tagGroup = (TagGroup) view.findViewById(R.id.tag_group);
+      studentJudgeCoachScore = (TextView) view.findViewById(R.id.student_judge_coach_score);
+      studentJudgeCoachStar = (RatingBar) view.findViewById(R.id.student_judge_coach_star);
+      studentJudgeCourseScore = (TextView) view.findViewById(R.id.student_judge_course_score);
+      studentJudgeCourseStar = (RatingBar) view.findViewById(R.id.student_judge_course_star);
+      studentJudgeText = (TextView) view.findViewById(R.id.student_judge_text);
+      studentJudgeTagCount = (TextView) view.findViewById(R.id.student_judge_tag_count);
+      studentJudgeGoodatTv = (TextView) view.findViewById(R.id.student_judge_goodat_tv);
+
+      isPrepared = true;
         lazyLoad();
         return view;
     }
@@ -147,6 +155,6 @@ public class StudentJudgeFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import com.qingchengfit.fitcoach.App;
@@ -33,14 +33,14 @@ import rx.schedulers.Schedulers;
 
 public class ChooseGymActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.sfl) SwipeRefreshLayout sfl;
-    @BindView(R.id.item_gym_name) TextView itemGymName;
-    @BindView(R.id.item_is_personal) TextView itemIsPersonal;
-    @BindView(R.id.qc_identify) ImageView qcIdentify;
-    @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
-    @BindView(R.id.item_right) ImageView itemRight;
+	Toolbar toolbar;
+	RecyclerView recyclerview;
+	SwipeRefreshLayout sfl;
+	TextView itemGymName;
+	TextView itemIsPersonal;
+	ImageView qcIdentify;
+	TextView itemGymPhonenum;
+	ImageView itemRight;
 
     private Subscription mHttpsub;
     private ImageTwoTextAdapter mGymsAdapter;
@@ -52,8 +52,21 @@ public class ChooseGymActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_gym);
-        ButterKnife.bind(this);
-        mCurModel = getIntent().getStringExtra("model");
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+      sfl = (SwipeRefreshLayout) findViewById(R.id.sfl);
+      itemGymName = (TextView) findViewById(R.id.item_gym_name);
+      itemIsPersonal = (TextView) findViewById(R.id.item_is_personal);
+      qcIdentify = (ImageView) findViewById(R.id.qc_identify);
+      itemGymPhonenum = (TextView) findViewById(R.id.item_gym_phonenum);
+      itemRight = (ImageView) findViewById(R.id.item_right);
+      findViewById(R.id.chooseall).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          chooseAll();
+        }
+      });
+
+      mCurModel = getIntent().getStringExtra("model");
         mCurId = getIntent().getStringExtra("id");
         mTitle = getIntent().getStringExtra("title");
         toolbar.setTitle("请选择您的场馆");
@@ -107,7 +120,7 @@ public class ChooseGymActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.chooseall) public void chooseAll() {
+ public void chooseAll() {
         Intent it = new Intent();
         it.putExtra("name", mTitle);
         it.putExtra("type", 0);

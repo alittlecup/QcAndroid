@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.course.batch.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -92,12 +92,14 @@ public class BatchCateItem extends AbstractFlexibleItem<BatchCateItem.BatchCateV
   }
 
   public class BatchCateVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_content) TextView tvContent;
-    @BindView(R2.id.img) ImageView img;
+	TextView tvTitle;
+	TextView tvContent;
+	ImageView img;
     public BatchCateVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
+      img = (ImageView) view.findViewById(R.id.img);
     }
   }
 }

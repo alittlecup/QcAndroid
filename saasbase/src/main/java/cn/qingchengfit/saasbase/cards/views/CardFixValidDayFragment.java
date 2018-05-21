@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.common.PayEvent;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
@@ -61,18 +61,18 @@ import static cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD;
 @Leaf(module = "card", path = "/modify/validate") public class CardFixValidDayFragment
     extends SaasBaseFragment implements CardFixValidDayPresenter.MVPView {
 
-  @BindView(R2.id.btn_start) CommonInputView btnStart;
-  @BindView(R2.id.btn_end) CommonInputView btnEnd;
-  @BindView(R2.id.civ_pay_method) CommonInputView civPayMethod;
-  @BindView(R2.id.civ_money) CommonInputView civMoney;
-  @BindView(R2.id.ep_money) ExpandedLayout epMoney;
-  @BindView(R2.id.ep_vilid_day) ExpandedLayout epValid;
+	CommonInputView btnStart;
+	CommonInputView btnEnd;
+	CommonInputView civPayMethod;
+	CommonInputView civMoney;
+	ExpandedLayout epMoney;
+	ExpandedLayout epValid;
 
   @Inject CardFixValidDayPresenter presenter;
   @Need Card card;
-  @BindView(R2.id.view_disable) View viewDisable;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	View viewDisable;
+	Toolbar toolbar;
+	TextView toolbarTitle;
   private TimeDialogWindow pwTime;
   private int pay_method;
 
@@ -84,7 +84,36 @@ import static cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_realcard_modify_valid_day, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    btnStart = (CommonInputView) view.findViewById(R.id.btn_start);
+    btnEnd = (CommonInputView) view.findViewById(R.id.btn_end);
+    civPayMethod = (CommonInputView) view.findViewById(R.id.civ_pay_method);
+    civMoney = (CommonInputView) view.findViewById(R.id.civ_money);
+    epMoney = (ExpandedLayout) view.findViewById(R.id.ep_money);
+    epValid = (ExpandedLayout) view.findViewById(R.id.ep_vilid_day);
+    viewDisable = (View) view.findViewById(R.id.view_disable);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked(v);
+      }
+    });
+    view.findViewById(R.id.btn_end).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked(v);
+      }
+    });
+    view.findViewById(R.id.civ_pay_method).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked(v);
+      }
+    });
+    view.findViewById(R.id.view_disable).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+
     delegatePresenter(presenter, this);
     if (card.getType() == Configs.CATEGORY_DATE) {
       viewDisable.setVisibility(View.VISIBLE);
@@ -211,7 +240,7 @@ import static cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD;
     super.onDestroyView();
   }
 
-  @OnClick({ R2.id.btn_start, R2.id.btn_end, R2.id.civ_pay_method })
+
   public void onViewClicked(View view) {
     int i = view.getId();
     if (i == R.id.btn_start) {
@@ -246,7 +275,7 @@ import static cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD;
     getActivity().onBackPressed();
   }
 
-  @OnClick(R2.id.view_disable) public void onViewClicked() {
+ public void onViewClicked() {
     ToastUtils.show("期限卡无法关闭有效期");
   }
 }

@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.BodyTestBean;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
@@ -42,14 +42,14 @@ import javax.inject.Inject;
  */
 public class BodyTestListFragment extends BaseFragment implements BodyTestListView {
 
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	RecycleViewWithNoImg recycleview;
 
     List<BodyTestBean> datas = new ArrayList<>();
     @Inject BodyTestListPresenter presenter;
     @Inject StudentWrapper studentBean;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private SimpleAdapter adapter;
     private int gender = 0;
@@ -72,8 +72,16 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bodytestlist, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter,this);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.add_bodytest).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BodyTestListFragment.this.onClick();
+        }
+      });
+
+      delegatePresenter(presenter,this);
         initToolbar(toolbar);
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -107,7 +115,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
         super.onDestroyView();
     }
 
-    @OnClick(R.id.add_bodytest) public void onClick() {
+ public void onClick() {
         boolean hasP = false;
         for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
             if (serPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),

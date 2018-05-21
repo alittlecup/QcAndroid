@@ -37,9 +37,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
@@ -71,14 +71,14 @@ import rx.schedulers.Schedulers;
  */
 public class SplashActivity extends BaseActivity {
 
-  @BindView(R.id.splash_viewpager) ViewPager splashViewpager;
-  @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
+	ViewPager splashViewpager;
+	CircleIndicator splashIndicator;
   List<View> imageViews = new ArrayList<>();
-  @BindView(R.id.main_loading) RelativeLayout mainLoading;
+	RelativeLayout mainLoading;
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
   //@BindView(R.id.animation_view) LottieAnimationView animationView;
-  @BindView(R.id.img_gif) ImageView imgGif;
+	ImageView imgGif;
   private int[] mSplashImg = new int[] {
       R.drawable.help1, R.drawable.help2, R.drawable.help3, R.drawable.help4, R.drawable.help5,
   };
@@ -94,7 +94,21 @@ public class SplashActivity extends BaseActivity {
       return;
     }
     setContentView(R.layout.activity_splash);
-    ButterKnife.bind(this);
+    splashViewpager = (ViewPager) findViewById(R.id.splash_viewpager);
+    splashIndicator = (CircleIndicator) findViewById(R.id.splash_indicator);
+    mainLoading = (RelativeLayout) findViewById(R.id.main_loading);
+    imgGif = (ImageView) findViewById(R.id.img_gif);
+    findViewById(R.id.splash_login_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        OnBtnClick(v);
+      }
+    });
+    findViewById(R.id.splash_registe_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        OnBtnClick(v);
+      }
+    });
+
     initX5();
 
     Glide.with(this)
@@ -257,9 +271,7 @@ public class SplashActivity extends BaseActivity {
     this.finish();
   }
 
-  @OnClick({
-      R.id.splash_login_btn, R.id.splash_registe_btn
-  }) public void OnBtnClick(View v) {
+ public void OnBtnClick(View v) {
     if (v.getId() == R.id.splash_registe_btn) {
       goLogin(1);
     } else {

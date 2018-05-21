@@ -21,9 +21,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -79,19 +79,19 @@ import rx.functions.Action1;
 public class StudentHomeFragment extends BaseFragment implements View.OnClickListener {
 
   public int statusToTab = -1;
-  @BindView(R.id.header) ImageView header;
-  @BindView(R.id.gender) ImageView gender;
-  @BindView(R.id.name) TextView name;
-  @BindView(R.id.tab) TabLayout tab;
-  @BindView(R.id.student) ViewPager student;
-  @BindView(R.id.buycard) Button buycard;
-  @BindView(R.id.order_group) Button orderGroup;
-  @BindView(R.id.order_private) Button orderPrivate;
-  @BindView(R.id.orderbtn_layout) LinearLayout orderbtnLayout;
-  @BindView(R.id.student_status) TextView studentStatus;
-  @BindView(R.id.phone) TextView phone;
-  @BindView(R.id.tv_student_call) ImageView tvStudentCall;
-  @BindView(R.id.tv_student_msg) ImageView tvStudentMsg;
+	ImageView header;
+	ImageView gender;
+	TextView name;
+	TabLayout tab;
+	ViewPager student;
+	Button buycard;
+	Button orderGroup;
+	Button orderPrivate;
+	LinearLayout orderbtnLayout;
+	TextView studentStatus;
+	TextView phone;
+	ImageView tvStudentCall;
+	ImageView tvStudentMsg;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject RestRepository restRepository;
@@ -99,8 +99,8 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject StudentAction studentAction;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
   ArrayList<Fragment> fragments = new ArrayList<>();
   private FragmentAdapter mAdapter;
   private Observable<StudentBaseInfoEvent> ObInfo;
@@ -112,7 +112,27 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       final Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.activity_student_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    header = (ImageView) view.findViewById(R.id.header);
+    gender = (ImageView) view.findViewById(R.id.gender);
+    name = (TextView) view.findViewById(R.id.name);
+    tab = (TabLayout) view.findViewById(R.id.tab);
+    student = (ViewPager) view.findViewById(R.id.student);
+    buycard = (Button) view.findViewById(R.id.buycard);
+    orderGroup = (Button) view.findViewById(R.id.order_group);
+    orderPrivate = (Button) view.findViewById(R.id.order_private);
+    orderbtnLayout = (LinearLayout) view.findViewById(R.id.orderbtn_layout);
+    studentStatus = (TextView) view.findViewById(R.id.student_status);
+    phone = (TextView) view.findViewById(R.id.phone);
+    tvStudentCall = (ImageView) view.findViewById(R.id.tv_student_call);
+    tvStudentMsg = (ImageView) view.findViewById(R.id.tv_student_msg);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.buycard).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        StudentHomeFragment.this.onClick();
+      }
+    });
+
     initToolbar(toolbar);
     if (!isLoading) {
 
@@ -262,7 +282,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     });
   }
 
-  @OnClick(R.id.buycard) public void onClick() {
+ public void onClick() {
 
     if (gymWrapper.inBrand()) {
       MutiChooseGymFragment.start(this, true, null, 9);

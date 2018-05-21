@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInCostBody;
@@ -44,10 +44,10 @@ import javax.inject.Inject;
  */
 public class SignInConfigFragment extends BaseFragment implements SignInConfigPresenter.SignInConfigView {
 
-    @BindView(R.id.swt_signin_config_locker) SwitcherLayout swtSigninConfigLocker;
-    @BindView(R.id.swt_signin_config_locker_back) SwitcherLayout swtSigninConfigLockerBack;
-    @BindView(R.id.tv_sign_in_config_notice) TextView tvSignInConfigNotice;
-    @BindView(R.id.recyclerView_SignIn_config) RecyclerView recyclerViewSignInConfig;
+	SwitcherLayout swtSigninConfigLocker;
+	SwitcherLayout swtSigninConfigLockerBack;
+	TextView tvSignInConfigNotice;
+	RecyclerView recyclerViewSignInConfig;
 
     @Inject SignInConfigPresenter presenter;
     @Inject SerPermisAction serPermisAction;
@@ -65,7 +65,7 @@ public class SignInConfigFragment extends BaseFragment implements SignInConfigPr
      * 签出是否自动归还更衣柜
      */
     List<SignInConfig.Config> signOutConfig = new ArrayList<>();
-    @BindView(R.id.no_permission) View noPermission;
+	View noPermission;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private LinearLayoutManager mLinearLayoutManager;
@@ -91,8 +91,19 @@ public class SignInConfigFragment extends BaseFragment implements SignInConfigPr
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_config, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+      swtSigninConfigLocker = (SwitcherLayout) view.findViewById(R.id.swt_signin_config_locker);
+      swtSigninConfigLockerBack =
+          (SwitcherLayout) view.findViewById(R.id.swt_signin_config_locker_back);
+      tvSignInConfigNotice = (TextView) view.findViewById(R.id.tv_sign_in_config_notice);
+      recyclerViewSignInConfig = (RecyclerView) view.findViewById(R.id.recyclerView_SignIn_config);
+      noPermission = (View) view.findViewById(R.id.no_permission);
+      view.findViewById(R.id.no_permission).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          noPermission();
+        }
+      });
+
+      getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         delegatePresenter(presenter, this);
         isGranted = serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE);
         noPermission.setVisibility(isGranted ? View.GONE : View.VISIBLE);
@@ -151,7 +162,7 @@ public class SignInConfigFragment extends BaseFragment implements SignInConfigPr
             });
     }
 
-    @OnClick(R.id.no_permission) public void noPermission() {
+ public void noPermission() {
         showAlert(R.string.alert_permission_forbid);
     }
 

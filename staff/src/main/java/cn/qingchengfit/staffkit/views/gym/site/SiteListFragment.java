@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -44,11 +44,11 @@ import javax.inject.Inject;
  */
 public class SiteListFragment extends BaseFragment implements ChooseSiteView {
 
-    @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
+	RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private ChooseSiteAdapter adapter;
     private List<ImageTwoTextBean> datas = new ArrayList<>();
     private boolean isLoading = false;
@@ -61,8 +61,11 @@ public class SiteListFragment extends BaseFragment implements ChooseSiteView {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         presenter.querySiteList(-1);
 

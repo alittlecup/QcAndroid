@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.gym.upgrate.item;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -40,13 +40,15 @@ public class LinearFunItem extends AbstractFlexibleItem<LinearFunItem.LinearFunV
 
     public class LinearFunVH extends FlexibleViewHolder {
 
-        @BindView(R.id.img_fun) ImageView imgFun;
-        @BindView(R.id.tv_title) TextView tvTitle;
-        @BindView(R.id.tv_content) TextView tvContent;
+	ImageView imgFun;
+	TextView tvTitle;
+	TextView tvContent;
 
         public LinearFunVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imgFun = (ImageView) view.findViewById(R.id.img_fun);
+          tvTitle = (TextView) view.findViewById(R.id.tv_title);
+          tvContent = (TextView) view.findViewById(R.id.tv_content);
         }
     }
 }

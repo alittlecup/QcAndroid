@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
@@ -52,12 +52,12 @@ import rx.schedulers.Schedulers;
 import static cn.qingchengfit.staffkit.MainActivity.IS_SIGNLE;
 
 public class SplashActivity extends AppCompatActivity {
-    @BindView(R.id.splash_viewpager) ViewPager splashViewpager;
-    @BindView(R.id.splash_login_btn) TextView splashLoginBtn;
-    @BindView(R.id.splash_registe_btn) TextView splashRegisteBtn;
-    @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
-    @BindView(R.id.main_loading) RelativeLayout mainLoading;
-  @BindView(R.id.img_gif) ImageView imgGif;
+	ViewPager splashViewpager;
+	TextView splashLoginBtn;
+	TextView splashRegisteBtn;
+	CircleIndicator splashIndicator;
+	RelativeLayout mainLoading;
+	ImageView imgGif;
     @Inject RestRepository restRepository;
     @Inject QCDbManagerImpl manager;
     @Inject LoginStatus loginStatus;
@@ -74,8 +74,14 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
         setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
-        PushSettings.enableDebugMode(getApplicationContext(), BuildConfig.DEBUG);
+      splashViewpager = (ViewPager) findViewById(R.id.splash_viewpager);
+      splashLoginBtn = (TextView) findViewById(R.id.splash_login_btn);
+      splashRegisteBtn = (TextView) findViewById(R.id.splash_registe_btn);
+      splashIndicator = (CircleIndicator) findViewById(R.id.splash_indicator);
+      mainLoading = (RelativeLayout) findViewById(R.id.main_loading);
+      imgGif = (ImageView) findViewById(R.id.img_gif);
+
+      PushSettings.enableDebugMode(getApplicationContext(), BuildConfig.DEBUG);
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
             getString(BuildConfig.DEBUG ? R.string.baidu_api_debug : R.string.baidu_api));
         cn.qingchengfit.utils.ToastUtils.init(getApplicationContext());

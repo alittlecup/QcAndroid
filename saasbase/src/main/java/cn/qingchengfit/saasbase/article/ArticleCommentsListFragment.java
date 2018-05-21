@@ -17,15 +17,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.article.presenter.ArticleCommentsPresenter;
 import cn.qingchengfit.saasbase.items.ArticleCommentItem;
 import cn.qingchengfit.saasbase.login.LoginActivity;
@@ -68,15 +68,15 @@ import rx.functions.Action1;
 @FragmentWithArgs public class ArticleCommentsListFragment extends BaseFragment
     implements ArticleCommentsPresenter.MVPView, FlexibleAdapter.EndlessScrollListener, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-    @BindView(R2.id.recyclerview) RecyclerView recyclerview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
+	RecyclerView recyclerview;
 
     @Inject ArticleCommentsPresenter presenter;
-    @BindView(R2.id.tv_total_count) TextView tvTotalCount;
-    @BindView(R2.id.input_et) EditText inputEt;
-    @BindView(R2.id.btn_send) Button btnSend;
+	TextView tvTotalCount;
+	EditText inputEt;
+	Button btnSend;
     LinearLayoutManager linearLayoutManager;
     String newsId;
     String replyId;
@@ -109,8 +109,20 @@ import rx.functions.Action1;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_comments, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      tvTotalCount = (TextView) view.findViewById(R.id.tv_total_count);
+      inputEt = (EditText) view.findViewById(R.id.input_et);
+      btnSend = (Button) view.findViewById(R.id.btn_send);
+      view.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onViewClicked();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
@@ -218,7 +230,7 @@ import rx.functions.Action1;
     /**
      * 发送评论
      */
-    @OnClick(R2.id.btn_send) public void onViewClicked() {
+ public void onViewClicked() {
         presenter.addComment(newsId, replyId, inputEt.getText().toString().trim());
     }
 

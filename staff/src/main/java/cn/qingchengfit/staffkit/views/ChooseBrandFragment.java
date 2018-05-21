@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.items.ListAddItem;
@@ -56,7 +56,7 @@ import rx.schedulers.Schedulers;
 
 public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.rv_brand) public RecyclerView rvBrand;
+	public RecyclerView rvBrand;
     public CommonFlexAdapter mCommonFlexAdapter;
     public List<AbstractFlexibleItem> mDatas = new ArrayList<>();
 
@@ -81,8 +81,9 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
         //        window.setWindowAnimations(R.style.TopDialogStyle);
 
         View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
+      rvBrand = (RecyclerView) view.findViewById(R.id.rv_brand);
+
+      mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
         mCommonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         rvBrand.setHasFixedSize(true);
         rvBrand.setNestedScrollingEnabled(false);

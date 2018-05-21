@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -103,18 +103,26 @@ public class CoachAapter extends RecyclerView.Adapter<CoachAapter.CoachVh> imple
     }
 
     public class CoachVh extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_student_alpha) TextView itemStudentAlpha;
-        @BindView(R.id.item_student_header) ImageView itemStudentHeader;
-        @BindView(R.id.item_student_header_loop) RelativeLayout itemStudentHeaderLoop;
-        @BindView(R.id.item_student_name) TextView itemStudentName;
-        @BindView(R.id.item_student_gender) ImageView itemStudentGender;
-        @BindView(R.id.item_student_phonenum) TextView itemStudentPhonenum;
-        @BindView(R.id.item_student_gymname) TextView itemStudentGymname;
-        @BindView(R.id.icon_right) ImageView iconRight;
+	TextView itemStudentAlpha;
+	ImageView itemStudentHeader;
+	RelativeLayout itemStudentHeaderLoop;
+	TextView itemStudentName;
+	ImageView itemStudentGender;
+	TextView itemStudentPhonenum;
+	TextView itemStudentGymname;
+	ImageView iconRight;
 
         public CoachVh(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          itemStudentAlpha = (TextView) itemView.findViewById(R.id.item_student_alpha);
+          itemStudentHeader = (ImageView) itemView.findViewById(R.id.item_student_header);
+          itemStudentHeaderLoop =
+              (RelativeLayout) itemView.findViewById(R.id.item_student_header_loop);
+          itemStudentName = (TextView) itemView.findViewById(R.id.item_student_name);
+          itemStudentGender = (ImageView) itemView.findViewById(R.id.item_student_gender);
+          itemStudentPhonenum = (TextView) itemView.findViewById(R.id.item_student_phonenum);
+          itemStudentGymname = (TextView) itemView.findViewById(R.id.item_student_gymname);
+          iconRight = (ImageView) itemView.findViewById(R.id.icon_right);
         }
     }
 }

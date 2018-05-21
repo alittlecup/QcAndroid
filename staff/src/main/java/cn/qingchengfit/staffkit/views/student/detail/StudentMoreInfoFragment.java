@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -74,15 +74,15 @@ public class StudentMoreInfoFragment extends BaseFragment
   public static final int RESULT_SCORE = 13;
   public static final int RESULT_COACH = 14;
 
-  @BindView(R.id.baseinfo_label) TextView baseinfoLabel;
-  @BindView(R.id.bodytest_img) ImageView bodytestImg;
-  @BindView(R.id.update_info) TextView updateInfo;
-  @BindView(R.id.signin_img) ImageView signinImg;
-  @BindView(R.id.no_checkin_img) TextView noCheckinImg;
-  @BindView(R.id.sales_name) TextView mSalesName;
-  @BindView(R.id.tv_student_source) TextView tvStudentSource;
-  @BindView(R.id.tv_student_referrer) TextView tvStudentReferrer;
-  @BindView(R.id.tv_student_score_value) TextView tvStudentScoreValue;
+	TextView baseinfoLabel;
+	ImageView bodytestImg;
+	TextView updateInfo;
+	ImageView signinImg;
+	TextView noCheckinImg;
+	TextView mSalesName;
+	TextView tvStudentSource;
+	TextView tvStudentReferrer;
+	TextView tvStudentScoreValue;
 
   @Inject StudentMoreInfoPresenter presenter;
   @Inject StudentWrapper studentBean;
@@ -90,11 +90,11 @@ public class StudentMoreInfoFragment extends BaseFragment
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
 
-  @BindView(R.id.coach_layout) LinearLayout coachLayout;
-  @BindView(R.id.coach_name) TextView coachName;
-  @BindView(R.id.body_layout) LinearLayout bodyLayout;
-  @BindView(R.id.baseinfo_layout) RelativeLayout baseinfoLayout;
-  @BindView(R.id.rl_score) RelativeLayout rlScore;
+	LinearLayout coachLayout;
+	TextView coachName;
+	LinearLayout bodyLayout;
+	RelativeLayout baseinfoLayout;
+	RelativeLayout rlScore;
 
   private User_Student user_student;
   private Observable<EditStudentEvent> mObEdit;
@@ -106,7 +106,66 @@ public class StudentMoreInfoFragment extends BaseFragment
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_student_moreinfo, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    baseinfoLabel = (TextView) view.findViewById(R.id.baseinfo_label);
+    bodytestImg = (ImageView) view.findViewById(R.id.bodytest_img);
+    updateInfo = (TextView) view.findViewById(R.id.update_info);
+    signinImg = (ImageView) view.findViewById(R.id.signin_img);
+    noCheckinImg = (TextView) view.findViewById(R.id.no_checkin_img);
+    mSalesName = (TextView) view.findViewById(R.id.sales_name);
+    tvStudentSource = (TextView) view.findViewById(R.id.tv_student_source);
+    tvStudentReferrer = (TextView) view.findViewById(R.id.tv_student_referrer);
+    tvStudentScoreValue = (TextView) view.findViewById(R.id.tv_student_score_value);
+    coachLayout = (LinearLayout) view.findViewById(R.id.coach_layout);
+    coachName = (TextView) view.findViewById(R.id.coach_name);
+    bodyLayout = (LinearLayout) view.findViewById(R.id.body_layout);
+    baseinfoLayout = (RelativeLayout) view.findViewById(R.id.baseinfo_layout);
+    rlScore = (RelativeLayout) view.findViewById(R.id.rl_score);
+    view.findViewById(R.id.baseinfo_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        oneditStudent();
+      }
+    });
+    view.findViewById(R.id.body_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickBodyTest();
+      }
+    });
+    view.findViewById(R.id.layout_signin_img).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSignInImg();
+      }
+    });
+    view.findViewById(R.id.rl_score).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        scoreClick(v);
+      }
+    });
+    view.findViewById(R.id.salers_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        allotSaler();
+      }
+    });
+    view.findViewById(R.id.coach_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        allocateCoach();
+      }
+    });
+    view.findViewById(R.id.civ_login_method).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickLoginMethod();
+      }
+    });
+    view.findViewById(R.id.ll_student_source).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        sourceClick(v);
+      }
+    });
+    view.findViewById(R.id.ll_student_referrer).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        referrerClick(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     onData(new User_Student.Builder().id(studentBean.id())
         .gender(studentBean.gender())
@@ -149,7 +208,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     super.onHiddenChanged(hidden);
   }
 
-  @OnClick(R.id.baseinfo_layout) public void oneditStudent() {
+ public void oneditStudent() {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       getParentFragment().getFragmentManager()
@@ -256,7 +315,7 @@ public class StudentMoreInfoFragment extends BaseFragment
   /**
    * 点击体测
    */
-  @OnClick(R.id.body_layout) public void onClickBodyTest() {
+ public void onClickBodyTest() {
     if (user_student == null) {
       Timber.e("获取学员信息失败");
       return;
@@ -273,7 +332,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     return StudentMoreInfoFragment.class.getName();
   }
 
-  @OnClick(R.id.layout_signin_img) public void onSignInImg() {
+ public void onSignInImg() {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       getParentFragment().getFragmentManager()
@@ -286,13 +345,13 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.rl_score) public void scoreClick(View view) {
+ public void scoreClick(View view) {
     // // 跳转会员积分
     Intent toScore = new Intent(getContext(), ScoreDetailActivity.class);
     startActivityForResult(toScore, RESULT_SCORE);
   }
 
-  @OnClick(R.id.salers_layout) public void allotSaler() {
+ public void allotSaler() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       changeSaler();
     } else {
@@ -303,7 +362,7 @@ public class StudentMoreInfoFragment extends BaseFragment
   /**
    * 选择教练
    */
-  @OnClick(R.id.coach_layout) public void allocateCoach() {
+ public void allocateCoach() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       Intent toChooseSaler = new Intent(getActivity(), MutiChooseCoachActivity.class);
       toChooseSaler.putExtra("hasReturn", false);
@@ -317,7 +376,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.civ_login_method)
+
   public void onClickLoginMethod(){
     if (user_student != null && user_student.getCloud_user() !=null) {
       routeTo(LoginMethodFragment.newInstance(new StaffLoginMethod.Builder().wx_active(user_student.getCloud_user().isWeixin_active())
@@ -328,7 +387,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.ll_student_source) public void sourceClick(View view) {
+ public void sourceClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       // TODO: 2017/11/6
@@ -344,7 +403,7 @@ public class StudentMoreInfoFragment extends BaseFragment
   /**
    * 推荐
    */
-  @OnClick(R.id.ll_student_referrer) public void referrerClick(View view) {
+ public void referrerClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       startActivityForResult(new Intent(getActivity(), ChooseReferrerActivity.class),

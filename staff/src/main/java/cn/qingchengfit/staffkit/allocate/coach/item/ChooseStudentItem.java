@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.CommonAllocateDetailItem;
@@ -56,13 +56,15 @@ public class ChooseStudentItem extends CommonAllocateDetailItem<ChooseStudentIte
 
     class ChooseStudentVH extends CommonAllocateDetailItem.AllocateDetailVH {
 
-        @BindView(R.id.item_student_modify_alpha) TextView itemStudentModifyAlpha;
-        @BindView(R.id.item_checkbox) CheckBox itemCheckbox;
-        @BindView(R.id.item_person_desc) TextView itemPersonDesc;
+	TextView itemStudentModifyAlpha;
+	CheckBox itemCheckbox;
+	TextView itemPersonDesc;
 
         public ChooseStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemStudentModifyAlpha = (TextView) view.findViewById(R.id.item_student_modify_alpha);
+          itemCheckbox = (CheckBox) view.findViewById(R.id.item_checkbox);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
         }
     }
 

@@ -13,11 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
@@ -64,16 +64,16 @@ import rx.schedulers.Schedulers;
 public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPView {
 
 
-    @BindView(R2.id.hint) TextView hint;
-    @BindView(R2.id.old_avatar) ImageView oldAvatar;
-    @BindView(R2.id.old_name) TextView oldName;
-    @BindView(R2.id.new_avatar) ImageView newAvatar;
-    @BindView(R2.id.new_name) TextView newName;
-    @BindView(R2.id.new_name_civ) CommonInputView newNameCiv;
-    @BindView(R2.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R2.id.same_hint) TextView sameHint;
-    @BindView(R2.id.comfirm) Button comfirm;
-    @BindView(R2.id.pw_view) PasswordView pwView;
+	TextView hint;
+	ImageView oldAvatar;
+	TextView oldName;
+	ImageView newAvatar;
+	TextView newName;
+	CommonInputView newNameCiv;
+	PhoneEditText phoneNum;
+	TextView sameHint;
+	Button comfirm;
+	PasswordView pwView;
 
     @Inject SuNewPresenter mSuNewPresenter;
 
@@ -86,8 +86,23 @@ public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPVie
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_su_change_to_new_saas, container, false);
-        ButterKnife.bind(this, view);
-        //
+      hint = (TextView) view.findViewById(R.id.hint);
+      oldAvatar = (ImageView) view.findViewById(R.id.old_avatar);
+      oldName = (TextView) view.findViewById(R.id.old_name);
+      newAvatar = (ImageView) view.findViewById(R.id.new_avatar);
+      newName = (TextView) view.findViewById(R.id.new_name);
+      newNameCiv = (CommonInputView) view.findViewById(R.id.new_name_civ);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      sameHint = (TextView) view.findViewById(R.id.same_hint);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      pwView = (PasswordView) view.findViewById(R.id.pw_view);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SuNewFragment.this.onClick();
+        }
+      });
+
+      //
         delegatePresenter(mSuNewPresenter, this);
         mCallbackActivity.setToolbar("填写新超级管理员信息", false, null, 0, null);
 
@@ -133,7 +148,7 @@ public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPVie
         return SuNewFragment.class.getName();
     }
 
-    @OnClick(R2.id.comfirm) public void onClick() {
+ public void onClick() {
         if (!phoneNum.checkPhoneNum()) {
             return;
         }

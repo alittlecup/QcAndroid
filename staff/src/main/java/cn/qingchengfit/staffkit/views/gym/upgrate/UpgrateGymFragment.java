@@ -17,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -82,23 +82,23 @@ import rx.schedulers.Schedulers;
  */
 public class UpgrateGymFragment extends BaseFragment {
 
-  @BindView(R.id.rv_function) RecyclerView rvFunction;
-  @BindView(R.id.tv_pay_title) TextView tvPayTitle;
-  @BindView(R.id.tag_pro) TextView tagPro;
-  @BindView(R.id.tv_pay_hint) TextView tvPayHint;
-  @BindView(R.id.rv_first_pay_choose) RecyclerView rvFirstPayChoose;
-  @BindView(R.id.tv_hide_title) TextView tvHideTitle;
-  @BindView(R.id.btn_show_all) AnimatedButton btnShowAll;
-  @BindView(R.id.rv_secound_pay_choose) RecyclerView rvSecoundPayChoose;
-  @BindView(R.id.tv_brand_name) TextView tvBrandName;
-  @BindView(R.id.tv_time_long) TextView tvTimeLong;
-  @BindView(R.id.tv_price) TextView tvPrice;
-  @BindView(R.id.tv_hiden_hint) TextView tvHidenHint;
-  @BindView(R.id.root_scroll) NestedScrollView rootScroll;
-  @BindView(R.id.hiden_trans) View hidenTrans;
-  @BindView(R.id.layout_hiden) RelativeLayout layoutHiden;
-  @BindView(R.id.tv_first_discount) TextView tvFirstDiscount;
-  @BindView(R.id.tv_first_discount_hide) TextView tvFirstDiscountHide;
+	RecyclerView rvFunction;
+	TextView tvPayTitle;
+	TextView tagPro;
+	TextView tvPayHint;
+	RecyclerView rvFirstPayChoose;
+	TextView tvHideTitle;
+	AnimatedButton btnShowAll;
+	RecyclerView rvSecoundPayChoose;
+	TextView tvBrandName;
+	TextView tvTimeLong;
+	TextView tvPrice;
+	TextView tvHidenHint;
+	NestedScrollView rootScroll;
+	View hidenTrans;
+	RelativeLayout layoutHiden;
+	TextView tvFirstDiscount;
+	TextView tvFirstDiscountHide;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Inject QcRestRepository qcRestRepository;
@@ -165,7 +165,39 @@ public class UpgrateGymFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_upgrade_gym, container, false);
-    ButterKnife.bind(this, view);
+    rvFunction = (RecyclerView) view.findViewById(R.id.rv_function);
+    tvPayTitle = (TextView) view.findViewById(R.id.tv_pay_title);
+    tagPro = (TextView) view.findViewById(R.id.tag_pro);
+    tvPayHint = (TextView) view.findViewById(R.id.tv_pay_hint);
+    rvFirstPayChoose = (RecyclerView) view.findViewById(R.id.rv_first_pay_choose);
+    tvHideTitle = (TextView) view.findViewById(R.id.tv_hide_title);
+    btnShowAll = (AnimatedButton) view.findViewById(R.id.btn_show_all);
+    rvSecoundPayChoose = (RecyclerView) view.findViewById(R.id.rv_secound_pay_choose);
+    tvBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
+    tvTimeLong = (TextView) view.findViewById(R.id.tv_time_long);
+    tvPrice = (TextView) view.findViewById(R.id.tv_price);
+    tvHidenHint = (TextView) view.findViewById(R.id.tv_hiden_hint);
+    rootScroll = (NestedScrollView) view.findViewById(R.id.root_scroll);
+    hidenTrans = (View) view.findViewById(R.id.hiden_trans);
+    layoutHiden = (RelativeLayout) view.findViewById(R.id.layout_hiden);
+    tvFirstDiscount = (TextView) view.findViewById(R.id.tv_first_discount);
+    tvFirstDiscountHide = (TextView) view.findViewById(R.id.tv_first_discount_hide);
+    view.findViewById(R.id.tv_hide_title).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowAll();
+      }
+    });
+    view.findViewById(R.id.btn_show_all).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowAll();
+      }
+    });
+    view.findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickPay();
+      }
+    });
+
     RxBus.getBus()
       .post(new ToolbarBean.Builder().title("高级版")
         .menu(R.menu.menu_pay_history)
@@ -247,7 +279,7 @@ public class UpgrateGymFragment extends BaseFragment {
     return view;
   }
 
-  @OnClick({ R.id.tv_hide_title, R.id.btn_show_all }) public void onShowAll() {
+ public void onShowAll() {
     btnShowAll.toggle();
     ViewCompat.setPivotY(layoutHiden, 0f);
     if (btnShowAll.isChecked()) {
@@ -284,7 +316,7 @@ public class UpgrateGymFragment extends BaseFragment {
     }
   }
 
-  @OnClick(R.id.btn_pay) public void onClickPay() {
+ public void onClickPay() {
     String price = tvPrice.getText().toString();
     int numPrice = -1;
     try {

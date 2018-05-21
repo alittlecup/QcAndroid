@@ -13,9 +13,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextAdapter;
@@ -32,15 +32,15 @@ import javax.inject.Inject;
 
 public class ChooseGymActivity extends AppCompatActivity implements ChooseGymView {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.sfl) SwipeRefreshLayout sfl;
-    @BindView(R.id.item_gym_name) TextView itemGymName;
-    @BindView(R.id.item_is_personal) TextView itemIsPersonal;
-    @BindView(R.id.qc_identify) ImageView qcIdentify;
-    @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
-    @BindView(R.id.item_right) ImageView itemRight;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	RecyclerView recyclerview;
+	SwipeRefreshLayout sfl;
+	TextView itemGymName;
+	TextView itemIsPersonal;
+	ImageView qcIdentify;
+	TextView itemGymPhonenum;
+	ImageView itemRight;
+	TextView toolbarTitile;
 
     //    @BindColor(R.color.colorPrimary)
     //    int colorPrimary;
@@ -76,8 +76,22 @@ public class ChooseGymActivity extends AppCompatActivity implements ChooseGymVie
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_gym);
-        ButterKnife.bind(this);
-        presenter.attachView(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+      sfl = (SwipeRefreshLayout) findViewById(R.id.sfl);
+      itemGymName = (TextView) findViewById(R.id.item_gym_name);
+      itemIsPersonal = (TextView) findViewById(R.id.item_is_personal);
+      qcIdentify = (ImageView) findViewById(R.id.qc_identify);
+      itemGymPhonenum = (TextView) findViewById(R.id.item_gym_phonenum);
+      itemRight = (ImageView) findViewById(R.id.item_right);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      findViewById(R.id.chooseall).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          chooseAll();
+        }
+      });
+
+      presenter.attachView(this);
         presenter.attachIncomingIntent(getIntent());
         mTitle = getIntent().getStringExtra("title");
         initView();
@@ -138,7 +152,7 @@ public class ChooseGymActivity extends AppCompatActivity implements ChooseGymVie
         });
     }
 
-    @OnClick(R.id.chooseall) public void chooseAll() {
+ public void chooseAll() {
         setResult(RESULT_OK, IntentUtils.instanceStringsIntent(getString(R.string.all_gyms), ""));
         this.finish();
     }

@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -50,11 +50,11 @@ import rx.functions.Action1;
  */
 @FragmentWithArgs public class UnLoginFragment extends BaseFragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.brand_manage) TextView brandManage;
-    @BindView(R.id.viewpager) ViewPager viewpager;
-    @BindView(R.id.tabview) TabView tabview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	TextView brandManage;
+	ViewPager viewpager;
+	TabView tabview;
 
     @Arg int currentPage = 0;
     @Arg String url;
@@ -68,8 +68,13 @@ import rx.functions.Action1;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chain, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        viewpager.setOffscreenPageLimit(2);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      brandManage = (TextView) view.findViewById(R.id.brand_manage);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      tabview = (TabView) view.findViewById(R.id.tabview);
+
+      viewpager.setOffscreenPageLimit(2);
         viewpager.setAdapter(new UnloginAdapter(getChildFragmentManager(), getContext()));
         viewpager.setCurrentItem(currentPage);
         brandManage.setVisibility(View.GONE);

@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -59,10 +59,10 @@ import static cn.qingchengfit.staffkit.views.gym.GymDetailFragment.RESULT_STAFF_
  */
 public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, GymMorePresenter.MVPView {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recycleview) RecyclerView mRecyclerView;
-    @BindView(R.id.my_fun_recycleview) RecyclerView myFunRecycleview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecyclerView mRecyclerView;
+	RecyclerView myFunRecycleview;
     @Inject GymMorePresenter mGymMorePresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -88,8 +88,12 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gymmore, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(mGymMorePresenter, this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
+      myFunRecycleview = (RecyclerView) view.findViewById(R.id.my_fun_recycleview);
+
+      delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");
         initToolbar(toolbar);
         toolbarTitile.setText("全部功能");

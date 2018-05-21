@@ -14,17 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.items.SimpleTextItemItem;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.presenters.EditCoursePresenter;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -40,12 +36,12 @@ import javax.inject.Inject;
 @Leaf(module = "course",path = "/edit/")
 public class EditCourseFragment extends SaasBaseFragment implements EditCoursePresenter.EditCourseView {
 
-    @BindView(R2.id.edit_hint) TextView editHint;
-    @BindView(R2.id.suit_gyms_hint) TextView suitGymsHint;
-    @BindView(R2.id.suit_gyms_edit) CommonInputView suitGymsEdit;
-    @BindView(R2.id.suit_gyms_rv) RecyclerView suitGymsRv;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	TextView editHint;
+	TextView suitGymsHint;
+	CommonInputView suitGymsEdit;
+	RecyclerView suitGymsRv;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     @Inject EditCoursePresenter mPresenter;
 
     @Need public CourseType courseType;
@@ -85,8 +81,19 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_course, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      editHint = (TextView) view.findViewById(R.id.edit_hint);
+      suitGymsHint = (TextView) view.findViewById(R.id.suit_gyms_hint);
+      suitGymsEdit = (CommonInputView) view.findViewById(R.id.suit_gyms_edit);
+      suitGymsRv = (RecyclerView) view.findViewById(R.id.suit_gyms_rv);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.suit_gyms_edit).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          editSuitGyms();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(mPresenter, this);
 
         return view;
@@ -144,7 +151,7 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
         suitGymsEdit.setContent(String.format(Locale.CHINA, "%d家", courseDetail.getShops().size()));
     }
 
-    @OnClick(R2.id.suit_gyms_edit) public void editSuitGyms() {
+ public void editSuitGyms() {
 
         ArrayList<String> stringList = new ArrayList<>();
         if (courseType != null) {

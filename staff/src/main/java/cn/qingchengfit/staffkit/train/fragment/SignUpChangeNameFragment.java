@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.train.presenter.SignUpGroupDetailPresenter;
 import cn.qingchengfit.staffkit.train.presenter.SignUpView;
@@ -32,12 +32,12 @@ import javax.inject.Inject;
  */
 @FragmentWithArgs public class SignUpChangeNameFragment extends BaseFragment implements SignUpView {
 
-    @BindView(R.id.edit_group_name) EditText editGroupName;
-    @BindView(R.id.image_clear_name) ImageView imageClearName;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+	EditText editGroupName;
+	ImageView imageClearName;
+	Toolbar toolbar;
 
     @Inject SignUpGroupDetailPresenter presenter;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	TextView toolbarTitile;
 
     @Arg String teamName;
     @Arg String teamId;
@@ -50,8 +50,22 @@ import javax.inject.Inject;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_change_name, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      editGroupName = (EditText) view.findViewById(R.id.edit_group_name);
+      imageClearName = (ImageView) view.findViewById(R.id.image_clear_name);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.edit_group_name).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onEdit(v);
+        }
+      });
+      view.findViewById(R.id.image_clear_name).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onEdit(v);
+        }
+      });
+
+      delegatePresenter(presenter, this);
         setToolbar();
         initEdit();
 
@@ -98,7 +112,7 @@ import javax.inject.Inject;
         });
     }
 
-    @OnClick({ R.id.edit_group_name, R.id.image_clear_name }) public void onEdit(View view) {
+ public void onEdit(View view) {
         switch (view.getId()) {
             case R.id.image_clear_name:
                 editGroupName.setText("");

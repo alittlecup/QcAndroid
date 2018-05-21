@@ -1,11 +1,7 @@
 package cn.qingchengfit.notisetting.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -38,11 +34,11 @@ public class NotiFooterItem extends AbstractFlexibleItem<NotiFooterItem.NotiFoot
   }
 
   public class NotiFooterVH extends FlexibleViewHolder {
-    @BindView(R.id.tv) TextView tv;
+	TextView tv;
 
     public NotiFooterVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tv = (TextView) view.findViewById(R.id.tv);
     }
   }
 }

@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -126,16 +126,21 @@ public class ImageThreeTextAdapter extends RecyclerView.Adapter<ImageThreeTextAd
 
     public static class ImageTwoTextVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.text1) TextView text1;
-        @BindView(R.id.texticon) ImageView texticon;
-        @BindView(R.id.text2) TextView text2;
-        @BindView(R.id.text3) TextView text3;
-        @BindView(R.id.righticon) ImageView righticon;
+	ImageView img;
+	TextView text1;
+	ImageView texticon;
+	TextView text2;
+	TextView text3;
+	ImageView righticon;
 
         public ImageTwoTextVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          img = (ImageView) itemView.findViewById(R.id.img);
+          text1 = (TextView) itemView.findViewById(R.id.text1);
+          texticon = (ImageView) itemView.findViewById(R.id.texticon);
+          text2 = (TextView) itemView.findViewById(R.id.text2);
+          text3 = (TextView) itemView.findViewById(R.id.text3);
+          righticon = (ImageView) itemView.findViewById(R.id.righticon);
         }
     }
 }

@@ -4,20 +4,15 @@ import android.graphics.drawable.Animatable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
+import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/11.
@@ -95,16 +90,18 @@ public class FilterGridItem extends AbstractFlexibleItem<FilterGridItem.ChooseSt
     }
 
     public class ChooseStaffVH extends FlexibleViewHolder {
-        @BindView(R2.id.saler_header_img)
+
         ImageView salerHeaderImg;
-        @BindView(R2.id.choose_img)
+
         ImageView chooseImg;
-        @BindView(R2.id.saler_name_tv)
+
         TextView salerNameTv;
 
         public ChooseStaffVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          salerHeaderImg = (ImageView) view.findViewById(R.id.saler_header_img);
+          chooseImg = (ImageView) view.findViewById(R.id.choose_img);
+          salerNameTv = (TextView) view.findViewById(R.id.saler_name_tv);
         }
 
         @Override

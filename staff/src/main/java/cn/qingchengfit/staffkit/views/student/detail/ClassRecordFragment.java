@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.common.AttendanceRecord;
@@ -60,17 +60,17 @@ public class ClassRecordFragment extends BaseFragment
     NotSignFilterFragment.OnNotSignFilterListener {
 
   public String curShopid = "";
-  @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	RecycleViewWithNoImg recycleview;
   //@BindView(R.id.tv_gym) TextView tvGym;
   @Inject ClassRecordPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-  @BindView(R.id.layout_gym_filter) FilterTextLayout layoutGymFilter;
-  @BindView(R.id.layout_type_filter) FilterTextLayout layoutTypeFilter;
-  @BindView(R.id.layout_status_filter) FilterTextLayout layoutStatusFilter;
-  @BindView(R.id.layout_time_filter) FilterTextLayout layoutTimeFilter;
-  @BindView(R.id.frag_not_sign_filter_layout) FrameLayout fragNotSignFilterLayout;
-  @BindView(R.id.shadow) View shadow;
+	FilterTextLayout layoutGymFilter;
+	FilterTextLayout layoutTypeFilter;
+	FilterTextLayout layoutStatusFilter;
+	FilterTextLayout layoutTimeFilter;
+	FrameLayout fragNotSignFilterLayout;
+	View shadow;
 
   private CommonFlexAdapter commonFlexAdapter;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
@@ -82,7 +82,34 @@ public class ClassRecordFragment extends BaseFragment
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_class_records, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+    layoutGymFilter = (FilterTextLayout) view.findViewById(R.id.layout_gym_filter);
+    layoutTypeFilter = (FilterTextLayout) view.findViewById(R.id.layout_type_filter);
+    layoutStatusFilter = (FilterTextLayout) view.findViewById(R.id.layout_status_filter);
+    layoutTimeFilter = (FilterTextLayout) view.findViewById(R.id.layout_time_filter);
+    fragNotSignFilterLayout = (FrameLayout) view.findViewById(R.id.frag_not_sign_filter_layout);
+    shadow = (View) view.findViewById(R.id.shadow);
+    view.findViewById(R.id.layout_gym_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        gymFilter();
+      }
+    });
+    view.findViewById(R.id.layout_type_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        typeFilter();
+      }
+    });
+    view.findViewById(R.id.layout_status_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        statusFilter();
+      }
+    });
+    view.findViewById(R.id.layout_time_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        timeFilter();
+      }
+    });
+
     delegatePresenter(presenter, this);
     //tvGym.setText(gymWrapper.name());
     //tvGym.setCompoundDrawablesWithIntrinsicBounds(null, null,
@@ -160,19 +187,19 @@ public class ClassRecordFragment extends BaseFragment
     shadow.startAnimation(animation);
   }
 
-  @OnClick(R.id.layout_gym_filter) public void gymFilter() {
+ public void gymFilter() {
     showFilter("gym");
   }
 
-  @OnClick(R.id.layout_type_filter) public void typeFilter() {
+ public void typeFilter() {
     showFilter("type");
   }
 
-  @OnClick(R.id.layout_status_filter) public void statusFilter() {
+ public void statusFilter() {
     showFilter("status");
   }
 
-  @OnClick(R.id.layout_time_filter) public void timeFilter() {
+ public void timeFilter() {
     showFilter("time");
   }
 

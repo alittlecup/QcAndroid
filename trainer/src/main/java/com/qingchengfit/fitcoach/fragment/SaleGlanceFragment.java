@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
@@ -29,30 +29,60 @@ import rx.schedulers.Schedulers;
  */
 public class SaleGlanceFragment extends Fragment {
     public static final String TAG = SaleGlanceFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
+	Toolbar toolbar;
     //@BindView(R.id.spinner_nav)
     //Spinner spinnerNav;
-    @BindView(R.id.statment_glance_month_title) TextView statmentGlanceMonthTitle;
-    @BindView(R.id.statment_glance_month_data) TextView statmentGlanceMonthData;
-    @BindView(R.id.statment_glance_week_title) TextView statmentGlanceWeekTitle;
-    @BindView(R.id.statment_glance_week_data) TextView statmentGlanceWeekData;
-    @BindView(R.id.statment_glance_today_title) TextView statmentGlanceTodayTitle;
-    @BindView(R.id.statment_glance_today_data) TextView statmentGlanceTodayData;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	TextView statmentGlanceMonthTitle;
+	TextView statmentGlanceMonthData;
+	TextView statmentGlanceWeekTitle;
+	TextView statmentGlanceWeekData;
+	TextView statmentGlanceTodayTitle;
+	TextView statmentGlanceTodayData;
+	SwipeRefreshLayout refresh;
+	TextView toolbarTitle;
     //    private ArrayAdapter<SpinnerBean> adapter;
     //    private ArrayList<SpinnerBean> spinnerBeans;
     private QcSaleGlanceResponse response;
     private int curSystem = 0;
-    private Unbinder unbinder;
+
 
     public SaleGlanceFragment() {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      statmentGlanceMonthTitle = (TextView) view.findViewById(R.id.statment_glance_month_title);
+      statmentGlanceMonthData = (TextView) view.findViewById(R.id.statment_glance_month_data);
+      statmentGlanceWeekTitle = (TextView) view.findViewById(R.id.statment_glance_week_title);
+      statmentGlanceWeekData = (TextView) view.findViewById(R.id.statment_glance_week_data);
+      statmentGlanceTodayTitle = (TextView) view.findViewById(R.id.statment_glance_today_title);
+      statmentGlanceTodayData = (TextView) view.findViewById(R.id.statment_glance_today_data);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.statement_glance_month).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickMonth();
+        }
+      });
+      view.findViewById(R.id.statement_glance_week).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickWeek();
+        }
+      });
+      view.findViewById(R.id.statement_glance_today).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickToday();
+        }
+      });
+      view.findViewById(R.id.statement_glance_custom)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onClickCustom();
+            }
+          });
+
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         view.setOnTouchListener((v, event) -> {
             return true;
@@ -204,24 +234,24 @@ public class SaleGlanceFragment extends Fragment {
     //        });
     //    }
 
-    @OnClick(R.id.statement_glance_month) public void onClickMonth() {
+ public void onClickMonth() {
         getFragmentManager().beginTransaction().add(R.id.web_frag_layout, SaleDetailFragment.newInstance(2)).addToBackStack(null).commit();
     }
 
-    @OnClick(R.id.statement_glance_week) public void onClickWeek() {
+ public void onClickWeek() {
         getFragmentManager().beginTransaction().add(R.id.web_frag_layout, SaleDetailFragment.newInstance(1)).addToBackStack(null).commit();
     }
 
-    @OnClick(R.id.statement_glance_today) public void onClickToday() {
+ public void onClickToday() {
         getFragmentManager().beginTransaction().add(R.id.web_frag_layout, SaleDetailFragment.newInstance(0)).addToBackStack(null).commit();
     }
 
-    @OnClick(R.id.statement_glance_custom) public void onClickCustom() {
+ public void onClickCustom() {
         getFragmentManager().beginTransaction().add(R.id.web_frag_layout, new CustomSaleFragment()).addToBackStack(null).commit();
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

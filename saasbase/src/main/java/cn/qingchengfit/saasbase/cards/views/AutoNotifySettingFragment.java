@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.NotifyIsOpen;
 import cn.qingchengfit.saasbase.cards.presenters.ChangeAutoNotifyPresenter;
@@ -24,12 +24,12 @@ import javax.inject.Inject;
 public class AutoNotifySettingFragment extends SaasBaseFragment
   implements ChangeAutoNotifyPresenter.OnGetNotifySettingListener {
 
-  @BindView(R2.id.text_store_value) TextView textStoreValue;
-  @BindView(R2.id.text_second_value) TextView textSecondValue;
-  @BindView(R2.id.text_time_value) TextView textTimeValue;
-  @BindView(R2.id.btn_change_setting) TextView btnSettingChange;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	TextView textStoreValue;
+	TextView textSecondValue;
+	TextView textTimeValue;
+	TextView btnSettingChange;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
   private boolean storeIsOpen;
 
@@ -49,7 +49,13 @@ public class AutoNotifySettingFragment extends SaasBaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_auto_notify, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    textStoreValue = (TextView) view.findViewById(R.id.text_store_value);
+    textSecondValue = (TextView) view.findViewById(R.id.text_second_value);
+    textTimeValue = (TextView) view.findViewById(R.id.text_time_value);
+    btnSettingChange = (TextView) view.findViewById(R.id.btn_change_setting);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
     delegatePresenter(changeAutoNotifyPresenter,this);
     changeAutoNotifyPresenter.setOnGetNotifySettingListener(this);
     changeAutoNotifyPresenter.getNotifySettingRequest();

@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
@@ -56,11 +56,11 @@ public class TopFilterSaleFragment extends BaseFragment
     implements TopFilterSalePresenter.PresenterView, View.OnTouchListener, FlexibleAdapter.OnItemClickListener {
 
     public int page = 0;
-    @BindView(R.id.rv_referrer) RecyclerView rvSales;
+	RecyclerView rvSales;
     @Inject TopFilterSalePresenter presenter;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
     private CommonFlexAdapter mFlexAdapter;
     private List<AbstractFlexibleItem> items = new ArrayList<>();
     private List<Staff> datas = new ArrayList<>();
@@ -81,8 +81,12 @@ public class TopFilterSaleFragment extends BaseFragment
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_referrer_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      rvSales = (RecyclerView) view.findViewById(R.id.rv_referrer);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
+      initToolbar(toolbar);
         initDI();
         if (getParentFragment() != null && getParentFragment() instanceof StudentFilterFragment) {
             isShowShort = true;

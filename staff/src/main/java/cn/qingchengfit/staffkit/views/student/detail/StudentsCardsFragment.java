@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -45,8 +45,8 @@ import javax.inject.Inject;
  */
 public class StudentsCardsFragment extends BaseFragment implements StudentsCardsView, TitleFragment, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.cardnum) TextView cardnum;
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	TextView cardnum;
+	RecycleViewWithNoImg recycleview;
 
     @Inject StudentsCardsPresenter presenter;
     @Inject LoginStatus loginStatus;
@@ -60,8 +60,10 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_students_cars, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      cardnum = (TextView) view.findViewById(R.id.cardnum);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+
+      delegatePresenter(presenter, this);
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         adatper = new CommonFlexAdapter(datas, this);
         recycleview.setAdapter(adatper);

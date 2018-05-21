@@ -12,15 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.events.EventBatchLooperConfict;
 import cn.qingchengfit.items.CmBottomListChosenItem;
 import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.utils.DateUtils;
@@ -63,14 +63,14 @@ import rx.functions.Action1;
 public abstract class IBatchLoopFragment extends SaasBaseFragment implements
     FlexibleAdapter.OnItemClickListener{
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.label_can_order) TextView labelCanOrder;
-  @BindView(R2.id.starttime)protected CommonInputView starttime;
-  @BindView(R2.id.endtime)protected CommonInputView endtime;
-  @BindView(R2.id.civ_order_interval)protected CommonInputView civOrderInterval;
-  @BindView(R2.id.desc) TextView desc;
-  @BindView(R2.id.rv) RecyclerView rv;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView labelCanOrder;
+	protected CommonInputView starttime;
+	protected CommonInputView endtime;
+	protected CommonInputView civOrderInterval;
+	TextView desc;
+	RecyclerView rv;
   String[] orderTimeIntervals;
 
   protected CommonFlexAdapter commonFlexAdapter;
@@ -93,7 +93,30 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_add_batch_loop, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    labelCanOrder = (TextView) view.findViewById(R.id.label_can_order);
+    starttime = (CommonInputView) view.findViewById(R.id.starttime);
+    endtime = (CommonInputView) view.findViewById(R.id.endtime);
+    civOrderInterval = (CommonInputView) view.findViewById(R.id.civ_order_interval);
+    desc = (TextView) view.findViewById(R.id.desc);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    view.findViewById(R.id.starttime).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onStarttimeClicked();
+      }
+    });
+    view.findViewById(R.id.endtime).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onEndtimeClicked();
+      }
+    });
+    view.findViewById(R.id.civ_order_interval).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickInterval();
+      }
+    });
+
     initToolbar(toolbar);
     setBackPress();
     endtime.setVisibility(isPrivate?View.VISIBLE:View.GONE);
@@ -164,7 +187,7 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.starttime) public void onStarttimeClicked() {
+ public void onStarttimeClicked() {
     timePickerDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
     timePickerDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
@@ -186,7 +209,7 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
     timePickerDialog.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
 
-  @OnClick(R2.id.endtime) public void onEndtimeClicked() {
+ public void onEndtimeClicked() {
     timePickerDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.TODAY_HOURS_MINS, 5);
     timePickerDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTodayTimeSelectListener() {
       @Override public void onTimeSelect(Date date, boolean isToday) {
@@ -213,7 +236,7 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
 
 
   //点击间隔
-  @OnClick(R2.id.civ_order_interval) public void onClickInterval() {
+ public void onClickInterval() {
     new DialogList(getContext())
         .list(orderTimeIntervals, new AdapterView.OnItemClickListener() {
           @Override

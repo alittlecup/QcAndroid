@@ -42,9 +42,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -105,10 +105,10 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   public static final String OPEN_URL = "open_url";
   public static final String MAIN_ACTION = "main.action";
   public static final int REOPEN_APP = -1;
-  @BindView(R.id.tabview) TabViewNoVp tabview;
-  @BindView(R.id.frag_choose_brand) FrameLayout fragChooseBrand;
-  @BindView(R.id.layout_brands) FrameLayout layoutBrands;
-  @BindView(R.id.tv_noti_count) TextView tvNotiCount;
+	TabViewNoVp tabview;
+	FrameLayout fragChooseBrand;
+	FrameLayout layoutBrands;
+	TextView tvNotiCount;
   @Inject RestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -161,7 +161,16 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
+    tabview = (TabViewNoVp) findViewById(R.id.tabview);
+    fragChooseBrand = (FrameLayout) findViewById(R.id.frag_choose_brand);
+    layoutBrands = (FrameLayout) findViewById(R.id.layout_brands);
+    tvNotiCount = (TextView) findViewById(R.id.tv_noti_count);
+    findViewById(R.id.layout_brands).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBgClick();
+      }
+    });
+
     initInject();
     initRouter();
     registeGlobleEvent();
@@ -636,7 +645,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   /**
    * 关闭选择品牌窗口
    */
-  @OnClick(R.id.layout_brands) public void onBgClick() {
+ public void onBgClick() {
     if (layoutBrands.getVisibility() == View.VISIBLE) {
 
       ViewCompat.animate(layoutBrands)

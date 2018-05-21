@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CoachService;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -56,18 +52,25 @@ public class GymItem extends AbstractFlexibleItem<GymItem.GymVH> {
 
     public class GymVH extends FlexibleViewHolder {
 
-        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name) TextView itemGymName;
-        @BindView(R.id.item_is_personal) TextView itemIsPersonal;
-        @BindView(R.id.qc_identify) ImageView qcIdentify;
-        @BindView(R.id.item_gym_brand) TextView itemGymBrand;
-        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
-        @BindView(R.id.item_right) ImageView itemRight;
-        @BindView(R.id.forbid) View forbid;
+	ImageView itemGymHeader;
+	TextView itemGymName;
+	TextView itemIsPersonal;
+	ImageView qcIdentify;
+	TextView itemGymBrand;
+	TextView itemGymPhonenum;
+	ImageView itemRight;
+	View forbid;
 
         public GymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemGymHeader = (ImageView) view.findViewById(R.id.item_gym_header);
+          itemGymName = (TextView) view.findViewById(R.id.item_gym_name);
+          itemIsPersonal = (TextView) view.findViewById(R.id.item_is_personal);
+          qcIdentify = (ImageView) view.findViewById(R.id.qc_identify);
+          itemGymBrand = (TextView) view.findViewById(R.id.item_gym_brand);
+          itemGymPhonenum = (TextView) view.findViewById(R.id.item_gym_phonenum);
+          itemRight = (ImageView) view.findViewById(R.id.item_right);
+          forbid = (View) view.findViewById(R.id.forbid);
         }
     }
 }

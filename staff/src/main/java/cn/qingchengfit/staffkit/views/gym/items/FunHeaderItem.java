@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.gym.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
@@ -42,11 +42,11 @@ public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH>
     }
 
     public class FunHeaderVH extends FlexibleViewHolder {
-        @BindView(R.id.title) TextView title;
+	TextView title;
 
         public FunHeaderVH(View view, FlexibleAdapter adapter) {
             super(view, adapter ,true);
-            ButterKnife.bind(this, view);
+          title = (TextView) view.findViewById(R.id.title);
         }
     }
 }

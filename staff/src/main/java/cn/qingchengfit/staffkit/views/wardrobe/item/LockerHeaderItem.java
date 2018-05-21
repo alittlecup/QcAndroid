@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.wardrobe.item;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -44,11 +44,11 @@ public class LockerHeaderItem extends AbstractFlexibleItem<LockerHeaderItem.Lock
     }
 
     public class LockerHeaderVH extends FlexibleViewHolder {
-        @BindView(R.id.text) TextView text;
+	TextView text;
 
         public LockerHeaderVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          text = (TextView) view.findViewById(R.id.text);
         }
     }
 }

@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
@@ -40,18 +40,23 @@ import com.qingchengfit.fitcoach.http.bean.Coach;
  */
 public class DrawerFragment extends Fragment {
     Gson gson;
-    @BindView(R.id.header_icon) ImageView headerIcon;
-    @BindView(R.id.drawer_name) TextView drawerName;
-    @BindView(R.id.drawer_headerview) RelativeLayout drawerHeaderview;
-    @BindView(R.id.drawer_radiogroup) CustomSetmentLayout drawerRadiogroup;
-    @BindView(R.id.drawer_modules) LinearLayout drawerModules;
+	ImageView headerIcon;
+	TextView drawerName;
+	RelativeLayout drawerHeaderview;
+	CustomSetmentLayout drawerRadiogroup;
+	LinearLayout drawerModules;
     private User user;
-    private Unbinder unbinder;
+
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_drawer, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        gson = new Gson();
+      headerIcon = (ImageView) view.findViewById(R.id.header_icon);
+      drawerName = (TextView) view.findViewById(R.id.drawer_name);
+      drawerHeaderview = (RelativeLayout) view.findViewById(R.id.drawer_headerview);
+      drawerRadiogroup = (CustomSetmentLayout) view.findViewById(R.id.drawer_radiogroup);
+      drawerModules = (LinearLayout) view.findViewById(R.id.drawer_modules);
+
+      gson = new Gson();
 
         String u = PreferenceUtils.getPrefString(getContext(), "user_info", "");
         if (!TextUtils.isEmpty(u)) {
@@ -88,6 +93,6 @@ public class DrawerFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

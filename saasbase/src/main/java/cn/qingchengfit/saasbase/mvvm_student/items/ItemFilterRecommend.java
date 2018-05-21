@@ -5,20 +5,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.items.FilterCommonLinearItem;
-import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.bill.filter.model.Content;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/8.
@@ -153,17 +149,20 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
 
     class ViewHolder extends FlexibleViewHolder {
 
-        @BindView(R2.id.recycler_filter_list)
+
         RecyclerView recyclerFilterList;
-        @BindView(R2.id.tv_filter_show_all)
+
         TextView tvFilterShowAll;
-        @BindView(R2.id.tv_filter_list_title)
+
         TextView tvFilterListTitle;
 
         public ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            tvFilterShowAll.setOnClickListener(new View.OnClickListener() {
+          recyclerFilterList = (RecyclerView) view.findViewById(R.id.recycler_filter_list);
+          tvFilterShowAll = (TextView) view.findViewById(R.id.tv_filter_show_all);
+          tvFilterListTitle = (TextView) view.findViewById(R.id.tv_filter_list_title);
+
+          tvFilterShowAll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = (int) view.getTag();

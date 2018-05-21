@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.student.detail;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.model.responese.SignInImg;
 import cn.qingchengfit.utils.DateUtils;
@@ -70,13 +70,15 @@ public class SignInImageItem extends AbstractFlexibleItem<SignInImageItem.SignIn
     }
 
     public class SignInImageVH extends FlexibleViewHolder {
-        @BindView(R.id.fix_time) TextView fixTime;
-        @BindView(R.id.fix_staff) TextView fixStaff;
-        @BindView(R.id.old_img) ImageView oldImg;
+	TextView fixTime;
+	TextView fixStaff;
+	ImageView oldImg;
 
         public SignInImageVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          fixTime = (TextView) view.findViewById(R.id.fix_time);
+          fixStaff = (TextView) view.findViewById(R.id.fix_staff);
+          oldImg = (ImageView) view.findViewById(R.id.old_img);
         }
     }
 }

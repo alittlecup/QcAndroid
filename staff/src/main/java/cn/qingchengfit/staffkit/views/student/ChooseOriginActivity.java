@@ -12,9 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -39,12 +39,12 @@ public class ChooseOriginActivity extends BaseActivity implements FragCallBack, 
 
     public static final int RESULT_ADD_ORIGIN = 11;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
 
-    @BindView(R.id.frag) FrameLayout frag;
+	FrameLayout frag;
     Observable observable;
     TopFilterSourceFragment sourceFragment;
     @Inject ChooseOriginPresenter presenter;
@@ -56,8 +56,23 @@ public class ChooseOriginActivity extends BaseActivity implements FragCallBack, 
         super.onCreate(savedInstanceState);
         //ChooseOriginActivityIntentBuilder.inject(getIntent(), this);
         setContentView(R.layout.activity_student_add_choose_origin);
-        ButterKnife.bind(this);
-        sourceFragment = new TopFilterSourceFragment();
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      frag = (FrameLayout) findViewById(R.id.frag);
+      findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickCancel();
+        }
+      });
+
+      sourceFragment = new TopFilterSourceFragment();
         initView();
         initToolBar();
         initBus();
@@ -141,11 +156,11 @@ public class ChooseOriginActivity extends BaseActivity implements FragCallBack, 
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
     }
 
     //取消搜索
-    @OnClick(R.id.searchview_cancle) public void onClickCancel() {
+ public void onClickCancel() {
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

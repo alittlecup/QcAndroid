@@ -11,12 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.student.other.MyIndicator;
 import cn.qingchengfit.saasbase.student.other.MySnapHelper;
@@ -39,13 +39,13 @@ import javax.inject.Inject;
 public class StudentOperationFragment extends BaseFragment
         implements FlexibleAdapter.OnItemClickListener, MySnapHelper.OnSelectListener {
 
-    @BindView(R2.id.recycleview)
+
     RecyclerView recycleview;
     @Inject
     LoginStatus loginStatus;
     @Inject
     GymWrapper gymWrapper;
-    @BindView(R2.id.indicator)
+
     MyIndicator indicator;
 
 
@@ -63,9 +63,10 @@ public class StudentOperationFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
-        unbinder = ButterKnife.bind(this, v);
+      recycleview = (RecyclerView) v.findViewById(R.id.recycleview);
+      indicator = (MyIndicator) v.findViewById(R.id.indicator);
 
-//        RxRegiste(
+      //        RxRegiste(
 //            gymBaseInfoAction.getGymByModel(gymWrapper.id(),gymWrapper.model())
 //            .filter(new Func1<List<CoachService>, Boolean>() {
 //            @Override public Boolean call(List<CoachService> list) {

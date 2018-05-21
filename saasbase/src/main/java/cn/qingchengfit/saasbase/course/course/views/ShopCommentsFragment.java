@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CommentShop;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -34,15 +34,15 @@ import javax.inject.Inject;
   extends SaasBaseFragment
   implements FlexibleAdapter.OnItemClickListener, ShopCommentPresenter.ShopCommentView {
 
-  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
-  @BindView(R2.id.student_judge_coach_score) TextView studentJudgeCoachScore;
-  @BindView(R2.id.student_judge_coach_star) RatingBarVectorFix studentJudgeCoachStar;
-  @BindView(R2.id.student_judge_course_score) TextView studentJudgeCourseScore;
-  @BindView(R2.id.student_judge_course_star) RatingBarVectorFix studentJudgeCourseStar;
-  @BindView(R2.id.server_score) TextView serverScore;
-  @BindView(R2.id.server_rate) RatingBarVectorFix serverRate;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	RecyclerView recyclerview;
+	TextView studentJudgeCoachScore;
+	RatingBarVectorFix studentJudgeCoachStar;
+	TextView studentJudgeCourseScore;
+	RatingBarVectorFix studentJudgeCourseStar;
+	TextView serverScore;
+	RatingBarVectorFix serverRate;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
   @Inject ShopCommentPresenter mPresenter;
   private List<AbstractFlexibleItem> mData = new ArrayList<>();
@@ -54,7 +54,16 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_shop_comment_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    studentJudgeCoachScore = (TextView) view.findViewById(R.id.student_judge_coach_score);
+    studentJudgeCoachStar = (RatingBarVectorFix) view.findViewById(R.id.student_judge_coach_star);
+    studentJudgeCourseScore = (TextView) view.findViewById(R.id.student_judge_course_score);
+    studentJudgeCourseStar = (RatingBarVectorFix) view.findViewById(R.id.student_judge_course_star);
+    serverScore = (TextView) view.findViewById(R.id.server_score);
+    serverRate = (RatingBarVectorFix) view.findViewById(R.id.server_rate);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
     initToolbar(toolbar);
     delegatePresenter(mPresenter, this);
     mPresenter.queryShopComments(mCourseId);

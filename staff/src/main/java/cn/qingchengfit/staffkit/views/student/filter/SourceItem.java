@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.student.filter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CompatUtils;
@@ -73,12 +73,13 @@ public class SourceItem extends AbstractFlexibleItem<SourceItem.SourceItemVH> {
     }
 
     public class SourceItemVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_source_name) TextView tvSourceName;
-        @BindView(R.id.img_hook) ImageView imgHook;
+	TextView tvSourceName;
+	ImageView imgHook;
 
         public SourceItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvSourceName = (TextView) view.findViewById(R.id.tv_source_name);
+          imgHook = (ImageView) view.findViewById(R.id.img_hook);
         }
     }
 }

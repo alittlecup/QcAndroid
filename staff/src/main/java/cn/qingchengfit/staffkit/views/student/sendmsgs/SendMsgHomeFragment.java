@@ -18,9 +18,9 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.ShortMsg;
 import cn.qingchengfit.saasbase.items.ShortMsgItem;
 import cn.qingchengfit.staffkit.R;
@@ -63,9 +63,9 @@ import rx.functions.Action1;
  */
 public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresentersPresenter.MVPView {
 
-    @BindView(R.id.tabview) TabLayout tabview;
-    @BindView(R.id.viewpager) ViewPager viewpager;
-    @BindView(R.id.et_search) EditText etSearch;
+	TabLayout tabview;
+	ViewPager viewpager;
+	EditText etSearch;
 
     FlexableListFragment allFragment;
     FlexableListFragment sendedFragment;
@@ -76,10 +76,10 @@ public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresent
     List<AbstractFlexibleItem> mDatasSended = new ArrayList<>();
 
     @Inject ShortMsgPresentersPresenter presenter;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     SendMsgHomeAdapter adapter;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
+	ImageView searchviewClear;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +87,19 @@ public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresent
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_send_msg_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      tabview = (TabLayout) view.findViewById(R.id.tabview);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      etSearch = (EditText) view.findViewById(R.id.et_search);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+      view.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          addMsg();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         if (allFragment == null) {
             allFragment = new FlexableListFragment();
@@ -225,7 +236,7 @@ public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresent
 
     }
 
-    @OnClick(R.id.fab_add) public void addMsg() {
+ public void addMsg() {
         getFragmentManager().beginTransaction()
             .setCustomAnimations(R.anim.slide_bottom_in, R.anim.slide_fade_out, R.anim.slide_fade_in, R.anim.slide_bottom_out)
             .replace(R.id.frag, new MsgSendFragmentFragment())

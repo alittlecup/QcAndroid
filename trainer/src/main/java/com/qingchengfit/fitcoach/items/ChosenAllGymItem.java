@@ -1,11 +1,7 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -31,11 +27,11 @@ public class ChosenAllGymItem extends AbstractFlexibleItem<ChosenAllGymItem.Chos
     }
 
     public class ChosenAllGymVH extends FlexibleViewHolder {
-        @BindView(R.id.chosen) ImageView chosen;
+	ImageView chosen;
 
         public ChosenAllGymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          chosen = (ImageView) view.findViewById(R.id.chosen);
         }
     }
 }

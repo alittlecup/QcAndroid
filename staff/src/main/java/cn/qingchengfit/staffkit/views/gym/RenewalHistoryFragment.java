@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.ProgressItem;
@@ -59,17 +59,20 @@ public class RenewalHistoryFragment extends BaseFragment
     public CommonFlexAdapter mCommonFlexAdapter;
     public int mCurPage = 1;
     public int mMaxPage = 1;
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	RecycleViewWithNoImg recycleview;
     @Inject RestRepository mRestRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_renewal_history, container, false);
-        ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();

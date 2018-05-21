@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.List;
@@ -63,11 +63,11 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringVH> 
     }
 
     public class StringVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.text) TextView text;
+	TextView text;
 
         public StringVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          text = (TextView) itemView.findViewById(R.id.text);
         }
     }
 }

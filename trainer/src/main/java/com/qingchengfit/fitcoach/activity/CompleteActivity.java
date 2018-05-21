@@ -5,11 +5,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
@@ -19,22 +17,34 @@ import rx.schedulers.Schedulers;
 
 public class CompleteActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.comple_name) TextInputLayout compleName;
-    @BindView(R.id.comple_city) TextInputLayout compleCity;
-    @BindView(R.id.comple_pw) TextInputLayout complePw;
-    @BindView(R.id.comple_pw_re) TextInputLayout complePwRe;
-    @BindView(R.id.comple_btn) Button compleBtn;
+	Toolbar toolbar;
+	TextInputLayout compleName;
+	TextInputLayout compleCity;
+	TextInputLayout complePw;
+	TextInputLayout complePwRe;
+	Button compleBtn;
 
     String mCode;   //服务器验证验证码后返回的code
 
-    @BindView(R.id.comple_gender) RadioGroup compleGender;
+	RadioGroup compleGender;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_complete_info);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      compleName = (TextInputLayout) findViewById(R.id.comple_name);
+      compleCity = (TextInputLayout) findViewById(R.id.comple_city);
+      complePw = (TextInputLayout) findViewById(R.id.comple_pw);
+      complePwRe = (TextInputLayout) findViewById(R.id.comple_pw_re);
+      compleBtn = (Button) findViewById(R.id.comple_btn);
+      compleGender = (RadioGroup) findViewById(R.id.comple_gender);
+      findViewById(R.id.comple_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OnComplete();
+        }
+      });
+
+      setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("完善资料");
         getSupportActionBar().setIcon(R.drawable.ic_arrow_left);
 
@@ -52,7 +62,7 @@ public class CompleteActivity extends AppCompatActivity {
         complePwRe.setHint("确认密码");
     }
 
-    @OnClick(R.id.comple_btn) public void OnComplete() {
+ public void OnComplete() {
         RegisteBean bean = new RegisteBean();
         bean.setCode(mCode);
         bean.setCity(compleCity.getEditText().getText().toString().trim());

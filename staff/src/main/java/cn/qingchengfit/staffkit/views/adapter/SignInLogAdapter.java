@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -107,16 +107,24 @@ public class SignInLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public static class StudentsHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_signin_item_student_face) ImageView iv_signin_item_student_face;
-        @BindView(R.id.tv_signin_item_student_name) TextView tv_signin_item_student_name;
-        @BindView(R.id.tv_signin_out_time) TextView tv_signin_item_in_time;
-        @BindView(R.id.tv_signin_item_out_time) TextView tv_signin_item_out_time;
-        @BindView(R.id.iv_signin_item_student_gender) ImageView iv_signin_item_student_gender;
-        @BindView(R.id.tv_signin_log_cancle) TextView tvSigninLogCancle;
+	ImageView iv_signin_item_student_face;
+	TextView tv_signin_item_student_name;
+	TextView tv_signin_item_in_time;
+	TextView tv_signin_item_out_time;
+	ImageView iv_signin_item_student_gender;
+	TextView tvSigninLogCancle;
 
         public StudentsHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          iv_signin_item_student_face =
+              (ImageView) itemView.findViewById(R.id.iv_signin_item_student_face);
+          tv_signin_item_student_name =
+              (TextView) itemView.findViewById(R.id.tv_signin_item_student_name);
+          tv_signin_item_in_time = (TextView) itemView.findViewById(R.id.tv_signin_out_time);
+          tv_signin_item_out_time = (TextView) itemView.findViewById(R.id.tv_signin_item_out_time);
+          iv_signin_item_student_gender =
+              (ImageView) itemView.findViewById(R.id.iv_signin_item_student_gender);
+          tvSigninLogCancle = (TextView) itemView.findViewById(R.id.tv_signin_log_cancle);
         }
     }
 }

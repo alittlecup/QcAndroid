@@ -1,13 +1,9 @@
 package cn.qingchengfit.staffkit.train.item;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.train.model.MemberAttendanceBean;
 import com.bumptech.glide.Glide;
@@ -83,24 +79,37 @@ public class SignUpAttendanceItem extends AbstractFlexibleItem<SignUpAttendanceI
 
     class SignUpAttendanceVH extends FlexibleViewHolder {
 
-        @BindView(R.id.img_sign_up_attendance_head) ImageView imgSignUpAttendanceHead;
-        @BindView(R.id.tv_sign_up_attendance_name) TextView tvSignUpAttendanceName;
-        @BindView(R.id.tv_sign_day_0) TextView tvSignDay0;
-        @BindView(R.id.tv_sign_action_0) TextView tvSignAction0;
-        @BindView(R.id.label_sign_unit_1) TextView labelSignUnit1;
-        @BindView(R.id.tv_sign_day_1) TextView tvSignDay1;
-        @BindView(R.id.tv_sign_action_1) TextView tvSignAction1;
-        @BindView(R.id.tv_sign_day_2) TextView tvSignDay2;
-        @BindView(R.id.tv_sign_action_2) TextView tvSignAction2;
-        @BindView(R.id.label_sign_unit_2) TextView labelSignUnit2;
-        @BindView(R.id.tv_sign_day_3) TextView tvSignDay3;
-        @BindView(R.id.tv_sign_action_3) TextView tvSignAction3;
-        @BindView(R.id.label_sign_unit_3) TextView labelSignUnit3;
-        @BindView(R.id.label_sign_unit_0) TextView labelSignUnit0;
+	ImageView imgSignUpAttendanceHead;
+	TextView tvSignUpAttendanceName;
+	TextView tvSignDay0;
+	TextView tvSignAction0;
+	TextView labelSignUnit1;
+	TextView tvSignDay1;
+	TextView tvSignAction1;
+	TextView tvSignDay2;
+	TextView tvSignAction2;
+	TextView labelSignUnit2;
+	TextView tvSignDay3;
+	TextView tvSignAction3;
+	TextView labelSignUnit3;
+	TextView labelSignUnit0;
 
         public SignUpAttendanceVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imgSignUpAttendanceHead = (ImageView) view.findViewById(R.id.img_sign_up_attendance_head);
+          tvSignUpAttendanceName = (TextView) view.findViewById(R.id.tv_sign_up_attendance_name);
+          tvSignDay0 = (TextView) view.findViewById(R.id.tv_sign_day_0);
+          tvSignAction0 = (TextView) view.findViewById(R.id.tv_sign_action_0);
+          labelSignUnit1 = (TextView) view.findViewById(R.id.label_sign_unit_1);
+          tvSignDay1 = (TextView) view.findViewById(R.id.tv_sign_day_1);
+          tvSignAction1 = (TextView) view.findViewById(R.id.tv_sign_action_1);
+          tvSignDay2 = (TextView) view.findViewById(R.id.tv_sign_day_2);
+          tvSignAction2 = (TextView) view.findViewById(R.id.tv_sign_action_2);
+          labelSignUnit2 = (TextView) view.findViewById(R.id.label_sign_unit_2);
+          tvSignDay3 = (TextView) view.findViewById(R.id.tv_sign_day_3);
+          tvSignAction3 = (TextView) view.findViewById(R.id.tv_sign_action_3);
+          labelSignUnit3 = (TextView) view.findViewById(R.id.label_sign_unit_3);
+          labelSignUnit0 = (TextView) view.findViewById(R.id.label_sign_unit_0);
         }
     }
 }

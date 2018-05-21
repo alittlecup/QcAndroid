@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.SignInLogAdapter;
@@ -27,9 +27,9 @@ import javax.inject.Inject;
  */
 public class SignInLogFragment extends BaseFragment implements SignInLogPresenter.SignInLogView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.studentlist_rv) RecyclerView studentlistRv;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	RecyclerView studentlistRv;
 
   @Inject SignInLogPresenter presenter;
   List<SignInTasks.SignInTask> list;
@@ -51,7 +51,10 @@ public class SignInLogFragment extends BaseFragment implements SignInLogPresente
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_signin_log, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    studentlistRv = (RecyclerView) view.findViewById(R.id.studentlist_rv);
+
     delegatePresenter(presenter, this);
 
     initView();

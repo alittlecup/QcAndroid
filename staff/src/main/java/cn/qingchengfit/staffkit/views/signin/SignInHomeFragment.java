@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
@@ -58,8 +58,8 @@ import timber.log.Timber;
  */
 public class SignInHomeFragment extends BaseFragment implements SignInConfigPresenter.SignInConfigView, ModuleConfigsPresenter.MVPView {
 
-    @BindView(R.id.tab) TabLayout tabLayout;
-    @BindView(R.id.viewpager) ViewPager viewpager;
+	TabLayout tabLayout;
+	ViewPager viewpager;
 
     //tab 的 adapter
     SignInViewpagerAdapter adapter;
@@ -70,8 +70,8 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
     @Inject SerPermisAction serPermisAction;
     @Inject SignInConfigPresenter presenter;
     @Inject ModuleConfigsPresenter moduleConfigsPresenter;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     public SignInHomeFragment() {
     }
@@ -95,8 +95,12 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      tabLayout = (TabLayout) view.findViewById(R.id.tab);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         delegatePresenter(moduleConfigsPresenter, this);
         showLoading();

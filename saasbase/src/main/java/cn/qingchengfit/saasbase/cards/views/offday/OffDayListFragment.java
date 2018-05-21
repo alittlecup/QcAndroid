@@ -12,11 +12,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.OffDay;
@@ -50,7 +50,7 @@ import javax.inject.Inject;
 public class OffDayListFragment
     extends SaasBaseFragment implements OffDayListView {
 
-  @BindView(R2.id.rv_offday_list) RecyclerView recyclerview;
+	RecyclerView recyclerview;
 
   @Inject OffDayListPresenter presenter;
   @Inject IPermissionModel permissionModel;
@@ -58,13 +58,16 @@ public class OffDayListFragment
 
   OffDayListAdapter adapter;
   List<OffDay> datas = new ArrayList<>();
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_card_offday_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerview = (RecyclerView) view.findViewById(R.id.rv_offday_list);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText("请假记录");

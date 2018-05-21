@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
@@ -24,7 +24,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.ImageTwoTextBean;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.constant.Configs;
@@ -63,9 +63,9 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
 
     public static final int FEATURE_ALLOTSALE = 1;
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.recycleview) RecyclerView recycleview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecyclerView recycleview;
     @Inject QcRestRepository restRepository;
     @Inject IPermissionModel serPermisAction;
     @Inject ICardModel cardModel;
@@ -150,8 +150,11 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbarTitile.setText("选择场馆");
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      toolbarTitile.setText("选择场馆");
         toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

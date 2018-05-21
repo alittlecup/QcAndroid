@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -82,13 +82,15 @@ public class CourseTeacherAdapter extends RecyclerView.Adapter<CourseTeacherAdap
 
     public class CourseTeacherVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.header) ImageView header;
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.rate_star) RatingBarVectorFix rateStar;
+	ImageView header;
+	TextView name;
+	RatingBarVectorFix rateStar;
 
         public CourseTeacherVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          header = (ImageView) itemView.findViewById(R.id.header);
+          name = (TextView) itemView.findViewById(R.id.name);
+          rateStar = (RatingBarVectorFix) itemView.findViewById(R.id.rate_star);
         }
     }
 }

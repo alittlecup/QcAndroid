@@ -4,10 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -49,16 +46,21 @@ public class JackManageItem extends AbstractFlexibleItem<JackManageItem.JackMana
     }
 
     public static class JackManageVH extends FlexibleViewHolder {
-        @BindView(R2.id.delete) ImageView delete;
-        @BindView(R2.id.img) ImageView img;
-        @BindView(R2.id.drag_tag) ImageView dragTag;
-        @BindView(R2.id.container) LinearLayout container;
-        @BindView(R2.id.text) TextView textView;
+	ImageView delete;
+	ImageView img;
+	ImageView dragTag;
+	LinearLayout container;
+	TextView textView;
 
         public JackManageVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            if (adapter.isHandleDragEnabled()) {
+          delete = (ImageView) view.findViewById(R.id.delete);
+          img = (ImageView) view.findViewById(R.id.img);
+          dragTag = (ImageView) view.findViewById(R.id.drag_tag);
+          container = (LinearLayout) view.findViewById(R.id.container);
+          textView = (TextView) view.findViewById(R.id.text);
+
+          if (adapter.isHandleDragEnabled()) {
                 setDragHandleView(dragTag);
             }
             delete.setOnClickListener(new View.OnClickListener() {

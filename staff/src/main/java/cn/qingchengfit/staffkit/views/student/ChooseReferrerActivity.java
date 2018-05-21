@@ -11,9 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.commpont.StaffWrapperComponent;
 import cn.qingchengfit.inject.model.StaffWrapper;
@@ -61,14 +61,14 @@ import rx.schedulers.Schedulers;
  */
 public class ChooseReferrerActivity extends BaseActivity implements FragCallBack, ChooseReferrerPresenter.PresenterView {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
 
     //@BindView(R.id.tv_add_new_origin) TextView tvAddNewOrigin;
-    @BindView(R.id.frag) FrameLayout frag;
-    @BindView(R.id.et_search) EditText etSearch;
+	FrameLayout frag;
+	EditText etSearch;
     Observable observable;
     ReferrerFragment referrerFragment;
     @Inject ChooseReferrerPresenter presenter;
@@ -79,8 +79,24 @@ public class ChooseReferrerActivity extends BaseActivity implements FragCallBack
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_add_choose_referrer);
-        ButterKnife.bind(this);
-        initView();
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      frag = (FrameLayout) findViewById(R.id.frag);
+      etSearch = (EditText) findViewById(R.id.et_search);
+      findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickCancel();
+        }
+      });
+
+      initView();
         initToolBar();
         initBus();
     }
@@ -197,11 +213,11 @@ public class ChooseReferrerActivity extends BaseActivity implements FragCallBack
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
     }
 
     //取消搜索
-    @OnClick(R.id.searchview_cancle) public void onClickCancel() {
+ public void onClickCancel() {
     }
 
     //@OnClick(R.id.tv_add_new_origin) public void onClick() {

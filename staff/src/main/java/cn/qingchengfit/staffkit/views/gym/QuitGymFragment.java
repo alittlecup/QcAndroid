@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
@@ -41,9 +41,9 @@ import javax.inject.Inject;
 
 public class QuitGymFragment extends BaseDialogFragment {
 
-    @BindView(R.id.gym_avatar) ImageView gymAvatar;
-    @BindView(R.id.title) TextView title;
-    @BindView(R.id.content) TextView content;
+	ImageView gymAvatar;
+	TextView title;
+	TextView content;
     @Inject GymWrapper gymWrapper;
     private View.OnClickListener mOnClickListener;
 
@@ -55,8 +55,21 @@ public class QuitGymFragment extends BaseDialogFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quit_gym, container, false);
-        ButterKnife.bind(this, view);
-        Glide.with(getContext())
+      gymAvatar = (ImageView) view.findViewById(R.id.gym_avatar);
+      title = (TextView) view.findViewById(R.id.title);
+      content = (TextView) view.findViewById(R.id.content);
+      view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          QuitGymFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          QuitGymFragment.this.onClick(v);
+        }
+      });
+
+      Glide.with(getContext())
             .load(gymWrapper.photo())
             .asBitmap()
             .placeholder(R.drawable.ic_default_header)
@@ -74,7 +87,7 @@ public class QuitGymFragment extends BaseDialogFragment {
         mOnClickListener = onClickListener;
     }
 
-    @OnClick({ R.id.cancel, R.id.comfirm }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel:
                 dismiss();

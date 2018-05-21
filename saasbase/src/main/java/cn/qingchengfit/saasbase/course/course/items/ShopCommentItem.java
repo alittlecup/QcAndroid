@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.course.course.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.course.bean.CommentShop;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
@@ -58,18 +58,25 @@ public class ShopCommentItem extends AbstractFlexibleItem<ShopCommentItem.ShopCo
 
     public static class ShopCommentVH extends FlexibleViewHolder {
 
-        @BindView(R2.id.shop_img) ImageView shopImg;
-        @BindView(R2.id.coach_score) TextView coachScore;
-        @BindView(R2.id.course_score) TextView courseScore;
-        @BindView(R2.id.server_score) TextView serverScore;
-        @BindView(R2.id.comments) TagContainerLayout comments;
-        @BindView(R2.id.check_detail) TextView checkDetail;
-        @BindView(R2.id.shop_name) TextView shopName;
-        @BindView(R2.id.no_impression) TextView noImpression;
+	ImageView shopImg;
+	TextView coachScore;
+	TextView courseScore;
+	TextView serverScore;
+	TagContainerLayout comments;
+	TextView checkDetail;
+	TextView shopName;
+	TextView noImpression;
 
         public ShopCommentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          shopImg = (ImageView) view.findViewById(R.id.shop_img);
+          coachScore = (TextView) view.findViewById(R.id.coach_score);
+          courseScore = (TextView) view.findViewById(R.id.course_score);
+          serverScore = (TextView) view.findViewById(R.id.server_score);
+          comments = (TagContainerLayout) view.findViewById(R.id.comments);
+          checkDetail = (TextView) view.findViewById(R.id.check_detail);
+          shopName = (TextView) view.findViewById(R.id.shop_name);
+          noImpression = (TextView) view.findViewById(R.id.no_impression);
         }
     }
 }

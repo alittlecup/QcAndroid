@@ -6,10 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.ChooseItem;
 import cn.qingchengfit.staffkit.R;
@@ -45,11 +45,11 @@ import java.util.List;
  */
 public class OnlineLimitFragment extends BottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
 
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     CommonFlexAdapter mFlexAdapter;
-    private Unbinder unbinder;
+
 
     public static OnlineLimitFragment newInstance(int... d) {
 
@@ -62,8 +62,14 @@ public class OnlineLimitFragment extends BottomSheetDialogFragment implements Fl
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom_list_muti, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        setRecyclerview();
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OnlineLimitFragment.this.onClick();
+        }
+      });
+
+      setRecyclerview();
         return view;
     }
 
@@ -91,12 +97,9 @@ public class OnlineLimitFragment extends BottomSheetDialogFragment implements Fl
         recyclerview.setAdapter(mFlexAdapter);
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        if (unbinder != null) unbinder.unbind();
-    }
 
-    @OnClick(R.id.comfirm) public void onClick() {
+
+ public void onClick() {
         String strChoose = "";
         List<Object> ret = new ArrayList<>();
         if (mFlexAdapter.isSelected(0)) {

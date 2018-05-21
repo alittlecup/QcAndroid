@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.network.ResponseConstant;
@@ -43,16 +43,16 @@ import rx.schedulers.Schedulers;
 
 public class ChooseBrandActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar) public Toolbar toolbar;
-    @BindView(R.id.toolbar_title) public TextView toolbarTitile;
-    @BindView(R.id.down) public ImageView down;
-    @BindView(R.id.titile_layout) public LinearLayout titileLayout;
-    @BindView(R.id.searchview_et) public EditText searchviewEt;
-    @BindView(R.id.searchview_clear) public ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) public Button searchviewCancle;
-    @BindView(R.id.searchview) public LinearLayout searchview;
-    @BindView(R.id.toolbar_layout) public RelativeLayout toolbarLayout;
-    @BindView(R.id.recycleview) public RecyclerView recycleview;
+	public Toolbar toolbar;
+	public TextView toolbarTitile;
+	public ImageView down;
+	public LinearLayout titileLayout;
+	public EditText searchviewEt;
+	public ImageView searchviewClear;
+	public Button searchviewCancle;
+	public LinearLayout searchview;
+	public RelativeLayout toolbarLayout;
+	public RecyclerView recycleview;
 
     @Inject public RestRepository restRepository;
     public List<Brand> datas = new ArrayList<>();
@@ -62,9 +62,18 @@ public class ChooseBrandActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recyleview_toolbar);
-        ButterKnife.bind(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchviewEt = (EditText) findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      recycleview = (RecyclerView) findViewById(R.id.recycleview);
 
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 setResult(Activity.RESULT_CANCELED);

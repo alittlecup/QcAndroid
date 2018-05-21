@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -38,12 +38,12 @@ import javax.inject.Inject;
 public class BatchHomeFragment extends BaseFragment {
 
   public static final String TAG = "GymCoursesFragment";
-  @BindView(R2.id.gym_img) ImageView gymImg;
-  @BindView(R2.id.gym_name) TextView gymName;
-  @BindView(R2.id.gym_title_tag) ImageView gymTitleTag;
-  @BindView(R2.id.gym_count) TextView gymCount;
-  @BindView(R2.id.myhome_tab) TabLayout myhomeTab;
-  @BindView(R2.id.viewpager) ViewPager viewpager;
+	ImageView gymImg;
+	TextView gymName;
+	ImageView gymTitleTag;
+	TextView gymCount;
+	TabLayout myhomeTab;
+	ViewPager viewpager;
   ArrayList<Fragment> fragments = new ArrayList<>();
   @Inject IPermissionModel serPermisAction;
   private FragmentAdapter fragmentAdater;
@@ -51,7 +51,12 @@ public class BatchHomeFragment extends BaseFragment {
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_batch_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    gymImg = (ImageView) view.findViewById(R.id.gym_img);
+    gymName = (TextView) view.findViewById(R.id.gym_name);
+    gymTitleTag = (ImageView) view.findViewById(R.id.gym_title_tag);
+    gymCount = (TextView) view.findViewById(R.id.gym_count);
+    myhomeTab = (TabLayout) view.findViewById(R.id.myhome_tab);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
 
     mCallbackActivity.setToolbar("课程排期", false, null, 0, null);
     if (fragments.size() == 0) {

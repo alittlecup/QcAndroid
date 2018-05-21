@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
@@ -38,14 +38,14 @@ import cn.qingchengfit.widgets.CommonInputView;
  * Created by Paper on 16/2/4 2016.
  */
 public class AddAccountTypeFragment extends BaseDialogFragment {
-    @BindView(R.id.toolbar) Toolbar toolbar;
+	Toolbar toolbar;
 
-    @BindView(R.id.name) CommonInputView name;
-    @BindView(R.id.type) CommonInputView type;
-    @BindView(R.id.instruction) LargeInputView instruction;
-    @BindView(R.id.comfirm) Button comfirm;
+	CommonInputView name;
+	CommonInputView type;
+	LargeInputView instruction;
+	Button comfirm;
     DialogSheet sheet;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	TextView toolbarTitile;
     private int cardtype = 1;
     private TextWatcher textChange = new TextWatcher() {
         @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,8 +81,24 @@ public class AddAccountTypeFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_accounttype, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      name = (CommonInputView) view.findViewById(R.id.name);
+      type = (CommonInputView) view.findViewById(R.id.type);
+      instruction = (LargeInputView) view.findViewById(R.id.instruction);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      view.findViewById(R.id.type).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCardType();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 dismiss();
@@ -97,7 +113,7 @@ public class AddAccountTypeFragment extends BaseDialogFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R.id.comfirm) public void onComfirm() {
+ public void onComfirm() {
         //        Logger.d(" name:" + name.getContent() + cardtype);
         Intent it = IntentUtils.instanceStringIntent(name.getContent());
         it.putExtra("type", cardtype);
@@ -105,7 +121,7 @@ public class AddAccountTypeFragment extends BaseDialogFragment {
         this.dismiss();
     }
 
-    @OnClick(R.id.type) public void onCardType() {
+ public void onCardType() {
         if (sheet == null) {
             sheet = DialogSheet.builder(getContext()).addButton(getString(R.string.cardtype_value), new View.OnClickListener() {
                 @Override public void onClick(View v) {

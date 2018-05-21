@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.common.FollowRecord;
 import cn.qingchengfit.staffkit.R;
@@ -81,14 +81,17 @@ public class FollowRecordAdapter extends RecyclerView.Adapter<FollowRecordAdapte
 
     public class FollowRecordVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.time) TextView time;
-        @BindView(R.id.follower) TextView follower;
-        @BindView(R.id.content) TextView content;
-        @BindView(R.id.recycleview_imgs) RecyclerView recycleviewImgs;
+	TextView time;
+	TextView follower;
+	TextView content;
+	RecyclerView recycleviewImgs;
 
         public FollowRecordVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          time = (TextView) itemView.findViewById(R.id.time);
+          follower = (TextView) itemView.findViewById(R.id.follower);
+          content = (TextView) itemView.findViewById(R.id.content);
+          recycleviewImgs = (RecyclerView) itemView.findViewById(R.id.recycleview_imgs);
         }
     }
 }

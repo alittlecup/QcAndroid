@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -40,15 +40,15 @@ import rx.functions.Func1;
 
 public class WardrobeActivity extends BaseActivity implements FragCallBack {
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
+	Toolbar mToolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
+	RelativeLayout toolbarLayout;
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -62,8 +62,22 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wardrobe);
-        ButterKnife.bind(this);
-        mToolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      mToolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchviewEt = (EditText) findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeActivity.this.onClick();
+        }
+      });
+
+      mToolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 onBackPressed();
@@ -205,7 +219,7 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
         this.hasSecondView = hasSecondView;
     }
 
-    @OnClick(R.id.searchview_cancle) public void onClick() {
+ public void onClick() {
         if (searchviewEt.getText().toString().length() > 0) {
             searchviewEt.setText("");
         }

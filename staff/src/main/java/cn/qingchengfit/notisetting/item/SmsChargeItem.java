@@ -1,12 +1,8 @@
 package cn.qingchengfit.notisetting.item;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.notisetting.bean.ShopOrder;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.BusinessUtils;
@@ -60,16 +56,21 @@ public class SmsChargeItem extends AbstractFlexibleItem<SmsChargeItem.ShopOrderV
   }
 
   public class ShopOrderVH extends FlexibleViewHolder {
-    @BindView(R.id.pay_time) TextView payTime;
-    @BindView(R.id.pay_status) TextView payStatus;
-    @BindView(R.id.gym_valid_time) TextView gymValidTime;
-    @BindView(R.id.gym_real_money) TextView gymRealMoney;
-    @BindView(R.id.pay_online) TextView payOnline;
-    @BindView(R.id.opera_user) TextView operaUser;
+	TextView payTime;
+	TextView payStatus;
+	TextView gymValidTime;
+	TextView gymRealMoney;
+	TextView payOnline;
+	TextView operaUser;
 
     public ShopOrderVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      payTime = (TextView) view.findViewById(R.id.pay_time);
+      payStatus = (TextView) view.findViewById(R.id.pay_status);
+      gymValidTime = (TextView) view.findViewById(R.id.gym_valid_time);
+      gymRealMoney = (TextView) view.findViewById(R.id.gym_real_money);
+      payOnline = (TextView) view.findViewById(R.id.pay_online);
+      operaUser = (TextView) view.findViewById(R.id.opera_user);
     }
   }
 }

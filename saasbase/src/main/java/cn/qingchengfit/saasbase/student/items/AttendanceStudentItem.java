@@ -1,26 +1,17 @@
 package cn.qingchengfit.saasbase.student.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.student.bean.Absentce;
 import cn.qingchengfit.utils.CircleImgWrapper;
+import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 public class AttendanceStudentItem extends AbstractFlexibleItem<AttendanceStudentItem.AttendanceStudentVH> {
 
@@ -62,31 +53,41 @@ public class AttendanceStudentItem extends AbstractFlexibleItem<AttendanceStuden
     }
 
     public class AttendanceStudentVH extends FlexibleViewHolder {
-        @BindView(R2.id.item_person_header)
+
         ImageView itemPersonHeader;
-        @BindView(R2.id.item_person_header_loop)
+
         RelativeLayout itemPersonHeaderLoop;
-        @BindView(R2.id.item_person_name)
+
         TextView itemPersonName;
-        @BindView(R2.id.item_person_gender)
+
         ImageView itemPersonGender;
-        @BindView(R2.id.tv_referrer_count)
+
         TextView tvReferrerCount;
-        @BindView(R2.id.item_person_desc)
+
         TextView itemPersonDesc;
-        @BindView(R2.id.tv_student_contact_ta)
+
         TextView tvStudentContactTa;
-        @BindView(R2.id.tv_student_title)
+
         TextView tvStudentTitle;
-        @BindView(R2.id.tv_student_date)
+
         TextView tvStudentDate;
-        @BindView(R2.id.text_absence_days)
+
         TextView tvAbsenceDay;
 
         public AttendanceStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            // REFACTOR: 2017/11/14 拨打电话
+          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+          itemPersonHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_person_header_loop);
+          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+          tvReferrerCount = (TextView) view.findViewById(R.id.tv_referrer_count);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+          tvStudentContactTa = (TextView) view.findViewById(R.id.tv_student_contact_ta);
+          tvStudentTitle = (TextView) view.findViewById(R.id.tv_student_title);
+          tvStudentDate = (TextView) view.findViewById(R.id.tv_student_date);
+          tvAbsenceDay = (TextView) view.findViewById(R.id.text_absence_days);
+
+          // REFACTOR: 2017/11/14 拨打电话
 //            tvStudentContactTa.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

@@ -8,10 +8,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -74,24 +74,30 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
     }
 
     class NotSignVH extends FlexibleViewHolder {
-        @BindView(R2.id.title_not_sign)
+
         TextView titleNotSign;
-        @BindView(R2.id.text_not_sign_class_count)
+
         TextView textNotSignClassCount;
-        @BindView(R2.id.text_not_sign_class_name)
+
         TextView textNotSignClassName;
-        @BindView(R2.id.image_not_sign_gender)
+
         ImageView imageNotSignGender;
-        @BindView(R2.id.text_not_sign_phone)
+
         TextView textNotSignPhone;
-        @BindView(R2.id.btn_contact_him)
+
         TextView btnContactHim;
-        @BindView(R2.id.img_not_sign_head)
+
         ImageView imgNotSignHead;
 
         public NotSignVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          titleNotSign = (TextView) view.findViewById(R.id.title_not_sign);
+          textNotSignClassCount = (TextView) view.findViewById(R.id.text_not_sign_class_count);
+          textNotSignClassName = (TextView) view.findViewById(R.id.text_not_sign_class_name);
+          imageNotSignGender = (ImageView) view.findViewById(R.id.image_not_sign_gender);
+          textNotSignPhone = (TextView) view.findViewById(R.id.text_not_sign_phone);
+          btnContactHim = (TextView) view.findViewById(R.id.btn_contact_him);
+          imgNotSignHead = (ImageView) view.findViewById(R.id.img_not_sign_head);
         }
     }
 

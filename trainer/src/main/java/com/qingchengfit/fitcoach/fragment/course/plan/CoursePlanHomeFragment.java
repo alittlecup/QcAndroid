@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -55,10 +55,10 @@ import rx.schedulers.Schedulers;
  */
 public class CoursePlanHomeFragment extends BaseFragment {
 
-    @BindView(R.id.tabview) TabLayout tabview;
-    @BindView(R.id.vp) ViewPager vp;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	TabLayout tabview;
+	ViewPager vp;
+	Toolbar toolbar;
+	TextView toolbarTitle;
     private FlexableListFragment mGymPlanFragment;
     private FlexableListFragment mCustomPlanFragment;
     private EmptyFragment mEmptyFragment;
@@ -67,8 +67,12 @@ public class CoursePlanHomeFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_plan_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+      tabview = (TabLayout) view.findViewById(R.id.tabview);
+      vp = (ViewPager) view.findViewById(R.id.vp);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
+      toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbarTitle.setText("我的课件");
         toolbar.inflateMenu(R.menu.add);

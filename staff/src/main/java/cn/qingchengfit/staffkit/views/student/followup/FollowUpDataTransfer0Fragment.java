@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.FollowUpConver;
@@ -47,12 +47,12 @@ import javax.inject.Inject;
  */
 public class FollowUpDataTransfer0Fragment extends BaseFragment implements FollowUpDataTransferPresenter.PresenterView {
 
-    @BindView(R.id.funnelview2) FunnelTwoView funnelview;
+	FunnelTwoView funnelview;
 
     @Inject FollowUpDataTransferPresenter presenter;
 
     StudentFilter filter = new StudentFilter();
-    @BindView(R.id.tv_lable) TextView tvLable;
+	TextView tvLable;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
@@ -63,8 +63,10 @@ public class FollowUpDataTransfer0Fragment extends BaseFragment implements Follo
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_follow_up_data_transfer_0, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initDI();
+      funnelview = (FunnelTwoView) view.findViewById(R.id.funnelview2);
+      tvLable = (TextView) view.findViewById(R.id.tv_lable);
+
+      initDI();
         initView();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));

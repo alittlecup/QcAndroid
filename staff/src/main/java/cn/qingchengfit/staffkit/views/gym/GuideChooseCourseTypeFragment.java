@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
@@ -33,15 +33,25 @@ public class GuideChooseCourseTypeFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_course_type, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+      view.findViewById(R.id.go_group).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GuideChooseCourseTypeFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.go_private).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GuideChooseCourseTypeFragment.this.onClick(v);
+        }
+      });
+
+      return view;
     }
 
     @Override public String getFragmentName() {
         return GuideChooseCourseTypeFragment.class.getName();
     }
 
-    @OnClick({ R.id.go_group, R.id.go_private }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             //case R.id.go_group:
             //    getFragmentManager().beginTransaction()

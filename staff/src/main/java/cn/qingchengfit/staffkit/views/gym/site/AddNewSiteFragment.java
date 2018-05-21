@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.Space;
@@ -56,12 +56,12 @@ import rx.schedulers.Schedulers;
  */
 public class AddNewSiteFragment extends BaseDialogFragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.name) CommonInputView name;
-    @BindView(R.id.count) CommonInputView count;
-    @BindView(R.id.usage) CommonInputView usage;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	CommonInputView name;
+	CommonInputView count;
+	CommonInputView usage;
+	Button btn;
+	TextView toolbarTitile;
     @Inject RestRepository restRepository;
     @Inject GymWrapper gymWrapper;
     private DialogSheet sheet;
@@ -90,10 +90,24 @@ public class AddNewSiteFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_site, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      name = (CommonInputView) view.findViewById(R.id.name);
+      count = (CommonInputView) view.findViewById(R.id.count);
+      usage = (CommonInputView) view.findViewById(R.id.usage);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.usage).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onUseage();
+        }
+      });
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
 
-
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 AddNewSiteFragment.this.dismiss();
@@ -105,7 +119,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
         return view;
     }
 
-    @OnClick(R.id.usage) public void onUseage() {
+ public void onUseage() {
         if (sheet == null) {
             sheet = new DialogSheet(getContext()).addButton(getString(R.string.course_type_private), new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -133,7 +147,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
         sheet.show();
     }
 
-    @SuppressWarnings("unused") @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (TextUtils.isEmpty(count.getContent()) || TextUtils.isEmpty(name.getContent())){
             DialogUtils.showAlert(getContext(), "请完善信息");
             return;

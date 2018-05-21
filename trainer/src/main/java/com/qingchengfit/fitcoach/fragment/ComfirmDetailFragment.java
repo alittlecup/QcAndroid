@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.DialogSheet;
@@ -40,21 +40,21 @@ import rx.schedulers.Schedulers;
  */
 public class ComfirmDetailFragment extends BaseSettingFragment {
     public static final String TAG = ComfirmDetailFragment.class.getName();
-    @BindView(R.id.recorddetail_title) TextView recorddetailTitle;
-    @BindView(R.id.recorddetail_host) TextView recorddetailHost;
-    @BindView(R.id.recorddetail_time) TextView recorddetailTime;
-    @BindView(R.id.recorddetail_score) TextView recorddetailScore;
-    @BindView(R.id.recorddetail_comment) TextView recorddetailComment;
-    @BindView(R.id.comfirm_img) ImageView comfirmImg;
-    @BindView(R.id.comfirm_createtime) TextView comfirmCreatetime;
-    @BindView(R.id.record_comfirm_img) ImageView recordComfirmImg;
-    @BindView(R.id.workexp_detail_hiden) TextView workexpDetailHiden;
-    @BindView(R.id.valid_lable) TextView validLable;
+	TextView recorddetailTitle;
+	TextView recorddetailHost;
+	TextView recorddetailTime;
+	TextView recorddetailScore;
+	TextView recorddetailComment;
+	ImageView comfirmImg;
+	TextView comfirmCreatetime;
+	ImageView recordComfirmImg;
+	TextView workexpDetailHiden;
+	TextView validLable;
     private int id;
     private DialogSheet dialogSheet;
     private MaterialDialog delDialog;
     private QcCertificatesReponse.DataEntity.CertificatesEntity entity;
-    private Unbinder unbinder;
+
 
     public ComfirmDetailFragment() {
     }
@@ -78,9 +78,18 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comfirm_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      recorddetailTitle = (TextView) view.findViewById(R.id.recorddetail_title);
+      recorddetailHost = (TextView) view.findViewById(R.id.recorddetail_host);
+      recorddetailTime = (TextView) view.findViewById(R.id.recorddetail_time);
+      recorddetailScore = (TextView) view.findViewById(R.id.recorddetail_score);
+      recorddetailComment = (TextView) view.findViewById(R.id.recorddetail_comment);
+      comfirmImg = (ImageView) view.findViewById(R.id.comfirm_img);
+      comfirmCreatetime = (TextView) view.findViewById(R.id.comfirm_createtime);
+      recordComfirmImg = (ImageView) view.findViewById(R.id.record_comfirm_img);
+      workexpDetailHiden = (TextView) view.findViewById(R.id.workexp_detail_hiden);
+      validLable = (TextView) view.findViewById(R.id.valid_lable);
 
-        initData();
+      initData();
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
@@ -394,6 +403,6 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

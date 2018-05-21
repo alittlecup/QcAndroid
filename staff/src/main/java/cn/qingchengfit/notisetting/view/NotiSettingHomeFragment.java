@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -44,10 +44,10 @@ import javax.inject.Inject;
  */
 public class NotiSettingHomeFragment extends BaseFragment {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.tablayout) TabLayout tablayout;
-  @BindView(R.id.vp) ViewPager vp;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TabLayout tablayout;
+	ViewPager vp;
   @Inject SerPermisAction serPermisAction;
 
   private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -64,7 +64,11 @@ public class NotiSettingHomeFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_noti_setting_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tablayout = (TabLayout) view.findViewById(R.id.tablayout);
+    vp = (ViewPager) view.findViewById(R.id.vp);
+
     initToolbar(toolbar);
     vp.setAdapter(adapter);
     tablayout.setupWithViewPager(vp);

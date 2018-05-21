@@ -4,11 +4,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -100,30 +100,39 @@ public class AllotMultiStaffItem extends AbstractFlexibleItem<AllotMultiStaffIte
 
 
     class ViewHolder extends FlexibleViewHolder {
-        @BindView(R2.id.item_student_modify_alpha)
+
         TextView itemStudentModifyAlpha;
-        @BindView(R2.id.item_checkbox)
+
         CheckBox itemCheckbox;
-        @BindView(R2.id.item_delete)
+
         ImageView itemDelete;
-        @BindView(R2.id.item_person_header)
+
         ImageView itemPersonHeader;
-        @BindView(R2.id.item_person_name)
+
         TextView itemPersonName;
-        @BindView(R2.id.item_person_gender)
+
         ImageView itemPersonGender;
-        @BindView(R2.id.tv_referrer_count)
+
         TextView tvReferrerCount;
-        @BindView(R2.id.item_person_phonenum)
+
         TextView itemPersonPhonenum;
-        @BindView(R2.id.item_person_desc)
+
         TextView itemPersonDesc;
-        @BindView(R2.id.status)
+
         TextView status;
 
         public ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemStudentModifyAlpha = (TextView) view.findViewById(R.id.item_student_modify_alpha);
+          itemCheckbox = (CheckBox) view.findViewById(R.id.item_checkbox);
+          itemDelete = (ImageView) view.findViewById(R.id.item_delete);
+          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+          tvReferrerCount = (TextView) view.findViewById(R.id.tv_referrer_count);
+          itemPersonPhonenum = (TextView) view.findViewById(R.id.item_person_phonenum);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+          status = (TextView) view.findViewById(R.id.status);
         }
     }
 }

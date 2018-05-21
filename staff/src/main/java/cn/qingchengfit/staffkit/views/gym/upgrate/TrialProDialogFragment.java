@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.staffkit.R;
@@ -46,10 +46,10 @@ import javax.inject.Inject;
 
 public class TrialProDialogFragment extends BaseDialogFragment {
 
-    @BindView(R.id.tv_title) TextView tvTitle;
-    @BindView(R.id.tv_content_1) TextView tvContent1;
-    @BindView(R.id.tv_content_2) TextView tvContent2;
-    @BindView(R.id.tv_content_3) TextView tvContent3;
+	TextView tvTitle;
+	TextView tvContent1;
+	TextView tvContent2;
+	TextView tvContent3;
 
     @Inject GymWrapper gymWrapper;
 
@@ -60,8 +60,17 @@ public class TrialProDialogFragment extends BaseDialogFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trial_pro, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        tvTitle.setText(R.string.title_welcome_trial);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvContent1 = (TextView) view.findViewById(R.id.tv_content_1);
+      tvContent2 = (TextView) view.findViewById(R.id.tv_content_2);
+      tvContent3 = (TextView) view.findViewById(R.id.tv_content_3);
+      view.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          TrialProDialogFragment.this.onClick();
+        }
+      });
+
+      tvTitle.setText(R.string.title_welcome_trial);
         tvContent1.setText(gymWrapper.brand_name() + gymWrapper.name() + "成功升级到高级版");
         tvContent2.setText("有效期至：" + gymWrapper.system_end());
         final SpannableString ss = new SpannableString("快去探索高级版d的强大功能吧!");
@@ -76,7 +85,7 @@ public class TrialProDialogFragment extends BaseDialogFragment {
         return view;
     }
 
-    @OnClick(R.id.btn_start) public void onClick() {
+ public void onClick() {
         RxBus.getBus().post(new EventFreshCoachService());
         dismiss();
     }

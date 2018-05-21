@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
@@ -57,11 +57,11 @@ import rx.functions.Action1;
  */
 public class ScheduleWeekFragment extends BaseFragment {
 
-  @BindView(R.id.bg_show) View bgShow;
-  @BindView(R.id.web_floatbtn) FloatingActionsMenu webFloatbtn;
-  @BindView(R.id.viewpager) ViewPager viewpager;
-  @BindView(R.id.tv_month) TextView tvMonth;
-  @BindView(R.id.btn_back_today) FrameLayout btnBackToday;
+	View bgShow;
+	FloatingActionsMenu webFloatbtn;
+	ViewPager viewpager;
+	TextView tvMonth;
+	FrameLayout btnBackToday;
   private CoachService mCoachService;
   private DatePicker dataPicker;
   private ScheduleWeekAdapter adapter;
@@ -73,7 +73,32 @@ public class ScheduleWeekFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    bgShow = (View) view.findViewById(R.id.bg_show);
+    webFloatbtn = (FloatingActionsMenu) view.findViewById(R.id.web_floatbtn);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    tvMonth = (TextView) view.findViewById(R.id.tv_month);
+    btnBackToday = (FrameLayout) view.findViewById(R.id.btn_back_today);
+    view.findViewById(R.id.bg_show).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ScheduleWeekFragment.this.onClick();
+      }
+    });
+    view.findViewById(R.id.btn_back_today).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        backTody();
+      }
+    });
+    view.findViewById(R.id.tv_month).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ScheduleWeekFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.day_view).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ScheduleWeekFragment.this.onClick(v);
+      }
+    });
+
     PreferenceUtils.setPrefBoolean(getContext(), "is_week_view", true);
     if (getParentFragment() instanceof MainScheduleFragment) {
       mCoachService = ((MainScheduleFragment) getParentFragment()).getCoachService();
@@ -196,11 +221,11 @@ public class ScheduleWeekFragment extends BaseFragment {
     return view;
   }
 
-  @OnClick(R.id.bg_show) public void onClick() {
+ public void onClick() {
     webFloatbtn.collapse();
   }
 
-  @OnClick(R.id.btn_back_today) public void backTody() {
+ public void backTody() {
     viewpager.setCurrentItem(250, true);
   }
 
@@ -226,7 +251,7 @@ public class ScheduleWeekFragment extends BaseFragment {
     return ScheduleWeekFragment.class.getName();
   }
 
-  @OnClick({ R.id.tv_month, R.id.day_view }) public void onClick(View view) {
+ public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tv_month:
         dataPicker = new DatePicker();

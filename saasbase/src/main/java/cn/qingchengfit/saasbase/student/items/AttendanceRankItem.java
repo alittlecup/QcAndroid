@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.student.bean.Attendance;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
@@ -173,42 +173,57 @@ public class AttendanceRankItem extends AbstractFlexibleItem<AttendanceRankItem.
     }
 
     public class AttendanceRankVH extends FlexibleViewHolder {
-        @BindView(R2.id.tv_day_0)
+
         TextView tvDay0;
-        @BindView(R2.id.tv_action_0)
+
         TextView tvAction0;
-        @BindView(R2.id.label_unit_0)
+
         TextView labelUnit0;
-        @BindView(R2.id.img_avatar)
+
         ImageView imgAvatar;
-        @BindView(R2.id.tv_name)
+
         TextView tvName;
-        @BindView(R2.id.tv_phone)
+
         TextView tvPhone;
-        @BindView(R2.id.ic_gender)
+
         ImageView icGender;
-        @BindView(R2.id.tv_day_1)
+
         TextView tvDay1;
-        @BindView(R2.id.tv_action_1)
+
         TextView tvAction1;
-        @BindView(R2.id.label_unit_1)
+
         TextView labelUnit1;
-        @BindView(R2.id.tv_day_2)
+
         TextView tvDay2;
-        @BindView(R2.id.tv_action_2)
+
         TextView tvAction2;
-        @BindView(R2.id.label_unit_2)
+
         TextView labelUnit2;
-        @BindView(R2.id.tv_day_3)
+
         TextView tvDay3;
-        @BindView(R2.id.tv_action_3)
+
         TextView tvAction3;
-        @BindView(R2.id.label_unit_3)
+
         TextView labelUnit3;
 
         public AttendanceRankVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvDay0 = (TextView) view.findViewById(R.id.tv_day_0);
+          tvAction0 = (TextView) view.findViewById(R.id.tv_action_0);
+          labelUnit0 = (TextView) view.findViewById(R.id.label_unit_0);
+          imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+          tvName = (TextView) view.findViewById(R.id.tv_name);
+          tvPhone = (TextView) view.findViewById(R.id.tv_phone);
+          icGender = (ImageView) view.findViewById(R.id.ic_gender);
+          tvDay1 = (TextView) view.findViewById(R.id.tv_day_1);
+          tvAction1 = (TextView) view.findViewById(R.id.tv_action_1);
+          labelUnit1 = (TextView) view.findViewById(R.id.label_unit_1);
+          tvDay2 = (TextView) view.findViewById(R.id.tv_day_2);
+          tvAction2 = (TextView) view.findViewById(R.id.tv_action_2);
+          labelUnit2 = (TextView) view.findViewById(R.id.label_unit_2);
+          tvDay3 = (TextView) view.findViewById(R.id.tv_day_3);
+          tvAction3 = (TextView) view.findViewById(R.id.tv_action_3);
+          labelUnit3 = (TextView) view.findViewById(R.id.label_unit_3);
         }
     }
 }

@@ -20,9 +20,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -88,36 +88,36 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     private static final int RESULT_COACH = 14;
     public boolean isAdd = true;
     public User_Student user;
-    @BindView(R.id.tv_student_source) TextView tvStudentSource;
-    @BindView(R.id.ll_student_source) LinearLayout llStudentSource;
-    @BindView(R.id.tv_student_referrer) TextView tvStudentReferrer;
-    @BindView(R.id.ll_student_referrer) LinearLayout llStudentReferrer;
-    @BindView(R.id.civ_remark) CommonInputView civRemark;
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.civ_name) CommonInputView civName;
-    @BindView(R.id.gender_male) RadioButton genderMale;
-    @BindView(R.id.gender_female) RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.gender_layout) RelativeLayout genderLayout;
-    @BindView(R.id.civ_birthday) CommonInputView civBirthday;
-    @BindView(R.id.civ_address) CommonInputView civAddress;
-    @BindView(R.id.btn_save) Button btnSave;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    @BindView(R.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.support_shops) CommonInputView supportShops;
-    @BindView(R.id.civ_salers) CommonInputView mCivSalers;
-    @BindView(R.id.tv_header) TextView tvHeader;
-    @BindView(R.id.tv_add_hint) TextView tvAddHint;
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R.id.divider_edit_student) View divider;
-    @BindView(R.id.margin_divider_edit_student) View marginDivider;
+	TextView tvStudentSource;
+	LinearLayout llStudentSource;
+	TextView tvStudentReferrer;
+	LinearLayout llStudentReferrer;
+	CommonInputView civRemark;
+	ImageView headerImg;
+	CommonInputView civName;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
+	CommonInputView civBirthday;
+	CommonInputView civAddress;
+	Button btnSave;
+	RelativeLayout toolbarLayout;
+	RelativeLayout headerLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	CommonInputView supportShops;
+	CommonInputView mCivSalers;
+	TextView tvHeader;
+	TextView tvAddHint;
+	PhoneEditText phoneNum;
+	View divider;
+	View marginDivider;
     @Inject EditStudentInfoPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.civ_coaches) CommonInputView civCoaches;
+	CommonInputView civCoaches;
     private String shopid;
 
     private StudentReferrerBean referrerBean;
@@ -142,8 +142,79 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_student_info, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      tvStudentSource = (TextView) view.findViewById(R.id.tv_student_source);
+      llStudentSource = (LinearLayout) view.findViewById(R.id.ll_student_source);
+      tvStudentReferrer = (TextView) view.findViewById(R.id.tv_student_referrer);
+      llStudentReferrer = (LinearLayout) view.findViewById(R.id.ll_student_referrer);
+      civRemark = (CommonInputView) view.findViewById(R.id.civ_remark);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      civName = (CommonInputView) view.findViewById(R.id.civ_name);
+      genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+      genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+      civBirthday = (CommonInputView) view.findViewById(R.id.civ_birthday);
+      civAddress = (CommonInputView) view.findViewById(R.id.civ_address);
+      btnSave = (Button) view.findViewById(R.id.btn_save);
+      toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
+      headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      supportShops = (CommonInputView) view.findViewById(R.id.support_shops);
+      mCivSalers = (CommonInputView) view.findViewById(R.id.civ_salers);
+      tvHeader = (TextView) view.findViewById(R.id.tv_header);
+      tvAddHint = (TextView) view.findViewById(R.id.tv_add_hint);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      divider = (View) view.findViewById(R.id.divider_edit_student);
+      marginDivider = (View) view.findViewById(R.id.margin_divider_edit_student);
+      civCoaches = (CommonInputView) view.findViewById(R.id.civ_coaches);
+      view.findViewById(R.id.civ_birthday).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBirthday();
+        }
+      });
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          EditStudentInfoFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          EditStudentInfoFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.support_shops).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSupportShops();
+        }
+      });
+      view.findViewById(R.id.civ_salers).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          EditStudentInfoFragment.this.onClick();
+        }
+      });
+      view.findViewById(R.id.civ_coaches).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onChooseCoached();
+        }
+      });
+      view.findViewById(R.id.civ_remark).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onRemarkClick();
+        }
+      });
+      view.findViewById(R.id.ll_student_source).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSourceAndReferrerClick(v);
+        }
+      });
+      view.findViewById(R.id.ll_student_referrer).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSourceAndReferrerClick(v);
+        }
+      });
+
+      delegatePresenter(presenter, this);
         if (getArguments() != null){
             isAdd = getArguments().getBoolean("add");
             user = getArguments().getParcelable("student");
@@ -252,7 +323,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         super.onDestroyView();
     }
 
-    @OnClick(R.id.civ_birthday) public void onBirthday() {
+ public void onBirthday() {
       final TimeDialogWindow pwTime =
           new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(1900, 2100);
@@ -266,7 +337,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
     }
 
-    @OnClick({ R.id.header_layout, R.id.btn_save }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.header_layout:
                 ChoosePictureFragmentDialog f = ChoosePictureFragmentDialog.newInstance();
@@ -342,7 +413,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         }
     }
 
-    @OnClick(R.id.support_shops) public void onSupportShops() {
+ public void onSupportShops() {
         MutiChooseGymFragment.start(EditStudentInfoFragment.this, false, null, 4);
     }
 
@@ -406,7 +477,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         ToastUtils.show(s);
     }
 
-    @OnClick(R.id.civ_salers) public void onClick() {
+ public void onClick() {
         if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             Intent toChooseSaler = new Intent(getActivity(), MutiChooseSalersActivity.class);
             toChooseSaler.putExtra("hasReturn", true);
@@ -416,7 +487,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         }
     }
 
-    @OnClick(R.id.civ_coaches) public void onChooseCoached() {
+ public void onChooseCoached() {
         if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             Intent toChooseSaler = new Intent(getActivity(), MutiChooseCoachActivity.class);
             toChooseSaler.putExtra("hasReturn", true);
@@ -426,7 +497,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         }
     }
 
-    @OnClick(R.id.civ_remark) public void onRemarkClick() {
+ public void onRemarkClick() {
         routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
             new CommonInputParams().title("填写备注信息").hint(remarks).content(user.getRemarks()).build());
     }
@@ -435,7 +506,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
      * 来源
      * 推荐人
      */
-    @OnClick({ R.id.ll_student_source, R.id.ll_student_referrer }) public void onSourceAndReferrerClick(View view) {
+ public void onSourceAndReferrerClick(View view) {
         switch (view.getId()) {
             case R.id.ll_student_source:
                 startActivityForResult(ChooseActivity.newIntent(getContext(), ChooseActivity.CHOOSE_SOURCE, ""), RESULT_ORIGIN);

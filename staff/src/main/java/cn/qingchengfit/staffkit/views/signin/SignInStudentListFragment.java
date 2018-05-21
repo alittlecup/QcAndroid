@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
@@ -41,14 +41,14 @@ import javax.inject.Inject;
  */
 public class SignInStudentListFragment extends BaseFragment implements StudentListPresenter.StudentListView {
 
-    @BindView(R.id.et_signin_search) EditText etSigninSearch;
-    @BindView(R.id.img_signin_search_clear) ImageView imgSigninSearchClear;
-    @BindView(R.id.tv_signin_search_cancel) TextView tvSigninSearchCancel;
-    @BindView(R.id.rl_signin_search) RelativeLayout rlSigninSearch;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
-    @BindView(R.id.ll_signin_manual_discrib) LinearLayout llSigninManualDiscrib;
-    @BindView(R.id.tv_sign_in_des) TextView tvSignInDes;
-    @BindView(R.id.no_data_img) ImageView noDataImg;
+	EditText etSigninSearch;
+	ImageView imgSigninSearchClear;
+	TextView tvSigninSearchCancel;
+	RelativeLayout rlSigninSearch;
+	RecyclerView recycleview;
+	LinearLayout llSigninManualDiscrib;
+	TextView tvSignInDes;
+	ImageView noDataImg;
 
     @Inject StudentListPresenter presenter;
     private boolean isSignIn = true;
@@ -73,8 +73,28 @@ public class SignInStudentListFragment extends BaseFragment implements StudentLi
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_student_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      etSigninSearch = (EditText) view.findViewById(R.id.et_signin_search);
+      imgSigninSearchClear = (ImageView) view.findViewById(R.id.img_signin_search_clear);
+      tvSigninSearchCancel = (TextView) view.findViewById(R.id.tv_signin_search_cancel);
+      rlSigninSearch = (RelativeLayout) view.findViewById(R.id.rl_signin_search);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+      llSigninManualDiscrib = (LinearLayout) view.findViewById(R.id.ll_signin_manual_discrib);
+      tvSignInDes = (TextView) view.findViewById(R.id.tv_sign_in_des);
+      noDataImg = (ImageView) view.findViewById(R.id.no_data_img);
+      view.findViewById(R.id.img_signin_search_clear)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onClear();
+            }
+          });
+      view.findViewById(R.id.tv_signin_search_cancel)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onClickCancel();
+            }
+          });
+
+      delegatePresenter(presenter, this);
         initView();
         return view;
     }
@@ -104,12 +124,12 @@ public class SignInStudentListFragment extends BaseFragment implements StudentLi
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.img_signin_search_clear) public void onClear() {
+ public void onClear() {
         etSigninSearch.setText("");
     }
 
     //取消搜索
-    @OnClick(R.id.tv_signin_search_cancel) public void onClickCancel() {
+ public void onClickCancel() {
 
         if (etSigninSearch.getText().toString().length() > 0) {
             etSigninSearch.setText("");

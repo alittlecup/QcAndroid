@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -21,23 +21,23 @@ import java.util.Locale;
 
 public class CourseBaseInfoShowFragment extends BaseFragment {
 
-    @BindView(R2.id.img) ImageView img;
-    @BindView(R2.id.img_foot) ImageView imgFoot;
-    @BindView(R2.id.text1) TextView text1;
-    @BindView(R2.id.texticon) ImageView texticon;
-    @BindView(R2.id.text2) TextView text2;
-    @BindView(R2.id.text3) TextView text3;
-    @BindView(R2.id.righticon) ImageView righticon;
-    @BindView(R2.id.course_layout) RelativeLayout courseLayout;
-    @BindView(R2.id.min_course_num) TextView minCourseNum;
-    @BindView(R2.id.min_course_num_layout) LinearLayout minCourseNumLayout;
-    @BindView(R2.id.default_course_plan) TextView defaultCoursePlan;
-    @BindView(R2.id.default_course_plan_layout) LinearLayout defaultCoursePlanLayout;
-    @BindView(R2.id.suit_gyms) TextView suitGyms;
-    @BindView(R2.id.suit_gyms_layout) LinearLayout suitGymsLayout;
-    @BindView(R2.id.single_order_count) TextView singleOrderCount;
-    @BindView(R2.id.img_layout) FrameLayout imgLayout;
-    @BindView(R2.id.layout_single_order) LinearLayout layoutSingleOrder;
+	ImageView img;
+	ImageView imgFoot;
+	TextView text1;
+	ImageView texticon;
+	TextView text2;
+	TextView text3;
+	ImageView righticon;
+	RelativeLayout courseLayout;
+	TextView minCourseNum;
+	LinearLayout minCourseNumLayout;
+	TextView defaultCoursePlan;
+	LinearLayout defaultCoursePlanLayout;
+	TextView suitGyms;
+	LinearLayout suitGymsLayout;
+	TextView singleOrderCount;
+	FrameLayout imgLayout;
+	LinearLayout layoutSingleOrder;
 
     private CourseType mCourse;
 
@@ -59,8 +59,25 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_base_info_show, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        setView();
+      img = (ImageView) view.findViewById(R.id.img);
+      imgFoot = (ImageView) view.findViewById(R.id.img_foot);
+      text1 = (TextView) view.findViewById(R.id.text1);
+      texticon = (ImageView) view.findViewById(R.id.texticon);
+      text2 = (TextView) view.findViewById(R.id.text2);
+      text3 = (TextView) view.findViewById(R.id.text3);
+      righticon = (ImageView) view.findViewById(R.id.righticon);
+      courseLayout = (RelativeLayout) view.findViewById(R.id.course_layout);
+      minCourseNum = (TextView) view.findViewById(R.id.min_course_num);
+      minCourseNumLayout = (LinearLayout) view.findViewById(R.id.min_course_num_layout);
+      defaultCoursePlan = (TextView) view.findViewById(R.id.default_course_plan);
+      defaultCoursePlanLayout = (LinearLayout) view.findViewById(R.id.default_course_plan_layout);
+      suitGyms = (TextView) view.findViewById(R.id.suit_gyms);
+      suitGymsLayout = (LinearLayout) view.findViewById(R.id.suit_gyms_layout);
+      singleOrderCount = (TextView) view.findViewById(R.id.single_order_count);
+      imgLayout = (FrameLayout) view.findViewById(R.id.img_layout);
+      layoutSingleOrder = (LinearLayout) view.findViewById(R.id.layout_single_order);
+
+      setView();
         return view;
     }
 

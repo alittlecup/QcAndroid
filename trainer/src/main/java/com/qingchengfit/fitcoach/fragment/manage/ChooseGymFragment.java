@@ -8,9 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -72,13 +72,13 @@ import rx.schedulers.Schedulers;
 
     @Arg CoachService mCoachService;
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
 
     @Inject GymWrapper gymWrapper;
     List<Brand> brands = new ArrayList<>();
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
-    private Unbinder unbinder;
+
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +87,9 @@ import rx.schedulers.Schedulers;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (getActivity() instanceof PopFromBottomActivity) {
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+      if (getActivity() instanceof PopFromBottomActivity) {
             getActivity().setTitle("选择健身房");
         }
 
@@ -175,7 +176,7 @@ import rx.schedulers.Schedulers;
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public boolean onItemClick(int position) {

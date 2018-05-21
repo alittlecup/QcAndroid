@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.course.bean.CoursePlan;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -35,13 +35,13 @@ import rx.functions.Action1;
 
 public class CourseBaseInfoEditFragment extends BaseFragment {
 
-    @BindView(R2.id.header_img) ImageView headerImg;
-    @BindView(R2.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R2.id.course_name) CommonInputView courseName;
-    @BindView(R2.id.course_length) CommonInputView courseLength;
-    @BindView(R2.id.course_min_count) CommonInputView courseMinCount;
-    @BindView(R2.id.default_course_plan) CommonInputView defaultCoursePlan;
-    @BindView(R2.id.single_count) CommonInputView singleCount;
+	ImageView headerImg;
+	RelativeLayout headerLayout;
+	CommonInputView courseName;
+	CommonInputView courseLength;
+	CommonInputView courseMinCount;
+	CommonInputView defaultCoursePlan;
+	CommonInputView singleCount;
     private CourseType mCourse;
     private boolean isPrivate;
 
@@ -78,8 +78,25 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_base_info_edit, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (mCourse != null) {
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+      courseName = (CommonInputView) view.findViewById(R.id.course_name);
+      courseLength = (CommonInputView) view.findViewById(R.id.course_length);
+      courseMinCount = (CommonInputView) view.findViewById(R.id.course_min_count);
+      defaultCoursePlan = (CommonInputView) view.findViewById(R.id.default_course_plan);
+      singleCount = (CommonInputView) view.findViewById(R.id.single_count);
+      view.findViewById(R.id.default_course_plan).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCoursePlan();
+        }
+      });
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CourseBaseInfoEditFragment.this.onClick();
+        }
+      });
+
+      if (mCourse != null) {
             Glide.with(getContext()).load(mCourse.getPhoto()).placeholder(R.drawable.ic_default_header).into(headerImg);
             courseName.setContent(mCourse.getName());
             if ((Object) mCourse.getLength() != null && mCourse.getLength() != 0) {
@@ -167,7 +184,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         super.onDetach();
     }
 
-    @OnClick(R2.id.default_course_plan) public void onCoursePlan() {
+ public void onCoursePlan() {
         if (mCourse.getPlan() != null && mCourse.getPlan().getId() != null)
             routeTo("/plan/list/",new ChooseCoursePlanParams().mChosenId(mCourse.getPlan().getId()+"").build());
         else routeTo("/plan/list/",new ChooseCoursePlanParams().build());
@@ -176,7 +193,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     /**
      * 选择头像
      */
-    @OnClick(R2.id.header_layout) public void onClick() {
+ public void onClick() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
 

@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -66,14 +62,17 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
     public class BatchVH extends FlexibleViewHolder {
 
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.course_name) TextView courseName;
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.outofdate) View outofdate;
+	TextView title;
+	TextView courseName;
+	ImageView img;
+	View outofdate;
 
         public BatchVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          title = (TextView) view.findViewById(R.id.title);
+          courseName = (TextView) view.findViewById(R.id.course_name);
+          img = (ImageView) view.findViewById(R.id.img);
+          outofdate = (View) view.findViewById(R.id.outofdate);
         }
     }
 }

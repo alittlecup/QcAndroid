@@ -5,7 +5,7 @@ import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import butterknife.ButterKnife;
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
@@ -29,7 +29,7 @@ public class NotificationActivity extends BaseActivity
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        ButterKnife.bind(this);
+
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.notification_layout, NotificationFragment.newInstance(getIntent().getStringExtra("type")))
             .commit();

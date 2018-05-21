@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.export.item.ExportRecordItem;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
@@ -30,9 +30,9 @@ import javax.inject.Inject;
 public class ExportRecordFragment extends BaseFragment implements ImportExportPresenter.MVPView,
     ExportRecordItem.OnButtonClickListener {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.recycler_export_record) RecyclerView recyclerExportRecord;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	RecyclerView recyclerExportRecord;
   @Inject ImportExportPresenter presenter;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
@@ -41,7 +41,10 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_export_record, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    recyclerExportRecord = (RecyclerView) view.findViewById(R.id.recycler_export_record);
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText(getString(R.string.toolbar_export_record));

@@ -4,11 +4,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -128,16 +128,22 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
   public static class CourseVh extends FlexibleViewHolder {
 
-    @BindView(R2.id.course_img) ImageView courseImg;
-    @BindView(R2.id.course_type_img) ImageView courseTypeImg;
-    @BindView(R2.id.course_name) TextView courseName;
-    @BindView(R2.id.course_length) TextView courseLength;
-    @BindView(R2.id.del) ImageView del;
-    @BindView(R2.id.img_course_status_right) ImageView imgCourseSelectRight;
+	ImageView courseImg;
+	ImageView courseTypeImg;
+	TextView courseName;
+	TextView courseLength;
+	ImageView del;
+	ImageView imgCourseSelectRight;
 
     public CourseVh(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      courseImg = (ImageView) view.findViewById(R.id.course_img);
+      courseTypeImg = (ImageView) view.findViewById(R.id.course_type_img);
+      courseName = (TextView) view.findViewById(R.id.course_name);
+      courseLength = (TextView) view.findViewById(R.id.course_length);
+      del = (ImageView) view.findViewById(R.id.del);
+      imgCourseSelectRight = (ImageView) view.findViewById(R.id.img_course_status_right);
+
       del.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {
           if (mAdapter.getItem(getFlexibleAdapterPosition()) instanceof CourseItem) {

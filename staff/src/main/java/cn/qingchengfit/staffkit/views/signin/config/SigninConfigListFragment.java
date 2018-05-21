@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
@@ -70,17 +70,17 @@ public class SigninConfigListFragment extends BaseFragment
   @Inject RestRepositoryV2 restRepository;
   @Inject ModuleConfigsPresenter presenter;
   @Inject IPermissionModel permissionModel;
-  @BindView(R.id.tv_signin_type_setted) TextView tvSigninTypeSetted;
-  @BindView(R.id.btn_how_to_use) TextView btnHowToUse;
-  @BindView(R.id.layout_signin_type) LinearLayout layoutSigninType;
-  @BindView(R.id.layout_signin_wardrobe) LinearLayout layoutSigninWardrobe;
-  @BindView(R.id.layout_signin_screen) LinearLayout layoutSigninScreen;
-  @BindView(R.id.sw_open) ExpandedLayout swOpen;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.input_sign_use_card) CommonInputView inputSignUseCard;
-  @BindView(R.id.input_sign_use_qrcode) CommonInputView inputSignUseQrcode;
-  @BindView(R.id.input_sign_use_zq) CommonInputView inputSignUseZq;
+	TextView tvSigninTypeSetted;
+	TextView btnHowToUse;
+	LinearLayout layoutSigninType;
+	LinearLayout layoutSigninWardrobe;
+	LinearLayout layoutSigninScreen;
+	ExpandedLayout swOpen;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	CommonInputView inputSignUseCard;
+	CommonInputView inputSignUseQrcode;
+	CommonInputView inputSignUseZq;
   @Inject ZqAccessPresenter zqPresenter;
   private boolean setted;
   private boolean isJumping = false;
@@ -89,7 +89,53 @@ public class SigninConfigListFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_signin_config_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvSigninTypeSetted = (TextView) view.findViewById(R.id.tv_signin_type_setted);
+    btnHowToUse = (TextView) view.findViewById(R.id.btn_how_to_use);
+    layoutSigninType = (LinearLayout) view.findViewById(R.id.layout_signin_type);
+    layoutSigninWardrobe = (LinearLayout) view.findViewById(R.id.layout_signin_wardrobe);
+    layoutSigninScreen = (LinearLayout) view.findViewById(R.id.layout_signin_screen);
+    swOpen = (ExpandedLayout) view.findViewById(R.id.sw_open);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    inputSignUseCard = (CommonInputView) view.findViewById(R.id.input_sign_use_card);
+    inputSignUseQrcode = (CommonInputView) view.findViewById(R.id.input_sign_use_qrcode);
+    inputSignUseZq = (CommonInputView) view.findViewById(R.id.input_sign_use_zq);
+    view.findViewById(R.id.btn_how_to_use).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickHowUse();
+      }
+    });
+    view.findViewById(R.id.input_sign_use_card).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSignUseCard();
+      }
+    });
+    view.findViewById(R.id.input_sign_use_qrcode).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSignUseQrCode();
+      }
+    });
+    view.findViewById(R.id.input_sign_use_zq).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSignUseZq();
+      }
+    });
+    view.findViewById(R.id.layout_signin_type).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SigninConfigListFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.layout_signin_wardrobe).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SigninConfigListFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.layout_signin_screen).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SigninConfigListFragment.this.onClick(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     delegatePresenter(zqPresenter, this);
     initToolbar(toolbar);
@@ -126,26 +172,26 @@ public class SigninConfigListFragment extends BaseFragment
     return SigninConfigListFragment.class.getName();
   }
 
-  @OnClick(R.id.btn_how_to_use) public void onClickHowUse() {
+ public void onClickHowUse() {
     WebActivity.startWeb(Router.WEB_HOW_TO_USE_SIGNIN, getContext());
   }
 
-  @OnClick(R.id.input_sign_use_card)
+
   public void onSignUseCard(){
     ContainerActivity.router(QRActivity.SIGN_IN_CARD, getContext());
   }
 
-  @OnClick(R.id.input_sign_use_qrcode)
+
   public void onSignUseQrCode(){
     ContainerActivity.router(QRActivity.SIGN_IN_CODE, getContext());
   }
 
-  @OnClick(R.id.input_sign_use_zq)
+
   public void onSignUseZq(){
     ContainerActivity.router(QRActivity.ZQ_ACCESS, getContext());
   }
 
-  @OnClick({ R.id.layout_signin_type, R.id.layout_signin_wardrobe, R.id.layout_signin_screen })
+
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.layout_signin_type:

@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.wardrobe.item;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -61,12 +61,13 @@ public class DistrictItem extends AbstractFlexibleItem<DistrictItem.DistrictVH> 
     }
 
     public static class DistrictVH extends FlexibleViewHolder {
-        @BindView(R.id.distric_name) TextView districName;
-        @BindView(R.id.edit) ImageView edit;
+	TextView districName;
+	ImageView edit;
 
         public DistrictVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          districName = (TextView) view.findViewById(R.id.distric_name);
+          edit = (ImageView) view.findViewById(R.id.edit);
         }
     }
 }

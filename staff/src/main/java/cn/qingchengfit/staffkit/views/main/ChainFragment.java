@@ -18,9 +18,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
@@ -74,22 +74,22 @@ import rx.schedulers.Schedulers;
  */
 public class ChainFragment extends BaseFragment {
 
-    @BindView(R.id.viewpager) ViewPager viewpager;
-    @BindView(R.id.tabview) TabView tabview;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.frag_choose_brand) FrameLayout mChooseBrandLayout;
+	ViewPager viewpager;
+	TabView tabview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
+	FrameLayout mChooseBrandLayout;
 
     @Inject RestRepository mRestRepository;
-    @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;
-    @BindView(R.id.brand_manage) TextView brandManage;
-    @BindView(R.id.layout_brands) FrameLayout layoutBrands;
+	TextView scheduleNotificationCount;
+	TextView brandManage;
+	FrameLayout layoutBrands;
     private String url;
     private String mCurBrandName;
     private Brand mCurBrand;
@@ -132,8 +132,32 @@ public class ChainFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chain, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        url = getArguments().getString("open_url");
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      tabview = (TabView) view.findViewById(R.id.tabview);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      down = (ImageView) view.findViewById(R.id.down);
+      titileLayout = (LinearLayout) view.findViewById(R.id.titile_layout);
+      searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) view.findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) view.findViewById(R.id.searchview);
+      mChooseBrandLayout = (FrameLayout) view.findViewById(R.id.frag_choose_brand);
+      scheduleNotificationCount = (TextView) view.findViewById(R.id.schedule_notification_count);
+      brandManage = (TextView) view.findViewById(R.id.brand_manage);
+      layoutBrands = (FrameLayout) view.findViewById(R.id.layout_brands);
+      view.findViewById(R.id.layout_brands).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBgClick();
+        }
+      });
+      view.findViewById(R.id.brand_manage).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ChainFragment.this.onClick();
+        }
+      });
+
+      url = getArguments().getString("open_url");
         initTab();
         RxBusAdd(EventGoNotification.class).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<EventGoNotification>() {
             @Override public void call(EventGoNotification eventGoNotification) {
@@ -166,7 +190,7 @@ public class ChainFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.layout_brands) public void onBgClick() {
+ public void onBgClick() {
         if (layoutBrands.getVisibility() == View.VISIBLE) {
 
             ViewCompat.animate(layoutBrands).alpha(0).setDuration(300).setListener(new ViewPropertyAnimatorListener() {
@@ -311,7 +335,7 @@ public class ChainFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R.id.brand_manage) public void onClick() {
+ public void onClick() {
 
         if (mCurBrand != null && mCurBrand.isHas_add_permission()) {
             Intent to = new Intent(getActivity(), BrandManageActivity.class);

@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.qingchengfit.fitcoach.R;
@@ -36,16 +36,17 @@ import java.util.List;
  */
 public class StudentClassRecordFragment extends VpFragment {
 
-    @BindView(R.id.layout_no_data) LinearLayout layoutNoData;
+	LinearLayout layoutNoData;
     private RecyclerView mRecyclerView;
     private StudentClassRecordAdapter mAdapter;
     private List<StatementBean> datas = new ArrayList<>();
-    private Unbinder unbinder;
+
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+      layoutNoData = (LinearLayout) view.findViewById(R.id.layout_no_data);
+
+      mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         //        add1.setVisibility(View.VISIBLE);
         //        add2.setVisibility(View.VISIBLE);
         //        add1.setText("代约私教");
@@ -107,6 +108,6 @@ public class StudentClassRecordFragment extends VpFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

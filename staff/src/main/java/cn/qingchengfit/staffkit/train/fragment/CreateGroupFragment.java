@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -44,14 +44,14 @@ import javax.inject.Inject;
 
 public class CreateGroupFragment extends BaseFragment implements SignUpView {
 
-    @BindView(R.id.create_group_new_name) EditText createGroupNewName;
-    @BindView(R.id.group_member_count) TextView groupMemberCount;
-    @BindView(R.id.tv_add_member) TextView tvAddMember;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recycle_add_member) RecyclerView recyclerAddMember;
-    @BindView(R.id.image_create_clear_name) ImageView imageClearName;
+	EditText createGroupNewName;
+	TextView groupMemberCount;
+	TextView tvAddMember;
+	Toolbar toolbar;
+	TextView textToolbarRight;
+	TextView toolbarTitile;
+	RecyclerView recyclerAddMember;
+	ImageView imageClearName;
     @Inject SignUpGroupDetailPresenter presenter;
     @Inject TrainIds trainIds;
     private List<QcStudentBean> users = new ArrayList<>();
@@ -61,9 +61,21 @@ public class CreateGroupFragment extends BaseFragment implements SignUpView {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_group, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      createGroupNewName = (EditText) view.findViewById(R.id.create_group_new_name);
+      groupMemberCount = (TextView) view.findViewById(R.id.group_member_count);
+      tvAddMember = (TextView) view.findViewById(R.id.tv_add_member);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      textToolbarRight = (TextView) view.findViewById(R.id.text_toolbar_right);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recyclerAddMember = (RecyclerView) view.findViewById(R.id.recycle_add_member);
+      imageClearName = (ImageView) view.findViewById(R.id.image_create_clear_name);
+      view.findViewById(R.id.tv_add_member).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddMember();
+        }
+      });
 
-        delegatePresenter(presenter, this);
+      delegatePresenter(presenter, this);
 
         flexAdapter = new CommonFlexAdapter(itemList);
         recyclerAddMember.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -119,7 +131,7 @@ public class CreateGroupFragment extends BaseFragment implements SignUpView {
         });
     }
 
-    @OnClick({ R.id.tv_add_member }) void onAddMember() {
+ void onAddMember() {
         Intent intent = new Intent(getActivity(), SignUpChooseActivity.class);
         intent.putExtra(Configs.EXTRA_GYM_ID, trainIds.getGymId());
         intent.putExtra("competition_id", trainIds.getCompetitionId());

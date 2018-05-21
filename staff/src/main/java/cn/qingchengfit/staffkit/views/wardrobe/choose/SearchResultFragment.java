@@ -8,8 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.Locker;
@@ -55,7 +55,7 @@ import java.util.List;
  */
 public class SearchResultFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.rv) RecycleViewWithNoImg rv;
+	RecycleViewWithNoImg rv;
     CommonFlexAdapter adatper;
     private List<AbstractFlexibleItem> mItems = new ArrayList<>();
 
@@ -70,8 +70,9 @@ public class SearchResultFragment extends BaseFragment implements FlexibleAdapte
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_serach_result, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        ArrayList<Locker> lockers = getArguments().getParcelableArrayList("l");
+      rv = (RecycleViewWithNoImg) view.findViewById(R.id.rv);
+
+      ArrayList<Locker> lockers = getArguments().getParcelableArrayList("l");
 
         if (adatper != null) RxBus.getBus().post(new EventFresh());
         adatper = new CommonFlexAdapter(mItems, this);

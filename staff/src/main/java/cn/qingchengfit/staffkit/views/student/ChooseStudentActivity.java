@@ -13,9 +13,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.common.Contact;
 import cn.qingchengfit.model.responese.AddStudentBean;
@@ -41,13 +41,13 @@ import rx.schedulers.Schedulers;
 
 public class ChooseStudentActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.choosestudent_rv) RecyclerView choosestudentRv;
-    @BindView(R.id.choosestudent_all) CheckBox choosestudentAll;
-    @BindView(R.id.choosestudent_choose_num) TextView choosestudentChooseNum;
-    @BindView(R.id.choosestudent_total_num) TextView choosestudentTotalNum;
-    @BindView(R.id.choosestudent_comfirm) TextView choosestudentComfirm;
-    @BindView(R.id.alphabetview) AlphabetView alphabetview;
+	Toolbar toolbar;
+	RecyclerView choosestudentRv;
+	CheckBox choosestudentAll;
+	TextView choosestudentChooseNum;
+	TextView choosestudentTotalNum;
+	TextView choosestudentComfirm;
+	AlphabetView alphabetview;
     List<StudentBean> studentBeans = new ArrayList<>(); //通讯录中所有联系人
 
     private LinearLayoutManager mLinearLayoutManager;
@@ -59,8 +59,21 @@ public class ChooseStudentActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_choose_student);
-        ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      choosestudentRv = (RecyclerView) findViewById(R.id.choosestudent_rv);
+      choosestudentAll = (CheckBox) findViewById(R.id.choosestudent_all);
+      choosestudentChooseNum = (TextView) findViewById(R.id.choosestudent_choose_num);
+      choosestudentTotalNum = (TextView) findViewById(R.id.choosestudent_total_num);
+      choosestudentComfirm = (TextView) findViewById(R.id.choosestudent_comfirm);
+      alphabetview = (AlphabetView) findViewById(R.id.alphabetview);
+
+      findViewById(R.id.choosestudent_comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onBackPressed();
@@ -187,7 +200,7 @@ public class ChooseStudentActivity extends BaseActivity {
     /**
      * 确认导入
      */
-    @OnClick(R.id.choosestudent_comfirm) public void onComfirm() {
+ public void onComfirm() {
         List<AddStudentBean> choosenstudentBeans = new ArrayList<>();
         for (StudentBean s : studentBeans) {
             if (s.isChosen) {
@@ -233,17 +246,21 @@ public class ChooseStudentActivity extends BaseActivity {
      * recycle adapter
      */
     public static class StudentsHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_student_header) ImageView itemStudentHeader;
-        @BindView(R.id.item_student_name) TextView itemStudentName;
-        @BindView(R.id.item_student_phonenum) TextView itemStudentPhonenum;
-        @BindView(R.id.item_checkbox) CheckBox itemCheckbox;
-        @BindView(R.id.item_student_alpha) TextView itemStudentAlpha;
-        //        @BindView(R.id.item_student_divider)
-        //        View itemStudentDivder;
+	ImageView itemStudentHeader;
+	TextView itemStudentName;
+	TextView itemStudentPhonenum;
+	CheckBox itemCheckbox;
+	TextView itemStudentAlpha;
+
 
         public StudentsHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          itemStudentHeader = (ImageView)itemView.findViewById(R.id.item_student_header);
+          itemStudentName = (TextView) itemView.findViewById(R.id.item_student_name);
+          itemStudentPhonenum = (TextView) itemView.findViewById(R.id.item_student_phonenum);
+          itemCheckbox = (CheckBox) itemView.findViewById(R.id.item_checkbox);
+          itemStudentAlpha = (TextView) itemView.findViewById(R.id.item_student_alpha);
+
         }
     }
 

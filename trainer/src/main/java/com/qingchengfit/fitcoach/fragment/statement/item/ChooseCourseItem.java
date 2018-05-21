@@ -2,8 +2,8 @@ package com.qingchengfit.fitcoach.fragment.statement.item;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.R;
 import cn.qingchengfit.bean.CourseDetail;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -36,11 +36,11 @@ public class ChooseCourseItem extends AbstractFlexibleItem<ChooseCourseItem.Choo
     }
 
     public class ChooseStudentVH extends FlexibleViewHolder {
-        @BindView(R.id.item_text) TextView itemText;
+	TextView itemText;
 
         public ChooseStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemText = (TextView) view.findViewById(R.id.item_text);
         }
     }
 }

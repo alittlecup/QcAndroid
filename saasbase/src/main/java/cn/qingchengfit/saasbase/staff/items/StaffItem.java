@@ -5,11 +5,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -76,19 +76,27 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
   }
 
   public class StaffVH extends FlexibleViewHolder {
-    @BindView(R2.id.cb) CheckBox cb;
-    @BindView(R2.id.item_student_header) ImageView itemStudentHeader;
-    @BindView(R2.id.item_student_header_loop) RelativeLayout itemStudentHeaderLoop;
-    @BindView(R2.id.item_student_name) TextView itemStudentName;
-    @BindView(R2.id.item_student_gender) ImageView itemStudentGender;
-    @BindView(R2.id.item_tv_student_status) TextView itemTvStudentStatus;
-    @BindView(R2.id.item_student_phonenum) TextView itemStudentPhonenum;
-    @BindView(R2.id.item_student_gymname) TextView itemStudentGymname;
-    @BindView(R2.id.icon_right) ImageView iconRight;
+	CheckBox cb;
+	ImageView itemStudentHeader;
+	RelativeLayout itemStudentHeaderLoop;
+	TextView itemStudentName;
+	ImageView itemStudentGender;
+	TextView itemTvStudentStatus;
+	TextView itemStudentPhonenum;
+	TextView itemStudentGymname;
+	ImageView iconRight;
 
     public StaffVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      cb = (CheckBox) view.findViewById(R.id.cb);
+      itemStudentHeader = (ImageView) view.findViewById(R.id.item_student_header);
+      itemStudentHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_student_header_loop);
+      itemStudentName = (TextView) view.findViewById(R.id.item_student_name);
+      itemStudentGender = (ImageView) view.findViewById(R.id.item_student_gender);
+      itemTvStudentStatus = (TextView) view.findViewById(R.id.item_tv_student_status);
+      itemStudentPhonenum = (TextView) view.findViewById(R.id.item_student_phonenum);
+      itemStudentGymname = (TextView) view.findViewById(R.id.item_student_gymname);
+      iconRight = (ImageView) view.findViewById(R.id.icon_right);
     }
   }
 }

@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.notisetting.presenter.NotiSettingMsgDetailPresenter;
 import cn.qingchengfit.staffkit.R;
@@ -40,11 +40,11 @@ import javax.inject.Inject;
 public class NotiSettingMsgDetailFragment extends BaseFragment
     implements NotiSettingMsgDetailPresenter.MVPView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.tv_cur_gym) TextView tvCurGym;
-  @BindView(R.id.tv_cur_count) TextView tvCurCount;
-  @BindView(R.id.btn_charge) Button btnCharge;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView tvCurGym;
+	TextView tvCurCount;
+	Button btnCharge;
 
   @Inject NotiSettingMsgDetailPresenter presenter;
   @Inject GymWrapper gymWrapper;
@@ -52,7 +52,22 @@ public class NotiSettingMsgDetailFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_noti_setting_msg, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvCurGym = (TextView) view.findViewById(R.id.tv_cur_gym);
+    tvCurCount = (TextView) view.findViewById(R.id.tv_cur_count);
+    btnCharge = (Button) view.findViewById(R.id.btn_charge);
+    view.findViewById(R.id.btn_charge).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnChargeClicked();
+      }
+    });
+    view.findViewById(R.id.tv_msg_charge_history).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTvMsgChargeHistoryClicked();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     presenter.queryCurSMSleft();
@@ -73,11 +88,11 @@ public class NotiSettingMsgDetailFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @OnClick(R.id.btn_charge) public void onBtnChargeClicked() {
+ public void onBtnChargeClicked() {
     routeTo(new NotiSettingMsgChargeFragment());
   }
 
-  @OnClick(R.id.tv_msg_charge_history) public void onTvMsgChargeHistoryClicked() {
+ public void onTvMsgChargeHistoryClicked() {
     routeTo(new NotiSettingChargeHistoryFragment());
   }
 

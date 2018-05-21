@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
@@ -48,12 +48,12 @@ public class StudentOperationFragment extends BaseFragment
     implements HandleClickAllotSale, HandleClickFollowUp, FlexibleAdapter.OnItemClickListener,
     MySnapHelper.OnSelectListener {
 
-  @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
-  @BindView(R.id.indicator) MyIndicator indicator;
+	MyIndicator indicator;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
   private CommonFlexAdapter mCommonFlexAdapter;
   private boolean proGym = false;
@@ -70,7 +70,9 @@ public class StudentOperationFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
-    unbinder = ButterKnife.bind(this, v);
+    recycleview = (RecyclerView) v.findViewById(R.id.recycleview);
+    indicator = (MyIndicator) v.findViewById(R.id.indicator);
+
     final SmoothScrollGridLayoutManager gridLayoutManager =
         new SmoothScrollGridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false);
     MySnapHelper pagerSnapHelper = new MySnapHelper();

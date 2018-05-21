@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
@@ -36,14 +36,16 @@ import com.qingchengfit.fitcoach.fragment.brandmanange.BrandDetailFragment;
 
 public class BrandManageActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_manange);
-        ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onBackPressed();

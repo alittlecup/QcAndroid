@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.utils.IntentUtils;
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class BottomSheetListDialogFragment extends BaseBottomSheetDialogFragment {
 
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
     private List<String> d;
 
     public static void start(Fragment fragment, int requestCode, ArrayList<String> datas) {
@@ -67,8 +67,9 @@ public class BottomSheetListDialogFragment extends BaseBottomSheetDialogFragment
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        BSAdapter adatper = new BSAdapter();
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      BSAdapter adatper = new BSAdapter();
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleview.addItemDecoration(new FlexibleItemDecoration(getContext())
           .withDivider(R.drawable.divider_horizon_left_44dp)
@@ -93,11 +94,13 @@ public class BottomSheetListDialogFragment extends BaseBottomSheetDialogFragment
     }
 
     class BSVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_text) TextView text;
+	TextView text;
 
         public BSVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            text = (TextView) itemView.findViewById(R.id.item_text);
+
+
         }
     }
 

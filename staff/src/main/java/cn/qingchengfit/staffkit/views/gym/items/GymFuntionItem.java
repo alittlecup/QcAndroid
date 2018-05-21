@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -120,14 +120,17 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
     }
 
     public class GymFuntionVH extends FlexibleViewHolder {
-        @BindView(R.id.root_view) ViewGroup rootView;
-        @BindView(R.id.fun_img) ImageView funImg;
-        @BindView(R.id.fun_txt) TextView funTxt;
-        @BindView(R.id.status_icon) ImageView statusIcon;
+	ViewGroup rootView;
+	ImageView funImg;
+	TextView funTxt;
+	ImageView statusIcon;
 
         public GymFuntionVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          rootView = (ViewGroup) view.findViewById(R.id.root_view);
+          funImg = (ImageView) view.findViewById(R.id.fun_img);
+          funTxt = (TextView) view.findViewById(R.id.fun_txt);
+          statusIcon = (ImageView) view.findViewById(R.id.status_icon);
         }
     }
 }

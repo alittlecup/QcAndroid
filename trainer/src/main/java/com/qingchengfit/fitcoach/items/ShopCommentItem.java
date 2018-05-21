@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.utils.StringUtils;
 import co.hkm.soltag.TagContainerLayout;
 import com.bumptech.glide.Glide;
@@ -80,18 +76,25 @@ public class ShopCommentItem extends AbstractFlexibleItem<ShopCommentItem.ShopCo
 
     public static class ShopCommentVH extends FlexibleViewHolder {
 
-        @BindView(R.id.shop_img) ImageView shopImg;
-        @BindView(R.id.coach_score) TextView coachScore;
-        @BindView(R.id.course_score) TextView courseScore;
-        @BindView(R.id.server_score) TextView serverScore;
-        @BindView(R.id.comments) TagContainerLayout comments;
-        @BindView(R.id.check_detail) TextView checkDetail;
-        @BindView(R.id.shop_name) TextView shopName;
-        @BindView(R.id.no_impression) TextView noImpression;
+	ImageView shopImg;
+	TextView coachScore;
+	TextView courseScore;
+	TextView serverScore;
+	TagContainerLayout comments;
+	TextView checkDetail;
+	TextView shopName;
+	TextView noImpression;
 
         public ShopCommentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          shopImg = (ImageView) view.findViewById(R.id.shop_img);
+          coachScore = (TextView) view.findViewById(R.id.coach_score);
+          courseScore = (TextView) view.findViewById(R.id.course_score);
+          serverScore = (TextView) view.findViewById(R.id.server_score);
+          comments = (TagContainerLayout) view.findViewById(R.id.comments);
+          checkDetail = (TextView) view.findViewById(R.id.check_detail);
+          shopName = (TextView) view.findViewById(R.id.shop_name);
+          noImpression = (TextView) view.findViewById(R.id.no_impression);
         }
     }
 }

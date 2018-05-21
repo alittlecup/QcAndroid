@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.staffkit.R;
@@ -44,9 +44,9 @@ import javax.inject.Inject;
  */
 public class CourseChooseDialogFragment extends BaseDialogFragment implements CourseChooseView {
 
-    @BindView(R.id.wheellayout) LinearLayout wheellayout;
-    @BindView(R.id.course_type) WheelView courseType;
-    @BindView(R.id.course_list) WheelView courseList;
+	LinearLayout wheellayout;
+	WheelView courseType;
+	WheelView courseList;
     @Inject CourseChoosePresenter presenter;
 
     private List<CourseTypeSample> mCourses;
@@ -68,8 +68,16 @@ public class CourseChooseDialogFragment extends BaseDialogFragment implements Co
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_course, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      wheellayout = (LinearLayout) view.findViewById(R.id.wheellayout);
+      courseType = (WheelView) view.findViewById(R.id.course_type);
+      courseList = (WheelView) view.findViewById(R.id.course_list);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CourseChooseDialogFragment.this.onClick();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         ArrayWheelAdapter<String> courseTypeAdatper =
             new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.choose_course_type))),
                 8);
@@ -110,7 +118,7 @@ public class CourseChooseDialogFragment extends BaseDialogFragment implements Co
         return dialog;
     }
 
-    @OnClick(R.id.comfirm) public void onClick() {
+ public void onClick() {
         int pos = ((WheelView) wheellayout.getChildAt(1)).getCurrentItem();
         if (mCourses != null && mCourses.size() > pos) {
             RxBus.getBus().post(mCourses.get(pos));

@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.adapter.JacketManageAdapter;
 import cn.qingchengfit.saasbase.course.course.items.JackManageItem;
@@ -40,11 +40,11 @@ import rx.functions.Action1;
   implements FlexibleAdapter.OnItemClickListener, JacketManagerPresenter.JacketManagerView {
 
   @Inject JacketManagerPresenter mPresenter;
-  @BindView(R2.id.recycler_view) RecyclerView mRecyclerView;
-  @BindView(R2.id.custom_switch) ExpandedLayout customSwitch;
-  @BindView(R2.id.costum_jacket_hint) TextView costumJacketHint;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	RecyclerView mRecyclerView;
+	ExpandedLayout customSwitch;
+	TextView costumJacketHint;
+	Toolbar toolbar;
+	TextView toolbarTitile;
   private ArrayList<AbstractFlexibleItem> mDatas = new ArrayList<>();
   private JacketManageAdapter mAdapter;
   @Need public String courseid;
@@ -54,7 +54,12 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_jacket_manager, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+    customSwitch = (ExpandedLayout) view.findViewById(R.id.custom_switch);
+    costumJacketHint = (TextView) view.findViewById(R.id.costum_jacket_hint);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
     delegatePresenter(mPresenter, this);
     initToolbar(toolbar);
     mAdapter = new JacketManageAdapter(mDatas, this);

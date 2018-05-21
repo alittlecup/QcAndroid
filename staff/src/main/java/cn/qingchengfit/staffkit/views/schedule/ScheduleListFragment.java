@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.usecase.bean.ScheduleBean;
@@ -31,8 +31,8 @@ import javax.inject.Inject;
  */
 public class ScheduleListFragment extends BaseFragment implements ScheduleListView {
     public static final String TAG = ScheduleListFragment.class.getName();
-    @BindView(R.id.schedule_timeline) View scheduleTimeline;
-    @BindView(R.id.schedule_rv) RecycleViewWithNoImg scheduleRv;
+	View scheduleTimeline;
+	RecycleViewWithNoImg scheduleRv;
 
     @Inject ScheduleListPresenter presenter;
     private ScheduesAdapter mAdapter;
@@ -56,8 +56,11 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      scheduleTimeline = (View) view.findViewById(R.id.schedule_timeline);
+      scheduleRv = (RecycleViewWithNoImg) view.findViewById(R.id.schedule_rv);
+
+
+      delegatePresenter(presenter, this);
         initView();
 
         return view;
@@ -100,19 +103,27 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_schedule_time) TextView itemScheduleTime;
-        @BindView(R.id.item_schedule_classname) TextView itemScheduleClassname;
-        @BindView(R.id.item_schedule_gymname) TextView itemScheduleGymname;
-        @BindView(R.id.item_schedule_num) TextView itemScheduleNum;
-        @BindView(R.id.item_schedule_classpic) ImageView itemScheduleClasspic;
-        @BindView(R.id.item_schedule_status) ImageView itemScheduleStatus;
-        @BindView(R.id.item_schedule_done) TextView getItemScheduleDone;
-        @BindView(R.id.item_schedule_conflict) TextView itemScheduleConflict;
-        @BindView(R.id.item_schedule_teacher) TextView itemTeacher;
+	TextView itemScheduleTime;
+	TextView itemScheduleClassname;
+	TextView itemScheduleGymname;
+	TextView itemScheduleNum;
+	ImageView itemScheduleClasspic;
+	ImageView itemScheduleStatus;
+	TextView getItemScheduleDone;
+	TextView itemScheduleConflict;
+	TextView itemTeacher;
 
-        public SchedulesVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public SchedulesVH(View view) {
+            super(view);
+            itemScheduleTime = (TextView) view.findViewById(R.id.item_schedule_time);
+            itemScheduleClassname = (TextView) view.findViewById(R.id.item_schedule_classname);
+            itemScheduleGymname = (TextView) view.findViewById(R.id.item_schedule_gymname);
+            itemScheduleNum = (TextView) view.findViewById(R.id.item_schedule_num);
+            itemScheduleClasspic = (ImageView) view.findViewById(R.id.item_schedule_classpic);
+            itemScheduleStatus = (ImageView) view.findViewById(R.id.item_schedule_status);
+            getItemScheduleDone = (TextView) view.findViewById(R.id.item_schedule_done);
+            itemScheduleConflict = (TextView) view.findViewById(R.id.item_schedule_conflict);
+            itemTeacher = (TextView) view.findViewById(R.id.item_schedule_teacher);
         }
     }
 

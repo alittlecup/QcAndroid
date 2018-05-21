@@ -9,14 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.items.DelStudentItem;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -52,11 +47,11 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment
   public static final int CHAT_FRIENDS = 1;
   protected CommonFlexAdapter adapter;
   int type;
-  @BindView(R2.id.tv_stud_count) protected TextView tvStudCount;
-  @BindView(R2.id.tv_clear_all) TextView tvClearAll;
-  @BindView(R2.id.recycleview) RecyclerView recycleview;
+	protected TextView tvStudCount;
+	TextView tvClearAll;
+	RecyclerView recycleview;
   List<AbstractFlexibleItem> datas = new ArrayList<>();
-  Unbinder unbinder;
+
   private BottomStudentsListener listener;
 
   public static BottomStudentsFragment newInstance(int type) {
@@ -77,7 +72,15 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment
     @Nullable Bundle savedInstanceState) {
     View view =
       inflater.inflate(R.layout.dialog_fragment_allotsale_show_selected, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvStudCount = (TextView) view.findViewById(R.id.tv_stud_count);
+    tvClearAll = (TextView) view.findViewById(R.id.tv_clear_all);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+    view.findViewById(R.id.tv_clear_all).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        BottomStudentsFragment.this.onClick();
+      }
+    });
+
     recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recycleview.addItemDecoration(
       new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -112,7 +115,7 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment
     return true;
   }
 
-  @OnClick(R2.id.tv_clear_all) public void onClick() {
+ public void onClick() {
     DirtySender.studentList.clear();
     datas.clear();
     adapter.clear();

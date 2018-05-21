@@ -17,9 +17,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -76,28 +76,28 @@ import static cn.qingchengfit.staffkit.views.gym.GymActivity.GYM_TO;
  * Created by Paper on 16/1/27 2016.
  */
 public class SetGymFragment extends BaseFragment implements ISetGymView {
-    @BindView(R.id.layout_brand) protected LinearLayout layoutBrand;
+	protected LinearLayout layoutBrand;
     protected String imageStr;
     protected int city_code;
     protected double lat;
     protected double lng;
     protected String desStr;
-    @BindView(R.id.header) ImageView header;
-    @BindView(R.id.gym_name) CommonInputView gymName;
-    @BindView(R.id.address) CommonInputView address;
-    @BindView(R.id.phone) CommonInputView phone;
-    @BindView(R.id.descripe) CommonInputView descripe;
-    @BindView(R.id.comfirm) Button comfirm;
+	ImageView header;
+	CommonInputView gymName;
+	CommonInputView address;
+	CommonInputView phone;
+	CommonInputView descripe;
+	Button comfirm;
     @Inject SetGymPresenter mSetGymPresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject GymBaseInfoAction gymBaseInfoAction;
-    @BindView(R.id.brand_img) ImageView brandImg;
-    @BindView(R.id.brand_name) TextView brandName;
-    @BindView(R.id.guide_step_1) ImageView guideStep1;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	ImageView brandImg;
+	TextView brandName;
+	ImageView guideStep1;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
     private String addressStr;
     private GymBody gymBody = new GymBody();
     //edit监听 btn状态
@@ -120,8 +120,36 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(mSetGymPresenter, this);
+      layoutBrand = (LinearLayout) view.findViewById(R.id.layout_brand);
+      header = (ImageView) view.findViewById(R.id.header);
+      gymName = (CommonInputView) view.findViewById(R.id.gym_name);
+      address = (CommonInputView) view.findViewById(R.id.address);
+      phone = (CommonInputView) view.findViewById(R.id.phone);
+      descripe = (CommonInputView) view.findViewById(R.id.descripe);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      brandImg = (ImageView) view.findViewById(R.id.brand_img);
+      brandName = (TextView) view.findViewById(R.id.brand_name);
+      guideStep1 = (ImageView) view.findViewById(R.id.guide_step_1);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+      view.findViewById(R.id.address).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickAddress();
+        }
+      });
+      view.findViewById(R.id.descripe).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDescripe();
+        }
+      });
+      view.findViewById(R.id.layout_gym_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onHeader();
+        }
+      });
+
+      delegatePresenter(mSetGymPresenter, this);
         initToolbar(toolbar);
         RxView.clicks(comfirm).throttleFirst(1000, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -170,7 +198,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
         }
     }
 
-    @OnClick(R.id.address) public void onClickAddress() {
+ public void onClickAddress() {
         Intent toAddress = new Intent(getContext(), ChooseActivity.class);
         toAddress.putExtra("to", ChooseActivity.CHOOSE_ADDRESS);
         startActivity(toAddress);
@@ -210,7 +238,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
         mSetGymPresenter.initShop(body);
     }
 
-    @OnClick(R.id.descripe) public void onDescripe() {
+ public void onDescripe() {
         WriteDescFragment.start(this, 2, getString(R.string.title_write_gym_descript), "请填写健身房描述");
     }
 
@@ -308,7 +336,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
         return SetGymFragment.class.getName();
     }
 
-    @OnClick(R.id.layout_gym_img) public void onHeader() {
+ public void onHeader() {
         ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
         dialog.show(getFragmentManager(), "");
         dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {

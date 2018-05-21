@@ -7,10 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
@@ -20,8 +20,8 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
  */
 public class DataStatementFragment extends MainBaseFragment {
     public static final String TAG = DataStatementFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    private Unbinder unbinder;
+	Toolbar toolbar;
+
 
     public DataStatementFragment() {
         // Required empty public constructor
@@ -34,20 +34,31 @@ public class DataStatementFragment extends MainBaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data_statement, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      view.findViewById(R.id.statement_order_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickOrder();
+        }
+      });
+      view.findViewById(R.id.statement_sales_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickSales();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.setTitle("数据报表");
         return view;
     }
 
-    @OnClick(R.id.statement_order_btn) public void clickOrder() {
+ public void clickOrder() {
         Intent it = new Intent(getActivity(), FragActivity.class);
         it.putExtra("type", 0);
         getActivity().startActivity(it);
     }
 
-    @OnClick(R.id.statement_sales_btn) public void clickSales() {
+ public void clickSales() {
         Intent it = new Intent(getActivity(), FragActivity.class);
         it.putExtra("type", 1);
         getActivity().startActivity(it);
@@ -55,7 +66,7 @@ public class DataStatementFragment extends MainBaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public String getFragmentName() {

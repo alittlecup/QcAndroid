@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasConstant;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
@@ -83,16 +83,21 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
   }
 
   public class CardVH extends FlexibleViewHolder implements AnimatedViewHolder {
-    @BindView(R2.id.realcard_name) TextView realcardName;
-    @BindView(R2.id.realcard_students) TextView realcardStudents;
-    @BindView(R2.id.realcard_balance) TextView realcardBalance;
-    @BindView(R2.id.tv_card_type) TextView tvCardCate;
-    @BindView(R2.id.img_stutus) TextView imgStatus;
-    @BindView(R2.id.bg_card) RelativeLayout bgCard;
+	TextView realcardName;
+	TextView realcardStudents;
+	TextView realcardBalance;
+	TextView tvCardCate;
+	TextView imgStatus;
+	RelativeLayout bgCard;
 
     public CardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      realcardName = (TextView) view.findViewById(R.id.realcard_name);
+      realcardStudents = (TextView) view.findViewById(R.id.realcard_students);
+      realcardBalance = (TextView) view.findViewById(R.id.realcard_balance);
+      tvCardCate = (TextView) view.findViewById(R.id.tv_card_type);
+      imgStatus = (TextView) view.findViewById(R.id.img_stutus);
+      bgCard = (RelativeLayout) view.findViewById(R.id.bg_card);
     }
 
     @Override public void scrollAnimators(@NonNull List<Animator> animators, int position,

@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.notisetting.presenter.NotiSettingWxTemplatePresenter;
 import cn.qingchengfit.staffkit.R;
@@ -44,13 +44,13 @@ import javax.inject.Inject;
 public class NotiSettingWxTemplateFragment extends BaseFragment
     implements NotiSettingWxTemplatePresenter.MVPView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.img_brand) ImageView imgBrand;
-  @BindView(R.id.tv_has_bind) TextView tvHasBind;
-  @BindView(R.id.tv_hint) TextView tvHint;
-  @BindView(R.id.tv_not_ready) TextView tvNotReady;
-  @BindView(R.id.btn_authored) Button btnAuthored;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	ImageView imgBrand;
+	TextView tvHasBind;
+	TextView tvHint;
+	TextView tvNotReady;
+	Button btnAuthored;
 
   @Inject GymWrapper gymWrapper;
   @Inject NotiSettingWxTemplatePresenter presenter;
@@ -58,7 +58,19 @@ public class NotiSettingWxTemplateFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_noti_setting_wx_template, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    imgBrand = (ImageView) view.findViewById(R.id.img_brand);
+    tvHasBind = (TextView) view.findViewById(R.id.tv_has_bind);
+    tvHint = (TextView) view.findViewById(R.id.tv_hint);
+    tvNotReady = (TextView) view.findViewById(R.id.tv_not_ready);
+    btnAuthored = (Button) view.findViewById(R.id.btn_authored);
+    view.findViewById(R.id.btn_authored).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     return view;
@@ -77,7 +89,7 @@ public class NotiSettingWxTemplateFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @OnClick(R.id.btn_authored) public void onViewClicked() {
+ public void onViewClicked() {
     gymFunctionFactory.goQrScan(this, "/message/channels", null, gymWrapper.getCoachService());
   }
 

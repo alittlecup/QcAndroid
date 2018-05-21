@@ -16,9 +16,9 @@ import android.view.ViewTreeObserver;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreRule;
@@ -64,23 +64,23 @@ import javax.inject.Inject;
  */
 public class ConfigFragment extends BaseFragment implements ConfigPresenter.PresenterView, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     @Inject ConfigPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.swt_score_config) SwitcherLayout swtScoreConfig;
-    @BindView(R.id.ll_config_base) LinearLayout llConfigBase;
-    @BindView(R.id.recyclerview_score_base_detail) RecyclerView recyclerviewScoreBaseDetail;
-    @BindView(R.id.ll_config_award_lable) LinearLayout llConfigAwardLable;
-    @BindView(R.id.recyclerview_award) RecyclerView recyclerviewAward;
-    @BindView(R.id.ll_config_award_add) LinearLayout llConfigAwardAdd;
-    @BindView(R.id.tv_student_score_award_rule) TextView tvStudentScoreAwardRule;
-    @BindView(R.id.ll_student_score_config_content) LinearLayout llStudentScoreConfigContent;
-    @BindView(R.id.tv_score_rule_update_info) TextView tvScoreRuleUpdateInfo;
-    @BindView(R.id.recyclerview_award_dis) RecyclerView recyclerviewAwardDis;
-    @BindView(R.id.tv_student_score_award_rule_dis) TextView tvStudentScoreAwardRuleDis;
+	SwitcherLayout swtScoreConfig;
+	LinearLayout llConfigBase;
+	RecyclerView recyclerviewScoreBaseDetail;
+	LinearLayout llConfigAwardLable;
+	RecyclerView recyclerviewAward;
+	LinearLayout llConfigAwardAdd;
+	TextView tvStudentScoreAwardRule;
+	LinearLayout llStudentScoreConfigContent;
+	TextView tvScoreRuleUpdateInfo;
+	RecyclerView recyclerviewAwardDis;
+	TextView tvStudentScoreAwardRuleDis;
     private CommonFlexAdapter flexibleAdapterBaseScore;
     private List<AbstractFlexibleItem> itemsBaseScore = new ArrayList<>();
     private List<StudentScoreAwardRuleBean> scoreAwardRuleBeanListOrigin = new ArrayList<>();
@@ -111,8 +111,40 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score_config, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      swtScoreConfig = (SwitcherLayout) view.findViewById(R.id.swt_score_config);
+      llConfigBase = (LinearLayout) view.findViewById(R.id.ll_config_base);
+      recyclerviewScoreBaseDetail =
+          (RecyclerView) view.findViewById(R.id.recyclerview_score_base_detail);
+      llConfigAwardLable = (LinearLayout) view.findViewById(R.id.ll_config_award_lable);
+      recyclerviewAward = (RecyclerView) view.findViewById(R.id.recyclerview_award);
+      llConfigAwardAdd = (LinearLayout) view.findViewById(R.id.ll_config_award_add);
+      tvStudentScoreAwardRule = (TextView) view.findViewById(R.id.tv_student_score_award_rule);
+      llStudentScoreConfigContent =
+          (LinearLayout) view.findViewById(R.id.ll_student_score_config_content);
+      tvScoreRuleUpdateInfo = (TextView) view.findViewById(R.id.tv_score_rule_update_info);
+      recyclerviewAwardDis = (RecyclerView) view.findViewById(R.id.recyclerview_award_dis);
+      tvStudentScoreAwardRuleDis =
+          (TextView) view.findViewById(R.id.tv_student_score_award_rule_dis);
+      view.findViewById(R.id.ll_config_base).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ConfigFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.ll_config_award_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ConfigFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_student_score_award_rule_dis)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onDisShowClick();
+            }
+          });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         initView();
 
@@ -400,7 +432,7 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
         return false;
     }
 
-    @OnClick({ R.id.ll_config_base, R.id.ll_config_award_add }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_config_base:
                 if (!serPermisAction.check(PermissionServerUtils.SCORE_SETTING_CAN_CHANGE)) {
@@ -437,7 +469,7 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
         }
     }
 
-    @OnClick(R.id.tv_student_score_award_rule_dis) public void onDisShowClick() {
+ public void onDisShowClick() {
         recyclerviewAwardDis.setVisibility(disAwardShow ? View.GONE : View.VISIBLE);
         tvStudentScoreAwardRuleDis.setText(disAwardShow ? "显示已删除的奖励规则" : "隐藏已删除的奖励规则");
         disAwardShow = !disAwardShow;

@@ -7,9 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.views.VpFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -26,9 +26,9 @@ import rx.schedulers.Schedulers;
  */
 public class StudentEvaluateFragment extends VpFragment {
 
-    @BindView(R.id.evaluate_tags) TagGroup evaluateTags;
-    @BindView(R.id.no_evaluate) LinearLayout noEvaluate;
-    private Unbinder unbinder;
+	TagGroup evaluateTags;
+	LinearLayout noEvaluate;
+
 
     public StudentEvaluateFragment() {
         // Required empty public constructor
@@ -37,8 +37,10 @@ public class StudentEvaluateFragment extends VpFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_evaluate, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        evaluateTags.setOnTouchListener(new View.OnTouchListener() {
+      evaluateTags = (TagGroup) view.findViewById(R.id.evaluate_tags);
+      noEvaluate = (LinearLayout) view.findViewById(R.id.no_evaluate);
+
+      evaluateTags.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
@@ -76,7 +78,7 @@ public class StudentEvaluateFragment extends VpFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public String getTitle() {

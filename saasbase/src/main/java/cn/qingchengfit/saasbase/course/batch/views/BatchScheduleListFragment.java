@@ -13,14 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchSchedule;
 import cn.qingchengfit.saasbase.course.batch.items.BatchScheduleItem;
@@ -66,11 +66,11 @@ import javax.inject.Inject;
 public class BatchScheduleListFragment extends SaasBaseFragment implements
     FlexibleAdapter.OnItemClickListener,BatchScheduleListPresenter.MVPView,SwipeRefreshLayout.OnRefreshListener{
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.rv) RecyclerView rv;
-  @BindView(R2.id.srl) SwipeRefreshLayout srl;
-  @BindView(R2.id.btn_del_selected) Button btnDelSelected;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	RecyclerView rv;
+	SwipeRefreshLayout srl;
+	Button btnDelSelected;
 
   @Inject BatchScheduleListPresenter presenter;
   CommonFlexAdapter adapter ;
@@ -89,7 +89,17 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_batch_schedule_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    btnDelSelected = (Button) view.findViewById(R.id.btn_del_selected);
+    view.findViewById(R.id.btn_del_selected).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        del();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     adapter = new CommonFlexAdapter(new ArrayList(), this);
@@ -179,7 +189,7 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     return true;
   }
 
-  @OnClick(R2.id.btn_del_selected)
+
   public void del(){
     DialogUtils.instanceDelDialog(getContext(), "确认删除已选课程？", new MaterialDialog.SingleButtonCallback() {
       @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

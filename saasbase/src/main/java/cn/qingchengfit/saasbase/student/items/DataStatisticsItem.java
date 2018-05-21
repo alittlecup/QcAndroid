@@ -1,36 +1,16 @@
 package cn.qingchengfit.saasbase.student.items;
 
-import android.support.annotation.ColorInt;
-import android.util.Pair;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TooManyListenersException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
 import cn.qingchengfit.saasbase.student.widget.LineCharDate;
-import cn.qingchengfit.saasbase.student.widget.LineCharWithBottomDate;
-import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/11/3.
@@ -79,24 +59,30 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
 
 
     public class DataStatisticsVH extends FlexibleViewHolder {
-        @BindView(R2.id.tv_title)
+
         TextView tvTitle;
-        @BindView(R2.id.layout_title)
+
         LinearLayout layoutTitle;
-        @BindView(R2.id.tv_data_today)
+
         TextView tvDataToday;
-        @BindView(R2.id.tv_data_7day)
+
         TextView tvData7day;
-        @BindView(R2.id.tv_data_30day)
+
         TextView tvData30day;
-        @BindView(R2.id.layout_data)
+
         LinearLayout layoutData;
-        @BindView(R2.id.lineChar)
+
         LineCharDate lineChar;
 
         public DataStatisticsVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvTitle = (TextView) view.findViewById(R.id.tv_title);
+          layoutTitle = (LinearLayout) view.findViewById(R.id.layout_title);
+          tvDataToday = (TextView) view.findViewById(R.id.tv_data_today);
+          tvData7day = (TextView) view.findViewById(R.id.tv_data_7day);
+          tvData30day = (TextView) view.findViewById(R.id.tv_data_30day);
+          layoutData = (LinearLayout) view.findViewById(R.id.layout_data);
+          lineChar = (LineCharDate) view.findViewById(R.id.lineChar);
         }
     }
 

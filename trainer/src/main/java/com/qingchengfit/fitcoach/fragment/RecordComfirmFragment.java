@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.VpFragment;
@@ -37,21 +37,26 @@ import rx.schedulers.Schedulers;
  */
 public class RecordComfirmFragment extends VpFragment {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.record_confirm_none) RelativeLayout recordConfirmNone;
-    @BindView(R.id.record_comfirm_no_img) ImageView recordComfirmNoImg;
-    @BindView(R.id.record_comfirm_no_txt) TextView recordComfirmNoTxt;
+	RecyclerView recyclerview;
+	RelativeLayout recordConfirmNone;
+	ImageView recordComfirmNoImg;
+	TextView recordComfirmNoTxt;
     private RecordComfirmAdapter adapter;
     private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
-    private Unbinder unbinder;
+
 
     public RecordComfirmFragment() {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        lazyLoad();
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      recordConfirmNone = (RelativeLayout) view.findViewById(R.id.record_confirm_none);
+      recordComfirmNoImg = (ImageView) view.findViewById(R.id.record_comfirm_no_img);
+      recordComfirmNoTxt = (TextView) view.findViewById(R.id.record_comfirm_no_txt);
+
+
+      lazyLoad();
         return view;
     }
 
@@ -107,7 +112,7 @@ public class RecordComfirmFragment extends VpFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public String getTitle() {
@@ -115,16 +120,21 @@ public class RecordComfirmFragment extends VpFragment {
     }
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.recordcomfirm_title) TextView recordcomfirmTitle;
-        @BindView(R.id.recordcomfirm_subtitle) TextView recordcomfirmSubtitle;
-        @BindView(R.id.recordcomfirm_time) TextView recordcomfirmTime;
-        @BindView(R.id.recordcomfirm_date) TextView recordcomfirmDate;
-        @BindView(R.id.img) ImageView recordImg;
-        @BindView(R.id.recordcomfirm_comfirm) ImageView img;
+	TextView recordcomfirmTitle;
+	TextView recordcomfirmSubtitle;
+	TextView recordcomfirmTime;
+	TextView recordcomfirmDate;
+	ImageView recordImg;
+	ImageView img;
 
-        public RecordComfirmVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public RecordComfirmVH(View view) {
+            super(view);
+            recordcomfirmTitle = (TextView) view.findViewById(R.id.recordcomfirm_title);
+            recordcomfirmSubtitle = (TextView) view.findViewById(R.id.recordcomfirm_subtitle);
+            recordcomfirmTime = (TextView) view.findViewById(R.id.recordcomfirm_time);
+            recordcomfirmDate = (TextView) view.findViewById(R.id.recordcomfirm_date);
+            recordImg = (ImageView) view.findViewById(R.id.img);
+            img = (ImageView) view.findViewById(R.id.recordcomfirm_comfirm);
         }
     }
 

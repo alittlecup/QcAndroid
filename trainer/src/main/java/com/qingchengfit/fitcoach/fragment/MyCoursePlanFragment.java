@@ -16,10 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.bean.CoursePlan;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.QcRestRepository;
@@ -47,17 +47,17 @@ import rx.schedulers.Schedulers;
  */
 public class MyCoursePlanFragment extends BaseFragment {
     public static final String TAG = MyCoursePlanFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.course_add) Button courseAdd;
-    @BindView(R.id.no_data) LinearLayout noData;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
+	Toolbar toolbar;
+	RecyclerView recyclerview;
+	Button courseAdd;
+	LinearLayout noData;
+	SwipeRefreshLayout refresh;
+	TextView toolbarTitle;
+	RelativeLayout layoutToolbar;
     @Inject QcRestRepository restRepository;
     private GymsAdapter mGymAdapter;
     private List<CoursePlan> adapterData = new ArrayList<>();
-    private Unbinder unbinder;
+
     private CoachService mCoachService;
 
     public MyCoursePlanFragment() {
@@ -71,8 +71,21 @@ public class MyCoursePlanFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(getString(R.string.my_course_template));
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      courseAdd = (Button) view.findViewById(R.id.course_add);
+      noData = (LinearLayout) view.findViewById(R.id.no_data);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      layoutToolbar = (RelativeLayout) view.findViewById(R.id.layout_toolbar);
+
+      view.findViewById(R.id.course_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddCourse();
+        }
+      });
+
+      toolbarTitle.setText(getString(R.string.my_course_template));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
@@ -154,7 +167,7 @@ public class MyCoursePlanFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.course_add) public void onAddCourse() {
+ public void onAddCourse() {
         Intent toWeb = new Intent(getContext(), WebActivity.class);
         toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
         startActivityForResult(toWeb, 10001);
@@ -197,20 +210,25 @@ public class MyCoursePlanFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     public static class GymsVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name) TextView itemGymName;
-        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
-        @BindView(R.id.qc_identify) ImageView itemIsPersonal;
-        @BindView(R.id.item_gym_brand) TextView itemItemBrand;
-        @BindView(R.id.item_right) ImageView itemRight;
+	ImageView itemGymHeader;
+	TextView itemGymName;
+	TextView itemGymPhonenum;
+	ImageView itemIsPersonal;
+	TextView itemItemBrand;
+	ImageView itemRight;
 
-        public GymsVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public GymsVH(View view) {
+            super(view);
+          itemGymHeader = (ImageView) view.findViewById(R.id.item_gym_header);
+          itemGymName = (TextView) view.findViewById(R.id.item_gym_name);
+          itemGymPhonenum = (TextView) view.findViewById(R.id.item_gym_phonenum);
+          itemIsPersonal = (ImageView) view.findViewById(R.id.qc_identify);
+          itemItemBrand = (TextView) view.findViewById(R.id.item_gym_brand);
+          itemRight = (ImageView) view.findViewById(R.id.item_right);
         }
     }
 

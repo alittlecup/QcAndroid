@@ -15,13 +15,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.base.StaffPosition;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -64,19 +64,19 @@ import rx.functions.Action1;
 @Leaf(module = "staff", path = "/su/")
 public class SuFragment extends SaasBaseFragment implements StaffDetailView {
 
-    @BindView(R2.id.hint) TextView hint;
-    @BindView(R2.id.header_img) ImageView headerImg;
-    @BindView(R2.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R2.id.username) CommonInputView username;
-    @BindView(R2.id.gender_male) RadioButton genderMale;
-    @BindView(R2.id.gender_female) RadioButton genderFemale;
-    @BindView(R2.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R2.id.gender_layout) RelativeLayout genderLayout;
-    @BindView(R2.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R2.id.change_su_btn) TextView changeSuBtn;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+	TextView hint;
+	ImageView headerImg;
+	RelativeLayout headerLayout;
+	CommonInputView username;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
+	PhoneEditText phoneNum;
+	TextView changeSuBtn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
     @Inject SuPresenter mSuPresenter;
     //上传的照片
     private String uploadImg;
@@ -84,8 +84,31 @@ public class SuFragment extends SaasBaseFragment implements StaffDetailView {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_su_staff_saas, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(mSuPresenter, this);
+      hint = (TextView) view.findViewById(R.id.hint);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+      username = (CommonInputView) view.findViewById(R.id.username);
+      genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+      genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      changeSuBtn = (TextView) view.findViewById(R.id.change_su_btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onHeader();
+        }
+      });
+      view.findViewById(R.id.change_su_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SuFragment.this.onClick(v);
+        }
+      });
+
+      delegatePresenter(mSuPresenter, this);
         initToolbar(toolbar);
         username.setContent(mStaff.getUsername());
         phoneNum.setPhoneNum(mStaff.getPhone());
@@ -152,11 +175,11 @@ public class SuFragment extends SaasBaseFragment implements StaffDetailView {
         return SuFragment.class.getName();
     }
 
-    @OnClick(R2.id.header_layout) public void onHeader(){
+ public void onHeader(){
         ChoosePictureFragmentDialog.newInstance(true, 11).show(getFragmentManager(), "");
     }
 
-    @OnClick(R2.id.change_su_btn) public void onClick(View view) {
+ public void onClick(View view) {
         routeTo("/su/change/",SuIdendifyParams.builder().mStaff(mStaff).build());
     }
 

@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -42,10 +42,10 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     @Arg int resTitle;
     @Arg int resContent;
 
-    @BindView(R.id.img) ImageView img;
-    @BindView(R.id.tv1) TextView tv1;
-    @BindView(R.id.tv2) TextView tv2;
-    Unbinder unbinder;
+	ImageView img;
+	TextView tv1;
+	TextView tv2;
+
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +55,11 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_add_photo, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        img.setImageResource(resImg);
+      img = (ImageView) view.findViewById(R.id.img);
+      tv1 = (TextView) view.findViewById(R.id.tv1);
+      tv2 = (TextView) view.findViewById(R.id.tv2);
+
+      img.setImageResource(resImg);
         tv1.setText(resTitle);
         tv2.setText(resContent);
         return view;
@@ -64,6 +67,6 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

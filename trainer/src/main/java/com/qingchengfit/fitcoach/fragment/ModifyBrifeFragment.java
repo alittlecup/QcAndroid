@@ -14,10 +14,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.model.common.BriefInfo;
 import cn.qingchengfit.utils.ChoosePicUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -49,12 +49,12 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
   public static int INSERT_PIC_GALLEY = 102;
   public static int CHANGE_PIC_CAMERA = 103;
   public static int CHANGE_PIC_GALLEY = 104;
-  @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
   private List<BriefInfo> mListData = new ArrayList<>();
   private ModifyBrifeAdapter adapter;
   private String mBrifeData;
   private TextInputDialog mTextInputDialog;
-  private Unbinder unbinder;
+
   private Subscription spUpImg;
   private ChoosePictureFragmentNewDialog DialogChoosepic;
 
@@ -87,7 +87,19 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_modify_brief, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+    view.findViewById(R.id.modifybrief_insertimg).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onInsertImg();
+      }
+    });
+    view.findViewById(R.id.modifybrief_inserttext).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onInsertText();
+      }
+    });
+
     fragmentCallBack.onToolbarMenu(R.menu.menu_save, 0, "自我介绍");
     fragmentCallBack.onToolbarClickListener(item -> {
       onSave();
@@ -175,11 +187,11 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     DialogChoosepic.show(getChildFragmentManager(),"");
   }
 
-  @OnClick(R.id.modifybrief_insertimg) public void onInsertImg() {
+ public void onInsertImg() {
     choosePic(-100);
   }
 
-  @OnClick(R.id.modifybrief_inserttext) public void onInsertText() {
+ public void onInsertText() {
     mTextInputDialog.setOnOkListener(v -> {
       if (TextUtils.isEmpty(mTextInputDialog.getContent())) {
 
@@ -233,7 +245,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
   }
 
   @Override public void onDestroyView() {
-    unbinder.unbind();
+
     super.onDestroyView();
     if (spUpImg != null && spUpImg.isUnsubscribed()) {
       spUpImg.unsubscribe();
@@ -241,15 +253,20 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
   }
 
   public static class ModifyBrifeVH extends RecyclerView.ViewHolder {
-    @BindView(R.id.item_modifybrief_text) TextView itemModifybriefText;
-    @BindView(R.id.item_modifybrief_img) ImageView itemModifybriefImg;
-    @BindView(R.id.item_modifybrief_del) Button itemModifybriefDel;
-    @BindView(R.id.item_modifybrief_up) Button itemModifybriefUp;
-    @BindView(R.id.item_modifybrief_down) Button itemModifybriefDown;
+	TextView itemModifybriefText;
+	ImageView itemModifybriefImg;
+	Button itemModifybriefDel;
+	Button itemModifybriefUp;
+	Button itemModifybriefDown;
 
-    public ModifyBrifeVH(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    public ModifyBrifeVH(View view) {
+      super(view);
+      itemModifybriefText = (TextView) view.findViewById(R.id.item_modifybrief_text);
+      itemModifybriefImg = (ImageView) view.findViewById(R.id.item_modifybrief_img);
+      itemModifybriefDel = (Button) view.findViewById(R.id.item_modifybrief_del);
+      itemModifybriefUp = (Button) view.findViewById(R.id.item_modifybrief_up);
+      itemModifybriefDown = (Button) view.findViewById(R.id.item_modifybrief_down);
+
     }
 
     public int OnDelclick(List data) {

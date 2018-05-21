@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.notisetting.item.NotiSettingChargeItem;
 import cn.qingchengfit.notisetting.presenter.NotiSettingMsgChargePresenter;
 import cn.qingchengfit.staffkit.R;
@@ -51,12 +51,12 @@ import javax.inject.Inject;
 public class NotiSettingMsgChargeFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, NotiSettingMsgChargePresenter.MVPView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.rv) RecyclerView rv;
-  @BindView(R.id.tv_sms_left) TextView tvSmsLeft;
-  @BindView(R.id.tv_count_after_charge) TextView tvCountAfterCharge;
-  @BindView(R.id.btn_confirm) Button btnConfirm;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	RecyclerView rv;
+	TextView tvSmsLeft;
+	TextView tvCountAfterCharge;
+	Button btnConfirm;
 
   @Inject NotiSettingMsgChargePresenter presenter;
   private CommonFlexAdapter adapter;
@@ -64,7 +64,18 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_noti_setting_msg_charge, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    tvSmsLeft = (TextView) view.findViewById(R.id.tv_sms_left);
+    tvCountAfterCharge = (TextView) view.findViewById(R.id.tv_count_after_charge);
+    btnConfirm = (Button) view.findViewById(R.id.btn_confirm);
+    view.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onComfirm();
+      }
+    });
+
     delegatePresenter(presenter, this);
     btnConfirm.setEnabled(false);
     initToolbar(toolbar);
@@ -104,7 +115,7 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @OnClick(R.id.btn_confirm) public void onComfirm() {
+ public void onComfirm() {
     showLoading();
     presenter.chargeSMS(adapter.getSelectedPositions().get(0), getString(R.string.wechat_code));
   }

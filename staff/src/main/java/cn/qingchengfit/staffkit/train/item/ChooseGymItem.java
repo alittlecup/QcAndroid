@@ -1,12 +1,8 @@
 package cn.qingchengfit.staffkit.train.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
 import com.bumptech.glide.Glide;
@@ -62,15 +58,19 @@ public class ChooseGymItem extends AbstractFlexibleItem<ChooseGymItem.ChooseGymV
     }
 
     public class ChooseGymVH extends FlexibleViewHolder {
-        @BindView(R.id.img_avatar) ImageView imgAvatar;
-        @BindView(R.id.tv_gym_name) TextView tvGymName;
-        @BindView(R.id.tv_complete_info) TextView tvCompleteInfo;
-        @BindView(R.id.tv_gym_brand) TextView tvGymBrand;
-        @BindView(R.id.ic_choose_gym_arrow) ImageView icChooseGymArrow;
+	ImageView imgAvatar;
+	TextView tvGymName;
+	TextView tvCompleteInfo;
+	TextView tvGymBrand;
+	ImageView icChooseGymArrow;
 
         public ChooseGymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+          tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+          tvCompleteInfo = (TextView) view.findViewById(R.id.tv_complete_info);
+          tvGymBrand = (TextView) view.findViewById(R.id.tv_gym_brand);
+          icChooseGymArrow = (ImageView) view.findViewById(R.id.ic_choose_gym_arrow);
         }
     }
 }

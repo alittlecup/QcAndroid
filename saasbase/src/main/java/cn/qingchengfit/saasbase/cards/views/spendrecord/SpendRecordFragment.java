@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.constant.Configs;
@@ -42,18 +42,18 @@ import java.util.Locale;
 @Leaf(module = "card", path = "/consumption/record/") public class SpendRecordFragment
     extends SaasBaseFragment {
 
-  @BindView(R2.id.addup_charge) TextView addupCharge;
-  @BindView(R2.id.addup_spend) TextView addupSpend;
-  @BindView(R2.id.balance) TextView balance;
-  @BindView(R2.id.minus_year) ImageView minusYear;
-  @BindView(R2.id.year) TextView year;
-  @BindView(R2.id.add_year) ImageView addYear;
-  @BindView(R2.id.month_tab) PagerSlidingTabStrip monthTab;
-  @BindView(R2.id.viewpager) ViewPager viewpager;
+	TextView addupCharge;
+	TextView addupSpend;
+	TextView balance;
+	ImageView minusYear;
+	TextView year;
+	ImageView addYear;
+	PagerSlidingTabStrip monthTab;
+	ViewPager viewpager;
 
   @Need Card card;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
   private int mCurYear, mCurMonth;
   private FragmentAdapter mFragmentAdapter;
 
@@ -61,7 +61,27 @@ import java.util.Locale;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_card_spendrecord, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    addupCharge = (TextView) view.findViewById(R.id.addup_charge);
+    addupSpend = (TextView) view.findViewById(R.id.addup_spend);
+    balance = (TextView) view.findViewById(R.id.balance);
+    minusYear = (ImageView) view.findViewById(R.id.minus_year);
+    year = (TextView) view.findViewById(R.id.year);
+    addYear = (ImageView) view.findViewById(R.id.add_year);
+    monthTab = (PagerSlidingTabStrip) view.findViewById(R.id.month_tab);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.minus_year).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SpendRecordFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.add_year).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SpendRecordFragment.this.onClick(v);
+      }
+    });
+
     initToolbar(toolbar);
     toolbarTitle.setText("消费记录");
 
@@ -106,7 +126,7 @@ import java.util.Locale;
     super.onDestroyView();
   }
 
-  @OnClick({ R2.id.minus_year, R2.id.add_year }) public void onClick(View view) {
+ public void onClick(View view) {
     int i = view.getId();
     if (i == R.id.minus_year) {
       mCurYear--;

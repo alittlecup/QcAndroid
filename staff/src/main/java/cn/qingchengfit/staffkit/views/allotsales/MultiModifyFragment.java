@@ -25,9 +25,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -105,25 +105,25 @@ import static android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 
   // 全选
   Observable<AllotSaleSelectAllEvent> observableSelectAll;
-  @BindView(R.id.swt_show_config) SwitcherLayout swtShowConfig;
-  @BindView(R.id.et_search) EditText etSearch;
-  @BindView(R.id.img_search_clear) ImageView imgSearchClear;
-  @BindView(R.id.add_student) ImageView addStudent;
-  @BindView(R.id.rl_search) RelativeLayout rlSearch;
-  @BindView(R.id.ll_sort) LinearLayout llSort;
-  @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-  @BindView(R.id.rv_student) RecycleViewWithNoImg rvStudent;
-  @BindView(R.id.ll_divider_bottom) View llDividerBottom;
-  @BindView(R.id.tv_allotsale_select_count) TextView tvAllotsaleSelectCount;
-  @BindView(R.id.img_down) ImageView imgDown;
-  @BindView(R.id.ll_show_select) LinearLayout llShowSelect;
-  @BindView(R.id.view_space) View viewSpace;
-  @BindView(R.id.btn_modify_sale) Button btnModifySale;
-  @BindView(R.id.ll_modify_sale) LinearLayout llModifySale;
-  @BindView(R.id.btn_remove_stud) Button btnRemoveStud;
-  @BindView(R.id.ll_remove_stud) LinearLayout llRemoveStud;
-  @BindView(R.id.ll_bottom) LinearLayout llBottom;
-  @BindView(R.id.scroll_root) CoordinatorLayout scrollRoot;
+	SwitcherLayout swtShowConfig;
+	EditText etSearch;
+	ImageView imgSearchClear;
+	ImageView addStudent;
+	RelativeLayout rlSearch;
+	LinearLayout llSort;
+	AppBarLayout myhomeAppBar;
+	RecycleViewWithNoImg rvStudent;
+	View llDividerBottom;
+	TextView tvAllotsaleSelectCount;
+	ImageView imgDown;
+	LinearLayout llShowSelect;
+	View viewSpace;
+	Button btnModifySale;
+	LinearLayout llModifySale;
+	Button btnRemoveStud;
+	LinearLayout llRemoveStud;
+	LinearLayout llBottom;
+	CoordinatorLayout scrollRoot;
   // 学员 list adapter
   private AllotSaleChooseAdapter studentAdapter;
   // 学员 recyclerView LayoutManager
@@ -140,7 +140,51 @@ import static android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_allotsale_multi_modify, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    swtShowConfig = (SwitcherLayout) view.findViewById(R.id.swt_show_config);
+    etSearch = (EditText) view.findViewById(R.id.et_search);
+    imgSearchClear = (ImageView) view.findViewById(R.id.img_search_clear);
+    addStudent = (ImageView) view.findViewById(R.id.add_student);
+    rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
+    llSort = (LinearLayout) view.findViewById(R.id.ll_sort);
+    myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+    rvStudent = (RecycleViewWithNoImg) view.findViewById(R.id.rv_student);
+    llDividerBottom = (View) view.findViewById(R.id.ll_divider_bottom);
+    tvAllotsaleSelectCount = (TextView) view.findViewById(R.id.tv_allotsale_select_count);
+    imgDown = (ImageView) view.findViewById(R.id.img_down);
+    llShowSelect = (LinearLayout) view.findViewById(R.id.ll_show_select);
+    viewSpace = (View) view.findViewById(R.id.view_space);
+    btnModifySale = (Button) view.findViewById(R.id.btn_modify_sale);
+    llModifySale = (LinearLayout) view.findViewById(R.id.ll_modify_sale);
+    btnRemoveStud = (Button) view.findViewById(R.id.btn_remove_stud);
+    llRemoveStud = (LinearLayout) view.findViewById(R.id.ll_remove_stud);
+    llBottom = (LinearLayout) view.findViewById(R.id.ll_bottom);
+    scrollRoot = (CoordinatorLayout) view.findViewById(R.id.scroll_root);
+    view.findViewById(R.id.btn_remove_stud).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        handleClick(v);
+      }
+    });
+    view.findViewById(R.id.btn_modify_sale).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        handleClick(v);
+      }
+    });
+    view.findViewById(R.id.ll_show_select).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        handleClick(v);
+      }
+    });
+    view.findViewById(R.id.add_student).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        handleClick(v);
+      }
+    });
+    view.findViewById(R.id.img_search_clear).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        handleClick(v);
+      }
+    });
+
     setView(view);
     super.onCreateView(inflater, container, savedInstanceState);
     initTitle();
@@ -527,10 +571,7 @@ import static android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
   }
 
   //处理绑定的点击事件
-  @OnClick({
-    R.id.btn_remove_stud, R.id.btn_modify_sale, R.id.ll_show_select, R.id.add_student,
-    R.id.img_search_clear
-  }) public void handleClick(View view) {
+ public void handleClick(View view) {
     switch (view.getId()) {
       case R.id.btn_modify_sale:
         if (datasChoose.size() <= 0) {

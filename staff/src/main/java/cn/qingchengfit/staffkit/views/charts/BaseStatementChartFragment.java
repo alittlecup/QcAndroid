@@ -10,9 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.R;
@@ -78,8 +78,8 @@ import timber.log.Timber;
      * 2 是签到报表
      */
 
-    @BindView(R.id.linechart) LineChart lineChart;
-    @BindView(R.id.chart_detail) CommonInputView chartDetail;
+	LineChart lineChart;
+	CommonInputView chartDetail;
 
     private LineDataSet set1;
 
@@ -90,8 +90,15 @@ import timber.log.Timber;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_statemnt_charts, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        chartDetail.setLabel(getChartName());
+      lineChart = (LineChart) view.findViewById(R.id.linechart);
+      chartDetail = (CommonInputView) view.findViewById(R.id.chart_detail);
+      view.findViewById(R.id.chart_detail).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+
+      chartDetail.setLabel(getChartName());
         initCharts();
         isLoading = true;
         return view;
@@ -110,7 +117,7 @@ import timber.log.Timber;
         }
     }
 
-    @OnClick(R.id.chart_detail) public void onClickTitle() {
+ public void onClickTitle() {
         RxBus.getBus().post(new EventChartTitle.Builder().chartType(mChartType).build());
     }
 

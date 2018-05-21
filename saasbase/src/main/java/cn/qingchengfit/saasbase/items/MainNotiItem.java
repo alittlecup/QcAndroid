@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -31,16 +31,21 @@ public class MainNotiItem extends AbstractFlexibleItem<MainNotiItem.MainNotiVH> 
     }
 
     public class MainNotiVH extends FlexibleViewHolder {
-        @BindView(R2.id.item_img) ImageView itemImg;
-        @BindView(R2.id.item_red_dogt) ImageView itemRedDogt;
-        @BindView(R2.id.item_name) TextView itemName;
-        @BindView(R2.id.item_time) TextView itemTime;
-        @BindView(R2.id.item_msg_tag) TextView itemMsgTag;
-        @BindView(R2.id.item_msg_content) TextView itemMsgContent;
+	ImageView itemImg;
+	ImageView itemRedDogt;
+	TextView itemName;
+	TextView itemTime;
+	TextView itemMsgTag;
+	TextView itemMsgContent;
 
         public MainNotiVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemImg = (ImageView) view.findViewById(R.id.item_img);
+          itemRedDogt = (ImageView) view.findViewById(R.id.item_red_dogt);
+          itemName = (TextView) view.findViewById(R.id.item_name);
+          itemTime = (TextView) view.findViewById(R.id.item_time);
+          itemMsgTag = (TextView) view.findViewById(R.id.item_msg_tag);
+          itemMsgContent = (TextView) view.findViewById(R.id.item_msg_content);
         }
     }
 }

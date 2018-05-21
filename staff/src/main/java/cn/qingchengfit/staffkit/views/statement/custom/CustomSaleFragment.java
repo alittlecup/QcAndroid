@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
@@ -55,19 +55,19 @@ import rx.functions.Action1;
 public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
 
     public static final String TAG = CustomSaleFragment.class.getName();
-    @BindView(R.id.custom_statment_start) CommonInputView customStatmentStart;
-    @BindView(R.id.custom_statment_end) CommonInputView customStatmentEnd;
-    @BindView(R.id.rootview) LinearLayout rootview;
+	CommonInputView customStatmentStart;
+	CommonInputView customStatmentEnd;
+	LinearLayout rootview;
 
     @Inject CustomSalePresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.custom_statment_cardtype) CommonInputView customStatmentCardtype;
-    @BindView(R.id.trade_type) CommonInputView tradeType;
-    @BindView(R.id.sale_menber) CommonInputView saleMenber;
-    @BindView(R.id.pay_method) CommonInputView payMethod;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	CommonInputView customStatmentCardtype;
+	CommonInputView tradeType;
+	CommonInputView saleMenber;
+	CommonInputView payMethod;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private Calendar date;
 
@@ -96,8 +96,54 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_sale, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //initDI
+      customStatmentStart = (CommonInputView) view.findViewById(R.id.custom_statment_start);
+      customStatmentEnd = (CommonInputView) view.findViewById(R.id.custom_statment_end);
+      rootview = (LinearLayout) view.findViewById(R.id.rootview);
+      customStatmentCardtype = (CommonInputView) view.findViewById(R.id.custom_statment_cardtype);
+      tradeType = (CommonInputView) view.findViewById(R.id.trade_type);
+      saleMenber = (CommonInputView) view.findViewById(R.id.sale_menber);
+      payMethod = (CommonInputView) view.findViewById(R.id.pay_method);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.custom_statment_end).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickEnd();
+        }
+      });
+      view.findViewById(R.id.custom_statment_start).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickStart();
+        }
+      });
+      view.findViewById(R.id.custom_statment_generate)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onClickGenerate();
+            }
+          });
+      view.findViewById(R.id.trade_type).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CustomSaleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.sale_menber).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CustomSaleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.pay_method).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CustomSaleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.custom_statment_cardtype)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              CustomSaleFragment.this.onClick(v);
+            }
+          });
+
+      //initDI
         //
         initView();
         initToolbar(toolbar);
@@ -219,7 +265,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
         }
     }
 
-    @OnClick(R.id.custom_statment_end) public void onClickEnd() {
+ public void onClickEnd() {
       if (pwTime == null) {
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
       }
@@ -247,7 +293,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
     }
 
-    @OnClick(R.id.custom_statment_start) public void onClickStart() {
+ public void onClickStart() {
       if (pwTime == null) {
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
       }
@@ -275,7 +321,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
     }
 
-    @OnClick(R.id.custom_statment_generate) public void onClickGenerate() {
+ public void onClickGenerate() {
         if (DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent()).getTime() > DateUtils.formatDateFromYYYYMMDD(
             customStatmentEnd.getContent()).getTime()) {
             ToastUtils.show("开始时间不能小于结束时间");
@@ -307,7 +353,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
         return CustomSaleFragment.class.getName();
     }
 
-    @OnClick({ R.id.trade_type, R.id.sale_menber, R.id.pay_method, R.id.custom_statment_cardtype }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trade_type:
                 List<String> tm = new ArrayList<>();

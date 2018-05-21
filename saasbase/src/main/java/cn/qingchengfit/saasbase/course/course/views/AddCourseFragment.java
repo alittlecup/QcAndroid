@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.views.MutiChooseGymFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -38,11 +38,11 @@ import javax.inject.Inject;
 @Leaf(module = "course", path = "/add/") public class AddCourseFragment extends SaasBaseFragment implements AddCoursePresenter.MVPview{
 
   private static final int RESULT_GYMS = 601;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.frag_baseinfo) FrameLayout fragBaseinfo;
-  @BindView(R2.id.btn_suit_gyms) CommonInputView btnSuitGyms;
-  @BindView(R2.id.layout_suit_gym) LinearLayout layoutSuitGym;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout fragBaseinfo;
+	CommonInputView btnSuitGyms;
+	LinearLayout layoutSuitGym;
 
   private CourseBaseInfoEditFragment mEditBaseInfo;
 
@@ -99,7 +99,17 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_course_add, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    fragBaseinfo = (FrameLayout) view.findViewById(R.id.frag_baseinfo);
+    btnSuitGyms = (CommonInputView) view.findViewById(R.id.btn_suit_gyms);
+    layoutSuitGym = (LinearLayout) view.findViewById(R.id.layout_suit_gym);
+    view.findViewById(R.id.layout_suit_gym).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickSuitGyms();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     if (mEditBaseInfo == null) {
@@ -128,7 +138,7 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.layout_suit_gym)
+
   public void onClickSuitGyms() {
     MutiChooseGymFragment.start(this, false, null,
         getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE : PermissionServerUtils.TEAMSETTING_CAN_WRITE,

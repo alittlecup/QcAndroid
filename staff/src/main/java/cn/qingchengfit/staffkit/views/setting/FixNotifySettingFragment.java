@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.BalanceNotify;
 import cn.qingchengfit.staffkit.App;
@@ -34,11 +34,11 @@ import javax.inject.Inject;
 public class FixNotifySettingFragment extends BaseDialogFragment implements FixNotifyPresenter.OnGetBalanceNotifyListener {
 
     private static int id;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.sw_balance_enough) SwitcherLayout swBalanceEnough;
-    @BindView(R.id.text_check_signal) TextView textCheckSignal;
-    @BindView(R.id.text_open_notify_tips) TextView textOpenNotifyTips;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	SwitcherLayout swBalanceEnough;
+	TextView textCheckSignal;
+	TextView textOpenNotifyTips;
     @Inject FixNotifyPresenter fixNotifyPresenter;
     @Inject RestRepository restRepository;
     private HashMap<String, Object> balanceMap = new HashMap<>();
@@ -65,8 +65,18 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notify_setting, container, false);
-        delegatePresenter(fixNotifyPresenter, this);
-        unbinder = ButterKnife.bind(this, view);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      swBalanceEnough = (SwitcherLayout) view.findViewById(R.id.sw_balance_enough);
+      textCheckSignal = (TextView) view.findViewById(R.id.text_check_signal);
+      textOpenNotifyTips = (TextView) view.findViewById(R.id.text_open_notify_tips);
+      view.findViewById(R.id.setting_fix_checkin).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OnClick();
+        }
+      });
+      delegatePresenter(fixNotifyPresenter, this);
+
         initToolbar();
         getData();
         initView();
@@ -112,7 +122,7 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
         fixNotifyPresenter.putBalanceNotify(App.staffId, configsBean);
     }
 
-    @OnClick({ R.id.setting_fix_checkin }) public void OnClick() {
+ public void OnClick() {
         FixCheckinFragment.start(this, 4);
     }
 

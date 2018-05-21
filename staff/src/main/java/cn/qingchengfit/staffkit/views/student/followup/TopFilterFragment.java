@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
@@ -40,14 +40,14 @@ public class TopFilterFragment extends BaseFragment {
     public boolean isTodyOnly;
     public int studentStatus;
 
-    @BindView(R.id.tv_student_follow_up_filter_sale) TextView tvStudentFollowUpFilterSale;
-    @BindView(R.id.tv_student_follow_up_filter_register) TextView tvStudentFollowUpFilterRegister;
+	TextView tvStudentFollowUpFilterSale;
+	TextView tvStudentFollowUpFilterRegister;
     //@BindView(R.id.tv_student_follow_up_filter_source) TextView tvStudentFollowUpFilterSource;
     //@BindView(R.id.tv_student_follow_up_filter_referrer) TextView tvStudentFollowUpFilterReferrer;
     //@BindView(R.id.tv_student_follow_up_filter_lastest_time) TextView
     //        tvStudentFollowUpFilterLastestTime;
-    @BindView(R.id.rl_student_follow_up_filter_sale) RelativeLayout rlStudentFollowUpFilterSale;
-    @BindView(R.id.rl_student_follow_up_filter_register) RelativeLayout rlStudentFollowUpFilterRegister;
+	RelativeLayout rlStudentFollowUpFilterSale;
+	RelativeLayout rlStudentFollowUpFilterRegister;
     //@BindView(R.id.rl_student_follow_up_filter_source) RelativeLayout rlStudentFollowUpFilterSource;
     //@BindView(R.id.rl_student_follow_up_filter_referrer) RelativeLayout
     //        rlStudentFollowUpFilterReferrer;
@@ -67,8 +67,16 @@ public class TopFilterFragment extends BaseFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_follow_up_top_filter, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
+      tvStudentFollowUpFilterSale =
+          (TextView) view.findViewById(R.id.tv_student_follow_up_filter_sale);
+      tvStudentFollowUpFilterRegister =
+          (TextView) view.findViewById(R.id.tv_student_follow_up_filter_register);
+      rlStudentFollowUpFilterSale =
+          (RelativeLayout) view.findViewById(R.id.rl_student_follow_up_filter_sale);
+      rlStudentFollowUpFilterRegister =
+          (RelativeLayout) view.findViewById(R.id.rl_student_follow_up_filter_register);
+
+      initView();
         return view;
     }
 

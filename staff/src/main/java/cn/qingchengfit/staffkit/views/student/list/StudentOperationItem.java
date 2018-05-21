@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -65,13 +65,15 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
     }
 
     public class StudentOperationVH extends FlexibleViewHolder {
-        @BindView(R.id.img_function) ImageView imgFunction;
-        @BindView(R.id.img_pro) ImageView imgPro;
-        @BindView(R.id.tv_title) TextView tvTitle;
+	ImageView imgFunction;
+	ImageView imgPro;
+	TextView tvTitle;
 
         public StudentOperationVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imgFunction = (ImageView) view.findViewById(R.id.img_function);
+          imgPro = (ImageView) view.findViewById(R.id.img_pro);
+          tvTitle = (TextView) view.findViewById(R.id.tv_title);
         }
     }
 }

@@ -11,15 +11,15 @@ import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.chat.events.EventChoosePerson;
 import cn.qingchengfit.saasbase.chat.events.EventFresh;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
@@ -62,13 +62,13 @@ import rx.functions.Action1;
 public class ChatChooseInGymFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R2.id.checkbox) protected CheckBox checkbox;
+	protected CheckBox checkbox;
   protected CommonFlexAdapter adapter;
-    @BindView(R2.id.img_avatar) ImageView imgAvatar;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.tv_staff_count) TextView tvStaffCount;
-    @BindView(R2.id.ic_entry_triangel) ImageView icEntryTriangel;
-    @BindView(R2.id.recyclerview) RecyclerView recyclerview;
+	ImageView imgAvatar;
+	TextView tvGymName;
+	TextView tvStaffCount;
+	ImageView icEntryTriangel;
+	RecyclerView recyclerview;
     ChatGym chatGym;
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
 
@@ -87,8 +87,19 @@ public class ChatChooseInGymFragment extends BaseFragment
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_choose_in_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        icEntryTriangel.setVisibility(View.GONE);
+    checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+    imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+    tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+    tvStaffCount = (TextView) view.findViewById(R.id.tv_staff_count);
+    icEntryTriangel = (ImageView) view.findViewById(R.id.ic_entry_triangel);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    view.findViewById(R.id.layout_gym).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickLayoutGym();
+      }
+    });
+
+    icEntryTriangel.setVisibility(View.GONE);
         Glide.with(getContext()).load(chatGym.photo).asBitmap().into(new CircleImgWrapper(imgAvatar, getContext()));
         tvGymName.setText(chatGym.name + " | " + chatGym.brand_name);
         checkbox.setOnTouchListener(new View.OnTouchListener() {
@@ -191,7 +202,7 @@ public class ChatChooseInGymFragment extends BaseFragment
     return new PositionHeaderItem(s);
     }
 
-    @OnClick(R2.id.layout_gym) public void onClickLayoutGym() {
+ public void onClickLayoutGym() {
         checkbox.toggle();
         if (checkbox.isChecked()) {
             DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), chatGym.coaches));

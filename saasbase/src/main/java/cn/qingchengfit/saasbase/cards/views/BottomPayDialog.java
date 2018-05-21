@@ -13,12 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.PayMethod;
 import cn.qingchengfit.saasbase.cards.event.PayEvent;
 import cn.qingchengfit.saasbase.cards.item.ItemPayMethod;
@@ -47,7 +47,7 @@ import java.util.List;
 public class BottomPayDialog extends BaseDialogFragment implements
     FlexibleAdapter.OnItemClickListener{
 
-  @BindView(R2.id.rv_pay_list) RecyclerView rvPayList;
+	RecyclerView rvPayList;
   private CommonFlexAdapter adapter;
   private boolean hasEditPermission;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
@@ -93,7 +93,8 @@ public class BottomPayDialog extends BaseDialogFragment implements
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_pay_bottom_saasbase, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    rvPayList = (RecyclerView) view.findViewById(R.id.rv_pay_list);
+
     if (adapter == null) {
       adapter = new CommonFlexAdapter(itemList, this);
     }

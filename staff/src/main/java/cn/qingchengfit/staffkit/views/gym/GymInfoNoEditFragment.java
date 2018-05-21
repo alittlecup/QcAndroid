@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
@@ -43,14 +43,14 @@ import javax.inject.Inject;
  */
 public class GymInfoNoEditFragment extends BaseFragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.img_brand) ImageView imgBrand;
-    @BindView(R.id.tv_gym_name) TextView tvGymName;
-    @BindView(R.id.tv_gym_address) TextView tvGymAddress;
-    @BindView(R.id.tv_gym_contact) TextView tvGymContact;
-    @BindView(R.id.tv_gym_desc) TextView tvGymDesc;
-    Unbinder unbinder;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView imgBrand;
+	TextView tvGymName;
+	TextView tvGymAddress;
+	TextView tvGymContact;
+	TextView tvGymDesc;
+
     @Inject GymWrapper gymWrapper;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,8 +59,15 @@ public class GymInfoNoEditFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_info_no_edit, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      imgBrand = (ImageView) view.findViewById(R.id.img_brand);
+      tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+      tvGymAddress = (TextView) view.findViewById(R.id.tv_gym_address);
+      tvGymContact = (TextView) view.findViewById(R.id.tv_gym_contact);
+      tvGymDesc = (TextView) view.findViewById(R.id.tv_gym_desc);
+
+      initToolbar(toolbar);
         initGym(gymWrapper.getCoachService());
         return view;
     }
@@ -88,6 +95,6 @@ public class GymInfoNoEditFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

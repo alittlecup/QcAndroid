@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.CmBean;
 import cn.qingchengfit.staffkit.R;
@@ -50,25 +50,25 @@ import rx.functions.Action1;
  * Created by Paper on 16/3/29 2016.
  */
 @FragmentWithArgs public class AddCycleFragment extends BaseFragment implements AddCycleView {
-    @BindView(R.id.starttime) CommonInputView starttime;
-    @BindView(R.id.endtime) CommonInputView endtime;
-    @BindView(R.id.desc) TextView desc;
-    @BindView(R.id.week1) CommonInputView week1;
-    @BindView(R.id.week2) CommonInputView week2;
-    @BindView(R.id.week3) CommonInputView week3;
-    @BindView(R.id.week4) CommonInputView week4;
-    @BindView(R.id.week5) CommonInputView week5;
-    @BindView(R.id.week6) CommonInputView week6;
-    @BindView(R.id.week7) CommonInputView week7;
-    @BindView(R.id.comfirm) Button comfirm;
+	CommonInputView starttime;
+	CommonInputView endtime;
+	TextView desc;
+	CommonInputView week1;
+	CommonInputView week2;
+	CommonInputView week3;
+	CommonInputView week4;
+	CommonInputView week5;
+	CommonInputView week6;
+	CommonInputView week7;
+	Button comfirm;
 
     @Arg(required = false) CmBean mCmBean;
     @Arg(required = false) long mCourselength = 0;
 
     List<Integer> x = new ArrayList<>();
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.label_can_order) TextView labelCanOrder;
+	TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView labelCanOrder;
     @Inject AddCyclePresenter presenter;
     private Date mStart = new Date();
     private Date mEnd = new Date();
@@ -82,9 +82,72 @@ import rx.functions.Action1;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_cycle, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      starttime = (CommonInputView) view.findViewById(R.id.starttime);
+      endtime = (CommonInputView) view.findViewById(R.id.endtime);
+      desc = (TextView) view.findViewById(R.id.desc);
+      week1 = (CommonInputView) view.findViewById(R.id.week1);
+      week2 = (CommonInputView) view.findViewById(R.id.week2);
+      week3 = (CommonInputView) view.findViewById(R.id.week3);
+      week4 = (CommonInputView) view.findViewById(R.id.week4);
+      week5 = (CommonInputView) view.findViewById(R.id.week5);
+      week6 = (CommonInputView) view.findViewById(R.id.week6);
+      week7 = (CommonInputView) view.findViewById(R.id.week7);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      labelCanOrder = (TextView) view.findViewById(R.id.label_can_order);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCofirm();
+        }
+      });
+      view.findViewById(R.id.week1).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.week2).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.week3).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.week4).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.week5).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.week6).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.week7).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddCycleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.starttime).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onChangetime(v);
+        }
+      });
+      view.findViewById(R.id.endtime).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onChangetime(v);
+        }
+      });
 
-        delegatePresenter(presenter, this);
+      delegatePresenter(presenter, this);
         //mCallbackActivity.setToolbar("添加周期", false, null, 0, null);
         //starttime.setContent("8:00");
         //endtime.setContent("21:00");
@@ -166,7 +229,7 @@ import rx.functions.Action1;
         super.onDestroyView();
     }
 
-    @OnClick(R.id.comfirm) public void onCofirm() {
+ public void onCofirm() {
         CmBean cmBean = new CmBean();
         cmBean.week.addAll(x);
         cmBean.dateStart = mStart;
@@ -181,7 +244,7 @@ import rx.functions.Action1;
         RxBus.getBus().post(cmBean);
     }
 
-    @OnClick({ R.id.week1, R.id.week2, R.id.week3, R.id.week4, R.id.week5, R.id.week6, R.id.week7 }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.week1:
                 week1.toggle();
@@ -235,7 +298,7 @@ import rx.functions.Action1;
         }
     }
 
-    @OnClick({ R.id.starttime, R.id.endtime }) public void onChangetime(View view) {
+ public void onChangetime(View view) {
         if (timeWindow == null) {
           timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
         }

@@ -1,12 +1,8 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -71,15 +67,19 @@ public class ArticleCommentItem extends AbstractFlexibleItem<ArticleCommentItem.
     }
 
     public class ArticleCommentVH extends FlexibleViewHolder {
-        @BindView(R.id.image_comment_head) ImageView imageCommentHead;
-        @BindView(R.id.tv_comment_name) TextView tvCommentName;
-        @BindView(R.id.tv_comment_content) TextView tvCommentContent;
-        @BindView(R.id.tv_comment_time) TextView tvCommentTime;
-        @BindView(R.id.tv_comment_reply) TextView tvCommentReply;
+	ImageView imageCommentHead;
+	TextView tvCommentName;
+	TextView tvCommentContent;
+	TextView tvCommentTime;
+	TextView tvCommentReply;
 
         public ArticleCommentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imageCommentHead = (ImageView) view.findViewById(R.id.image_comment_head);
+          tvCommentName = (TextView) view.findViewById(R.id.tv_comment_name);
+          tvCommentContent = (TextView) view.findViewById(R.id.tv_comment_content);
+          tvCommentTime = (TextView) view.findViewById(R.id.tv_comment_time);
+          tvCommentReply = (TextView) view.findViewById(R.id.tv_comment_reply);
         }
     }
 }

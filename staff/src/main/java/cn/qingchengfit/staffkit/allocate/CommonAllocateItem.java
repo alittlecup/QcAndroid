@@ -1,13 +1,9 @@
 package cn.qingchengfit.staffkit.allocate;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
 import com.bumptech.glide.Glide;
@@ -61,13 +57,15 @@ public class CommonAllocateItem extends AbstractFlexibleItem<CommonAllocateItem.
 
     class AllocateVH extends FlexibleViewHolder {
 
-        @BindView(R.id.item_sales_header) ImageView itemSalesHeader;
-        @BindView(R.id.tv_sale_name) TextView tvSaleName;
-        @BindView(R.id.tv_sale_stucount) TextView tvSaleStucount;
+	ImageView itemSalesHeader;
+	TextView tvSaleName;
+	TextView tvSaleStucount;
 
         public AllocateVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemSalesHeader = (ImageView) view.findViewById(R.id.item_sales_header);
+          tvSaleName = (TextView) view.findViewById(R.id.tv_sale_name);
+          tvSaleStucount = (TextView) view.findViewById(R.id.tv_sale_stucount);
         }
     }
 }

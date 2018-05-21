@@ -17,8 +17,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.commpont.StaffWrapperComponent;
 import cn.qingchengfit.inject.model.StaffWrapper;
@@ -46,14 +46,14 @@ public class AllotSalesActivity extends BaseActivity
   public StaffWrapperComponent component;
 
   public StaffWrapper staffWrapper;
-  @BindView(R.id.drawer) public MyDrawerLayout drawer;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.titile_layout) LinearLayout titileLayout;
-  @BindView(R.id.student_frag) FrameLayout studentFrag;
-  @BindView(R.id.down) ImageView down;
-  @BindView(R.id.rb_select_all) CheckBox selectAll;
-  @BindView(R.id.frame_student_filter) FrameLayout filterFrameLayout;
+	public MyDrawerLayout drawer;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	LinearLayout titileLayout;
+	FrameLayout studentFrag;
+	ImageView down;
+	CheckBox selectAll;
+	FrameLayout filterFrameLayout;
 
   Observable<AllotSaleEvent> observable;
   TextView tvCancel;
@@ -65,8 +65,16 @@ public class AllotSalesActivity extends BaseActivity
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_allot_sales);
+    drawer = (MyDrawerLayout) findViewById(R.id.drawer);
+    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+    titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+    studentFrag = (FrameLayout) findViewById(R.id.student_frag);
+    down = (ImageView) findViewById(R.id.down);
+    selectAll = (CheckBox) findViewById(R.id.rb_select_all);
+    filterFrameLayout = (FrameLayout) findViewById(R.id.frame_student_filter);
     tvCancel = new TextView(getApplicationContext());
-    ButterKnife.bind(this);
+
     staffWrapper = new StaffWrapper();
     initDI();
     initToolBar();

@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.ResponseConstant;
@@ -56,8 +56,8 @@ import rx.schedulers.Schedulers;
  */
 public class SyncGymFragment extends BaseFragment {
 
-    @BindView(R.id.sync_gym_hint) TextView syncGymHint;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	TextView syncGymHint;
+	RecyclerView recyclerview;
 
     @Inject RepoCoachServiceImpl repoCoachService;
 
@@ -67,8 +67,10 @@ public class SyncGymFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sync_gyms, container, false);
-        ButterKnife.bind(this, view);
-        recyclerview.setHasFixedSize(true);
+      syncGymHint = (TextView) view.findViewById(R.id.sync_gym_hint);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+      recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mData.clear();

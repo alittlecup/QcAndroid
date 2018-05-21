@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.wardrobe.item;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.StringUtils;
@@ -88,13 +88,15 @@ public class PayWardrobeItem extends AbstractFlexibleItem<PayWardrobeItem.PayWar
     }
 
     public class PayWardrobeVH extends FlexibleViewHolder {
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.account) TextView account;
+	ImageView img;
+	TextView name;
+	TextView account;
 
         public PayWardrobeVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          img = (ImageView) view.findViewById(R.id.img);
+          name = (TextView) view.findViewById(R.id.name);
+          account = (TextView) view.findViewById(R.id.account);
         }
     }
 }

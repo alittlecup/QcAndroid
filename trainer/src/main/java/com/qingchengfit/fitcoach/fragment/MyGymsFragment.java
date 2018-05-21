@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -37,14 +37,14 @@ import rx.schedulers.Schedulers;
  */
 public class MyGymsFragment extends BaseFragment {
     public static final String TAG = MyGymsFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.refresh_nodata) SwipeRefreshLayout refreshNodata;
+	Toolbar toolbar;
+	RecyclerView recyclerview;
+	SwipeRefreshLayout refresh;
+	SwipeRefreshLayout refreshNodata;
     private GymsAdapter mGymAdapter;
     private List<CoachService> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
-    private Unbinder unbinder;
+
 
     public MyGymsFragment() {
     }
@@ -56,8 +56,23 @@ public class MyGymsFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms_true, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setTitle("我的健身房");
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      refreshNodata = (SwipeRefreshLayout) view.findViewById(R.id.refresh_nodata);
+
+      view.findViewById(R.id.course_add_private).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickprivate();
+        }
+      });
+      view.findViewById(R.id.course_add_belong).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickBelong();
+        }
+      });
+
+      toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         //        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         //        toolbar.inflateMenu(R.menu.add);
@@ -120,7 +135,7 @@ public class MyGymsFragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.course_add_private) public void onClickprivate() {
+ public void onClickprivate() {
         Intent intent = new Intent(getActivity(), FragActivity.class);
         if (mHasPrivate) {
             intent.putExtra("type", 2);
@@ -130,7 +145,7 @@ public class MyGymsFragment extends BaseFragment {
         startActivityForResult(intent, 11);
     }
 
-    @OnClick(R.id.course_add_belong) public void onClickBelong() {
+ public void onClickBelong() {
         Intent intent = new Intent(getActivity(), FragActivity.class);
         intent.putExtra("type", 4);
         startActivityForResult(intent, 11);
@@ -193,19 +208,24 @@ public class MyGymsFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     public static class GymsVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name) TextView itemGymName;
-        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
-        @BindView(R.id.qc_identify) ImageView itemIsPersonal;
-        @BindView(R.id.item_gym_brand) TextView brand;
+	ImageView itemGymHeader;
+	TextView itemGymName;
+	TextView itemGymPhonenum;
+	ImageView itemIsPersonal;
+	TextView brand;
 
-        public GymsVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public GymsVH(View view) {
+            super(view);
+          itemGymHeader = (ImageView) view.findViewById(R.id.item_gym_header);
+          itemGymName = (TextView) view.findViewById(R.id.item_gym_name);
+          itemGymPhonenum = (TextView) view.findViewById(R.id.item_gym_phonenum);
+          itemIsPersonal = (ImageView) view.findViewById(R.id.qc_identify);
+          brand = (TextView) view.findViewById(R.id.item_gym_brand);
+
         }
     }
 

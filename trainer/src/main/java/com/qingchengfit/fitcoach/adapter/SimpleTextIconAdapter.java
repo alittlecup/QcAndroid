@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.List;
@@ -68,12 +68,13 @@ public class SimpleTextIconAdapter extends RecyclerView.Adapter<SimpleTextIconAd
 
     public class SimpleTextVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageicon_text) TextView imageiconText;
-        @BindView(R.id.icon) ImageView icon;
+	TextView imageiconText;
+	ImageView icon;
 
         public SimpleTextVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          imageiconText = (TextView) itemView.findViewById(R.id.imageicon_text);
+          icon = (ImageView) itemView.findViewById(R.id.icon);
         }
     }
 }

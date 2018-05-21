@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.network.ResponseConstant;
@@ -45,22 +45,38 @@ import rx.schedulers.Schedulers;
 
 public class AddBrandActivity extends BaseActivity implements AddBrandView {
 
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.brand_photo) ImageView brandPhoto;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView brandPhoto;
     @Inject CreateBrandPresenter presenter;
-    @BindView(R.id.content) CommonInputView content;
+	CommonInputView content;
     @Inject RestRepository restRepository;
-    @BindView(R.id.guide_step_1) ImageView guideStep1;
+	ImageView guideStep1;
     private Subscription sp;
     private String uploadImg;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_gym_add_brand);
-        ButterKnife.bind(this);
-        presenter.attachView(this);
+      btn = (Button) findViewById(R.id.btn);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      brandPhoto = (ImageView) findViewById(R.id.brand_photo);
+      content = (CommonInputView) findViewById(R.id.content);
+      guideStep1 = (ImageView) findViewById(R.id.guide_step_1);
+      findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      findViewById(R.id.photo_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          addPhoto();
+        }
+      });
+
+      presenter.attachView(this);
         presenter.onNewSps();
         if (getIntent() != null && getIntent().getIntExtra(GymActivity.GYM_TO, -1) == GymActivity.GYM_GUIDE) {
             guideStep1.setVisibility(View.VISIBLE);
@@ -93,14 +109,14 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
         });
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (!TextUtils.isEmpty(content.getContent().trim())) {
             showLoading();
             presenter.createBrand(content.getContent().trim(), uploadImg);
         }
     }
 
-    @OnClick(R.id.photo_layout) public void addPhoto() {
+ public void addPhoto() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {

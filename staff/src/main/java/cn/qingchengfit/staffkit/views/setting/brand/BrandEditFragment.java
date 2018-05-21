@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.body.BrandBody;
@@ -67,18 +67,18 @@ import rx.schedulers.Schedulers;
  */
 public class BrandEditFragment extends BaseFragment {
 
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.brand_name) CommonInputView brandName;
-    @BindView(R.id.change_creator) CommonInputView changeCreator;
-    @BindView(R.id.del) TextView del;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	ImageView headerImg;
+	CommonInputView brandName;
+	CommonInputView changeCreator;
+	TextView del;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
     @Inject RestRepository restRepository;
 
     BrandBody postBrand = new BrandBody();
-    @BindView(R.id.brand_id) CommonInputView brandId;
-    @BindView(R.id.brand_create) CommonInputView brandCreateTime;
+	CommonInputView brandId;
+	CommonInputView brandCreateTime;
     private Brand brand;
 
     public static BrandEditFragment newInstance(Brand bran) {
@@ -92,9 +92,31 @@ public class BrandEditFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_brand, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      brandName = (CommonInputView) view.findViewById(R.id.brand_name);
+      changeCreator = (CommonInputView) view.findViewById(R.id.change_creator);
+      del = (TextView) view.findViewById(R.id.del);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      brandId = (CommonInputView) view.findViewById(R.id.brand_id);
+      brandCreateTime = (CommonInputView) view.findViewById(R.id.brand_create);
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BrandEditFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.change_creator).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BrandEditFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BrandEditFragment.this.onClick(v);
+        }
+      });
 
-        initBus();
+      initBus();
         initToolbar(toolbar);
         if (getArguments() != null) {
             brand = getArguments().getParcelable("brand");
@@ -216,7 +238,7 @@ public class BrandEditFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.header_layout, R.id.change_creator, R.id.del }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.header_layout:
                 ChoosePictureFragmentDialog f = ChoosePictureFragmentDialog.newInstance();

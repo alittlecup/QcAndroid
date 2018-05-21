@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Router;
@@ -47,14 +47,26 @@ import javax.inject.Inject;
  */
 public class GymExpireFragment extends BaseDialogFragment {
 
-    @BindView(R.id.tag_pro) TextView tagPro;
-    @BindView(R.id.content) TextView content;
+	TextView tagPro;
+	TextView content;
     @Inject GymWrapper gymWrapper;
     long startTime = 0L;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_expire, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        String Strcontent = "高级版d将于" + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(gymWrapper.system_end())) + "到期\n请及时续费以免影响使用";
+      tagPro = (TextView) view.findViewById(R.id.tag_pro);
+      content = (TextView) view.findViewById(R.id.content);
+      view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GymExpireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GymExpireFragment.this.onClick(v);
+        }
+      });
+
+      String Strcontent = "高级版d将于" + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(gymWrapper.system_end())) + "到期\n请及时续费以免影响使用";
         final SpannableString ss = new SpannableString(Strcontent);
         //得到drawable对象，即所要插入的图片
         Drawable d = ContextCompat.getDrawable(getContext(), R.drawable.ic_pro_lineout);
@@ -72,7 +84,7 @@ public class GymExpireFragment extends BaseDialogFragment {
 
 
 
-    @OnClick({ R.id.cancel, R.id.comfirm }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel:
                 SensorsUtils.track("QcSaasAlmostExpireWindowCancelBtnClick")

@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -39,7 +39,7 @@ import javax.inject.Inject;
  */
 public class BrandManageFragment extends BaseFragment implements BrandManageView {
     public static final String TAG = BrandManageFragment.class.getSimpleName();
-    @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
+	RecycleViewWithNoImg recyclerview;
     BrandManageAdapterAdapter adapter;
     List<Brand> datas = new ArrayList<>();
     @Inject BrandManagePresenter presenter;
@@ -48,8 +48,9 @@ public class BrandManageFragment extends BaseFragment implements BrandManageView
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //((BrandManageComponent) mCallbackActivity.getComponent()).inject(this);
+      recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+
+      //((BrandManageComponent) mCallbackActivity.getComponent()).inject(this);
         //mCallbackActivity.setToolbar(getString(R.string.brand_manage), false, null, 0, null);
         //presenter.attachView(this);
         //adapter = new BrandManageAdapterAdapter(datas);

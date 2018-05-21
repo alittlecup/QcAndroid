@@ -6,10 +6,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -22,16 +22,16 @@ import java.util.Date;
  */
 public class GymTimeFragment extends Fragment {
     public static final String TAG = GymTimeFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.gymtime_mon) CommonInputView gymtimeMon;
-    @BindView(R.id.gymtime_tus) CommonInputView gymtimeTus;
-    @BindView(R.id.gymtime_wen) CommonInputView gymtimeWen;
-    @BindView(R.id.gymtime_thu) CommonInputView gymtimeThu;
-    @BindView(R.id.gymtime_fri) CommonInputView gymtimeFri;
-    @BindView(R.id.gymtime_sat) CommonInputView gymtimeSat;
-    @BindView(R.id.gymtime_sun) CommonInputView gymtimeSun;
+	Toolbar toolbar;
+	CommonInputView gymtimeMon;
+	CommonInputView gymtimeTus;
+	CommonInputView gymtimeWen;
+	CommonInputView gymtimeThu;
+	CommonInputView gymtimeFri;
+	CommonInputView gymtimeSat;
+	CommonInputView gymtimeSun;
     TimePeriodChooser timeDialogWindow;
-    private Unbinder unbinder;
+
 
     public GymTimeFragment() {
     }
@@ -39,15 +39,28 @@ public class GymTimeFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gym_time, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setTitle("营业时间");
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      gymtimeMon = (CommonInputView) view.findViewById(R.id.gymtime_mon);
+      gymtimeTus = (CommonInputView) view.findViewById(R.id.gymtime_tus);
+      gymtimeWen = (CommonInputView) view.findViewById(R.id.gymtime_wen);
+      gymtimeThu = (CommonInputView) view.findViewById(R.id.gymtime_thu);
+      gymtimeFri = (CommonInputView) view.findViewById(R.id.gymtime_fri);
+      gymtimeSat = (CommonInputView) view.findViewById(R.id.gymtime_sat);
+      gymtimeSun = (CommonInputView) view.findViewById(R.id.gymtime_sun);
+      view.findViewById(R.id.gymtime_mon).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GymTimeFragment.this.onClick();
+        }
+      });
+
+      toolbar.setTitle("营业时间");
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS);
         return view;
     }
 
-    @OnClick(R.id.gymtime_mon) public void onClick() {
+ public void onClick() {
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
                 StringBuffer sb = new StringBuffer();
@@ -60,6 +73,6 @@ public class GymTimeFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

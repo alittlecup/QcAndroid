@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -74,14 +74,17 @@ public class PrivateBatchAdapter extends RecyclerView.Adapter<PrivateBatchAdapte
     }
 
     public class BatchViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.course_name) TextView courseName;
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.outofdate) View view;
+	TextView title;
+	TextView courseName;
+	ImageView img;
+	View view;
 
         public BatchViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          title = (TextView) itemView.findViewById(R.id.title);
+          courseName = (TextView) itemView.findViewById(R.id.course_name);
+          img = (ImageView) itemView.findViewById(R.id.img);
+          view = (View) itemView.findViewById(R.id.outofdate);
         }
     }
 }

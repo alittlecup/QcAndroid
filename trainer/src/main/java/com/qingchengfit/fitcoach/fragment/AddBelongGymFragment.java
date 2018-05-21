@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -18,9 +18,9 @@ import com.qingchengfit.fitcoach.R;
  */
 public class AddBelongGymFragment extends Fragment {
     public static final String TAG = AddBelongGymFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.add_gym_private_btn) Button addGymPrivateBtn;
-    private Unbinder unbinder;
+	Toolbar toolbar;
+	Button addGymPrivateBtn;
+
 
     public AddBelongGymFragment() {
     }
@@ -28,19 +28,26 @@ public class AddBelongGymFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_belong_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setTitle("添加所属健身房");
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      addGymPrivateBtn = (Button) view.findViewById(R.id.add_gym_private_btn);
+      view.findViewById(R.id.add_gym_private_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddBelongGymFragment.this.onClick();
+        }
+      });
+
+      toolbar.setTitle("添加所属健身房");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         return view;
     }
 
-    @OnClick(R.id.add_gym_private_btn) public void onClick() {
+ public void onClick() {
         getActivity().onBackPressed();
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

@@ -1,13 +1,9 @@
 package cn.qingchengfit.staffkit.views.student.followup;
 
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -87,12 +83,13 @@ public class LatestTimeItem extends AbstractFlexibleItem<LatestTimeItem.LatestTi
     }
 
     public class LatestTimeItemVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_source_name) TextView tvSourceName;
-        @BindView(R.id.img_hook) ImageView imgHook;
+	TextView tvSourceName;
+	ImageView imgHook;
 
         public LatestTimeItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvSourceName = (TextView) view.findViewById(R.id.tv_source_name);
+          imgHook = (ImageView) view.findViewById(R.id.img_hook);
         }
     }
 }

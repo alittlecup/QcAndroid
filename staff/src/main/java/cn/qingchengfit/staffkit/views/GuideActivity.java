@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -67,15 +67,15 @@ import static cn.qingchengfit.staffkit.views.gym.GymActivity.GYM_TO;
 
 public class GuideActivity extends BaseActivity implements FragCallBack {
     public boolean isAdd = false;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview) LinearLayout searchview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	RelativeLayout toolbarLayout;
+	EditText searchviewEt;
+	LinearLayout searchview;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -87,8 +87,27 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym);
-        ButterKnife.bind(this);
-        //        ((App) getApplication()).getAppCompoent().inject(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchviewClear = (ImageView) findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) findViewById(R.id.searchview_cancle);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      searchviewEt = (EditText) findViewById(R.id.searchview_et);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSearch(v);
+        }
+      });
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSearch(v);
+        }
+      });
+
+      //        ((App) getApplication()).getAppCompoent().inject(this);
         mRestRepository = new RestRepository();
         if (getIntent().getParcelableExtra(Configs.EXTRA_BRAND) == null) {
 
@@ -233,7 +252,7 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
         toolbarList.clear();
     }
 
-    @OnClick({ R.id.searchview_clear, R.id.searchview_cancle }) public void onSearch(View v) {
+ public void onSearch(View v) {
         switch (v.getId()) {
             case R.id.searchview_clear:
                 searchviewEt.setText("");

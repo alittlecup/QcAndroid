@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.chat.model.Record;
 import cn.qingchengfit.saasbase.chat.model.RecruitMsgPresenter;
 import cn.qingchengfit.utils.LogUtil;
@@ -44,10 +44,10 @@ import javax.inject.Inject;
 public class RecruitMessageListFragment extends BaseFragment
     implements RecruitMsgPresenter.MVPView, ConversationView, FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R2.id.recycler_recruit_message_list) RecyclerView recyclerRecruitMessageList;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+	RecyclerView recyclerRecruitMessageList;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
   @Inject RecruitMsgPresenter presenter;
   private List<Record> records = new ArrayList<>();
   private HashMap<String, Object> map = new HashMap<>();
@@ -63,7 +63,12 @@ public class RecruitMessageListFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_message_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerRecruitMessageList =
+        (RecyclerView) view.findViewById(R.id.recycler_recruit_message_list);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
     delegatePresenter(presenter, this);
     adapter = new CommonFlexAdapter(itemList, this);
     presenter.queryRecruitMsgList();

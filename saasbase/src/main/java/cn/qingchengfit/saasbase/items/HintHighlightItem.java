@@ -4,10 +4,10 @@ import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IHeader;
@@ -60,12 +60,13 @@ public class HintHighlightItem extends AbstractFlexibleItem<HintHighlightItem.Hi
     }
 
     public class HintHighlightVH extends FlexibleViewHolder {
-        @BindView(R2.id.img_info) ImageView imgInfo;
-        @BindView(R2.id.tv_hint) TextView tvHint;
+	ImageView imgInfo;
+	TextView tvHint;
 
         public HintHighlightVH(View view, FlexibleAdapter adapter) {
             super(view, adapter, true);
-            ButterKnife.bind(this, view);
+          imgInfo = (ImageView) view.findViewById(R.id.img_info);
+          tvHint = (TextView) view.findViewById(R.id.tv_hint);
         }
     }
 }

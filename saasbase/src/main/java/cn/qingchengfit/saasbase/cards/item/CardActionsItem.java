@@ -1,16 +1,11 @@
 package cn.qingchengfit.saasbase.cards.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -45,12 +40,14 @@ public class CardActionsItem extends AbstractFlexibleItem<CardActionsItem.CardAc
 
   public class CardActionsVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.tv_balance) TextView tvBalance;
-    @BindView(R2.id.btn_charge) Button btnCharge;
+	TextView tvBalance;
+	Button btnCharge;
 
     public CardActionsVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvBalance = (TextView) view.findViewById(R.id.tv_balance);
+      btnCharge = (Button) view.findViewById(R.id.btn_charge);
+
       btnCharge.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           RxBus.getBus().post(new EventRecycleClick(getAdapterPosition(),btnCharge.getId()));

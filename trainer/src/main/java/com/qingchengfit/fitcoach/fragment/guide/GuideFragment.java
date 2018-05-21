@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.LogUtil;
@@ -55,12 +55,12 @@ public class GuideFragment extends BaseFragment {
 
     public static final int RESULT_BRAND = 11;
 
-    @BindView(R.id.step_indicator) StepperIndicator stepIndicator;
+	StepperIndicator stepIndicator;
 
     CoachInitBean initBean;
     Gson gson = new Gson();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
   private boolean isAddBrannd = false;
     private Brand brand;
@@ -75,9 +75,11 @@ public class GuideFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      stepIndicator = (StepperIndicator) view.findViewById(R.id.step_indicator);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
 
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();

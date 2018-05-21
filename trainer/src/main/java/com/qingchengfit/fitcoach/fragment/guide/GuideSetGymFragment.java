@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CoachInitBean;
 import cn.qingchengfit.bean.EventStep;
@@ -77,20 +77,20 @@ import rx.schedulers.Schedulers;
     @Arg public String brandImgUrl;
     @Arg public String brandNameStr;
     public String imgUrl;
-    @BindView(R.id.brand_img) protected ImageView brandImg;
-    @BindView(R.id.brand_name) protected TextView brandName;
-    @BindView(R.id.gym_img) protected ImageView gymImg;
-    @BindView(R.id.gym_name) protected CommonInputView gymName;
-    @BindView(R.id.next_step) protected Button nextStep;
-    @BindView(R.id.gym_address) protected CommonInputView gymAddress;
-    @BindView(R.id.hint) protected TextView hint;
-    @BindView(R.id.layout_brand) protected LinearLayout layoutBrand;
+	protected ImageView brandImg;
+	protected TextView brandName;
+	protected ImageView gymImg;
+	protected CommonInputView gymName;
+	protected Button nextStep;
+	protected CommonInputView gymAddress;
+	protected TextView hint;
+	protected LinearLayout layoutBrand;
 
     protected double lat;
     protected double lng;
     protected int city_code;
     @Inject RepoCoachServiceImpl repoCoachService;
-    private Unbinder unbinder;
+
     private String addressStr;
     private String gymNameStr;
 
@@ -101,10 +101,36 @@ import rx.schedulers.Schedulers;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
-        unbinder = ButterKnife.bind(GuideSetGymFragment.this, view);
+      brandImg = (ImageView) view.findViewById(R.id.brand_img);
+      brandName = (TextView) view.findViewById(R.id.brand_name);
+      gymImg = (ImageView) view.findViewById(R.id.gym_img);
+      gymName = (CommonInputView) view.findViewById(R.id.gym_name);
+      nextStep = (Button) view.findViewById(R.id.next_step);
+      gymAddress = (CommonInputView) view.findViewById(R.id.gym_address);
+      hint = (TextView) view.findViewById(R.id.hint);
+      layoutBrand = (LinearLayout) view.findViewById(R.id.layout_brand);
+      view.findViewById(R.id.layout_brand).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GuideSetGymFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.layout_gym_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GuideSetGymFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.gym_address).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GuideSetGymFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.next_step).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onNextStep();
+        }
+      });
 
-
-        Glide.with(getContext())
+      Glide.with(getContext())
             .load(PhotoUtils.getSmall(brandImgUrl))
             .asBitmap()
             .placeholder(R.drawable.ic_default_header)
@@ -181,10 +207,10 @@ import rx.schedulers.Schedulers;
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
-    @OnClick({ R.id.layout_brand, R.id.layout_gym_img, R.id.gym_address }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_brand:
                 break;
@@ -211,7 +237,7 @@ import rx.schedulers.Schedulers;
         }
     }
 
-    @OnClick(R.id.next_step) public void onNextStep() {
+ public void onNextStep() {
         if (gymAddress.isEmpty()) {
             ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
             return;

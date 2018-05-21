@@ -60,7 +60,6 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
-  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
 
   implementation "com.github.akarnokd:rxjava2-interop:0.11.5"
 

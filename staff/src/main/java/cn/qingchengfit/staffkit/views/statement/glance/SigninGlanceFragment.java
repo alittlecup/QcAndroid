@@ -16,9 +16,9 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.staffkit.R;
@@ -39,24 +39,24 @@ import javax.inject.Inject;
  */
 public class SigninGlanceFragment extends BaseFragment implements StatementGlanceView {
     public static final String TAG = SigninGlanceFragment.class.getName();
-    @BindView(R.id.statment_glance_today_title) TextView statmentGlanceTodayTitle;
-    @BindView(R.id.statment_glance_today_data) TextView statmentGlanceTodayData;
-    @BindView(R.id.statement_glance_today) RelativeLayout statementGlanceToday;
-    @BindView(R.id.statment_glance_week_title) TextView statmentGlanceWeekTitle;
-    @BindView(R.id.statment_glance_week_data) TextView statmentGlanceWeekData;
-    @BindView(R.id.statement_glance_week) RelativeLayout statementGlanceWeek;
-    @BindView(R.id.statment_glance_month_title) TextView statmentGlanceMonthTitle;
-    @BindView(R.id.statment_glance_month_data) TextView statmentGlanceMonthData;
-    @BindView(R.id.statement_glance_month) RelativeLayout statementGlanceMonth;
-    @BindView(R.id.statement_glance_custom) RelativeLayout statementGlanceCustom;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+	TextView statmentGlanceTodayTitle;
+	TextView statmentGlanceTodayData;
+	RelativeLayout statementGlanceToday;
+	TextView statmentGlanceWeekTitle;
+	TextView statmentGlanceWeekData;
+	RelativeLayout statementGlanceWeek;
+	TextView statmentGlanceMonthTitle;
+	TextView statmentGlanceMonthData;
+	RelativeLayout statementGlanceMonth;
+	RelativeLayout statementGlanceCustom;
+	SwipeRefreshLayout refresh;
 
     @Inject GlancePresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
 
     private String mChooseShopId;
 
@@ -65,8 +65,53 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      statmentGlanceTodayTitle = (TextView) view.findViewById(R.id.statment_glance_today_title);
+      statmentGlanceTodayData = (TextView) view.findViewById(R.id.statment_glance_today_data);
+      statementGlanceToday = (RelativeLayout) view.findViewById(R.id.statement_glance_today);
+      statmentGlanceWeekTitle = (TextView) view.findViewById(R.id.statment_glance_week_title);
+      statmentGlanceWeekData = (TextView) view.findViewById(R.id.statment_glance_week_data);
+      statementGlanceWeek = (RelativeLayout) view.findViewById(R.id.statement_glance_week);
+      statmentGlanceMonthTitle = (TextView) view.findViewById(R.id.statment_glance_month_title);
+      statmentGlanceMonthData = (TextView) view.findViewById(R.id.statment_glance_month_data);
+      statementGlanceMonth = (RelativeLayout) view.findViewById(R.id.statement_glance_month);
+      statementGlanceCustom = (RelativeLayout) view.findViewById(R.id.statement_glance_custom);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      down = (ImageView) view.findViewById(R.id.down);
+      view.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+      view.findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+      view.findViewById(R.id.statement_glance_month).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickMonth();
+        }
+      });
+      view.findViewById(R.id.statement_glance_week).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickWeek();
+        }
+      });
+      view.findViewById(R.id.statement_glance_today).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickToday();
+        }
+      });
+      view.findViewById(R.id.statement_glance_custom)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onClickCustom();
+            }
+          });
+
+      initToolbar(toolbar);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -89,7 +134,7 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
         }
     }
 
-    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
+ public void onClickTitle() {
         ChooseGymActivity.start(SigninGlanceFragment.this, 1, PermissionServerUtils.SALES_REPORT, getString(R.string.choose_gym),
             mChooseShopId);
     }
@@ -130,14 +175,14 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
             "本月(" + DateUtils.getStartDayOfMonth(new Date()) + "至" + DateUtils.getEndDayOfMonth(new Date()) + ")");
     }
 
-    @OnClick(R.id.statement_glance_month) public void onClickMonth() {
+ public void onClickMonth() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), SigninReportFragment.newInstance(2))
             .addToBackStack(null)
             .commit();
     }
 
-    @OnClick(R.id.statement_glance_week) public void onClickWeek() {
+ public void onClickWeek() {
 
         Fragment fragment = SigninReportFragment.newInstance(1);
         getFragmentManager().beginTransaction()
@@ -145,14 +190,14 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
             .add(mCallbackActivity.getFragId(), fragment).addToBackStack(null).commit();
     }
 
-    @OnClick(R.id.statement_glance_today) public void onClickToday() {
+ public void onClickToday() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), SigninReportFragment.newInstance(0))
             .addToBackStack(null)
             .commit();
     }
 
-    @OnClick(R.id.statement_glance_custom) public void onClickCustom() {
+ public void onClickCustom() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), new CustomSigninFragment())
             .addToBackStack(null)

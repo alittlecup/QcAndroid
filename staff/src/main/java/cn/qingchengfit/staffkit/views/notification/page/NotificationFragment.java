@@ -24,8 +24,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.inject.moudle.GymStatus;
@@ -90,14 +90,14 @@ public class NotificationFragment extends BaseFragment
     public static final String[] TYPES = { "STAFF_1", "STAFF_2" };
     public static final List<Long> MSG_TYPES = new ArrayList<>(Arrays.asList(1l, 2l));
 
-    @BindView(R.id.rv) RecycleViewWithNoImg rv;
+	RecycleViewWithNoImg rv;
     @Inject NotificationPresenter presenter;
     @Inject RestRepository mRestRepository;
     @Inject SerPermisAction serPermisAction;
     @Inject GymBaseInfoAction gymBaseInfoAction;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mAdatper;
     private int unReadCount = 0;
@@ -127,8 +127,12 @@ public class NotificationFragment extends BaseFragment
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      rv = (RecycleViewWithNoImg) view.findViewById(R.id.rv);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         mAdatper = new CommonFlexAdapter(mData, this);
         mAdatper.setEndlessScrollListener(this, new ProgressItem(getContext()));

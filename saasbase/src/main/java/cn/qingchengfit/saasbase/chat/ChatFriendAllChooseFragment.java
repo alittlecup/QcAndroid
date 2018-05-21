@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -20,7 +20,7 @@ import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.chat.events.EventChoosePerson;
 import cn.qingchengfit.saasbase.chat.events.EventFresh;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
@@ -65,10 +65,10 @@ import javax.inject.Inject;
  */
 public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFriendPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R2.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R2.id.et_search) EditText etSearch;
-    @BindView(R2.id.search_clear) ImageView searchClear;
-    @BindView(R2.id.layout_alphabet) AlphabetLessView layoutAlphabet;
+	RecyclerView recyclerview;
+	EditText etSearch;
+	ImageView searchClear;
+	AlphabetLessView layoutAlphabet;
 
     @Inject ChatFriendPresenter presenter;
 
@@ -80,8 +80,12 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chatfriend_all_choose, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      etSearch = (EditText) view.findViewById(R.id.et_search);
+      searchClear = (ImageView) view.findViewById(R.id.search_clear);
+      layoutAlphabet = (AlphabetLessView) view.findViewById(R.id.layout_alphabet);
+
+      delegatePresenter(presenter, this);
 
         etSearch.setHint(R.string.search_hint);
         etSearch.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_search_24dp), null,

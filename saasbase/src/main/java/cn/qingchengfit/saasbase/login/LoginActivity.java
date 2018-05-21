@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.login.views.LoginFragment;
 import cn.qingchengfit.saasbase.login.views.RegistInitFragment;
 import cn.qingchengfit.saasbase.login.views.RegisteFragment;
@@ -33,8 +33,8 @@ import javax.inject.Inject;
 public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
 
-  @BindView(R2.id.viewpager) ViewPager viewpager;
-  @BindView(R2.id.login_tabview) TabLayout loginTabview;
+	ViewPager viewpager;
+	TabLayout loginTabview;
   LoadingDialog dialog;
   @Inject LoginStatus loginStatus;
 
@@ -45,7 +45,8 @@ public class LoginActivity extends BaseActivity implements HasSupportFragmentInj
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    ButterKnife.bind(this);
+    viewpager = (ViewPager) findViewById(R.id.viewpager);
+    loginTabview = (TabLayout) findViewById(R.id.login_tabview);
 
     if (!CompatUtils.less21() ) {
       loginTabview.setPadding(0,

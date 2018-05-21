@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.bill.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -50,11 +50,11 @@ public class ItemMoreFooter extends AbstractFlexibleItem<ItemMoreFooter.ItemMore
 
   class ItemMoreVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.text_load_more) TextView textLoadMore;
+	TextView textLoadMore;
 
     public ItemMoreVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      textLoadMore = (TextView) view.findViewById(R.id.text_load_more);
     }
   }
 

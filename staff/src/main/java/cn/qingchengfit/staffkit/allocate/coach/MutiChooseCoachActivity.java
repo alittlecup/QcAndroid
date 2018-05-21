@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
@@ -53,9 +53,9 @@ public class MutiChooseCoachActivity extends BaseActivity
     public static final String INPUT_TYPE = "operation_type";
     public static final int CHANGE = 1;
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.toolbar_title) TextView mToolbarTitile;
-    @BindView(R.id.all_coach_recyclerView) RecyclerView mRecyclerview;
+	Toolbar mToolbar;
+	TextView mToolbarTitile;
+	RecyclerView mRecyclerview;
     @Inject MutiChooseCoachPresenter mPresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -73,8 +73,11 @@ public class MutiChooseCoachActivity extends BaseActivity
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_all_coach);
-        ButterKnife.bind(this);
-        mPresenter.attachView(this);
+      mToolbar = (Toolbar) findViewById(R.id.toolbar);
+      mToolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      mRecyclerview = (RecyclerView) findViewById(R.id.all_coach_recyclerView);
+
+      mPresenter.attachView(this);
         mPresenter.onNewSps();
         if (getIntent().getStringArrayListExtra(INPUT_COACHES) != null) {
             mChoosedCoachsList = getIntent().getStringArrayListExtra(INPUT_COACHES);

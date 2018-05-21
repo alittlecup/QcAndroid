@@ -4,14 +4,14 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.chat.events.EventChoosePerson;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
@@ -106,14 +106,17 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
     }
 
     public class PositionHeaderVH extends ExpandableViewHolder {
-        @BindView(R2.id.checkbox) CheckBox checkbox;
-        @BindView(R2.id.tv_positon) TextView tvPositon;
-        @BindView(R2.id.ic_right) ImageView icRight;
+	CheckBox checkbox;
+	TextView tvPositon;
+	ImageView icRight;
 
         public PositionHeaderVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            checkbox.setOnClickListener(new View.OnClickListener() {
+          checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+          tvPositon = (TextView) view.findViewById(R.id.tv_positon);
+          icRight = (ImageView) view.findViewById(R.id.ic_right);
+
+          checkbox.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     if (adapter.getItem(getAdapterPosition()) instanceof PositionHeaderItem) {
                         PositionHeaderItem item = (PositionHeaderItem) adapter.getItem(getAdapterPosition());

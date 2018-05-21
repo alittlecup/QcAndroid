@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.recycle_popwindow_common) RecyclerView rlPopWindowCommon;
+	RecyclerView rlPopWindowCommon;
 
     private CommonFlexAdapter commonFlexAdapter;
     private OnSelectListener onSelectListener;
@@ -38,8 +38,9 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.layout_pop_common, null, false);
-        unbinder = ButterKnife.bind(this, view);
-        rlPopWindowCommon.setLayoutManager(new LinearLayoutManager(getContext()));
+      rlPopWindowCommon = (RecyclerView) view.findViewById(R.id.recycle_popwindow_common);
+
+      rlPopWindowCommon.setLayoutManager(new LinearLayoutManager(getContext()));
         rlPopWindowCommon.setAdapter(commonFlexAdapter);
         commonFlexAdapter.addListener(this);
         return view;

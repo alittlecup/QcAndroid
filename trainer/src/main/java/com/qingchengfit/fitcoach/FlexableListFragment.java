@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -44,15 +44,16 @@ public class FlexableListFragment extends BaseFragment {
 
     @DrawableRes public int customNoImage;
     public String customNoStr;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mFlexAdapter;
     private FlexibleAdapter.OnItemClickListener mItemClickListener;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_flexable_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        recycleview.setHasFixedSize(true);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      recycleview.setHasFixedSize(true);
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mFlexAdapter = new CommonFlexAdapter(mData, mItemClickListener);

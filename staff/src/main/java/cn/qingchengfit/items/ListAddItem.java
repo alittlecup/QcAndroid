@@ -3,8 +3,8 @@ package cn.qingchengfit.items;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -63,11 +63,11 @@ public class ListAddItem extends AbstractFlexibleItem<ListAddItem.ListAddVH> {
 
 
     public class ListAddVH extends FlexibleViewHolder {
-        @BindView(R.id.item_gym_name) TextView addText;
+	TextView addText;
 
         public ListAddVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          addText = (TextView) view.findViewById(R.id.item_gym_name);
         }
     }
 }

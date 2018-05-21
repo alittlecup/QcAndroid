@@ -4,8 +4,8 @@ import android.graphics.drawable.Animatable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -58,13 +58,15 @@ public class ChooseCoachItem extends AbstractFlexibleItem<ChooseCoachItem.Choose
     }
 
     public class ChooseSalerVH extends FlexibleViewHolder {
-        @BindView(R.id.saler_header_img) ImageView salerHeaderImg;
-        @BindView(R.id.choose_img) ImageView chooseImg;
-        @BindView(R.id.saler_name_tv) TextView salerNameTv;
+	ImageView salerHeaderImg;
+	ImageView chooseImg;
+	TextView salerNameTv;
 
         public ChooseSalerVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          salerHeaderImg = (ImageView) view.findViewById(R.id.saler_header_img);
+          chooseImg = (ImageView) view.findViewById(R.id.choose_img);
+          salerNameTv = (TextView) view.findViewById(R.id.saler_name_tv);
         }
 
         @Override public void toggleActivation() {

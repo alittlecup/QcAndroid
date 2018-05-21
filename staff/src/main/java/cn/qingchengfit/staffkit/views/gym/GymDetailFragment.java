@@ -28,9 +28,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
@@ -124,24 +124,24 @@ public class GymDetailFragment extends BaseFragment
 
   public static final int RESULT_STAFF_MANAGE = 12;
 
-  @BindView(R.id.recycleview) RecyclerView recycleview;
-  @BindView(R.id.shop_img) ImageView shopImg;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.down) ImageView down;
-  @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-  @BindView(R.id.gym_layout) LinearLayout gymLayout;
-  @BindView(R.id.toolbar_left) TextView toolbarLeft;
-  @BindView(R.id.layout_collapsed) AppBarLayout layoutCollapsed;
-  @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;
-  @BindView(R.id.vp_charts) ViewPager vpCharts;
-  @BindView(R.id.indicator) CircleIndicator indicator;
-  @BindView(R.id.gym_name) TextView gymName;
-  @BindView(R.id.gym_su) TextView gymSu;
-  @BindView(R.id.recharge) Button mRechargeBtn;
-  @BindView(R.id.tag_pro) ImageView tagPro;
-  @BindView(R.id.layout_to_charge) LinearLayout layoutCharge;
-  @BindView(R.id.tv_price) CompatTextView tvPrice;
+	RecyclerView recycleview;
+	ImageView shopImg;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	RelativeLayout toolbarLayout;
+	LinearLayout gymLayout;
+	TextView toolbarLeft;
+	AppBarLayout layoutCollapsed;
+	TextView scheduleNotificationCount;
+	ViewPager vpCharts;
+	CircleIndicator indicator;
+	TextView gymName;
+	TextView gymSu;
+	Button mRechargeBtn;
+	ImageView tagPro;
+	LinearLayout layoutCharge;
+	CompatTextView tvPrice;
 
   @Inject GymDetailPresenter gymDetailPresenter;
   @Inject RestRepository restRepository;
@@ -172,7 +172,40 @@ public class GymDetailFragment extends BaseFragment
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+    shopImg = (ImageView) view.findViewById(R.id.shop_img);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    down = (ImageView) view.findViewById(R.id.down);
+    toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
+    gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
+    toolbarLeft = (TextView) view.findViewById(R.id.toolbar_left);
+    layoutCollapsed = (AppBarLayout) view.findViewById(R.id.layout_collapsed);
+    scheduleNotificationCount = (TextView) view.findViewById(R.id.schedule_notification_count);
+    vpCharts = (ViewPager) view.findViewById(R.id.vp_charts);
+    indicator = (CircleIndicator) view.findViewById(R.id.indicator);
+    gymName = (TextView) view.findViewById(R.id.gym_name);
+    gymSu = (TextView) view.findViewById(R.id.gym_su);
+    mRechargeBtn = (Button) view.findViewById(R.id.recharge);
+    tagPro = (ImageView) view.findViewById(R.id.tag_pro);
+    layoutCharge = (LinearLayout) view.findViewById(R.id.layout_to_charge);
+    tvPrice = (CompatTextView) view.findViewById(R.id.tv_price);
+    view.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTitleClick();
+      }
+    });
+    view.findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTitleClick();
+      }
+    });
+    view.findViewById(R.id.toolbar_left).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLeft();
+      }
+    });
+
     delegatePresenter(gymDetailPresenter, this);
     initToolbar(toolbar);
     initView();
@@ -253,7 +286,7 @@ public class GymDetailFragment extends BaseFragment
   /**
    * 点击标题弹出场馆信息
    */
-  @OnClick({ R.id.toolbar_title, R.id.down }) public void onTitleClick() {
+ public void onTitleClick() {
     gymLayout.setPivotY(0);
     if (gymLayout.getVisibility() == View.VISIBLE) {
       ViewCompat.animate(gymLayout)
@@ -589,7 +622,7 @@ public class GymDetailFragment extends BaseFragment
   /**
    * 单场馆新增健身房
    */
-  @OnClick(R.id.toolbar_left) public void onLeft() {
+ public void onLeft() {
 
     //新增健身房
     SystemInitBody body;

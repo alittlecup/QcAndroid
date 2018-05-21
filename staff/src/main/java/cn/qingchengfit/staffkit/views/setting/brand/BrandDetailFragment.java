@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.model.base.Brand;
@@ -79,18 +79,18 @@ import rx.schedulers.Schedulers;
  */
 public class BrandDetailFragment extends BaseFragment {
 
-    @BindView(R.id.bg) ImageView bg;
-    @BindView(R.id.img) ImageView img;
-    @BindView(R.id.name) TextView name;
-    @BindView(R.id.brand) TextView brand;
-    @BindView(R.id.contact) TextView contact;
-    @BindView(R.id.create_time) TextView createTime;
-    @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	ImageView bg;
+	ImageView img;
+	TextView name;
+	TextView brand;
+	TextView contact;
+	TextView createTime;
+	AppBarLayout myhomeAppBar;
+	RecyclerView recyclerview;
     BrandGymsAdapter adapter;
     @Inject RestRepository restRepository;
     @Inject QcDbManager qcDbManager;
-    @BindView(R.id.no_brand_shop) LinearLayout noBrandShop;
+	LinearLayout noBrandShop;
     private List<Shop> datas = new ArrayList<>();
     private String mBrandId;
     private Subscription sp;
@@ -105,8 +105,17 @@ public class BrandDetailFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (getArguments() != null) {
+      bg = (ImageView) view.findViewById(R.id.bg);
+      img = (ImageView) view.findViewById(R.id.img);
+      name = (TextView) view.findViewById(R.id.name);
+      brand = (TextView) view.findViewById(R.id.brand);
+      contact = (TextView) view.findViewById(R.id.contact);
+      createTime = (TextView) view.findViewById(R.id.create_time);
+      myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      noBrandShop = (LinearLayout) view.findViewById(R.id.no_brand_shop);
+
+      if (getArguments() != null) {
             final Brand brand = getArguments().getParcelable("brand");
             if (brand != null) {
                 mCallbackActivity.setToolbar(brand.getName(), false, null, R.menu.menu_edit, new Toolbar.OnMenuItemClickListener() {

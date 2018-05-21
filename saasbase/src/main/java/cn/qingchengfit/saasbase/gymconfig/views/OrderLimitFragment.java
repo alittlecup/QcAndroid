@@ -10,12 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
@@ -38,22 +38,22 @@ import javax.inject.Inject;
     extends SaasBaseFragment
     implements OrderLimitPresenter.MVPView, BottomListFragment.ComfirmChooseListener {
 
-  @BindView(R2.id.civ_order_course_time) CommonInputView civOrderCourseTime;
-  @BindView(R2.id.sw_order_course) ExpandedLayout swOrderCourse;
-  @BindView(R2.id.civ_cancel_time) CommonInputView civCancelTime;
-  @BindView(R2.id.sw_cancle) ExpandedLayout swCancle;
-  @BindView(R2.id.sw_substitute) ExpandedLayout swSubstitute;
+	CommonInputView civOrderCourseTime;
+	ExpandedLayout swOrderCourse;
+	CommonInputView civCancelTime;
+	ExpandedLayout swCancle;
+	ExpandedLayout swSubstitute;
 
   @Need public Boolean mIsPrivate;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
   @Inject OrderLimitPresenter mOrderLimitPresenter;
-  @BindView(R2.id.input_sign_class_way) CommonInputView inputSignClassWay;
-  @BindView(R2.id.input_sign_class_start) CommonInputView inputSignClassStart;
-  @BindView(R2.id.input_sign_class_end) CommonInputView inputSignClassEnd;
-  @BindView(R2.id.sw_sign_group) ExpandedLayout swSignGroup;
-  @BindView(R2.id.tv_class_limit_tips) TextView tvClassLimitTips;
-  @BindView(R2.id.tv_class_cancel_tips) TextView tvClassCancelTips;
+	CommonInputView inputSignClassWay;
+	CommonInputView inputSignClassStart;
+	CommonInputView inputSignClassEnd;
+	ExpandedLayout swSignGroup;
+	TextView tvClassLimitTips;
+	TextView tvClassCancelTips;
   private String mOrderId;
   private String mCancleId;
   private String mMsgId;
@@ -70,7 +70,25 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_order_limit, container, false);
-    ButterKnife.bind(this, view);
+    civOrderCourseTime = (CommonInputView) view.findViewById(R.id.civ_order_course_time);
+    swOrderCourse = (ExpandedLayout) view.findViewById(R.id.sw_order_course);
+    civCancelTime = (CommonInputView) view.findViewById(R.id.civ_cancel_time);
+    swCancle = (ExpandedLayout) view.findViewById(R.id.sw_cancle);
+    swSubstitute = (ExpandedLayout) view.findViewById(R.id.sw_substitute);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    inputSignClassWay = (CommonInputView) view.findViewById(R.id.input_sign_class_way);
+    inputSignClassStart = (CommonInputView) view.findViewById(R.id.input_sign_class_start);
+    inputSignClassEnd = (CommonInputView) view.findViewById(R.id.input_sign_class_end);
+    swSignGroup = (ExpandedLayout) view.findViewById(R.id.sw_sign_group);
+    tvClassLimitTips = (TextView) view.findViewById(R.id.tv_class_limit_tips);
+    tvClassCancelTips = (TextView) view.findViewById(R.id.tv_class_cancel_tips);
+    view.findViewById(R.id.input_sign_class_way).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSelectSignway();
+      }
+    });
+
     delegatePresenter(mOrderLimitPresenter, this);
     //mCallbackActivity.setToolbar(mIsPrivate ? "私教预约限制" : "团课预约限制", false, null, R.menu.menu_comfirm,
     //    new Toolbar.OnMenuItemClickListener() {
@@ -111,7 +129,7 @@ import javax.inject.Inject;
     });
   }
 
-  @OnClick(R2.id.input_sign_class_way) public void onSelectSignway() {
+ public void onSelectSignway() {
     ArrayList<String> items = new ArrayList<>();
     items.add("教练点名");
     items.add("会员扫码");

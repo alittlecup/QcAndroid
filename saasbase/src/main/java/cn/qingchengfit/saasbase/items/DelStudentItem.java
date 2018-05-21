@@ -5,12 +5,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.student.widget.CircleView;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import com.bumptech.glide.Glide;
@@ -118,19 +118,27 @@ public class DelStudentItem extends AbstractFlexibleItem<DelStudentItem.ChooseSt
     }
 
     public class ChooseStudentVH extends FlexibleViewHolder {
-        @BindView(R2.id.del) ImageView del;
-        @BindView(R2.id.item_person_header) ImageView itemPersonHeader;
-        @BindView(R2.id.item_person_header_loop) RelativeLayout itemPersonHeaderLoop;
-        @BindView(R2.id.item_person_name) TextView itemPersonName;
-        @BindView(R2.id.item_person_gender) ImageView itemPersonGender;
-        @BindView(R2.id.item_person_phonenum) TextView itemPersonPhonenum;
-        @BindView(R2.id.item_person_desc) TextView itemPersonDesc;
-        @BindView(R2.id.status) TextView status;
+	ImageView del;
+	ImageView itemPersonHeader;
+	RelativeLayout itemPersonHeaderLoop;
+	TextView itemPersonName;
+	ImageView itemPersonGender;
+	TextView itemPersonPhonenum;
+	TextView itemPersonDesc;
+	TextView status;
 
         public ChooseStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            del.setOnClickListener(this);
+          del = (ImageView) view.findViewById(R.id.del);
+          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+          itemPersonHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_person_header_loop);
+          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+          itemPersonPhonenum = (TextView) view.findViewById(R.id.item_person_phonenum);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+          status = (TextView) view.findViewById(R.id.status);
+
+          del.setOnClickListener(this);
         }
 
         @Override public void onClick(View view) {

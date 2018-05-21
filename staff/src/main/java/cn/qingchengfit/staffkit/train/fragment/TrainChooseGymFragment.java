@@ -14,10 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.events.EventFreshGyms;
@@ -69,174 +66,192 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/1.
  */
-public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, QuerySuPresenter.MVPView {
+public class TrainChooseGymFragment extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener, QuerySuPresenter.MVPView {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindString(R.string.only_su_can_competition) String suHint;
-    @BindString(R.string.su_manager) String suStr;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.img_info) ImageView imgInfo;
-    @BindView(R.id.tv_hint) TextView tvHint;
-    @BindView(R.id.btn_add_gym) LinearLayout btnAddGym;
-    @BindView(R.id.layout_hint) LinearLayout layoutHint;
-    @Inject QuerySuPresenter presenter;
-    @Inject GymWrapper gymWrapper;
-    private List<AbstractFlexibleItem> datas = new ArrayList<>();
-    private CommonFlexAdapter adapter;
-    private CoachService tmpCoachService;
+  RecyclerView recyclerview;
+  String suHint;
+  String suStr;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  ImageView imgInfo;
+  TextView tvHint;
+  LinearLayout btnAddGym;
+  LinearLayout layoutHint;
+  @Inject QuerySuPresenter presenter;
+  @Inject GymWrapper gymWrapper;
+  private List<AbstractFlexibleItem> datas = new ArrayList<>();
+  private CommonFlexAdapter adapter;
+  private CoachService tmpCoachService;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_train_choose_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
-        initToolbar(toolbar);
-        adapter = new CommonFlexAdapter(datas, this);
-        //Utils.highlightText(tvHint, suHint, suStr);
-        recyclerview.setAdapter(adapter);
-        adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
-        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
-          .withDivider(R.drawable.divider_horizon_left_44dp)
-          .withOffset(1).withBottomEdge(true));
-        RxBusAdd(EventClickViewPosition.class).subscribe(new Action1<EventClickViewPosition>() {
-            @Override public void call(EventClickViewPosition eventClickViewPosition) {
-                if (eventClickViewPosition.getId() == R.id.btn_fun) {
-                    startActivity(new Intent(getActivity(), GuideActivity.class));
-                }
-            }
-        }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_train_choose_gym, container, false);
+    suHint = getResources().getString(R.string.only_su_can_competition);
+    suStr = getResources().getString(R.string.su_manager);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    imgInfo = (ImageView) view.findViewById(R.id.img_info);
+    tvHint = (TextView) view.findViewById(R.id.tv_hint);
+    btnAddGym = (LinearLayout) view.findViewById(R.id.btn_add_gym);
+    layoutHint = (LinearLayout) view.findViewById(R.id.layout_hint);
+    view.findViewById(R.id.btn_add_gym).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickAddGym();
+      }
+    });
 
-            }
-        });
-        RxBusAdd(EventFreshGyms.class)
-            .subscribe(new Action1<EventFreshGyms>() {
-                @Override public void call(EventFreshGyms eventFreshGyms) {
-                    freshData();
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
+    delegatePresenter(presenter, this);
+    initToolbar(toolbar);
+    adapter = new CommonFlexAdapter(datas, this);
+    //Utils.highlightText(tvHint, suHint, suStr);
+    recyclerview.setAdapter(adapter);
+    adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
+    recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    recyclerview.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_horizon_left_44dp)
+            .withOffset(1)
+            .withBottomEdge(true));
+    RxBusAdd(EventClickViewPosition.class).subscribe(new Action1<EventClickViewPosition>() {
+      @Override public void call(EventClickViewPosition eventClickViewPosition) {
+        if (eventClickViewPosition.getId() == R.id.btn_fun) {
+          startActivity(new Intent(getActivity(), GuideActivity.class));
+        }
+      }
+    }, new Action1<Throwable>() {
+      @Override public void call(Throwable throwable) {
 
-                }
-            });
-        tmpCoachService = gymWrapper.getCoachService();
-        return view;
-    }
-
-    @Override protected void onFinishAnimation() {
-        super.onFinishAnimation();
+      }
+    });
+    RxBusAdd(EventFreshGyms.class).subscribe(new Action1<EventFreshGyms>() {
+      @Override public void call(EventFreshGyms eventFreshGyms) {
         freshData();
-    }
+      }
+    }, new Action1<Throwable>() {
+      @Override public void call(Throwable throwable) {
 
-    public void freshData(){
-        RxRegiste(new RestRepository().getGet_api()
-            .qcGetCoachService(App.staffId, null)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.computation())
-            .flatMap(new Func1<QcDataResponse<GymList>, Observable<List<CoachService>>>() {
-                @Override public Observable<List<CoachService>> call(QcDataResponse<GymList> gymListQcResponseData) {
-                    if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
-                        return Observable.just(gymListQcResponseData.getData().services)
-                            .onBackpressureBuffer()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread());
-                    } else {
-                        List<CoachService> em = new ArrayList<CoachService>();
-                        return Observable.just(em)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .onBackpressureBuffer()
-                            .subscribeOn(Schedulers.io());
-                    }
-                }
-            })
-            .subscribe(new Action1<List<CoachService>>() {
-                @Override public void call(List<CoachService> coachServices) {
-                    if (coachServices != null && coachServices.size() > 0) {
-                        adapter.clear();
-                        datas.clear();
-                        for (int i = 0; i < coachServices.size(); i++) {
-                            datas.add(new ChooseGymItem(coachServices.get(i)));
-                        }
-                        adapter.updateDataSet(datas,true);
-                        //layoutHint.setVisibility(View.VISIBLE);
-                        btnAddGym.setVisibility(View.VISIBLE);
-                    } else {//无场馆
-                        adapter.clear();
-                        datas.clear();
-                        datas.add(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
-                        adapter.updateDataSet(datas,true);
-                        //layoutHint.setVisibility(View.GONE);
-                        btnAddGym.setVisibility(View.GONE);
-                    }
-                }
-            }, new NetWorkThrowable()));
-    }
+      }
+    });
+    tmpCoachService = gymWrapper.getCoachService();
+    return view;
+  }
 
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
-        super.initToolbar(toolbar);
-        toolbarTitile.setText("选择报名场馆");
-    }
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    freshData();
+  }
 
-    @Override public String getFragmentName() {
-        return TrainChooseGymFragment.class.getName();
-    }
-
-    /**
-     * 新增场馆
-     */
-    @OnClick(R.id.btn_add_gym) public void onClickAddGym() {
-        Intent toAdd = new Intent(getContext(), GuideActivity.class);
-
-        toAdd.putExtra("trainer", true);
-        startActivity(toAdd);
-    }
-
-    @Override public boolean onItemClick(int i) {
-        if (adapter.getItem(i) instanceof ChooseGymItem) {
-            ChooseGymItem gymItem = (ChooseGymItem) adapter.getItem(i);
-            presenter.getPermission(gymItem.getCoachService());
-        }
-        return false;
-    }
-
-    /**
-     *
-     * @param isSu 表示是否有修改权限（修改后）// comment @ 2017/9/5
-     */
-
-    @Override public void onGetSu(boolean isSu, CoachService coachService) {
-        if (isSu) {
-            if (coachService.getcityCode() <= 0) {
-                Intent toGymInfo = new Intent(getActivity(), GymActivity.class);
-                toGymInfo.putExtra(GymActivity.GYM_TO, GymActivity.GYM_INFO);
-                toGymInfo.putExtra("su", true);
-                gymWrapper.setCoachService(coachService);
-                startActivity(toGymInfo);
+  public void freshData() {
+    RxRegiste(new RestRepository().getGet_api()
+        .qcGetCoachService(App.staffId, null)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .flatMap(new Func1<QcDataResponse<GymList>, Observable<List<CoachService>>>() {
+          @Override public Observable<List<CoachService>> call(
+              QcDataResponse<GymList> gymListQcResponseData) {
+            if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
+              return Observable.just(gymListQcResponseData.getData().services)
+                  .onBackpressureBuffer()
+                  .subscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread());
             } else {
-                Intent ret = new Intent();
-                ret.putExtra("json", new Gson().toJson(coachService, CoachService.class));
-                String aciton = getActivity().getIntent().getData().getHost() + getActivity().getIntent().getData().getPath();
-                ret.putExtra("web_action", aciton);
-                getActivity().setResult(Activity.RESULT_OK, ret);
-                getActivity().onBackPressed();
+              List<CoachService> em = new ArrayList<CoachService>();
+              return Observable.just(em)
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .onBackpressureBuffer()
+                  .subscribeOn(Schedulers.io());
             }
-        } else {
-            showAlert("抱歉，您无场馆信息的修改权限，请联系超级管理员");
-        }
-    }
+          }
+        })
+        .subscribe(new Action1<List<CoachService>>() {
+          @Override public void call(List<CoachService> coachServices) {
+            if (coachServices != null && coachServices.size() > 0) {
+              adapter.clear();
+              datas.clear();
+              for (int i = 0; i < coachServices.size(); i++) {
+                datas.add(new ChooseGymItem(coachServices.get(i)));
+              }
+              adapter.updateDataSet(datas, true);
+              //layoutHint.setVisibility(View.VISIBLE);
+              btnAddGym.setVisibility(View.VISIBLE);
+            } else {//无场馆
+              adapter.clear();
+              datas.clear();
+              datas.add(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
+              adapter.updateDataSet(datas, true);
+              //layoutHint.setVisibility(View.GONE);
+              btnAddGym.setVisibility(View.GONE);
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
 
-    @Override public void onDetach() {
-        gymWrapper.setCoachService(tmpCoachService);
-        super.onDetach();
-    }
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("选择报名场馆");
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
+  @Override public String getFragmentName() {
+    return TrainChooseGymFragment.class.getName();
+  }
+
+  /**
+   * 新增场馆
+   */
+  public void onClickAddGym() {
+    Intent toAdd = new Intent(getContext(), GuideActivity.class);
+
+    toAdd.putExtra("trainer", true);
+    startActivity(toAdd);
+  }
+
+  @Override public boolean onItemClick(int i) {
+    if (adapter.getItem(i) instanceof ChooseGymItem) {
+      ChooseGymItem gymItem = (ChooseGymItem) adapter.getItem(i);
+      presenter.getPermission(gymItem.getCoachService());
     }
+    return false;
+  }
+
+  /**
+   * @param isSu 表示是否有修改权限（修改后）// comment @ 2017/9/5
+   */
+
+  @Override public void onGetSu(boolean isSu, CoachService coachService) {
+    if (isSu) {
+      if (coachService.getcityCode() <= 0) {
+        Intent toGymInfo = new Intent(getActivity(), GymActivity.class);
+        toGymInfo.putExtra(GymActivity.GYM_TO, GymActivity.GYM_INFO);
+        toGymInfo.putExtra("su", true);
+        gymWrapper.setCoachService(coachService);
+        startActivity(toGymInfo);
+      } else {
+        Intent ret = new Intent();
+        ret.putExtra("json", new Gson().toJson(coachService, CoachService.class));
+        String aciton = getActivity().getIntent().getData().getHost() + getActivity().getIntent()
+            .getData()
+            .getPath();
+        ret.putExtra("web_action", aciton);
+        getActivity().setResult(Activity.RESULT_OK, ret);
+        getActivity().onBackPressed();
+      }
+    } else {
+      showAlert("抱歉，您无场馆信息的修改权限，请联系超级管理员");
+    }
+  }
+
+  @Override public void onDetach() {
+    gymWrapper.setCoachService(tmpCoachService);
+    super.onDetach();
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

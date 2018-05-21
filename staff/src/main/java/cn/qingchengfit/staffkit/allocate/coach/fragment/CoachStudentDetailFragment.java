@@ -17,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -67,18 +67,18 @@ import rx.schedulers.Schedulers;
     public int sortType = SORT_TYPE_REGISTER;
     @Arg String name;
     @Arg String coachId;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.ll_add_stu) LinearLayout llAddStu;
-    @BindView(R.id.alphabetview) AlphabetView alphabetview;
-    @BindView(R.id.drawer) MyDrawerLayout drawer;
-    @BindView(R.id.smrv_sale) RecyclerView smrvSale;
+	Toolbar toolbar;
+	TextView textToolbarRight;
+	TextView toolbarTitile;
+	LinearLayout llAddStu;
+	AlphabetView alphabetview;
+	MyDrawerLayout drawer;
+	RecyclerView smrvSale;
     @Inject CoachDetailPresenter presenter;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.tv_sort_register) QcToggleButton tvSortRegister;
-    @BindView(R.id.tv_sort_alpha) QcToggleButton tvSortAlpha;
-    @BindView(R.id.tv_sort_filter) QcToggleButton tvSortFilter;
+	QcToggleButton tvSortRegister;
+	QcToggleButton tvSortAlpha;
+	QcToggleButton tvSortFilter;
     private Observable<StudentFilterEvent> obFilter;
     private List<CommonAllocateDetailItem> itemList = new ArrayList<>();
     private CommonFlexAdapter adapter;
@@ -100,8 +100,23 @@ import rx.schedulers.Schedulers;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_allocate_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      textToolbarRight = (TextView) view.findViewById(R.id.text_toolbar_right);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      llAddStu = (LinearLayout) view.findViewById(R.id.ll_add_stu);
+      alphabetview = (AlphabetView) view.findViewById(R.id.alphabetview);
+      drawer = (MyDrawerLayout) view.findViewById(R.id.drawer);
+      smrvSale = (RecyclerView) view.findViewById(R.id.smrv_sale);
+      tvSortRegister = (QcToggleButton) view.findViewById(R.id.tv_sort_register);
+      tvSortAlpha = (QcToggleButton) view.findViewById(R.id.tv_sort_alpha);
+      tvSortFilter = (QcToggleButton) view.findViewById(R.id.tv_sort_filter);
+      view.findViewById(R.id.ll_add_stu).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onOpenStudent();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         setToolbar();
         initRxBus();
 
@@ -293,7 +308,7 @@ import rx.schedulers.Schedulers;
         sortDataByRegister();
     }
 
-    @OnClick(R.id.ll_add_stu) public void onOpenStudent() {
+ public void onOpenStudent() {
         getFragmentManager().beginTransaction()
             .replace(R.id.frame_allocate_coach, AddStudentFragmentBuilder.newAddStudentFragment(coachId))
             .addToBackStack(null)

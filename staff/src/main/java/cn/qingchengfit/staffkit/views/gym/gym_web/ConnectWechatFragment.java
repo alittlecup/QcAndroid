@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
@@ -57,10 +57,10 @@ import rx.schedulers.Schedulers;
  */
 @FragmentWithArgs public class ConnectWechatFragment extends BaseFragment {
 
-    @BindView(R.id.civ_wechat_name) CommonInputView civWechatName;
-    @BindView(R.id.img_wechat_public) ImageView imgWechatPublic;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	CommonInputView civWechatName;
+	ImageView imgWechatPublic;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Arg String mWxName;
     @Arg String mWxQr;
@@ -73,8 +73,17 @@ import rx.schedulers.Schedulers;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connect_wechat, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_triangle_left);
+      civWechatName = (CommonInputView) view.findViewById(R.id.civ_wechat_name);
+      imgWechatPublic = (ImageView) view.findViewById(R.id.img_wechat_public);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.layout_up_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ConnectWechatFragment.this.onClick();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_triangle_left);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();
@@ -148,7 +157,7 @@ import rx.schedulers.Schedulers;
         return ConnectWechatFragment.class.getName();
     }
 
-    @OnClick(R.id.layout_up_img) public void onClick() {
+ public void onClick() {
         ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
     }
 }

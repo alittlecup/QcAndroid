@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventAddress;
 import cn.qingchengfit.events.EventLoginChange;
@@ -75,19 +75,19 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2017/2/23.
  */
 @FragmentWithArgs public class SetGymInMainFragment extends BaseFragment {
-    @BindView(R.id.brand_img) ImageView brandImg;
-    @BindView(R.id.brand_name) TextView brandName;
-    @BindView(R.id.header) ImageView gymImg;
-    @BindView(R.id.gym_name) CommonInputView gymName;
-    @BindView(R.id.address) CommonInputView address;
-    @BindView(R.id.phone) CommonInputView phone;
-    @BindView(R.id.descripe) CommonInputView descripe;
-    @BindView(R.id.comfirm) Button comfirm;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	ImageView brandImg;
+	TextView brandName;
+	ImageView gymImg;
+	CommonInputView gymName;
+	CommonInputView address;
+	CommonInputView phone;
+	CommonInputView descripe;
+	Button comfirm;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
     @Arg Brand mBrand;
-    @BindView(R.id.guide_step_1) ImageView guideStep1;
+	ImageView guideStep1;
 
     @Inject GymBaseInfoAction gymBaseInfoAction;
     private String gymImgStr;
@@ -106,8 +106,44 @@ import rx.schedulers.Schedulers;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_gym, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        brandName.setText(mBrand.getName());
+      brandImg = (ImageView) view.findViewById(R.id.brand_img);
+      brandName = (TextView) view.findViewById(R.id.brand_name);
+      gymImg = (ImageView) view.findViewById(R.id.header);
+      gymName = (CommonInputView) view.findViewById(R.id.gym_name);
+      address = (CommonInputView) view.findViewById(R.id.address);
+      phone = (CommonInputView) view.findViewById(R.id.phone);
+      descripe = (CommonInputView) view.findViewById(R.id.descripe);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      guideStep1 = (ImageView) view.findViewById(R.id.guide_step_1);
+      view.findViewById(R.id.layout_brand).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFun(v);
+        }
+      });
+      view.findViewById(R.id.layout_gym_img).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFun(v);
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFun(v);
+        }
+      });
+      view.findViewById(R.id.address).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickContent(v);
+        }
+      });
+      view.findViewById(R.id.descripe).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickContent(v);
+        }
+      });
+
+      brandName.setText(mBrand.getName());
         Glide.with(getContext())
             .load(PhotoUtils.getSmall(mBrand.getPhoto()))
             .asBitmap()
@@ -141,7 +177,7 @@ import rx.schedulers.Schedulers;
         return "";
     }
 
-    @OnClick({ R.id.layout_brand, R.id.layout_gym_img, R.id.comfirm }) public void onClickFun(View view) {
+ public void onClickFun(View view) {
         switch (view.getId()) {
             case R.id.layout_brand:
 
@@ -206,7 +242,7 @@ import rx.schedulers.Schedulers;
         }
     }
 
-    @OnClick({ R.id.address, R.id.descripe }) public void onClickContent(View view) {
+ public void onClickContent(View view) {
         switch (view.getId()) {
             case R.id.address:
                 Intent toAddress = new Intent(getContext(), ChooseActivity.class);

@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.VpFragment;
@@ -45,14 +45,14 @@ import rx.schedulers.Schedulers;
  */
 public class GymDetailNativeFragment extends Fragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.gym_name) TextView gymName;
-    @BindView(R.id.gym_count) TextView gymCount;
-    @BindView(R.id.gym_img) ImageView gymImg;
-    @BindView(R.id.linearlayout) LinearLayout linearlayout;
-    @BindView(R.id.gym_title_tag) ImageView gymTitleTag;
-    @BindView(R.id.myhome_tab) TabLayout myhomeTab;
-    @BindView(R.id.viewpager) ViewPager viewpager;
+	Toolbar toolbar;
+	TextView gymName;
+	TextView gymCount;
+	ImageView gymImg;
+	LinearLayout linearlayout;
+	ImageView gymTitleTag;
+	TabLayout myhomeTab;
+	ViewPager viewpager;
     private long mId;
     private boolean mIsPrivate;
     private Subscription mHttpSc;
@@ -62,7 +62,7 @@ public class GymDetailNativeFragment extends Fragment {
     private Observable mAddObserable;
     private Observable<ImageThreeTextBean> mCourseObserable;
     private Observable<String> mObservableFresh;
-    private Unbinder unbinder;
+
 
     public GymDetailNativeFragment() {
     }
@@ -90,8 +90,16 @@ public class GymDetailNativeFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_detail_native, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      gymName = (TextView) view.findViewById(R.id.gym_name);
+      gymCount = (TextView) view.findViewById(R.id.gym_count);
+      gymImg = (ImageView) view.findViewById(R.id.gym_img);
+      linearlayout = (LinearLayout) view.findViewById(R.id.linearlayout);
+      gymTitleTag = (ImageView) view.findViewById(R.id.gym_title_tag);
+      myhomeTab = (TabLayout) view.findViewById(R.id.myhome_tab);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();
@@ -339,6 +347,6 @@ public class GymDetailNativeFragment extends Fragment {
         RxBus.getBus().unregister(RxBus.BUS_REFRESH, mObservableFresh);
         RxBus.getBus().unregister(ImageThreeTextBean.class.getName(), mCourseObserable);
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

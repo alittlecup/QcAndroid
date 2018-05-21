@@ -13,10 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.ChoosePicUtils;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -41,14 +41,14 @@ import rx.schedulers.Schedulers;
  */
 public class AdviceFragment extends BaseSettingFragment {
 
-    @BindView(R.id.setting_advice_mail) EditText settingAdviceMail;
-    @BindView(R.id.setting_advice_content) EditText settingAdviceContent;
-    @BindView(R.id.advice_update) RelativeLayout adviceUpdate;
-    @BindView(R.id.advice_update_img) ImageView adviceUpdateImg;
+	EditText settingAdviceMail;
+	EditText settingAdviceContent;
+	RelativeLayout adviceUpdate;
+	ImageView adviceUpdateImg;
     private FeedBackBean feedBackBean;
     private DialogSheet dialogSheet;
     private String filepath;
-    private Unbinder unbinder;
+
     private Subscription spUpImg;
 
     public AdviceFragment() {
@@ -56,14 +56,28 @@ public class AdviceFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_advice, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, 0, "意见反馈");
+      settingAdviceMail = (EditText) view.findViewById(R.id.setting_advice_mail);
+      settingAdviceContent = (EditText) view.findViewById(R.id.setting_advice_content);
+      adviceUpdate = (RelativeLayout) view.findViewById(R.id.advice_update);
+      adviceUpdateImg = (ImageView) view.findViewById(R.id.advice_update_img);
+      view.findViewById(R.id.setting_advice_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAdvice();
+        }
+      });
+      view.findViewById(R.id.advice_update).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddImg();
+        }
+      });
+
+      fragmentCallBack.onToolbarMenu(0, 0, "意见反馈");
         feedBackBean = new FeedBackBean();
 
         return view;
     }
 
-    @OnClick(R.id.setting_advice_btn) public void onAdvice() {
+ public void onAdvice() {
         String email = settingAdviceMail.getText().toString();
         String content = settingAdviceContent.getText().toString();
         feedBackBean.setEmail(email);
@@ -98,7 +112,7 @@ public class AdviceFragment extends BaseSettingFragment {
         }
     }
 
-    @OnClick(R.id.advice_update) public void onAddImg() {
+ public void onAddImg() {
         if (adviceUpdateImg.getVisibility() == View.VISIBLE) {
             if (dialogSheet == null) {
                 dialogSheet = DialogSheet.builder(getContext()).addButton("重新上传", new View.OnClickListener() {
@@ -184,7 +198,7 @@ public class AdviceFragment extends BaseSettingFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
         if (spUpImg != null && spUpImg.isUnsubscribed()) {
             spUpImg.unsubscribe();
         }

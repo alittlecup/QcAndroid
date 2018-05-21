@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -31,21 +31,38 @@ import rx.schedulers.Schedulers;
 
 public class AddBrandActivity extends BaseActivity {
 
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.brand_photo) ImageView brandPhoto;
-    @BindView(R.id.content) CommonInputView content;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
-    @BindView(R.id.photo_layout) RelativeLayout photoLayout;
+	Button btn;
+	Toolbar toolbar;
+	ImageView brandPhoto;
+	CommonInputView content;
+	TextView toolbarTitle;
+	RelativeLayout layoutToolbar;
+	RelativeLayout photoLayout;
     private Subscription sp;
     private String uploadImg;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_brand);
-        ButterKnife.bind(this);
-        // TODO: 16/11/10 引导流程时直接返回
+      btn = (Button) findViewById(R.id.btn);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      brandPhoto = (ImageView) findViewById(R.id.brand_photo);
+      content = (CommonInputView) findViewById(R.id.content);
+      toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+      layoutToolbar = (RelativeLayout) findViewById(R.id.layout_toolbar);
+      photoLayout = (RelativeLayout) findViewById(R.id.photo_layout);
+      findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      findViewById(R.id.photo_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          addPhoto();
+        }
+      });
+
+      // TODO: 16/11/10 引导流程时直接返回
         //        if (getIntent()!= null && getIntent().getIntExtra(GymActivity.GYM_TO,-1) == GymActivity.GYM_GUIDE)
         //            onSucceed();
         toolbarTitle.setText("添加健身房品牌");
@@ -76,7 +93,7 @@ public class AddBrandActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder().name(content.getContent()).photo(uploadImg).build())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -93,7 +110,7 @@ public class AddBrandActivity extends BaseActivity {
             });
     }
 
-    @OnClick(R.id.photo_layout) public void addPhoto() {
+ public void addPhoto() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {

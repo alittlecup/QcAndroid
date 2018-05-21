@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -45,7 +45,7 @@ public class StudentBodyTestListFragment extends VpFragment {
     private SimpleAdapter mAdapter;
     private String model;
     private String modelid;
-    private Unbinder unbinder;
+
 
     public static StudentBodyTestListFragment newInstance(String model, String modelid) {
 
@@ -65,7 +65,7 @@ public class StudentBodyTestListFragment extends VpFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        unbinder = ButterKnife.bind(this, view);
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -101,6 +101,6 @@ public class StudentBodyTestListFragment extends VpFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

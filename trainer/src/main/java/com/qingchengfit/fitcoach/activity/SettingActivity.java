@@ -8,8 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -26,16 +26,18 @@ public class SettingActivity extends BaseActivity
 
     public static String TAG = SettingActivity.class.getName();
     FragmentManager fragmentManager;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
     private MaterialDialog loadingDialog;
     private int result = 0;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
-        if (android.os.Build.VERSION.SDK_INT >=21)
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
+      if (android.os.Build.VERSION.SDK_INT >=21)
             getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         fragmentManager = getSupportFragmentManager();

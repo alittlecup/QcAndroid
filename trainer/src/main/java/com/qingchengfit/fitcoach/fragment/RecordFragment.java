@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.utils.DateUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.Configs;
@@ -42,11 +42,12 @@ public class RecordFragment extends BaseSettingFragment {
     //@BindView(R.id.refresh)
     //SwipeRefreshLayout refresh;
     private RecordComfirmAdapter adapter;
-    private Unbinder unbinder;
+
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
-        //unbinder=ButterKnife.bind(this, view);
+
+      //unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add_certification, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
             int requestCode = 10011;
@@ -170,15 +171,20 @@ public class RecordFragment extends BaseSettingFragment {
     }
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.recordcomfirm_title) TextView recordcomfirmTitle;
-        @BindView(R.id.recordcomfirm_subtitle) TextView recordcomfirmSubtitle;
-        @BindView(R.id.recordcomfirm_time) TextView recordcomfirmTime;
-        @BindView(R.id.recordcomfirm_comfirm) ImageView recordcomfirmImg;
-        @BindView(R.id.item__hidden) View hideView;
+	TextView recordcomfirmTitle;
+	TextView recordcomfirmSubtitle;
+	TextView recordcomfirmTime;
+	ImageView recordcomfirmImg;
+	View hideView;
 
-        public RecordComfirmVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public RecordComfirmVH(View view) {
+            super(view);
+            recordcomfirmTitle = (TextView) view.findViewById(R.id.recordcomfirm_title);
+            recordcomfirmSubtitle = (TextView) view.findViewById(R.id.recordcomfirm_subtitle);
+            recordcomfirmTime = (TextView) view.findViewById(R.id.recordcomfirm_time);
+            recordcomfirmImg = (ImageView) view.findViewById(R.id.recordcomfirm_comfirm);
+            hideView = (View) view.findViewById(R.id.item__hidden);
+
         }
     }
 

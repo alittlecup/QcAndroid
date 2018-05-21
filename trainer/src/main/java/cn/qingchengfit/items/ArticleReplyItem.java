@@ -1,14 +1,9 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.model.responese.ArticleComment;
@@ -74,22 +69,40 @@ public class ArticleReplyItem extends AbstractFlexibleItem<ArticleReplyItem.Arti
     }
 
     public class ArticleReplyVH extends FlexibleViewHolder {
-        @BindView(R.id.img_avatar) ImageView imgAvatar;
-        @BindView(R.id.tv_by_name) TextView tvByName;
-        @BindView(R.id.tv_at_name) TextView tvAtName;
-        @BindView(R.id.tv_time) TextView tvTime;
-        @BindView(R.id.tv_content) TextView tvContent;
-        @BindView(R.id.img_article) ImageView imgArticle;
-        @BindView(R.id.tv_article_title) TextView tvArticleTitle;
-        @BindView(R.id.tv_article_content) TextView tvArticleContent;
-        @BindView(R.id.layout_article) RelativeLayout layoutArticle;
+	ImageView imgAvatar;
+	TextView tvByName;
+	TextView tvAtName;
+	TextView tvTime;
+	TextView tvContent;
+	ImageView imgArticle;
+	TextView tvArticleTitle;
+	TextView tvArticleContent;
+	RelativeLayout layoutArticle;
 
         public ArticleReplyVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+          tvByName = (TextView) view.findViewById(R.id.tv_by_name);
+          tvAtName = (TextView) view.findViewById(R.id.tv_at_name);
+          tvTime = (TextView) view.findViewById(R.id.tv_time);
+          tvContent = (TextView) view.findViewById(R.id.tv_content);
+          imgArticle = (ImageView) view.findViewById(R.id.img_article);
+          tvArticleTitle = (TextView) view.findViewById(R.id.tv_article_title);
+          tvArticleContent = (TextView) view.findViewById(R.id.tv_article_content);
+          layoutArticle = (RelativeLayout) view.findViewById(R.id.layout_article);
+          view.findViewById(R.id.btn_reply).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onReply(v);
+            }
+          });
+          view.findViewById(R.id.layout_article).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onReply(v);
+            }
+          });
         }
 
-        @OnClick({ R.id.btn_reply, R.id.layout_article }) public void onReply(View view) {
+ public void onReply(View view) {
             RxBus.getBus().post(new EventRecycleClick(getAdapterPosition(), view.getId()));
         }
     }

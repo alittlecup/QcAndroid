@@ -21,11 +21,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -42,11 +42,11 @@ public class FilterCustomFragment extends BaseFragment {
     public int limitDay;
     @Arg(required = true)
     String title;
-    @BindView(R2.id.edit_absence_start)
+
     EditText editAbsenceStart;
-    @BindView(R2.id.edit_absence_end)
+
     EditText editAbsenceEnd;
-    @BindView(R2.id.modify_setting_title)
+
     TextView modifySettingTitle;
     private OnBackFilterDataListener onBackFilterDataListener;
     private TimeDialogWindow pwTime;
@@ -75,8 +75,23 @@ public class FilterCustomFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_filter_custom, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
+      editAbsenceStart = (EditText) view.findViewById(R.id.edit_absence_start);
+      editAbsenceEnd = (EditText) view.findViewById(R.id.edit_absence_end);
+      modifySettingTitle = (TextView) view.findViewById(R.id.modify_setting_title);
+      view.findViewById(R.id.tv_absence_filter_confirm)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onSetData(v);
+            }
+          });
+      view.findViewById(R.id.tv_absence_filter_reset)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onSetData(v);
+            }
+          });
+
+      initView();
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -118,7 +133,7 @@ public class FilterCustomFragment extends BaseFragment {
         isSelectTime = selectTime;
     }
 
-    @OnClick({R2.id.tv_absence_filter_confirm, R2.id.tv_absence_filter_reset})
+
     public void onSetData(View view) {
          if(view.getId()== R.id.tv_absence_filter_confirm){
 

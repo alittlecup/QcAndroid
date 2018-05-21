@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import java.util.List;
@@ -92,13 +92,15 @@ public class ChooseSiteAdapter extends RecyclerView.Adapter<ChooseSiteAdapter.Ch
     }
 
     public static class ChooseSiteTextVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.text1) public TextView t1;
-        @BindView(R.id.text2) public TextView t2;
-        @BindView(R.id.righticon) public ImageView righticon;
+	public TextView t1;
+	public TextView t2;
+	public ImageView righticon;
 
         public ChooseSiteTextVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          t1 = (TextView) itemView.findViewById(R.id.text1);
+          t2 = (TextView) itemView.findViewById(R.id.text2);
+          righticon = (ImageView) itemView.findViewById(R.id.righticon);
         }
     }
 }

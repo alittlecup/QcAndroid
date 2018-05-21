@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -59,13 +59,13 @@ import rx.schedulers.Schedulers;
  */
 public class ChooseRegionFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.rv) RecyclerView rv;
+	RecyclerView rv;
 
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private CommonFlexAdapter mAdapter;
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
 
@@ -78,8 +78,11 @@ public class ChooseRegionFragment extends BaseFragment implements FlexibleAdapte
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_district_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      rv = (RecyclerView) view.findViewById(R.id.rv);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      initToolbar(toolbar);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

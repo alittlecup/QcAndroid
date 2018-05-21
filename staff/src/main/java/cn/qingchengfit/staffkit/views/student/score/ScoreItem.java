@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.student.score;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CircleImgWrapper;
@@ -82,18 +82,24 @@ public class ScoreItem extends AbstractFlexibleItem<ScoreItem.ItemVH> {
     }
 
     public static class ItemVH extends FlexibleViewHolder {
-        @BindView(R.id.item_person_header) ImageView itemPersonHeader;
+	ImageView itemPersonHeader;
         //@BindView(R.id.item_person_header_loop) RelativeLayout itemPersonHeaderLoop;
-        @BindView(R.id.item_person_name) TextView itemPersonName;
-        @BindView(R.id.item_person_gender) ImageView itemPersonGender;
-        @BindView(R.id.item_person_phonenum) TextView itemPersonPhonenum;
-        @BindView(R.id.item_person_desc) TextView itemPersonDesc;
-        @BindView(R.id.tv_item_student_score) TextView tvItemStudentScore;
-        @BindView(R.id.tv_item_student_position) TextView tvItemStudentPosition;
+	TextView itemPersonName;
+	ImageView itemPersonGender;
+	TextView itemPersonPhonenum;
+	TextView itemPersonDesc;
+	TextView tvItemStudentScore;
+	TextView tvItemStudentPosition;
 
         public ItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+          itemPersonPhonenum = (TextView) view.findViewById(R.id.item_person_phonenum);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+          tvItemStudentScore = (TextView) view.findViewById(R.id.tv_item_student_score);
+          tvItemStudentPosition = (TextView) view.findViewById(R.id.tv_item_student_position);
         }
     }
 }

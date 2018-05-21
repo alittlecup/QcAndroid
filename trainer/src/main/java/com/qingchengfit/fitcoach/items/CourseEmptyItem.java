@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -65,12 +61,13 @@ public class CourseEmptyItem extends AbstractFlexibleItem<CourseEmptyItem.Course
 
     public static class CourseEmptyVH extends FlexibleViewHolder {
 
-        @BindView(R.id.nodata_hint) TextView nodataHint;
-        @BindView(R.id.add_course_btn) Button addCourseBtn;
+	TextView nodataHint;
+	Button addCourseBtn;
 
         public CourseEmptyVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          nodataHint = (TextView) view.findViewById(R.id.nodata_hint);
+          addCourseBtn = (Button) view.findViewById(R.id.add_course_btn);
         }
     }
 }

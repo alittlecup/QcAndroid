@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
@@ -66,16 +66,16 @@ import rx.schedulers.Schedulers;
  */
 public class BrandDetailFragment extends BaseFragment {
 
-    @BindView(R.id.bg) ImageView bg;
-    @BindView(R.id.img) ImageView img;
-    @BindView(R.id.name) TextView name;
-    @BindView(R.id.brand) TextView tvBrand;
-    @BindView(R.id.contact) TextView contact;
-    @BindView(R.id.create_time) TextView createTime;
-    @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	ImageView bg;
+	ImageView img;
+	TextView name;
+	TextView tvBrand;
+	TextView contact;
+	TextView createTime;
+	AppBarLayout myhomeAppBar;
+	RecyclerView recyclerview;
     BrandGymsAdapter adapter;
-    @BindView(R.id.no_brand_shop) LinearLayout noBrandShop;
+	LinearLayout noBrandShop;
     private List<Shop> datas = new ArrayList<>();
     private String mBrandId;
     private Subscription sp;
@@ -97,8 +97,17 @@ public class BrandDetailFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (getArguments() != null) {
+      bg = (ImageView) view.findViewById(R.id.bg);
+      img = (ImageView) view.findViewById(R.id.img);
+      name = (TextView) view.findViewById(R.id.name);
+      tvBrand = (TextView) view.findViewById(R.id.brand);
+      contact = (TextView) view.findViewById(R.id.contact);
+      createTime = (TextView) view.findViewById(R.id.create_time);
+      myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      noBrandShop = (LinearLayout) view.findViewById(R.id.no_brand_shop);
+
+      if (getArguments() != null) {
             brand = getArguments().getParcelable("brand");
             if (brand != null) {
                 if (getActivity() instanceof BrandManageActivity) {

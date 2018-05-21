@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.ScoreRuleCard;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.IntentUtils;
@@ -52,12 +52,12 @@ public class ScoreRuleAddFragemnt extends BaseFragment
   public static final int TYPE_BUY = 445;
   public static final int TYPE_CHARGE = 303;
   @Inject ScoreRuleAddPresenter presenter;
-  @BindView(R.id.et_student_score_amount_start) EditText etStudentScoreAmountStart;
-  @BindView(R.id.et_student_score_amount_end) EditText etStudentScoreAmountEnd;
-  @BindView(R.id.civ_score_value) CommonInputView civScoreValue;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	EditText etStudentScoreAmountStart;
+	EditText etStudentScoreAmountEnd;
+	CommonInputView civScoreValue;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
   private int ruleType;
   private int requestCode;
   private ArrayList<ScoreRuleCard> others;
@@ -86,7 +86,13 @@ public class ScoreRuleAddFragemnt extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_student_score_rule_add, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    etStudentScoreAmountStart = (EditText) view.findViewById(R.id.et_student_score_amount_start);
+    etStudentScoreAmountEnd = (EditText) view.findViewById(R.id.et_student_score_amount_end);
+    civScoreValue = (CommonInputView) view.findViewById(R.id.civ_score_value);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
     delegatePresenter(presenter, this);
     initTitle();
     initView();

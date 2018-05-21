@@ -10,10 +10,10 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -29,16 +29,16 @@ public class CalSyncFragment extends BaseSettingFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.cal_sync_switch) Switch calSyncSwitch;
-    @BindView(R.id.cal_sync_switch_layout) RelativeLayout calSyncSwitchLayout;
-    @BindView(R.id.cal_sync_time) TextView calSyncTime;
-    @BindView(R.id.cal_sync_time_layout) RelativeLayout calSyncTimeLayout;
+	Switch calSyncSwitch;
+	RelativeLayout calSyncSwitchLayout;
+	TextView calSyncTime;
+	RelativeLayout calSyncTimeLayout;
     private String[] mTimeArray = { "不提醒", "15分钟提醒", "30分钟提醒", "1小时提醒", "2小时提醒", "24小时提醒" };
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Unbinder unbinder;
+
 
     public CalSyncFragment() {
         // Required empty public constructor
@@ -73,8 +73,22 @@ public class CalSyncFragment extends BaseSettingFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cal_sync, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_cal_sync_title));
+      calSyncSwitch = (Switch) view.findViewById(R.id.cal_sync_switch);
+      calSyncSwitchLayout = (RelativeLayout) view.findViewById(R.id.cal_sync_switch_layout);
+      calSyncTime = (TextView) view.findViewById(R.id.cal_sync_time);
+      calSyncTimeLayout = (RelativeLayout) view.findViewById(R.id.cal_sync_time_layout);
+      view.findViewById(R.id.cal_sync_switch_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSwitch();
+        }
+      });
+      view.findViewById(R.id.cal_sync_time_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          chooseTime();
+        }
+      });
+
+      fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_cal_sync_title));
         calSyncSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -105,11 +119,11 @@ public class CalSyncFragment extends BaseSettingFragment {
         return view;
     }
 
-    @OnClick(R.id.cal_sync_switch_layout) public void onSwitch() {
+ public void onSwitch() {
         calSyncSwitch.toggle();
     }
 
-    @OnClick(R.id.cal_sync_time_layout) public void chooseTime() {
+ public void chooseTime() {
 
         DialogList dialogList = new DialogList(getContext());
         dialogList.title("请选择提醒时间");
@@ -137,6 +151,6 @@ public class CalSyncFragment extends BaseSettingFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

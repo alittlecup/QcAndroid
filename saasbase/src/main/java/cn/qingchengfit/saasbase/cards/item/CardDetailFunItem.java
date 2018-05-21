@@ -2,11 +2,11 @@ package cn.qingchengfit.saasbase.cards.item;
 
 import android.view.View;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -46,28 +46,45 @@ public class CardDetailFunItem extends AbstractFlexibleItem<CardDetailFunItem.Ca
 
   class CardDetailFunVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.btn_spend) LinearLayout btnSpend;
-    @BindView(R2.id.ask_offday) LinearLayout askOffday;
-    @BindView(R2.id.overflow_more) LinearLayout overflowMore;
+	LinearLayout btnSpend;
+	LinearLayout askOffday;
+	LinearLayout overflowMore;
 
     public CardDetailFunVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      btnSpend = (LinearLayout) view.findViewById(R.id.btn_spend);
+      askOffday = (LinearLayout) view.findViewById(R.id.ask_offday);
+      overflowMore = (LinearLayout) view.findViewById(R.id.overflow_more);
+      view.findViewById(R.id.btn_spend).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onSpend();
+        }
+      });
+      view.findViewById(R.id.ask_offday).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAskOffday();
+        }
+      });
+      view.findViewById(R.id.overflow_more).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onMore();
+        }
+      });
     }
 
-    @OnClick(R2.id.btn_spend) public void onSpend() {
+ public void onSpend() {
       if (listener != null){
         listener.onClickSpend();
       }
     }
 
-    @OnClick(R2.id.ask_offday) public void onAskOffday() {
+ public void onAskOffday() {
       if (listener != null){
         listener.onAskOffDay();
       }
     }
 
-    @OnClick(R2.id.overflow_more) public void onMore() {
+ public void onMore() {
       if (listener != null){
         listener.onClickMore();
       }

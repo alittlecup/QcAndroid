@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -36,26 +36,41 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
 
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
-  @BindView(R.id.tv_import) public TextView tvStudentImport;
-  @BindView(R.id.tv_export) public TextView tvStudentExport;
+	public TextView tvStudentImport;
+	public TextView tvStudentExport;
   @Inject public ImportExportPresenter presenter;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title)
+	Toolbar toolbar;
+
   public TextView toolbarTitle;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	FrameLayout toolbarLayout;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_import_export, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvStudentImport = (TextView) view.findViewById(R.id.tv_import);
+    tvStudentExport = (TextView) view.findViewById(R.id.tv_export);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    view.findViewById(R.id.tv_import).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onImport();
+      }
+    });
+    view.findViewById(R.id.tv_export).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onExport();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText(getResources().getString(R.string.toolbar_import_export_student));
     return view;
   }
 
-  @OnClick(R.id.tv_import) public void onImport() {
+ public void onImport() {
     if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
         PermissionServerUtils.STUDENT_IMPORT)) {
       showAlert(R.string.sorry_for_no_permission);
@@ -76,7 +91,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
     startActivity(toScan);
   }
 
-  @OnClick(R.id.tv_export) public void onExport() {
+ public void onExport() {
     if (!serPermisAction.check(PermissionServerUtils.STUDENT_EXPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;

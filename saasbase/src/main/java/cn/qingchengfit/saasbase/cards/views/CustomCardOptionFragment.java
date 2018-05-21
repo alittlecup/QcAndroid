@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
 import cn.qingchengfit.utils.AppUtils;
@@ -33,20 +33,33 @@ import com.anbillon.flabellum.annotations.Need;
 
 public abstract class CustomCardOptionFragment extends SaasBaseFragment {
 
-  @BindView(R2.id.civ_charge_money) CommonInputView civChargeMoney;
-  @BindView(R2.id.civ_real_money) CommonInputView civRealMoney;
-  @BindView(R2.id.civ_custom_validity) CommonInputView civCustomValidity;
-  @BindView(R2.id.el_need_valid) ExpandedLayout elNeedValid;
+	CommonInputView civChargeMoney;
+	CommonInputView civRealMoney;
+	CommonInputView civCustomValidity;
+	ExpandedLayout elNeedValid;
   @Need CardTplOption cardOptionCustom;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.layout) LinearLayout layout;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	LinearLayout layout;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_custom_card_option, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    civChargeMoney = (CommonInputView) view.findViewById(R.id.civ_charge_money);
+    civRealMoney = (CommonInputView) view.findViewById(R.id.civ_real_money);
+    civCustomValidity = (CommonInputView) view.findViewById(R.id.civ_custom_validity);
+    elNeedValid = (ExpandedLayout) view.findViewById(R.id.el_need_valid);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    layout = (LinearLayout) view.findViewById(R.id.layout);
+    view.findViewById(R.id.tv_custom_card_option_confirm)
+        .setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            onConfirm();
+          }
+        });
+
     layout.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (getActivity() != null) {
@@ -75,7 +88,7 @@ public abstract class CustomCardOptionFragment extends SaasBaseFragment {
     toolbarTitle.setText(getToolbarTitle());
   }
 
-  @OnClick(R2.id.tv_custom_card_option_confirm) public void onConfirm() {
+ public void onConfirm() {
     if (elNeedValid.isExpanded() && TextUtils.isEmpty(civCustomValidity.getContent())) {
       DialogUtils.showAlert(getContext(), "请填写有效期");
       return;

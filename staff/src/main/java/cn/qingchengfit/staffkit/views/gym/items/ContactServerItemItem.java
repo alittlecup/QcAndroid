@@ -1,9 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -31,7 +28,7 @@ public class ContactServerItemItem extends AbstractFlexibleItem<ContactServerIte
 
         public ContactServerItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+
         }
     }
 }

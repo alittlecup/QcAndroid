@@ -10,10 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -67,8 +67,8 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
     //@BindView(R.id.toolbar) Toolbar toolbar;
     //@BindView(R.id.toolbar_title) TextView toolbarTitle;
     protected CommonFlexAdapter mAdapter;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    private Unbinder unbinder;
+	RecyclerView recyclerview;
+
     private Subscription sp;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,8 +78,14 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym_dialog, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OnClose();
+        }
+      });
+
+      //toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         //toolbar.setNavigationOnClickListener(new View.OnClickListener() {
         //    @Override public void onClick(View v) {
         //    //    getActivity().onBackPressed();
@@ -99,7 +105,7 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
         return view;
     }
 
-    @OnClick(R.id.close) public void OnClose() {
+ public void OnClose() {
         dismissAllowingStateLoss();
     }
 
@@ -138,7 +144,7 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
     @Override public void onDestroyView() {
         if (sp != null && !sp.isUnsubscribed()) sp.unsubscribe();
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public boolean onItemClick(int position) {

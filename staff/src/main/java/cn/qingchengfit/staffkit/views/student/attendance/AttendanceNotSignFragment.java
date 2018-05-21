@@ -16,9 +16,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.staffkit.R;
@@ -54,18 +54,18 @@ public class AttendanceNotSignFragment extends BaseFragment
     implements NotSignPresenter.MVPView, FilterCustomFragment.OnBackFilterDataListener,
     FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R.id.text_not_sign_filter_time) TextView textNotSignFilterTime;
-  @BindView(R.id.image_not_sign_filter_time) ImageView imageNotSignFilterTime;
-  @BindView(R.id.layout_not_sign_time) LinearLayout layoutNotSignTime;
-  @BindView(R.id.text_not_sign_filter_count) TextView textNotSignFilterCount;
-  @BindView(R.id.image_not_sign_filter_count) ImageView imageNotSignFilterCount;
-  @BindView(R.id.text_filter_total) TextView textFilterTotal;
-  @BindView(R.id.recycler_not_sign) RecyclerView recyclerNotSign;
+	TextView textNotSignFilterTime;
+	ImageView imageNotSignFilterTime;
+	LinearLayout layoutNotSignTime;
+	TextView textNotSignFilterCount;
+	ImageView imageNotSignFilterCount;
+	TextView textFilterTotal;
+	RecyclerView recyclerNotSign;
   @Inject NotSignPresenter presenter;
-  @BindView(R.id.frag_not_sign_filter) FrameLayout fragNotSignFilter;
-  @BindView(R.id.layout_not_sign_count) LinearLayout layoutNotSignCount;
-  @BindView(R.id.fragment_not_sign_count) FrameLayout fragLayoutCount;
-  @BindView(R.id.shadow) View shadow;
+	FrameLayout fragNotSignFilter;
+	LinearLayout layoutNotSignCount;
+	FrameLayout fragLayoutCount;
+	View shadow;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   private CommonFlexAdapter adapter;
   private FilterFragment timeFilterFragment;
@@ -79,7 +79,28 @@ public class AttendanceNotSignFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_not_sign_class, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    textNotSignFilterTime = (TextView) view.findViewById(R.id.text_not_sign_filter_time);
+    imageNotSignFilterTime = (ImageView) view.findViewById(R.id.image_not_sign_filter_time);
+    layoutNotSignTime = (LinearLayout) view.findViewById(R.id.layout_not_sign_time);
+    textNotSignFilterCount = (TextView) view.findViewById(R.id.text_not_sign_filter_count);
+    imageNotSignFilterCount = (ImageView) view.findViewById(R.id.image_not_sign_filter_count);
+    textFilterTotal = (TextView) view.findViewById(R.id.text_filter_total);
+    recyclerNotSign = (RecyclerView) view.findViewById(R.id.recycler_not_sign);
+    fragNotSignFilter = (FrameLayout) view.findViewById(R.id.frag_not_sign_filter);
+    layoutNotSignCount = (LinearLayout) view.findViewById(R.id.layout_not_sign_count);
+    fragLayoutCount = (FrameLayout) view.findViewById(R.id.fragment_not_sign_count);
+    shadow = (View) view.findViewById(R.id.shadow);
+    view.findViewById(R.id.layout_not_sign_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowTimeFilter();
+      }
+    });
+    view.findViewById(R.id.layout_not_sign_count).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowCountFilter();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initView();
     initFilter();
@@ -213,7 +234,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.layout_not_sign_time) public void onShowTimeFilter() {
+ public void onShowTimeFilter() {
     if (fragNotSignFilter.getLayoutParams().height > MeasureUtils.dpToPx(432f, getResources())) {
       ViewGroup.LayoutParams params = fragNotSignFilter.getLayoutParams();
       params.height = MeasureUtils.dpToPx(432f, getResources());
@@ -251,7 +272,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     return false;
   }
 
-  @OnClick(R.id.layout_not_sign_count) public void onShowCountFilter() {
+ public void onShowCountFilter() {
     if (fragLayoutCount.getLayoutParams().height > MeasureUtils.dpToPx(432f, getResources())) {
       ViewGroup.LayoutParams params = fragLayoutCount.getLayoutParams();
       params.height = MeasureUtils.dpToPx(432f, getResources());

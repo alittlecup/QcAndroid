@@ -17,12 +17,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.BalanceDetail;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -73,18 +73,18 @@ import rx.android.schedulers.AndroidSchedulers;
 
   CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.text_filter_tips) TextView textFilterTips;
-  @BindView(R2.id.text_filter_condition) TextView textFilterCondition;
-  @BindView(R2.id.text_change_button) TextView textChangeButton;
-  @BindView(R2.id.ll_balance_condition) LinearLayout llBalanceCondition;
-  @BindView(R2.id.filter_tpl) QcFilterToggle filterTpl;
-  @BindView(R2.id.filter_status) QcFilterToggle filterStatus;
-  @BindView(R2.id.tv_card_count) TextView tvCardCount;
-  @BindView(R2.id.frag_card_list) FrameLayout fragCardList;
-  @BindView(R2.id.frag_card_filter) FrameLayout fragCardFilter;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TextView textFilterTips;
+	TextView textFilterCondition;
+	TextView textChangeButton;
+	LinearLayout llBalanceCondition;
+	QcFilterToggle filterTpl;
+	QcFilterToggle filterStatus;
+	TextView tvCardCount;
+	FrameLayout fragCardList;
+	FrameLayout fragCardFilter;
 
   @Inject CardBalancePresenter presenter;
   private PopupWindow popupWindow;
@@ -113,7 +113,34 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_card_balance, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    textFilterTips = (TextView) view.findViewById(R.id.text_filter_tips);
+    textFilterCondition = (TextView) view.findViewById(R.id.text_filter_condition);
+    textChangeButton = (TextView) view.findViewById(R.id.text_change_button);
+    llBalanceCondition = (LinearLayout) view.findViewById(R.id.ll_balance_condition);
+    filterTpl = (QcFilterToggle) view.findViewById(R.id.filter_tpl);
+    filterStatus = (QcFilterToggle) view.findViewById(R.id.filter_status);
+    tvCardCount = (TextView) view.findViewById(R.id.tv_card_count);
+    fragCardList = (FrameLayout) view.findViewById(R.id.frag_card_list);
+    fragCardFilter = (FrameLayout) view.findViewById(R.id.frag_card_filter);
+    view.findViewById(R.id.filter_tpl).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFilterTplClicked();
+      }
+    });
+    view.findViewById(R.id.filter_status).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFilterStatusClicked();
+      }
+    });
+    view.findViewById(R.id.text_change_button).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFilter(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     presenter.queryBalanceCondition();
@@ -327,14 +354,14 @@ import rx.android.schedulers.AndroidSchedulers;
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.filter_tpl) public void onFilterTplClicked() {
+ public void onFilterTplClicked() {
     toggleFilter(0);
   }
 
-  @OnClick(R2.id.filter_status) public void onFilterStatusClicked() {
+ public void onFilterStatusClicked() {
     toggleFilter(1);
   }
-  @OnClick({ R2.id.text_change_button }) public void onFilter(View view) {
+ public void onFilter(View view) {
     showAsDropDown(popupWindow, view);
   }
   public void showAsDropDown(PopupWindow mPopupWindow, View view) {

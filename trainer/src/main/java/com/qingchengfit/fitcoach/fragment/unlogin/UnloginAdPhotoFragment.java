@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -42,9 +42,9 @@ import com.qingchengfit.fitcoach.R;
     @Arg int resTitle;
     @Arg int resContent;
 
-    @BindView(R.id.img) ImageView img;
-    @BindView(R.id.tv1) TextView tv1;
-    Unbinder unbinder;
+	ImageView img;
+	TextView tv1;
+
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +54,16 @@ import com.qingchengfit.fitcoach.R;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_add_photo, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        img.setImageResource(resImg);
+      img = (ImageView) view.findViewById(R.id.img);
+      tv1 = (TextView) view.findViewById(R.id.tv1);
+
+      img.setImageResource(resImg);
         tv1.setText(resTitle);
         return view;
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }
