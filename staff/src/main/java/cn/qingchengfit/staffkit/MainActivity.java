@@ -42,9 +42,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -105,10 +102,10 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   public static final String OPEN_URL = "open_url";
   public static final String MAIN_ACTION = "main.action";
   public static final int REOPEN_APP = -1;
-	TabViewNoVp tabview;
-	FrameLayout fragChooseBrand;
-	FrameLayout layoutBrands;
-	TextView tvNotiCount;
+  TabViewNoVp tabview;
+  FrameLayout fragChooseBrand;
+  FrameLayout layoutBrands;
+  TextView tvNotiCount;
   @Inject RestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -434,7 +431,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   @Override public void onBackPressed() {
     if (!getSupportFragmentManager().popBackStackImmediate()) {
       if (exitDialog == null) {
-        exitDialog = DialogUtils.initConfirmDialog(this, "退出应用?", "", (dialog, action) -> {
+        exitDialog = DialogUtils.initConfirmDialog(this, "", "退出应用?", (dialog, action) -> {
           dialog.dismiss();
           if (action == DialogAction.POSITIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -645,7 +642,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   /**
    * 关闭选择品牌窗口
    */
- public void onBgClick() {
+  public void onBgClick() {
     if (layoutBrands.getVisibility() == View.VISIBLE) {
 
       ViewCompat.animate(layoutBrands)

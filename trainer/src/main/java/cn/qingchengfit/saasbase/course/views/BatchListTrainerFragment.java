@@ -27,6 +27,7 @@ import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
@@ -44,8 +45,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
-  implements CourseBatchDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
-  FlexibleAdapter.EndlessScrollListener {
+    implements CourseBatchDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
+    FlexibleAdapter.EndlessScrollListener {
 
   @Inject GymWrapper gymWrapper;
   @Inject CourseBatchDetailPresenter presenter;
@@ -69,7 +70,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(presenter, this);
     return v;
@@ -125,17 +126,12 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
    */
   private void delCourse() {
     if (delDialog == null) {
-      delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
-        .content("是否删除课程?")
-        .positiveText("确定")
-        .negativeText("取消")
-        .onPositive(new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog dialog, DialogAction which) {
-            presenter.delCourse();
-          }
-        })
-        .cancelable(false)
-        .build();
+      delDialog = DialogUtils.initConfirmDialog(getContext(), "", "是否删除课程?", (dialog, action) -> {
+        dialog.dismiss();
+        if (action == DialogAction.POSITIVE) {
+          presenter.delCourse();
+        }
+      });
     }
     delDialog.show();
   }
@@ -149,7 +145,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   }
 
   @Override public void clickCopyBatch() {
-    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+    if (!permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) {
       showAlert(cn.qingchengfit.saasbase.R.string.sorry_for_no_permission);
       return;
     }
@@ -157,8 +153,10 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     coach.setName(loginStatus.staff_name());
     coach.setId(loginStatus.staff_id());
     coach.setGender(0);
-    routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), new BatchCopyParams().isPrivate(
-        mType != 1? Boolean.FALSE : Boolean.TRUE).coach(coach).build());
+    routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"),
+        new BatchCopyParams().isPrivate(mType != 1 ? Boolean.FALSE : Boolean.TRUE)
+            .coach(coach)
+            .build());
   }
 
   /**
@@ -182,9 +180,9 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       BatchItem batchItem = (BatchItem) commonFlexAdapter.getItem(position);
       if (batchItem != null && batchItem.getBatchModel() != null) {
         routeTo("course", "/batch/edit/", EditBatchParams.builder()
-          .batchId(batchItem.getId())
-          .isPrvite(mType == Configs.TYPE_PRIVATE)
-          .build());
+            .batchId(batchItem.getId())
+            .isPrvite(mType == Configs.TYPE_PRIVATE)
+            .build());
       }
     } else if (commonFlexAdapter.getItem(position) instanceof HideBatchItem) {
       commonFlexAdapter.toggleSelection(position);
@@ -218,7 +216,6 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
 
   }
 
-
   @Override public void onBatchList(List<QcResponsePrivateDetail.PrivateBatch> batch) {
     if (srl != null) srl.setRefreshing(false);
     mDatas.clear();
@@ -231,8 +228,8 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
         if (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))) {
           if (mDatas.size() == 0) {
             mDatas.add(new HintItem.Builder().text(
-              mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
-                : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
+                mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
+                    : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
           }
           mDatas.add(new HideBatchItem());
           isOutofDate = true;
@@ -247,9 +244,9 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     }
     if (mDatas.size() == 0) {
       mDatas.add(new CommonNoDataItem(R.drawable.no_batch,
-        mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
-          : getString(R.string.hint_no_group_course)));
-    }else{
+          mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
+              : getString(R.string.hint_no_group_course)));
+    } else {
       mDatas.add(0, new BatchCopyItem(batch.size() + "节课", this));
     }
 
@@ -263,8 +260,10 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
 
   @Override public void clickPrint() {
     WebActivity.startWeb(
-        getResources().getString(cn.qingchengfit.saasbase.R.string.copy_batch_print_url, gymWrapper.getCoachService().host,
-            gymWrapper.shop_id(), (mType  != 1? "type=group":"type=private") + "&coach_id=" + loginStatus.staff_id()), getContext());
+        getResources().getString(cn.qingchengfit.saasbase.R.string.copy_batch_print_url,
+            gymWrapper.getCoachService().host, gymWrapper.shop_id(),
+            (mType != 1 ? "type=group" : "type=private") + "&coach_id=" + loginStatus.staff_id()),
+        getContext());
   }
 
   @Override public void onRefresh() {

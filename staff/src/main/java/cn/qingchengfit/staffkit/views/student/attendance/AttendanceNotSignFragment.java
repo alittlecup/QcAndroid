@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.staffkit.R;
@@ -27,13 +23,13 @@ import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
 import cn.qingchengfit.staffkit.views.student.attendance.presenter.NotSignPresenter;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.FilterFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -54,18 +50,18 @@ public class AttendanceNotSignFragment extends BaseFragment
     implements NotSignPresenter.MVPView, FilterCustomFragment.OnBackFilterDataListener,
     FlexibleAdapter.OnItemClickListener {
 
-	TextView textNotSignFilterTime;
-	ImageView imageNotSignFilterTime;
-	LinearLayout layoutNotSignTime;
-	TextView textNotSignFilterCount;
-	ImageView imageNotSignFilterCount;
-	TextView textFilterTotal;
-	RecyclerView recyclerNotSign;
+  TextView textNotSignFilterTime;
+  ImageView imageNotSignFilterTime;
+  LinearLayout layoutNotSignTime;
+  TextView textNotSignFilterCount;
+  ImageView imageNotSignFilterCount;
+  TextView textFilterTotal;
+  RecyclerView recyclerNotSign;
   @Inject NotSignPresenter presenter;
-	FrameLayout fragNotSignFilter;
-	LinearLayout layoutNotSignCount;
-	FrameLayout fragLayoutCount;
-	View shadow;
+  FrameLayout fragNotSignFilter;
+  LinearLayout layoutNotSignCount;
+  FrameLayout fragLayoutCount;
+  View shadow;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   private CommonFlexAdapter adapter;
   private FilterFragment timeFilterFragment;
@@ -234,7 +230,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     }
   }
 
- public void onShowTimeFilter() {
+  public void onShowTimeFilter() {
     if (fragNotSignFilter.getLayoutParams().height > MeasureUtils.dpToPx(432f, getResources())) {
       ViewGroup.LayoutParams params = fragNotSignFilter.getLayoutParams();
       params.height = MeasureUtils.dpToPx(432f, getResources());
@@ -272,7 +268,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     return false;
   }
 
- public void onShowCountFilter() {
+  public void onShowCountFilter() {
     if (fragLayoutCount.getLayoutParams().height > MeasureUtils.dpToPx(432f, getResources())) {
       ViewGroup.LayoutParams params = fragLayoutCount.getLayoutParams();
       params.height = MeasureUtils.dpToPx(432f, getResources());
@@ -310,32 +306,12 @@ public class AttendanceNotSignFragment extends BaseFragment
     for (NotSignStudent student : studentList) {
       itemList.add(new NotSignClassItem(student, new NotSignClassItem.OnClickContactListener() {
         @Override public void onContact(final String phone) {
-          new MaterialDialog.Builder(getActivity()).autoDismiss(true)
-              .content(new StringBuilder().append("确定呼叫号码\n").append(phone).append("吗？").toString())
-              .positiveText(R.string.common_comfirm)
-              .negativeText(R.string.common_cancel)
-              .autoDismiss(true)
-              .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                  new RxPermissions(getActivity()).request(Manifest.permission.CALL_PHONE)
-                      .subscribe(new Action1<Boolean>() {
-                        @Override public void call(Boolean aBoolean) {
-                          if (aBoolean) {
-                            Uri uri = Uri.parse(
-                                new StringBuilder().append("tel:").append(phone).toString());
-                            Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
-                            dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(dialntent);
-                          } else {
-                            ToastUtils.show("请在应用设置中开启拨打电话权限");
-                          }
-                        }
-                      });
-                }
-              })
-              .show();
+          DialogUtils.showConfirm(getActivity(), "",
+              new StringBuilder().append("确定呼叫号码\n").append(phone).append("吗？").toString(),
+              (dialog, action) -> {
+                dialog.dismiss();
+                if (action == DialogAction.POSITIVE) callPhone(phone);
+              });
         }
       }));
     }
@@ -343,6 +319,22 @@ public class AttendanceNotSignFragment extends BaseFragment
     textFilterTotal.setText(
         getResources().getString(R.string.text_not_sign_tip, DateUtils.interval(start, end) + 1,
             count, studentList.size()));
+  }
+
+  private void callPhone(String phone) {
+    new RxPermissions(getActivity()).request(Manifest.permission.CALL_PHONE)
+        .subscribe(new Action1<Boolean>() {
+          @Override public void call(Boolean aBoolean) {
+            if (aBoolean) {
+              Uri uri = Uri.parse(new StringBuilder().append("tel:").append(phone).toString());
+              Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
+              dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              startActivity(dialntent);
+            } else {
+              ToastUtils.show("请在应用设置中开启拨打电话权限");
+            }
+          }
+        });
   }
 
   @Override public void onSettingData(String start, String end) {

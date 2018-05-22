@@ -22,6 +22,7 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
@@ -153,17 +154,11 @@ public class BrandDetailFragment extends BaseFragment {
                 adapter.setListener(new OnRecycleItemClickListener() {
                     @Override public void onItemClick(View v, int pos) {
                         if (adapter.getItemViewType(pos) == 0) {
-                            new MaterialDialog.Builder(getContext()).content(R.string.contact_gm)
-                                .autoDismiss(true)
-                                .canceledOnTouchOutside(true)
-                                .negativeText(R.string.pickerview_cancel)
-                                .positiveText(R.string.comfirm)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        PhoneFuncUtils.callPhone(getContext(), getString(R.string.qingcheng_gm_phone));
-                                    }
-                                })
-                                .show();
+
+                          DialogUtils.showConfirm(getContext(),"",getString(R.string.contact_gm),(dialog,action)->{
+                            dialog.dismiss();
+                            if(action==DialogAction.POSITIVE) PhoneFuncUtils.callPhone(getContext(), getString(R.string.qingcheng_gm_phone));
+                          });
                         } else if (adapter.getItemViewType(pos) == 1) {
                             //getFragmentManager().beginTransaction()
                             //    .replace(R.id.frag,
