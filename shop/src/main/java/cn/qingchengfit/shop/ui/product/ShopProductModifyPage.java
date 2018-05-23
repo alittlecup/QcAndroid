@@ -23,6 +23,7 @@ import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
@@ -167,7 +168,10 @@ import javax.inject.Inject;
         return;
       }
       ViewUtil.instanceDelDialog(getContext(), "确定删除商品？", (dialog, which) -> {
-        mViewModel.deleteProduct(productId);
+        dialog.dismiss();
+        if (which == DialogAction.POSITIVE) {
+          mViewModel.deleteProduct(productId);
+        }
       }).show();
     });
     mBinding.buttonSale.setOnClickListener(v -> {
@@ -217,12 +221,15 @@ import javax.inject.Inject;
     if (inUpdate) {
       ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_modify),
           (dialog, which) -> {
-            sensorsTrack(ShopSensorsConstants.SHOP_EDIT_COMMODITY_CANCEL_BTN_CLICK);
-            onback = false;
-            if (getActivity() instanceof BaseActivity) {
-              ((BaseActivity) getActivity()).setBackPress(null);
+            dialog.dismiss();
+            if (which == DialogAction.POSITIVE) {
+              sensorsTrack(ShopSensorsConstants.SHOP_EDIT_COMMODITY_CANCEL_BTN_CLICK);
+              onback = false;
+              if (getActivity() instanceof BaseActivity) {
+                ((BaseActivity) getActivity()).setBackPress(null);
+              }
+              getActivity().onBackPressed();
             }
-            getActivity().onBackPressed();
           }).show();
       return onback;
     }

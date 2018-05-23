@@ -19,6 +19,7 @@ import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,9 +103,13 @@ import java.util.regex.Pattern;
   @Override public boolean onFragmentBackPress() {
     ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_add_product),
         (dialog, which) -> {
+          dialog.dismiss();
+          if(which== DialogAction.POSITIVE){
           sensorsTrack(ShopSensorsConstants.SHOP_ADD_COMMODITY_CANCEL_BTN_CLICK);
           setBackPressNull();
           getActivity().onBackPressed();
+          }
+
         }).show();
     return ((BaseActivity) getActivity()).getBackPress() != null;
   }
