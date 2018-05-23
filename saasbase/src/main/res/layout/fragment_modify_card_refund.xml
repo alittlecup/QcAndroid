@@ -14,94 +14,132 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/deduction_money"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="50dp"
+      app:civ_hint="请输入数字"
       app:civ_inputnum="true"
-      app:civ_lable="扣费金额(元)"
+      app:civ_lable="扣费金额"
       app:civ_nonnull="true"
-
+      app:civ_unit="元"
       />
+  <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/refund_money"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_inputnum="true"
-      app:civ_lable="退款金额(元)"
-      app:civ_nonnull="true"
-      />
 
   <TextView
       android:id="@+id/balance"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="45dp"
       android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:text="扣费后卡余额:"
-      android:textSize="12sp"
-      style="@style/Qc.TextCommonBlack"
+      android:paddingTop="5dp"
+      tools:text="当前卡余额:3000元   扣费后卡余额：3000元"
+      style="@style/QcTextStyleSmallGrey"
       />
+  <include layout="@layout/divider_grey"/>
+  <cn.qingchengfit.widgets.SwitcherLayout
+      android:id="@+id/switch_deduction"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      android:clickable="false"
+      android:focusable="false"
+      app:sw_lable="退款"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
+  <LinearLayout
+      android:id="@+id/ll_deduction"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/refund_money"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_edit_able="true"
+        app:civ_inputnum="true"
+        app:civ_lable="退款金额"
+        app:civ_nonnull="true"
+        app:civ_unit="元"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/deduction_way"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_clickable="true"
+        app:civ_edit_able="false"
+        app:civ_hint="请选择退款方式"
+        app:civ_lable="退款方式"
+        app:civ_nonnull="true"
+        app:civ_showright="true"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/sale"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_clickable="true"
+        app:civ_edit_able="false"
+        app:civ_hint="请选择销售"
+        app:civ_inputnum="true"
+        app:civ_lable="销售"
+        app:civ_nonnull="true"
+        app:civ_showright="true"
+        />
+  </LinearLayout>
+  <include layout="@layout/divider_grey"/>
 
+
+  <cn.qingchengfit.widgets.SwitcherLayout
+      android:id="@+id/switch_time"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_marginTop="15dp"
+      android:background="@color/white"
+      android:clickable="false"
+      android:focusable="false"
+      app:sw_lable="设置有效期"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
   <LinearLayout
       android:id="@+id/extra_period"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/activity_vertical_margin"
       android:background="@color/white"
       android:orientation="vertical"
+      android:visibility="gone"
+      tools:visibility="visible"
       >
-
-    <include layout="@layout/layout_switcher"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@color/divider_grey"
-        />
-
     <cn.qingchengfit.widgets.CommonInputView
-        android:id="@+id/starttime"
+        android:id="@+id/start_time"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:visibility="gone"
+        android:layout_height="50dp"
         app:civ_clickable="true"
         app:civ_hint="@string/common_please_choose"
         app:civ_lable="@string/start_day"
+        app:civ_nonnull="true"
         app:civ_showright="true"
-        tools:visibility="visible"
         />
 
     <cn.qingchengfit.widgets.CommonInputView
-        android:id="@+id/endtime"
+        android:id="@+id/end_time"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:visibility="gone"
+        android:layout_height="50dp"
         app:civ_clickable="true"
         app:civ_hint="@string/common_please_choose"
         app:civ_lable="@string/end_day"
+        app:civ_nonnull="true"
         app:civ_showdivier="false"
         app:civ_showright="true"
-        tools:visibility="visible"
         />
-
     <include layout="@layout/divider_grey"/>
   </LinearLayout>
-
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/sale"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/common_please_choose"
-      app:civ_lable="销售"
-      app:civ_nonnull="true"
-      app:civ_showright="true"
-      />
-
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/mark"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
       app:civ_clickable="true"
       app:civ_hint="选填"
       app:civ_lable="@string/mark"

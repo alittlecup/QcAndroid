@@ -6,7 +6,6 @@ def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 
 android {
-//  <<<<<<< HEAD
   compileSdkVersion cfg.compileVersion
   buildToolsVersion cfg.buildToolsVersion
   dataBinding {
@@ -67,7 +66,7 @@ android {
 
   dependencies {
 
-    api "cn.qingchengfit.widgets:qcbase:1.0.180522"
+    api "cn.qingchengfit.widgets:qcbase:1.0.180522.2"
     api "cn.qingchengfit.recruit:recruit:1.1.2"
     api "cn.qingchengfit.chat:sdk:1.1.2"
     api "cn.qingchengfit.chat:qcim:1.1.2"

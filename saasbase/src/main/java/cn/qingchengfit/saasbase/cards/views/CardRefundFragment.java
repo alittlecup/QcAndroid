@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,15 +12,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.items.BottomPayExpandItem;
+import cn.qingchengfit.items.BottomPayItem;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
@@ -32,17 +31,21 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BottomPayDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.SwitcherLayout;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -62,18 +65,20 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by Paper on 16/3/25 2016.
  */
 
-@Leaf(module = "card", path = "/deduction/")
-public class CardRefundFragment extends SaasBaseFragment implements CardBuyPresenter.MVPView {
+@Leaf(module = "card", path = "/deduction/") public class CardRefundFragment
+    extends SaasBaseFragment implements CardBuyPresenter.MVPView {
 
   @BindView(R2.id.deduction_money) CommonInputView deductionMoney;
   @BindView(R2.id.refund_money) CommonInputView refundMoney;
   @BindView(R2.id.balance) TextView balance;
-  @BindView(R2.id.switch_name) TextView name;
-  @BindView(R2.id.switcher) SwitchCompat switcher;
-  @BindView(R2.id.switcher_layout) RelativeLayout switcherLayout;
-  @BindView(R2.id.starttime) CommonInputView starttime;
-  @BindView(R2.id.endtime) CommonInputView endtime;
+  @BindView(R2.id.switch_deduction) SwitcherLayout swDeduction;
+  @BindView(R2.id.switch_time) SwitcherLayout swTime;
+  @BindView(R2.id.ll_deduction) LinearLayout llDeduction;
+  @BindView(R2.id.start_time) CommonInputView startTime;
+  @BindView(R2.id.end_time) CommonInputView endTime;
   @BindView(R2.id.extra_period) LinearLayout extraPeriod;
+  @BindView(R2.id.deduction_way) CommonInputView deductionWay;
+
   @BindView(R2.id.sale) CommonInputView sale;
   @BindView(R2.id.mark) CommonInputView mark;
   @Inject CardBuyPresenter presenter;
@@ -96,21 +101,11 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
 
   @OnClick(R2.id.comfirm) public void onComfirm() {
 
-    if (TextUtils.isEmpty(sale.getContent())) {
-      ToastUtils.show("请选择销售");
-      return;
-    }
-    chargeBody.setShop_id(shopid);
     if (TextUtils.isEmpty(deductionMoney.getContent())) {
       ToastUtils.show("请填写" + deductionMoney.getLable());
       return;
     }
 
-    if (TextUtils.isEmpty(refundMoney.getContent())) {
-      ToastUtils.show("请填写退款金额");
-      return;
-    }
-    chargeBody.setPrice("-" + refundMoney.getContent());
     switch (card.getType()) {
       case Configs.CATEGORY_VALUE:
         chargeBody.setAccount("-" + deductionMoney.getContent());
@@ -131,24 +126,47 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
         }
         break;
     }
+    float price = Float.valueOf(deductionMoney.getContent()) * (card.getRatio());
+    if (!(card.getType() == Configs.CATEGORY_DATE)) {
+      chargeBody.setPrice("-" + price);
+      chargeBody.setCharge_type(1);
+    }
+    if (swDeduction.isOpen()) {
+      if (TextUtils.isEmpty(refundMoney.getContent())) {
+        ToastUtils.show("请填写退款金额");
+        return;
+      }
+      if (TextUtils.isEmpty(deductionWay.getContent())) {
+        ToastUtils.show("请选择退款方式");
+        return;
+      }
+      if (TextUtils.isEmpty(sale.getContent())) {
+        ToastUtils.show("请选择销售");
+        return;
+      }
+      chargeBody.setPrice("-" + refundMoney.getContent());
+      chargeBody.setShop_id(shopid);
+      chargeBody.setType(Configs.TRADE_DEDUCTION);
+      chargeBody.setCharge_type(chargeType);
+    } else {
+      chargeBody.setType(Configs.TRADE_REFUND);
+    }
 
-    if (switcher.isChecked()) {
-      if (TextUtils.isEmpty(starttime.getContent())) {
+    if (swTime.isOpen()) {
+      if (TextUtils.isEmpty(startTime.getContent())) {
         ToastUtils.show("请填写开始日期");
         return;
       }
-      if (TextUtils.isEmpty(endtime.getContent())) {
+      if (TextUtils.isEmpty(endTime.getContent())) {
         ToastUtils.show("请填写结束日期");
         return;
       }
       chargeBody.setCheck_valid(true);
-      chargeBody.setValid_from(starttime.getContent());
-      chargeBody.setValid_to(endtime.getContent());
+      chargeBody.setValid_from(startTime.getContent());
+      chargeBody.setValid_to(endTime.getContent());
     } else {
       chargeBody.setCheck_valid(false);
     }
-    chargeBody.setCharge_type(1);
-    chargeBody.setType(Configs.TRADE_REFUND);
     presenter.proactiveDeduction(card.getId(), chargeBody);
   }
 
@@ -169,14 +187,17 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
       case Configs.CATEGORY_VALUE:
         break;
       case Configs.CATEGORY_TIMES:
-        deductionMoney.setLabel("扣费次数(次)");
+        deductionMoney.setLabel("扣费次数");
+        deductionMoney.setUnit("次");
         break;
       case Configs.CATEGORY_DATE:
-        deductionMoney.setLabel("扣费天数(天)");
+        deductionMoney.setLabel("扣费天数");
+        deductionMoney.setUnit("天");
         extraPeriod.setVisibility(View.GONE);
+        swTime.setVisibility(View.GONE);
         break;
     }
-    name.setText("设置有效期");
+    balance.setText("当前卡余额：" + CardBusinessUtils.getCardBlance(card));
     deductionMoney.addTextWatcher(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -188,24 +209,40 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
 
       @Override public void afterTextChanged(Editable s) {
         try {
+          if(s==null||TextUtils.isEmpty(s.toString())){
+            return;
+          }
           Float b = Float.parseFloat(s.toString());
           Float a = card.getBalance();
-          balance.setText("扣费后余额:" + (a - b));
+          if (a - b < 0) {
+            ToastUtils.show("扣费后余额不能小于0");
+            deductionMoney.setContent(s.toString().substring(0, s.toString().length() - 1));
+            return;
+          }
+          balance.setText("当前卡余额："
+              + CardBusinessUtils.getCardBlance(card)
+              + "  扣费后卡余额："
+              + (a - b)
+              + CardBusinessUtils.getCardTypeCategoryUnit(card.getType(), getContext()));
         } catch (Exception e) {
-          balance.setText("扣费后余额:" + card.getBalance());
+          //balance.setText("扣费后余额:" + card.getBalance());
         }
       }
     });
-    switcher.setChecked(false);
-    switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-          starttime.setVisibility(View.VISIBLE);
-          endtime.setVisibility(View.VISIBLE);
-        } else {
-          starttime.setVisibility(View.GONE);
-          endtime.setVisibility(View.GONE);
-        }
+    swTime.setOpen(false);
+    swTime.setOnCheckListener((buttonView, isChecked) -> {
+      if (isChecked) {
+        extraPeriod.setVisibility(View.VISIBLE);
+      } else {
+        extraPeriod.setVisibility(View.GONE);
+      }
+    });
+    swDeduction.setOpen(false);
+    swDeduction.setOnCheckListener((buttonView, isChecked) -> {
+      if (isChecked) {
+        llDeduction.setVisibility(View.VISIBLE);
+      } else {
+        llDeduction.setVisibility(View.GONE);
       }
     });
   }
@@ -220,30 +257,29 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
         .subscribe(new BusSubscribe<Staff>() {
           @Override public void onNext(Staff staff) {
             sale.setContent(staff.getUsername());
-            if (staff.id.equals("0"))
-              chargeBody.setSeller_id(null);
+            if (staff.id.equals("0")) chargeBody.setSeller_id(null);
           }
         });
   }
 
-  @OnClick({ R2.id.switcher_layout, R2.id.starttime, R2.id.endtime, R2.id.sale, R2.id.mark })
+  private BottomPayDialog dialog;
+
+  @OnClick({ R2.id.start_time, R2.id.end_time, R2.id.sale, R2.id.mark, R2.id.deduction_way })
   public void onClick(View view) {
     int i = view.getId();
-    if (i == R.id.switcher_layout) {
-      switcher.toggle();
-    } else if (i == R.id.starttime) {
+    if (i == R.id.start_time) {
       pwTime.setRange(2000, 2100);
       pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
         @Override public void onTimeSelect(Date date) {
-          starttime.setContent(DateUtils.Date2YYYYMMDD(date));
+          startTime.setContent(DateUtils.Date2YYYYMMDD(date));
         }
       });
       pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
-    } else if (i == R.id.endtime) {
+    } else if (i == R.id.end_time) {
       pwTime.setRange(2000, 2100);
       pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
         @Override public void onTimeSelect(Date date) {
-          endtime.setContent(DateUtils.Date2YYYYMMDD(date));
+          endTime.setContent(DateUtils.Date2YYYYMMDD(date));
         }
       });
       pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
@@ -252,7 +288,50 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
       routeTo(AppUtils.getRouterUri(getContext(), "/staff/choose/saler/"), null);
     } else if (i == R.id.mark) {
       WriteDescFragment.start(this, 5, "备注", "填写");
+    } else if (i == R.id.deduction_way) {
+      showBottomPayDialog();
     }
+  }
+
+  private int chargeType = -1;
+
+  private void showBottomPayDialog() {
+    if (dialog == null) {
+      List<BottomPayExpandItem> items = new ArrayList<>();
+      BottomPayExpandItem item1 = new BottomPayExpandItem("线下支付");
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.CASH_PAY));
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.CREDIT_PAY));
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.TRANSIT_PAY));
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.OTHER_PAY));
+      items.add(item1);
+      dialog = new BottomPayDialog(getContext(), "选择退款方式", items);
+      dialog.setOnItemClickListener(i -> {
+        switch (i) {
+          case 1:
+            deductionWay.setContent("现金");
+            chargeType = 1;
+            break;
+          case 2:
+            deductionWay.setContent("刷卡");
+            chargeType = 2;
+            break;
+          case 3:
+            deductionWay.setContent("转账");
+            chargeType = 3;
+            break;
+          case 4:
+            deductionWay.setContent("其他");
+            chargeType = 4;
+            break;
+        }
+        return false;
+      });
+    }
+    dialog.show();
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -317,7 +396,6 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
 
   @Override public void onBusinessOrder(JsonObject response) {
     ToastUtils.showS("扣费成功");
-    //for (int i = 0; i < getFragmentManager().getFragments().size() - 1; i++) {
     getActivity().onBackPressed();
   }
 

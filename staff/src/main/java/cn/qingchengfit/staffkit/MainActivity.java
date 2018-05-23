@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.qingchengfit.utils.DialogUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
@@ -186,9 +187,9 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     if (loginStatus.isLogined()) initBDPush();
 
 
-        /*
-         * 全局监听App关闭的消息
-         */
+    /*
+     * 全局监听App关闭的消息
+     */
     mCloseOb = RxBus.getBus().register(RxCloseAppEvent.class);
     mCloseOb.subscribe(rxCloseAppEvent -> {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -198,9 +199,9 @@ public class MainActivity extends BaseActivity implements FragCallBack {
       }
       System.exit(0);
     });
-        /*
-         * App异常时重新回到主页
-         */
+    /*
+     * App异常时重新回到主页
+     */
     mBackMainOb = RxBus.getBus().register(EventInitApp.class);
     mBackMainOb.subscribe(new Action1<EventInitApp>() {
       @Override public void call(EventInitApp eventInitApp) {
@@ -216,9 +217,9 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     });
 
 
-        /*
-         * 全局监听刷新 场馆
-         */
+    /*
+     * 全局监听刷新 场馆
+     */
     mFreshCoachService = RxBus.getBus().register(EventFreshCoachService.class);
     mFreshCoachService.subscribe(eventFreshCoachService -> sp = restRepository.getGet_api()
         .qcGetCoachService(loginStatus.staff_id(), null)
@@ -232,9 +233,9 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             gymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
           }
         }));
-        /*
-         * 全局监听品牌
-         */
+    /*
+     * 全局监听品牌
+     */
     brandChangeOb = RxBus.getBus().register(EventBrandChange.class);
     brandChangeOb.observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<EventBrandChange>() {
@@ -279,7 +280,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   public Fragment generateFragment(int pos) {
     switch (pos) {
       case 1:
-        return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http","https"));
+        return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
       case 2:
         return new MainMsgFragment();
       case 3:
@@ -298,7 +299,8 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         .flatMap((Func1<Boolean, Observable<?>>) aBoolean -> {
           if (aBoolean) {
-            WeexUtil.loadAndSaveData(Configs.WEEX_RELEASE_PATH,Configs.WEEX_TEST_PATH,Configs.WEEX_PAGE_INDEX);
+            WeexUtil.loadAndSaveData(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
+                Configs.WEEX_PAGE_INDEX);
           }
           return new RxPermissions(MainActivity.this).request(
               Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_SETTINGS,
@@ -423,21 +425,17 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   @Override public void onBackPressed() {
     if (!getSupportFragmentManager().popBackStackImmediate()) {
       if (exitDialog == null) {
-        exitDialog = new MaterialDialog.Builder(this).title("退出应用?")
-            .positiveText(R.string.common_comfirm)
-            .negativeText("取消")
-            .negativeColorRes(R.color.text_grey)
-            .positiveColorRes(R.color.colorPrimary)
-            .canceledOnTouchOutside(true)
-            .onPositive((dialog, which) -> {
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                finishAndRemoveTask();
-              } else {
-                finishAffinity();
-              }
-              System.exit(0);
-            })
-            .build();
+        exitDialog = DialogUtils.initConfirmDialog(this, "退出应用?", "", (dialog, action) -> {
+          dialog.dismiss();
+          if (action == DialogAction.POSITIVE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              finishAndRemoveTask();
+            } else {
+              finishAffinity();
+            }
+            System.exit(0);
+          }
+        });
       }
       exitDialog.show();
     }

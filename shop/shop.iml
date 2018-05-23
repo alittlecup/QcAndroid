@@ -151,6 +151,7 @@
     <orderEntry type="library" name="Gradle: com.android.support:support-v4-27.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-9.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-27.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.databinding:baseLibrary:3.1.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.0.2@jar" level="project" />
@@ -159,7 +160,7 @@
     <orderEntry type="library" name="Gradle: com.nineoldandroids:library:2.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.hkm.taglib:tag-1.6.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment-27.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: cn.qingchengfit.widgets:qcbase-1.0.180522" level="project" />
+    <orderEntry type="library" name="Gradle: cn.qingchengfit.widgets:qcbase-1.0.180522.2" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.analytics:analytics:6.1.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.airbnb.android:lottie-2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
@@ -197,18 +198,17 @@
     <orderEntry type="library" name="Gradle: android.arch.persistence:db-framework-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.persistence:db-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.PhilJay:MPAndroidChart:v3.0.1@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:8.6.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: me.gujun.android.taggroup:library-1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.dagger:dagger-android-2.11" level="project" />
     <orderEntry type="library" name="Gradle: com.dlazaro66.qrcodereaderview:qrcodereaderview-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.hannesdorfmann.fragmentargs:annotation:3.0.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:9.0.0-SNAPSHOT@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v13-27.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.clans:fab-1.6.4" level="project" />
     <orderEntry type="library" name="Gradle: com.taobao.android:weex_sdk-0.17.0" level="project" />
     <orderEntry type="library" name="Gradle: com.anbillon.flabellum:flabellum:0.2.23@jar" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex.rxjava2:rxjava:2.1.9@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-8.6.0" level="project" />
     <orderEntry type="library" name="Gradle: com.alibaba.android:bindingx_weex_plugin-1.0.1" level="project" />
     <orderEntry type="library" name="Gradle: me.zhanghai.android.materialprogressbar:library-1.4.2" level="project" />
     <orderEntry type="library" name="Gradle: org.weex.plugin:annotation:1.0.0@jar" level="project" />

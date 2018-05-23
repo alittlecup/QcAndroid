@@ -177,7 +177,7 @@ public class BatchCopyViewModel extends BaseViewModel {
       if (!is_course_all) {
         if (!coachCourseMap.get(coach.get().id).contains(courseValue.get().id)) {
           DialogUtils.showAlert(view.getContext(), "没有可复制的有效排期", view.getContext()
-              .getString(R.string.text_copy_batch_error, startTime.get(), endTime.get(), coach.get().username, courseValue.get().name));
+              .getString(R.string.text_copy_batch_error, startTime.get(), endTime.get(), coach.get().username, courseValue.get().name),null);
           return;
         }
       }

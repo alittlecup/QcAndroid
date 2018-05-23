@@ -34,6 +34,7 @@ public class Card implements Parcelable {
     private String card_tpl_id;
     private float total_cost;
     private float price;
+    private float ratio;//折扣率，用于在扣费的时候不填写退款金额计算折扣后的退款金额
     private String card_no;
     private String start;
     private String end;
@@ -133,6 +134,14 @@ public class Card implements Parcelable {
 
     public String getRemarks() {
         return remarks;
+    }
+
+    public float getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio;
     }
 
     public String getUsersStr() {
