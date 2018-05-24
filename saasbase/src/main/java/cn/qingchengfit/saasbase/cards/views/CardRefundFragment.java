@@ -45,6 +45,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.JsonObject;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,36 +101,10 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   @OnClick(R2.id.comfirm) public void onComfirm() {
-
+    //先全判断通过再赋值，避免应该反复开关导致数据错乱
     if (TextUtils.isEmpty(deductionMoney.getContent())) {
       ToastUtils.show("请填写" + deductionMoney.getLable());
       return;
-    }
-
-    switch (card.getType()) {
-      case Configs.CATEGORY_VALUE:
-        chargeBody.setAccount("-" + deductionMoney.getContent());
-        break;
-      case Configs.CATEGORY_TIMES:
-        chargeBody.setTimes("-" + deductionMoney.getContent());
-        break;
-      case Configs.CATEGORY_DATE:
-        //                deductionMoney.setLabel("扣费天数(天)");
-        //                extraPeriod.setVisibility(View.GONE);
-        try {
-          chargeBody.setStart(
-              DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.getStart())));
-          chargeBody.setEnd(DateUtils.minusDay(DateUtils.formatDateFromServer(card.getEnd()),
-              Integer.parseInt(deductionMoney.getContent())));
-        } catch (Exception e) {
-
-        }
-        break;
-    }
-    float price = Float.valueOf(deductionMoney.getContent()) * (card.getRatio());
-    if (!(card.getType() == Configs.CATEGORY_DATE)) {
-      chargeBody.setPrice("-" + price);
-      chargeBody.setCharge_type(1);
     }
     if (swDeduction.isOpen()) {
       if (TextUtils.isEmpty(refundMoney.getContent())) {
@@ -144,14 +119,7 @@ import rx.android.schedulers.AndroidSchedulers;
         ToastUtils.show("请选择销售");
         return;
       }
-      chargeBody.setPrice("-" + refundMoney.getContent());
-      chargeBody.setShop_id(shopid);
-      chargeBody.setType(Configs.TRADE_DEDUCTION);
-      chargeBody.setCharge_type(chargeType);
-    } else {
-      chargeBody.setType(Configs.TRADE_REFUND);
     }
-
     if (swTime.isOpen()) {
       if (TextUtils.isEmpty(startTime.getContent())) {
         ToastUtils.show("请填写开始日期");
@@ -161,6 +129,44 @@ import rx.android.schedulers.AndroidSchedulers;
         ToastUtils.show("请填写结束日期");
         return;
       }
+    }
+
+    chargeBody.setRemarks(remarkString);
+    chargeBody.setShop_id(shopid);
+
+    switch (card.getType()) {
+      case Configs.CATEGORY_VALUE:
+        chargeBody.setAccount("-" + deductionMoney.getContent());
+        break;
+      case Configs.CATEGORY_TIMES:
+        chargeBody.setTimes("-" + deductionMoney.getContent());
+        break;
+      case Configs.CATEGORY_DATE:
+        try {
+          chargeBody.setStart(
+              DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.getStart())));
+          chargeBody.setEnd(DateUtils.minusDay(DateUtils.formatDateFromServer(card.getEnd()),
+              Integer.parseInt(deductionMoney.getContent())));
+        } catch (Exception e) {
+
+        }
+        break;
+    }
+    float price = Float.valueOf(deductionMoney.getContent()) * (card.getRatio());
+    if (!(card.getType() == Configs.CATEGORY_DATE)) {
+      chargeBody.setPrice("-" + formatePrice(price));
+      chargeBody.setCharge_type(1);
+    }
+    if (swDeduction.isOpen()) {
+      chargeBody.setPrice("-" + refundMoney.getContent());
+      chargeBody.setSeller_id(sellerId);
+      chargeBody.setType(Configs.TRADE_DEDUCTION);
+      chargeBody.setCharge_type(chargeType);
+    } else {
+      chargeBody.setType(Configs.TRADE_REFUND);
+    }
+
+    if (swTime.isOpen()) {
       chargeBody.setCheck_valid(true);
       chargeBody.setValid_from(startTime.getContent());
       chargeBody.setValid_to(endTime.getContent());
@@ -180,6 +186,12 @@ import rx.android.schedulers.AndroidSchedulers;
     pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     initView();
     return view;
+  }
+
+  private float formatePrice(float value) {
+    DecimalFormat format = new DecimalFormat("#.00");
+    String format1 = format.format(value);
+    return Float.valueOf(format1);
   }
 
   private void initView() {
@@ -209,21 +221,22 @@ import rx.android.schedulers.AndroidSchedulers;
 
       @Override public void afterTextChanged(Editable s) {
         try {
-          if(s==null||TextUtils.isEmpty(s.toString())){
+          if (s == null || TextUtils.isEmpty(s.toString())) {
+            if (swDeduction.isOpen()) {
+              refundMoney.setContent("");
+            }
             return;
           }
           Float b = Float.parseFloat(s.toString());
           Float a = card.getBalance();
-          if (a - b < 0) {
-            ToastUtils.show("扣费后余额不能小于0");
-            deductionMoney.setContent(s.toString().substring(0, s.toString().length() - 1));
-            return;
-          }
           balance.setText("当前卡余额："
               + CardBusinessUtils.getCardBlance(card)
               + "  扣费后卡余额："
               + (a - b)
               + CardBusinessUtils.getCardTypeCategoryUnit(card.getType(), getContext()));
+          if (swDeduction.isOpen()) {
+            refundMoney.setContent(formatePrice(b * card.getRatio()) + "");
+          }
         } catch (Exception e) {
           //balance.setText("扣费后余额:" + card.getBalance());
         }
@@ -241,11 +254,27 @@ import rx.android.schedulers.AndroidSchedulers;
     swDeduction.setOnCheckListener((buttonView, isChecked) -> {
       if (isChecked) {
         llDeduction.setVisibility(View.VISIBLE);
+        setRefundMoney(deductionMoney.getContent());
       } else {
         llDeduction.setVisibility(View.GONE);
       }
     });
   }
+
+  private void setRefundMoney(String s) {
+    try {
+      if (!TextUtils.isEmpty(s)) {
+        Float v = Float.parseFloat(s);
+        refundMoney.setContent(formatePrice(v * card.getRatio()) + "");
+      } else {
+        refundMoney.setContent("");
+      }
+    } catch (Exception e) {
+
+    }
+  }
+
+  private String sellerId;
 
   @Override public void onDestroyView() {
     super.onDestroyView();
@@ -257,7 +286,11 @@ import rx.android.schedulers.AndroidSchedulers;
         .subscribe(new BusSubscribe<Staff>() {
           @Override public void onNext(Staff staff) {
             sale.setContent(staff.getUsername());
-            if (staff.id.equals("0")) chargeBody.setSeller_id(null);
+            if (staff.id.equals("0")) {
+              sellerId = null;
+            } else {
+              sellerId = staff.id;
+            }
           }
         });
   }
@@ -334,29 +367,14 @@ import rx.android.schedulers.AndroidSchedulers;
     dialog.show();
   }
 
+  private String remarkString;
+
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == 1) {
-        String name = IntentUtils.getIntentString(data, 0);
-        String id = IntentUtils.getIntentString(data, 1);
-        chargeBody.setSeller_id(id);
-        sale.setContent(name);
-      } else if (requestCode == 5) {
+      if (requestCode == 5) {
         mark.setContent("已填写");
-        chargeBody.setRemarks(IntentUtils.getIntentString(data));
-      } else if (requestCode == 2) {
-        if (mSalers != null) {
-          int pos = Integer.parseInt(IntentUtils.getIntentString(data));
-          if (pos > 0) {
-            Staff mChosenSaler = mSalers.get(pos - 1);
-            sale.setContent(mChosenSaler.username);
-            chargeBody.setSeller_id(mChosenSaler.id);
-          } else {
-            sale.setContent("无销售");
-            chargeBody.setSeller_id(null);
-          }
-        }
+        remarkString = IntentUtils.getIntentString(data);
       }
     }
   }
