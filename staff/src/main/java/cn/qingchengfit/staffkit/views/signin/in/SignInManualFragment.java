@@ -348,7 +348,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
         }
 
         // TODO
-        int cost = 0;
+        float cost = 0;
         String costStr = "";
         for (SignInCardCostBean.CardCost cardCost : cardCosts) {
             if (cardCost.getId() == Integer.valueOf(selectedCard.getCard_tpl_id())) {

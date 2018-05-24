@@ -9,71 +9,71 @@ import java.util.List;
  */
 public class SignInCostBody {
 
-    private String shop_id;
-    private List<CardCost> card_costs;
+  private String shop_id;
+  private List<CardCost> card_costs;
 
-    public String getShop_id() {
-        return shop_id;
+  public String getShop_id() {
+    return shop_id;
+  }
+
+  public void setShop_id(String shop_id) {
+    this.shop_id = shop_id;
+  }
+
+  public List<CardCost> getCard_costs() {
+    return card_costs;
+  }
+
+  public void setCard_costs(List<CardCost> card_costs) {
+    this.card_costs = card_costs;
+  }
+
+  public static class CardCost implements Parcelable {
+    public static final Parcelable.Creator<CardCost> CREATOR = new Parcelable.Creator<CardCost>() {
+      @Override public CardCost createFromParcel(Parcel source) {
+        return new CardCost(source);
+      }
+
+      @Override public CardCost[] newArray(int size) {
+        return new CardCost[size];
+      }
+    };
+    private String card_tpl_id;
+    private float cost;
+
+    public CardCost(String card_tpl_id, float cost) {
+      this.card_tpl_id = card_tpl_id;
+      this.cost = cost;
     }
 
-    public void setShop_id(String shop_id) {
-        this.shop_id = shop_id;
+    protected CardCost(Parcel in) {
+      this.card_tpl_id = in.readString();
+      this.cost = in.readFloat();
     }
 
-    public List<CardCost> getCard_costs() {
-        return card_costs;
+    public String getCard_tpl_id() {
+      return card_tpl_id;
     }
 
-    public void setCard_costs(List<CardCost> card_costs) {
-        this.card_costs = card_costs;
+    public void setCard_tpl_id(String card_tpl_id) {
+      this.card_tpl_id = card_tpl_id;
     }
 
-    public static class CardCost implements Parcelable {
-        public static final Parcelable.Creator<CardCost> CREATOR = new Parcelable.Creator<CardCost>() {
-            @Override public CardCost createFromParcel(Parcel source) {
-                return new CardCost(source);
-            }
-
-            @Override public CardCost[] newArray(int size) {
-                return new CardCost[size];
-            }
-        };
-        private String card_tpl_id;
-        private int cost;
-
-        public CardCost(String card_tpl_id, int cost) {
-            this.card_tpl_id = card_tpl_id;
-            this.cost = cost;
-        }
-
-        protected CardCost(Parcel in) {
-            this.card_tpl_id = in.readString();
-            this.cost = in.readInt();
-        }
-
-        public String getCard_tpl_id() {
-            return card_tpl_id;
-        }
-
-        public void setCard_tpl_id(String card_tpl_id) {
-            this.card_tpl_id = card_tpl_id;
-        }
-
-        public int getCost() {
-            return cost;
-        }
-
-        public void setCost(int cost) {
-            this.cost = cost;
-        }
-
-        @Override public int describeContents() {
-            return 0;
-        }
-
-        @Override public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.card_tpl_id);
-            dest.writeInt(this.cost);
-        }
+    public float getCost() {
+      return cost;
     }
+
+    public void setCost(float cost) {
+      this.cost = cost;
+    }
+
+    @Override public int describeContents() {
+      return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+      dest.writeString(this.card_tpl_id);
+      dest.writeFloat(this.cost);
+    }
+  }
 }
