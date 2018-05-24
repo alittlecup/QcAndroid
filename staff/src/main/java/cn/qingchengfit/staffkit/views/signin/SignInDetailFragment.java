@@ -88,7 +88,8 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //
+        initToolbar(view.findViewById(R.id.toolbar));
+        ((TextView)view.findViewById(R.id.toolbar_title)).setText(R.string.sign_in_detail_title);
         delegatePresenter(presenter, this);
 
         mCallbackActivity.setToolbar(getString(R.string.sign_in_detail_title), false, null, 0, null);
@@ -222,7 +223,7 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
     }
 
     @OnClick(R.id.ll_signin_detail_cancel) public void onClick(View view) {
-        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LIST_CAN_DEL)) {
+        if (!serPermisAction.check(PermissionServerUtils.CHECKIN_LIST_CAN_DEL)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
