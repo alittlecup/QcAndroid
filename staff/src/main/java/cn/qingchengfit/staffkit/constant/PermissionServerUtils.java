@@ -103,8 +103,8 @@ public class PermissionServerUtils {
     public static final String LOCKER_SETTING_CAN_CHANGE = "locker_setting_can_change";
     public static final String LOCKER_SETTING_CAN_DELETE = "locker_setting_can_delete";
     public static final String CHECKIN_LIST = "checkin_list";
-    public static final String CHECKIN_LIST_CAN_CHANGE = "checkin_list_can_change";
-    public static final String CHECKIN_LIST_CAN_DEL = "checkin_list_can_delete";
+    public static final String CHECKIN_LIST_CAN_CHANGE = "checkin_help_can_change";
+    public static final String CHECKIN_LIST_CAN_DEL = "checkin_help_can_delete";
     //public static final String PERSONAL_CHECKIN_LIST = "personal_checkin_list";
     //public static final String PERSONAL_CHECKIN_LIST_CAN_CHANGE = "personal_checkin_list_can_change";
     public static final String CHECKIN_SETTING = "checkin_setting";
