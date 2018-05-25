@@ -102,7 +102,7 @@ public class SignInConfigItem extends AbstractFlexibleItem<SignInConfigItem.Item
                         ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setCost(0);
                     } else {
                         ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setCost(
-                            Integer.valueOf(editable.toString().trim()));
+                            Float.valueOf(editable.toString().trim()));
                     }
                 }
             });
