@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.apis;
 
+import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
@@ -85,6 +86,13 @@ public interface CardApi {
   @GET("/api/staffs/{id}/cards/{card_id}/") rx.Observable<QcDataResponse<CardWrap>> qcGetCardDetail(
       @Path("id") String staff, @Path("card_id") String card_id,
       @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 获取会员卡扣费时默认的销售信息
+   */
+  @GET("/api/staffs/{id}/cards/{card_id}/seller/")
+  rx.Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(@Path("id") String staff,
+      @Path("card_id") String card_id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 会员卡绑定会员

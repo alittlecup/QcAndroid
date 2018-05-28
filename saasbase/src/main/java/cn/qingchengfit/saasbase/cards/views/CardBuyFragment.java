@@ -25,6 +25,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.responese.Seller;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -455,6 +456,10 @@ import rx.functions.Action1;
 
   @Override public void setPayMoney(float s) {
     tvPayMoney.setText("¥" + CmStringUtils.getMoneyStr(s));
+  }
+
+  @Override public void setDefineSeller(Seller seller) {
+
   }
 
   @Override public void realCardNum(boolean isRealCard) {
