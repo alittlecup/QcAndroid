@@ -48,7 +48,7 @@ public class CardListPresenter extends BasePresenter {
     } else if (cardstatus == 4) {//停卡
       p.put("is_active", "0");
       p.put("is_locked", "0");
-      p.put("is_expired", "0");
+      //p.put("is_expired", "0");
     } else if (cardstatus == 3) {//过期
       p.put("is_expired", "1");
     }else {
