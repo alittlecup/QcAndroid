@@ -76,7 +76,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
     @BindView(R.id.layout_send_hint) RelativeLayout layoutSendHint;
 
     String smsBegin =
-        "\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020";
+        "\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020";
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject ShortMsgPresentersPresenter presenter;
@@ -130,12 +130,12 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
                     etContent.setText(smsBegin);
                     etContent.setSelection(etContent.getText().length());
                 }
-                if ((textViewTextChangeEvent.text().toString().trim().length() + 7) > 59) {
+                if ((textViewTextChangeEvent.text().toString().length()-24) > 59) {
                     layoutSendHint.setVisibility(View.VISIBLE);
                 } else {
                     layoutSendHint.setVisibility(View.GONE);
                 }
-                tvSmsCount.setText((textViewTextChangeEvent.text().toString().trim().length() + 7) + "");
+                tvSmsCount.setText((textViewTextChangeEvent.text().toString().length()-24) + "");
             }
         });
         return view;
@@ -227,7 +227,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
             }
         }
 
-        presenter.sendMsg(new ShortMsgBody.Builder().content(etContent.getText().toString().trim()).send(1).user_ids(ids).build());
+        presenter.sendMsg(new ShortMsgBody.Builder().content(etContent.getText().toString().substring(24)).send(1).user_ids(ids).build());
     }
 
     /**
