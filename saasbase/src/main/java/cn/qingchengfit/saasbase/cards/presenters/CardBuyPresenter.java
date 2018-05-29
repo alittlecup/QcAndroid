@@ -10,8 +10,6 @@ import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.Seller;
-import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -24,12 +22,15 @@ import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -37,6 +38,7 @@ public class CardBuyPresenter extends BasePresenter {
 
   private MVPView view;
   @Inject GymWrapper gymWrapper;
+  @Inject IStaffModel staffModel;
   @Inject ICardModel cardModel;
   @Inject SerPermisAction serPermisAction;
   @Inject LoginStatus loginStatus;
@@ -193,25 +195,28 @@ public class CardBuyPresenter extends BasePresenter {
         }));
   }
 
+  private String id = "";
+
   /**
    * 获取默认填充的销售信息
    */
-  public void getDefineSeller(String card_id) {
-    RxRegiste(cardModel.qcGetDefineSeller(card_id)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<SellerWrapper>>() {
-          @Override public void onNext(QcDataResponse<SellerWrapper> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              if (qcResponse.data != null && qcResponse.data.seller != null) {
-                view.setDefineSeller(qcResponse.data.seller);
+  public void getDefineSeller(String sellerId) {
+    if (TextUtils.isEmpty(sellerId)) return;
+    Observable<QcDataResponse<SalerListWrap>> salers = staffModel.getSalers();
+    RxRegiste(
+        salers.filter(response -> ResponseConstant.checkSuccess(response) && response.data != null)
+            .onBackpressureLatest()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {
+              @Override public void onNext(QcDataResponse<SalerListWrap> response) {
+                for (Staff seller : response.data.sellers) {
+                  if (seller.getId().equals(sellerId)) {
+                    view.setDefineSeller(seller);
+                  }
+                }
               }
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
-          }
-        }));
+            }));
   }
 
   /**
@@ -381,7 +386,7 @@ public class CardBuyPresenter extends BasePresenter {
 
     void setPayMoney(float x);
 
-    void setDefineSeller(Seller seller);
+    void setDefineSeller(Staff seller);
 
     /**
      * 下单完成后返回的数据

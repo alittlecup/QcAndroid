@@ -23,7 +23,6 @@ import cn.qingchengfit.items.BottomPayExpandItem;
 import cn.qingchengfit.items.BottomPayItem;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.Seller;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -257,7 +256,7 @@ import rx.android.schedulers.AndroidSchedulers;
         llDeduction.setVisibility(View.VISIBLE);
         setRefundMoney(deductionMoney.getContent());
         if (seller == null) {
-          presenter.getDefineSeller(card.getId());
+          presenter.getDefineSeller(card.getSeller().getId());
         }
         if (TextUtils.isEmpty(deductionWay.getContent())) {
           deductionWay.setContent("其他");
@@ -420,9 +419,9 @@ import rx.android.schedulers.AndroidSchedulers;
 
   }
 
-  private Seller seller;
+  private Staff seller;
 
-  @Override public void setDefineSeller(Seller seller) {
+  @Override public void setDefineSeller(Staff seller) {
     this.seller = seller;
     if (swDeduction.isOpen()) {
       sale.setContent(seller.getUsername());
