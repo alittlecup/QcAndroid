@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,17 +63,23 @@ public class CardFilterTplFragment extends BaseFragment {
   @BindView(R2.id.rv_right) RecyclerView rvRight;
   @BindArray(R2.array.card_filter_cardtype_category) String[] cardCategory;
   CommonFlexAdapter adapterLeft, adapterRight;
+  private int rightSelcet = 0;
   private HashMap<String,List<CardTpl>> mAllDatas = new HashMap<>();
   @Inject ICardModel cardModel;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    adapterLeft = new CommonFlexAdapter(new ArrayList(), leftClickListener);
+    adapterRight = new CommonFlexAdapter(new ArrayList(), rightClickListener);
+    adapterLeft.setMode(SelectableAdapter.Mode.SINGLE);
+    adapterRight.setMode(SelectableAdapter.Mode.SINGLE);
+
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_card_filter_tpl, container, false);
     unbinder = ButterKnife.bind(this, view);
-    adapterLeft = new CommonFlexAdapter(new ArrayList(), leftClickListener);
-    adapterRight = new CommonFlexAdapter(new ArrayList(), rightClickListener);
-    adapterLeft.setMode(SelectableAdapter.Mode.SINGLE);
-    adapterRight.setMode(SelectableAdapter.Mode.SINGLE);
     rvLeft.setLayoutManager(new LinearLayoutManager(getContext()));
     rvRight.setLayoutManager(new LinearLayoutManager(getContext()));
     rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));
@@ -134,10 +141,9 @@ public class CardFilterTplFragment extends BaseFragment {
 
           }
         }));
-    //if (adapterLeft.getSelectedItemCount() == 0){
-    //
-    //}
+
   }
+
 
   @Override public String getFragmentName() {
     return CardFilterTplFragment.class.getName();
@@ -160,6 +166,7 @@ public class CardFilterTplFragment extends BaseFragment {
       new FlexibleAdapter.OnItemClickListener() {
         @Override public boolean onItemClick(int position) {
           //选中某一个卡种类
+          rightSelcet = position;
           adapterRight.toggleSelection(position);
           adapterRight.notifyDataSetChanged();
           int x = 0;
