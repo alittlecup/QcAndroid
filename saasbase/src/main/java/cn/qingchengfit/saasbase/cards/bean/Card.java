@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.utils.CmStringUtils;
 import java.util.ArrayList;
@@ -49,8 +50,15 @@ public class Card implements Parcelable {
     private String remarks;
     public boolean is_open_service_term;
     public CardProtocol card_tpl_service_term;
+    public Staff seller;
 
+    public Staff getSeller() {
+        return seller;
+    }
 
+    public void setSeller(Staff seller) {
+        this.seller = seller;
+    }
 
     public Card() {
     }
@@ -445,6 +453,7 @@ public class Card implements Parcelable {
         dest.writeString(this.remarks);
         dest.writeByte(this.is_open_service_term ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.card_tpl_service_term, flags);
+        dest.writeParcelable(this.seller, flags);
     }
 
     protected Card(Parcel in) {
@@ -484,6 +493,7 @@ public class Card implements Parcelable {
         this.remarks = in.readString();
         this.is_open_service_term = in.readByte() != 0;
         this.card_tpl_service_term = in.readParcelable(CardProtocol.class.getClassLoader());
+        this.seller = in.readParcelable(Staff.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
