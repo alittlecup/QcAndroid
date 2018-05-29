@@ -34,6 +34,7 @@ public class Card implements Parcelable {
     private String card_tpl_id;
     private float total_cost;
     private float price;
+    private float ratio;//折扣率，用于在扣费的时候不填写退款金额计算折扣后的退款金额
     private String card_no;
     private String start;
     private String end;
@@ -44,7 +45,6 @@ public class Card implements Parcelable {
     private Integer trial_days;
     private String lock_start;
     private String lock_end;
-    //    @Ignore
     private List<Shop> shops;
     private String remarks;
     public boolean is_open_service_term;
@@ -133,6 +133,14 @@ public class Card implements Parcelable {
 
     public String getRemarks() {
         return remarks;
+    }
+
+    public float getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio;
     }
 
     public String getUsersStr() {
@@ -422,6 +430,7 @@ public class Card implements Parcelable {
         dest.writeString(this.card_tpl_id);
         dest.writeFloat(this.total_cost);
         dest.writeFloat(this.price);
+        dest.writeFloat(this.ratio);
         dest.writeString(this.card_no);
         dest.writeString(this.start);
         dest.writeString(this.end);
@@ -460,6 +469,7 @@ public class Card implements Parcelable {
         this.card_tpl_id = in.readString();
         this.total_cost = in.readFloat();
         this.price = in.readFloat();
+        this.ratio = in.readFloat();
         this.card_no = in.readString();
         this.start = in.readString();
         this.end = in.readString();
@@ -476,7 +486,7 @@ public class Card implements Parcelable {
         this.card_tpl_service_term = in.readParcelable(CardProtocol.class.getClassLoader());
     }
 
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
+    public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
         @Override public Card createFromParcel(Parcel source) {
             return new Card(source);
         }

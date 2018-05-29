@@ -4,10 +4,10 @@ import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.ui.items.inventory.IInventoryItemData;
 import cn.qingchengfit.shop.ui.items.product.IProductItemData;
 import cn.qingchengfit.shop.util.SpanUtils;
+import cn.qingchengfit.views.fragments.DoubleListFilterFragment;
 import java.util.ArrayList;
 import java.util.List;
 

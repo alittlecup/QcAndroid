@@ -118,6 +118,7 @@ public class Configs {
     public static final int TRADE_CHARGE_FIRST = 3; //开卡
     public static final int TRADE_REFUND = 14; //扣费
     public static final int TRADE_PRESENT = 13;  //赠送
+    public static final int TRADE_DEDUCTION = 23;  //扣费时填写扣费金额
     /**
      * 支付渠道
      */
@@ -130,7 +131,7 @@ public class Configs {
     public static final int DEAL_CASH = 1;  //现金
     public static final int DEAL_CARD = 2;  //卡
     public static final int DEAL_TRANSFER = 3;  //转账
-    public static final int DEAL_ADMIN = 4;  //人工
+    public static final int DEAL_ADMIN = 4;  //其他
     public static final int DEAL_QINGCHENG = 11;  //青城卡
     public static final int DEAL_WECHAT = 12;  //微信
     public static final int DEAL_WEIXIN_QR = 13;  //微信扫码

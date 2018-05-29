@@ -91,7 +91,18 @@ import com.anbillon.flabellum.annotations.Need;
     initToolbar(toolbar);
     toolbar.setNavigationOnClickListener(v -> {
       if (!TextUtils.isEmpty(content) && TextUtils.isEmpty(richTxtFragment.getContent())) {
-        ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_clear_cur_content), (dialog, which) ->sendBack(),(dialog,which)->getActivity().onBackPressed()).show();
+        ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_clear_cur_content),
+            (dialog, which) -> {
+              dialog.dismiss();
+              switch (which) {
+                case POSITIVE:
+                  sendBack();
+                  break;
+                case NEGATIVE:
+                  getActivity().onBackPressed();
+                  break;
+              }
+            }).show();
       } else {
         ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_modify),
             (dialog, which) -> getActivity().onBackPressed()).show();

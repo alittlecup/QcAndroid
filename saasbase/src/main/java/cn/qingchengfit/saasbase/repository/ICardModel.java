@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
@@ -84,6 +85,11 @@ public interface ICardModel {
    * 获取会员卡详情
    */
   rx.Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id);
+
+  /**
+   * 获取会员卡扣费时默认的销售信息
+   */
+  rx.Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id);
 
 
   /**

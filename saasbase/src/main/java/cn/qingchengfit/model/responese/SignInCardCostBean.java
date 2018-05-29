@@ -14,17 +14,11 @@ public class SignInCardCostBean {
 
     public static class CardCost implements Parcelable {
 
-        public static final Parcelable.Creator<CardCost> CREATOR = new Parcelable.Creator<CardCost>() {
-            @Override public CardCost createFromParcel(Parcel source) {
-                return new CardCost(source);
-            }
 
-            @Override public CardCost[] newArray(int size) {
-                return new CardCost[size];
-            }
-        };
         @SerializedName("selected") private boolean selected;
-        @SerializedName("cost") private int cost;
+
+
+        @SerializedName("cost") private float cost;
         @SerializedName("type") private int type;
         @SerializedName("id") private Integer id;
         @SerializedName("name") private String name;
@@ -32,13 +26,6 @@ public class SignInCardCostBean {
         public CardCost() {
         }
 
-        protected CardCost(Parcel in) {
-            this.selected = in.readByte() != 0;
-            this.cost = in.readInt();
-            this.type = in.readInt();
-            this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-            this.name = in.readString();
-        }
 
         @Override public boolean equals(Object obj) {
             if (obj instanceof CardCost) {
@@ -60,13 +47,14 @@ public class SignInCardCostBean {
             this.selected = selected;
         }
 
-        public int getCost() {
+        public float getCost() {
             return cost;
         }
 
-        public void setCost(int cost) {
+        public void setCost(float cost) {
             this.cost = cost;
         }
+
 
         public int getType() {
             return type;
@@ -110,11 +98,30 @@ public class SignInCardCostBean {
 
         @Override public void writeToParcel(Parcel dest, int flags) {
             dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
-            dest.writeInt(this.cost);
+            dest.writeFloat(this.cost);
             dest.writeInt(this.type);
             dest.writeValue(this.id);
             dest.writeString(this.name);
         }
+
+        protected CardCost(Parcel in) {
+            this.selected = in.readByte() != 0;
+            this.cost = in.readFloat();
+            this.type = in.readInt();
+            this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.name = in.readString();
+        }
+
+        public static final Parcelable.Creator<CardCost> CREATOR =
+            new Parcelable.Creator<CardCost>() {
+                @Override public CardCost createFromParcel(Parcel source) {
+                    return new CardCost(source);
+                }
+
+                @Override public CardCost[] newArray(int size) {
+                    return new CardCost[size];
+                }
+            };
     }
 
     public class Data {

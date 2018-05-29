@@ -130,7 +130,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
                     etContent.setText(smsBegin);
                     etContent.setSelection(etContent.getText().length());
                 }
-                if ((textViewTextChangeEvent.text().toString().trim().length() + 7) > 70) {
+                if ((textViewTextChangeEvent.text().toString().trim().length() + 7) > 59) {
                     layoutSendHint.setVisibility(View.VISIBLE);
                 } else {
                     layoutSendHint.setVisibility(View.GONE);
