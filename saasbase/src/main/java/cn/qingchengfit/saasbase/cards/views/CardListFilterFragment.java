@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,18 @@ public class CardListFilterFragment extends BaseFilterFragment {
   @Override public void dismiss() {
     if (listener != null)
       listener.onFilterResult(mCardTpl, mStatus);
+    hideAll();
     super.dismiss();
+  }
+
+  protected  void hideAll(){
+    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+    for (String s : getTags()) {
+     Fragment f = getChildFragmentManager().findFragmentByTag(s);
+     if (f != null)
+       ft.hide(f);
+    }
+    ft.commit();
   }
 
   @Override protected String[] getTags() {
