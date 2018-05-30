@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.weex.BuildConfig;
 import cn.qingchengfit.weex.https.WXHttpManager;
@@ -105,8 +106,12 @@ public final class WeexUtil {
    */
 
   public static void openWeexActivity(String url) {
-    Intent intent = new Intent(ACTION_VIEW);
-    intent.addCategory("cn.qingchengfit.android.intent.category.WEEX");
+    Intent intent = new Intent();
+    intent.setPackage(WXEnvironment.getApplication().getPackageName());
+    intent.addCategory(AppUtils.getCurAppSchema(WXEnvironment.getApplication())
+        + "://cn.qingchengfit.android.intent.category.WEEX");
+    intent.setAction(AppUtils.getCurAppSchema(WXEnvironment.getApplication())
+        + "://cn.qignchengfit.android.intent.action.WEEX");
     intent.putExtra("url", url);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     WXEnvironment.getApplication().startActivity(intent);
