@@ -1,17 +1,6 @@
 package com.qingchengfit.fitcoach.di;
 
-import com.google.gson.JsonObject;
-import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.routers.CourseRouter;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
-import java.util.HashMap;
-import java.util.List;
-
+import android.app.Application;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -19,6 +8,7 @@ import cn.qingchengfit.model.CourseModel;
 import cn.qingchengfit.model.GymConfigModel;
 import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.UserModel;
+import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -191,6 +181,9 @@ import rx.Observable;
     }
 
     @Provides App provideApplicationContext() {
+        return app;
+    }
+    @Provides Application provideApplication() {
         return app;
     }
 
@@ -455,6 +448,11 @@ import rx.Observable;
         }
 
         @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
+            return null;
+        }
+
+        @Override
+        public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {
             return null;
         }
 

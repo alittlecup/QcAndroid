@@ -14,9 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.BottomPayExpandItem;
@@ -24,7 +21,6 @@ import cn.qingchengfit.items.BottomPayItem;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -69,25 +65,25 @@ import rx.android.schedulers.AndroidSchedulers;
 @Leaf(module = "card", path = "/deduction/") public class CardRefundFragment
     extends SaasBaseFragment implements CardBuyPresenter.MVPView {
 
-  @BindView(R2.id.deduction_money) CommonInputView deductionMoney;
-  @BindView(R2.id.refund_money) CommonInputView refundMoney;
-  @BindView(R2.id.balance) TextView balance;
-  @BindView(R2.id.switch_deduction) SwitcherLayout swDeduction;
-  @BindView(R2.id.switch_time) SwitcherLayout swTime;
-  @BindView(R2.id.ll_deduction) LinearLayout llDeduction;
-  @BindView(R2.id.start_time) CommonInputView startTime;
-  @BindView(R2.id.end_time) CommonInputView endTime;
-  @BindView(R2.id.extra_period) LinearLayout extraPeriod;
-  @BindView(R2.id.deduction_way) CommonInputView deductionWay;
+	CommonInputView deductionMoney;
+	CommonInputView refundMoney;
+	TextView balance;
+	SwitcherLayout swDeduction;
+	SwitcherLayout swTime;
+	LinearLayout llDeduction;
+	CommonInputView startTime;
+	CommonInputView endTime;
+	LinearLayout extraPeriod;
+	CommonInputView deductionWay;
 
-  @BindView(R2.id.sale) CommonInputView sale;
-  @BindView(R2.id.mark) CommonInputView mark;
+	CommonInputView sale;
+	CommonInputView mark;
   @Inject CardBuyPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Need Card card;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
   private TimeDialogWindow pwTime;
   private String shopid;
 
@@ -100,7 +96,7 @@ import rx.android.schedulers.AndroidSchedulers;
     initBus();
   }
 
-  @OnClick(R2.id.comfirm) public void onComfirm() {
+ public void onComfirm() {
     //先全判断通过再赋值，避免应该反复开关导致数据错乱
     if (TextUtils.isEmpty(deductionMoney.getContent())) {
       ToastUtils.show("请填写" + deductionMoney.getLable());
@@ -179,7 +175,51 @@ import rx.android.schedulers.AndroidSchedulers;
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_modify_card_refund, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    deductionMoney = (CommonInputView) view.findViewById(R.id.deduction_money);
+    refundMoney = (CommonInputView) view.findViewById(R.id.refund_money);
+    balance = (TextView) view.findViewById(R.id.balance);
+    swDeduction = (SwitcherLayout) view.findViewById(R.id.switch_deduction);
+    swTime = (SwitcherLayout) view.findViewById(R.id.switch_time);
+    llDeduction = (LinearLayout) view.findViewById(R.id.ll_deduction);
+    startTime = (CommonInputView) view.findViewById(R.id.start_time);
+    endTime = (CommonInputView) view.findViewById(R.id.end_time);
+    extraPeriod = (LinearLayout) view.findViewById(R.id.extra_period);
+    deductionWay = (CommonInputView) view.findViewById(R.id.deduction_way);
+    sale = (CommonInputView) view.findViewById(R.id.sale);
+    mark = (CommonInputView) view.findViewById(R.id.mark);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onComfirm();
+      }
+    });
+    view.findViewById(R.id.start_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        CardRefundFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.end_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        CardRefundFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.sale).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        CardRefundFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.mark).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        CardRefundFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.deduction_way).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        CardRefundFragment.this.onClick(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText("会员卡扣费");
@@ -304,7 +344,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
   private BottomPayDialog dialog;
 
-  @OnClick({ R2.id.start_time, R2.id.end_time, R2.id.sale, R2.id.mark, R2.id.deduction_way })
+
   public void onClick(View view) {
     int i = view.getId();
     if (i == R.id.start_time) {

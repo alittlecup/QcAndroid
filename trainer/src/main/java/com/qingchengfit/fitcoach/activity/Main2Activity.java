@@ -81,8 +81,6 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONException;
-import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -152,46 +150,47 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     layoutFrag = findViewById(R.id.frag_main);
     tvNotiCount = findViewById(R.id.tv_noti_count);
     initRouter();
-    RxBus.getBus().register(EventCloseApp.class)
-      .onBackpressureDrop()
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventCloseApp>() {
-        @Override public void onNext(EventCloseApp eventCloseApp) {
-          closeApp();
-        }
-      });
+    RxBus.getBus()
+        .register(EventCloseApp.class)
+        .onBackpressureDrop()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventCloseApp>() {
+          @Override public void onNext(EventCloseApp eventCloseApp) {
+            closeApp();
+          }
+        });
 
     new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-      .subscribe(aBoolean -> {
-        if (aBoolean) {
-          setupFile();
-          initVersion();
-        } else {
-          ToastUtils.showDefaultStyle("请开启存储空间权限");
-        }
-      });
+        .subscribe(aBoolean -> {
+          if (aBoolean) {
+            setupFile();
+            initVersion();
+          } else {
+            ToastUtils.showDefaultStyle("请开启存储空间权限");
+          }
+        });
 
     new RxPermissions(this).request(Manifest.permission.READ_PHONE_STATE,
-      Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR,
-      Manifest.permission.WRITE_CALENDAR).subscribe(aBoolean -> {
+        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR,
+        Manifest.permission.WRITE_CALENDAR).subscribe(aBoolean -> {
 
     });
 
     setupVp();
     gson = new Gson();
     logoutDialog = new MaterialDialog.Builder(this).autoDismiss(true)
-      .content("退出应用？")
-      .positiveText("退出")
-      .negativeText("取消")
-      .onPositive((dialog, which) -> {
-        closeApp();
-      })
-      .build();
+        .content("退出应用？")
+        .positiveText("退出")
+        .negativeText("取消")
+        .onPositive((dialog, which) -> {
+          closeApp();
+        })
+        .build();
 
     changeLogin();
     obLoginChange = RxBus.getBus().register(EventLoginChange.class);
     obLoginChange.observeOn(AndroidSchedulers.mainThread())
-      .subscribe(eventLoginChange -> changeLogin());
+        .subscribe(eventLoginChange -> changeLogin());
 
     App.gMainAlive = true;//main是否存活,为推送
     if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -228,7 +227,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     });
 
     if (getIntent() != null && getIntent().getScheme() != null && getIntent().getScheme()
-      .equals("qccoach")) {
+        .equals("qccoach")) {
       try {
         String path = getIntent().getData().toString();
         url = path.split("openurl/")[1];
@@ -253,35 +252,35 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     System.exit(0);
   }
 
-  private void loginIM(){
+  private void loginIM() {
     //聊天系统初始化
     mChatApplication = new MyApplication(getApplication());
 
-    if (loginStatus.isLogined()){
+    if (loginStatus.isLogined()) {
       try {
         Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
         Constant.setSdkAppid(BuildConfig.DEBUG ? 1400029014 : 1400029022);
         Constant.setXiaomiPushAppid(
-          BuildConfig.DEBUG ? "2882303761517418101" : "2882303761517418101");
+            BuildConfig.DEBUG ? "2882303761517418101" : "2882303761517418101");
         Constant.setBussId(BuildConfig.DEBUG ? 611 : 605);
         Constant.setXiaomiPushAppkey("5361741818101");
         Constant.setHuaweiBussId(612);
         if (loginProcessor == null) {
           loginProcessor = new LoginProcessor(getApplicationContext(),
-            getString(R.string.chat_user_id_header, loginStatus.getUserId()),
-            Uri.parse(com.qingchengfit.fitcoach.Configs.Server).getHost(), new LoginProcessor.OnLoginListener() {
-            @Override public void onLoginSuccess() {
-              LogUtil.d("IM:  登录成功");
-            }
+              getString(R.string.chat_user_id_header, loginStatus.getUserId()),
+              Uri.parse(com.qingchengfit.fitcoach.Configs.Server).getHost(),
+              new LoginProcessor.OnLoginListener() {
+                @Override public void onLoginSuccess() {
+                  LogUtil.d("IM:  登录成功");
+                }
 
-            @Override public void onLoginFailed(TLSErrInfo t) {
-              LogUtil.e("IM ::::"+t.Title+"   "+ t.Msg+"   "+t.ExtraMsg);
-            }
-          });
+                @Override public void onLoginFailed(TLSErrInfo t) {
+                  LogUtil.e("IM ::::" + t.Title + "   " + t.Msg + "   " + t.ExtraMsg);
+                }
+              });
         }
-        if (!loginProcessor.isLogin())
-          loginProcessor.sientInstall();
-      }catch (Exception e){
+        if (!loginProcessor.isLogin()) loginProcessor.sientInstall();
+      } catch (Exception e) {
         CrashUtils.sendCrash(e);
       }
     }
@@ -306,7 +305,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
   private void setupVp() {
     //默认设置发现页面有红点
-    tabview.setupTabView(mIconSelect,mIconNormal);
+    tabview.setupTabView(mIconSelect, mIconNormal);
     tabview.setPoint(1);
     tabview.setListener(pos -> {
       if (pos == 1 || pos == 2) {
@@ -316,14 +315,15 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     });
     showPage(0);
     tabview.setPointStatu(2, isShowFindRed);
-    getSupportFragmentManager().registerFragmentLifecycleCallbacks(new android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks() {
-      @Override
-      public void onFragmentViewCreated(android.support.v4.app.FragmentManager fm, Fragment f,
-        View v, Bundle savedInstanceState) {
-        super.onFragmentViewCreated(fm, f, v, savedInstanceState);
-        beginTranste = false;
-      }
-    },false);
+    getSupportFragmentManager().registerFragmentLifecycleCallbacks(
+        new android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks() {
+          @Override
+          public void onFragmentViewCreated(android.support.v4.app.FragmentManager fm, Fragment f,
+              View v, Bundle savedInstanceState) {
+            super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+            beginTranste = false;
+          }
+        }, false);
   }
 
   boolean beginTranste = false;//切换页面
@@ -333,7 +333,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   }
 
   /**
-   *
    * 主页当前页面
    */
   public int getCurrrentPage() {
@@ -360,8 +359,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
   @Override public void onBackPressed() {
 
-    if (getCurrrentPage() != 0)
-      tabview.setCurrentItem(0);
+    if (getCurrrentPage() != 0) tabview.setCurrentItem(0);
 
     if (!logoutDialog.isShowing()) {
       logoutDialog.show();
@@ -434,20 +432,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
               } else {
                 if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex)) return;
               }
-        getString(BuildConfig.DEBUG ? R.string.fir_token_debug : R.string.fir_token),
-        new VersionCheckCallback() {
-          @Override public void onSuccess(String s) {
-            super.onSuccess(s);
-            UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
-            if (BuildConfig.DEBUG && BuildConfig.FLAVOR.startsWith("internal")) {
-              long oldupdate = PreferenceUtils.getPrefLong(Main2Activity.this, "update", 0);
-              if (updateVersion.updated_at <= oldupdate) {
-                return;
-              }
-              PreferenceUtils.setPrefLong(Main2Activity.this, "update", updateVersion.updated_at);
-            } else {
-              if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex)) return;
-            }
 
               url = updateVersion.direct_install_url;
               newAkp = new File(getExternalCacheDir().getAbsolutePath()
@@ -480,49 +464,22 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                 builder.canceledOnTouchOutside(false);
                 builder.cancelable(false);
               }
-            url = updateVersion.direct_install_url;
-            newAkp = new File(getExternalCacheDir().getAbsolutePath()
-                + getString(R.string.app_name)
-                + "_"
-                + updateVersion.version
-                + ".apk");
-            MaterialDialog.Builder builder =
-                new MaterialDialog.Builder(Main2Activity.this).title("前方发现新版本!!")
-                    .content(updateVersion.changelog)
-                    .positiveText("更新")
-                    .autoDismiss(true)
-                    .onPositive((dialog, which) -> {
-                      if (url != null) {
-                        downloadDialog.show();
-                        mDownloadThread = new AsyncDownloader();
-                        mDownloadThread.execute(url);
-                      }
-                      dialog.dismiss();
-                    });
-            if (updateVersion.version % 10 != 0) {
-              builder.negativeText("下次再说");
-              builder.autoDismiss(false);
-              builder.canceledOnTouchOutside(false);
-              builder.onNegative((dialog, which) -> {
-                dialog.dismiss();
-              });
-            } else {
-              builder.autoDismiss(false);
-              builder.canceledOnTouchOutside(false);
-              builder.cancelable(false);
-            }
 
-            updateDialog = builder.build();
-            downloadDialog = new MaterialDialog.Builder(Main2Activity.this).content("正在飞速为您下载")
-                .progress(false, 100)
-                .cancelable(false)
-                .positiveText("后台更新")
-                .onNegative((materialDialog, dialogAction) -> {
-                  materialDialog.dismiss();
-                  mDownloadThread.cancel(true);
-                })
-                .build();
-            updateDialog.show();
+              updateDialog = builder.build();
+              downloadDialog = new MaterialDialog.Builder(Main2Activity.this).content("正在飞速为您下载")
+                  .progress(false, 100)
+                  .cancelable(false)
+                  .positiveText("后台更新")
+                  .onNegative((dialog,action)->{
+                    dialog.dismiss();
+                    mDownloadThread.cancel(true);
+                  })
+                  .onPositive((dialog,aciton)->dialog.dismiss())
+                  .build();
+              updateDialog.show();
+            } catch (Exception e) {
+              LogUtil.e("coach exception", e + "; json_str: " + s);
+            }
           }
 
           @Override public void onFail(Exception e) {
@@ -542,7 +499,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   public void freshNotiCount(int count) {
     tvNotiCount.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
     tvNotiCount.setText(count > 99 ? "…" : Integer.toString(count));
-
   }
 
   private void initUser() {
@@ -634,7 +590,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       R.drawable.ic_tabbar_discover_normal, R.drawable.vd_tab_noti_nomal,
       R.drawable.ic_tabbar_account_normal
   };
-
 
   //private void showPage(int position) {
   //  Flowable.just(position)
