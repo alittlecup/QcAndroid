@@ -59,7 +59,7 @@ group 'cn.qingchengfit.weex'
 version "1.0.$today.4"
 def ci = "$isCI".endsWith("true")
 uploadArchives {
-  if (true) {
+  if (ci) {
     repositories {
       mavenDeployer {
         repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
