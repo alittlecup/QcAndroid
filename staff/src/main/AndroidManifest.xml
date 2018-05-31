@@ -355,12 +355,12 @@
 
     <activity
         android:name=".views.gym.GymActivity"
+        android:screenOrientation="portrait"
         android:configChanges="keyboard"
         />
     <activity
         android:name=".views.ChooseActivity"
         android:configChanges="keyboard"
-        android:screenOrientation="portrait"
         android:theme="@style/QcBaseTheme"
         >
       <intent-filter>

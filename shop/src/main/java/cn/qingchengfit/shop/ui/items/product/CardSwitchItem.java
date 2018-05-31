@@ -1,7 +1,6 @@
 package cn.qingchengfit.shop.ui.items.product;
 
 import android.view.View;
-import android.widget.CompoundButton;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCardSwitchBinding;
@@ -39,24 +38,18 @@ public class CardSwitchItem
     return data;
   }
 
+
+
+
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemCardSwitchBinding> holder, int position, List payloads) {
     ItemCardSwitchBinding dataBinding = holder.getDataBinding();
     dataBinding.cardTpl.setLabel(data.getShopCardTplName());
+    dataBinding.cardTpl.setClickable(false);
     if (adapter.isSelected(position)) {
       dataBinding.cardTpl.setOpen(true);
     } else {
       dataBinding.cardTpl.setOpen(false);
     }
-    dataBinding.cardTpl.setOnCheckListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-          adapter.addSelection(position);
-        } else {
-          adapter.removeSelection(position);
-        }
-
-      }
-    });
   }
 }

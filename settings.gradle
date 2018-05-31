@@ -1,9 +1,6 @@
-include  ':saasbase',
+include ':saasbase',
 //    ':trainer',
-//    ':atest',
+    //    ':atest',
     ':staff',
-//    ':student',
-//':qcbase'
 ':shop'
-//    ':weex'
 

@@ -28,7 +28,7 @@ import java.util.List;
  * Created by huangbaole on 2017/12/20.
  */
 @Leaf(module = "shop", path = "/product/paycard") public class ProductPayPage
-    extends ShopBaseFragment<PageProductPayBinding, ProductPayViewModel> {
+    extends ShopBaseFragment<PageProductPayBinding, ProductPayViewModel> implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
   @Need ArrayList<Integer> ids;
 
@@ -49,11 +49,11 @@ import java.util.List;
       for (int pos = 0; pos < items.size(); pos++) {
         for (Integer id : ids) {
           if (String.valueOf(id).equals(items.get(pos).getData().getShopCardTplId())) {
-            adapter.toggleSelection(pos);
+            adapter.addSelection(pos);
+            adapter.notifyItemChanged(pos);
           }
         }
       }
-      adapter.notifyDataSetChanged();
     }
   }
 
@@ -73,6 +73,7 @@ import java.util.List;
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
     adapter.setMode(SelectableAdapter.Mode.MULTI);
+    adapter.addListener(this);
   }
 
   private void initToolbar() {
@@ -96,5 +97,11 @@ import java.util.List;
         getActivity().onBackPressed();
       }
     });
+  }
+
+  @Override public boolean onItemClick(int position) {
+    adapter.toggleSelection(position);
+    adapter.notifyItemChanged(position);
+    return false;
   }
 }
