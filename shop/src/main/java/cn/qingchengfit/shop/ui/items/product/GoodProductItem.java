@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCategoryBinding;
 import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
@@ -14,6 +15,7 @@ import cn.qingchengfit.shop.vo.Channel;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.CommonInputView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -120,8 +122,8 @@ public class GoodProductItem
     });
     dataBinding.categoryInventory.addTextWatcher(new AfterTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
-        if(s!=null){
-          good.setInventoryStr(s.toString());
+        if (s != null) {
+          setGoodInventory(s.toString(),dataBinding.categoryInventory);
         }
       }
     });
@@ -197,5 +199,26 @@ public class GoodProductItem
       }
     }
     return format;
+  }
+
+  private void setGoodInventory(String inventory,CommonInputView editText) {
+    Long goodInventory = 0l;
+    if (StringUtils.isEmpty(inventory)) {
+      good.setInventory(goodInventory);
+      return;
+    }
+    try {
+      goodInventory = Long.valueOf(inventory);
+      if (goodInventory > 9999) {
+        goodInventory = Long.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
+        editText.setContent(inventory.subSequence(0, inventory.length() - 1).toString());
+        ToastUtils.show("库存数量不能大于9999");
+      }
+    } catch (NumberFormatException ex) {
+      goodInventory = Long.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
+      editText.setContent(inventory.subSequence(0, inventory.length() - 1).toString());
+      ToastUtils.show("请输入正确整数库存");
+    }
+    good.setInventory(goodInventory);
   }
 }
