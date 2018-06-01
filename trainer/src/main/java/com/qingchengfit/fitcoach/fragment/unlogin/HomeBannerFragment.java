@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.saasbase.login.LoginActivity;
@@ -51,10 +51,10 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class HomeBannerFragment extends BaseFragment {
 
-    @BindView(R.id.vp) ViewPager vp;
-    @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
-    @BindView(R.id.btn_use_now) Button btnUseNow;
-    @BindView(R.id.btn_login) Button btnLogin;
+	ViewPager vp;
+	CircleIndicator splashIndicator;
+	Button btnUseNow;
+	Button btnLogin;
     @Inject LoginStatus loginStatus;
     ArrayList<Fragment> list = new ArrayList<>();
     private int[] imgs = new int[] {
@@ -78,8 +78,22 @@ public class HomeBannerFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_banner, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        viewPaperAdapter = new FragmentAdapter(getChildFragmentManager(),list);
+      vp = (ViewPager) view.findViewById(R.id.vp);
+      splashIndicator = (CircleIndicator) view.findViewById(R.id.splash_indicator);
+      btnUseNow = (Button) view.findViewById(R.id.btn_use_now);
+      btnLogin = (Button) view.findViewById(R.id.btn_login);
+      view.findViewById(R.id.btn_use_now).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickUseNow();
+        }
+      });
+      view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onLogin();
+        }
+      });
+
+      viewPaperAdapter = new FragmentAdapter(getChildFragmentManager(),list);
         vp.setAdapter(viewPaperAdapter);
         splashIndicator.setViewPager(vp);
         if (!loginStatus.isLogined()) {
@@ -109,7 +123,7 @@ public class HomeBannerFragment extends BaseFragment {
     /**
      * 注册
      */
-    @OnClick(R.id.btn_use_now)
+
     public void onClickUseNow(){
         if (!loginStatus.isLogined()) {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
@@ -123,7 +137,7 @@ public class HomeBannerFragment extends BaseFragment {
     /**
      * 立即登录
      */
-    @OnClick(R.id.btn_login)
+
     public void onLogin(){
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
         toLogin.putExtra("isRegiste", false);

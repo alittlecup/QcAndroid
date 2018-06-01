@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import android.view.View;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -25,14 +23,14 @@ public class ChangeTimeActivity extends BaseActivity {
 
     public static final String TAG = ChangeTimeActivity.class.getName();
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.gymtime_mon) CommonInputView gymtimeMon;
-    @BindView(R.id.gymtime_tus) CommonInputView gymtimeTus;
-    @BindView(R.id.gymtime_wen) CommonInputView gymtimeWen;
-    @BindView(R.id.gymtime_thu) CommonInputView gymtimeThu;
-    @BindView(R.id.gymtime_fri) CommonInputView gymtimeFri;
-    @BindView(R.id.gymtime_sat) CommonInputView gymtimeSat;
-    @BindView(R.id.gymtime_sun) CommonInputView gymtimeSun;
+	Toolbar toolbar;
+	CommonInputView gymtimeMon;
+	CommonInputView gymtimeTus;
+	CommonInputView gymtimeWen;
+	CommonInputView gymtimeThu;
+	CommonInputView gymtimeFri;
+	CommonInputView gymtimeSat;
+	CommonInputView gymtimeSun;
     TimePeriodChooser timeDialogWindow;
 
     List<QcPrivateGymReponse.OpenTime> openTimes = new ArrayList<>();
@@ -47,8 +45,56 @@ public class ChangeTimeActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_gym_time);
-        ButterKnife.bind(this);
-        toolbar.setTitle("营业时间");
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      gymtimeMon = (CommonInputView) findViewById(R.id.gymtime_mon);
+      gymtimeTus = (CommonInputView) findViewById(R.id.gymtime_tus);
+      gymtimeWen = (CommonInputView) findViewById(R.id.gymtime_wen);
+      gymtimeThu = (CommonInputView) findViewById(R.id.gymtime_thu);
+      gymtimeFri = (CommonInputView) findViewById(R.id.gymtime_fri);
+      gymtimeSat = (CommonInputView) findViewById(R.id.gymtime_sat);
+      gymtimeSun = (CommonInputView) findViewById(R.id.gymtime_sun);
+      findViewById(R.id.gymtime_mon).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick1();
+        }
+      });
+      findViewById(R.id.gymtime_tus).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick2();
+        }
+      });
+      findViewById(R.id.gymtime_wen).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick3();
+        }
+      });
+      findViewById(R.id.gymtime_thu).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick4();
+        }
+      });
+      findViewById(R.id.gymtime_fri).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick5();
+        }
+      });
+      findViewById(R.id.gymtime_sat).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick6();
+        }
+      });
+      findViewById(R.id.gymtime_sun).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClick7();
+        }
+      });
+      findViewById(R.id.gymtime_comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OnComfirm();
+        }
+      });
+
+      toolbar.setTitle("营业时间");
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
         toolbar.setNavigationOnClickListener(v -> this.onBackPressed());
         timeDialogWindow = new TimePeriodChooser(this, TimePopupWindow.Type.HOURS_MINS);
@@ -113,7 +159,7 @@ public class ChangeTimeActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.gymtime_mon) public void onClick1() {
+ public void onClick1() {
         setDialogTime(gymtimeMon);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -128,7 +174,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_tus) public void onClick2() {
+ public void onClick2() {
         setDialogTime(gymtimeTus);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -143,7 +189,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_wen) public void onClick3() {
+ public void onClick3() {
         setDialogTime(gymtimeWen);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -158,7 +204,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_thu) public void onClick4() {
+ public void onClick4() {
         setDialogTime(gymtimeThu);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -173,7 +219,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_fri) public void onClick5() {
+ public void onClick5() {
         setDialogTime(gymtimeFri);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -188,7 +234,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_sat) public void onClick6() {
+ public void onClick6() {
         setDialogTime(gymtimeSat);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -203,7 +249,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_sun) public void onClick7() {
+ public void onClick7() {
         setDialogTime(gymtimeSun);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date start, Date end) {
@@ -218,7 +264,7 @@ public class ChangeTimeActivity extends BaseActivity {
         timeDialogWindow.showAtLocation();
     }
 
-    @OnClick(R.id.gymtime_comfirm) public void OnComfirm() {
+ public void OnComfirm() {
         Intent it = new Intent();
         openTimes.clear();
         openTimes.add(openTime1);

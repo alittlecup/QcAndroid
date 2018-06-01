@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
 
@@ -27,97 +26,99 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeLi
  * <p>
  * Created by Paper on 15/9/14 2015.
  */
-public class SegmentLayout extends LinearLayout implements onSegmentChangeListener, View.OnClickListener {
+public class SegmentLayout extends LinearLayout
+    implements onSegmentChangeListener, View.OnClickListener {
 
-    public SegmentListener segmentListener;
-    public TouchUpListener listener;
-    @BindView(R.id.segment_img) ImageView segmentImg;
-    @BindView(R.id.segment_text) TextView segmentText;
-    Drawable[] drawables;
-    private String text;
+  public SegmentListener segmentListener;
+  public TouchUpListener listener;
+  ImageView segmentImg;
+  TextView segmentText;
+  Drawable[] drawables;
+  private String text;
 
-    public SegmentLayout(Context context) {
-        super(context);
-        init(context);
+  public SegmentLayout(Context context) {
+    super(context);
+    init(context);
+  }
+
+  public SegmentLayout(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init(context);
+  }
+
+  public SegmentLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(context);
+  }
+
+  public void setListener(TouchUpListener listener) {
+    this.listener = listener;
+  }
+
+  public void setSegmentListener(SegmentListener segmentListener) {
+    this.segmentListener = segmentListener;
+  }
+
+  public void init(Context context) {
+    LayoutInflater.from(context).inflate(R.layout.layout_segment, this, true);
+    segmentImg = findViewById(R.id.segment_img);
+    segmentText = findViewById(R.id.segment_text);
+    setOnClickListener(this);
+  }
+
+  @Override protected void onFinishInflate() {
+    super.onFinishInflate();
+  }
+
+  @Override public void onViewAdded(View child) {
+    super.onViewAdded(child);
+    //        segmentImg.setImageDrawable(drawables[0]);
+    //       segmentText.setText(text);
+
+  }
+
+  public void setCheck(boolean isCheck) {
+
+  }
+
+  @Override public void onCheckChange(boolean isChecked) {
+    if (isChecked) {
+      segmentImg.setImageDrawable(drawables[1]);
+      //            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
+      segmentText.setTextColor(getResources().getColor(R.color.primary));
+    } else {
+      segmentImg.setImageDrawable(drawables[0]);
+      segmentText.setTextColor(Color.argb(255, 102, 102, 102));
     }
+  }
 
-    public SegmentLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
+  public void setDrawables(Drawable[] drawables) {
+    this.drawables = drawables;
+    segmentImg.setImageDrawable(drawables[0]);
+  }
 
-    public SegmentLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
+  public void setDrawables(int res0, int res1) {
+    this.drawables = new Drawable[] {
+        getContext().getResources().getDrawable(res0), getContext().getResources().getDrawable(res1)
+    };
+    segmentImg.setImageDrawable(drawables[0]);
+  }
 
-    public void setListener(TouchUpListener listener) {
-        this.listener = listener;
-    }
+  public void setText(String s) {
+    this.text = s;
+    segmentText.setText(text);
+  }
 
-    public void setSegmentListener(SegmentListener segmentListener) {
-        this.segmentListener = segmentListener;
-    }
+  @Override public void onClick(View v) {
+    if (listener != null) listener.onTouchUp(v);
+    if (segmentListener != null) segmentListener.onSegmentClick(v);
+  }
 
-    public void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.layout_segment, this, true);
-        ButterKnife.bind(this);
-        setOnClickListener(this);
-    }
+  public interface TouchUpListener {
+    void onTouchUp(View v);
+  }
 
-    @Override protected void onFinishInflate() {
-        super.onFinishInflate();
-    }
-
-    @Override public void onViewAdded(View child) {
-        super.onViewAdded(child);
-        //        segmentImg.setImageDrawable(drawables[0]);
-        //       segmentText.setText(text);
-
-    }
-
-    public void setCheck(boolean isCheck) {
-
-    }
-
-    @Override public void onCheckChange(boolean isChecked) {
-        if (isChecked) {
-            segmentImg.setImageDrawable(drawables[1]);
-            //            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
-            segmentText.setTextColor(getResources().getColor(R.color.primary));
-        } else {
-            segmentImg.setImageDrawable(drawables[0]);
-            segmentText.setTextColor(Color.argb(255, 102, 102, 102));
-        }
-    }
-
-    public void setDrawables(Drawable[] drawables) {
-        this.drawables = drawables;
-        segmentImg.setImageDrawable(drawables[0]);
-    }
-
-    public void setDrawables(int res0, int res1) {
-        this.drawables = new Drawable[] {
-            getContext().getResources().getDrawable(res0), getContext().getResources().getDrawable(res1)
-        };
-        segmentImg.setImageDrawable(drawables[0]);
-    }
-
-    public void setText(String s) {
-        this.text = s;
-        segmentText.setText(text);
-    }
-
-    @Override public void onClick(View v) {
-        if (listener != null) listener.onTouchUp(v);
-        if (segmentListener != null) segmentListener.onSegmentClick(v);
-    }
-
-    public interface TouchUpListener {
-        void onTouchUp(View v);
-    }
-
-    public interface SegmentListener {
-        void onSegmentClick(View v);
-    }
+  public interface SegmentListener {
+    void onSegmentClick(View v);
+  }
 }

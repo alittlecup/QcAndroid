@@ -5,16 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
 import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
@@ -32,13 +27,13 @@ import javax.inject.Inject;
 
 public class ExportSendEmailFragment extends BaseFragment implements ImportExportPresenter.MVPView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R.id.tv_download_content) TextView tvDownloadContent;
-  @BindView(R.id.tv_download_info) TextView tvDownloadInfo;
-  @BindView(R.id.edit_target_email) EditText editTargetEmail;
-  @BindView(R.id.tv_send_email) TextView tvSendEmail;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TextView tvDownloadContent;
+	TextView tvDownloadInfo;
+	EditText editTargetEmail;
+	TextView tvSendEmail;
   @Inject ImportExportPresenter presenter;
   private ExportRecord record;
 
@@ -61,7 +56,19 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_download_export, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvDownloadContent = (TextView) view.findViewById(R.id.tv_download_content);
+    tvDownloadInfo = (TextView) view.findViewById(R.id.tv_download_info);
+    editTargetEmail = (EditText) view.findViewById(R.id.edit_target_email);
+    tvSendEmail = (TextView) view.findViewById(R.id.tv_send_email);
+    view.findViewById(R.id.tv_send_email).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        send();
+      }
+    });
+
     delegatePresenter(presenter, this);
     setToolbar();
     initView();
@@ -78,7 +85,7 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
     tvDownloadInfo.setText(DateUtils.replaceTFromServer(record.created_at) + " " + record.created_by.username);
   }
 
-  @OnClick(R.id.tv_send_email) public void send() {
+ public void send() {
     if (TextUtils.isEmpty(editTargetEmail.getText()) || !StringUtils.isEmail(editTargetEmail.getText().toString())){
       DialogUtils.showAlert(getContext(), "请填写正确的邮箱格式");
       return;

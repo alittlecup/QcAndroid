@@ -13,14 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
@@ -64,11 +64,11 @@ import javax.inject.Inject;
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
   extends SaasBaseFragment
   implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.et_search) CompatEditView etSearch;
-  @BindView(R2.id.srl) SwipeRefreshLayout srl;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	CompatEditView etSearch;
+	SwipeRefreshLayout srl;
 
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
@@ -96,7 +96,17 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_student_choose, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    etSearch = (CompatEditView) view.findViewById(R.id.et_search);
+    srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    view.findViewById(R.id.btn_add_student).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnAddStudentClicked();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     RxTextView.afterTextChangeEvents(etSearch)
@@ -157,7 +167,7 @@ import javax.inject.Inject;
   /**
    * 新增会员
    */
-  @OnClick(R2.id.btn_add_student) public void onBtnAddStudentClicked() {
+ public void onBtnAddStudentClicked() {
     if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
       routeTo(AppUtils.getRouterUri(getContext(), "staff/add/"), null);
     }else{

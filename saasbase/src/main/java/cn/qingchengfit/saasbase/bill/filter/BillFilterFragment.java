@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.bill.event.BillFilterEvent;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -39,11 +39,11 @@ public class BillFilterFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, BillFilterPresenter.MVPView,
     ItemFilterTime.OnTimeChooseListener {
 
-  @BindView(R2.id.btn_bill_filter_reset) TextView btnBillFilterReset;
-  @BindView(R2.id.btn_bill_filter_confirm) TextView btnBillFilterConfirm;
+	TextView btnBillFilterReset;
+	TextView btnBillFilterConfirm;
   @Inject BillFilterPresenter presenter;
-  @BindView(R2.id.recycler_bill_filter) RecyclerView recyclerBillFilter;
-  @BindView(R2.id.filter_layout) LinearLayout filterLayout;
+	RecyclerView recyclerBillFilter;
+	LinearLayout filterLayout;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   private HashMap<String, Object> map = new HashMap<>();
@@ -79,7 +79,21 @@ public class BillFilterFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.layout_bill_filter, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    btnBillFilterReset = (TextView) view.findViewById(R.id.btn_bill_filter_reset);
+    btnBillFilterConfirm = (TextView) view.findViewById(R.id.btn_bill_filter_confirm);
+    recyclerBillFilter = (RecyclerView) view.findViewById(R.id.recycler_bill_filter);
+    filterLayout = (LinearLayout) view.findViewById(R.id.filter_layout);
+    view.findViewById(R.id.btn_bill_filter_confirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onConfirm();
+      }
+    });
+    view.findViewById(R.id.btn_bill_filter_reset).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onReset();
+      }
+    });
+
     delegatePresenter(presenter, this);
     presenter.getFilterList();
     initView();
@@ -95,7 +109,7 @@ public class BillFilterFragment extends BaseFragment
     recyclerBillFilter.setAdapter(adapter);
   }
 
-  @OnClick(R2.id.btn_bill_filter_confirm) public void onConfirm() {
+ public void onConfirm() {
     String key = "";
     for (int i = 0; i < adapter.getItemCount(); i++) {
       if (adapter.getItem(i) instanceof ItemFilterCommon) {
@@ -128,7 +142,7 @@ public class BillFilterFragment extends BaseFragment
     //filterModel.getFitlerData().setValue(map);
   }
 
-  @OnClick(R2.id.btn_bill_filter_reset) public void onReset() {
+ public void onReset() {
     for (int i = 0; i < adapter.getItemCount(); i++) {
       adapter.addSelection(i);
     }

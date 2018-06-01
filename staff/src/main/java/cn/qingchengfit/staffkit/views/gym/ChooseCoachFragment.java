@@ -15,9 +15,9 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -55,12 +55,12 @@ public class ChooseCoachFragment extends BaseDialogFragment {
 
     @Inject ChooseCoachPresenter chooseCoachPresenter;
 
-    @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	RecycleViewWithNoImg recyclerview;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     String selectPhone;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
+	RelativeLayout toolbarLayout;
     private int mType = 0;
     private List<ImageTwoTextBean> datas = new ArrayList<>();
     private ImageTwoTextAdapter adapter;
@@ -91,8 +91,18 @@ public class ChooseCoachFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycleview, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
+      recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickAdd();
+        }
+      });
+
+      initView();
         initData();
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
@@ -214,7 +224,7 @@ public class ChooseCoachFragment extends BaseDialogFragment {
         });
     }
 
-    @OnClick(R.id.btn) public void onClickAdd() {
+ public void onClickAdd() {
         AddNewCoachFragment.start(getTargetFragment(), getTargetRequestCode());
         dismiss();
     }

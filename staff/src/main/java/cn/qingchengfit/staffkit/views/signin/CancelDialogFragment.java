@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.SignInCancelEvent;
@@ -27,8 +27,8 @@ import cn.qingchengfit.utils.MeasureUtils;
  */
 public class CancelDialogFragment extends BaseDialogFragment {
 
-    @BindView(R.id.cancel) TextView cancel;
-    @BindView(R.id.confirm) TextView confirm;
+	TextView cancel;
+	TextView confirm;
 
     private int checkInId = 0;
 
@@ -51,8 +51,20 @@ public class CancelDialogFragment extends BaseDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_sign_in_cancel, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+      cancel = (TextView) view.findViewById(R.id.cancel);
+      confirm = (TextView) view.findViewById(R.id.confirm);
+      view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CancelDialogFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CancelDialogFragment.this.onClick(v);
+        }
+      });
+
+      return view;
     }
 
     @Override public void onAttach(Context context) {
@@ -81,7 +93,7 @@ public class CancelDialogFragment extends BaseDialogFragment {
         return dialog;
     }
 
-    @OnClick({ R.id.cancel, R.id.confirm }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel:
                 dismiss();

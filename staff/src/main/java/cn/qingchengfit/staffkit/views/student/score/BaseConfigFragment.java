@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.ScoreRule;
 import cn.qingchengfit.model.responese.ScoreRuleCard;
 import cn.qingchengfit.model.responese.StudentScoreRuleBean;
@@ -58,20 +58,20 @@ import javax.inject.Inject;
 public class BaseConfigFragment extends BaseFragment implements BaseConfigPresenter.PresenterView, View.OnClickListener {
 
     @Inject BaseConfigPresenter presenter;
-    @BindView(R.id.sw_score_config_group) SwitcherLayout swScoreConfigGroup;
-    @BindView(R.id.civ_score_config_group) CommonInputView civScoreConfigGroup;
-    @BindView(R.id.sw_score_config_private) SwitcherLayout swScoreConfigPrivate;
-    @BindView(R.id.civ_score_config_private) CommonInputView civScoreConfigPrivate;
-    @BindView(R.id.sw_score_config_signin) SwitcherLayout swScoreConfigSignin;
-    @BindView(R.id.civ_score_config_signin) CommonInputView civScoreConfigSignin;
-    @BindView(R.id.sw_score_config_buy) SwitcherLayout swScoreConfigBuy;
-    @BindView(R.id.recyclerView_score_config_buy) RecyclerView recyclerViewBuy;
-    @BindView(R.id.tv_student_score_rule_buy) TextView tvStudentScoreRuleBuy;
-    @BindView(R.id.sw_score_config_charge) SwitcherLayout swScoreConfigCharge;
-    @BindView(R.id.recyclerView_score_config_charge) RecyclerView recyclerViewCharge;
-    @BindView(R.id.tv_student_score_rule_charge) TextView tvStudentScoreRuleCharge;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	SwitcherLayout swScoreConfigGroup;
+	CommonInputView civScoreConfigGroup;
+	SwitcherLayout swScoreConfigPrivate;
+	CommonInputView civScoreConfigPrivate;
+	SwitcherLayout swScoreConfigSignin;
+	CommonInputView civScoreConfigSignin;
+	SwitcherLayout swScoreConfigBuy;
+	RecyclerView recyclerViewBuy;
+	TextView tvStudentScoreRuleBuy;
+	SwitcherLayout swScoreConfigCharge;
+	RecyclerView recyclerViewCharge;
+	TextView tvStudentScoreRuleCharge;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private CommonFlexAdapter flexibleAdapterBuy;
     private List<AbstractFlexibleItem> itemsBuy = new ArrayList<>();
@@ -101,8 +101,34 @@ public class BaseConfigFragment extends BaseFragment implements BaseConfigPresen
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score_config_base, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      swScoreConfigGroup = (SwitcherLayout) view.findViewById(R.id.sw_score_config_group);
+      civScoreConfigGroup = (CommonInputView) view.findViewById(R.id.civ_score_config_group);
+      swScoreConfigPrivate = (SwitcherLayout) view.findViewById(R.id.sw_score_config_private);
+      civScoreConfigPrivate = (CommonInputView) view.findViewById(R.id.civ_score_config_private);
+      swScoreConfigSignin = (SwitcherLayout) view.findViewById(R.id.sw_score_config_signin);
+      civScoreConfigSignin = (CommonInputView) view.findViewById(R.id.civ_score_config_signin);
+      swScoreConfigBuy = (SwitcherLayout) view.findViewById(R.id.sw_score_config_buy);
+      recyclerViewBuy = (RecyclerView) view.findViewById(R.id.recyclerView_score_config_buy);
+      tvStudentScoreRuleBuy = (TextView) view.findViewById(R.id.tv_student_score_rule_buy);
+      swScoreConfigCharge = (SwitcherLayout) view.findViewById(R.id.sw_score_config_charge);
+      recyclerViewCharge = (RecyclerView) view.findViewById(R.id.recyclerView_score_config_charge);
+      tvStudentScoreRuleCharge = (TextView) view.findViewById(R.id.tv_student_score_rule_charge);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.tv_student_score_rule_buy)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onRuleAddClick(v);
+            }
+          });
+      view.findViewById(R.id.tv_student_score_rule_charge)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onRuleAddClick(v);
+            }
+          });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         initView();
 
@@ -296,7 +322,7 @@ public class BaseConfigFragment extends BaseFragment implements BaseConfigPresen
         return this.getClass().getName();
     }
 
-    @OnClick({ R.id.tv_student_score_rule_buy, R.id.tv_student_score_rule_charge }) public void onRuleAddClick(View view) {
+ public void onRuleAddClick(View view) {
         buildRule(false);
         switch (view.getId()) {
             case R.id.tv_student_score_rule_buy:

@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CompatUtils;
@@ -30,24 +30,35 @@ import rx.functions.Action1;
  */
 public class AttendanceActivity extends BaseActivity implements FragCallBack {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
+	Toolbar toolbar;
 
-    @BindView(R.id.rb_select_all) CheckBox rbSelectAll;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    @BindView(R.id.activity_attendance_frag) FrameLayout activityAttendanceFrag;
+	CheckBox rbSelectAll;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
+	RelativeLayout toolbarLayout;
+	FrameLayout activityAttendanceFrag;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
-        ButterKnife.bind(this);
-        initToolbar();
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      rbSelectAll = (CheckBox) findViewById(R.id.rb_select_all);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchviewEt = (EditText) findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      activityAttendanceFrag = (FrameLayout) findViewById(R.id.activity_attendance_frag);
+
+      initToolbar();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.activity_attendance_frag, new AttendanceHomeFragment()).commit();
     }

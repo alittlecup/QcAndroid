@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
 import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -37,8 +37,23 @@ public class EditHomeFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_home, container, false);
-        ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "编辑主页");
+      view.findViewById(R.id.btn_personal_intro).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickBtn(v);
+        }
+      });
+      view.findViewById(R.id.btn_pics).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickBtn(v);
+        }
+      });
+      view.findViewById(R.id.btn_base_info).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickBtn(v);
+        }
+      });
+
+      fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "编辑主页");
         return view;
     }
 
@@ -46,7 +61,7 @@ public class EditHomeFragment extends BaseSettingFragment {
         return EditHomeFragment.class.getName();
     }
 
-    @OnClick({ R.id.btn_personal_intro, R.id.btn_pics, R.id.btn_base_info }) public void onClickBtn(View view) {
+ public void onClickBtn(View view) {
         switch (view.getId()) {
             case R.id.btn_personal_intro:
                 //fragmentCallBack.onFragmentChange();

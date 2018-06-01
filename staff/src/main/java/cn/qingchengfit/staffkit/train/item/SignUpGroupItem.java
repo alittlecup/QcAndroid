@@ -1,11 +1,7 @@
 package cn.qingchengfit.staffkit.train.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.train.model.GroupListBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -51,12 +47,13 @@ public class SignUpGroupItem extends AbstractFlexibleItem<SignUpGroupItem.SignUp
 
     class SignUpGroupVH extends FlexibleViewHolder {
 
-        @BindView(R.id.tv_sign_group_name) TextView tvGroupName;
-        @BindView(R.id.tv_sign_group_member) TextView tvGroupMember;
+	TextView tvGroupName;
+	TextView tvGroupMember;
 
         public SignUpGroupVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvGroupName = (TextView) view.findViewById(R.id.tv_sign_group_name);
+          tvGroupMember = (TextView) view.findViewById(R.id.tv_sign_group_member);
         }
     }
 }

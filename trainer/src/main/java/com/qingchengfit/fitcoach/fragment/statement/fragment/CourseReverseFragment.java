@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
 import cn.qingchengfit.saasbase.report.bean.CourseReportOrder;
 import cn.qingchengfit.saasbase.report.bean.CourseReportSchedule;
@@ -50,20 +50,20 @@ import javax.inject.Inject;
 
   @Arg String sechduleId;
 
-  @BindView(R.id.image_report_detail_head) ImageView imageReportDetailHead;
-  @BindView(R.id.text_report_detail_name) TextView textReportDetailName;
-  @BindView(R.id.text_report_detail_studio_name) TextView textReportDetailStudioName;
-  @BindView(R.id.image_report_detail_coach_head) ImageView imageReportDetailCoachHead;
-  @BindView(R.id.image_report_detail_coach_name) TextView imageReportDetailCoachName;
-  @BindView(R.id.student_judge_coach_star) RatingBarVectorFix studentJudgeCoachStar;
-  @BindView(R.id.text_report_reverse_number) TextView textReportReverseNumber;
-  @BindView(R.id.text_report_reverse_income) TextView textReportReverseIncome;
-  @BindView(R.id.text_report_reverse_fact) TextView textReportReverseFact;
-  @BindView(R.id.recycler_report_detail) RecyclerView recyclerReportDetail;
-  @BindView(R.id.toolbar) Toolbar toolbar;
+	ImageView imageReportDetailHead;
+	TextView textReportDetailName;
+	TextView textReportDetailStudioName;
+	ImageView imageReportDetailCoachHead;
+	TextView imageReportDetailCoachName;
+	RatingBarVectorFix studentJudgeCoachStar;
+	TextView textReportReverseNumber;
+	TextView textReportReverseIncome;
+	TextView textReportReverseFact;
+	RecyclerView recyclerReportDetail;
+	Toolbar toolbar;
 
   @Inject CourseReversePresenter presenter;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	TextView toolbarTitle;
   private CommonFlexAdapter adapter;
   private List<CourseReverseDetailItem> itemList = new ArrayList<>();
 
@@ -79,7 +79,19 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_report_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    imageReportDetailHead = (ImageView) view.findViewById(R.id.image_report_detail_head);
+    textReportDetailName = (TextView) view.findViewById(R.id.text_report_detail_name);
+    textReportDetailStudioName = (TextView) view.findViewById(R.id.text_report_detail_studio_name);
+    imageReportDetailCoachHead = (ImageView) view.findViewById(R.id.image_report_detail_coach_head);
+    imageReportDetailCoachName = (TextView) view.findViewById(R.id.image_report_detail_coach_name);
+    studentJudgeCoachStar = (RatingBarVectorFix) view.findViewById(R.id.student_judge_coach_star);
+    textReportReverseNumber = (TextView) view.findViewById(R.id.text_report_reverse_number);
+    textReportReverseIncome = (TextView) view.findViewById(R.id.text_report_reverse_income);
+    textReportReverseFact = (TextView) view.findViewById(R.id.text_report_reverse_fact);
+    recyclerReportDetail = (RecyclerView) view.findViewById(R.id.recycler_report_detail);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
     delegatePresenter(presenter, this);
     setToolbar();
 

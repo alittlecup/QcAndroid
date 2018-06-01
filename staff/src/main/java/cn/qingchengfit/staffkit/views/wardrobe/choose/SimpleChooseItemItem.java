@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.wardrobe.choose;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -45,12 +45,12 @@ public class SimpleChooseItemItem extends AbstractFlexibleItem<SimpleChooseItemI
     }
 
     public class SimpleChooseItemVH extends FlexibleViewHolder {
-        @BindView(R.id.item_text) TextView itemText;
+	TextView itemText;
 
         public SimpleChooseItemVH(View view, FlexibleAdapter adapter) {
 
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemText = (TextView) view.findViewById(R.id.item_text);
         }
     }
 }

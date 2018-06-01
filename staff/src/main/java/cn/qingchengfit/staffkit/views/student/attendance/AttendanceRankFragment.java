@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.common.Attendance;
@@ -63,17 +63,17 @@ public class AttendanceRankFragment extends BaseFragment
 
     int rankType = 0;
 
-    @BindView(R.id.ll_filter_attendance_account) ViewGroup llAbsenceAccount;
-    @BindView(R.id.ll_filter_attendance_sort) ViewGroup llSort;
-    @BindView(R.id.text_attendance_condition) TextView textAbsence;
-    @BindView(R.id.text_attendance_sort) TextView textSort;
-    @BindView(R.id.image_attendance_account_arrow) ImageView imageAbsenceArrow;
-    @BindView(R.id.image_attendance_sort_arrow) ImageView imageSortArrow;
-    @BindView(R.id.rl_attendance_account) RecyclerView rlAttendList;
-    @BindView(R.id.tips_attendance_account) TextView textTipsAccount;
-    @BindView(R.id.attendance_list_shadow) View shadow;
-    @BindView(R.id.frag_attendance_rank) ViewGroup filteLayout;
-    @BindView(R.id.frag_attendance_sort) ViewGroup sortLayout;
+	ViewGroup llAbsenceAccount;
+	ViewGroup llSort;
+	TextView textAbsence;
+	TextView textSort;
+	ImageView imageAbsenceArrow;
+	ImageView imageSortArrow;
+	RecyclerView rlAttendList;
+	TextView textTipsAccount;
+	View shadow;
+	ViewGroup filteLayout;
+	ViewGroup sortLayout;
     @Inject AttendanceRankPresenter attendanceRankPresenter;
 
     private List<AbstractFlexibleItem> filterList = new ArrayList<>();
@@ -98,9 +98,36 @@ public class AttendanceRankFragment extends BaseFragment
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attendance_rank, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      llAbsenceAccount = (ViewGroup) view.findViewById(R.id.ll_filter_attendance_account);
+      llSort = (ViewGroup) view.findViewById(R.id.ll_filter_attendance_sort);
+      textAbsence = (TextView) view.findViewById(R.id.text_attendance_condition);
+      textSort = (TextView) view.findViewById(R.id.text_attendance_sort);
+      imageAbsenceArrow = (ImageView) view.findViewById(R.id.image_attendance_account_arrow);
+      imageSortArrow = (ImageView) view.findViewById(R.id.image_attendance_sort_arrow);
+      rlAttendList = (RecyclerView) view.findViewById(R.id.rl_attendance_account);
+      textTipsAccount = (TextView) view.findViewById(R.id.tips_attendance_account);
+      shadow = (View) view.findViewById(R.id.attendance_list_shadow);
+      filteLayout = (ViewGroup) view.findViewById(R.id.frag_attendance_rank);
+      sortLayout = (ViewGroup) view.findViewById(R.id.frag_attendance_sort);
+      view.findViewById(R.id.ll_filter_attendance_account)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onConditionFilter();
+            }
+          });
+      view.findViewById(R.id.ll_filter_attendance_sort)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onConditionSort();
+            }
+          });
+      view.findViewById(R.id.attendance_list_shadow).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDismiss();
+        }
+      });
 
-        delegatePresenter(attendanceRankPresenter, this);
+      delegatePresenter(attendanceRankPresenter, this);
 
         mCallbackActivity.setToolbar("出勤排行", false, null, 0, null);
 
@@ -215,20 +242,20 @@ public class AttendanceRankFragment extends BaseFragment
     }
 
     //天数筛选
-    @OnClick(R.id.ll_filter_attendance_account) public void onConditionFilter() {
+ public void onConditionFilter() {
         isShow = !isShow;
         isRightShow = false;
         toggleViewState();
     }
 
     //排序菜单
-    @OnClick(R.id.ll_filter_attendance_sort) public void onConditionSort() {
+ public void onConditionSort() {
         isRightShow = !isRightShow;
         isShow = false;
         toggleViewState();
     }
 
-    @OnClick(R.id.attendance_list_shadow) public void onDismiss() {
+ public void onDismiss() {
         isShow = isRightShow = false;
         toggleViewState();
     }

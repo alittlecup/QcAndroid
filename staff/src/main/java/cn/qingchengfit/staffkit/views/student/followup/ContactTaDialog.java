@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.utils.AppUtils;
@@ -43,7 +43,7 @@ import cn.qingchengfit.utils.AppUtils;
 
 public class ContactTaDialog extends BaseBottomSheetDialogFragment {
 
-    @BindView(R.id.tv_contact_phone) TextView tvContactPhone;
+	TextView tvContactPhone;
     private String phone;
 
     public static void start(Fragment fragment, int requestCode, String phone) {
@@ -81,8 +81,19 @@ public class ContactTaDialog extends BaseBottomSheetDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom_dialog_contact_ta, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        phone = getArguments().getString("phone");
+      tvContactPhone = (TextView) view.findViewById(R.id.tv_contact_phone);
+      view.findViewById(R.id.tv_contact_phone).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ContactTaDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_contact_sms).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ContactTaDialog.this.onClick(v);
+        }
+      });
+
+      phone = getArguments().getString("phone");
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return view;
     }
@@ -92,7 +103,7 @@ public class ContactTaDialog extends BaseBottomSheetDialogFragment {
         tvContactPhone.setText(new StringBuilder().append("呼叫").append(phone).toString());
     }
 
-    @OnClick({ R.id.tv_contact_phone, R.id.tv_contact_sms }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_contact_phone:
                 Uri uri = Uri.parse(new StringBuilder().append("tel:").append(phone).toString());

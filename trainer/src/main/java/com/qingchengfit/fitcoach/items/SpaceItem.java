@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import cn.qingchengfit.bean.Space;
@@ -51,13 +51,15 @@ public class SpaceItem extends AbstractFlexibleItem<SpaceItem.SpaceVH> {
     }
 
     public class SpaceVH extends FlexibleViewHolder {
-        @BindView(R.id.text1) TextView text1;
-        @BindView(R.id.text2) TextView text2;
-        @BindView(R.id.righticon) ImageView righticon;
+	TextView text1;
+	TextView text2;
+	ImageView righticon;
 
         public SpaceVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          text1 = (TextView) view.findViewById(R.id.text1);
+          text2 = (TextView) view.findViewById(R.id.text2);
+          righticon = (ImageView) view.findViewById(R.id.righticon);
         }
     }
 }

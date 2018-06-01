@@ -13,9 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -51,10 +51,10 @@ import java.util.List;
  */
 public class CardTypeChooseDialogFragment extends BaseDialogFragment {
 
-    @BindView(R.id.comfirm) TextView comfirm;
-    @BindView(R.id.course_type) WheelView courseType;
-    @BindView(R.id.course_list) WheelView courseList;
-    @BindView(R.id.wheellayout) LinearLayout wheellayout;
+	TextView comfirm;
+	WheelView courseType;
+	WheelView courseList;
+	LinearLayout wheellayout;
 
     List<CardTpl> mCard_tpls = new ArrayList<>();
     List<CardTpl> mOrigin = new ArrayList<>();
@@ -76,8 +76,17 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_cardtype, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        ArrayWheelAdapter<String> courseTypeAdatper =
+      comfirm = (TextView) view.findViewById(R.id.comfirm);
+      courseType = (WheelView) view.findViewById(R.id.course_type);
+      courseList = (WheelView) view.findViewById(R.id.course_list);
+      wheellayout = (LinearLayout) view.findViewById(R.id.wheellayout);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CardTypeChooseDialogFragment.this.onClick();
+        }
+      });
+
+      ArrayWheelAdapter<String> courseTypeAdatper =
             new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.cardtype_filter))), 8);
         courseType.setAdapter(courseTypeAdatper);
         courseType.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 16f);
@@ -160,7 +169,7 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R.id.comfirm) public void onClick() {
+ public void onClick() {
         int pos1 = courseType.getCurrentItem();
         int pos2 = ((WheelView) wheellayout.getChildAt(1)).getCurrentItem();
         if (pos2 == 0) {

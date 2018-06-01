@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
@@ -55,14 +55,14 @@ import rx.schedulers.Schedulers;
  */
 public class BrandCreatorEditFragment extends BaseFragment {
 
-    @BindView(R.id.name) CommonInputView name;
-    @BindView(R.id.gender_male) RadioButton genderMale;
-    @BindView(R.id.gender_female) RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.gender_layout) RelativeLayout genderLayout;
+	CommonInputView name;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
 
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R.id.checkcode) PasswordView checkcode;
+	PhoneEditText phoneNum;
+	PasswordView checkcode;
 
     private Brand brand;
 
@@ -84,8 +84,15 @@ public class BrandCreatorEditFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_creator, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //((BrandManageComponent) mCallbackActivity.getComponent()).inject(this);
+      name = (CommonInputView) view.findViewById(R.id.name);
+      genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+      genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      checkcode = (PasswordView) view.findViewById(R.id.checkcode);
+
+      //((BrandManageComponent) mCallbackActivity.getComponent()).inject(this);
 
         if (brand != null) {
             if (getActivity() instanceof BrandManageActivity) {

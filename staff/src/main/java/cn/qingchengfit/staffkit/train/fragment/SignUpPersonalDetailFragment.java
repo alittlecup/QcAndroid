@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.train.model.GroupBean;
 import cn.qingchengfit.staffkit.train.model.SignUpDetailResponse;
@@ -46,19 +46,19 @@ import rx.functions.Action1;
 
 @FragmentWithArgs public class SignUpPersonalDetailFragment extends BaseFragment implements SignUpView<SignUpDetailResponse> {
 
-    @BindView(R.id.ll_student_call) LinearLayout llStudentCall;
-    @BindView(R.id.ll_student_msg) LinearLayout llStudentMsg;
-    @BindView(R.id.text_sign_joined) TextView textSignJoin;
-    @BindView(R.id.text_sign_info_cost) TextView textSignCost;
-    @BindView(R.id.ll_sign_info_group) AutoLineGroup llSignInfoGroup;
-    @BindView(R.id.header) ImageView header;
-    @BindView(R.id.gender) ImageView gender;
-    @BindView(R.id.name) TextView textName;
-    @BindView(R.id.phone) TextView textPhone;
+	LinearLayout llStudentCall;
+	LinearLayout llStudentMsg;
+	TextView textSignJoin;
+	TextView textSignCost;
+	AutoLineGroup llSignInfoGroup;
+	ImageView header;
+	ImageView gender;
+	TextView textName;
+	TextView textPhone;
 
     @Arg String orderId;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     @Inject SignUpDetailPresenter signUpDetailPresenter;
     RxPermissions rxPermissions;
     private SignUpDetailResponse.SignUpDetailBean bean;
@@ -71,8 +71,29 @@ import rx.functions.Action1;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(signUpDetailPresenter, this);
+      llStudentCall = (LinearLayout) view.findViewById(R.id.ll_student_call);
+      llStudentMsg = (LinearLayout) view.findViewById(R.id.ll_student_msg);
+      textSignJoin = (TextView) view.findViewById(R.id.text_sign_joined);
+      textSignCost = (TextView) view.findViewById(R.id.text_sign_info_cost);
+      llSignInfoGroup = (AutoLineGroup) view.findViewById(R.id.ll_sign_info_group);
+      header = (ImageView) view.findViewById(R.id.header);
+      gender = (ImageView) view.findViewById(R.id.gender);
+      textName = (TextView) view.findViewById(R.id.name);
+      textPhone = (TextView) view.findViewById(R.id.phone);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.ll_student_call).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onStartInfo(v);
+        }
+      });
+      view.findViewById(R.id.ll_student_msg).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onStartInfo(v);
+        }
+      });
+
+      delegatePresenter(signUpDetailPresenter, this);
         initToolbar(toolbar);
         toolbarTitile.setText("详情 ");
 
@@ -90,7 +111,7 @@ import rx.functions.Action1;
         signUpDetailPresenter.querySignDetail(orderId);
     }
 
-    @OnClick({ R.id.ll_student_call, R.id.ll_student_msg }) public void onStartInfo(View v) {
+ public void onStartInfo(View v) {
         switch (v.getId()) {
             case R.id.ll_student_call:
                 new MaterialDialog.Builder(getContext()).autoDismiss(true)

@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -60,16 +60,16 @@ import rx.schedulers.Schedulers;
  */
 public class SignOutListFragment extends BaseFragment implements SignOutListPresenter.SignOutListView {
 
-    @BindView(R.id.ll_signin_qrcode) LinearLayout llSigninQrcode;
+	LinearLayout llSigninQrcode;
 
-    @BindView(R.id.ll_signin_manual) LinearLayout llSigninManual;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
-    @BindView(R.id.tv_signin_qrcode) TextView tvSigninQrcode;
-    @BindView(R.id.tv_signin_manual) TextView tvSigninManual;
+	LinearLayout llSigninManual;
+	RecyclerView recycleview;
+	TextView tvSigninQrcode;
+	TextView tvSigninManual;
 
-    @BindView(R.id.tv_signin_header) TextView tvSigninHeader;
-    @BindView(R.id.tv_signin_footer) TextView tvSigninFooter;
-    @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeRefreshLayout;
+	TextView tvSigninHeader;
+	TextView tvSigninFooter;
+	SwipeRefreshLayout swipeRefreshLayout;
     List<AbstractFlexibleItem> items = new ArrayList<>();
     List<SignInTasks.SignInTask> sourceList = new ArrayList<>();
     List<SignInTasks.SignInTask> newList = new ArrayList<>();
@@ -98,8 +98,36 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      llSigninQrcode = (LinearLayout) view.findViewById(R.id.ll_signin_qrcode);
+      llSigninManual = (LinearLayout) view.findViewById(R.id.ll_signin_manual);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+      tvSigninQrcode = (TextView) view.findViewById(R.id.tv_signin_qrcode);
+      tvSigninManual = (TextView) view.findViewById(R.id.tv_signin_manual);
+      tvSigninHeader = (TextView) view.findViewById(R.id.tv_signin_header);
+      tvSigninFooter = (TextView) view.findViewById(R.id.tv_signin_footer);
+      swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
+      view.findViewById(R.id.ll_signin_qrcode).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignOutListFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.ll_signin_manual).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignOutListFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_signin_header).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignOutListFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_signin_footer).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignOutListFragment.this.onClick(v);
+        }
+      });
+
+      delegatePresenter(presenter, this);
         tvSigninQrcode.setText("签出二维码");
         tvSigninManual.setText("手动签出");
         initView();
@@ -298,7 +326,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
         setNoData();
     }
 
-    @OnClick({ R.id.ll_signin_qrcode, R.id.ll_signin_manual, R.id.tv_signin_header, R.id.tv_signin_footer })
+
     public void onClick(View view) {
         if (!PreferenceUtils.getPrefBoolean(getContext(), "showNotice" + App.staffId, false)) {
             ToastUtils.show("还没有设置进场签到设置,暂时无法操作");

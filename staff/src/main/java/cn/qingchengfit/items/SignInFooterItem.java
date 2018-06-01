@@ -2,8 +2,8 @@ package cn.qingchengfit.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
@@ -44,11 +44,11 @@ public class SignInFooterItem extends AbstractFlexibleItem<SignInFooterItem.Item
 
     public static class ItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R.id.tv_signin_header) TextView tvSigninHeader;
+	TextView tvSigninHeader;
 
         public ItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvSigninHeader = (TextView) view.findViewById(R.id.tv_signin_header);
         }
     }
 }

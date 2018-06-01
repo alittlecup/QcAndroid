@@ -1,11 +1,7 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -54,11 +50,11 @@ public class JacketAddItem extends AbstractFlexibleItem<JacketAddItem.JacketAddV
     }
 
     public static class JacketAddVH extends FlexibleViewHolder {
-        @BindView(R.id.add_img) TextView addImg;
+	TextView addImg;
 
         public JacketAddVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          addImg = (TextView) view.findViewById(R.id.add_img);
         }
     }
 }

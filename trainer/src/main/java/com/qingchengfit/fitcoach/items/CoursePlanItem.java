@@ -4,8 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.R;
 import cn.qingchengfit.bean.CoursePlan;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -50,13 +50,15 @@ public class CoursePlanItem extends AbstractFlexibleItem<CoursePlanItem.CoursePl
     }
 
     public class CoursePlanVH extends FlexibleViewHolder {
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.content) TextView content;
-        @BindView(R.id.chosen) ImageView chosen;
+	TextView name;
+	TextView content;
+	ImageView chosen;
 
         public CoursePlanVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          name = (TextView) view.findViewById(R.id.name);
+          content = (TextView) view.findViewById(R.id.content);
+          chosen = (ImageView) view.findViewById(R.id.chosen);
         }
     }
 }

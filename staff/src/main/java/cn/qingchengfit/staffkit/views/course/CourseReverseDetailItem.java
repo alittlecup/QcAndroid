@@ -6,8 +6,8 @@ import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.CourseReportOrder;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.DateUtils;
@@ -157,22 +157,33 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
 
     class CourseReverseVH extends FlexibleViewHolder {
 
-        @BindView(R.id.item_personal_header) ImageView itemPersonalHeader;
-        @BindView(R.id.item_personal_name) TextView itemPersonalName;
-        @BindView(R.id.item_personal_gender) ImageView itemPersonalGender;
-        @BindView(R.id.tv_referrer_count) TextView tvReferrerCount;
-        @BindView(R.id.tv_student_status) TextView tvStudentStatus;
-        @BindView(R.id.item_person_phone) TextView itemPersonPhone;
-        @BindView(R.id.text_reverse_time) TextView textReverseTime;
-        @BindView(R.id.text_pay_way) TextView textPayWay;
-        @BindView(R.id.text_report_reverse_number) TextView textReportReverseNumber;
-        @BindView(R.id.text_report_reverse_income) TextView textReportReverseIncome;
-        @BindView(R.id.text_report_reverse_fact) TextView textReportReverseFact;
-        @BindView(R.id.img_pay_way) ImageView imgPayWay;
+	ImageView itemPersonalHeader;
+	TextView itemPersonalName;
+	ImageView itemPersonalGender;
+	TextView tvReferrerCount;
+	TextView tvStudentStatus;
+	TextView itemPersonPhone;
+	TextView textReverseTime;
+	TextView textPayWay;
+	TextView textReportReverseNumber;
+	TextView textReportReverseIncome;
+	TextView textReportReverseFact;
+	ImageView imgPayWay;
 
         public CourseReverseVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+            itemPersonalHeader = (ImageView) view.findViewById(R.id.item_personal_header);
+            itemPersonalName = (TextView) view.findViewById(R.id.item_personal_name);
+            itemPersonalGender = (ImageView) view.findViewById(R.id.item_personal_gender);
+            tvReferrerCount = (TextView) view.findViewById(R.id.tv_referrer_count);
+            tvStudentStatus = (TextView) view.findViewById(R.id.tv_student_status);
+            itemPersonPhone = (TextView) view.findViewById(R.id.item_person_phone);
+            textReverseTime = (TextView) view.findViewById(R.id.text_reverse_time);
+            textPayWay = (TextView) view.findViewById(R.id.text_pay_way);
+            textReportReverseNumber = (TextView) view.findViewById(R.id.text_report_reverse_number);
+            textReportReverseIncome = (TextView) view.findViewById(R.id.text_report_reverse_income);
+            textReportReverseFact = (TextView) view.findViewById(R.id.text_report_reverse_fact);
+            imgPayWay = (ImageView) view.findViewById(R.id.img_pay_way);
         }
     }
 }

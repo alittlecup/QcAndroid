@@ -9,9 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.IntentUtils;
@@ -45,12 +45,12 @@ public class EditTextActivity extends BaseActivity implements FragCallBack {
 
     String title;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
 
-    @BindView(R.id.edit_text_content) EditText editTextContent;
+	EditText editTextContent;
 
 
 
@@ -58,8 +58,23 @@ public class EditTextActivity extends BaseActivity implements FragCallBack {
         super.onCreate(savedInstanceState);
         title = getIntent().getStringExtra("title");
         setContentView(R.layout.activity_edit_text);
-        ButterKnife.bind(this);
-        initToolBar();
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      editTextContent = (EditText) findViewById(R.id.edit_text_content);
+      findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickCancel();
+        }
+      });
+
+      initToolBar();
     }
 
     public void initToolBar() {
@@ -122,10 +137,10 @@ public class EditTextActivity extends BaseActivity implements FragCallBack {
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
     }
 
     //取消搜索
-    @OnClick(R.id.searchview_cancle) public void onClickCancel() {
+ public void onClickCancel() {
     }
 }

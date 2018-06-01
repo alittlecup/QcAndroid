@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.staffkit.R;
@@ -41,7 +41,7 @@ public class NotSignFilterFragment extends BaseFragment
   public static final String SHOP_NAME = "shop_name";
   public static final String TIME_LABEL = "time_label";
 
-  @BindView(R.id.frag_student_filter) FrameLayout fragStudentFilter;
+	FrameLayout fragStudentFilter;
 
   @Inject NotSignFilterPresenter presenter;
 
@@ -63,7 +63,8 @@ public class NotSignFilterFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_not_sign_filter, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    fragStudentFilter = (FrameLayout) view.findViewById(R.id.frag_student_filter);
+
     initFilter();
     return view;
   }

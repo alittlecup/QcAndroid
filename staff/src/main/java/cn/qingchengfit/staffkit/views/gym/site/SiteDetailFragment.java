@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
@@ -44,16 +44,16 @@ import javax.inject.Inject;
  */
 public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
 
-    @BindView(R.id.name) CommonInputView name;
-    @BindView(R.id.count) CommonInputView count;
-    @BindView(R.id.usage) CommonInputView usage;
-    @BindView(R.id.btn_del) RelativeLayout btnDel;
+	CommonInputView name;
+	CommonInputView count;
+	CommonInputView usage;
+	RelativeLayout btnDel;
 
     @Inject SiteDetailPresenter presenter;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.deny_layout) View denyLayout;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	View denyLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private Space mCurSpace;
     private DialogSheet sheet;
@@ -77,8 +77,30 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      name = (CommonInputView) view.findViewById(R.id.name);
+      count = (CommonInputView) view.findViewById(R.id.count);
+      usage = (CommonInputView) view.findViewById(R.id.usage);
+      btnDel = (RelativeLayout) view.findViewById(R.id.btn_del);
+      denyLayout = (View) view.findViewById(R.id.deny_layout);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.deny_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDeny();
+        }
+      });
+      view.findViewById(R.id.usage).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onUseage();
+        }
+      });
+      view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDel();
+        }
+      });
+
+      initToolbar(toolbar);
 
         boolean eP = serPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE);
         denyLayout.setVisibility(eP ? View.GONE : View.VISIBLE);
@@ -145,11 +167,11 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
         }
     }
 
-    @OnClick(R.id.deny_layout) public void onDeny() {
+ public void onDeny() {
         showAlert(R.string.alert_permission_forbid);
     }
 
-    @OnClick(R.id.usage) public void onUseage() {
+ public void onUseage() {
         if (sheet == null) {
             sheet = new DialogSheet(getContext()).addButton(getString(R.string.course_type_private), new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -201,7 +223,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
         hideLoading();
     }
 
-    @OnClick(R.id.btn_del) public void onDel() {
+ public void onDel() {
         if (!serPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_DELETE)) {
             showAlert(R.string.alert_permission_forbid);
             return;

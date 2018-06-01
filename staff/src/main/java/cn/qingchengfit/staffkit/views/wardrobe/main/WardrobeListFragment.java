@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
@@ -54,11 +54,11 @@ import timber.log.Timber;
 public class WardrobeListFragment extends BaseFragment implements TitleFragment, FlexibleAdapter.OnItemClickListener {
     public static final int RESULT_STATUS = 1;
 
-    @BindView(R.id.free_count) TextView freeCount;
-    @BindView(R.id.rv) RecyclerView rv;
+	TextView freeCount;
+	RecyclerView rv;
     List<AbstractFlexibleItem> mData = new ArrayList<>();
     CommonFlexAdapter mAdatper;
-    @BindView(R.id.filter) TextView filter;
+	TextView filter;
     private int count = 0;
     private List<Locker> mAllLocker = new ArrayList<>();
 
@@ -83,8 +83,16 @@ public class WardrobeListFragment extends BaseFragment implements TitleFragment,
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mAdatper = new CommonFlexAdapter(mData, this);
+      freeCount = (TextView) view.findViewById(R.id.free_count);
+      rv = (RecyclerView) view.findViewById(R.id.rv);
+      filter = (TextView) view.findViewById(R.id.filter);
+      view.findViewById(R.id.filter).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onFilter();
+        }
+      });
+
+      mAdatper = new CommonFlexAdapter(mData, this);
         //        }
         rv.setHasFixedSize(true);
         SmoothScrollGridLayoutManager manager = new SmoothScrollGridLayoutManager(getContext(), 2);
@@ -157,7 +165,7 @@ public class WardrobeListFragment extends BaseFragment implements TitleFragment,
         super.onDestroyView();
     }
 
-    @OnClick(R.id.filter) public void onFilter() {
+ public void onFilter() {
         BottomSheetListDialogFragment.start(this, RESULT_STATUS, getResources().getStringArray(R.array.wardrobe_status));
     }
 

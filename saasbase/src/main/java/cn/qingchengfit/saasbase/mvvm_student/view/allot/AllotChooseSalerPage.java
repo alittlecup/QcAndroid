@@ -10,7 +10,7 @@ import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotChooseViewModel;
 import cn.qingchengfit.saasbase.student.other.BaseGirdListFragment;
 import cn.qingchengfit.utils.DialogUtils;
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -110,12 +110,10 @@ public class AllotChooseSalerPage extends StudentBaseFragment<PageAllotChooseSal
                 }
             }
 
-            new MaterialDialog.Builder(getContext()).content(msg)
-                    .positiveText(cn.qingchengfit.saasbase.R.string.common_comfirm)
-                    .negativeText(cn.qingchengfit.saasbase.R.string.common_cancel)
-                    .autoDismiss(true)
-                    .onPositive((dialog, which) -> mViewModel.allotSaler(selectIds))
-                    .show();
+            DialogUtils.showConfirm(getContext(), "", msg, (dialog, action) -> {
+                dialog.dismiss();
+                if (action == DialogAction.POSITIVE) mViewModel.allotSaler(selectIds);
+            });
 
             return true;
         });

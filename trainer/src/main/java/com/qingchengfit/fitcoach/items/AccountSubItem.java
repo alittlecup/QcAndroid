@@ -1,9 +1,6 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -55,7 +52,7 @@ public class AccountSubItem extends AbstractFlexibleItem<AccountSubItem.AccountS
 
         public AccountSubVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+
         }
     }
 }

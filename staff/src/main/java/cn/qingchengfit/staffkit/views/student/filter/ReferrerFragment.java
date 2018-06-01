@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.StudentReferrerBean;
@@ -69,10 +69,10 @@ import javax.inject.Inject;
     @Arg int chooseType = -1;// 1会员跟进筛选-单选；2；会员列表筛选页-多选；3-搜索推荐人
 
     @Inject ReferrerPresenter presenter;
-    @BindView(R.id.rv_referrer) RecyclerView rvReferrer;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	RecyclerView rvReferrer;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +82,12 @@ import javax.inject.Inject;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_referrer_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      rvReferrer = (RecyclerView) view.findViewById(R.id.rv_referrer);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         initView();
         if (chooseType != 3) {

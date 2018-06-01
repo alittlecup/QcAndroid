@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
@@ -38,13 +38,13 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  */
 public class NotiSettingChargeResultFragment extends BaseFragment {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.img_result) ImageView imgResult;
-  @BindView(R.id.tv_result_title) TextView tvResultTitle;
-  @BindView(R.id.tv_content) TextView tvContent;
-  @BindView(R.id.btn_charge_history) Button btnChargeHistory;
-  @BindView(R.id.btn_back) Button btnBack;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	ImageView imgResult;
+	TextView tvResultTitle;
+	TextView tvContent;
+	Button btnChargeHistory;
+	Button btnBack;
   private boolean result = false;
 
   public static NotiSettingChargeResultFragment newInstanceSuccess(int count) {
@@ -72,7 +72,24 @@ public class NotiSettingChargeResultFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_charge_sms_success, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    imgResult = (ImageView) view.findViewById(R.id.img_result);
+    tvResultTitle = (TextView) view.findViewById(R.id.tv_result_title);
+    tvContent = (TextView) view.findViewById(R.id.tv_content);
+    btnChargeHistory = (Button) view.findViewById(R.id.btn_charge_history);
+    btnBack = (Button) view.findViewById(R.id.btn_back);
+    view.findViewById(R.id.btn_charge_history).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnChargeHistoryClicked();
+      }
+    });
+    view.findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnBackClicked();
+      }
+    });
+
     initToolbar(toolbar);
     if (result) {
 
@@ -102,13 +119,13 @@ public class NotiSettingChargeResultFragment extends BaseFragment {
     super.onDestroyView();
   }
 
-  @OnClick(R.id.btn_charge_history) public void onBtnChargeHistoryClicked() {
+ public void onBtnChargeHistoryClicked() {
     if (result)
       routeTo(new NotiSettingChargeHistoryFragment());
     else getActivity().onBackPressed();
   }
 
-  @OnClick(R.id.btn_back) public void onBtnBackClicked() {
+ public void onBtnBackClicked() {
     getActivity().finish();
   }
 }

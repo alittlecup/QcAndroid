@@ -9,9 +9,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.AllotSalePreView;
@@ -35,8 +35,8 @@ public class SalesListFragment extends BaseFragment implements SalesListPresente
 
   AllotSalesAdapter adapter;
   List<AllotSalePreView> datas = new ArrayList<>();
-  @BindView(R.id.rv_sales) RecycleViewWithNoImg rvSales;
-  Unbinder unbinder;
+	RecycleViewWithNoImg rvSales;
+
   private LinearLayoutManager mLinearLayoutManager;
 
   public static SalesListFragment newInstance() {
@@ -62,7 +62,8 @@ public class SalesListFragment extends BaseFragment implements SalesListPresente
 
     View view =
         inflater.inflate(R.layout.fragment_allotsale_salelist, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    rvSales = (RecycleViewWithNoImg) view.findViewById(R.id.rv_sales);
+
     if (getActivity() instanceof AllotSalesActivity) {
       ((AllotSalesActivity) getActivity()).removeFilterFragment();
     }

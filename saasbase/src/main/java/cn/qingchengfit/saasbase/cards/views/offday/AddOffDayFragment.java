@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
@@ -51,16 +51,16 @@ import javax.inject.Inject;
 @Leaf(module = "card", path = "/add/offday") public class AddOffDayFragment extends SaasBaseFragment
     implements AddOffDayView {
 
-  @BindView(R2.id.mark) CommonInputView mark;
-  @BindView(R2.id.offday_reason) CommonInputView offdayReason;
-  @BindView(R2.id.start_day) CommonInputView startDay;
-  @BindView(R2.id.end_day) CommonInputView endDay;
-  @BindView(R2.id.spend) CommonInputView spend;
-  @BindView(R2.id.comfirm) Button comfirm;
+	CommonInputView mark;
+	CommonInputView offdayReason;
+	CommonInputView startDay;
+	CommonInputView endDay;
+	CommonInputView spend;
+	Button comfirm;
   @Need String cardId;
   @Inject AddOffDayPresenter presenter;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	TextView toolbarTitle;
   private TimeDialogWindow pwTime;
   private TextWatcher textchange = new TextWatcher() {
     @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -85,7 +85,40 @@ import javax.inject.Inject;
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_card_add_offday, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    mark = (CommonInputView) view.findViewById(R.id.mark);
+    offdayReason = (CommonInputView) view.findViewById(R.id.offday_reason);
+    startDay = (CommonInputView) view.findViewById(R.id.start_day);
+    endDay = (CommonInputView) view.findViewById(R.id.end_day);
+    spend = (CommonInputView) view.findViewById(R.id.spend);
+    comfirm = (Button) view.findViewById(R.id.comfirm);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.offday_reason).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        AddOffDayFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.start_day).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        AddOffDayFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.end_day).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        AddOffDayFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.mark).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        AddOffDayFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        AddOffDayFragment.this.onClick(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText("添加请假");
@@ -101,7 +134,7 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
-  @OnClick({ R2.id.offday_reason, R2.id.start_day, R2.id.end_day, R2.id.mark, R2.id.comfirm })
+
   public void onClick(View view) {
     int i = view.getId();
     if (i == R.id.offday_reason) {

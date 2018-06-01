@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.ClubCardView;
@@ -49,11 +49,11 @@ public class CardTypeListAdapter extends RecyclerView.Adapter<CardTypeListAdapte
     }
 
     public class CardTypeListVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.cardtype) public ClubCardView clubCardView;
+	public ClubCardView clubCardView;
 
         public CardTypeListVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          clubCardView = (ClubCardView) itemView.findViewById(R.id.cardtype);
         }
     }
 }

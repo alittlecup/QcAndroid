@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
@@ -58,7 +58,7 @@ import javax.inject.Inject;
 
     @Arg(required = false) ArrayList<SignInCardCostBean.CardCost> costList;
 
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
     @Inject SigninConfigCardtypePresenter presenter;
     /**
      * 获得的初始化费用配置信息
@@ -73,8 +73,9 @@ import javax.inject.Inject;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_cardtype_lsit, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      delegatePresenter(presenter, this);
         mCallbackActivity.setToolbar("会员卡签到", false, null, R.menu.menu_compelete, new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 if (isSetted()) {

@@ -6,8 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.StudentScoreHistoryBean;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -71,17 +71,23 @@ public class HistoryItem extends AbstractFlexibleItem<HistoryItem.HistoryVH> {
     }
 
     public class HistoryVH extends FlexibleViewHolder {
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.info) TextView info;
-        @BindView(R.id.award) TextView award;
-        @BindView(R.id.gym) TextView gym;
-        @BindView(R.id.comment) TextView comment;
-        @BindView(R.id.score) TextView score;
-        @BindView(R.id.cur_score) TextView curScore;
+	TextView title;
+	TextView info;
+	TextView award;
+	TextView gym;
+	TextView comment;
+	TextView score;
+	TextView curScore;
 
         public HistoryVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          title = (TextView) view.findViewById(R.id.title);
+          info = (TextView) view.findViewById(R.id.info);
+          award = (TextView) view.findViewById(R.id.award);
+          gym = (TextView) view.findViewById(R.id.gym);
+          comment = (TextView) view.findViewById(R.id.comment);
+          score = (TextView) view.findViewById(R.id.score);
+          curScore = (TextView) view.findViewById(R.id.cur_score);
         }
     }
 }

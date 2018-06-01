@@ -15,9 +15,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.StudentScoreAwardRuleBean;
@@ -66,29 +66,29 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
     @Inject ScoreAwardAddPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.tv_date_start) TextView tvDateStart;
-    @BindView(R.id.tv_date_end) TextView tvDateEnd;
-    @BindView(R.id.sw_score_config_group) SwitcherLayout swScoreConfigGroup;
-    @BindView(R.id.et_award_group) EditText etAwardGroup;
-    @BindView(R.id.ll_award_group) LinearLayout llAwardGroup;
-    @BindView(R.id.sw_score_config_private) SwitcherLayout swScoreConfigPrivate;
-    @BindView(R.id.et_award_private) EditText etAwardPrivate;
-    @BindView(R.id.ll_award_private) LinearLayout llAwardPrivate;
-    @BindView(R.id.sw_score_config_signin) SwitcherLayout swScoreConfigSignin;
-    @BindView(R.id.et_award_signin) EditText etAwardSignin;
-    @BindView(R.id.ll_award_signin) LinearLayout llAwardSignin;
-    @BindView(R.id.sw_score_config_buy) SwitcherLayout swScoreConfigBuy;
-    @BindView(R.id.et_award_buy) EditText etAwardBuy;
-    @BindView(R.id.ll_award_buy) LinearLayout llAwardBuy;
-    @BindView(R.id.sw_score_config_charge) SwitcherLayout swScoreConfigCharge;
-    @BindView(R.id.et_award_charge) EditText etAwardCharge;
-    @BindView(R.id.ll_award_charge) LinearLayout llAwardCharge;
-    @BindView(R.id.tv_award_delete) TextView tvAwardDelete;
+	TextView tvDateStart;
+	TextView tvDateEnd;
+	SwitcherLayout swScoreConfigGroup;
+	EditText etAwardGroup;
+	LinearLayout llAwardGroup;
+	SwitcherLayout swScoreConfigPrivate;
+	EditText etAwardPrivate;
+	LinearLayout llAwardPrivate;
+	SwitcherLayout swScoreConfigSignin;
+	EditText etAwardSignin;
+	LinearLayout llAwardSignin;
+	SwitcherLayout swScoreConfigBuy;
+	EditText etAwardBuy;
+	LinearLayout llAwardBuy;
+	SwitcherLayout swScoreConfigCharge;
+	EditText etAwardCharge;
+	LinearLayout llAwardCharge;
+	TextView tvAwardDelete;
     //private Date dateStart;
     //private Date dateEnd;
     ArrayList<StudentScoreAwardRuleBean> allAwards = new ArrayList<>();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private int type;
     private int requestCode;
 
@@ -132,8 +132,43 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score_config_award_add, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      tvDateStart = (TextView) view.findViewById(R.id.tv_date_start);
+      tvDateEnd = (TextView) view.findViewById(R.id.tv_date_end);
+      swScoreConfigGroup = (SwitcherLayout) view.findViewById(R.id.sw_score_config_group);
+      etAwardGroup = (EditText) view.findViewById(R.id.et_award_group);
+      llAwardGroup = (LinearLayout) view.findViewById(R.id.ll_award_group);
+      swScoreConfigPrivate = (SwitcherLayout) view.findViewById(R.id.sw_score_config_private);
+      etAwardPrivate = (EditText) view.findViewById(R.id.et_award_private);
+      llAwardPrivate = (LinearLayout) view.findViewById(R.id.ll_award_private);
+      swScoreConfigSignin = (SwitcherLayout) view.findViewById(R.id.sw_score_config_signin);
+      etAwardSignin = (EditText) view.findViewById(R.id.et_award_signin);
+      llAwardSignin = (LinearLayout) view.findViewById(R.id.ll_award_signin);
+      swScoreConfigBuy = (SwitcherLayout) view.findViewById(R.id.sw_score_config_buy);
+      etAwardBuy = (EditText) view.findViewById(R.id.et_award_buy);
+      llAwardBuy = (LinearLayout) view.findViewById(R.id.ll_award_buy);
+      swScoreConfigCharge = (SwitcherLayout) view.findViewById(R.id.sw_score_config_charge);
+      etAwardCharge = (EditText) view.findViewById(R.id.et_award_charge);
+      llAwardCharge = (LinearLayout) view.findViewById(R.id.ll_award_charge);
+      tvAwardDelete = (TextView) view.findViewById(R.id.tv_award_delete);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.tv_date_start).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDateClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_date_end).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDateClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_award_delete).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDeleteClick();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         initView();
         return view;
@@ -244,7 +279,7 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
         return this.getClass().getName();
     }
 
-    @OnClick({ R.id.tv_date_start, R.id.tv_date_end }) public void onDateClick(View view) {
+ public void onDateClick(View view) {
         switch (view.getId()) {
             case R.id.tv_date_start:
                 if (pwTime == null) {
@@ -281,7 +316,7 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
         }
     }
 
-    @OnClick(R.id.tv_award_delete) public void onDeleteClick() {
+ public void onDeleteClick() {
         new MaterialDialog.Builder(getContext()).content("删除积分奖励不会影响已发放的积分，确定删除积分奖励？")
             .positiveText(R.string.common_comfirm)
             .negativeText(R.string.common_cancel)

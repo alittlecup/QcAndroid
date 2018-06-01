@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
@@ -41,7 +41,7 @@ import javax.inject.Inject;
  */
 public class StudentsChooseDialogFragment extends BaseDialogFragment implements StudentChooseView {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
     List<String> stringList = new ArrayList<>();
     @Inject StudentChoosePresenter presenter;
     private ClassStatmentFilterCallback mCallback;
@@ -56,8 +56,9 @@ public class StudentsChooseDialogFragment extends BaseDialogFragment implements 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_coach, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //mCallback.getFilterComponent().inject(this);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+      //mCallback.getFilterComponent().inject(this);
         adapter = new StringAdapter(stringList);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(adapter);

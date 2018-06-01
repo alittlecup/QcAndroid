@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.LockerRegion;
@@ -52,17 +52,17 @@ import javax.inject.Inject;
  */
 public class DistrictAddFragment extends BaseFragment implements DistrictAddPresenter.MVPView {
 
-    @BindView(R.id.text) CommonInputView text;
+	CommonInputView text;
     @Inject DistrictAddPresenter presenter;
-    @BindView(R.id.del) TextView del;
-    @BindView(R.id.layout_del) LinearLayout layoutDel;
-    @BindView(R.id.no_permission) View noPermission;
+	TextView del;
+	LinearLayout layoutDel;
+	View noPermission;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
 
     private LockerRegion mLockerRegion;
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
@@ -97,8 +97,25 @@ public class DistrictAddFragment extends BaseFragment implements DistrictAddPres
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_district_add, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      text = (CommonInputView) view.findViewById(R.id.text);
+      del = (TextView) view.findViewById(R.id.del);
+      layoutDel = (LinearLayout) view.findViewById(R.id.layout_del);
+      noPermission = (View) view.findViewById(R.id.no_permission);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+      view.findViewById(R.id.no_permission).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onNoPermission();
+        }
+      });
+      view.findViewById(R.id.del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          DistrictAddFragment.this.onClick();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         return view;
     }
@@ -123,7 +140,7 @@ public class DistrictAddFragment extends BaseFragment implements DistrictAddPres
         }
     }
 
-    @OnClick(R.id.no_permission) public void onNoPermission() {
+ public void onNoPermission() {
         showAlert(R.string.alert_permission_forbid);
     }
 
@@ -136,7 +153,7 @@ public class DistrictAddFragment extends BaseFragment implements DistrictAddPres
         super.onDestroyView();
     }
 
-    @OnClick(R.id.del) public void onClick() {
+ public void onClick() {
         //            showAlert(getString(R.string.titile_forbid_del_region), getString(R.string.alert_del_region_deny));
         if (mLockerRegion.has_used_lockers) {
             new MaterialDialog.Builder(getContext()).title(getString(R.string.titile_forbid_del_region))

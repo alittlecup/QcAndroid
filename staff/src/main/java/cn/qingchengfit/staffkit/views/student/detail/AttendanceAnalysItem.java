@@ -1,11 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -46,14 +42,17 @@ public class AttendanceAnalysItem extends AbstractFlexibleItem<AttendanceAnalysI
     }
 
     public class AttendanceAnalysVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_day) TextView tvDay;
-        @BindView(R.id.tv_action) TextView tvAction;
-        @BindView(R.id.bg_color) View bgColor;
-        @BindView(R.id.unit) TextView unit;
+	TextView tvDay;
+	TextView tvAction;
+	View bgColor;
+	TextView unit;
 
         public AttendanceAnalysVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvDay = (TextView) view.findViewById(R.id.tv_day);
+          tvAction = (TextView) view.findViewById(R.id.tv_action);
+          bgColor = (View) view.findViewById(R.id.bg_color);
+          unit = (TextView) view.findViewById(R.id.unit);
         }
     }
 }

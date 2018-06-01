@@ -1,11 +1,7 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -31,11 +27,11 @@ public class HideBatchItem extends AbstractFlexibleItem<HideBatchItem.HideBatchV
     }
 
     public class HideBatchVH extends FlexibleViewHolder {
-        @BindView(R.id.btn_show) TextView btnShow;
+	TextView btnShow;
 
         public HideBatchVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          btnShow = (TextView) view.findViewById(R.id.btn_show);
         }
     }
 }

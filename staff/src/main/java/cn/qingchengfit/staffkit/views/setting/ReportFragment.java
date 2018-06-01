@@ -14,9 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.mvpbase.CommonPView;
@@ -51,14 +51,14 @@ import rx.schedulers.Schedulers;
 public class ReportFragment extends BaseDialogFragment implements CommonPView {
 
     @Inject ReportPresenter presenter;
-    @BindView(R.id.setting_advice_mail) EditText settingAdviceMail;
-    @BindView(R.id.setting_advice_content) EditText settingAdviceContent;
-    @BindView(R.id.advice_right_arrow) ImageView adviceRightArrow;
-    @BindView(R.id.advice_update_img) ImageView adviceUpdateImg;
-    @BindView(R.id.advice_update) RelativeLayout adviceUpdate;
-    @BindView(R.id.setting_advice_btn) Button settingAdviceBtn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	EditText settingAdviceMail;
+	EditText settingAdviceContent;
+	ImageView adviceRightArrow;
+	ImageView adviceUpdateImg;
+	RelativeLayout adviceUpdate;
+	Button settingAdviceBtn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private String uploadImageUrl = "";
 
@@ -85,9 +85,26 @@ public class ReportFragment extends BaseDialogFragment implements CommonPView {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      settingAdviceMail = (EditText) view.findViewById(R.id.setting_advice_mail);
+      settingAdviceContent = (EditText) view.findViewById(R.id.setting_advice_content);
+      adviceRightArrow = (ImageView) view.findViewById(R.id.advice_right_arrow);
+      adviceUpdateImg = (ImageView) view.findViewById(R.id.advice_update_img);
+      adviceUpdate = (RelativeLayout) view.findViewById(R.id.advice_update);
+      settingAdviceBtn = (Button) view.findViewById(R.id.setting_advice_btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.setting_advice_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAdvice();
+        }
+      });
+      view.findViewById(R.id.advice_update).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          upImage();
+        }
+      });
 
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 dismiss();
@@ -98,7 +115,7 @@ public class ReportFragment extends BaseDialogFragment implements CommonPView {
         return view;
     }
 
-    @OnClick(R.id.setting_advice_btn) public void onAdvice() {
+ public void onAdvice() {
         if (TextUtils.isEmpty(settingAdviceMail.getText()) || TextUtils.isEmpty(settingAdviceContent.getText())) {
             ToastUtils.show(getString(R.string.err_advice));
             return;
@@ -108,7 +125,7 @@ public class ReportFragment extends BaseDialogFragment implements CommonPView {
                 uploadImageUrl));
     }
 
-    @OnClick(R.id.advice_update) public void upImage() {
+ public void upImage() {
         RxBus.getBus().post(new LoadingEvent(true));
         ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
         dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {

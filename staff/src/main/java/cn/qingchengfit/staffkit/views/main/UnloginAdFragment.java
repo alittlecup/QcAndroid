@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
 import cn.qingchengfit.staffkit.App;
@@ -48,10 +48,10 @@ import rx.functions.Action1;
 public class UnloginAdFragment extends BaseFragment {
 
     public static final int RESULT_LOGIN = 2;
-    @BindView(R.id.vp) ViewPager vp;
-    @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
-    @BindView(R.id.btn_use_now) Button btnUseNow;
-    @BindView(R.id.btn_login) Button btnLogin;
+	ViewPager vp;
+	CircleIndicator splashIndicator;
+	Button btnUseNow;
+	Button btnLogin;
     private int[] imgs = new int[] {
         R.drawable.img_guide1, R.drawable.img_guide2, R.drawable.img_guide3, R.drawable.img_guide4,
     };
@@ -64,8 +64,22 @@ public class UnloginAdFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_ad, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //告诉 未登录home页，新增场馆到第几步了
+      vp = (ViewPager) view.findViewById(R.id.vp);
+      splashIndicator = (CircleIndicator) view.findViewById(R.id.splash_indicator);
+      btnUseNow = (Button) view.findViewById(R.id.btn_use_now);
+      btnLogin = (Button) view.findViewById(R.id.btn_login);
+      view.findViewById(R.id.btn_use_now).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickUse(v);
+        }
+      });
+      view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickUse(v);
+        }
+      });
+
+      //告诉 未登录home页，新增场馆到第几步了
         RxBus.getBus().post(new EventUnloginHomeLevel(0));
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -102,7 +116,7 @@ public class UnloginAdFragment extends BaseFragment {
         return UnloginAdFragment.class.getName();
     }
 
-    @OnClick({ R.id.btn_use_now, R.id.btn_login }) public void onClickUse(View v) {
+ public void onClickUse(View v) {
         if (!TextUtils.isEmpty(App.staffId)) {
             if (getParentFragment() instanceof HomeUnLoginFragment) {
                 ((HomeUnLoginFragment) getParentFragment()).replace(new ChooseBrandInMainFragmentBuilder().build(), true);

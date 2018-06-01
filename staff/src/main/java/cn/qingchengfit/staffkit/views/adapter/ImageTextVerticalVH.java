@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 
 /**
@@ -23,11 +21,12 @@ import cn.qingchengfit.staffkit.R;
  */
 public class ImageTextVerticalVH extends RecyclerView.ViewHolder {
 
-    @SuppressWarnings("unused") @BindView(R.id.text) public TextView tv;
-    @SuppressWarnings("unused") @BindView(R.id.img) public ImageView img;
+  public TextView tv;
+  public ImageView img;
 
-    public ImageTextVerticalVH(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
+  public ImageTextVerticalVH(View itemView) {
+    super(itemView);
+    tv = itemView.findViewById(R.id.text);
+    img = itemView.findViewById(R.id.img);
+  }
 }

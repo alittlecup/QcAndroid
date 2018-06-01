@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -120,17 +120,23 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
     }
 
     public static class ImageTwoTextVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name) TextView itemGymName;
-        @BindView(R.id.item_is_personal) TextView itemIsPersonal;
-        @BindView(R.id.qc_identify) ImageView qcIdentify;
-        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
-        @BindView(R.id.item_right) ImageView itemRight;
-        @BindView(R.id.item_gym_brand) TextView itemBrand;
+	ImageView itemGymHeader;
+	TextView itemGymName;
+	TextView itemIsPersonal;
+	ImageView qcIdentify;
+	TextView itemGymPhonenum;
+	ImageView itemRight;
+	TextView itemBrand;
 
         public ImageTwoTextVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          itemGymHeader = (ImageView) itemView.findViewById(R.id.item_gym_header);
+          itemGymName = (TextView) itemView.findViewById(R.id.item_gym_name);
+          itemIsPersonal = (TextView) itemView.findViewById(R.id.item_is_personal);
+          qcIdentify = (ImageView) itemView.findViewById(R.id.qc_identify);
+          itemGymPhonenum = (TextView) itemView.findViewById(R.id.item_gym_phonenum);
+          itemRight = (ImageView) itemView.findViewById(R.id.item_right);
+          itemBrand = (TextView) itemView.findViewById(R.id.item_gym_brand);
         }
     }
 }

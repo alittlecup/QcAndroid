@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInCostBody;
@@ -69,10 +69,10 @@ import javax.inject.Inject;
     @Inject GymWrapper gymWrapper;
     @Arg(required = false) int enterType;// 0 为正常  1为设置跳转
     @Arg(required = false) int autoIn;// 0 为正常  1为自动跳转进来的
-    @BindView(R.id.tv_content) TextView tvContent;
-    @BindView(R.id.tag_pro) ImageView tagPro;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	TextView tvContent;
+	ImageView tagPro;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Inject RestRepositoryV2 restRepository;
     @Inject SigninConfigCardtypePresenter presenter;
@@ -87,8 +87,17 @@ import javax.inject.Inject;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_type, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
+      tagPro = (ImageView) view.findViewById(R.id.tag_pro);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.layout_signin_card).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInTypeFragment.this.onClick();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         delegatePresenter(moduleConfigsPresenter, this);
         tagPro.setVisibility(gymWrapper.isPro() ? View.GONE : View.VISIBLE);
@@ -139,7 +148,7 @@ import javax.inject.Inject;
         return true;
     }
 
-    @OnClick(R.id.layout_signin_card) public void onClick() {
+ public void onClick() {
         if (gymWrapper.isPro()) {
             Intent x = IntentUtils.getChooseIntent(getContext(), gymWrapper.getCoachService(), gymWrapper.getBrand(),
                 ChooseActivity.SIGN_IN_CARDS);

@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -51,12 +51,12 @@ public class ScoreModifyFragment extends BaseFragment implements ScoreModifyPres
     private static final int RESULT_ADD_REMARKS = 11;
     public int type;
     @Inject ScoreModifyPresenter presenter;
-    @BindView(R.id.tv_cur_score) TextView tvCurScore;
-    @BindView(R.id.tv_score_after_lable) TextView tvScoreAfterLable;
-    @BindView(R.id.tv_score_after_value) TextView tvScoreAfterValue;
-    @BindView(R.id.civ_remark) CommonInputView civRemark;
-    @BindView(R.id.tv_student_score_lable) TextView tvStudentScoreLable;
-    @BindView(R.id.et_score) EditText etScore;
+	TextView tvCurScore;
+	TextView tvScoreAfterLable;
+	TextView tvScoreAfterValue;
+	CommonInputView civRemark;
+	TextView tvStudentScoreLable;
+	EditText etScore;
     private String remarks;
     private String curScore;
 
@@ -85,8 +85,19 @@ public class ScoreModifyFragment extends BaseFragment implements ScoreModifyPres
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score_modify, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      tvCurScore = (TextView) view.findViewById(R.id.tv_cur_score);
+      tvScoreAfterLable = (TextView) view.findViewById(R.id.tv_score_after_lable);
+      tvScoreAfterValue = (TextView) view.findViewById(R.id.tv_score_after_value);
+      civRemark = (CommonInputView) view.findViewById(R.id.civ_remark);
+      tvStudentScoreLable = (TextView) view.findViewById(R.id.tv_student_score_lable);
+      etScore = (EditText) view.findViewById(R.id.et_score);
+      view.findViewById(R.id.civ_remark).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ScoreModifyFragment.this.onClick();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initTitle();
         initView();
         return view;
@@ -178,7 +189,7 @@ public class ScoreModifyFragment extends BaseFragment implements ScoreModifyPres
         return ScoreModifyFragment.class.getName();
     }
 
-    @OnClick(R.id.civ_remark) public void onClick() {
+ public void onClick() {
         // TODO: 2017/11/6
         //Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
         //startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);

@@ -19,15 +19,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -64,21 +64,21 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
 
   public static final int RESULT_FLOW = 1;
 
-  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
 
   @Inject StaffListPresenter presenter;
-  @BindView(R2.id.nodata) LinearLayout nodata;
-  @BindView(R2.id.loading_layout) LinearLayout loadingLayout;
-  @BindView(R2.id.su_admin_title) TextView suAdminTitle;
-  @BindView(R2.id.su_avatar) ImageView suAvatar;
-  @BindView(R2.id.su_name) TextView suName;
-  @BindView(R2.id.su_phone) TextView suPhone;
+	LinearLayout nodata;
+	LinearLayout loadingLayout;
+	TextView suAdminTitle;
+	ImageView suAvatar;
+	TextView suName;
+	TextView suPhone;
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
   private Staff mSelf;
 
@@ -101,7 +101,26 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    nodata = (LinearLayout) view.findViewById(R.id.nodata);
+    loadingLayout = (LinearLayout) view.findViewById(R.id.loading_layout);
+    suAdminTitle = (TextView) view.findViewById(R.id.su_admin_title);
+    suAvatar = (ImageView) view.findViewById(R.id.su_avatar);
+    suName = (TextView) view.findViewById(R.id.su_name);
+    suPhone = (TextView) view.findViewById(R.id.su_phone);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.fab_add_staff).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        addStaff();
+      }
+    });
+    view.findViewById(R.id.layout_su).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickSu();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     if (getArguments() != null){
@@ -211,7 +230,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     }
   }
 
-  @OnClick(R2.id.fab_add_staff) public void addStaff() {
+ public void addStaff() {
 
     if (!serPermisAction.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
@@ -264,7 +283,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     //        recyclerview.setFresh(false);
   }
 
-  @OnClick(R2.id.layout_su) public void onClickSu() {
+ public void onClickSu() {
     if (mSu != null && mSelf != null && mSu.getPhone().equalsIgnoreCase(mSelf.getPhone())) {
       //getFragmentManager().beginTransaction()
       //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)

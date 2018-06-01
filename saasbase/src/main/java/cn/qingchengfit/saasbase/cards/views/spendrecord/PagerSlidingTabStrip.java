@@ -28,7 +28,6 @@ import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.utils.CompatUtils;
 
-import static cn.qingchengfit.saasbase.R2.id.img;
 
 /*
  * Copyright (C) 2013 Andreas Stuetz <andreas.stuetz@gmail.com>
@@ -297,7 +296,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
      */
     private void addImageTab(final int position, boolean show, String text) {
         LinearLayout tab = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_notification_indicator, null);
-        ImageView imageView = (ImageView) tab.findViewById(img);
+        ImageView imageView = (ImageView) tab.findViewById(R.id.img);
         imageView.setVisibility(show ? VISIBLE : INVISIBLE);
         TextView textView = (TextView) tab.findViewById(R.id.text);
         //        Glide.with(getContext()).load(img).asBitmap().into(new CircleImgWrapper(imageView, getContext()));

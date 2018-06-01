@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.LargeInputView;
@@ -39,10 +39,10 @@ import cn.qingchengfit.utils.IntentUtils;
  */
 public class WriteDescFragment extends BaseDialogFragment {
 
-    @BindView(R.id.descripe) LargeInputView descripe;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	LargeInputView descripe;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private TextChange textChange;
 
     public static void start(Fragment fragment, int requestCode, String title, String hint) {
@@ -83,8 +83,17 @@ public class WriteDescFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_descript, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      descripe = (LargeInputView) view.findViewById(R.id.descripe);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbarTitile.setText(getArguments().getString("title"));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -114,7 +123,7 @@ public class WriteDescFragment extends BaseDialogFragment {
         return view;
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (!TextUtils.isEmpty(descripe.getContent())) {
             getTargetFragment().onActivityResult(getTargetRequestCode(), android.app.Activity.RESULT_OK,
                 IntentUtils.instanceStringIntent(descripe.getContent()));

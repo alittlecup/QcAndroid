@@ -11,10 +11,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.ResponseConstant;
@@ -64,24 +64,61 @@ import rx.schedulers.Schedulers;
  */
 public class MineFragmentFragment extends BaseFragment {
 
-    @BindView(R.id.img_header) ImageView imgHeader;
-    @BindView(R.id.tv_name) TextView tvName;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.layout_my_orders) LinearLayout layoutMyOrders;
-    @BindView(R.id.btn_login) Button btnLogin;
-    @BindView(R.id.layout_login) LinearLayout layoutLogin;
+	ImageView imgHeader;
+	TextView tvName;
+	TextView toolbarTitle;
+	Toolbar toolbar;
+	LinearLayout layoutMyOrders;
+	Button btnLogin;
+	LinearLayout layoutLogin;
     @Inject LoginStatus loginStatus;
     @Inject BaseRouter baseRouter;
-    private Unbinder unbinder;
+
     private QcCoachRespone.DataEntity.CoachEntity user;
     private Subscription sp1;
     private GuideWindow gd1;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.mine);
+      imgHeader = (ImageView) view.findViewById(R.id.img_header);
+      tvName = (TextView) view.findViewById(R.id.tv_name);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      layoutMyOrders = (LinearLayout) view.findViewById(R.id.layout_my_orders);
+      btnLogin = (Button) view.findViewById(R.id.btn_login);
+      layoutLogin = (LinearLayout) view.findViewById(R.id.layout_login);
+      view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          doLogin();
+        }
+      });
+      view.findViewById(R.id.layout_header).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.layout_my_page).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.layout_my_resume).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.layout_my_courseplan).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+      view.findViewById(R.id.layout_my_orders).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFunction(v);
+        }
+      });
+
+      toolbarTitle.setText(R.string.mine);
 
         RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> checkLogin());
         //checkLogin();
@@ -117,7 +154,7 @@ public class MineFragmentFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.btn_login) public void doLogin() {
+ public void doLogin() {
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
         toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
@@ -189,10 +226,10 @@ public class MineFragmentFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
-    @OnClick({ R.id.layout_header, R.id.layout_my_page, R.id.layout_my_resume, R.id.layout_my_courseplan, R.id.layout_my_orders })
+
     public void onClickFunction(View view) {
         if (!loginStatus.isLogined()) {
             doLogin();

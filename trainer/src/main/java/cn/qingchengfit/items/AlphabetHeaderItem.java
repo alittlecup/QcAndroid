@@ -1,12 +1,8 @@
 package cn.qingchengfit.items;
 
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
@@ -43,11 +39,11 @@ public class AlphabetHeaderItem extends AbstractHeaderItem<AlphabetHeaderItem.Al
     }
 
     public class AlphabetHeaderVH extends FlexibleViewHolder {
-        @BindView(R.id.title) TextView title;
+	TextView title;
 
         public AlphabetHeaderVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          title = (TextView) view.findViewById(R.id.title);
         }
     }
 }

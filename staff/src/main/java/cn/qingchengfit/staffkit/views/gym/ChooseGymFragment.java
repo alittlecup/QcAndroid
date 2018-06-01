@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextAdapter;
@@ -42,9 +42,9 @@ import java.util.List;
  */
 public class ChooseGymFragment extends BaseDialogFragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecyclerView recycleview;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
     private ImageTwoTextAdapter mGymsAdapter;
     private AdapterView.OnItemClickListener listener;
@@ -82,8 +82,11 @@ public class ChooseGymFragment extends BaseDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //        ((App)getActivity().getApplication()).getAppCompoent().inject(this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      //        ((App)getActivity().getApplication()).getAppCompoent().inject(this);
 
         toolbarTitile.setText("选择健身房");
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);

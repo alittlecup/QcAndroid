@@ -5,8 +5,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.TextpaperUtils;
 import cn.qingchengfit.bean.FunctionBean;
@@ -49,13 +49,15 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
     }
 
     public class ManageWorkVH extends FlexibleViewHolder {
-        @BindView(R.id.image) ImageView image;
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.subTitle) TextView subTitle;
+	ImageView image;
+	TextView title;
+	TextView subTitle;
 
         public ManageWorkVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          image = (ImageView) view.findViewById(R.id.image);
+          title = (TextView) view.findViewById(R.id.title);
+          subTitle = (TextView) view.findViewById(R.id.subTitle);
         }
     }
 }

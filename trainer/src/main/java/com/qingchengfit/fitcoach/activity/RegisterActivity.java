@@ -5,32 +5,41 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.registe_phone_num) TextInputLayout registePhoneNum;
-    @BindView(R.id.registe_username) TextInputLayout registeUsername;
-    @BindView(R.id.registe_password) TextInputLayout registePassword;
-    @BindView(R.id.registe_phone_verity) TextInputLayout registePhoneVerity;
-    @BindView(R.id.registe_getcode_btn) Button registeGetcodeBtn;
-    @BindView(R.id.registe_checkcode_layout) LinearLayout registeCheckcodeLayout;
-    @BindView(R.id.registe_btn) Button registeBtn;
+	TextInputLayout registePhoneNum;
+	TextInputLayout registeUsername;
+	TextInputLayout registePassword;
+	TextInputLayout registePhoneVerity;
+	Button registeGetcodeBtn;
+	LinearLayout registeCheckcodeLayout;
+	Button registeBtn;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+      registePhoneNum = (TextInputLayout) findViewById(R.id.registe_phone_num);
+      registeUsername = (TextInputLayout) findViewById(R.id.registe_username);
+      registePassword = (TextInputLayout) findViewById(R.id.registe_password);
+      registePhoneVerity = (TextInputLayout) findViewById(R.id.registe_phone_verity);
+      registeGetcodeBtn = (Button) findViewById(R.id.registe_getcode_btn);
+      registeCheckcodeLayout = (LinearLayout) findViewById(R.id.registe_checkcode_layout);
+      registeBtn = (Button) findViewById(R.id.registe_btn);
+      findViewById(R.id.registe_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onRegisge();
+        }
+      });
     }
 
-    @OnClick(R.id.registe_btn) public void onRegisge() {
+ public void onRegisge() {
         Gson gson = new Gson();
         RegisteBean bean = new RegisteBean("123456778", "papap", "123123");
         //        QcCloudClient.getApi().postApi

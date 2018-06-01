@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
@@ -43,8 +43,8 @@ import java.util.Arrays;
  */
 public class ClassLimitBottomFragment extends BaseDialogFragment {
 
-    @BindView(R2.id.freqent) WheelView freqent;
-    @BindView(R2.id.times) WheelView times;
+	WheelView freqent;
+	WheelView times;
     private ArrayWheelAdapter<String> frequentAdatper;
 
     public static void start(Fragment fragment, int requestCode) {
@@ -69,8 +69,15 @@ public class ClassLimitBottomFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_class_limit, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        times.setAdapter(new NumericWheelAdapter(0, 100, 1));
+      freqent = (WheelView) view.findViewById(R.id.freqent);
+      times = (WheelView) view.findViewById(R.id.times);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ClassLimitBottomFragment.this.onClick();
+        }
+      });
+
+      times.setAdapter(new NumericWheelAdapter(0, 100, 1));
         times.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);
         frequentAdatper =
             new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.class_frequent))), 6);
@@ -102,7 +109,7 @@ public class ClassLimitBottomFragment extends BaseDialogFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R2.id.comfirm) public void onClick() {
+ public void onClick() {
         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
             IntentUtils.instanceStringsIntent(freqent.getCurrentItem() + "", times.getCurrentItem() + ""));
         ClassLimitBottomFragment.this.dismiss();

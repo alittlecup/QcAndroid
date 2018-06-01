@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -74,12 +74,12 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class SettingFragment extends BaseFragment implements SettingView {
   public static final int RESULT_LOGIN = 1;
-  @BindView(R.id.header_icon) ImageView headerIcon;
-  @BindView(R.id.drawer_name) TextView drawerName;
-  @BindView(R.id.update_time) TextView updateTime;
-  @BindView(R.id.logout) TextView logout;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.toolbar) Toolbar toolbar;
+	ImageView headerIcon;
+	TextView drawerName;
+	TextView updateTime;
+	TextView logout;
+	TextView toolbarTitile;
+	Toolbar toolbar;
 
   @Inject GymWrapper gymWrapper;
   @Inject RestRepository mRestRepository;
@@ -91,7 +91,63 @@ public class SettingFragment extends BaseFragment implements SettingView {
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_setting, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    headerIcon = (ImageView) view.findViewById(R.id.header_icon);
+    drawerName = (TextView) view.findViewById(R.id.drawer_name);
+    updateTime = (TextView) view.findViewById(R.id.update_time);
+    logout = (TextView) view.findViewById(R.id.logout);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    view.findViewById(R.id.drawer_headerview).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onHeader();
+      }
+    });
+    view.findViewById(R.id.setting_fix_notify).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFixCheckin();
+      }
+    });
+    view.findViewById(R.id.aboutus).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onAboutUs();
+      }
+    });
+    view.findViewById(R.id.share).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShare();
+      }
+    });
+    view.findViewById(R.id.web_site).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onWebSite();
+      }
+    });
+    view.findViewById(R.id.report).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onReport();
+      }
+    });
+    view.findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onUpdate();
+      }
+    });
+    view.findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLogout();
+      }
+    });
+    view.findViewById(R.id.civ_resume).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMyResume();
+      }
+    });
+    view.findViewById(R.id.civ_orders).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onOders();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     onVisible();
@@ -141,7 +197,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
       : AppUtils.getAppVer(getActivity()));
   }
 
-  @OnClick(R.id.drawer_headerview) public void onHeader() {
+ public void onHeader() {
     if (!loginStatus.isLogined()) {
       goLogin();
       return;
@@ -151,7 +207,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
   }
 
 
-  @OnClick(R.id.setting_fix_notify) public void onFixCheckin() {
+ public void onFixCheckin() {
     if (!loginStatus.isLogined()) {
       goLogin();
       return;
@@ -159,17 +215,17 @@ public class SettingFragment extends BaseFragment implements SettingView {
     FixNotifySettingFragment.start(this, 4);
   }
 
-  @OnClick(R.id.aboutus) public void onAboutUs() {
+ public void onAboutUs() {
     WebActivity.startWeb(Configs.ABOUT_US, true, getActivity());
   }
 
-  @OnClick(R.id.share) public void onShare() {
+ public void onShare() {
     ShareDialogFragment.newInstance("健身房管理", getString(R.string.str_share_app),
       "http://qcresource.b0.upaiyun.com/14.pic_thumb.jpg", Configs.DOWNLOAD_MANAGE)
       .show(getFragmentManager(), "");
   }
 
-  @OnClick(R.id.web_site) public void onWebSite() {
+ public void onWebSite() {
     new MaterialDialog.Builder(getContext()).autoDismiss(true)
       .content("网页端地址\n" + "http://cloud.qingchengfit.cn/backend/settings/")
       .positiveText(R.string.common_comfirm)
@@ -187,15 +243,15 @@ public class SettingFragment extends BaseFragment implements SettingView {
       .show();
   }
 
-  @OnClick(R.id.report) public void onReport() {
+ public void onReport() {
     ReportFragment.start(this, 3);
   }
 
-  @OnClick(R.id.update) public void onUpdate() {
+ public void onUpdate() {
     RxBus.getBus().post(new UpdateEvent());
   }
 
-  @OnClick(R.id.logout) public void onLogout() {
+ public void onLogout() {
     if (getActivity() != null && getActivity() instanceof MainActivity) {
       loginStatus.logout(getContext());
       App.staffId = "";
@@ -211,7 +267,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     }
   }
 
-  @OnClick(R.id.civ_resume) public void onMyResume() {
+ public void onMyResume() {
     if (!loginStatus.isLogined()) {
       baseRouter.toLogin(this);
       return;
@@ -219,7 +275,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     baseRouter.routerTo("recruit", "resume", getContext(), 1001);
   }
 
-  @OnClick(R.id.civ_orders) public void onOders() {
+ public void onOders() {
     if (!loginStatus.isLogined()) {
       baseRouter.toLogin(this);
       return;

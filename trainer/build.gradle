@@ -166,8 +166,7 @@ afterEvaluate {
 
 dependencies {
   implementation project(path: ':saasbase')
-  implementation 'cn.qingchengfit.chat:qcim:1.1.0'
-  implementation 'cn.qingchengfit.chat:sdk:1.1.0'
+
 
   implementation 'org.glassfish:javax.annotation:10.0-b28'
   //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
@@ -191,7 +190,6 @@ dependencies {
   implementation 'com.hkm.taglib:tag:1.6.0'
   debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3.1'
   releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
-  implementation "com.jakewharton:butterknife:${libs.butterknife}"
   implementation "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
   implementation('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
 
@@ -199,7 +197,6 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
   annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
-  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
   annotationProcessor "android.arch.persistence.room:compiler:1.0.0"

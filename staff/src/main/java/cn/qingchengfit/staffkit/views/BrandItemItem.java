@@ -1,13 +1,9 @@
 package cn.qingchengfit.staffkit.views;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.staffkit.R;
 import com.bumptech.glide.Glide;
@@ -65,14 +61,17 @@ public class BrandItemItem extends AbstractFlexibleItem<BrandItemItem.BrandItemV
     }
 
     public class BrandItemVH extends FlexibleViewHolder {
-        @BindView(R.id.brand_avatar) ImageView brandAvatar;
-        @BindView(R.id.brand_name) TextView brandName;
-        @BindView(R.id.brand_content) TextView brandContent;
-        @BindView(R.id.chosen) ImageView chosen;
+	ImageView brandAvatar;
+	TextView brandName;
+	TextView brandContent;
+	ImageView chosen;
 
         public BrandItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          brandAvatar = (ImageView) view.findViewById(R.id.brand_avatar);
+          brandName = (TextView) view.findViewById(R.id.brand_name);
+          brandContent = (TextView) view.findViewById(R.id.brand_content);
+          chosen = (ImageView) view.findViewById(R.id.chosen);
         }
     }
 }

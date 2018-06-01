@@ -14,12 +14,12 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.OnlineLimit;
@@ -45,16 +45,16 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
     @Need public Integer maxPeople;
     @Need public Boolean multiPrice;
 
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.lable) TextView lable;
-  @BindView(R2.id.switcher_limit) SwitchCompat switcher;
-  @BindView(R2.id.layout_limit_peop) RelativeLayout layoutLimitPeop;
-  @BindView(R2.id.pay_online) ExpandedLayout payOnline;
-  @BindView(R2.id.limit_who) CommonInputView limitWho;
-  @BindView(R2.id.limit_num) CommonInputView limitNum;
-  @BindView(R2.id.pay_online_money) CommonInputView payOnlineMoney;
-  @BindView(R2.id.divider) View divider;
+	TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView lable;
+	SwitchCompat switcher;
+	RelativeLayout layoutLimitPeop;
+	ExpandedLayout payOnline;
+	CommonInputView limitWho;
+	CommonInputView limitNum;
+	CommonInputView payOnlineMoney;
+	View divider;
 
   /**
    * 用来记录在线支付的约课限制
@@ -65,7 +65,27 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_batch_pay_onlien, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    lable = (TextView) view.findViewById(R.id.lable);
+    switcher = (SwitchCompat) view.findViewById(R.id.switcher_limit);
+    layoutLimitPeop = (RelativeLayout) view.findViewById(R.id.layout_limit_peop);
+    payOnline = (ExpandedLayout) view.findViewById(R.id.pay_online);
+    limitWho = (CommonInputView) view.findViewById(R.id.limit_who);
+    limitNum = (CommonInputView) view.findViewById(R.id.limit_num);
+    payOnlineMoney = (CommonInputView) view.findViewById(R.id.pay_online_money);
+    divider = (View) view.findViewById(R.id.divider);
+    view.findViewById(R.id.limit_who).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clickLimitWho();
+      }
+    });
+    view.findViewById(R.id.limit_num).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clickLimitNum();
+      }
+    });
+
     setBackPress();
     initToolbar(toolbar);
     if (rule != null && rule.channel.equalsIgnoreCase(Configs.CHANNEL_ONLINE)) {
@@ -194,11 +214,11 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
     return BatchPayOnlineFragment.class.getName();
   }
 
-  @OnClick(R2.id.limit_who) public void clickLimitWho() {
+ public void clickLimitWho() {
     OnlineLimitFragment.newInstance(Utils.toIntArray(mLimit)).show(getFragmentManager(), "");
   }
 
-  @OnClick(R2.id.limit_num) public void clickLimitNum() {
+ public void clickLimitNum() {
     stucount = new DialogList(getContext()).list(StringUtils.getNums(1, maxPeople),
       new AdapterView.OnItemClickListener() {
         @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

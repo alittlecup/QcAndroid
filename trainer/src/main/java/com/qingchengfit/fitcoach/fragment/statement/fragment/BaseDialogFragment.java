@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment.statement.fragment;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
-import butterknife.Unbinder;
+
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
@@ -28,7 +28,7 @@ import rx.Subscription;
 public abstract class BaseDialogFragment extends DialogFragment {
     //    abstract   void start(Fragment fragment, int requestCode);
 
-    public Unbinder unbinder;
+
     List<Subscription> sps = new ArrayList<>();
     private PresenterDelegate delegate;
     private boolean isVisible;
@@ -82,7 +82,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
             sps.get(i).unsubscribe();
         }
         if (delegate != null) delegate.unattachView();
-        if (unbinder != null) unbinder.unbind();
         super.onDestroyView();
     }
 }

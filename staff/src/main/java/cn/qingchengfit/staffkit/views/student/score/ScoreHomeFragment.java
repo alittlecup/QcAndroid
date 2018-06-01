@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -64,10 +64,10 @@ public class ScoreHomeFragment extends BaseFragment
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
 
-    @BindView(R.id.recycler_view) RecycleViewWithNoImg recyclerView;
-    @BindView(R.id.ll_student_score_lable) LinearLayout llStudentScoreLable;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	RecycleViewWithNoImg recyclerView;
+	LinearLayout llStudentScoreLable;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private CommonFlexAdapter flexibleAdapter;
     private List<AbstractFlexibleItem> items = new ArrayList();
@@ -83,8 +83,12 @@ public class ScoreHomeFragment extends BaseFragment
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      recyclerView = (RecycleViewWithNoImg) view.findViewById(R.id.recycler_view);
+      llStudentScoreLable = (LinearLayout) view.findViewById(R.id.ll_student_score_lable);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         initTitle();
         initView();

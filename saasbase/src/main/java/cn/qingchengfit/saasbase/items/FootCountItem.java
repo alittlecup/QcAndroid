@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -35,11 +35,11 @@ public class FootCountItem extends AbstractFlexibleItem<FootCountItem.FootCountV
     }
 
     public class FootCountVH extends FlexibleViewHolder {
-        @BindView(R2.id.tv_foot_str) TextView tvFootStr;
+	TextView tvFootStr;
 
         public FootCountVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvFootStr = (TextView) view.findViewById(R.id.tv_foot_str);
         }
     }
 }

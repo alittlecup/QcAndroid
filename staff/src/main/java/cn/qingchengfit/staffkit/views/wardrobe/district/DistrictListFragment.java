@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.LockerRegion;
@@ -54,14 +54,14 @@ import javax.inject.Inject;
  */
 public class DistrictListFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, DistrictListPresenter.MVPView {
 
-    @BindView(R.id.rv) RecyclerView rv;
+	RecyclerView rv;
     @Inject DistrictListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mAdatper;
 
@@ -76,8 +76,12 @@ public class DistrictListFragment extends BaseFragment implements FlexibleAdapte
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_district_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      rv = (RecyclerView) view.findViewById(R.id.rv);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rv.setHasFixedSize(true);

@@ -19,10 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.App;
@@ -58,14 +55,14 @@ public class SaleDetailFragment extends FilterCommonFragment
   @Inject SaleDetailPresenter presenter;
   @Inject StaffWrapper staffWrapper;
   @Inject StaffWrapper saler;
-  @BindView(R.id.ll_add_stu) LinearLayout llAddStu;
-  @BindView(R.id.ll_sort) LinearLayout llSort;
-  @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-  @BindView(R.id.smrv_sale) SwipeMenuRecyclerView smrvSale;
-  @BindView(R.id.swipe) CustomSwipeRefreshLayout swipe;
-  @BindView(R.id.scroll_root) CoordinatorLayout scrollRoot;
-  Unbinder unbinder;
-  @BindView(R.id.alphabetview) AlphabetView alphabetview;
+  LinearLayout llAddStu;
+  LinearLayout llSort;
+  AppBarLayout myhomeAppBar;
+  SwipeMenuRecyclerView smrvSale;
+  CustomSwipeRefreshLayout swipe;
+  CoordinatorLayout scrollRoot;
+
+  AlphabetView alphabetview;
   private DetailStudentAdapter studentAdapter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +74,14 @@ public class SaleDetailFragment extends FilterCommonFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_allotsale_saledetail, container, false);
+    llAddStu = (LinearLayout) view.findViewById(R.id.ll_add_stu);
+    llSort = (LinearLayout) view.findViewById(R.id.ll_sort);
+    myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+    smrvSale = (SwipeMenuRecyclerView) view.findViewById(R.id.smrv_sale);
+    swipe = (CustomSwipeRefreshLayout) view.findViewById(R.id.swipe);
+    scrollRoot = (CoordinatorLayout) view.findViewById(R.id.scroll_root);
+    alphabetview = (AlphabetView) view.findViewById(R.id.alphabetview);
+
     setView(view);
     super.onCreateView(inflater, container, savedInstanceState);
     if (saler.getStaff() == null) return view;
@@ -122,7 +127,7 @@ public class SaleDetailFragment extends FilterCommonFragment
 
     presenter.queryStudent(App.staffId, filter, saler.getStaff().id);
     presenter.getSellerUsers(saler.getStaff().id);
-    unbinder = ButterKnife.bind(this, view);
+
     return view;
   }
 
@@ -206,12 +211,13 @@ public class SaleDetailFragment extends FilterCommonFragment
     });
   }
 
-  @OnClick public void onClick(View v) {
+  public void onClick(View v) {
     // 添加名下会员
     switch (v.getId()) {
       case R.id.ll_add_stu:
         MultiModifyFragment fragment =
-            MultiModifyFragmentBuilder.newMultiModifyFragment(saler.getStaff(), filter, MultiModifyFragment.TYPE_ADD_STUDENT);
+            MultiModifyFragmentBuilder.newMultiModifyFragment(saler.getStaff(), filter,
+                MultiModifyFragment.TYPE_ADD_STUDENT);
         fragment.originList = originStuList;
         fragment.students = datas;
         getFragmentManager().beginTransaction()
@@ -246,7 +252,6 @@ public class SaleDetailFragment extends FilterCommonFragment
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   @Override public void onDestroy() {
@@ -436,19 +441,27 @@ public class SaleDetailFragment extends FilterCommonFragment
   }
 
   public class MyBindingViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.item_student_detail_alpha) TextView itemStudentDetailAlpha;
-    @BindView(R.id.item_person_header) ImageView itemPersonHeader;
-    @BindView(R.id.item_person_name) TextView itemPersonName;
-    @BindView(R.id.item_person_gender) ImageView itemPersonGender;
-    @BindView(R.id.tv_referrer_count) TextView tvReferrerCount;
-    @BindView(R.id.item_person_phonenum) TextView itemPersonPhonenum;
-    @BindView(R.id.item_person_desc) TextView itemPersonDesc;
-    @BindView(R.id.status) TextView status;
-    @BindView(R.id.sml) LinearLayout sml;
+    TextView itemStudentDetailAlpha;
+    ImageView itemPersonHeader;
+    TextView itemPersonName;
+    ImageView itemPersonGender;
+    TextView tvReferrerCount;
+    TextView itemPersonPhonenum;
+    TextView itemPersonDesc;
+    TextView status;
+    LinearLayout sml;
 
-    public MyBindingViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    public MyBindingViewHolder(View view) {
+      super(view);
+      itemStudentDetailAlpha = (TextView) view.findViewById(R.id.item_student_detail_alpha);
+      itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+      itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+      itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+      tvReferrerCount = (TextView) view.findViewById(R.id.tv_referrer_count);
+      itemPersonPhonenum = (TextView) view.findViewById(R.id.item_person_phonenum);
+      itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+      status = (TextView) view.findViewById(R.id.status);
+      sml = (LinearLayout) view.findViewById(R.id.sml);
     }
   }
 }

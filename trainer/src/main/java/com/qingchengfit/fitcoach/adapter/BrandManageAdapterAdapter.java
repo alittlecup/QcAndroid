@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -116,14 +116,17 @@ public class BrandManageAdapterAdapter extends RecyclerView.Adapter<BrandManageA
     }
 
     public class BrandManageAdapterVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.background) ImageView bg;
-        @BindView(R.id.image) ImageView image;
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.brand) TextView brand;
+	ImageView bg;
+	ImageView image;
+	TextView name;
+	TextView brand;
 
         public BrandManageAdapterVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          bg = (ImageView) itemView.findViewById(R.id.background);
+          image = (ImageView) itemView.findViewById(R.id.image);
+          name = (TextView) itemView.findViewById(R.id.name);
+          brand = (TextView) itemView.findViewById(R.id.brand);
         }
     }
 }

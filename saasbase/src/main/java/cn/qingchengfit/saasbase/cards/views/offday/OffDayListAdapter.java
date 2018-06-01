@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.OffDay;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.DateUtils;
@@ -103,19 +103,27 @@ public class OffDayListAdapter extends RecyclerView.Adapter<OffDayListAdapter.Of
 
     public class OffDayListVH extends RecyclerView.ViewHolder {
 
-        @BindView(R2.id.title) TextView title;
-        @BindView(R2.id.cancel) TextView cancel;
-        @BindView(R2.id.period) TextView period;
-        @BindView(R2.id.price) TextView price;
-        @BindView(R2.id.mark) TextView mark;
-        @BindView(R2.id.controler) TextView controler;
-        @BindView(R2.id.cancel_offday) TextView cancel_offday;
-        @BindView(R2.id.btn_ahead_offday) TextView btnAheadOffday;
-        @BindView(R2.id.layout_btn) LinearLayout layoutBtn;
+	TextView title;
+	TextView cancel;
+	TextView period;
+	TextView price;
+	TextView mark;
+	TextView controler;
+	TextView cancel_offday;
+	TextView btnAheadOffday;
+	LinearLayout layoutBtn;
 
         public OffDayListVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          title = (TextView) itemView.findViewById(R.id.title);
+          cancel = (TextView) itemView.findViewById(R.id.cancel);
+          period = (TextView) itemView.findViewById(R.id.period);
+          price = (TextView) itemView.findViewById(R.id.price);
+          mark = (TextView) itemView.findViewById(R.id.mark);
+          controler = (TextView) itemView.findViewById(R.id.controler);
+          cancel_offday = (TextView) itemView.findViewById(R.id.cancel_offday);
+          btnAheadOffday = (TextView) itemView.findViewById(R.id.btn_ahead_offday);
+          layoutBtn = (LinearLayout) itemView.findViewById(R.id.layout_btn);
         }
     }
 }

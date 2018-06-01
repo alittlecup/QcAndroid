@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
@@ -42,17 +42,27 @@ import com.anbillon.flabellum.annotations.Leaf;
 @Leaf(module = "staff" ,path = "/cashier/add/")
 public class CashierAddFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.civ_name) CommonInputView civName;
-  @BindView(R2.id.civ_phoneNum) CommonInputView civPhoneNum;
-  @BindView(R2.id.civ_gender) CommonInputView civGender;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	CommonInputView civName;
+	CommonInputView civPhoneNum;
+	CommonInputView civGender;
 
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cashier_add, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    civName = (CommonInputView) view.findViewById(R.id.civ_name);
+    civPhoneNum = (CommonInputView) view.findViewById(R.id.civ_phoneNum);
+    civGender = (CommonInputView) view.findViewById(R.id.civ_gender);
+    view.findViewById(R.id.civ_gender).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+
     initToolbar(toolbar);
     return view;
   }
@@ -69,7 +79,7 @@ public class CashierAddFragment extends BaseFragment {
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.civ_gender) public void onViewClicked() {
+ public void onViewClicked() {
     DialogList.builder(getContext()).list(getResources().getStringArray(R.array.gender_list), new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // TODO: 2017/10/11 新增收银员接口

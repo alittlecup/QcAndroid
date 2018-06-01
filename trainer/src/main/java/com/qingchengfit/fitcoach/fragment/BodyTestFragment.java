@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -56,36 +56,36 @@ public class BodyTestFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.img_model) ImageView imgModel;
-    @BindView(R.id.hipline) TextView hipline;
-    @BindView(R.id.chest) TextView chest;
-    @BindView(R.id.waistline) TextView waistline;
-    @BindView(R.id.height) TextView height;
-    @BindView(R.id.height_layout) LinearLayout heightLayout;
-    @BindView(R.id.weight) TextView weight;
-    @BindView(R.id.weight_layout) LinearLayout weightLayout;
-    @BindView(R.id.bmi) TextView bmi;
-    @BindView(R.id.bmi_layout) LinearLayout bmiLayout;
-    @BindView(R.id.body_fat_rate) TextView bodyFatRate;
-    @BindView(R.id.body_fat_rate_layout) LinearLayout bodyFatRateLayout;
-    @BindView(R.id.title) TextView title;
-    @BindView(R.id.other_data) InterupteLinearLayout otherData;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.test_pic_title) TextView testPicTitle;
-    @BindView(R.id.left_upper) TextView leftUpper;
-    @BindView(R.id.right_upper) TextView rightUpper;
-    @BindView(R.id.left_thigh) TextView leftThigh;
-    @BindView(R.id.right_thigh) TextView rightThigh;
-    @BindView(R.id.right_calf) TextView rightCalf;
-    @BindView(R.id.left_calf) TextView leftCalf;
+	ImageView imgModel;
+	TextView hipline;
+	TextView chest;
+	TextView waistline;
+	TextView height;
+	LinearLayout heightLayout;
+	TextView weight;
+	LinearLayout weightLayout;
+	TextView bmi;
+	LinearLayout bmiLayout;
+	TextView bodyFatRate;
+	LinearLayout bodyFatRateLayout;
+	TextView title;
+	InterupteLinearLayout otherData;
+	RecyclerView recyclerview;
+	Toolbar toolbar;
+	TextView testPicTitle;
+	TextView leftUpper;
+	TextView rightUpper;
+	TextView leftThigh;
+	TextView rightThigh;
+	TextView rightCalf;
+	TextView leftCalf;
     private int mGender;
 
     private ImageGridAdapter imageGridAdapter;
     private FullyGridLayoutManager gridLayoutManager;
     private String mMeasureId;
     private List<AddBodyTestBean.Photo> datas = new ArrayList<>();
-    private Unbinder unbinder;
+
     private Subscription spUpImg;
 
     public BodyTestFragment() {
@@ -118,8 +118,31 @@ public class BodyTestFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_body_test, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      imgModel = (ImageView) view.findViewById(R.id.img_model);
+      hipline = (TextView) view.findViewById(R.id.hipline);
+      chest = (TextView) view.findViewById(R.id.chest);
+      waistline = (TextView) view.findViewById(R.id.waistline);
+      height = (TextView) view.findViewById(R.id.height);
+      heightLayout = (LinearLayout) view.findViewById(R.id.height_layout);
+      weight = (TextView) view.findViewById(R.id.weight);
+      weightLayout = (LinearLayout) view.findViewById(R.id.weight_layout);
+      bmi = (TextView) view.findViewById(R.id.bmi);
+      bmiLayout = (LinearLayout) view.findViewById(R.id.bmi_layout);
+      bodyFatRate = (TextView) view.findViewById(R.id.body_fat_rate);
+      bodyFatRateLayout = (LinearLayout) view.findViewById(R.id.body_fat_rate_layout);
+      title = (TextView) view.findViewById(R.id.title);
+      otherData = (InterupteLinearLayout) view.findViewById(R.id.other_data);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      testPicTitle = (TextView) view.findViewById(R.id.test_pic_title);
+      leftUpper = (TextView) view.findViewById(R.id.left_upper);
+      rightUpper = (TextView) view.findViewById(R.id.right_upper);
+      leftThigh = (TextView) view.findViewById(R.id.left_thigh);
+      rightThigh = (TextView) view.findViewById(R.id.right_thigh);
+      rightCalf = (TextView) view.findViewById(R.id.right_calf);
+      leftCalf = (TextView) view.findViewById(R.id.left_calf);
+
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();
@@ -317,7 +340,7 @@ public class BodyTestFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
         if (spUpImg != null && spUpImg.isUnsubscribed()) {
             spUpImg.unsubscribe();
         }

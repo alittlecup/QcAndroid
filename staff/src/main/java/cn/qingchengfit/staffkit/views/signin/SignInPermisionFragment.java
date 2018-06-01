@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
@@ -19,7 +19,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  */
 public class SignInPermisionFragment extends BaseFragment {
 
-    @BindView(R.id.tv_signin_footer) TextView tvSigninFooter;
+	TextView tvSigninFooter;
 
     public SignInPermisionFragment() {
     }
@@ -35,8 +35,14 @@ public class SignInPermisionFragment extends BaseFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_permision, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+      tvSigninFooter = (TextView) view.findViewById(R.id.tv_signin_footer);
+      view.findViewById(R.id.tv_signin_footer).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInPermisionFragment.this.onClick(v);
+        }
+      });
+
+      return view;
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -51,7 +57,7 @@ public class SignInPermisionFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick(R.id.tv_signin_footer) public void onClick(View view) {
+ public void onClick(View view) {
         RxBus.getBus().post(new SignInLogEvent());
     }
 }

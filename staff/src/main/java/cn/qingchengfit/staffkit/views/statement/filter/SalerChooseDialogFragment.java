@@ -15,8 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
@@ -50,8 +50,8 @@ import javax.inject.Inject;
  */
 public class SalerChooseDialogFragment extends BaseDialogFragment implements SalerChooseDialogView {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.title) TextView title;
+	RecyclerView recyclerview;
+	TextView title;
     List<String> stringList = new ArrayList<>();
     @Inject SalerChoosePresenter presenter;
     private List<StudentBean> salers = new ArrayList<>();
@@ -59,8 +59,10 @@ public class SalerChooseDialogFragment extends BaseDialogFragment implements Sal
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_coach, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      title = (TextView) view.findViewById(R.id.title);
+
+      delegatePresenter(presenter, this);
         title.setText(R.string.choose_salers);
         adapter = new StringAdapter(stringList);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));

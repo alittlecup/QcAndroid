@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -108,8 +108,23 @@ public class WebActivityForGuide extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_for_guide);
-        ButterKnife.bind(this);
-        mCopyUrl = getIntent().getStringExtra("copyurl");
+      findViewById(R.id.btn_help).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onTabClick(v);
+        }
+      });
+      findViewById(R.id.btn_config_homepage).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onTabClick(v);
+        }
+      });
+      findViewById(R.id.btn_poplularize).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onTabClick(v);
+        }
+      });
+
+      mCopyUrl = getIntent().getStringExtra("copyurl");
         mUrl = getIntent().getStringExtra("url");
         //((App)getApplication()).getAppCompoent().inject(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.web_for_guide_frag, WebFragment.newInstance(mUrl)).commit();
@@ -168,14 +183,14 @@ public class WebActivityForGuide extends BaseActivity implements FragCallBack {
         mSpShopConfig.unsubscribe();
     }
 
-    @OnClick({ R.id.btn_help, R.id.btn_config_homepage, R.id.btn_poplularize }) public void onTabClick(View view) {
+ public void onTabClick(View view) {
         switch (view.getId()) {
             /**
              * 帮助
              */
             case R.id.btn_help:
                 DialogUtils.showAlert(this, getString(R.string.alert_title_what_is_home_page),
-                    getString(R.string.alert_content_what_is_home_page),(dialog,action)->dialog.dismiss());
+                    getString(R.string.alert_content_what_is_home_page),null);
                 break;
             /**
              * 配置主页

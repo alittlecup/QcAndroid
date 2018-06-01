@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
@@ -42,7 +42,7 @@ import javax.inject.Inject;
  */
 public class CoachChooseDialogFragment extends BaseDialogFragment implements CoachChooseView {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
     List<String> stringList = new ArrayList<>();
     @Inject CoachChoosePresenter presenter;
     private List<Staff> coaches = new ArrayList<>();
@@ -56,8 +56,9 @@ public class CoachChooseDialogFragment extends BaseDialogFragment implements Coa
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_coach, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+      delegatePresenter(presenter, this);
         adapter = new StringAdapter(stringList);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(adapter);

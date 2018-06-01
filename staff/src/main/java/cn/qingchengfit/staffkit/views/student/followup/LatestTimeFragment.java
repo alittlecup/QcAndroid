@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -54,7 +54,7 @@ public class LatestTimeFragment extends BaseFragment implements FlexibleAdapter.
     public int selectedPos = 0;
     public int type;
 
-    @BindView(R.id.rv_referrer) RecyclerView rvReferrer;
+	RecyclerView rvReferrer;
     private FlexibleAdapter.OnItemClickListener onItemClickListener;
 
     @Inject public LatestTimeFragment() {
@@ -63,8 +63,14 @@ public class LatestTimeFragment extends BaseFragment implements FlexibleAdapter.
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_follow_up_latest_time, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
+      rvReferrer = (RecyclerView) view.findViewById(R.id.rv_referrer);
+      view.findViewById(R.id.view_mask).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          LatestTimeFragment.this.onClick();
+        }
+      });
+
+      initView();
         view.setOnTouchListener(this);
         return view;
     }
@@ -121,7 +127,7 @@ public class LatestTimeFragment extends BaseFragment implements FlexibleAdapter.
         return false;
     }
 
-    @OnClick(R.id.view_mask) public void onClick() {
+ public void onClick() {
     }
 
     public FlexibleAdapter.OnItemClickListener getOnItemClickListener() {

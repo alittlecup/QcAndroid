@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SigninValidCard;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class SignInCardSelectDialogFragment extends BaseBottomSheetDialogFragment {
 
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
     private List<SigninValidCard.DataBean.CardsBean> d;
     private String selectedCardId = "";
 
@@ -56,8 +56,10 @@ public class SignInCardSelectDialogFragment extends BaseBottomSheetDialogFragmen
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_signin_card_select, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        BSAdapter adatper = new BSAdapter();
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+
+      BSAdapter adatper = new BSAdapter();
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recycleview.setAdapter(adatper);
@@ -80,13 +82,16 @@ public class SignInCardSelectDialogFragment extends BaseBottomSheetDialogFragmen
     }
 
     class BSVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.realcard_name) TextView realcard_name;
-        @BindView(R.id.realcard_balance) TextView realcard_balance;
-        @BindView(R.id.iv_card_selected) ImageView iv_card_selected;
+	TextView realcard_name;
+	TextView realcard_balance;
+	ImageView iv_card_selected;
 
-        public BSVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public BSVH(View view) {
+            super(view);
+            realcard_name = (TextView) view.findViewById(R.id.realcard_name);
+            realcard_balance = (TextView) view.findViewById(R.id.realcard_balance);
+            iv_card_selected = (ImageView) view.findViewById(R.id.iv_card_selected);
+
         }
     }
 

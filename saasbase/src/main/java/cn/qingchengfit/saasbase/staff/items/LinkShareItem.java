@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -49,13 +49,16 @@ public class LinkShareItem extends AbstractFlexibleItem<LinkShareItem.LinkShareV
   }
 
   public class LinkShareVH extends FlexibleViewHolder {
-    @BindView(R2.id.img) ImageView img;
-    @BindView(R2.id.tv) TextView tv;
-    @BindView(R2.id.layout) LinearLayout layout;
-    @BindView(R2.id.img_check) ImageView imgCheck;
+	ImageView img;
+	TextView tv;
+	LinearLayout layout;
+	ImageView imgCheck;
     public LinkShareVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      img = (ImageView) view.findViewById(R.id.img);
+      tv = (TextView) view.findViewById(R.id.tv);
+      layout = (LinearLayout) view.findViewById(R.id.layout);
+      imgCheck = (ImageView) view.findViewById(R.id.img_check);
     }
   }
 }

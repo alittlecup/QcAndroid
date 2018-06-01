@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import cn.qingchengfit.notisetting.presenter.NotiSettingMsgRulePresenter;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
@@ -39,9 +38,9 @@ import javax.inject.Inject;
 public class NotiSettingMsgRuleFragment extends VpFragment
     implements NotiSettingMsgRulePresenter.MVPView, TitleFragment {
 
-  @BindView(R.id.tv_sms) TextView tvSms;
-  @BindView(R.id.tv_group) TextView tvGroup;
-  @BindView(R.id.tv_private) TextView tvPrivate;
+  TextView tvSms;
+  TextView tvGroup;
+  TextView tvPrivate;
   @Inject NotiSettingMsgRulePresenter presenter;
   @Inject SerPermisAction serPermisAction;
 
@@ -50,12 +49,13 @@ public class NotiSettingMsgRuleFragment extends VpFragment
     View view = null;
     if (serPermisAction.check(PermissionServerUtils.MESSAGESETTING)) {
       view = inflater.inflate(R.layout.fragment_noti_setting_send_rule, container, false);
-      unbinder = ButterKnife.bind(this, view);
+      tvSms = (TextView) view.findViewById(R.id.tv_sms);
+      tvGroup = (TextView) view.findViewById(R.id.tv_group);
+      tvPrivate = (TextView) view.findViewById(R.id.tv_private);
       delegatePresenter(presenter, this);
     } else {
       view = inflater.inflate(R.layout.item_common_no_data, container, false);
-      ((ImageView) view.findViewById(R.id.img)).setImageResource(
-          R.drawable.vd_img_no_permission);
+      ((ImageView) view.findViewById(R.id.img)).setImageResource(R.drawable.vd_img_no_permission);
       ((TextView) view.findViewById(R.id.tv_title)).setText(R.string.no_read_permission);
     }
     return view;

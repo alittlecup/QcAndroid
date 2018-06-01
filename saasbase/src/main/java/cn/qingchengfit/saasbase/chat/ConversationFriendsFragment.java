@@ -13,15 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.chat.events.EventChoosePerson;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
@@ -56,9 +56,9 @@ public class ConversationFriendsFragment extends BaseFragment
   implements ChatFriendPresenter.MVPView {
 
   //@BindView(R2.id.tv_left) protected TextView tvLeft;
-  @BindView(R2.id.toolbar) protected Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) protected TextView toolbarTitle;
-  @BindView(R2.id.tv_allotsale_select_count) protected TextView tvAllotsaleSelectCount;
+	protected Toolbar toolbar;
+	protected TextView toolbarTitle;
+	protected TextView tvAllotsaleSelectCount;
   //@BindView(R.id.et_search) EditText etSearch;
   //@BindView(R.id.search_clear) ImageView searchClear;
   @Inject LoginStatus loginStatus;
@@ -72,7 +72,20 @@ public class ConversationFriendsFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_conversation_friend, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvAllotsaleSelectCount = (TextView) view.findViewById(R.id.tv_allotsale_select_count);
+    view.findViewById(R.id.btn_modify_sale).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDone();
+      }
+    });
+    view.findViewById(R.id.ll_show_select).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+
     initToolbar(toolbar);
     initView();
     return view;
@@ -134,7 +147,7 @@ public class ConversationFriendsFragment extends BaseFragment
   /**
    * 选择完成
    */
-  @OnClick(R2.id.btn_modify_sale) public void onDone() {
+ public void onDone() {
     Intent ret = new Intent();
     ret.putExtra("ids", (ArrayList<String>) qcstudentIds2ListChatExcepteSb(DirtySender.studentList,
       loginStatus.getUserId(), getContext()));
@@ -147,7 +160,7 @@ public class ConversationFriendsFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.ll_show_select) public void onViewClicked() {
+ public void onViewClicked() {
     BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
     selectSutdentFragment.setListener(list -> {
       DirtySender.studentList.clear();

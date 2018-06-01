@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.R;
@@ -51,12 +51,12 @@ import java.util.List;
 public class ChooseMainFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R.id.strip) TabLayout strip;
-  @BindView(R.id.viewpager) ViewPager viewpager;
-  @BindView(R.id.all_region) LinearLayout allRegion;
-  @BindView(R.id.all_region_rv) RecyclerView allRegionRv;
-  @BindView(R.id.btn_show_all) AnimatedButton btnShowAll;
-  @BindView(R.id.layout_manage_district) FrameLayout layoutManageDistrict;
+	TabLayout strip;
+	ViewPager viewpager;
+	LinearLayout allRegion;
+	RecyclerView allRegionRv;
+	AnimatedButton btnShowAll;
+	FrameLayout layoutManageDistrict;
   ArrayList<Locker> lockers = new ArrayList<>();
   HashMap<Long, List<Locker>> mLockers = new HashMap<>();
   //@BindView(R.id.toolbar) Toolbar toolbar;
@@ -82,7 +82,18 @@ public class ChooseMainFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_wardrobe_main, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    strip = (TabLayout) view.findViewById(R.id.strip);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    allRegion = (LinearLayout) view.findViewById(R.id.all_region);
+    allRegionRv = (RecyclerView) view.findViewById(R.id.all_region_rv);
+    btnShowAll = (AnimatedButton) view.findViewById(R.id.btn_show_all);
+    layoutManageDistrict = (FrameLayout) view.findViewById(R.id.layout_manage_district);
+    view.findViewById(R.id.btn_show_all).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowAll();
+      }
+    });
+
     layoutManageDistrict.setVisibility(View.GONE);
     lockers = getArguments().getParcelableArrayList("l");
     regions = getArguments().getParcelableArrayList("lr");
@@ -118,7 +129,7 @@ public class ChooseMainFragment extends BaseFragment
     return view;
   }
 
-  @OnClick(R.id.btn_show_all) public void onShowAll() {
+ public void onShowAll() {
     btnShowAll.toggle();
     if (allRegion.getVisibility() == View.VISIBLE) {
       allRegion.setVisibility(View.GONE);

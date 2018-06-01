@@ -4,11 +4,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -106,18 +106,26 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH>
   }
 
   public class StudentVH extends FlexibleViewHolder {
-    @BindView(R2.id.item_student_header) ImageView itemStudentHeader;
-    @BindView(R2.id.item_student_name) TextView itemStudentName;
-    @BindView(R2.id.item_student_gender) ImageView itemStudentGender;
-    @BindView(R2.id.item_tv_student_status) TextView itemTvStudentStatus;
-    @BindView(R2.id.item_student_phonenum) TextView itemStudentPhonenum;
-    @BindView(R2.id.item_student_gymname) public TextView itemStudentGymname;
-    @BindView(R2.id.icon_right) ImageView iconRight;
-    @BindView(R2.id.cb) public CheckBox cb;
+	ImageView itemStudentHeader;
+	TextView itemStudentName;
+	ImageView itemStudentGender;
+	TextView itemTvStudentStatus;
+	TextView itemStudentPhonenum;
+	public TextView itemStudentGymname;
+	ImageView iconRight;
+	public CheckBox cb;
 
     public StudentVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      itemStudentHeader = (ImageView) view.findViewById(R.id.item_student_header);
+      itemStudentName = (TextView) view.findViewById(R.id.item_student_name);
+      itemStudentGender = (ImageView) view.findViewById(R.id.item_student_gender);
+      itemTvStudentStatus = (TextView) view.findViewById(R.id.item_tv_student_status);
+      itemStudentPhonenum = (TextView) view.findViewById(R.id.item_student_phonenum);
+      itemStudentGymname = (TextView) view.findViewById(R.id.item_student_gymname);
+      iconRight = (ImageView) view.findViewById(R.id.icon_right);
+      cb = (CheckBox) view.findViewById(R.id.cb);
+
       cb.setClickable(false);
     }
   }

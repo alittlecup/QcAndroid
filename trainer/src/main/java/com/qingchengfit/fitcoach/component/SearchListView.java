@@ -16,8 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.qingchengfit.fitcoach.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,117 +36,122 @@ import java.util.List;
  */
 public class SearchListView extends RelativeLayout {
 
-    public String keyword;
-    @BindView(R.id.searchresult_btn) Button searchresultBtn;
-    @BindView(R.id.searchresult_none) LinearLayout searchresultNone;
-    @BindView(R.id.searchresult_rv) RecyclerView searchresultRv;
-    SearchResultAdapter adapter;
-    private List<String> strings;
+  public String keyword;
+  Button searchresultBtn;
+  LinearLayout searchresultNone;
+  RecyclerView searchresultRv;
+  SearchResultAdapter adapter;
+  private List<String> strings;
 
-    public SearchListView(Context context) {
-        super(context);
-        init(context);
+  public SearchListView(Context context) {
+    super(context);
+    init(context);
+  }
+
+  public SearchListView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init(context);
+  }
+
+  public SearchListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(context);
+  }
+
+  public void setKeyword(String keyword, List<String> result) {
+    this.keyword = keyword;
+    this.strings = result;
+    if (result.size() > 0) {
+      adapter.notifyDataSetChanged();
+      searchresultRv.setVisibility(VISIBLE);
+      searchresultNone.setVisibility(GONE);
+    } else {
+      searchresultRv.setVisibility(GONE);
+      searchresultNone.setVisibility(VISIBLE);
+    }
+  }
+
+  public void init(Context context) {
+    LayoutInflater.from(context).inflate(R.layout.layout_search_result, this, false);
+  }
+
+  @Override protected void onFinishInflate() {
+    super.onFinishInflate();
+    searchresultBtn = findViewById(R.id.searchresult_btn);
+    searchresultNone = findViewById(R.id.searchresult_none);
+    searchresultRv = findViewById(R.id.searchresult_rv);
+    searchresultRv.setLayoutManager(new LinearLayoutManager(getContext()));
+    strings = new ArrayList<>();
+    strings.add("中国建设协会");
+    strings.add("China fit 健身");
+    strings.add("说好的健身呢");
+    strings.add("必须要包含健身");
+    adapter = new SearchResultAdapter(new ArrayList<>());
+    searchresultRv.setAdapter(adapter);
+  }
+
+  public void setOnItemClickListener(OnRecycleItemClickListener listener) {
+    adapter.setListener(listener);
+  }
+
+  public interface OnRecycleItemClickListener {
+    void onItemClick(View v, int pos);
+  }
+
+  public static class SearchResultVH extends RecyclerView.ViewHolder {
+    TextView itemText;
+
+    public SearchResultVH(View itemView) {
+      super(itemView);
+      itemText = itemView.findViewById(R.id.item_text);
+    }
+  }
+
+  class SearchResultAdapter extends RecyclerView.Adapter<SearchResultVH>
+      implements OnClickListener {
+
+    private List<String> datas;
+    private OnRecycleItemClickListener listener;
+
+    public SearchResultAdapter(List datas) {
+      this.datas = datas;
     }
 
-    public SearchListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
+    public OnRecycleItemClickListener getListener() {
+      return listener;
     }
 
-    public SearchListView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
+    public void setListener(OnRecycleItemClickListener listener) {
+      this.listener = listener;
     }
 
-    public void setKeyword(String keyword, List<String> result) {
-        this.keyword = keyword;
-        this.strings = result;
-        if (result.size() > 0) {
-            adapter.notifyDataSetChanged();
-            searchresultRv.setVisibility(VISIBLE);
-            searchresultNone.setVisibility(GONE);
-        } else {
-            searchresultRv.setVisibility(GONE);
-            searchresultNone.setVisibility(VISIBLE);
-        }
+    @Override public SearchResultVH onCreateViewHolder(ViewGroup parent, int viewType) {
+      SearchResultVH holder = new SearchResultVH(
+          LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
+      holder.itemView.setOnClickListener(this);
+      return holder;
     }
 
-    public void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.layout_search_result, this, false);
+    @Override public void onBindViewHolder(SearchResultVH holder, int position) {
+      holder.itemView.setTag(position);
+      String s = datas.get(position);
+      if (TextUtils.isEmpty(keyword) && s.contains(s)) {
+        SpannableString ss = new SpannableString(s);
+        int pos = s.indexOf(keyword);
+        ss.setSpan(new ForegroundColorSpan(Color.CYAN), pos, pos + keyword.length(),
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        holder.itemText.setText(ss);
+      } else {
+        holder.itemText.setText(s);
+      }
     }
 
-    @Override protected void onFinishInflate() {
-        super.onFinishInflate();
-        ButterKnife.bind(this);
-        searchresultRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        strings = new ArrayList<>();
-        strings.add("中国建设协会");
-        strings.add("China fit 健身");
-        strings.add("说好的健身呢");
-        strings.add("必须要包含健身");
-        adapter = new SearchResultAdapter(new ArrayList<>());
-        searchresultRv.setAdapter(adapter);
+    @Override public int getItemCount() {
+      return datas.size();
     }
 
-    public void setOnItemClickListener(OnRecycleItemClickListener listener) {
-        adapter.setListener(listener);
+    @Override public void onClick(View v) {
+      listener.onItemClick(v, (int) v.getTag());
     }
-
-    public interface OnRecycleItemClickListener {
-        void onItemClick(View v, int pos);
-    }
-
-    public static class SearchResultVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_text) TextView itemText;
-
-        public SearchResultVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    class SearchResultAdapter extends RecyclerView.Adapter<SearchResultVH> implements OnClickListener {
-
-        private List<String> datas;
-        private OnRecycleItemClickListener listener;
-
-        public SearchResultAdapter(List datas) {
-            this.datas = datas;
-        }
-
-        public OnRecycleItemClickListener getListener() {
-            return listener;
-        }
-
-        public void setListener(OnRecycleItemClickListener listener) {
-            this.listener = listener;
-        }
-
-        @Override public SearchResultVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            SearchResultVH holder = new SearchResultVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
-            holder.itemView.setOnClickListener(this);
-            return holder;
-        }
-
-        @Override public void onBindViewHolder(SearchResultVH holder, int position) {
-            holder.itemView.setTag(position);
-            String s = datas.get(position);
-            if (TextUtils.isEmpty(keyword) && s.contains(s)) {
-                SpannableString ss = new SpannableString(s);
-                int pos = s.indexOf(keyword);
-                ss.setSpan(new ForegroundColorSpan(Color.CYAN), pos, pos + keyword.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-                holder.itemText.setText(ss);
-            } else {
-                holder.itemText.setText(s);
-            }
-        }
-
-        @Override public int getItemCount() {
-            return datas.size();
-        }
-
-        @Override public void onClick(View v) {
-            listener.onItemClick(v, (int) v.getTag());
-        }
-    }
+  }
 }

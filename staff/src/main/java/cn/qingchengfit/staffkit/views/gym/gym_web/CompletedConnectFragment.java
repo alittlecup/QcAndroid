@@ -11,9 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
@@ -52,16 +52,33 @@ public class CompletedConnectFragment extends BaseFragment {
 
     public String mCopyUrl;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Inject public CompletedConnectFragment() {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completed_connect, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_triangle_left);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.copy_link_to_wechat).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CompletedConnectFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CompletedConnectFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.go_to_how).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CompletedConnectFragment.this.onClick(v);
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_triangle_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();
@@ -80,7 +97,7 @@ public class CompletedConnectFragment extends BaseFragment {
         return CompletedConnectFragment.class.getName();
     }
 
-    @OnClick({ R.id.copy_link_to_wechat, R.id.btn_done, R.id.go_to_how }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.copy_link_to_wechat:
                 ClipboardManager cmb = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);

@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.course.course.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -33,11 +33,11 @@ public class JacketAddItem extends AbstractFlexibleItem<JacketAddItem.JacketAddV
     }
 
     public static class JacketAddVH extends FlexibleViewHolder {
-        @BindView(R2.id.add_img) TextView addImg;
+	TextView addImg;
 
         public JacketAddVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          addImg = (TextView) view.findViewById(R.id.add_img);
         }
     }
 }

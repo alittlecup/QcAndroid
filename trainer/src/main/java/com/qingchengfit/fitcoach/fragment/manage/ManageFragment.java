@@ -13,10 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
@@ -84,26 +84,26 @@ import rx.schedulers.Schedulers;
 public class ManageFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, AdapterView.OnItemClickListener {
 
-  @BindView(R.id.recyclerview) RecyclerView recyclerview;
+	RecyclerView recyclerview;
   List<AbstractFlexibleItem> mData = new ArrayList<>();
-  @BindView(R.id.recyclerview2) RecyclerView recyclerview2;
-  @BindView(R.id.title) TextView title;
-  @BindView(R.id.angle_show) ImageView angleShow;
-  @BindView(R.id.name_brand) TextView nameBrand;
-  @BindView(R.id.address_phone) TextView addressPhone;
-  @BindView(R.id.gym_info_layout) LinearLayout gymInfoLayout;
-  @BindView(R.id.shop_img) ImageView shopImg;
-  @BindView(R.id.gym_layout) LinearLayout gymLayout;
+	RecyclerView recyclerview2;
+	TextView title;
+	ImageView angleShow;
+	TextView nameBrand;
+	TextView addressPhone;
+	LinearLayout gymInfoLayout;
+	ImageView shopImg;
+	LinearLayout gymLayout;
 
   @Inject GymWrapper gymWrapper;
   @Inject RepoCoachServiceImpl repoCoachService;
   @Inject LoginStatus loginStatus;
-  @BindView(R.id.change_gym) TextView changeGym;
-  @BindView(R.id.dataoff) TextView dataoff;
-  @BindView(R.id.renewal) TextView renewal;
+	TextView changeGym;
+	TextView dataoff;
+	TextView renewal;
 
   private CommonFlexAdapter mAdapter;
-  private Unbinder unbinder;
+
   private DialogList dialogList;
   private QuitGymFragment quiteGym;
   private Gson gson = new Gson();
@@ -111,7 +111,44 @@ public class ManageFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_manange, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    recyclerview2 = (RecyclerView) view.findViewById(R.id.recyclerview2);
+    title = (TextView) view.findViewById(R.id.title);
+    angleShow = (ImageView) view.findViewById(R.id.angle_show);
+    nameBrand = (TextView) view.findViewById(R.id.name_brand);
+    addressPhone = (TextView) view.findViewById(R.id.address_phone);
+    gymInfoLayout = (LinearLayout) view.findViewById(R.id.gym_info_layout);
+    shopImg = (ImageView) view.findViewById(R.id.shop_img);
+    gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
+    changeGym = (TextView) view.findViewById(R.id.change_gym);
+    dataoff = (TextView) view.findViewById(R.id.dataoff);
+    renewal = (TextView) view.findViewById(R.id.renewal);
+    view.findViewById(R.id.change_gym).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ManageFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.title).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ManageFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.angle_show).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ManageFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.renewal).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ManageFragment.this.onClick();
+      }
+    });
+    view.findViewById(R.id.action_flow).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ManageFragment.this.onClickFlow();
+      }
+    });
+
     mData.clear();
     mData.add(new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.moudule_service_private)
@@ -394,7 +431,7 @@ public class ManageFragment extends BaseFragment
     return true;
   }
 
-  @OnClick({ R.id.change_gym, R.id.title, R.id.angle_show }) public void onClick(View view) {
+ public void onClick(View view) {
     switch (view.getId()) {
       case R.id.change_gym:
         //Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
@@ -408,7 +445,7 @@ public class ManageFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.renewal) public void onClick() {
+ public void onClick() {
     if (gymWrapper.getCoachService() != null) {
       RxRegiste(QcCloudClient.getApi().getApi.qcStaffPmission(App.coachid + "",
           GymUtils.getParams(gymWrapper.getCoachService()))
@@ -449,7 +486,7 @@ public class ManageFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.action_flow) public void onClickFlow() {
+ public void onClickFlow() {
     if (dialogList == null) {
       dialogList = new DialogList(getContext());
       ArrayList<String> flows = new ArrayList<>();

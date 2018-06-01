@@ -17,13 +17,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.signin.zq.event.EventAddZq;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.BottomModel;
@@ -65,15 +61,15 @@ public class ZqAccessFragment extends BaseFragment
   public static final String INTRO_URL =
       "https://mp.weixin.qq.com/s/Rz4jRg2NyJG5AEDxC1M41A";
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R.id.tv_zq_introduce) TextView tvZqIntroduce;
-  @BindView(R.id.tv_zq_buy) TextView tvZqBuy;
-  @BindView(R.id.recycler_zq_access) RecyclerView recyclerZqAccess;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TextView tvZqIntroduce;
+	TextView tvZqBuy;
+	RecyclerView recyclerZqAccess;
 
   @Inject ZqAccessPresenter presenter;
-  @BindView(R.id.img_access) ImageView imgAccess;
+	ImageView imgAccess;
 
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
@@ -87,7 +83,24 @@ public class ZqAccessFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_zq_access, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvZqIntroduce = (TextView) view.findViewById(R.id.tv_zq_introduce);
+    tvZqBuy = (TextView) view.findViewById(R.id.tv_zq_buy);
+    recyclerZqAccess = (RecyclerView) view.findViewById(R.id.recycler_zq_access);
+    imgAccess = (ImageView) view.findViewById(R.id.img_access);
+    view.findViewById(R.id.tv_zq_introduce).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onIntro();
+      }
+    });
+    view.findViewById(R.id.tv_zq_buy).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBuy();
+      }
+    });
+
     delegatePresenter(presenter, this);
     bottomListFragment = BottomListFragment.newInstance("");
     setToolbar();
@@ -128,12 +141,12 @@ public class ZqAccessFragment extends BaseFragment
     });
   }
 
-  @OnClick(R.id.tv_zq_introduce)
+
   public void onIntro(){
     WebActivity.startWeb(INTRO_URL, getContext());
   }
 
-  @OnClick(R.id.tv_zq_buy)
+
   public void onBuy(){
     DialogUtils.instanceDelDialog(getContext(), getResources().getString(R.string.dialog_buy_access_zq),
         new MaterialDialog.SingleButtonCallback() {

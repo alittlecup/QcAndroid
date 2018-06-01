@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.gym.config;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -60,14 +60,17 @@ public class HintExpandItem extends AbstractFlexibleItem<HintExpandItem.HintExpa
     }
 
     public class HintExpandVH extends FlexibleViewHolder {
-        @BindView(R.id.hint) TextView hint;
-        @BindView(R.id.sw_content) CommonInputView swContent;
-        @BindView(R.id.sw_key) ExpandedLayout swKey;
-        @BindView(R.id.divider) View divider;
+	TextView hint;
+	CommonInputView swContent;
+	ExpandedLayout swKey;
+	View divider;
 
         public HintExpandVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          hint = (TextView) view.findViewById(R.id.hint);
+          swContent = (CommonInputView) view.findViewById(R.id.sw_content);
+          swKey = (ExpandedLayout) view.findViewById(R.id.sw_key);
+          divider = (View) view.findViewById(R.id.divider);
         }
     }
 }

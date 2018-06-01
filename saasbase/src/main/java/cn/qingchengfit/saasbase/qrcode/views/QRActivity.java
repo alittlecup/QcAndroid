@@ -18,16 +18,16 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
@@ -215,12 +215,12 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.done) LinearLayout done;
-    @BindView(R2.id.layout_next) LinearLayout layoutNext;
-    @BindView(R2.id.root) LinearLayout root;
-    @BindView(R2.id.root_view) RelativeLayout rootView;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	LinearLayout done;
+	LinearLayout layoutNext;
+	LinearLayout root;
+	RelativeLayout rootView;
     private Subscription sp;
     @Inject GymWrapper gymWrapper;
     @Inject QcRestRepository restRepository;
@@ -332,8 +332,19 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saas_qr);
-        ButterKnife.bind(this);
-        View v = new View(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      done = (LinearLayout) findViewById(R.id.done);
+      layoutNext = (LinearLayout) findViewById(R.id.layout_next);
+      root = (LinearLayout) findViewById(R.id.root);
+      rootView = (RelativeLayout) findViewById(R.id.root_view);
+      findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickNext();
+        }
+      });
+
+      View v = new View(this);
         v.setBackgroundResource(R.color.toolbar);
         root.addView(v,0,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
           MeasureUtils.getStatusBarHeight(this)));
@@ -347,7 +358,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         //        qrdecoderview.setOnQRCodeReadListener(this);
     }
 
-    @OnClick(R2.id.btn_next) public void onClickNext() {
+ public void onClickNext() {
         new RxPermissions(this).request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
             @Override public void call(Boolean aBoolean) {
                 if (aBoolean) {

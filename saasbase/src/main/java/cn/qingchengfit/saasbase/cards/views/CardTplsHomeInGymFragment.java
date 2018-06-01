@@ -17,13 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
@@ -66,12 +66,12 @@ import javax.inject.Inject;
   implements CardTypeListPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener,
   FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R2.id.tab) TabLayout tab;
-  @BindView(R2.id.viewpager) ViewPager viewpager;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.card_count) TextView cardCount;
-  @BindView(R2.id.card_disable) TextView cardDisable;
+	TabLayout tab;
+	ViewPager viewpager;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView cardCount;
+	TextView cardDisable;
 
   @Inject CardTypeListPresenter presenter;
   @Inject IPermissionModel permissionModel;
@@ -109,8 +109,24 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtype_home, container, false);
+    tab = (TabLayout) view.findViewById(R.id.tab);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    cardCount = (TextView) view.findViewById(R.id.card_count);
+    cardDisable = (TextView) view.findViewById(R.id.card_disable);
+    view.findViewById(R.id.card_disable).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickCardDisable();
+      }
+    });
+    view.findViewById(R.id.card_disable_status).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickCardDisable();
+      }
+    });
     super.onCreateView(inflater, container, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
+
     delegatePresenter(getPresenter(), this);
     initToolbar(toolbar);
     initVp();
@@ -190,7 +206,7 @@ import javax.inject.Inject;
     return CardTplsHomeInGymFragment.class.getName();
   }
 
-  @OnClick({ R2.id.card_disable, R2.id.card_disable_status }) public void onClickCardDisable() {
+ public void onClickCardDisable() {
     final String[] status = getResources().getStringArray(R.array.cardtype_disable_stauts);
     DialogList.builder(getContext()).list(status, new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

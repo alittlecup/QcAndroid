@@ -21,9 +21,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -65,20 +65,20 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
     public static final String TAG = SigninReportFragment.class.getName();
     public static final int RESULT_FILTER = 2;
 
-    @BindView(R.id.statement_detail_less) ImageButton statementDetailLess;
-    @BindView(R.id.statement_detail_more) ImageButton statementDetailMore;
-    @BindView(R.id.statement_detail_time) TextView statementDetailTime;
-    @BindView(R.id.statement_detail_filter) TextView statementDetailFilter;
-    @BindView(R.id.item_statement_time_shop) TextView itemStatementDetailContent;
-    @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
-    @BindView(R.id.statement_detail_change) Button statementDetailChange;
-    @BindView(R.id.viewpager) ViewPager viewpager;
+	ImageButton statementDetailLess;
+	ImageButton statementDetailMore;
+	TextView statementDetailTime;
+	TextView statementDetailFilter;
+	TextView itemStatementDetailContent;
+	RecycleViewWithNoImg recyclerview;
+	Button statementDetailChange;
+	ViewPager viewpager;
     @Inject SigninReportPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
 
     private ReportDetailAdapter mStatementDetailAdapter;
     private List<SigninReportDetail.CheckinsBean> statementBeans = new ArrayList<>();
@@ -180,12 +180,39 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_report_detail, container, false);
-        view.setOnTouchListener(new View.OnTouchListener() {
+      statementDetailLess = (ImageButton) view.findViewById(R.id.statement_detail_less);
+      statementDetailMore = (ImageButton) view.findViewById(R.id.statement_detail_more);
+      statementDetailTime = (TextView) view.findViewById(R.id.statement_detail_time);
+      statementDetailFilter = (TextView) view.findViewById(R.id.statement_detail_filter);
+      itemStatementDetailContent = (TextView) view.findViewById(R.id.item_statement_time_shop);
+      recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+      statementDetailChange = (Button) view.findViewById(R.id.statement_detail_change);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      down = (ImageView) view.findViewById(R.id.down);
+
+      view.findViewById(R.id.statement_detail_less).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickLess();
+        }
+      });
+      view.findViewById(R.id.statement_detail_more).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickMore();
+        }
+      });
+      view.findViewById(R.id.btn_filter).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBtnFilter();
+        }
+      });
+      view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
         });
-        unbinder = ButterKnife.bind(this, view);
+
         delegatePresenter(presenter, this);
         initView();
         initToolbar(toolbar);
@@ -288,15 +315,15 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
         super.onDestroyView();
     }
 
-    @OnClick(R.id.statement_detail_less) public void onClickLess() {
+ public void onClickLess() {
         changeCalendar(-1);
     }
 
-    @OnClick(R.id.statement_detail_more) public void onClickMore() {
+ public void onClickMore() {
         changeCalendar(1);
     }
 
-    @OnClick(R.id.btn_filter) public void onBtnFilter() {
+ public void onBtnFilter() {
         Intent toFilter = new Intent(getActivity(), SigninFilterActivity.class);
         if (TextUtils.isEmpty(mSaleFilter.startDay)) mSaleFilter.startDay = start;
         if (TextUtils.isEmpty(mSaleFilter.endDay)) mSaleFilter.endDay = end;
@@ -538,22 +565,35 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
      */
     class StatementDetailVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_statement_detail_bottomdivier) View itemStatementDetailBottomdivier;
-        @BindView(R.id.item_statement_detail_headerdivier) View itemStatementDetailHeaderdivier;
-        @BindView(R.id.item_statement_detail_day) TextView itemStatementDetailDay;
-        @BindView(R.id.item_statement_detail_month) TextView itemStatementDetailMonth;
-        @BindView(R.id.item_statement_detail_date) LinearLayout itemStatementDetailDate;
+	View itemStatementDetailBottomdivier;
+	View itemStatementDetailHeaderdivier;
+	TextView itemStatementDetailDay;
+	TextView itemStatementDetailMonth;
+	LinearLayout itemStatementDetailDate;
 
-        @BindView(R.id.item_statement_detail_pic) ImageView itemStatementDetailPic;
-        @BindView(R.id.item_statement_detail_name) TextView itemStatementDetailName;
-        @BindView(R.id.item_statement_detail_status) TextView itemStatementDetailStatus;
-        @BindView(R.id.item_statement_time_shop) TextView itemStatementTimeShop;
-        @BindView(R.id.item_card_cost) TextView itemCardCost;
-        @BindView(R.id.item_checkout_time) TextView itemCheckoutTime;
+	ImageView itemStatementDetailPic;
+	TextView itemStatementDetailName;
+	TextView itemStatementDetailStatus;
+	TextView itemStatementTimeShop;
+	TextView itemCardCost;
+	TextView itemCheckoutTime;
 
-        public StatementDetailVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public StatementDetailVH(View view) {
+            super(view);
+          itemStatementDetailBottomdivier =
+              (View) view.findViewById(R.id.item_statement_detail_bottomdivier);
+          itemStatementDetailHeaderdivier =
+              (View) view.findViewById(R.id.item_statement_detail_headerdivier);
+          itemStatementDetailDay = (TextView) view.findViewById(R.id.item_statement_detail_day);
+          itemStatementDetailMonth = (TextView) view.findViewById(R.id.item_statement_detail_month);
+          itemStatementDetailDate = (LinearLayout) view.findViewById(R.id.item_statement_detail_date);
+          itemStatementDetailPic = (ImageView) view.findViewById(R.id.item_statement_detail_pic);
+          itemStatementDetailName = (TextView) view.findViewById(R.id.item_statement_detail_name);
+          itemStatementDetailStatus = (TextView) view.findViewById(R.id.item_statement_detail_status);
+          itemStatementTimeShop = (TextView) view.findViewById(R.id.item_statement_time_shop);
+          itemCardCost = (TextView) view.findViewById(R.id.item_card_cost);
+          itemCheckoutTime = (TextView) view.findViewById(R.id.item_checkout_time);
+
         }
     }
 

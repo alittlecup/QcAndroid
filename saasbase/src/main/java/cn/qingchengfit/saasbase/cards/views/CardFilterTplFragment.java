@@ -7,15 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindArray;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardCateFilterItem;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
@@ -59,9 +55,9 @@ import rx.schedulers.Schedulers;
  */
 public class CardFilterTplFragment extends BaseFragment {
 
-  @BindView(R2.id.rv_left) RecyclerView rvLeft;
-  @BindView(R2.id.rv_right) RecyclerView rvRight;
-  @BindArray(R2.array.card_filter_cardtype_category) String[] cardCategory;
+  RecyclerView rvLeft;
+  RecyclerView rvRight;
+  String[] cardCategory;
   CommonFlexAdapter adapterLeft, adapterRight;
   private int rightSelcet = 0;
   private HashMap<String,List<CardTpl>> mAllDatas = new HashMap<>();
@@ -79,11 +75,21 @@ public class CardFilterTplFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_card_filter_tpl, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    rvLeft = (RecyclerView) view.findViewById(R.id.rv_left);
+    rvRight = (RecyclerView) view.findViewById(R.id.rv_right);
+    cardCategory = getResources().getStringArray(R.array.card_filter_cardtype_category);
+    adapterLeft = new CommonFlexAdapter(new ArrayList(), leftClickListener);
+    adapterRight = new CommonFlexAdapter(new ArrayList(), rightClickListener);
+    adapterLeft.setMode(SelectableAdapter.Mode.SINGLE);
+    adapterRight.setMode(SelectableAdapter.Mode.SINGLE);
     rvLeft.setLayoutManager(new LinearLayoutManager(getContext()));
     rvRight.setLayoutManager(new LinearLayoutManager(getContext()));
-    rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));
-    rvRight.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin).withBottomEdge(true));
+    rvLeft.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line)
+            .withBottomEdge(true));
+    rvRight.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
+            .withBottomEdge(true));
     rvLeft.setAdapter(adapterLeft);
     rvRight.setAdapter(adapterRight);
     return view;
@@ -95,41 +101,44 @@ public class CardFilterTplFragment extends BaseFragment {
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(Schedulers.io())
-        .flatMap(new Func1<QcDataResponse<CardTplListWrap>, Observable<HashMap<String,List<CardTpl>>>>() {
-          @Override
-          public Observable<HashMap<String,List<CardTpl>>> call(QcDataResponse<CardTplListWrap> cardTplListWrapQcDataResponse) {
-            //获取到所有可以筛选的会员卡种类，然后分类
-            HashMap<String,List<CardTpl>> ret = new HashMap<String, List<CardTpl>>();
-            if (ResponseConstant.checkSuccess(cardTplListWrapQcDataResponse)) {
-              ret.put(cardCategory[0],new ArrayList<CardTpl>());
-              ret.put(cardCategory[1],new ArrayList<CardTpl>());
-              ret.put(cardCategory[2],new ArrayList<CardTpl>());
-              ret.put(cardCategory[3],new ArrayList<CardTpl>());
-              //全部卡种类
-              ret.get(cardCategory[0]).add(new CardTpl("全部卡种类",0,"","",""));
-              ret.get(cardCategory[0]).addAll(cardTplListWrapQcDataResponse.data.card_tpls);
-              ret.get(cardCategory[1]).add(new CardTpl("全部储值卡",1,"","",""));
-              ret.get(cardCategory[2]).add(new CardTpl("全部次卡",2,"","",""));
-              ret.get(cardCategory[3]).add(new CardTpl("全部期限卡",3,"","",""));
+        .flatMap(
+            new Func1<QcDataResponse<CardTplListWrap>, Observable<HashMap<String, List<CardTpl>>>>() {
+              @Override public Observable<HashMap<String, List<CardTpl>>> call(
+                  QcDataResponse<CardTplListWrap> cardTplListWrapQcDataResponse) {
+                //获取到所有可以筛选的会员卡种类，然后分类
+                HashMap<String, List<CardTpl>> ret = new HashMap<String, List<CardTpl>>();
+                if (ResponseConstant.checkSuccess(cardTplListWrapQcDataResponse)) {
+                  ret.put(cardCategory[0], new ArrayList<CardTpl>());
+                  ret.put(cardCategory[1], new ArrayList<CardTpl>());
+                  ret.put(cardCategory[2], new ArrayList<CardTpl>());
+                  ret.put(cardCategory[3], new ArrayList<CardTpl>());
+                  //全部卡种类
+                  ret.get(cardCategory[0]).add(new CardTpl("全部卡种类", 0, "", "", ""));
+                  ret.get(cardCategory[0]).addAll(cardTplListWrapQcDataResponse.data.card_tpls);
+                  ret.get(cardCategory[1]).add(new CardTpl("全部储值卡", 1, "", "", ""));
+                  ret.get(cardCategory[2]).add(new CardTpl("全部次卡", 2, "", "", ""));
+                  ret.get(cardCategory[3]).add(new CardTpl("全部期限卡", 3, "", "", ""));
 
-              for (CardTpl card_tpl : cardTplListWrapQcDataResponse.data.card_tpls) {
-                ret.get(cardCategory[card_tpl.type]).add(card_tpl);
+                  for (CardTpl card_tpl : cardTplListWrapQcDataResponse.data.card_tpls) {
+                    ret.get(cardCategory[card_tpl.type]).add(card_tpl);
+                  }
+                } else {
+                  LogUtil.e(cardTplListWrapQcDataResponse.getMsg());
+                }
+                return Observable.just(ret)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
               }
-            } else {
-              LogUtil.e(cardTplListWrapQcDataResponse.getMsg());
-            }
-            return Observable.just(ret).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-          }
-        })
-        .subscribe(new NetSubscribe<HashMap<String,List<CardTpl>>>() {
-          @Override public void onNext(HashMap<String,List<CardTpl>> hashmap) {
+            })
+        .subscribe(new NetSubscribe<HashMap<String, List<CardTpl>>>() {
+          @Override public void onNext(HashMap<String, List<CardTpl>> hashmap) {
             adapterLeft.clear();
             adapterRight.clear();
             mAllDatas = hashmap;
             //有数据的会员卡类型添加进去
             for (String s : cardCategory) {
-              if (hashmap.get(s).size() > 0){
-                adapterLeft.addItem(new CardCateFilterItem(s,false));
+              if (hashmap.get(s).size() > 0) {
+                adapterLeft.addItem(new CardCateFilterItem(s, false));
               }
             }
 
@@ -138,7 +147,6 @@ public class CardFilterTplFragment extends BaseFragment {
             adapterRight.toggleSelection(0);
             adapterLeft.notifyDataSetChanged();
             adapterRight.notifyDataSetChanged();
-
           }
         }));
 
@@ -172,12 +180,12 @@ public class CardFilterTplFragment extends BaseFragment {
           int x = 0;
           try {
             x = adapterLeft.getSelectedPositions().get(0);
-          }catch (Exception e){
+          } catch (Exception e) {
 
           }
           IFlexible item = adapterRight.getItem(position);
           if (item instanceof FilterCommonLinearItem) {
-              RxBus.getBus().post(mAllDatas.get(cardCategory[x]).get(position));
+            RxBus.getBus().post(mAllDatas.get(cardCategory[x]).get(position));
           }
           return true;
         }

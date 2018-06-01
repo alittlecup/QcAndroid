@@ -1,11 +1,7 @@
 package cn.qingchengfit.staffkit.allocate;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -41,11 +37,11 @@ public class FooterStudentCountItem extends AbstractFlexibleItem<FooterStudentCo
     }
 
     class FooterStudentCountVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_total_count) TextView tvTotalCount;
+	TextView tvTotalCount;
 
         public FooterStudentCountVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvTotalCount = (TextView) view.findViewById(R.id.tv_total_count);
         }
     }
 }

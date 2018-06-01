@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.export.item;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.export.bean.ExportRecord;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -73,14 +73,17 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
 
   class ExportRecordVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.tv_export_title) TextView tvExportTitle;
-    @BindView(R2.id.tv_export_info) TextView tvExportInfo;
-    @BindView(R2.id.tv_export_download) TextView tvExportDownload;
-    @BindView(R2.id.tv_export_state) TextView tvExportState;
+	TextView tvExportTitle;
+	TextView tvExportInfo;
+	TextView tvExportDownload;
+	TextView tvExportState;
 
     public ExportRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvExportTitle = (TextView) view.findViewById(R.id.tv_export_title);
+      tvExportInfo = (TextView) view.findViewById(R.id.tv_export_info);
+      tvExportDownload = (TextView) view.findViewById(R.id.tv_export_download);
+      tvExportState = (TextView) view.findViewById(R.id.tv_export_state);
     }
   }
 

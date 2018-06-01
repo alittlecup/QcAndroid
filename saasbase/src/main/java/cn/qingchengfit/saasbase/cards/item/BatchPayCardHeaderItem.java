@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.cards.item;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
@@ -113,13 +113,15 @@ public class BatchPayCardHeaderItem extends AbstractHeaderItem<BatchPayCardHeade
     }
 
     public class BatchPayCardHeaderVH extends ExpandableViewHolder {
-        @BindView(R2.id.tv_status) TextView tvStatus;
-        @BindView(R2.id.tv_title) TextView tvTitle;
-        @BindView(R2.id.sw) Switch sw;
+	TextView tvStatus;
+	TextView tvTitle;
+	Switch sw;
 
         public BatchPayCardHeaderVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvStatus = (TextView) view.findViewById(R.id.tv_status);
+          tvTitle = (TextView) view.findViewById(R.id.tv_title);
+          sw = (Switch) view.findViewById(R.id.sw);
         }
     }
 }

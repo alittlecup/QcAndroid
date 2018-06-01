@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -33,22 +33,26 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
     public static Integer checkinWithLocker = 1;
     public static String checkin_url = "";
     public static String checkout_url = "";
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.student_frag) FrameLayout studentFrag;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout studentFrag;
     //@BindView(R.id.down) ImageView down;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SignInPresenter presenter;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
+	LinearLayout titileLayout;
+	RelativeLayout toolbarLayout;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_toolbar);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      studentFrag = (FrameLayout) findViewById(R.id.student_frag);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
 
-        ButterKnife.bind(this);
-        presenter.attachView(this);
+      presenter.attachView(this);
         presenter.onNewSps();
 
         presenter.getSignInConfig();

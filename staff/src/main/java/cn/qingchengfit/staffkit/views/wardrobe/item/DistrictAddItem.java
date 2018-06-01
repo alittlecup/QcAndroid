@@ -1,11 +1,7 @@
 package cn.qingchengfit.staffkit.views.wardrobe.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -51,11 +47,11 @@ public class DistrictAddItem extends AbstractFlexibleItem<DistrictItem.DistrictV
     }
 
     public class DistrictAddVH extends FlexibleViewHolder {
-        @BindView(R.id.distric_name) TextView districName;
+	TextView districName;
 
         public DistrictAddVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          districName = (TextView) view.findViewById(R.id.distric_name);
         }
     }
 }

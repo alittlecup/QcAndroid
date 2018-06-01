@@ -1,12 +1,8 @@
 package cn.qingchengfit.staffkit.views.student.score;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -61,12 +57,13 @@ public class StartItem extends AbstractFlexibleItem<StartItem.StartVH> {
     }
 
     public static class StartVH extends FlexibleViewHolder {
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.hint) TextView hint;
+	ImageView img;
+	TextView hint;
 
         public StartVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          img = (ImageView) view.findViewById(R.id.img);
+          hint = (TextView) view.findViewById(R.id.hint);
         }
     }
 }

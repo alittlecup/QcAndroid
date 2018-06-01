@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SigninReportForm;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -22,18 +22,18 @@ import java.util.Locale;
  */
 public class SigninReportFormFragment extends BaseFragment {
 
-  @BindView(R.id.tv_signin_report_date_count) TextView tv_signin_report_date_count;
-  @BindView(R.id.tv_signin_report_date_income) TextView tvSigninReportDateIncome;
-  @BindView(R.id.tv_siginin_report_times_count) TextView tv_siginin_report_times_count;
-  @BindView(R.id.tv_siginin_report_value_count) TextView tv_siginin_report_value_count;
-  @BindView(R.id.tv_siginin_report_value_income) TextView tv_siginin_report_value_income;
-  @BindView(R.id.tv_siginin_report_total_count) TextView tv_siginin_report_total_count;
-  @BindView(R.id.tv_siginin_report_total_income) TextView tv_siginin_report_total_income;
-  @BindView(R.id.tv_siginin_report_times_incomes) TextView tv_siginin_report_times_incomes;
-  @BindView(R.id.tv_signin_report_date_cost) TextView tvSigninReportDateCost;
-  @BindView(R.id.tv_siginin_report_times_cost) TextView tvSigininReportTimesCost;
-  @BindView(R.id.tv_siginin_report_value_cost) TextView tvSigininReportValueCost;
-  @BindView(R.id.tv_siginin_report_total_cost) TextView tvSigininReportTotalCost;
+	TextView tv_signin_report_date_count;
+	TextView tvSigninReportDateIncome;
+	TextView tv_siginin_report_times_count;
+	TextView tv_siginin_report_value_count;
+	TextView tv_siginin_report_value_income;
+	TextView tv_siginin_report_total_count;
+	TextView tv_siginin_report_total_income;
+	TextView tv_siginin_report_times_incomes;
+	TextView tvSigninReportDateCost;
+	TextView tvSigininReportTimesCost;
+	TextView tvSigininReportValueCost;
+	TextView tvSigininReportTotalCost;
 
   public static SigninReportFormFragment newInstance(List<SigninReportForm> ts) {
 
@@ -48,7 +48,25 @@ public class SigninReportFormFragment extends BaseFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_signin_report_form, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tv_signin_report_date_count = (TextView) view.findViewById(R.id.tv_signin_report_date_count);
+    tvSigninReportDateIncome = (TextView) view.findViewById(R.id.tv_signin_report_date_income);
+    tv_siginin_report_times_count =
+        (TextView) view.findViewById(R.id.tv_siginin_report_times_count);
+    tv_siginin_report_value_count =
+        (TextView) view.findViewById(R.id.tv_siginin_report_value_count);
+    tv_siginin_report_value_income =
+        (TextView) view.findViewById(R.id.tv_siginin_report_value_income);
+    tv_siginin_report_total_count =
+        (TextView) view.findViewById(R.id.tv_siginin_report_total_count);
+    tv_siginin_report_total_income =
+        (TextView) view.findViewById(R.id.tv_siginin_report_total_income);
+    tv_siginin_report_times_incomes =
+        (TextView) view.findViewById(R.id.tv_siginin_report_times_incomes);
+    tvSigninReportDateCost = (TextView) view.findViewById(R.id.tv_signin_report_date_cost);
+    tvSigininReportTimesCost = (TextView) view.findViewById(R.id.tv_siginin_report_times_cost);
+    tvSigininReportValueCost = (TextView) view.findViewById(R.id.tv_siginin_report_value_cost);
+    tvSigininReportTotalCost = (TextView) view.findViewById(R.id.tv_siginin_report_total_cost);
+
     if (getArguments() != null) {
       ArrayList<SigninReportForm> ts = getArguments().getParcelableArrayList("form");
       if (ts != null) {

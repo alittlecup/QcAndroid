@@ -1,25 +1,18 @@
 package cn.qingchengfit.saasbase.student.items;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponse;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
+import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/10/27.

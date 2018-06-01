@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.export.bean.ExportRecord;
 import cn.qingchengfit.saasbase.export.presenter.ImportExportPresenter;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -29,11 +29,11 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
   public static final String STUDENT_EXPORT_STR = "member";
   public static final String CARD_EXPORT_STR = "member_card";
 
-  @BindView(R2.id.tv_import) public TextView tvStudentImport;
-  @BindView(R2.id.tv_export) public TextView tvStudentExport;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) public TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+	public TextView tvStudentImport;
+	public TextView tvStudentExport;
+	Toolbar toolbar;
+	public TextView toolbarTitle;
+	FrameLayout toolbarLayout;
 
   @Inject public ImportExportPresenter presenter;
   @Inject IPermissionModel serPermisAction;
@@ -42,14 +42,29 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_import_export, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvStudentImport = (TextView) view.findViewById(R.id.tv_import);
+    tvStudentExport = (TextView) view.findViewById(R.id.tv_export);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    view.findViewById(R.id.tv_import).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onImport();
+      }
+    });
+    view.findViewById(R.id.tv_export).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onExport();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText(getResources().getString(R.string.toolbar_import_export_student));
     return view;
   }
 
-  @OnClick(R2.id.tv_import) public void onImport() {
+ public void onImport() {
     if (!serPermisAction.check(PermissionServerUtils.STUDENT_IMPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
@@ -70,7 +85,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
     QRActivity.start(getContext(),"/manage/members/import");
   }
 
-  @OnClick(R2.id.tv_export) public void onExport() {
+ public void onExport() {
     if (!serPermisAction.check(PermissionServerUtils.STUDENT_EXPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;

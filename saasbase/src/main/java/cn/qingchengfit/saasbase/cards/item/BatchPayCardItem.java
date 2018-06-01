@@ -6,10 +6,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.StringUtils;
@@ -93,13 +93,15 @@ public class BatchPayCardItem extends AbstractFlexibleItem<BatchPayCardItem.Batc
     }
 
     public class BatchPayCardVH extends FlexibleViewHolder {
-        @BindView(R2.id.tv_lable) TextView tvLable;
-        @BindView(R2.id.et_content) EditText etContent;
+	TextView tvLable;
+	EditText etContent;
 
         public BatchPayCardVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            etContent.addTextChangedListener(new TextWatcher() {
+          tvLable = (TextView) view.findViewById(R.id.tv_lable);
+          etContent = (EditText) view.findViewById(R.id.et_content);
+
+          etContent.addTextChangedListener(new TextWatcher() {
                 @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 }

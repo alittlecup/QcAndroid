@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
 import cn.qingchengfit.model.responese.Locker;
@@ -50,19 +50,19 @@ import javax.inject.Inject;
  */
 public class WardrobeReturnDialog extends BaseDialogFragment implements WardrobeReturnDialogPresenter.MVPView {
 
-    @BindView(R.id.tv_status) TextView tvStatus;
-    @BindView(R.id.layout_status) LinearLayout layoutStatus;
-    @BindView(R.id.tv_time_limit) TextView tvTimeLimit;
-    @BindView(R.id.layout_period) LinearLayout layoutPeriod;
-    @BindView(R.id.tv_student) TextView tvStudent;
-    @BindView(R.id.layout_student) LinearLayout layoutStudent;
-    @BindView(R.id.tv_remind_day) TextView tvRemindDay;
-    @BindView(R.id.layout_remind_day) LinearLayout layoutRemindDay;
-    @BindView(R.id.btn_continue_hire) Button btnContinueHire;
+	TextView tvStatus;
+	LinearLayout layoutStatus;
+	TextView tvTimeLimit;
+	LinearLayout layoutPeriod;
+	TextView tvStudent;
+	LinearLayout layoutStudent;
+	TextView tvRemindDay;
+	LinearLayout layoutRemindDay;
+	Button btnContinueHire;
 
     @Inject WardrobeReturnDialogPresenter mPresenter;
-    @BindView(R.id.locker_name) TextView lockerName;
-    @BindView(R.id.locker_rg) TextView lockerRg;
+	TextView lockerName;
+	TextView lockerRg;
 
     private Locker mLocker;
 
@@ -83,9 +83,34 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_wardrobe_return, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      tvStatus = (TextView) view.findViewById(R.id.tv_status);
+      layoutStatus = (LinearLayout) view.findViewById(R.id.layout_status);
+      tvTimeLimit = (TextView) view.findViewById(R.id.tv_time_limit);
+      layoutPeriod = (LinearLayout) view.findViewById(R.id.layout_period);
+      tvStudent = (TextView) view.findViewById(R.id.tv_student);
+      layoutStudent = (LinearLayout) view.findViewById(R.id.layout_student);
+      tvRemindDay = (TextView) view.findViewById(R.id.tv_remind_day);
+      layoutRemindDay = (LinearLayout) view.findViewById(R.id.layout_remind_day);
+      btnContinueHire = (Button) view.findViewById(R.id.btn_continue_hire);
+      lockerName = (TextView) view.findViewById(R.id.locker_name);
+      lockerRg = (TextView) view.findViewById(R.id.locker_rg);
+      view.findViewById(R.id.btn_wardrobe_return).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeReturnDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_continue_hire).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeReturnDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeReturnDialog.this.onClick(v);
+        }
+      });
 
-        delegatePresenter(mPresenter, this);
+      delegatePresenter(mPresenter, this);
 
         //        mPresenter.queryInfo();
         onLockerInfo(mLocker);
@@ -119,7 +144,7 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.btn_wardrobe_return, R.id.btn_continue_hire }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_wardrobe_return:
                 if (mLocker.is_long_term_borrow)//归还长期更衣柜
@@ -180,7 +205,7 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
 
     }
 
-    @OnClick(R.id.btn_close) public void onClick() {
+ public void onClick() {
         dismiss();
     }
 

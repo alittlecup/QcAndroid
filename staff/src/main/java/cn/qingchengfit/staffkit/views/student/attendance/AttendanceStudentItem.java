@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.common.Absentce;
 import cn.qingchengfit.staffkit.R;
@@ -57,21 +57,31 @@ public class AttendanceStudentItem extends AbstractFlexibleItem<AttendanceStuden
     }
 
     public class AttendanceStudentVH extends FlexibleViewHolder {
-        @BindView(R.id.item_person_header) ImageView itemPersonHeader;
-        @BindView(R.id.item_person_header_loop) RelativeLayout itemPersonHeaderLoop;
-        @BindView(R.id.item_person_name) TextView itemPersonName;
-        @BindView(R.id.item_person_gender) ImageView itemPersonGender;
-        @BindView(R.id.tv_referrer_count) TextView tvReferrerCount;
-        @BindView(R.id.item_person_desc) TextView itemPersonDesc;
-        @BindView(R.id.tv_student_contact_ta) TextView tvStudentContactTa;
-        @BindView(R.id.tv_student_title) TextView tvStudentTitle;
-        @BindView(R.id.tv_student_date) TextView tvStudentDate;
-        @BindView(R.id.text_absence_days) TextView tvAbsenceDay;
+	ImageView itemPersonHeader;
+	RelativeLayout itemPersonHeaderLoop;
+	TextView itemPersonName;
+	ImageView itemPersonGender;
+	TextView tvReferrerCount;
+	TextView itemPersonDesc;
+	TextView tvStudentContactTa;
+	TextView tvStudentTitle;
+	TextView tvStudentDate;
+	TextView tvAbsenceDay;
 
         public AttendanceStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            tvStudentContactTa.setOnClickListener(new View.OnClickListener() {
+          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+          itemPersonHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_person_header_loop);
+          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+          tvReferrerCount = (TextView) view.findViewById(R.id.tv_referrer_count);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+          tvStudentContactTa = (TextView) view.findViewById(R.id.tv_student_contact_ta);
+          tvStudentTitle = (TextView) view.findViewById(R.id.tv_student_title);
+          tvStudentDate = (TextView) view.findViewById(R.id.tv_student_date);
+          tvAbsenceDay = (TextView) view.findViewById(R.id.text_absence_days);
+
+          tvStudentContactTa.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     Absentce absentce = ((AttendanceStudentItem)adapter.getItem((int)v.getTag())).getData();
                     if (absentce != null) RxBus.getBus().post(new EventContactUser(absentce.user));

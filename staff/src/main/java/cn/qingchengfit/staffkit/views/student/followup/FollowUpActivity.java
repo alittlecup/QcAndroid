@@ -12,8 +12,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -63,8 +63,8 @@ public class FollowUpActivity extends BaseActivity implements FragCallBack {
     //@BindView(R.id.searchview_clear) ImageView searchviewClear;
     //@BindView(R.id.searchview_cancle) Button searchviewCancle;
     //@BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @BindView(R.id.frag) FrameLayout frag;
+	DrawerLayout drawerLayout;
+	FrameLayout frag;
 
     @Inject RestRepository mRestRepository;
 
@@ -88,8 +88,10 @@ public class FollowUpActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_follow_up);
-        ButterKnife.bind(this);
-        initView();
+      drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+      frag = (FrameLayout) findViewById(R.id.frag);
+
+      initView();
         initToolBar();
     }
 

@@ -24,10 +24,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.bean.SearchItemBean;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.recruit.views.organization.AddGymBean;
@@ -59,21 +59,21 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     public static final int RESULT_BRAND = 2;
 
     public String keyword;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchresult_btn) Button searchresultBtn;
-    @BindView(R.id.searchresult_none) LinearLayout searchresultNone;
-    @BindView(R.id.searchresult_rv) RecyclerView searchresultRv;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchresultBtn;
+	LinearLayout searchresultNone;
+	RecyclerView searchresultRv;
     SearchResultAdapter adapter;
-    @BindView(R.id.search_hottable) TextView searchHottable;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.search_hint) TextView searchHint;
-    @BindView(R.id.searchresult_hint) TextView searchresultHint;
+	TextView searchHottable;
+	Toolbar toolbar;
+	TextView searchHint;
+	TextView searchresultHint;
     private int type;
     private List<SearchItemBean> strings;
     private InternalSearchHandler handler;
     private SearchInterface searchListener;
-    private Unbinder unbinder;
+
 
     public SearchFragment() {
     }
@@ -97,8 +97,28 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View view = inflater.inflate(R.layout.fragment_search_recruit, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+      searchresultBtn = (Button) view.findViewById(R.id.searchresult_btn);
+      searchresultNone = (LinearLayout) view.findViewById(R.id.searchresult_none);
+      searchresultRv = (RecyclerView) view.findViewById(R.id.searchresult_rv);
+      searchHottable = (TextView) view.findViewById(R.id.search_hottable);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      searchHint = (TextView) view.findViewById(R.id.search_hint);
+      searchresultHint = (TextView) view.findViewById(R.id.searchresult_hint);
+
+      view.findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      view.findViewById(R.id.searchresult_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAdd();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 getActivity().onBackPressed();
@@ -252,11 +272,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
         searchviewEt.setText("");
     }
 
-    @OnClick(R.id.searchresult_btn) public void onAdd() {
+ public void onAdd() {
         if (type == TYPE_GYM) {
             Intent toChooseBrand = new Intent(getActivity(), ExpChooseBrandActivity.class);
 
@@ -371,7 +391,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     public void setOnItemClickListener(OnRecycleItemClickListener listener) {
@@ -395,14 +415,18 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     }
 
     public static class SearchResultVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_text) TextView itemText;
-        @BindView(R.id.item_img) ImageView imageView;
-        @BindView(R.id.item_qc_identify) ImageView qcIdentify;
-        @BindView(R.id.item_address) TextView itemAddress;
+	TextView itemText;
+	ImageView imageView;
+	ImageView qcIdentify;
+	TextView itemAddress;
 
-        public SearchResultVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public SearchResultVH(View view) {
+            super(view);
+          itemText = (TextView) view.findViewById(R.id.item_text);
+          imageView = (ImageView) view.findViewById(R.id.item_img);
+          qcIdentify = (ImageView) view.findViewById(R.id.item_qc_identify);
+          itemAddress = (TextView) view.findViewById(R.id.item_address);
+
         }
     }
 

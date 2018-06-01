@@ -4,8 +4,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -73,13 +73,15 @@ public class SignInConfigItem extends AbstractFlexibleItem<SignInConfigItem.Item
 
     public static class ItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R.id.sw_signin_config) SwitcherLayout swSigninConfig;
-        @BindView(R.id.sw_signin_config_fee) CommonInputView swSigninConfigFee;
+	SwitcherLayout swSigninConfig;
+	CommonInputView swSigninConfigFee;
 
         public ItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            swSigninConfig.setOnCheckListener(new CompoundButton.OnCheckedChangeListener() {
+          swSigninConfig = (SwitcherLayout) view.findViewById(R.id.sw_signin_config);
+          swSigninConfigFee = (CommonInputView) view.findViewById(R.id.sw_signin_config_fee);
+
+          swSigninConfig.setOnCheckListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setSelected(b);
                     if (((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.getType() != Configs.CATEGORY_DATE) {

@@ -1,11 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Card_tpl;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -38,11 +34,11 @@ public class ChooseCardtplItem extends AbstractFlexibleItem<ChooseCardtplItem.Ch
     }
 
     public class ChooseStudentVH extends FlexibleViewHolder {
-        @BindView(R.id.item_text) TextView itemText;
+	TextView itemText;
 
         public ChooseStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemText = (TextView) view.findViewById(R.id.item_text);
         }
     }
 }

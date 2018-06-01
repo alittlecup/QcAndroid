@@ -17,9 +17,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CardTplOption;
@@ -27,7 +27,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
@@ -95,39 +95,39 @@ import rx.functions.Action1;
   public static final int TYPE_CARD_BUY_CARD_NO = 1001;
   public static final int TYPE_CARD_BUY_REMARK = 1002;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
-  @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
-  @BindView(R2.id.tv_gym_name) TextView tvGymName;
-  @BindView(R2.id.tv_card_id) TextView tvCardId;
-  @BindView(R2.id.cardview) RelativeLayout cardview;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	TextView tvCardTplType;
+	TextView tvCardtplName;
+	TextView tvGymName;
+	TextView tvCardId;
+	RelativeLayout cardview;
 
-  @BindView(R2.id.rv) RecyclerView rv;
-  @BindView(R2.id.tv_money_label) protected TextView tvMoneyLabel;
-  @BindView(R2.id.tv_pay_money) protected TextView tvPayMoney;
-  @BindView(R2.id.btn_pay) Button btnPay;
-  @BindView(R2.id.civ_bind_menbers) protected CommonInputView civBindMenbers;
-  @BindView(R2.id.civ_saler) protected CommonInputView civSaler;
-  @BindView(R2.id.civ_start_time) protected CommonInputView civStartTime;
-  @BindView(R2.id.civ_end_time) protected CommonInputView civEndTime;
-  @BindView(R2.id.el_auto_open) protected ExpandedLayout elAutoOpen;
-  @BindView(R2.id.tv_card_expand_desc) ExpandTextView tvCardExpandDesc;
+	RecyclerView rv;
+	protected TextView tvMoneyLabel;
+	protected TextView tvPayMoney;
+	Button btnPay;
+	protected CommonInputView civBindMenbers;
+	protected CommonInputView civSaler;
+	protected CommonInputView civStartTime;
+	protected CommonInputView civEndTime;
+	protected ExpandedLayout elAutoOpen;
+	ExpandTextView tvCardExpandDesc;
 
-  @BindView(R2.id.civ_real_card_num) CommonInputView civRealCardNum;
-  @BindView(R2.id.civ_mark) CommonInputView civMark;
-  @BindView(R2.id.civ_pay_method) CommonInputView civPayMethod;
-  @BindView(R2.id.lo_input_money) LinearLayout loInputMoney;
-  @BindView(R2.id.tv_card_append) TextView tvCardAppend;
+	CommonInputView civRealCardNum;
+	CommonInputView civMark;
+	CommonInputView civPayMethod;
+	LinearLayout loInputMoney;
+	TextView tvCardAppend;
 
   @Inject public CardBuyPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
   @Need QcStudentBean qcStudentBean;
-  @BindView(R2.id.layout_validate) LinearLayout layoutValidate;
-  @BindView(R2.id.tv_card_validate_total) TextView tvCardValidateTotal;
-  @BindView(R2.id.card_protocol) CommonInputView cardProtocol;
+	LinearLayout layoutValidate;
+	TextView tvCardValidateTotal;
+	CommonInputView cardProtocol;
 
   protected CardTplOption cardOptionCustom = new CardTplOption();
   private List<CardTplOption> optionList = new ArrayList<>();
@@ -146,7 +146,72 @@ import rx.functions.Action1;
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_buy_card, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvCardTplType = (TextView) view.findViewById(R.id.tv_card_tpl_type);
+    tvCardtplName = (TextView) view.findViewById(R.id.tv_cardtpl_name);
+    tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+    tvCardId = (TextView) view.findViewById(R.id.tv_card_id);
+    cardview = (RelativeLayout) view.findViewById(R.id.cardview);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    tvMoneyLabel = (TextView) view.findViewById(R.id.tv_money_label);
+    tvPayMoney = (TextView) view.findViewById(R.id.tv_pay_money);
+    btnPay = (Button) view.findViewById(R.id.btn_pay);
+    civBindMenbers = (CommonInputView) view.findViewById(R.id.civ_bind_menbers);
+    civSaler = (CommonInputView) view.findViewById(R.id.civ_saler);
+    civStartTime = (CommonInputView) view.findViewById(R.id.civ_start_time);
+    civEndTime = (CommonInputView) view.findViewById(R.id.civ_end_time);
+    elAutoOpen = (ExpandedLayout) view.findViewById(R.id.el_auto_open);
+    tvCardExpandDesc = (ExpandTextView) view.findViewById(R.id.tv_card_expand_desc);
+    civRealCardNum = (CommonInputView) view.findViewById(R.id.civ_real_card_num);
+    civMark = (CommonInputView) view.findViewById(R.id.civ_mark);
+    civPayMethod = (CommonInputView) view.findViewById(R.id.civ_pay_method);
+    loInputMoney = (LinearLayout) view.findViewById(R.id.lo_input_money);
+    tvCardAppend = (TextView) view.findViewById(R.id.tv_card_append);
+    layoutValidate = (LinearLayout) view.findViewById(R.id.layout_validate);
+    tvCardValidateTotal = (TextView) view.findViewById(R.id.tv_card_validate_total);
+    cardProtocol = (CommonInputView) view.findViewById(R.id.card_protocol);
+    view.findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+    view.findViewById(R.id.card_protocol).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCardProrocol();
+      }
+    });
+    view.findViewById(R.id.civ_bind_menbers).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivBindMenbersClicked();
+      }
+    });
+    view.findViewById(R.id.civ_saler).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivSalerClicked();
+      }
+    });
+    view.findViewById(R.id.civ_start_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivStartTimeClicked();
+      }
+    });
+    view.findViewById(R.id.civ_mark).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCivMarkClicked();
+      }
+    });
+    view.findViewById(R.id.civ_real_card_num).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickCardId();
+      }
+    });
+    view.findViewById(R.id.civ_pay_method).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSelectPayMethod();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     setCardInfo();
@@ -281,7 +346,7 @@ import rx.functions.Action1;
   /**
    * 点击支付
    */
-  @OnClick(R2.id.btn_pay) public void onViewClicked() {
+ public void onViewClicked() {
     onConfirmPay();
   }
 
@@ -314,7 +379,7 @@ import rx.functions.Action1;
     return true;
   }
 
-  @OnClick(R2.id.card_protocol) public void onCardProrocol() {
+ public void onCardProrocol() {
     if (cardTpl.card_tpl_service_term != null) {
       CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(),
           false);
@@ -355,16 +420,16 @@ import rx.functions.Action1;
     }
   }
 
-  @OnClick(R2.id.civ_bind_menbers) public void onCivBindMenbersClicked() {
+ public void onCivBindMenbersClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
         new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
   }
 
-  @OnClick(R2.id.civ_saler) public void onCivSalerClicked() {
+ public void onCivSalerClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/staff/choose/saler/"), null);
   }
 
-  @OnClick(R2.id.civ_start_time) public void onCivStartTimeClicked() {
+ public void onCivStartTimeClicked() {
     choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, new Date(), civStartTime,
         new TimeDialogWindow.OnTimeSelectListener() {
           @Override public void onTimeSelect(Date date) {
@@ -385,7 +450,7 @@ import rx.functions.Action1;
             cardOptionCustom.getCharge()) - 1 : cardOptionCustom.getDays() - 1)));
   }
 
-  @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
+ public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
         new CommonInputParams().title("会员卡备注")
             .content(presenter.getRemarks())
@@ -393,7 +458,7 @@ import rx.functions.Action1;
             .build());
   }
 
-  @OnClick(R2.id.civ_real_card_num) public void onClickCardId() {
+ public void onClickCardId() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
         new CommonInputParams().title("添加实体卡号")
             .content(presenter.getRealCardNo())
@@ -401,7 +466,7 @@ import rx.functions.Action1;
             .build());
   }
 
-  @OnClick(R2.id.civ_pay_method) public void onSelectPayMethod() {
+ public void onSelectPayMethod() {
     BottomPayDialog f = BottomPayDialog.newInstance(presenter.hasEditPermission(), selectPos);
     f.show(getFragmentManager(), "");
   }

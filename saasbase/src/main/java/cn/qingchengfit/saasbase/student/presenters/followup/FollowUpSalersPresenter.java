@@ -1,19 +1,15 @@
 package cn.qingchengfit.saasbase.student.presenters.followup;
 
-import java.util.HashMap;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saas.response.GymWrap;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import java.util.HashMap;
+import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;

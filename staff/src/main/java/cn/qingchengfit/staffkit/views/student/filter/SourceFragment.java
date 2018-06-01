@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StaffWrapper;
@@ -70,17 +70,17 @@ import javax.inject.Inject;
     public List<StudentSourceBean> datas = new ArrayList<>();
     public List<SourceItem> items = new ArrayList<>();
     public boolean isShowShort = true;
-    @BindView(R.id.rv_referrer) RecyclerView rvReferrer;
+	RecyclerView rvReferrer;
 
     @Inject StaffWrapper staffWrapper;
     @Inject SourcePresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-    @BindView(R.id.tv_add_new_origin) TextView tvAddNew;
-    @BindView(R.id.divider) View divider;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
+	TextView tvAddNew;
+	View divider;
     boolean inSales = false;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,8 +91,19 @@ import javax.inject.Inject;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_referrer_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      rvReferrer = (RecyclerView) view.findViewById(R.id.rv_referrer);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+      tvAddNew = (TextView) view.findViewById(R.id.tv_add_new_origin);
+      divider = (View) view.findViewById(R.id.divider);
+      view.findViewById(R.id.tv_add_new_origin).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddNewOrigin();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(presenter, this);
         presenter.setType(chooseType);
         if (getActivity() != null && getActivity() instanceof AllotSalesActivity) {
@@ -146,7 +157,7 @@ import javax.inject.Inject;
         rvReferrer.setAdapter(flexibleAdapter);
     }
 
-    @OnClick(R.id.tv_add_new_origin) public void onAddNewOrigin() {
+ public void onAddNewOrigin() {
 
         //Intent toAddOrigin = new EditTextActivityIntentBuilder("添加新来源").build(getContext());
         Intent toAddOrigin = new Intent(getContext(), EditTextActivity.class);

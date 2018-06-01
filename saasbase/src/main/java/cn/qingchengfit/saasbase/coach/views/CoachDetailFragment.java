@@ -31,7 +31,7 @@
 //import cn.qingchengfit.model.base.PermissionServerUtils;
 //import cn.qingchengfit.model.base.Staff;
 //import cn.qingchengfit.saasbase.R;
-//import cn.qingchengfit.saasbase.R2;
+//
 //import cn.qingchengfit.saasbase.coach.presenter.CoachDetailView;
 //import cn.qingchengfit.saasbase.coach.presenter.EditCoachInfoPresenter;
 //import cn.qingchengfit.saasbase.constant.Configs;

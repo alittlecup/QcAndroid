@@ -6,7 +6,7 @@
 //import butterknife.BindView;
 //import butterknife.ButterKnife;
 //import cn.qingchengfit.saasbase.R;
-//import cn.qingchengfit.saasbase.R2;
+//
 //import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 //import cn.qingchengfit.saasbase.cards.item.BatchPayCardItem;
 //import eu.davidea.flexibleadapter.FlexibleAdapter;

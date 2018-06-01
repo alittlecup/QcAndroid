@@ -10,13 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
 import cn.qingchengfit.saasbase.course.course.bean.SchedulePhotos;
@@ -44,9 +44,9 @@ import rx.schedulers.Schedulers;
 public class CourseImagesFragment extends SaasBaseFragment
   implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
 
-  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	RecyclerView recyclerview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
   @Inject ICourseModel courseModel;
 
@@ -74,7 +74,10 @@ public class CourseImagesFragment extends SaasBaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_all_course_images, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
     initToolbar(toolbar);
     //init recycle
 

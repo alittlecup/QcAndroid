@@ -32,7 +32,7 @@
 //import cn.qingchengfit.model.base.Staff;
 //import cn.qingchengfit.network.QcRestRepository;
 //import cn.qingchengfit.saasbase.R;
-//import cn.qingchengfit.saasbase.R2;
+//
 //import cn.qingchengfit.saasbase.coach.event.LoadingEvent;
 //import cn.qingchengfit.saasbase.coach.presenter.AddNewCoachPresenter;
 //import cn.qingchengfit.saasbase.constant.Configs;

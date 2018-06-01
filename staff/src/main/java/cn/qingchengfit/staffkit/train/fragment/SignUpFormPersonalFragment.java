@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.train.item.SignUpFormPersonalItem;
@@ -45,13 +45,13 @@ import rx.functions.Action1;
 public class SignUpFormPersonalFragment extends BaseFragment
     implements TitleFragment, SignUpView<SignRecord>, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.recycle_sign_personal) RecyclerView recyclerView;
-    @BindView(R.id.et_search) EditText etSearch;
-    @BindView(R.id.img_search_clear) ImageView imgSearchClear;
-    @BindView(R.id.text_sign_number) TextView textSignNumber;
-    @BindView(R.id.text_sign_fee) TextView textSignFee;
-    @BindView(R.id.rl_personal_search) RelativeLayout rlPersonalSearch;
-    @BindView(R.id.ll_personal_info) LinearLayout llPersonalInfo;
+	RecyclerView recyclerView;
+	EditText etSearch;
+	ImageView imgSearchClear;
+	TextView textSignNumber;
+	TextView textSignFee;
+	RelativeLayout rlPersonalSearch;
+	LinearLayout llPersonalInfo;
     @Inject SignUpPersonalPresenter personalPresenter;
     @Inject TrainIds trainIds;
     private CommonFlexAdapter flexAdapter;
@@ -61,8 +61,15 @@ public class SignUpFormPersonalFragment extends BaseFragment
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_personal, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(personalPresenter, this);
+      recyclerView = (RecyclerView) view.findViewById(R.id.recycle_sign_personal);
+      etSearch = (EditText) view.findViewById(R.id.et_search);
+      imgSearchClear = (ImageView) view.findViewById(R.id.img_search_clear);
+      textSignNumber = (TextView) view.findViewById(R.id.text_sign_number);
+      textSignFee = (TextView) view.findViewById(R.id.text_sign_fee);
+      rlPersonalSearch = (RelativeLayout) view.findViewById(R.id.rl_personal_search);
+      llPersonalInfo = (LinearLayout) view.findViewById(R.id.ll_personal_info);
+
+      delegatePresenter(personalPresenter, this);
 
         initSearch();
 

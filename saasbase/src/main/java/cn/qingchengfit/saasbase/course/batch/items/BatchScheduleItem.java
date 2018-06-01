@@ -5,11 +5,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.batch.bean.BatchSchedule;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.DateUtils;
@@ -83,15 +83,19 @@ public class BatchScheduleItem extends AbstractFlexibleItem<BatchScheduleItem.Ba
 
   public class BatchScheduleVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.item_checkbox) CheckBox itemCheckbox;
-    @BindView(R2.id.date) TextView date;
-    @BindView(R2.id.weekday) TextView weekday;
-    @BindView(R2.id.time) TextView time;
-    @BindView(R2.id.outofdate) CompatTextView outofdate;
+	CheckBox itemCheckbox;
+	TextView date;
+	TextView weekday;
+	TextView time;
+	CompatTextView outofdate;
 
     public BatchScheduleVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      itemCheckbox = (CheckBox) view.findViewById(R.id.item_checkbox);
+      date = (TextView) view.findViewById(R.id.date);
+      weekday = (TextView) view.findViewById(R.id.weekday);
+      time = (TextView) view.findViewById(R.id.time);
+      outofdate = (CompatTextView) view.findViewById(R.id.outofdate);
     }
   }
 }

@@ -17,12 +17,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
@@ -88,17 +88,17 @@ import javax.inject.Inject;
 public class EditBatchFragment extends SaasBaseFragment implements IBatchPresenter.MVPView,
   FlexibleAdapter.OnItemClickListener{
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.frag_course_info) FrameLayout fragCourseInfo;
-  @BindView(R2.id.tv_batch_loop_hint) TextView tvBatchLoopHint;
-  @BindView(R2.id.tv_clear_auto_batch) TextView tvClearAutoBatch;
-  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
-  @BindView(R2.id.btn_all_schedule) CompatTextView btnAllSchedule;
-  @BindView(R2.id.starttime) CommonInputView starttime;
-  @BindView(R2.id.endtime) CommonInputView endtime;
-  @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
-  @BindView(R2.id.btn_del) Button btnDel;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout fragCourseInfo;
+	TextView tvBatchLoopHint;
+	TextView tvClearAutoBatch;
+	RecyclerView recyclerview;
+	CompatTextView btnAllSchedule;
+	CommonInputView starttime;
+	CommonInputView endtime;
+	CommonInputView civOpenTime;
+	Button btnDel;
 
   @Inject BatchEditPresenter presenter;
   CommonFlexAdapter commonFlexAdapter;
@@ -127,7 +127,43 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       Bundle savedInstanceState) {
     super.onCreateView(inflater,container,savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_edit_batch, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    fragCourseInfo = (FrameLayout) view.findViewById(R.id.frag_course_info);
+    tvBatchLoopHint = (TextView) view.findViewById(R.id.tv_batch_loop_hint);
+    tvClearAutoBatch = (TextView) view.findViewById(R.id.tv_clear_auto_batch);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    btnAllSchedule = (CompatTextView) view.findViewById(R.id.btn_all_schedule);
+    starttime = (CommonInputView) view.findViewById(R.id.starttime);
+    endtime = (CommonInputView) view.findViewById(R.id.endtime);
+    civOpenTime = (CommonInputView) view.findViewById(R.id.civ_to_open_time);
+    btnDel = (Button) view.findViewById(R.id.btn_del);
+    view.findViewById(R.id.btn_all_schedule).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnAllScheduleClicked();
+      }
+    });
+    view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnDelClicked();
+      }
+    });
+    view.findViewById(R.id.starttime).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onStartTime();
+      }
+    });
+    view.findViewById(R.id.endtime).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onEndTime();
+      }
+    });
+    view.findViewById(R.id.civ_to_open_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onOpenTime();
+      }
+    });
+
     delegatePresenter(presenter,this);
     presenter.setBatchId(batchId);
     presenter.setPrivate(isPrvite);
@@ -188,7 +224,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 查看所有排期批次
    */
-  @OnClick(R2.id.btn_all_schedule) public void onBtnAllScheduleClicked() {
+ public void onBtnAllScheduleClicked() {
     routeTo("/batch/schedule/list/",new cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListParams()
       .batchId(presenter.getBatchId())
       .isPrivate(presenter.isPrivate())
@@ -207,7 +243,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 删除当前批次
    */
-  @OnClick(R2.id.btn_del) public void onBtnDelClicked() {
+ public void onBtnDelClicked() {
     DialogUtils.instanceDelDialog(getContext(), "是否确认删除当前排课？", (dialog, which) -> {
       presenter.delBatch();
     }).show();
@@ -342,7 +378,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 选择开始时间
    */
-  @OnClick(R2.id.starttime) public void onStartTime() {
+ public void onStartTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -362,7 +398,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 选择结束时间
    */
-  @OnClick(R2.id.endtime) public void onEndTime() {
+ public void onEndTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -389,7 +425,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
-  @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {
+ public void onOpenTime() {
     if (openDialog == null) {
       openDialog =
         DialogList.builder(getContext()).list(arrayOpenTime, new AdapterView.OnItemClickListener() {

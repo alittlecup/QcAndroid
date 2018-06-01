@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
@@ -46,9 +46,9 @@ public class MutiChooseSalersActivity extends BaseActivity
     public static final int CHANGE = 1;
     public static final int ALLOT = 2;
 
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.toolbar_title) TextView mToolbarTitile;
-    @BindView(R.id.recyclerview) RecyclerView mRecyclerview;
+	Toolbar mToolbar;
+	TextView mToolbarTitile;
+	RecyclerView mRecyclerview;
     @Inject MutiChooseSalersPresenterPresenter mPresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -67,8 +67,11 @@ public class MutiChooseSalersActivity extends BaseActivity
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_muti_choose_salers);
-        ButterKnife.bind(this);
-        mPresenter.attachView(this);
+      mToolbar = (Toolbar) findViewById(R.id.toolbar);
+      mToolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      mRecyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+
+      mPresenter.attachView(this);
         mPresenter.onNewSps();
         mStudentId = getIntent().getStringArrayListExtra(INPUT_STUDENT);
         mChoosedSalersList = getIntent().getStringArrayListExtra(INPUT_SALERS);

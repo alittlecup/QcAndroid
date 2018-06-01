@@ -1,8 +1,8 @@
 package cn.qingchengfit.staff;
 
-import cn.qingchengfit.model.responesex.Login;
+import cn.qingchengfit.saasbase.login.bean.Login;
+import cn.qingchengfit.saasbase.login.bean.LoginBody;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
 import java.io.IOException;
 
 /**

@@ -9,9 +9,9 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
@@ -33,12 +33,12 @@ import rx.Observable;
 import rx.functions.Action1;
 
 public class StatmentFilterActivity extends AppCompatActivity implements ClassStatmentFilterCallback {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.start_day) CommonInputView startDay;
-    @BindView(R.id.end_day) CommonInputView endDay;
-    @BindView(R.id.all_student) CommonInputView allStudent;
-    @BindView(R.id.rootview) LinearLayout rootview;
-    @BindView(R.id.all_course) CommonInputView allCourse;
+	Toolbar toolbar;
+	CommonInputView startDay;
+	CommonInputView endDay;
+	CommonInputView allStudent;
+	LinearLayout rootview;
+	CommonInputView allCourse;
     private TimeDialogWindow pwTime;
     private ClassStatmentFilterBean filterBean;
 
@@ -53,7 +53,38 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statment_filter);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        startDay = (CommonInputView) findViewById(R.id.start_day);
+        endDay = (CommonInputView) findViewById(R.id.end_day);
+        allStudent = (CommonInputView) findViewById(R.id.all_student);
+        rootview = (LinearLayout) findViewById(R.id.rootview);
+        allCourse = (CommonInputView) findViewById(R.id.all_course);
+        findViewById(R.id.start_day).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                StatmentFilterActivity.this.onClick(v);
+            }
+        });
+        findViewById(R.id.end_day).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                StatmentFilterActivity.this.onClick(v);
+            }
+        });
+        findViewById(R.id.all_student).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                StatmentFilterActivity.this.onClick(v);
+            }
+        });
+        findViewById(R.id.generate).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                StatmentFilterActivity.this.onClick(v);
+            }
+        });
+        findViewById(R.id.all_course).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                StatmentFilterActivity.this.onClick(v);
+            }
+        });
+
         //((App)getApplication()).getAppCompoent().inject(this);
 
         //handle intent
@@ -128,8 +159,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
         allStudent.setContent(getString(R.string.all_students));
     }
 
-    @OnClick({ R.id.start_day, R.id.end_day
-        , R.id.all_student, R.id.generate, R.id.all_course })
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_day:

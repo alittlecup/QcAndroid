@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
@@ -62,11 +62,11 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/3/7 2016.
  */
 public class ContainerActivity extends BaseActivity implements FragCallBack {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.titile_layout) LinearLayout titleLayout;
-    @BindView(R.id.frag) FrameLayout frag;
-    @BindView(R.id.down) ImageView down;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	LinearLayout titleLayout;
+	FrameLayout frag;
+	ImageView down;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject SerPermisAction serPermisAction;
     private Observable<EventToolbar> toolbarOb;
@@ -87,8 +87,13 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
-        ButterKnife.bind(this);
-        initBus();
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      titleLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      frag = (FrameLayout) findViewById(R.id.frag);
+      down = (ImageView) findViewById(R.id.down);
+
+      initBus();
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
@@ -105,17 +105,23 @@ public class BrandGymsAdapter extends RecyclerView.Adapter<BrandGymsAdapter.Bran
 
     public class BrandGymsVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.gym_img) ImageView gymImg;
-        @BindView(R.id.gym_name) TextView gymName;
-        @BindView(R.id.gym_date) TextView gymDate;
-        @BindView(R.id.gym_contact) TextView gymContact;
-        @BindView(R.id.gym_permission) TextView gymPermission;
-        @BindView(R.id.del) TextView del;
-        @BindView(R.id.img_pro) ImageView imgPro;
+	ImageView gymImg;
+	TextView gymName;
+	TextView gymDate;
+	TextView gymContact;
+	TextView gymPermission;
+	TextView del;
+	ImageView imgPro;
 
         public BrandGymsVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          gymImg = (ImageView) itemView.findViewById(R.id.gym_img);
+          gymName = (TextView) itemView.findViewById(R.id.gym_name);
+          gymDate = (TextView) itemView.findViewById(R.id.gym_date);
+          gymContact = (TextView) itemView.findViewById(R.id.gym_contact);
+          gymPermission = (TextView) itemView.findViewById(R.id.gym_permission);
+          del = (TextView) itemView.findViewById(R.id.del);
+          imgPro = (ImageView) itemView.findViewById(R.id.img_pro);
         }
     }
 }

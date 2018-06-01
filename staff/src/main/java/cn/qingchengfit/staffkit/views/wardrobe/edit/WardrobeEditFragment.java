@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.EditWardrobeBody;
@@ -55,9 +55,9 @@ import rx.functions.Action1;
 public class WardrobeEditFragment extends BaseFragment implements WardrobeEditPresenter.MVPView {
 
     @Inject WardrobeEditPresenter presenter;
-    @BindView(R.id.wardrobe_no) CommonInputView wardrobeNo;
-    @BindView(R.id.wardrobe_district) CommonInputView wardrobeDistrict;
-    @BindView(R.id.permisson_dendy) View permissonDendy;
+	CommonInputView wardrobeNo;
+	CommonInputView wardrobeDistrict;
+	View permissonDendy;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -89,8 +89,26 @@ public class WardrobeEditFragment extends BaseFragment implements WardrobeEditPr
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_wardrobe, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //
+      wardrobeNo = (CommonInputView) view.findViewById(R.id.wardrobe_no);
+      wardrobeDistrict = (CommonInputView) view.findViewById(R.id.wardrobe_district);
+      permissonDendy = (View) view.findViewById(R.id.permisson_dendy);
+      view.findViewById(R.id.wardrobe_district).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeEditFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeEditFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.permisson_dendy).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeEditFragment.this.onClick(v);
+        }
+      });
+
+      //
         delegatePresenter(presenter, this);
         //        CommonInputView wardrobeNo = (CommonInputView) view.findViewById(R.id.wardrobe_no);
         //        final CommonInputView wardrobeDistrict = (CommonInputView) view.findViewById(R.id.wardrobe_district);
@@ -130,7 +148,7 @@ public class WardrobeEditFragment extends BaseFragment implements WardrobeEditPr
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.wardrobe_district, R.id.btn_del, R.id.permisson_dendy }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.wardrobe_district://选择区域
                 getFragmentManager().beginTransaction()

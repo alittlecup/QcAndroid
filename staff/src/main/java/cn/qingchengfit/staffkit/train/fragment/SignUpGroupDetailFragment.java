@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -57,17 +57,17 @@ import rx.functions.Action1;
 //小组详情
 @FragmentWithArgs public class SignUpGroupDetailFragment extends BaseFragment implements SignUpView<GroupBean> {
 
-    @BindView(R.id.sign_up_group_name) TextView tvSignGroupName;
-    @BindView(R.id.list_sign_up_group_member) RecyclerView recycleGroup;
-    @BindView(R.id.sign_group_member_count) TextView tvSignMemberCount;
-    @BindView(R.id.btn_sign_group_add_member) TextView tvAddGroup;
-    @BindView(R.id.btn_sign_group_remove_member) TextView tvRemoveMember;
-    @BindView(R.id.recycle_sign_up_group_atten_detail) RecyclerView recyclerAttenDetail;
-    @BindView(R.id.change_group_name) RelativeLayout changeGroupName;
-    @BindView(R.id.open_all_member) LinearLayout openAllMember;
+	TextView tvSignGroupName;
+	RecyclerView recycleGroup;
+	TextView tvSignMemberCount;
+	TextView tvAddGroup;
+	TextView tvRemoveMember;
+	RecyclerView recyclerAttenDetail;
+	RelativeLayout changeGroupName;
+	LinearLayout openAllMember;
     @Arg String teamId;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     @Inject SignUpGroupDetailPresenter presenter;
     @Inject TrainIds trainIds;
     private CommonFlexAdapter flexAdapter;
@@ -89,9 +89,41 @@ import rx.functions.Action1;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_group, container, false);
-        ButterKnife.bind(this, view);
+      tvSignGroupName = (TextView) view.findViewById(R.id.sign_up_group_name);
+      recycleGroup = (RecyclerView) view.findViewById(R.id.list_sign_up_group_member);
+      tvSignMemberCount = (TextView) view.findViewById(R.id.sign_group_member_count);
+      tvAddGroup = (TextView) view.findViewById(R.id.btn_sign_group_add_member);
+      tvRemoveMember = (TextView) view.findViewById(R.id.btn_sign_group_remove_member);
+      recyclerAttenDetail =
+          (RecyclerView) view.findViewById(R.id.recycle_sign_up_group_atten_detail);
+      changeGroupName = (RelativeLayout) view.findViewById(R.id.change_group_name);
+      openAllMember = (LinearLayout) view.findViewById(R.id.open_all_member);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.btn_sign_group_add_member)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onAddOrRemove(v);
+            }
+          });
+      view.findViewById(R.id.btn_sign_group_remove_member)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onAddOrRemove(v);
+            }
+          });
+      view.findViewById(R.id.change_group_name).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddOrRemove(v);
+        }
+      });
+      view.findViewById(R.id.open_all_member).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onOpenMember();
+        }
+      });
 
-        initBus();
+      initBus();
 
         delegatePresenter(presenter, this);
 
@@ -139,9 +171,7 @@ import rx.functions.Action1;
         });
     }
 
-    @OnClick({
-        R.id.btn_sign_group_add_member, R.id.btn_sign_group_remove_member, R.id.change_group_name
-    }) public void onAddOrRemove(View view) {
+ public void onAddOrRemove(View view) {
         switch (view.getId()) {
             case R.id.btn_sign_group_add_member:
                 Intent intent = new Intent(getActivity(), SignUpChooseActivity.class);
@@ -168,7 +198,7 @@ import rx.functions.Action1;
         }
     }
 
-    @OnClick(R.id.open_all_member) void onOpenMember() {
+ void onOpenMember() {
         isOpened = true;
         presenter.queryGroupDetail(teamId);
     }

@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.CmBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -83,14 +83,16 @@ public class CmAdapter extends RecyclerView.Adapter<CmAdapter.CmVh> implements V
     }
 
     public class CmVh extends RecyclerView.ViewHolder {
-        @BindView(R.id.time) TextView time;
-        @BindView(R.id.week) TextView week;
+	TextView time;
+	TextView week;
 
-        @BindView(R.id.delete) ImageView delete;
+	ImageView delete;
 
         public CmVh(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          time = (TextView) itemView.findViewById(R.id.time);
+          week = (TextView) itemView.findViewById(R.id.week);
+          delete = (ImageView) itemView.findViewById(R.id.delete);
         }
     }
 }

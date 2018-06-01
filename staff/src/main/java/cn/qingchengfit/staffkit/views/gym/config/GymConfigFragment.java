@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -44,7 +44,7 @@ import java.util.List;
     @Arg String keys;
     @Arg String title;
 
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
 
     //@Inject
     GymConfigPresenter mGymConfigPresenter;
@@ -56,8 +56,9 @@ import java.util.List;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_config, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(mGymConfigPresenter, this);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      delegatePresenter(mGymConfigPresenter, this);
         mGymConfigPresenter.queryShopConfig(App.staffId, keys);
 
         return view;

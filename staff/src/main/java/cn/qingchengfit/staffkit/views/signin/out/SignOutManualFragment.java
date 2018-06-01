@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
@@ -44,7 +44,7 @@ import rx.schedulers.Schedulers;
  * Created by yangming on 16/8/29.
  */
 public class SignOutManualFragment extends BaseFragment implements SignOutManualPresenter.SignOutManualView {
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	RecycleViewWithNoImg recycleview;
 
     @Inject SignOutManualPresenter presenter;
     @Inject LoginStatus loginStatus;
@@ -68,8 +68,9 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signout_manual, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+
+      delegatePresenter(presenter, this);
         mCallbackActivity.setToolbar("手动签出", false, null, 0, null);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         recycleview.addItemDecoration(new SpaceItemDecoration(20, getContext()));

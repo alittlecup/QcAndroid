@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.Shops;
 import cn.qingchengfit.network.ResponseConstant;
@@ -53,9 +53,9 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/4/28 2016.
  */
 public class SimpleChooseGymFragment extends BaseDialogFragment {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecyclerView recycleview;
     @Inject RestRepository restRepository;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
     private MutiImageTwoTextAdapter mGymsAdapter;
@@ -91,8 +91,11 @@ public class SimpleChooseGymFragment extends BaseDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbarTitile.setText(getString(R.string.choose_gym));
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
+      toolbarTitile.setText(getString(R.string.choose_gym));
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.common.AttendanceRecord;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.DateUtils;
@@ -113,20 +113,31 @@ public class AttendanceRecordItem
   }
 
   public class AttendanceRecordVH extends FlexibleViewHolder {
-    @BindView(R.id.item_statement_detail_bottomdivier) View itemStatementDetailBottomdivier;
-    @BindView(R.id.item_statement_detail_headerdivier) View itemStatementDetailHeaderdivier;
-    @BindView(R.id.item_statement_detail_day) TextView itemStatementDetailDay;
-    @BindView(R.id.item_statement_detail_month) TextView itemStatementDetailMonth;
-    @BindView(R.id.item_statement_detail_date) LinearLayout itemStatementDetailDate;
-    @BindView(R.id.item_statement_detail_pic) ImageView itemStatementDetailPic;
-    @BindView(R.id.item_statement_detail_name) TextView itemStatementDetailName;
-    @BindView(R.id.item_statement_time_shop) TextView itemStatementTimeShop;
-    @BindView(R.id.account) TextView account;
-    @BindView(R.id.not_sign_class) LinearLayout notSignClass;
+	View itemStatementDetailBottomdivier;
+	View itemStatementDetailHeaderdivier;
+	TextView itemStatementDetailDay;
+	TextView itemStatementDetailMonth;
+	LinearLayout itemStatementDetailDate;
+	ImageView itemStatementDetailPic;
+	TextView itemStatementDetailName;
+	TextView itemStatementTimeShop;
+	TextView account;
+	LinearLayout notSignClass;
 
     public AttendanceRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      itemStatementDetailBottomdivier =
+          (View) view.findViewById(R.id.item_statement_detail_bottomdivier);
+      itemStatementDetailHeaderdivier =
+          (View) view.findViewById(R.id.item_statement_detail_headerdivier);
+      itemStatementDetailDay = (TextView) view.findViewById(R.id.item_statement_detail_day);
+      itemStatementDetailMonth = (TextView) view.findViewById(R.id.item_statement_detail_month);
+      itemStatementDetailDate = (LinearLayout) view.findViewById(R.id.item_statement_detail_date);
+      itemStatementDetailPic = (ImageView) view.findViewById(R.id.item_statement_detail_pic);
+      itemStatementDetailName = (TextView) view.findViewById(R.id.item_statement_detail_name);
+      itemStatementTimeShop = (TextView) view.findViewById(R.id.item_statement_time_shop);
+      account = (TextView) view.findViewById(R.id.account);
+      notSignClass = (LinearLayout) view.findViewById(R.id.not_sign_class);
     }
   }
 }

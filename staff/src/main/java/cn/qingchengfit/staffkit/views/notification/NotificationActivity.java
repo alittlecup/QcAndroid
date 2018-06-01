@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import butterknife.ButterKnife;
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -32,7 +32,7 @@ public class NotificationActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        ButterKnife.bind(this);
+
         //toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         //toolbar.setNavigationOnClickListener(new View.OnClickListener() {
         //    @Override

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import butterknife.ButterKnife;
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -25,7 +25,7 @@ public class SettingActivity extends BaseActivity implements FragCallBack, Setti
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
+
 
         //component = ((App) getApplication()).getAppCompoent().plus(new GymMoudle(
         //        new CoachService(),

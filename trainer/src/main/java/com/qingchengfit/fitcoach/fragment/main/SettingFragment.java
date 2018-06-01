@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
@@ -37,14 +37,14 @@ import javax.inject.Inject;
  */
 public class SettingFragment extends BaseSettingFragment {
 
-    @BindView(R.id.settting_modifyinfo) RelativeLayout setttingModifyinfo;
-    @BindView(R.id.setting_advice) RelativeLayout settingAdvice;
-    @BindView(R.id.setting_aboutus) RelativeLayout settingAboutus;
+	RelativeLayout setttingModifyinfo;
+	RelativeLayout settingAdvice;
+	RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
-    @BindView(R.id.version_code) TextView versionCode;
+	TextView versionCode;
     @Inject LoginStatus loginStatus;
     @Inject BaseRouter baseRouter;
-    private Unbinder unbinder;
+
     private String versionStr;
 
     public SettingFragment() {
@@ -64,7 +64,61 @@ public class SettingFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        setttingModifyinfo = (RelativeLayout) view.findViewById(R.id.settting_modifyinfo);
+        settingAdvice = (RelativeLayout) view.findViewById(R.id.setting_advice);
+        settingAboutus = (RelativeLayout) view.findViewById(R.id.setting_aboutus);
+        versionCode = (TextView) view.findViewById(R.id.version_code);
+        view.findViewById(R.id.setting_aboutus).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.setting_advice).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.settting_modifyinfo).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.setting_comfirm).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.setting_workexpe).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.setting_logout).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.setting_calsync).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onClickUs(v);
+            }
+        });
+        view.findViewById(R.id.setting_share).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                SettingFragment.this.onClick(v);
+            }
+        });
+        view.findViewById(R.id.setting_update).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                SettingFragment.this.onClick(v);
+            }
+        });
+        view.findViewById(R.id.setting_logout).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                SettingFragment.this.onClick(v);
+            }
+        });
+
         fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "设置");
         versionCode.setText(AppUtils.getAppVer(getContext()));
         return view;
@@ -74,10 +128,7 @@ public class SettingFragment extends BaseSettingFragment {
         super.onResume();
     }
 
-    @OnClick({
-        R.id.setting_aboutus, R.id.setting_advice, R.id.settting_modifyinfo, R.id.setting_comfirm,
-        R.id.setting_workexpe, R.id.setting_logout,  R.id.setting_calsync
-    }) public void onClickUs(View view) {
+ public void onClickUs(View view) {
         switch (view.getId()) {
             case R.id.setting_advice:
                 fragmentCallBack.onFragmentChange(new AdviceFragment());
@@ -97,10 +148,10 @@ public class SettingFragment extends BaseSettingFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
-    @OnClick({ R.id.setting_share, R.id.setting_update, R.id.setting_logout }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.setting_share:
                 ShareDialogFragment.newInstance(getString(R.string.app_name), getString(R.string.app_slogan),

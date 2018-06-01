@@ -23,9 +23,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
@@ -71,14 +71,14 @@ import javax.inject.Inject;
  */
 public class StudentListFragment extends FilterCommonFragment {
 
-    @BindView(R.id.searchview_et) public EditText searchviewEt;
-    @BindView(R.id.searchview_clear) public ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) public Button searchviewCancle;
-    @BindView(R.id.searchview) public LinearLayout searchview;
-    @BindView(R.id.studentlist_rv) RecycleViewWithNoImg studentlistRv;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
+	public EditText searchviewEt;
+	public ImageView searchviewClear;
+	public Button searchviewCancle;
+	public LinearLayout searchview;
+	RecycleViewWithNoImg studentlistRv;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
     @Inject StudentListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -98,9 +98,52 @@ public class StudentListFragment extends FilterCommonFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studentlist, container, false);
-        setView(view);
+      searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) view.findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) view.findViewById(R.id.searchview);
+      studentlistRv = (RecycleViewWithNoImg) view.findViewById(R.id.studentlist_rv);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      down = (ImageView) view.findViewById(R.id.down);
+      view.findViewById(R.id.titile_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onTitleClick();
+        }
+      });
+      view.findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      view.findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickCancel();
+        }
+      });
+      view.findViewById(R.id.tv_sort_alpha).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StudentListFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_sort_register).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StudentListFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_sort_filter).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StudentListFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.fab_add_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          StudentListFragment.this.onClickAddStudent();
+        }
+      });
+      setView(view);
         super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
+
         delegatePresenter(presenter, this);
         initToolBar();
         initView();
@@ -211,7 +254,7 @@ public class StudentListFragment extends FilterCommonFragment {
         }
     }
 
-    @OnClick(R.id.titile_layout) public void onTitleClick() {
+ public void onTitleClick() {
         if (gymWrapper.inBrand()) {
             ChooseGymActivity.start(this, 9, PermissionServerUtils.MANAGE_MEMBERS, getString(R.string.choose_gym), mChooseShopId);
         }
@@ -331,12 +374,12 @@ public class StudentListFragment extends FilterCommonFragment {
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
         searchviewEt.setText("");
     }
 
     //取消搜索
-    @OnClick(R.id.searchview_cancle) public void onClickCancel() {
+ public void onClickCancel() {
 
         if (searchviewEt.getText().toString().length() > 0) {
             searchviewEt.setText("");
@@ -407,7 +450,7 @@ public class StudentListFragment extends FilterCommonFragment {
     }
 
     // 排序，筛选事件点击
-    @OnClick({ R.id.tv_sort_alpha, R.id.tv_sort_register, R.id.tv_sort_filter }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_sort_alpha:
                 sortType = SORT_TYPE_ALPHA;
@@ -427,7 +470,7 @@ public class StudentListFragment extends FilterCommonFragment {
         }
     }
 
-    @OnClick(R.id.fab_add_student) void onClickAddStudent() {
+ void onClickAddStudent() {
 
         if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             showAlert(getString(R.string.alert_permission_forbid));

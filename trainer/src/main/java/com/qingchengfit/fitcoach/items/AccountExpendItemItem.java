@@ -1,12 +1,8 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.support.v7.widget.SwitchCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Card_tpl;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -78,12 +74,13 @@ public class AccountExpendItemItem extends AbstractFlexibleItem<AccountExpendIte
     }
 
     public class AccountExpendItemVH extends ExpandableViewHolder {
-        @BindView(R.id.label) TextView label;
-        @BindView(R.id.switcher) SwitchCompat switcher;
+	TextView label;
+	SwitchCompat switcher;
 
         public AccountExpendItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          label = (TextView) view.findViewById(R.id.label);
+          switcher = (SwitchCompat) view.findViewById(R.id.switcher);
         }
 
         @Override protected boolean isViewExpandableOnClick() {

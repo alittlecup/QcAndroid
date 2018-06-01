@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
@@ -64,19 +64,19 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
 
     public static final int RESULT_LOCKER = 2;
 
-    @BindView(R.id.iv_signin_item_student_face) ImageView ivSigninItemStudentFace;
-    @BindView(R.id.tv_signin_item_student_name) TextView tvSigninItemStudentName;
-    @BindView(R.id.iv_signin_item_student_gender) ImageView ivSigninItemStudentGender;
-    @BindView(R.id.tv_signin_item_student_phone) TextView tvSigninItemStudentPhone;
-    @BindView(R.id.tv_signin_card) TextView tvSigninCard;
-    @BindView(R.id.tv_signin_locker) TextView tvSigninLocker;
-    @BindView(R.id.tv_signin_item_confirm) TextView tvSigninItemConfirm;
-    @BindView(R.id.ll_signin_confirm) LinearLayout llSigninConfirm;
-    @BindView(R.id.tv_signin_course) TextView tvSigninCourse;
-    @BindView(R.id.recyclerview_signin_course) RecyclerView recyclerviewSigninCourse;
-    @BindView(R.id.tv_sign_in_charge) TextView tvSignInCharge;
-    @BindView(R.id.ll_sign_in_balance_less) LinearLayout llSignInBalanceLess;
-    @BindView(R.id.margin) View margin;
+	ImageView ivSigninItemStudentFace;
+	TextView tvSigninItemStudentName;
+	ImageView ivSigninItemStudentGender;
+	TextView tvSigninItemStudentPhone;
+	TextView tvSigninCard;
+	TextView tvSigninLocker;
+	TextView tvSigninItemConfirm;
+	LinearLayout llSigninConfirm;
+	TextView tvSigninCourse;
+	RecyclerView recyclerviewSigninCourse;
+	TextView tvSignInCharge;
+	LinearLayout llSignInBalanceLess;
+	View margin;
 
     @Inject SignInManualPresenter presenter;
 
@@ -93,8 +93,8 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
     int selectedPos = -1;
     SigninValidCard.DataBean.CardsBean selectedCard;
     List<SignInCardCostBean.CardCost> cardCosts = new ArrayList<>();
-    @BindView(R.id.ll_signin_manual_locker) LinearLayout llSigninManualLocker;
-    @BindView(R.id.course_layout) LinearLayout courseLayout;
+	LinearLayout llSigninManualLocker;
+	LinearLayout courseLayout;
     private Locker selectedLocker;//选中的更衣柜
     private Integer selectedCardStatus = 0;
 
@@ -108,8 +108,49 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_manual, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      ivSigninItemStudentFace = (ImageView) view.findViewById(R.id.iv_signin_item_student_face);
+      tvSigninItemStudentName = (TextView) view.findViewById(R.id.tv_signin_item_student_name);
+      ivSigninItemStudentGender = (ImageView) view.findViewById(R.id.iv_signin_item_student_gender);
+      tvSigninItemStudentPhone = (TextView) view.findViewById(R.id.tv_signin_item_student_phone);
+      tvSigninCard = (TextView) view.findViewById(R.id.tv_signin_card);
+      tvSigninLocker = (TextView) view.findViewById(R.id.tv_signin_locker);
+      tvSigninItemConfirm = (TextView) view.findViewById(R.id.tv_signin_item_confirm);
+      llSigninConfirm = (LinearLayout) view.findViewById(R.id.ll_signin_confirm);
+      tvSigninCourse = (TextView) view.findViewById(R.id.tv_signin_course);
+      recyclerviewSigninCourse = (RecyclerView) view.findViewById(R.id.recyclerview_signin_course);
+      tvSignInCharge = (TextView) view.findViewById(R.id.tv_sign_in_charge);
+      llSignInBalanceLess = (LinearLayout) view.findViewById(R.id.ll_sign_in_balance_less);
+      margin = (View) view.findViewById(R.id.margin);
+      llSigninManualLocker = (LinearLayout) view.findViewById(R.id.ll_signin_manual_locker);
+      courseLayout = (LinearLayout) view.findViewById(R.id.course_layout);
+      view.findViewById(R.id.iv_signin_item_student_face)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onAvatarClick();
+            }
+          });
+      view.findViewById(R.id.tv_signin_card).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInManualFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_signin_locker).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInManualFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.ll_signin_confirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInManualFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.tv_sign_in_charge).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInManualFragment.this.onClick(v);
+        }
+      });
+
+      delegatePresenter(presenter, this);
         mCallbackActivity.setToolbar("手动签到", false, null, 0, null);
         recyclerviewSigninCourse.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -168,7 +209,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
         return view;
     }
 
-    @OnClick(R.id.iv_signin_item_student_face) public void onAvatarClick() {
+ public void onAvatarClick() {
 
         if (StringUtils.isEmpty(studentBean.getStudentBean().checkin_avatar)) {
             if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
@@ -266,7 +307,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
 
     }
 
-    @OnClick({ R.id.tv_signin_card, R.id.tv_signin_locker, R.id.ll_signin_confirm, R.id.tv_sign_in_charge })
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_signin_card:

@@ -4,8 +4,8 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.StringUtils;
@@ -85,16 +85,21 @@ public abstract class CommonAllocateDetailItem<T extends CommonAllocateDetailIte
 
     public static class AllocateDetailVH extends FlexibleViewHolder {
 
-        @BindView(R.id.item_personal_header) ImageView itemPersonalHeader;
-        @BindView(R.id.item_personal_name) TextView itemPersonalName;
-        @BindView(R.id.item_personal_gender) ImageView itemPersonalGender;
-        @BindView(R.id.tv_student_status) TextView tvStudentStatus;
-        @BindView(R.id.item_person_phone) TextView itemPersonPhone;
-        @BindView(R.id.item_student_modify_alpha) TextView itemStudentModifyAlpha;
+	ImageView itemPersonalHeader;
+	TextView itemPersonalName;
+	ImageView itemPersonalGender;
+	TextView tvStudentStatus;
+	TextView itemPersonPhone;
+	TextView itemStudentModifyAlpha;
 
         public AllocateDetailVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemPersonalHeader = (ImageView) view.findViewById(R.id.item_personal_header);
+          itemPersonalName = (TextView) view.findViewById(R.id.item_personal_name);
+          itemPersonalGender = (ImageView) view.findViewById(R.id.item_personal_gender);
+          tvStudentStatus = (TextView) view.findViewById(R.id.tv_student_status);
+          itemPersonPhone = (TextView) view.findViewById(R.id.item_person_phone);
+          itemStudentModifyAlpha = (TextView) view.findViewById(R.id.item_student_modify_alpha);
         }
     }
 }

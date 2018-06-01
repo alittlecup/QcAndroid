@@ -21,16 +21,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -105,40 +101,40 @@ import rx.functions.Action1;
 
   private final static String PARAMS_KEY = "uuid=";
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
-  @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
-  @BindView(R2.id.tv_gym_name) TextView tvGymName;
-  @BindView(R2.id.tv_card_id) TextView tvCardId;
-  @BindView(R2.id.img_stutus) TextView cardStatus;
-  @BindView(R2.id.cardview) RelativeLayout cardview;
-  @BindView(R2.id.recycleview) RecyclerView recycleview;
-  @BindView(R2.id.btn_del) TextView btnDel;
-  @BindView(R2.id.tv_card_append) TextView tvCardAppend;
-  @BindView(R2.id.tv_card_expand_desc) ExpandTextView tvCardExpandDesc;
-  @BindView(R2.id.civ_input_card_name) protected CommonInputView civInputCardname;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TextView tvCardTplType;
+	TextView tvCardtplName;
+	TextView tvGymName;
+	TextView tvCardId;
+	TextView cardStatus;
+	RelativeLayout cardview;
+	RecyclerView recycleview;
+	TextView btnDel;
+	TextView tvCardAppend;
+	ExpandTextView tvCardExpandDesc;
+	protected CommonInputView civInputCardname;
 
   @Inject public CardTplDetailPresenter presenter;
   @Inject GymWrapper gymWrapper;
   @Inject public IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
-  @BindView(R2.id.civ_input_card_desc) CommonInputView civInputCardDesc;
-  @BindView(R2.id.expand_setting_limit) ExpandedLayout expandSettingLimit;
-  @BindView(R2.id.expand_card_protocol) ExpandedLayout expandCardProtocol;
-  @BindView(R2.id.pre_order_count) CommonInputView preOrderCount;
-  @BindView(R2.id.during_count) CommonInputView duringCount;
-  @BindView(R2.id.limit_bug_count) CommonInputView limitBugCount;
-  @BindView(R2.id.support_gyms) CommonInputView supportGyms;
+	CommonInputView civInputCardDesc;
+	ExpandedLayout expandSettingLimit;
+	ExpandedLayout expandCardProtocol;
+	CommonInputView preOrderCount;
+	CommonInputView duringCount;
+	CommonInputView limitBugCount;
+	CommonInputView supportGyms;
   protected CardLimit cardLimit = new CardLimit();
-  @BindView(R2.id.layout_card_value_desc) LinearLayout layoutCardValueDesc;
-  @BindView(R2.id.layout_card_option) LinearLayout layoutCardOption;
-  @BindView(R2.id.input_card_protocol) CommonInputView inputCardProtocol;
+	LinearLayout layoutCardValueDesc;
+	LinearLayout layoutCardOption;
+	CommonInputView inputCardProtocol;
   public String desc;
   protected String supportShopStr;
-  @BindView(R2.id.layout_card_detail) protected LinearLayout layoutCardDetail;
+	protected LinearLayout layoutCardDetail;
   private CardtplBody body = new CardtplBody();
   private boolean isShouldSave;
   private StringBuilder sb = new StringBuilder();
@@ -178,7 +174,72 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtpl_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvCardTplType = (TextView) view.findViewById(R.id.tv_card_tpl_type);
+    tvCardtplName = (TextView) view.findViewById(R.id.tv_cardtpl_name);
+    tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+    tvCardId = (TextView) view.findViewById(R.id.tv_card_id);
+    cardStatus = (TextView) view.findViewById(R.id.img_stutus);
+    cardview = (RelativeLayout) view.findViewById(R.id.cardview);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+    btnDel = (TextView) view.findViewById(R.id.btn_del);
+    tvCardAppend = (TextView) view.findViewById(R.id.tv_card_append);
+    tvCardExpandDesc = (ExpandTextView) view.findViewById(R.id.tv_card_expand_desc);
+    civInputCardname = (CommonInputView) view.findViewById(R.id.civ_input_card_name);
+    civInputCardDesc = (CommonInputView) view.findViewById(R.id.civ_input_card_desc);
+    expandSettingLimit = (ExpandedLayout) view.findViewById(R.id.expand_setting_limit);
+    expandCardProtocol = (ExpandedLayout) view.findViewById(R.id.expand_card_protocol);
+    preOrderCount = (CommonInputView) view.findViewById(R.id.pre_order_count);
+    duringCount = (CommonInputView) view.findViewById(R.id.during_count);
+    limitBugCount = (CommonInputView) view.findViewById(R.id.limit_bug_count);
+    supportGyms = (CommonInputView) view.findViewById(R.id.support_gyms);
+    layoutCardValueDesc = (LinearLayout) view.findViewById(R.id.layout_card_value_desc);
+    layoutCardOption = (LinearLayout) view.findViewById(R.id.layout_card_option);
+    inputCardProtocol = (CommonInputView) view.findViewById(R.id.input_card_protocol);
+    layoutCardDetail = (LinearLayout) view.findViewById(R.id.layout_card_detail);
+    view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDeleteCardTpl();
+      }
+    });
+    view.findViewById(R.id.input_card_protocol).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onOpenProtocol();
+      }
+    });
+    view.findViewById(R.id.civ_input_card_desc).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDesc();
+      }
+    });
+    view.findViewById(R.id.expand_card_protocol).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onProtocol();
+      }
+    });
+    view.findViewById(R.id.support_gyms).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSupportGyms();
+      }
+    });
+    view.findViewById(R.id.pre_order_count).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onPreOrderCount();
+      }
+    });
+    view.findViewById(R.id.during_count).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDuringCount();
+      }
+    });
+    view.findViewById(R.id.limit_bug_count).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onLimitCard();
+      }
+    });
+
     delegatePresenter(presenter, this);
     presenter.setCardTpl(cardTpl);
     setToolbar();
@@ -443,7 +504,7 @@ public boolean hasAddPermission(boolean toast) {
     });
   }
 
-  @OnClick(R2.id.btn_del) public void onDeleteCardTpl() {
+ public void onDeleteCardTpl() {
     if (presenter.isCardTplEnable()) {
       if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_DELETE,
         cardTpl.getShopIds())) {
@@ -755,25 +816,25 @@ public boolean hasAddPermission(boolean toast) {
   }
 
 
-  @OnClick({ R2.id.input_card_protocol }) public void onOpenProtocol() {
+ public void onOpenProtocol() {
     if (cardTpl != null && cardTpl.has_service_term) {
       CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(), true,
         "", cardTpl);
     }
   }
 
-  @OnClick(R2.id.civ_input_card_desc) public void onDesc() {
+ public void onDesc() {
     if (!hasAddPermission()) return;
     routeTo("common", "/input/",
       new CommonInputParams().content(body.description).title("填加简介").hint("填写会员卡简介").build());
     editInfoListener(true);
   }
 
-  @OnClick(R2.id.expand_card_protocol) public void onProtocol() {
+ public void onProtocol() {
     if (!hasAddPermission()) return;
   }
 
-  @OnClick(R2.id.support_gyms) public void onSupportGyms() {
+ public void onSupportGyms() {
     if (cardTpl != null && cardTpl.getShopIds() != null) {
       MutiChooseGymFragment.start(CardTplDetailFragment.this, false,
         (ArrayList<String>) cardTpl.getShopIds(), PermissionServerUtils.CARDSETTING_CAN_WRITE, 4);
@@ -788,7 +849,7 @@ public boolean hasAddPermission(boolean toast) {
   }
 
   //可提前预约课程数
-  @OnClick(R2.id.pre_order_count)
+
   public void onPreOrderCount() {
     if (!hasAddPermission()) return;
     List<String> preList = new ArrayList<>();
@@ -811,14 +872,14 @@ public boolean hasAddPermission(boolean toast) {
   }
 
   //单位时间可上课程数
-  @OnClick(R2.id.during_count)
+
   public void onDuringCount() {
     if (!hasAddPermission()) return;
     ClassLimitBottomFragment.start(this, 3);
   }
 
   //每个会员限购张数
-  @OnClick(R2.id.limit_bug_count)
+
   public void onLimitCard() {
     if (!hasAddPermission()) return;
     BottomBuyLimitFragment.newInstance(cardLimit.buy_limit).show(getFragmentManager(), "");

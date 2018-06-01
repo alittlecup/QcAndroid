@@ -1,12 +1,8 @@
 package cn.qingchengfit.staffkit.views;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -44,13 +40,15 @@ public class ChooseShopItemItem extends AbstractFlexibleItem<ChooseShopItemItem.
     }
 
     public class ChooseShopItemVH extends FlexibleViewHolder {
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.tv_name) TextView tvName;
-        @BindView(R.id.chosen) ImageView chosen;
+	ImageView img;
+	TextView tvName;
+	ImageView chosen;
 
         public ChooseShopItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          img = (ImageView) view.findViewById(R.id.img);
+          tvName = (TextView) view.findViewById(R.id.tv_name);
+          chosen = (ImageView) view.findViewById(R.id.chosen);
         }
     }
 }

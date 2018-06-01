@@ -3,8 +3,8 @@ package com.qingchengfit.fitcoach.items;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
@@ -76,15 +76,19 @@ public class AllCourseImageHeaderItem extends AbstractHeaderItem {
     }
 
     public static class CourseImageHeaderHolder extends FlexibleViewHolder {
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.sub_title) TextView subTitle;
-        @BindView(R.id.btn_manage) TextView btnManage;
-        @BindView(R.id.no_data) TextView noData;
+	TextView title;
+	TextView subTitle;
+	TextView btnManage;
+	TextView noData;
 
         public CourseImageHeaderHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            btnManage.setOnClickListener(new View.OnClickListener() {
+          title = (TextView) view.findViewById(R.id.title);
+          subTitle = (TextView) view.findViewById(R.id.sub_title);
+          btnManage = (TextView) view.findViewById(R.id.btn_manage);
+          noData = (TextView) view.findViewById(R.id.no_data);
+
+          btnManage.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     RxBus.getBus().post(new CourseImageManageEvent(getAdapterPosition()));
                 }

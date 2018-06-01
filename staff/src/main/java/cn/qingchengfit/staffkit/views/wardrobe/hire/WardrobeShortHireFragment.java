@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -53,8 +53,8 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class WardrobeShortHireFragment extends BaseFragment implements WardrobeShortHirePresenter.MVPView {
 
-    @BindView(R.id.choose_student) CommonInputView chooseStudent;
-    @BindView(R.id.comfirm) Button comfirm;
+	CommonInputView chooseStudent;
+	Button comfirm;
 
     @Inject WardrobeShortHirePresenter mPersenter;
     @Inject LoginStatus loginStatus;
@@ -91,8 +91,25 @@ public class WardrobeShortHireFragment extends BaseFragment implements WardrobeS
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_short_hire, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mCallbackActivity.setToolbar("租用更衣柜", false, null, R.menu.menu_edit, listener);
+      chooseStudent = (CommonInputView) view.findViewById(R.id.choose_student);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeShortHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_long_hire).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeShortHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.choose_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeShortHireFragment.this.onClick();
+        }
+      });
+
+      mCallbackActivity.setToolbar("租用更衣柜", false, null, R.menu.menu_edit, listener);
         //
         delegatePresenter(mPersenter, this);
         RxBusAdd(EventSelectedStudent.class)
@@ -116,7 +133,7 @@ public class WardrobeShortHireFragment extends BaseFragment implements WardrobeS
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.comfirm, R.id.btn_long_hire }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.comfirm:
                 showLoading();
@@ -149,7 +166,7 @@ public class WardrobeShortHireFragment extends BaseFragment implements WardrobeS
         onShowError(getString(e));
     }
 
-    @OnClick(R.id.choose_student) public void onClick() {
+ public void onClick() {
         //Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);
         //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
         //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");

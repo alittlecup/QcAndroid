@@ -4,11 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
 import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;
@@ -75,13 +72,16 @@ public class AllCourseImageItem extends AbstractFlexibleItem implements ISection
 
   public static class AllCourseImageItemHolder extends FlexibleViewHolder {
 
-    @BindView(R2.id.image) ImageView image;
-    @BindView(R2.id.reader) TextView reader;
-    @BindView(R2.id.uploader) TextView uploader;
+	ImageView image;
+	TextView reader;
+	TextView uploader;
 
     public AllCourseImageItemHolder(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      image = (ImageView) view.findViewById(R.id.image);
+      reader = (TextView) view.findViewById(R.id.reader);
+      uploader = (TextView) view.findViewById(R.id.uploader);
+
       image.setOnClickListener(view1 -> {
         if (adapter.getItem(getAdapterPosition()) instanceof AllCourseImageItem) {
           RxBus.getBus().post(adapter.getItem(getAdapterPosition()));

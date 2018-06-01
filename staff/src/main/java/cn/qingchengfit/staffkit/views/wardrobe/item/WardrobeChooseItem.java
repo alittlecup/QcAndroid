@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.wardrobe.item;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -75,16 +75,21 @@ public class WardrobeChooseItem extends AbstractFlexibleItem<WardrobeChooseItem.
 
     public class WardrobeVH extends FlexibleViewHolder {
 
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.phone) TextView phone;
-        @BindView(R.id.period) TextView period;
-        @BindView(R.id.long_time_tag) TextView longTimeTag;
-        @BindView(R.id.item_root) RelativeLayout itemRoot;
-        @BindView(R.id.wardrobe_id) TextView wardrobeId;
+	TextView name;
+	TextView phone;
+	TextView period;
+	TextView longTimeTag;
+	RelativeLayout itemRoot;
+	TextView wardrobeId;
 
         public WardrobeVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          name = (TextView) view.findViewById(R.id.name);
+          phone = (TextView) view.findViewById(R.id.phone);
+          period = (TextView) view.findViewById(R.id.period);
+          longTimeTag = (TextView) view.findViewById(R.id.long_time_tag);
+          itemRoot = (RelativeLayout) view.findViewById(R.id.item_root);
+          wardrobeId = (TextView) view.findViewById(R.id.wardrobe_id);
         }
     }
 }

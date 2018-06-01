@@ -6,8 +6,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.AllocateCoachListFragment;
@@ -26,17 +26,18 @@ import rx.functions.Action1;
 
 public class AllocateCoachActivity extends BaseActivity implements FragCallBack, DrawerLayout.DrawerListener {
 
-    @BindView(R.id.allocate_coach_drawer) public MyDrawerLayout drawer;
+	public MyDrawerLayout drawer;
     public StudentFilter studentFilter = new StudentFilter();
-    @BindView(R.id.frame_student_filter) FrameLayout filterFrameLayout;
+	FrameLayout filterFrameLayout;
     StudentFilterFragment filterFragment;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allocate_coach);
-        ButterKnife.bind(this);
+      drawer = (MyDrawerLayout) findViewById(R.id.allocate_coach_drawer);
+      filterFrameLayout = (FrameLayout) findViewById(R.id.frame_student_filter);
 
-        setFilterFragment();
+      setFilterFragment();
         getSupportFragmentManager().beginTransaction()
             .replace(getFragId(), new AllocateCoachListFragment())
             .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out)

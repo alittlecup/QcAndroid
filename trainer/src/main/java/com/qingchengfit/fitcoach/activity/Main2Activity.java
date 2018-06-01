@@ -470,16 +470,11 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                   .progress(false, 100)
                   .cancelable(false)
                   .positiveText("后台更新")
-                  .callback(new MaterialDialog.ButtonCallback() {
-                    @Override public void onPositive(MaterialDialog dialog) {
-                      super.onPositive(dialog);
-                    }
-
-                    @Override public void onNegative(MaterialDialog dialog) {
-                      super.onNegative(dialog);
-                      mDownloadThread.cancel(true);
-                    }
+                  .onNegative((dialog,action)->{
+                    dialog.dismiss();
+                    mDownloadThread.cancel(true);
                   })
+                  .onPositive((dialog,aciton)->dialog.dismiss())
                   .build();
               updateDialog.show();
             } catch (Exception e) {

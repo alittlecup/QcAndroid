@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
@@ -25,8 +25,8 @@ import javax.inject.Inject;
  */
 public class DataStatementFragment extends BaseFragment {
     public static final String TAG = DataStatementFragment.class.getName();
-    @BindView(R.id.statement_order_btn) RelativeLayout statementOrderBtn;
-    @BindView(R.id.statement_sales_btn) RelativeLayout statementSalesBtn;
+	RelativeLayout statementOrderBtn;
+	RelativeLayout statementSalesBtn;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -48,13 +48,30 @@ public class DataStatementFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data_statement, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //
+      statementOrderBtn = (RelativeLayout) view.findViewById(R.id.statement_order_btn);
+      statementSalesBtn = (RelativeLayout) view.findViewById(R.id.statement_sales_btn);
+      view.findViewById(R.id.statement_order_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickOrder();
+        }
+      });
+      view.findViewById(R.id.statement_sales_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickSales();
+        }
+      });
+      view.findViewById(R.id.statement_signin_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickSginin();
+        }
+      });
+
+      //
         mCallbackActivity.setToolbar(getString(R.string.statement_title), false, null, 0, null);
         return view;
     }
 
-    @OnClick(R.id.statement_order_btn) public void clickOrder() {
+ public void clickOrder() {
         if (serPermisAction.checkNoOne(PermissionServerUtils.COST_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
             return;
@@ -66,7 +83,7 @@ public class DataStatementFragment extends BaseFragment {
             .commit();
     }
 
-    @OnClick(R.id.statement_sales_btn) public void clickSales() {
+ public void clickSales() {
         if (serPermisAction.checkNoOne(PermissionServerUtils.SALES_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
             return;
@@ -78,7 +95,7 @@ public class DataStatementFragment extends BaseFragment {
             .commit();
     }
 
-    @OnClick(R.id.statement_signin_btn) public void clickSginin() {
+ public void clickSginin() {
         if (serPermisAction.checkNoOne(PermissionServerUtils.CHECKIN_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
             return;

@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.App;
@@ -59,16 +59,16 @@ import rx.functions.Action1;
  */
 public class WardrobeContinueHireFragment extends BaseFragment implements WardrobeContinueHirePresenter.MVPView {
 
-    @BindView(R.id.name) TextView name;
-    @BindView(R.id.region) TextView region;
-    @BindView(R.id.card_id) TextView cardId;
-    @BindView(R.id.balance) TextView balance;
-    @BindView(R.id.period) CommonInputView period;
-    @BindView(R.id.day_count) TextView dayCount;
-    @BindView(R.id.cv_cost) CommonInputView cvCost;
+	TextView name;
+	TextView region;
+	TextView cardId;
+	TextView balance;
+	CommonInputView period;
+	TextView dayCount;
+	CommonInputView cvCost;
     @Inject WardrobeContinueHirePresenter mPresenter;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private Locker mLocker;
     private TimeDialogWindow pwTime;
     private int mPayMode = -1;
@@ -94,9 +94,33 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_continue_hire, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+      name = (TextView) view.findViewById(R.id.name);
+      region = (TextView) view.findViewById(R.id.region);
+      cardId = (TextView) view.findViewById(R.id.card_id);
+      balance = (TextView) view.findViewById(R.id.balance);
+      period = (CommonInputView) view.findViewById(R.id.period);
+      dayCount = (TextView) view.findViewById(R.id.day_count);
+      cvCost = (CommonInputView) view.findViewById(R.id.cv_cost);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.layout_pay_method).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeContinueHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeContinueHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.period).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeContinueHireFragment.this.onClick(v);
+        }
+      });
+      getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        unbinder = ButterKnife.bind(this, view);
+
         initToolbar(toolbar);
         delegatePresenter(mPresenter, this);
         name.setText(mLocker.name);
@@ -160,7 +184,7 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.layout_pay_method, R.id.btn_comfirm, R.id.period }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_pay_method:
                 WardrobePayBottomFragment.newInstance(mLocker.user.getId(), true).show(getFragmentManager(), "");

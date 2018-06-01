@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.FilterCommonLinearItem;
@@ -60,14 +60,14 @@ public class AbsenceStuentListFragment extends BaseFragment
     implements AbsenceListPresenter.AbsenceView, FilterFragment.OnSelectListener, FilterCustomFragment.OnBackFilterDataListener,
     FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
 
-    @BindView(R.id.ll_filter_absence_account) ViewGroup llAbsenceAccount;
-    @BindView(R.id.text_absence_condition) TextView textAbsence;
-    @BindView(R.id.image_absence_account_arrow) ImageView imageAbsenceArrow;
-    @BindView(R.id.rl_absence_account) RecyclerView rlAbsenceAccount;
-    @BindView(R.id.tips_absence_account) TextView textTipsAccount;
-    @BindView(R.id.absence_list_shadow) View shadow;
-    @BindView(R.id.frag_absence_rank) ViewGroup filterLayout;
-    @BindView(R.id.frag_absence_setting) ViewGroup settingLayout;
+	ViewGroup llAbsenceAccount;
+	TextView textAbsence;
+	ImageView imageAbsenceArrow;
+	RecyclerView rlAbsenceAccount;
+	TextView textTipsAccount;
+	View shadow;
+	ViewGroup filterLayout;
+	ViewGroup settingLayout;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -88,8 +88,27 @@ public class AbsenceStuentListFragment extends BaseFragment
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_absence_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(absenceListPresenter, this);
+      llAbsenceAccount = (ViewGroup) view.findViewById(R.id.ll_filter_absence_account);
+      textAbsence = (TextView) view.findViewById(R.id.text_absence_condition);
+      imageAbsenceArrow = (ImageView) view.findViewById(R.id.image_absence_account_arrow);
+      rlAbsenceAccount = (RecyclerView) view.findViewById(R.id.rl_absence_account);
+      textTipsAccount = (TextView) view.findViewById(R.id.tips_absence_account);
+      shadow = (View) view.findViewById(R.id.absence_list_shadow);
+      filterLayout = (ViewGroup) view.findViewById(R.id.frag_absence_rank);
+      settingLayout = (ViewGroup) view.findViewById(R.id.frag_absence_setting);
+      view.findViewById(R.id.ll_filter_absence_account)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onConditionFilter();
+            }
+          });
+      view.findViewById(R.id.absence_list_shadow).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDismiss();
+        }
+      });
+
+      delegatePresenter(absenceListPresenter, this);
         mCallbackActivity.setToolbar("缺勤统计", false, null, 0, null);
 
         initFilterData();
@@ -154,7 +173,7 @@ public class AbsenceStuentListFragment extends BaseFragment
         }
     }
 
-    @OnClick(R.id.ll_filter_absence_account) public void onConditionFilter() {
+ public void onConditionFilter() {
         if (settingLayout.getHeight() > 0) {
             return;
         }
@@ -162,7 +181,7 @@ public class AbsenceStuentListFragment extends BaseFragment
         toggleViewState();
     }
 
-    @OnClick(R.id.absence_list_shadow) public void onDismiss() {
+ public void onDismiss() {
         isShow = false;
         toggleViewState();
     }

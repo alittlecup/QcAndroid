@@ -14,9 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
@@ -47,17 +47,17 @@ import rx.functions.Action1;
 @Deprecated public class CourseDetailFragment extends BaseFragment implements CourseDetailView {
 
     @Inject CourseDetailPresenter presenter;
-    @BindView(R.id.gym_addcourse_img) ImageView gymAddcourseImg;
-    @BindView(R.id.gym_addcourse_img_layout) RelativeLayout gymAddcourseImgLayout;
-    @BindView(R.id.course_type_private) RadioButton courseTypePrivate;
-    @BindView(R.id.course_type_group) RadioButton courseTypeGroup;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.course_type_layout) RelativeLayout courseTypeLayout;
-    @BindView(R.id.course_name) CommonInputView courseName;
-    @BindView(R.id.course_time) CommonInputView courseTime;
-    @BindView(R.id.course_capacity) CommonInputView courseCapacity;
-    @BindView(R.id.gym_course_detail_layout) LinearLayout gymCourseDetailLayout;
-    @BindView(R.id.btn_del) RelativeLayout btnDel;
+	ImageView gymAddcourseImg;
+	RelativeLayout gymAddcourseImgLayout;
+	RadioButton courseTypePrivate;
+	RadioButton courseTypeGroup;
+	RadioGroup courseTypeRg;
+	RelativeLayout courseTypeLayout;
+	CommonInputView courseName;
+	CommonInputView courseTime;
+	CommonInputView courseCapacity;
+	LinearLayout gymCourseDetailLayout;
+	RelativeLayout btnDel;
 
     private boolean isAdd = false;
     private CourseTypeSample mCourse;
@@ -88,8 +88,30 @@ import rx.functions.Action1;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //        ((GymComponent) mCallbackActivity.getComponent()).inject(this);
+      gymAddcourseImg = (ImageView) view.findViewById(R.id.gym_addcourse_img);
+      gymAddcourseImgLayout = (RelativeLayout) view.findViewById(R.id.gym_addcourse_img_layout);
+      courseTypePrivate = (RadioButton) view.findViewById(R.id.course_type_private);
+      courseTypeGroup = (RadioButton) view.findViewById(R.id.course_type_group);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      courseTypeLayout = (RelativeLayout) view.findViewById(R.id.course_type_layout);
+      courseName = (CommonInputView) view.findViewById(R.id.course_name);
+      courseTime = (CommonInputView) view.findViewById(R.id.course_time);
+      courseCapacity = (CommonInputView) view.findViewById(R.id.course_capacity);
+      gymCourseDetailLayout = (LinearLayout) view.findViewById(R.id.gym_course_detail_layout);
+      btnDel = (RelativeLayout) view.findViewById(R.id.btn_del);
+      view.findViewById(R.id.gym_addcourse_img_layout)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              CourseDetailFragment.this.onClick(v);
+            }
+          });
+      view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CourseDetailFragment.this.onClick(v);
+        }
+      });
+
+      //        ((GymComponent) mCallbackActivity.getComponent()).inject(this);
 
         presenter.attachView(this);
         mCallbackActivity.setToolbar("课程详情", false, null, R.menu.menu_comfirm, new Toolbar.OnMenuItemClickListener() {
@@ -137,7 +159,7 @@ import rx.functions.Action1;
 
     }
 
-    @OnClick({ R.id.gym_addcourse_img_layout, R.id.btn_del }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.gym_addcourse_img_layout:
                 ChoosePictureFragmentDialog dialog = ChoosePictureFragmentDialog.newInstance();

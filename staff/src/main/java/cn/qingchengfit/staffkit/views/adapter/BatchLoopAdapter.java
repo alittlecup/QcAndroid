@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Time_repeat;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -63,11 +63,11 @@ public class BatchLoopAdapter extends RecyclerView.Adapter<BatchLoopAdapter.Batc
     }
 
     public class BatchLoopVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_date) TextView tv_date;
+	TextView tv_date;
 
         public BatchLoopVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          tv_date = (TextView) itemView.findViewById(R.id.item_date);
         }
     }
 }

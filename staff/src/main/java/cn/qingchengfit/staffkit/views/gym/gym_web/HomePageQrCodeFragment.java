@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.staffkit.R;
@@ -49,9 +49,9 @@ import static android.graphics.Color.WHITE;
 public class HomePageQrCodeFragment extends BaseFragment {
 
     public String mUrl;
-    @BindView(R.id.img_qr_code) ImageView imgQrCode;
-    @BindView(R.id.tv_gym_name) TextView tvGymName;
-    @BindView(R.id.btn_save_qrcode) TextView btnSaveQrcode;
+	ImageView imgQrCode;
+	TextView tvGymName;
+	TextView btnSaveQrcode;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
@@ -62,8 +62,26 @@ public class HomePageQrCodeFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page_qrcode, container, false);
-        ButterKnife.bind(this, view);
-        tvGymName.setText(gymWrapper.name());
+      imgQrCode = (ImageView) view.findViewById(R.id.img_qr_code);
+      tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+      btnSaveQrcode = (TextView) view.findViewById(R.id.btn_save_qrcode);
+      view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          HomePageQrCodeFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_save_qrcode).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          HomePageQrCodeFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.root_view).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          HomePageQrCodeFragment.this.onClick(v);
+        }
+      });
+
+      tvGymName.setText(gymWrapper.name());
         try {
             mBitmapSoftReference = new SoftReference<Bitmap>(encodeAsBitmap(mUrl));
             imgQrCode.setImageBitmap(mBitmapSoftReference.get());
@@ -77,7 +95,7 @@ public class HomePageQrCodeFragment extends BaseFragment {
         return HomePageQrCodeFragment.class.getName();
     }
 
-    @OnClick({ R.id.btn_close, R.id.btn_save_qrcode, R.id.root_view }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_close:
                 getActivity().onBackPressed();

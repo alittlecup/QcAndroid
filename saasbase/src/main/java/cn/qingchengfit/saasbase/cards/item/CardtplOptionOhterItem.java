@@ -4,10 +4,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -47,18 +47,26 @@ public class CardtplOptionOhterItem
   }
 
   public class CardtplOptionOhterVH extends FlexibleViewHolder {
-    @BindView(R2.id.title) TextView title;
-    @BindView(R2.id.real_income) TextView realIncome;
-    @BindView(R2.id.valid_date) TextView validDate;
-    @BindView(R2.id.support_type) TextView supportType;
-    @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
-    @BindView(R2.id.chosen) ImageView chosen;
-    @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
-    @BindView(R2.id.shadow_card_option) View shadow;
+	TextView title;
+	TextView realIncome;
+	TextView validDate;
+	TextView supportType;
+	LinearLayout chargeLayout;
+	ImageView chosen;
+	ImageView tagOnlyStaff;
+	View shadow;
 
     public CardtplOptionOhterVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      title = (TextView) view.findViewById(R.id.title);
+      realIncome = (TextView) view.findViewById(R.id.real_income);
+      validDate = (TextView) view.findViewById(R.id.valid_date);
+      supportType = (TextView) view.findViewById(R.id.support_type);
+      chargeLayout = (LinearLayout) view.findViewById(R.id.charge_layout);
+      chosen = (ImageView) view.findViewById(R.id.chosen);
+      tagOnlyStaff = (ImageView) view.findViewById(R.id.tag_only_staff);
+      shadow = (View) view.findViewById(R.id.shadow_card_option);
+
       title.setText("自定义");
       realIncome.setVisibility(View.GONE);
       validDate.setVisibility(View.GONE);

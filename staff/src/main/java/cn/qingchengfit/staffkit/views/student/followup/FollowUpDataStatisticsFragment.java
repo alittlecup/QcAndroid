@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -64,8 +64,8 @@ import rx.functions.Action1;
   int offDays = 7;
   //TopFilterSaleFragment saleFragment;
   //FilterTimesFragment latestTimeFragment;
-  @BindView(R.id.qft_saler) QcFilterToggle qftSaler;
-  @BindView(R.id.qft_times) QcFilterToggle qftTimes;
+	QcFilterToggle qftSaler;
+	QcFilterToggle qftTimes;
   //@BindView(R.id.frag_contianer) FrameLayout layoutBg;
   private StudentFilter filter = new StudentFilter();
   //private OnCheckedChangeListener filterListenr = new OnCheckedChangeListener() {
@@ -110,7 +110,19 @@ import rx.functions.Action1;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_follow_up_data_statistics, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    qftSaler = (QcFilterToggle) view.findViewById(R.id.qft_saler);
+    qftTimes = (QcFilterToggle) view.findViewById(R.id.qft_times);
+    view.findViewById(R.id.qft_saler).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpDataStatisticsFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.qft_times).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpDataStatisticsFragment.this.onClick(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     initBus();
     switch (statusChangeType) {
@@ -138,7 +150,6 @@ import rx.functions.Action1;
       qftSaler.setText(loginStatus.staff_name());
     }
 
-
     isLoading = true;
     return view;
   }
@@ -156,9 +167,8 @@ import rx.functions.Action1;
    * 点击背景关闭弹窗
    */
   //@OnClick(R.id.frag_follow_up_filter_container) public void onClickBg() {
-    //filterListenr.onCheckedChanged(null, false);
+  //filterListenr.onCheckedChanged(null, false);
   //}
-
   private void initBus() {
     RxBusAdd(FollowUpFilterEvent.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<FollowUpFilterEvent>() {
@@ -168,10 +178,11 @@ import rx.functions.Action1;
             switch (followUpFilterEvent.eventType) {
               case FollowUpFilterEvent.EVENT_SALE_ITEM_CLICK:
                 filter.sale = followUpFilterEvent.filter.sale;
-                if (filter.sale == null){
+                if (filter.sale == null) {
                   qftSaler.setText("销售");
-                }else
+                } else {
                   qftSaler.setText(filter.sale.getUsername());
+                }
                 qftSaler.setChecked(false);
                 break;
 
@@ -223,9 +234,7 @@ import rx.functions.Action1;
     return this.getClass().getName();
   }
 
-  @OnClick({
-      R.id.qft_saler, R.id.qft_times
-  }) public void onClick(View view) {
+ public void onClick(View view) {
     FragmentTransaction ts = getChildFragmentManager().beginTransaction();
     switch (view.getId()) {
       case R.id.qft_saler:

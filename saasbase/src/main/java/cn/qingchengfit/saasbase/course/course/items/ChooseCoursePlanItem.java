@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.course.course.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.course.bean.CoursePlan;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -51,13 +51,15 @@ public class ChooseCoursePlanItem extends
     }
 
     public static class ChooseCoursePlanVH extends FlexibleViewHolder {
-        @BindView(R2.id.name) TextView name;
-        @BindView(R2.id.content) TextView content;
-        @BindView(R2.id.chosen) ImageView chosen;
+	TextView name;
+	TextView content;
+	ImageView chosen;
 
         public ChooseCoursePlanVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          name = (TextView) view.findViewById(R.id.name);
+          content = (TextView) view.findViewById(R.id.content);
+          chosen = (ImageView) view.findViewById(R.id.chosen);
         }
     }
 }

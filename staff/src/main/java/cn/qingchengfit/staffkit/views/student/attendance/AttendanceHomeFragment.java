@@ -9,10 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindColor;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
 import cn.qingchengfit.staffkit.R;
@@ -48,18 +44,18 @@ import javax.inject.Inject;
 public class AttendanceHomeFragment extends BaseFragment
     implements FilterFragment.OnSelectListener, AttendanceChartPresenter.AttendanceView {
 
-  @BindView(R.id.btn_absentee) ViewGroup btnAbsentete;
-  @BindView(R.id.btn_attendence) ViewGroup btnAttendence;
-  @BindView(R.id.rl_absence_top_filter) RelativeLayout rlAbsenceTopFilter;
-  @BindView(R.id.text_recent_condition) TextView textRecentCondition;
-  @BindView(R.id.image_up) ImageView imgUp;
-  @BindView(R.id.attendance_list_shadow) View shadow;
-  @BindView(R.id.filter_fragment) ViewGroup filterLayout;
+  ViewGroup btnAbsentete;
+  ViewGroup btnAttendence;
+  RelativeLayout rlAbsenceTopFilter;
+  TextView textRecentCondition;
+  ImageView imgUp;
+  View shadow;
+  ViewGroup filterLayout;
 
-  @BindColor(R.color.white) int white;
-  @BindColor(R.color.bg_grey) int grey;
+  int white;
+  int grey;
   @Inject AttendanceChartPresenter chartPresenter;
-  @BindView(R.id.btn_not_sign_class) LinearLayout btnNotSignClass;
+  LinearLayout btnNotSignClass;
   private List<AbstractFlexibleItem> filterList = new ArrayList<>();
   private FilterFragment filterFragment;
   private AttendanceStaticFragment staticFragment;
@@ -70,7 +66,42 @@ public class AttendanceHomeFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_attendance_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    btnAbsentete = (ViewGroup) view.findViewById(R.id.btn_absentee);
+    btnAttendence = (ViewGroup) view.findViewById(R.id.btn_attendence);
+    rlAbsenceTopFilter = (RelativeLayout) view.findViewById(R.id.rl_absence_top_filter);
+    textRecentCondition = (TextView) view.findViewById(R.id.text_recent_condition);
+    imgUp = (ImageView) view.findViewById(R.id.image_up);
+    shadow = (View) view.findViewById(R.id.attendance_list_shadow);
+    filterLayout = (ViewGroup) view.findViewById(R.id.filter_fragment);
+    btnNotSignClass = (LinearLayout) view.findViewById(R.id.btn_not_sign_class);
+    view.findViewById(R.id.btn_absentee).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onJump(v);
+      }
+    });
+    view.findViewById(R.id.btn_attendence).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onJump(v);
+      }
+    });
+    view.findViewById(R.id.rl_absence_top_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onJump(v);
+      }
+    });
+    view.findViewById(R.id.btn_not_sign_class).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onJump(v);
+      }
+    });
+    view.findViewById(R.id.attendance_list_shadow).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDismiss();
+      }
+    });
+    white = getResources().getColor(R.color.white);
+    grey = getResources().getColor(R.color.grey);
+
     mCallbackActivity.setToolbar("会员出勤", false, null, 0, null);
     delegatePresenter(chartPresenter, this);
 
@@ -111,7 +142,6 @@ public class AttendanceHomeFragment extends BaseFragment
     }
   }
 
-  @OnClick({ R.id.btn_absentee, R.id.btn_attendence, R.id.rl_absence_top_filter, R.id.btn_not_sign_class})
   public void onJump(View view) {
     switch (view.getId()) {
       case R.id.btn_absentee:
@@ -144,7 +174,7 @@ public class AttendanceHomeFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.attendance_list_shadow) public void onDismiss() {
+  public void onDismiss() {
     isShow = false;
     toggleViewState();
   }

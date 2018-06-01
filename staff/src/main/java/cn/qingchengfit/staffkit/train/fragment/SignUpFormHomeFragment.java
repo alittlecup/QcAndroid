@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -24,17 +24,20 @@ import java.util.ArrayList;
 
 public class SignUpFormHomeFragment extends BaseFragment {
 
-    @BindView(R.id.sign_up_tab) TabLayout tabLayout;
-    @BindView(R.id.sign_up_viewpager) ViewPager viewPager;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	TabLayout tabLayout;
+	ViewPager viewPager;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      tabLayout = (TabLayout) view.findViewById(R.id.sign_up_tab);
+      viewPager = (ViewPager) view.findViewById(R.id.sign_up_viewpager);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
 
-        initToolbar(toolbar);
+      initToolbar(toolbar);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager(), fragments);

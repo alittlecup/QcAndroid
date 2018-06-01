@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.App;
@@ -146,28 +146,47 @@ public class SignInItem extends AbstractFlexibleItem<SignInItem.ItemViewHolder> 
 
     public static class ItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R.id.cardview) CardView cardView;
-        @BindView(R.id.img_signin_item_face) ImageView imgSigninItemFace;
-        @BindView(R.id.tv_signin_item_name) TextView tvSigninItemName;
-        @BindView(R.id.iv_signin_item_gender) ImageView ivSigninItemGender;
-        @BindView(R.id.tv_signin_item_phone) TextView tvSigninItemPhone;
-        @BindView(R.id.tv_signin_item_card) TextView tvSigninItemCard;
-        @BindView(R.id.tv_signin_item_fee) TextView tvSigninItemFee;
-        @BindView(R.id.tv_signin_item_gui) TextView tvSigninItemGui;
-        @BindView(R.id.tv_signin_item_ignor) TextView tvSigninItemIgnor;
-        @BindView(R.id.ll_signin_item_ignor) LinearLayout llSigninItemIgnor;
-        @BindView(R.id.tv_signin_item_confirm) TextView tvSigninItemConfirm;
-        @BindView(R.id.ll_signin_item_confirm) LinearLayout llSigninItemConfirm;
-        @BindView(R.id.ll_signin_item_course) LinearLayout llSigninItemCourse;
-        @BindView(R.id.ll_line) LinearLayout ll_line;
-        @BindView(R.id.tv_signin_item_course) TextView tvSigninItemCourse;
-        @BindView(R.id.recyclerview_signin_item_course) RecyclerView recyclerviewSigninItemCourse;
-        @BindView(R.id.ll_signin_untreated_locker) LinearLayout llSigninUntreatedLocker;
+	CardView cardView;
+	ImageView imgSigninItemFace;
+	TextView tvSigninItemName;
+	ImageView ivSigninItemGender;
+	TextView tvSigninItemPhone;
+	TextView tvSigninItemCard;
+	TextView tvSigninItemFee;
+	TextView tvSigninItemGui;
+	TextView tvSigninItemIgnor;
+	LinearLayout llSigninItemIgnor;
+	TextView tvSigninItemConfirm;
+	LinearLayout llSigninItemConfirm;
+	LinearLayout llSigninItemCourse;
+	LinearLayout ll_line;
+	TextView tvSigninItemCourse;
+	RecyclerView recyclerviewSigninItemCourse;
+	LinearLayout llSigninUntreatedLocker;
 
         public ItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            llSigninItemIgnor.setOnClickListener(new View.OnClickListener() {
+          cardView = (CardView) view.findViewById(R.id.cardview);
+          imgSigninItemFace = (ImageView) view.findViewById(R.id.img_signin_item_face);
+          tvSigninItemName = (TextView) view.findViewById(R.id.tv_signin_item_name);
+          ivSigninItemGender = (ImageView) view.findViewById(R.id.iv_signin_item_gender);
+          tvSigninItemPhone = (TextView) view.findViewById(R.id.tv_signin_item_phone);
+          tvSigninItemCard = (TextView) view.findViewById(R.id.tv_signin_item_card);
+          tvSigninItemFee = (TextView) view.findViewById(R.id.tv_signin_item_fee);
+          tvSigninItemGui = (TextView) view.findViewById(R.id.tv_signin_item_gui);
+          tvSigninItemIgnor = (TextView) view.findViewById(R.id.tv_signin_item_ignor);
+          llSigninItemIgnor = (LinearLayout) view.findViewById(R.id.ll_signin_item_ignor);
+          tvSigninItemConfirm = (TextView) view.findViewById(R.id.tv_signin_item_confirm);
+          llSigninItemConfirm = (LinearLayout) view.findViewById(R.id.ll_signin_item_confirm);
+          llSigninItemCourse = (LinearLayout) view.findViewById(R.id.ll_signin_item_course);
+          ll_line = (LinearLayout) view.findViewById(R.id.ll_line);
+          tvSigninItemCourse = (TextView) view.findViewById(R.id.tv_signin_item_course);
+          recyclerviewSigninItemCourse =
+              (RecyclerView) view.findViewById(R.id.recyclerview_signin_item_course);
+          llSigninUntreatedLocker =
+              (LinearLayout) view.findViewById(R.id.ll_signin_untreated_locker);
+
+          llSigninItemIgnor.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     if (!PreferenceUtils.getPrefBoolean(App.context, "showNotice" + App.staffId, false)) {
                         ToastUtils.show("还没有设置进场签到设置,暂时无法操作");

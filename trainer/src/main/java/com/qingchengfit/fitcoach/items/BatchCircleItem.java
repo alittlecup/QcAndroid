@@ -3,8 +3,8 @@ package com.qingchengfit.fitcoach.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -59,14 +59,17 @@ public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchC
 
     public class BatchCircleVH extends FlexibleViewHolder {
 
-        @BindView(R.id.delete) ImageView delete;
-        @BindView(R.id.work_time) TextView workTime;
-        @BindView(R.id.work_weekday) TextView workWeekday;
+	ImageView delete;
+	TextView workTime;
+	TextView workWeekday;
 
         public BatchCircleVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            delete.setOnClickListener(v -> adapter.removeItem(getAdapterPosition()));
+          delete = (ImageView) view.findViewById(R.id.delete);
+          workTime = (TextView) view.findViewById(R.id.work_time);
+          workWeekday = (TextView) view.findViewById(R.id.work_weekday);
+
+          delete.setOnClickListener(v -> adapter.removeItem(getAdapterPosition()));
         }
     }
 }

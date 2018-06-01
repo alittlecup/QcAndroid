@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.CompatUtils;
@@ -60,24 +60,24 @@ import rx.schedulers.Schedulers;
  */
 public class WorkExpSyncDetailFragment extends BaseSettingFragment {
 
-    @BindView(R.id.host_img) ImageView hostImg;
-    @BindView(R.id.host_qc_identify) ImageView hostQcIdentify;
-    @BindView(R.id.workexpedit_gym_name) TextView workexpeditGymName;
-    @BindView(R.id.host_address) TextView hostAddress;
-    @BindView(R.id.host_layout) RelativeLayout hostLayout;
-    @BindView(R.id.workexpedit_start_time) CommonInputView workexpeditStartTime;
-    @BindView(R.id.workexpedit_start_end) CommonInputView workexpeditStartEnd;
-    @BindView(R.id.workexpedit_city) CommonInputView workexpeditCity;
-    @BindView(R.id.workexpedit_position) CommonInputView workexpeditPosition;
-    @BindView(R.id.workexpedit_descripe) EditText workexpeditDescripe;
-    @BindView(R.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
-    @BindView(R.id.tv_group) TextView tvGroup;
-    @BindView(R.id.sw_group) ExpandedLayout swGroup;
-    @BindView(R.id.tv_private) TextView tvPrivate;
-    @BindView(R.id.sw_private) ExpandedLayout swPrivate;
-    @BindView(R.id.tv_sales) TextView tvSales;
-    @BindView(R.id.sw_sale) ExpandedLayout swSale;
-    @BindView(R.id.rootview) ScrollView rootview;
+	ImageView hostImg;
+	ImageView hostQcIdentify;
+	TextView workexpeditGymName;
+	TextView hostAddress;
+	RelativeLayout hostLayout;
+	CommonInputView workexpeditStartTime;
+	CommonInputView workexpeditStartEnd;
+	CommonInputView workexpeditCity;
+	CommonInputView workexpeditPosition;
+	EditText workexpeditDescripe;
+	LinearLayout workexpeditExpeLayout;
+	TextView tvGroup;
+	ExpandedLayout swGroup;
+	TextView tvPrivate;
+	ExpandedLayout swPrivate;
+	TextView tvSales;
+	ExpandedLayout swSale;
+	ScrollView rootview;
 
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
 
@@ -98,8 +98,26 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workexp_sync, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        fragmentCallBack.showToolbar();
+      hostImg = (ImageView) view.findViewById(R.id.host_img);
+      hostQcIdentify = (ImageView) view.findViewById(R.id.host_qc_identify);
+      workexpeditGymName = (TextView) view.findViewById(R.id.workexpedit_gym_name);
+      hostAddress = (TextView) view.findViewById(R.id.host_address);
+      hostLayout = (RelativeLayout) view.findViewById(R.id.host_layout);
+      workexpeditStartTime = (CommonInputView) view.findViewById(R.id.workexpedit_start_time);
+      workexpeditStartEnd = (CommonInputView) view.findViewById(R.id.workexpedit_start_end);
+      workexpeditCity = (CommonInputView) view.findViewById(R.id.workexpedit_city);
+      workexpeditPosition = (CommonInputView) view.findViewById(R.id.workexpedit_position);
+      workexpeditDescripe = (EditText) view.findViewById(R.id.workexpedit_descripe);
+      workexpeditExpeLayout = (LinearLayout) view.findViewById(R.id.workexpedit_expe_layout);
+      tvGroup = (TextView) view.findViewById(R.id.tv_group);
+      swGroup = (ExpandedLayout) view.findViewById(R.id.sw_group);
+      tvPrivate = (TextView) view.findViewById(R.id.tv_private);
+      swPrivate = (ExpandedLayout) view.findViewById(R.id.sw_private);
+      tvSales = (TextView) view.findViewById(R.id.tv_sales);
+      swSale = (ExpandedLayout) view.findViewById(R.id.sw_sale);
+      rootview = (ScrollView) view.findViewById(R.id.rootview);
+
+      fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(R.menu.menu_save, 0, "工作经历详情");
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {

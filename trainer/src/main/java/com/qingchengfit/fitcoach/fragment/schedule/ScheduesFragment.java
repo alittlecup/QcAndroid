@@ -18,10 +18,10 @@ import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.NewPushMsg;
 import cn.qingchengfit.bean.RxRefreshList;
@@ -64,12 +64,12 @@ import rx.functions.Action1;
 @FragmentWithArgs public class ScheduesFragment extends BaseFragment {
   public static final String TAG = ScheduesFragment.class.getName();
   @Arg @Nullable Long mDateTime;
-  @BindView(R.id.schedule_tab) PagerSlidingTabStrip scheduleTab;
-  @BindView(R.id.schedule_vp) ViewPager scheduleVp;
-  @BindView(R.id.month_view) TextView monthView;
-  @BindView(R.id.tv_month) TextView tvMonth;
-  @BindView(R.id.web_floatbtn) FloatingActionsMenu webFloatbtn;
-  @BindView(R.id.bg_show) View bgShow;
+	PagerSlidingTabStrip scheduleTab;
+	ViewPager scheduleVp;
+	TextView monthView;
+	TextView tvMonth;
+	FloatingActionsMenu webFloatbtn;
+	View bgShow;
   //@BindView(R.id.schedule_expend_view) LinearLayout scheduleExpendView;
   private FloatingActionButton btn1;
   private FloatingActionButton btn2;
@@ -90,7 +90,7 @@ import rx.functions.Action1;
   private Observable<String> mObservableReresh;
   private String curModel;
   private String mTitle;
-  private Unbinder unbinder;
+
 
   public ScheduesFragment() {
   }
@@ -107,7 +107,39 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_schedues, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    scheduleTab = (PagerSlidingTabStrip) view.findViewById(R.id.schedule_tab);
+    scheduleVp = (ViewPager) view.findViewById(R.id.schedule_vp);
+    monthView = (TextView) view.findViewById(R.id.month_view);
+    tvMonth = (TextView) view.findViewById(R.id.tv_month);
+    webFloatbtn = (FloatingActionsMenu) view.findViewById(R.id.web_floatbtn);
+    bgShow = (View) view.findViewById(R.id.bg_show);
+
+    view.findViewById(R.id.back_today).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        backToady();
+      }
+    });
+    view.findViewById(R.id.tv_month).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCalendarClick();
+      }
+    });
+    view.findViewById(R.id.icon_down).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCalendarClick();
+      }
+    });
+    view.findViewById(R.id.month_view).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onMonth();
+      }
+    });
+    view.findViewById(R.id.bg_show).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ScheduesFragment.this.onClick();
+      }
+    });
+
     PreferenceUtils.setPrefBoolean(getContext(), "is_week_view", false);
     Gson gson = new Gson();
     String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
@@ -294,7 +326,7 @@ import rx.functions.Action1;
     });
   }
 
-  @OnClick(R.id.back_today) public void backToady() {
+ public void backToady() {
     goDateSchedule(new Date());
   }
 
@@ -341,7 +373,7 @@ import rx.functions.Action1;
     //scheduleTab.selectChild(mFragmentAdapter.getCurMidPos(),0);
   }
 
-  @OnClick({ R.id.tv_month, R.id.icon_down }) public void onCalendarClick() {
+ public void onCalendarClick() {
     mDatePicker = new DatePicker();
     mDatePicker.show(getFragmentManager(), "");
     if (getActivity() instanceof Main2Activity) {
@@ -366,18 +398,18 @@ import rx.functions.Action1;
   @Override public void onDestroyView() {
     RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
     RxBus.getBus().unregister(RxRefreshList.class.getName(), mObservableReresh);
-    unbinder.unbind();
+
     super.onDestroyView();
   }
 
-  @OnClick(R.id.month_view) public void onMonth() {
+ public void onMonth() {
     getFragmentManager().beginTransaction()
       .setCustomAnimations(R.anim.slide_fade_in, R.anim.slide_fade_out)
       .replace(R.id.schedule_frag, new ScheduleWeekFragment())
       .commitAllowingStateLoss();
   }
 
-  @OnClick(R.id.bg_show) public void onClick() {
+ public void onClick() {
     webFloatbtn.collapse();
   }
 
@@ -386,17 +418,23 @@ import rx.functions.Action1;
    */
 
   public static class SchedulesVH extends RecyclerView.ViewHolder {
-    @BindView(R.id.item_schedule_time) TextView itemScheduleTime;
-    @BindView(R.id.item_schedule_classname) TextView itemScheduleClassname;
-    @BindView(R.id.item_schedule_gymname) TextView itemScheduleGymname;
-    @BindView(R.id.item_schedule_num) TextView itemScheduleNum;
-    @BindView(R.id.item_schedule_classpic) ImageView itemScheduleClasspic;
-    @BindView(R.id.item_schedule_status) ImageView itemScheduleStatus;
-    @BindView(R.id.indicator) View indicator;
+	TextView itemScheduleTime;
+	TextView itemScheduleClassname;
+	TextView itemScheduleGymname;
+	TextView itemScheduleNum;
+	ImageView itemScheduleClasspic;
+	ImageView itemScheduleStatus;
+	View indicator;
 
-    public SchedulesVH(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    public SchedulesVH(View view) {
+      super(view);
+      itemScheduleTime = (TextView) view.findViewById(R.id.item_schedule_time);
+      itemScheduleClassname = (TextView) view.findViewById(R.id.item_schedule_classname);
+      itemScheduleGymname = (TextView) view.findViewById(R.id.item_schedule_gymname);
+      itemScheduleNum = (TextView) view.findViewById(R.id.item_schedule_num);
+      itemScheduleClasspic = (ImageView) view.findViewById(R.id.item_schedule_classpic);
+      itemScheduleStatus = (ImageView) view.findViewById(R.id.item_schedule_status);
+      indicator = (View) view.findViewById(R.id.indicator);
     }
   }
 

@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.cards.item;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
@@ -87,18 +87,25 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
   }
 
   public class CardDetailVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
-    @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.tv_card_id) TextView tvCardId;
-    @BindView(R2.id.cardview) RelativeLayout cardview;
-    @BindView(R2.id.tv_card_append) TextView tvCardAppend;
-    @BindView(R2.id.img_stutus) TextView imgStatus;
-    @BindView(R2.id.tv_card_expand_desc) ExpandTextView tvCardExpandDesc;
+	TextView tvCardTplType;
+	TextView tvCardtplName;
+	TextView tvGymName;
+	TextView tvCardId;
+	RelativeLayout cardview;
+	TextView tvCardAppend;
+	TextView imgStatus;
+	ExpandTextView tvCardExpandDesc;
 
     public CardDetailVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvCardTplType = (TextView) view.findViewById(R.id.tv_card_tpl_type);
+      tvCardtplName = (TextView) view.findViewById(R.id.tv_cardtpl_name);
+      tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+      tvCardId = (TextView) view.findViewById(R.id.tv_card_id);
+      cardview = (RelativeLayout) view.findViewById(R.id.cardview);
+      tvCardAppend = (TextView) view.findViewById(R.id.tv_card_append);
+      imgStatus = (TextView) view.findViewById(R.id.img_stutus);
+      tvCardExpandDesc = (ExpandTextView) view.findViewById(R.id.tv_card_expand_desc);
     }
   }
 }

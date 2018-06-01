@@ -5,8 +5,7 @@ import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -22,8 +21,8 @@ import rx.functions.Action1;
 
 public class PopFromBottomActivity extends BaseActivity implements FragCallBack {
 
-    @BindView(cn.qingchengfit.staffkit.R.id.toolbar) Toolbar toolbar;
-    @BindView(cn.qingchengfit.staffkit.R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Inject GymWrapper gymWrapper;
     private Observable<ToolbarBean> mObToolbar;
@@ -31,7 +30,9 @@ public class PopFromBottomActivity extends BaseActivity implements FragCallBack 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(cn.qingchengfit.staffkit.R.layout.activity_pop_from_bottom);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+
         mObToolbar = RxBus.getBus().register(ToolbarBean.class);
         mObToolbar.subscribe(new Action1<ToolbarBean>() {
             @Override public void call(ToolbarBean toolbarBean) {

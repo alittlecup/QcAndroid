@@ -15,10 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.FragmentAdapter;
@@ -55,19 +55,19 @@ import rx.schedulers.Schedulers;
  */
 public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
 
-    @BindView(R.id.header) ImageView myhomeHeader;
-    @BindView(R.id.gender) ImageView myhomeGender;
-    @BindView(R.id.name) TextView myhomeName;
-    @BindView(R.id.myhome_brief) TextView myhomeBrief;
-    @BindView(R.id.myhome_location) TextView myhomeLocation;
-    @BindView(R.id.myhome_sawtooth) ImageView myhomeSawtooth;
-    @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-    @BindView(R.id.tab) TabLayout myhomeTab;
-    @BindView(R.id.student) ViewPager myhomeViewpager;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.sfl) CustomSwipeRefreshLayout sfl;
-    @BindView(R.id.scroll_root) CoordinatorLayout scrollRoot;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	ImageView myhomeHeader;
+	ImageView myhomeGender;
+	TextView myhomeName;
+	TextView myhomeBrief;
+	TextView myhomeLocation;
+	ImageView myhomeSawtooth;
+	AppBarLayout myhomeAppBar;
+	TabLayout myhomeTab;
+	ViewPager myhomeViewpager;
+	Toolbar toolbar;
+	CustomSwipeRefreshLayout sfl;
+	CoordinatorLayout scrollRoot;
+	TextView toolbarTitle;
     private Gson gson = new Gson();
     private int mAppBarOffset = 0;
     private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
@@ -90,12 +90,30 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
             handleResponse(qcMyhomeResponse);
         }
     };
-    private Unbinder unbinder;
+
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText("我的主页");
+      myhomeHeader = (ImageView) view.findViewById(R.id.header);
+      myhomeGender = (ImageView) view.findViewById(R.id.gender);
+      myhomeName = (TextView) view.findViewById(R.id.name);
+      myhomeBrief = (TextView) view.findViewById(R.id.myhome_brief);
+      myhomeLocation = (TextView) view.findViewById(R.id.myhome_location);
+      myhomeSawtooth = (ImageView) view.findViewById(R.id.myhome_sawtooth);
+      myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+      myhomeTab = (TabLayout) view.findViewById(R.id.tab);
+      myhomeViewpager = (ViewPager) view.findViewById(R.id.student);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      sfl = (CustomSwipeRefreshLayout) view.findViewById(R.id.sfl);
+      scrollRoot = (CoordinatorLayout) view.findViewById(R.id.scroll_root);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.myhome_student_judge).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onJudge();
+        }
+      });
+
+      toolbarTitle.setText("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> {
             getActivity().onBackPressed();
@@ -199,7 +217,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         sfl.setRefreshing(false);
     }
 
-    @OnClick(R.id.myhome_student_judge) public void onJudge() {
+ public void onJudge() {
         myhomeAppBar.setExpanded(false);
         myhomeTab.setScrollPosition(3, 0, true);
         myhomeViewpager.setCurrentItem(3);
@@ -229,7 +247,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public boolean canSwipeRefreshChildScrollUp() {

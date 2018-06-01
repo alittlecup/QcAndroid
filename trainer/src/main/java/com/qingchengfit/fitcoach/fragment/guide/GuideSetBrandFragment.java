@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CoachInitBean;
 import cn.qingchengfit.events.EventChooseImage;
@@ -52,16 +52,29 @@ import rx.schedulers.Schedulers;
  */
 public class GuideSetBrandFragment extends BaseFragment {
 
-    @BindView(R.id.brand_img) ImageView brandImg;
-    @BindView(R.id.brand_name) CommonInputView brandName;
-    @BindView(R.id.next_step) Button nextStep;
+	ImageView brandImg;
+	CommonInputView brandName;
+	Button nextStep;
     String imgUrl = "";
-    private Unbinder unbinder;
+
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_brand, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
+      brandImg = (ImageView) view.findViewById(R.id.brand_img);
+      brandName = (CommonInputView) view.findViewById(R.id.brand_name);
+      nextStep = (Button) view.findViewById(R.id.next_step);
+      view.findViewById(R.id.layout_brand_logo).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickBrandLogo();
+        }
+      });
+      view.findViewById(R.id.next_step).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          GuideSetBrandFragment.this.onClick(v);
+        }
+      });
+
+      RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
                 UpYunClient.rxUpLoad("brand/", eventChooseImage.filePath)
@@ -102,7 +115,7 @@ public class GuideSetBrandFragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.layout_brand_logo) public void onClickBrandLogo() {
+ public void onClickBrandLogo() {
         ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
 
         new RxPermissions(getActivity())
@@ -123,10 +136,10 @@ public class GuideSetBrandFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
-    @OnClick({ R.id.next_step }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_step:
                 if (brandName.isEmpty()) {

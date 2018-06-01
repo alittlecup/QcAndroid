@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -65,14 +65,14 @@ import rx.schedulers.Schedulers;
 
 public class MutiChooseStudentFragment extends BaseFragment implements StudentListView {
 
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.tv_select_count) TextView tvSelectCount;
+	EditText searchviewEt;
+	TextView tvSelectCount;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;
     EditStudentInfoFragment editStudentInfoFragment;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private ChooseStudentListFragment chooseStudentListFragment;
     private List<String> students = new ArrayList<>();
 
@@ -123,8 +123,22 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_muti_choose_for_add_card, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+      tvSelectCount = (TextView) view.findViewById(R.id.tv_select_count);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.add_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          addStudent();
+        }
+      });
+      view.findViewById(R.id.ll_show_select).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MutiChooseStudentFragment.this.onClick();
+        }
+      });
+
+      initToolbar(toolbar);
         getChildFragmentManager().beginTransaction().replace(R.id.frag_student_list, chooseStudentListFragment).commit();
         chooseStudentListFragment.setSortType(0);
         chooseStudentListFragment.setListener(new ChooseStudentListFragment.SelectChangeListener() {
@@ -193,7 +207,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
         super.onDestroyView();
     }
 
-    @OnClick(R.id.add_student) public void addStudent() {
+ public void addStudent() {
         editStudentInfoFragment.isAdd = true;
         getFragmentManager().beginTransaction()
             .replace(mCallbackActivity.getFragId(), editStudentInfoFragment)
@@ -221,7 +235,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
         hideLoadingTrans();
     }
 
-    @OnClick(R.id.ll_show_select) public void onClick() {
+ public void onClick() {
         BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
         selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
             @Override public void onBottomStudents(List<Personage> list) {

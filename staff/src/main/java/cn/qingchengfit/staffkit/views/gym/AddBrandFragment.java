@@ -16,9 +16,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
@@ -51,12 +51,12 @@ import rx.functions.Action1;
  */
 public class AddBrandFragment extends BaseDialogFragment implements AddBrandView {
 
-    @BindView(R.id.toolbar_layout) public RelativeLayout toolbarLayout;
-    @BindView(R.id.toolbar) public Toolbar toolbar;
-    @BindView(R.id.toolbar_title) public TextView toolbarTitle;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.content) CommonInputView content;
-    @BindView(R.id.brand_photo) ImageView brandPhoto;
+	public RelativeLayout toolbarLayout;
+	public Toolbar toolbar;
+	public TextView toolbarTitle;
+	Button btn;
+	CommonInputView content;
+	ImageView brandPhoto;
     @Inject CreateBrandPresenter presenter;
     private TextChange textChange;
     private String uploadImg;
@@ -96,8 +96,24 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_add_brand, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initDI();
+      toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+      btn = (Button) view.findViewById(R.id.btn);
+      content = (CommonInputView) view.findViewById(R.id.content);
+      brandPhoto = (ImageView) view.findViewById(R.id.brand_photo);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      view.findViewById(R.id.brand_photo).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          addPhoto();
+        }
+      });
+
+      initDI();
         presenter.attachView(this);
         content.addTextWatcher(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,7 +141,7 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
     private void initDI() {
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (!TextUtils.isEmpty(content.getContent().trim())) {
             showLoading();
             presenter.createBrand(content.getContent().trim(), uploadImg);
@@ -133,7 +149,7 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
         }
     }
 
-    @OnClick(R.id.brand_photo) public void addPhoto() {
+ public void addPhoto() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {

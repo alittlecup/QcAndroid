@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.GymUtils;
@@ -42,21 +42,21 @@ import rx.schedulers.Schedulers;
  */
 public class AddStudentManulkFragment extends Fragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.choose_gym) CommonInputView chooseGym;
-    @BindView(R.id.choose_name) CommonInputView chooseName;
-    @BindView(R.id.comple_gender_label) TextView compleGenderLabel;
-    @BindView(R.id.comple_gender_male) RadioButton compleGenderMale;
-    @BindView(R.id.comple_gender_female) RadioButton compleGenderFemale;
-    @BindView(R.id.comple_gender) RadioGroup compleGender;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.hint) TextView hint;
-    @BindView(R.id.choose_phone) PhoneEditText choosePhone;
+	Toolbar toolbar;
+	CommonInputView chooseGym;
+	CommonInputView chooseName;
+	TextView compleGenderLabel;
+	RadioButton compleGenderMale;
+	RadioButton compleGenderFemale;
+	RadioGroup compleGender;
+	Button btn;
+	TextView hint;
+	PhoneEditText choosePhone;
     List<CoachService> systems = new ArrayList<>();
     private List<String> gymStrings = new ArrayList<>();
     private String chooseGymId = "";
     private String chooseGymModel;
-    private Unbinder unbinder;
+
 
     public AddStudentManulkFragment() {
     }
@@ -76,8 +76,28 @@ public class AddStudentManulkFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_student_manulk, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setTitle("添加学员");
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      chooseGym = (CommonInputView) view.findViewById(R.id.choose_gym);
+      chooseName = (CommonInputView) view.findViewById(R.id.choose_name);
+      compleGenderLabel = (TextView) view.findViewById(R.id.comple_gender_label);
+      compleGenderMale = (RadioButton) view.findViewById(R.id.comple_gender_male);
+      compleGenderFemale = (RadioButton) view.findViewById(R.id.comple_gender_female);
+      compleGender = (RadioGroup) view.findViewById(R.id.comple_gender);
+      btn = (Button) view.findViewById(R.id.btn);
+      hint = (TextView) view.findViewById(R.id.hint);
+      choosePhone = (PhoneEditText) view.findViewById(R.id.choose_phone);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      view.findViewById(R.id.choose_gym).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          chooseGym();
+        }
+      });
+
+      toolbar.setTitle("添加学员");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -118,7 +138,7 @@ public class AddStudentManulkFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (TextUtils.isEmpty(chooseName.getContent())) {
             ToastUtils.showDefaultStyle("请填写学员姓名");
             return;
@@ -157,7 +177,7 @@ public class AddStudentManulkFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.choose_gym) public void chooseGym() {
+ public void chooseGym() {
         DialogList dialogList = new DialogList(getContext());
         dialogList.title("请选择健身房");
         dialogList.list(gymStrings, new AdapterView.OnItemClickListener() {
@@ -183,6 +203,6 @@ public class AddStudentManulkFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

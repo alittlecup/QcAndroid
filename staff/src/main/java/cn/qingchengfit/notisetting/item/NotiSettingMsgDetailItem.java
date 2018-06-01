@@ -2,12 +2,8 @@ package cn.qingchengfit.notisetting.item;
 
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.notisetting.bean.NotiSettingMsgDetail;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.DateUtils;
@@ -82,14 +78,18 @@ public class NotiSettingMsgDetailItem
   }
 
   public class NotiSettingMsgDetailVH extends FlexibleViewHolder {
-    @BindView(R.id.tv_to) TextView tvTo;
-    @BindView(R.id.tv_status) TextView tvStatus;
-    @BindView(R.id.tv_content) TextView tvContent;
-    @BindView(R.id.tv_channel) TextView tvChannel;
-    @BindView(R.id.tv_time_sender) TextView tvTimeSender;
+	TextView tvTo;
+	TextView tvStatus;
+	TextView tvContent;
+	TextView tvChannel;
+	TextView tvTimeSender;
     public NotiSettingMsgDetailVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTo = (TextView) view.findViewById(R.id.tv_to);
+      tvStatus = (TextView) view.findViewById(R.id.tv_status);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
+      tvChannel = (TextView) view.findViewById(R.id.tv_channel);
+      tvTimeSender = (TextView) view.findViewById(R.id.tv_time_sender);
     }
   }
 }

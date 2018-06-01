@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.train.model.AttendanceBean;
 import cn.qingchengfit.staffkit.train.model.RankTypeBean;
@@ -21,25 +21,25 @@ import cn.qingchengfit.widgets.CircleTextView;
 
 public class RankCountFragment extends BaseFragment {
 
-  @BindView(R.id.sign_up_empty_rank) LinearLayout llEmptyRank;
-  @BindView(R.id.ll_account_sign_up) LinearLayout llAccountRank;
-  @BindView(R.id.circle_text_attendance) CircleTextView cirAttendance;
-  @BindView(R.id.text_attendance_rank) TextView textAttendanceRank;
-  @BindView(R.id.circle_text_signal) CircleTextView cirSignal;
-  @BindView(R.id.text_signal_rank) TextView textSignalRank;
-  @BindView(R.id.circle_text_group) CircleTextView cirGroup;
-  @BindView(R.id.text_group_rank) TextView textGroupRank;
-  @BindView(R.id.circle_text_private) CircleTextView cirPrivate;
-  @BindView(R.id.text_private_rank) TextView textPrivateRank;
-  @BindView(R.id.ll_rank_first_line) LinearLayout llRankFirstLine;
-  @BindView(R.id.ll_rank_second_line) LinearLayout llRankSecondLine;
-  @BindView(R.id.ll_rank_attendance) LinearLayout llRankAttendance;
-  @BindView(R.id.ll_rank_signal) LinearLayout llRankSignal;
-  @BindView(R.id.ll_rank_group) LinearLayout llRankGroup;
-  @BindView(R.id.ll_rank_private) LinearLayout llRankPrivate;
-  @BindView(R.id.text_group_attendance) TextView textGroupAttendance;
-  @BindView(R.id.text_group_class) TextView textGroupClass;
-  @BindView(R.id.text_group_private) TextView textGroupPrivate;
+	LinearLayout llEmptyRank;
+	LinearLayout llAccountRank;
+	CircleTextView cirAttendance;
+	TextView textAttendanceRank;
+	CircleTextView cirSignal;
+	TextView textSignalRank;
+	CircleTextView cirGroup;
+	TextView textGroupRank;
+	CircleTextView cirPrivate;
+	TextView textPrivateRank;
+	LinearLayout llRankFirstLine;
+	LinearLayout llRankSecondLine;
+	LinearLayout llRankAttendance;
+	LinearLayout llRankSignal;
+	LinearLayout llRankGroup;
+	LinearLayout llRankPrivate;
+	TextView textGroupAttendance;
+	TextView textGroupClass;
+	TextView textGroupPrivate;
 
   private boolean isLow;
   private boolean isShowTogether;
@@ -67,7 +67,26 @@ public class RankCountFragment extends BaseFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.layout_sign_up_count, container, false);
-    ButterKnife.bind(this, view);
+    llEmptyRank = (LinearLayout) view.findViewById(R.id.sign_up_empty_rank);
+    llAccountRank = (LinearLayout) view.findViewById(R.id.ll_account_sign_up);
+    cirAttendance = (CircleTextView) view.findViewById(R.id.circle_text_attendance);
+    textAttendanceRank = (TextView) view.findViewById(R.id.text_attendance_rank);
+    cirSignal = (CircleTextView) view.findViewById(R.id.circle_text_signal);
+    textSignalRank = (TextView) view.findViewById(R.id.text_signal_rank);
+    cirGroup = (CircleTextView) view.findViewById(R.id.circle_text_group);
+    textGroupRank = (TextView) view.findViewById(R.id.text_group_rank);
+    cirPrivate = (CircleTextView) view.findViewById(R.id.circle_text_private);
+    textPrivateRank = (TextView) view.findViewById(R.id.text_private_rank);
+    llRankFirstLine = (LinearLayout) view.findViewById(R.id.ll_rank_first_line);
+    llRankSecondLine = (LinearLayout) view.findViewById(R.id.ll_rank_second_line);
+    llRankAttendance = (LinearLayout) view.findViewById(R.id.ll_rank_attendance);
+    llRankSignal = (LinearLayout) view.findViewById(R.id.ll_rank_signal);
+    llRankGroup = (LinearLayout) view.findViewById(R.id.ll_rank_group);
+    llRankPrivate = (LinearLayout) view.findViewById(R.id.ll_rank_private);
+    textGroupAttendance = (TextView) view.findViewById(R.id.text_group_attendance);
+    textGroupClass = (TextView) view.findViewById(R.id.text_group_class);
+    textGroupPrivate = (TextView) view.findViewById(R.id.text_group_private);
+
     if (getArguments().containsKey("isShow")) {
       isShowTogether = getArguments().getBoolean("isShow");
     }

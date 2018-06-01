@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.bill.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasConstant;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.utils.DateUtils;
@@ -89,17 +89,23 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
 
   class ItemBillVH extends FlexibleViewHolder{
 
-    @BindView(R2.id.tv_time) TextView tvTime;
-    @BindView(R2.id.tv_operator) TextView tvOperator;
-    @BindView(R2.id.img_bill) ImageView imgBill;
-    @BindView(R2.id.tv_item_bill_name) TextView tvItemBillName;
-    @BindView(R2.id.tv_item_bill_action) TextView tvItemBillAction;
-    @BindView(R2.id.tv_item_bill_account) TextView tvItemBillAccount;
-    @BindView(R2.id.tv_item_bill_status) TextView tvItemBillStatus;
+	TextView tvTime;
+	TextView tvOperator;
+	ImageView imgBill;
+	TextView tvItemBillName;
+	TextView tvItemBillAction;
+	TextView tvItemBillAccount;
+	TextView tvItemBillStatus;
 
     public ItemBillVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTime = (TextView) view.findViewById(R.id.tv_time);
+      tvOperator = (TextView) view.findViewById(R.id.tv_operator);
+      imgBill = (ImageView) view.findViewById(R.id.img_bill);
+      tvItemBillName = (TextView) view.findViewById(R.id.tv_item_bill_name);
+      tvItemBillAction = (TextView) view.findViewById(R.id.tv_item_bill_action);
+      tvItemBillAccount = (TextView) view.findViewById(R.id.tv_item_bill_account);
+      tvItemBillStatus = (TextView) view.findViewById(R.id.tv_item_bill_status);
     }
   }
 

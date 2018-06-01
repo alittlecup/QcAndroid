@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.common.RealCard;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -109,16 +109,21 @@ public class RealCardAdapter extends RecyclerView.Adapter<RealCardAdapter.RealCa
 
     public class RealCardVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.realcard_name) TextView realcardName;
-        @BindView(R.id.realcard_students) TextView realcardStudents;
-        @BindView(R.id.realcard_balance) TextView realcardBalance;
-        @BindView(R.id.img_stutus) ConnerTag imgStatus;
-        @BindView(R.id.card) CardView cardView;
-        @BindView(R.id.card_bg) RelativeLayout cardBg;
+	TextView realcardName;
+	TextView realcardStudents;
+	TextView realcardBalance;
+	ConnerTag imgStatus;
+	CardView cardView;
+	RelativeLayout cardBg;
 
         public RealCardVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          realcardName = (TextView) itemView.findViewById(R.id.realcard_name);
+          realcardStudents = (TextView) itemView.findViewById(R.id.realcard_students);
+          realcardBalance = (TextView) itemView.findViewById(R.id.realcard_balance);
+          imgStatus = (ConnerTag) itemView.findViewById(R.id.img_stutus);
+          cardView = (CardView) itemView.findViewById(R.id.card);
+          cardBg = (RelativeLayout) itemView.findViewById(R.id.card_bg);
         }
     }
 }

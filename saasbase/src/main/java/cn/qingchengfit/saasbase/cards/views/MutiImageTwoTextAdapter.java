@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.ImageTwoTextBean;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -135,18 +135,25 @@ public class MutiImageTwoTextAdapter extends RecyclerView.Adapter<MutiImageTwoTe
     }
 
     public static class ImageTwoTextVH extends RecyclerView.ViewHolder {
-        @BindView(R2.id.item_gym_header) ImageView itemGymHeader;
-        @BindView(R2.id.item_gym_name) TextView itemGymName;
-        @BindView(R2.id.item_is_personal) TextView itemIsPersonal;
-        @BindView(R2.id.qc_identify) ImageView qcIdentify;
-        @BindView(R2.id.item_gym_phonenum) TextView itemGymPhonenum;
-        @BindView(R2.id.item_right) ImageView itemRight;
-        @BindView(R2.id.item_gym_brand) TextView itemBrand;
-        @BindView(R2.id.hiden) View view;
+	ImageView itemGymHeader;
+	TextView itemGymName;
+	TextView itemIsPersonal;
+	ImageView qcIdentify;
+	TextView itemGymPhonenum;
+	ImageView itemRight;
+	TextView itemBrand;
+	View view;
 
         public ImageTwoTextVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          itemGymHeader = (ImageView) itemView.findViewById(R.id.item_gym_header);
+          itemGymName = (TextView) itemView.findViewById(R.id.item_gym_name);
+          itemIsPersonal = (TextView) itemView.findViewById(R.id.item_is_personal);
+          qcIdentify = (ImageView) itemView.findViewById(R.id.qc_identify);
+          itemGymPhonenum = (TextView) itemView.findViewById(R.id.item_gym_phonenum);
+          itemRight = (ImageView) itemView.findViewById(R.id.item_right);
+          itemBrand = (TextView) itemView.findViewById(R.id.item_gym_brand);
+          view = (View) itemView.findViewById(R.id.hiden);
         }
     }
     public interface OnRecycleItemClickListener {

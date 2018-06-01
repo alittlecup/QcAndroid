@@ -19,7 +19,7 @@
 //import butterknife.OnClick;
 //import cn.qingchengfit.model.base.CardTplOption;
 //import cn.qingchengfit.saasbase.R;
-//import cn.qingchengfit.saasbase.R2;
+//
 //import cn.qingchengfit.saasbase.cards.bean.Card;
 //import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 //import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;

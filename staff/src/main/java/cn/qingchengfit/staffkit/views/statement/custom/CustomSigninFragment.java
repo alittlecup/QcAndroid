@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.SigninFilter;
 import cn.qingchengfit.model.responese.SigninReportDetail;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -48,15 +48,15 @@ import rx.functions.Action1;
 public class CustomSigninFragment extends BaseFragment implements CustomSigninPresenter.PresenterView {
 
     public static final String TAG = CustomSigninFragment.class.getName();
-    @BindView(R.id.custom_statment_start) CommonInputView customStatmentStart;
-    @BindView(R.id.custom_statment_end) CommonInputView customStatmentEnd;
-    @BindView(R.id.custom_statment_cardtype) CommonInputView customStatmentCardtype;
-    @BindView(R.id.custom_statment_signin_type) CommonInputView customStatmentSignintype;
-    @BindView(R.id.rootview) LinearLayout rootview;
+	CommonInputView customStatmentStart;
+	CommonInputView customStatmentEnd;
+	CommonInputView customStatmentCardtype;
+	CommonInputView customStatmentSignintype;
+	LinearLayout rootview;
 
     @Inject CustomSigninPresenter presenter;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private Calendar date;
 
@@ -82,8 +82,44 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_signin, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      customStatmentStart = (CommonInputView) view.findViewById(R.id.custom_statment_start);
+      customStatmentEnd = (CommonInputView) view.findViewById(R.id.custom_statment_end);
+      customStatmentCardtype = (CommonInputView) view.findViewById(R.id.custom_statment_cardtype);
+      customStatmentSignintype =
+          (CommonInputView) view.findViewById(R.id.custom_statment_signin_type);
+      rootview = (LinearLayout) view.findViewById(R.id.rootview);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.custom_statment_start).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickStart(v);
+        }
+      });
+      view.findViewById(R.id.custom_statment_end).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickEnd(v);
+        }
+      });
+      view.findViewById(R.id.custom_statment_cardtype)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              CustomSigninFragment.this.onClick(v);
+            }
+          });
+      view.findViewById(R.id.custom_statment_signin_type)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              CustomSigninFragment.this.onClickStatus(v);
+            }
+          });
+      view.findViewById(R.id.custom_statment_generate)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              CustomSigninFragment.this.onClickGenerate(v);
+            }
+          });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         initView();
 
@@ -190,7 +226,7 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
      *
      * @param view view
      */
-    @OnClick(R.id.custom_statment_start) public void onClickStart(View view) {
+ public void onClickStart(View view) {
       if (pwTime == null) {
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
       }
@@ -221,7 +257,7 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
     /**
      * 结束时间点击
      */
-    @OnClick(R.id.custom_statment_end) public void onClickEnd(View view) {
+ public void onClickEnd(View view) {
       if (pwTime == null) {
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
       }
@@ -253,7 +289,7 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
      *
      * @param view view
      */
-    @OnClick({ R.id.custom_statment_cardtype }) public void onClick(View view) {
+ public void onClick(View view) {
         presenter.queryCardTpl();
     }
 
@@ -262,7 +298,7 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
      *
      * @param view view
      */
-    @OnClick({ R.id.custom_statment_signin_type }) public void onClickStatus(View view) {
+ public void onClickStatus(View view) {
         final List<String> trades = new ArrayList<>();
         trades.add(getString(R.string.no_limit));
         trades.add("已签到");
@@ -292,7 +328,7 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
     /**
      * 生成报表按钮点击
      */
-    @OnClick(R.id.custom_statment_generate) public void onClickGenerate(View view) {
+ public void onClickGenerate(View view) {
         if (DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent()).getTime() > DateUtils.formatDateFromYYYYMMDD(
             customStatmentEnd.getContent()).getTime()) {
             ToastUtils.show("开始时间不能小于结束时间");

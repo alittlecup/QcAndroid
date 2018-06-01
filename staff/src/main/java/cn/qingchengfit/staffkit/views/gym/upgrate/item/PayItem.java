@@ -3,13 +3,9 @@ package cn.qingchengfit.staffkit.views.gym.upgrate.item;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.StringUtils;
@@ -100,14 +96,17 @@ public class PayItem extends AbstractFlexibleItem<PayItem.PayVH> {
     }
 
     public class PayVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_time) TextView tvTime;
-        @BindView(R.id.tv_origin_price) TextView tvOriginPrice;
-        @BindView(R.id.tv_price) TextView tvPrice;
-        @BindView(R.id.root_view) RelativeLayout rootView;
+	TextView tvTime;
+	TextView tvOriginPrice;
+	TextView tvPrice;
+	RelativeLayout rootView;
 
         public PayVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvTime = (TextView) view.findViewById(R.id.tv_time);
+          tvOriginPrice = (TextView) view.findViewById(R.id.tv_origin_price);
+          tvPrice = (TextView) view.findViewById(R.id.tv_price);
+          rootView = (RelativeLayout) view.findViewById(R.id.root_view);
         }
     }
 }

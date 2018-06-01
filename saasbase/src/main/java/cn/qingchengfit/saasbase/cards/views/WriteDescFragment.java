@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
@@ -40,10 +40,10 @@ import cn.qingchengfit.widgets.LargeInputView;
  */
 public class WriteDescFragment extends BaseDialogFragment {
 
-    @BindView(R2.id.input_gym_description) LargeInputView description;
-    @BindView(R2.id.btn) Button btn;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	LargeInputView description;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private TextChange textChange;
 
     public static void start(Fragment fragment, int requestCode, String title, String hint) {
@@ -84,8 +84,17 @@ public class WriteDescFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_card_gym_descript, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      description = (LargeInputView) view.findViewById(R.id.input_gym_description);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbarTitile.setText(getArguments().getString("title"));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -115,7 +124,7 @@ public class WriteDescFragment extends BaseDialogFragment {
         return view;
     }
 
-    @OnClick(R2.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (!TextUtils.isEmpty(description.getContent())) {
             getTargetFragment().onActivityResult(getTargetRequestCode(), android.app.Activity.RESULT_OK,
                 IntentUtils.instanceStringIntent(description.getContent()));

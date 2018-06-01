@@ -11,16 +11,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
@@ -72,20 +72,20 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class BatchDetailCommonView extends BaseFragment {
 
-  @BindView(R2.id.img) ImageView img;
-  @BindView(R2.id.img_layout) FrameLayout imgLayout;
-  @BindView(R2.id.img_foot) ImageView imgFoot;
-  @BindView(R2.id.text1) TextView text1;
-  @BindView(R2.id.text3) TextView text3;
-  @BindView(R2.id.righticon) ImageView righticon;
-  @BindView(R2.id.course_layout) RelativeLayout courseLayout;
-  @BindView(R2.id.coach) CommonInputView coach;
-  @BindView(R2.id.space) CommonInputView space;
-  @BindView(R2.id.order_sutdent_count) CommonInputView orderSutdentCount;
-  @BindView(R2.id.pay_online) CommonInputView payOnline;
-  @BindView(R2.id.pay_card) CommonInputView payCard;
-  @BindView(R2.id.el_pay) ExpandedLayout elPay;
-  @BindView(R2.id.el_multi_support) ExpandedLayout elMultiSupport;
+	ImageView img;
+	FrameLayout imgLayout;
+	ImageView imgFoot;
+	TextView text1;
+	TextView text3;
+	ImageView righticon;
+	RelativeLayout courseLayout;
+	CommonInputView coach;
+	CommonInputView space;
+	CommonInputView orderSutdentCount;
+	CommonInputView payOnline;
+	CommonInputView payCard;
+	ExpandedLayout elPay;
+	ExpandedLayout elMultiSupport;
 
   @Inject GymWrapper gymWrapper;
 
@@ -156,7 +156,51 @@ public class BatchDetailCommonView extends BaseFragment {
       Bundle savedInstanceState) {
     View view = inflater.inflate(isPrivate ? R.layout.fragment_batch_detail_common_private
         : R.layout.fragment_batch_detail_common_group, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    img = (ImageView) view.findViewById(R.id.img);
+    imgLayout = (FrameLayout) view.findViewById(R.id.img_layout);
+    imgFoot = (ImageView) view.findViewById(R.id.img_foot);
+    text1 = (TextView) view.findViewById(R.id.text1);
+    text3 = (TextView) view.findViewById(R.id.text3);
+    righticon = (ImageView) view.findViewById(R.id.righticon);
+    courseLayout = (RelativeLayout) view.findViewById(R.id.course_layout);
+    coach = (CommonInputView) view.findViewById(R.id.coach);
+    space = (CommonInputView) view.findViewById(R.id.space);
+    orderSutdentCount = (CommonInputView) view.findViewById(R.id.order_sutdent_count);
+    payOnline = (CommonInputView) view.findViewById(R.id.pay_online);
+    payCard = (CommonInputView) view.findViewById(R.id.pay_card);
+    elPay = (ExpandedLayout) view.findViewById(R.id.el_pay);
+    elMultiSupport = (ExpandedLayout) view.findViewById(R.id.el_multi_support);
+    view.findViewById(R.id.course_layout).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCourseLayoutClicked();
+      }
+    });
+    view.findViewById(R.id.coach).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onCoachClicked();
+      }
+    });
+    view.findViewById(R.id.space).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onSpaceClicked();
+      }
+    });
+    view.findViewById(R.id.order_sutdent_count).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onOrderSutdentCountClicked();
+      }
+    });
+    view.findViewById(R.id.pay_online).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onPayOnlineClicked();
+      }
+    });
+    view.findViewById(R.id.pay_card).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onPayCardClicked();
+      }
+    });
+
     setCourse(course);
     setTrainer(trainer);
     RxBusAdd(EventBatchPayCard.class).onBackpressureBuffer()
@@ -373,7 +417,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改课程
    */
-  @OnClick(R2.id.course_layout) public void onCourseLayoutClicked() {
+ public void onCourseLayoutClicked() {
     routeTo("course", "/choose/",
         CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
   }
@@ -381,7 +425,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改教练
    */
-  @OnClick(R2.id.coach) public void onCoachClicked() {
+ public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0) return;
     routeTo("staff", "/trainer/choose/",
         new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
@@ -390,7 +434,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改场地
    */
-  @OnClick(R2.id.space) public void onSpaceClicked() {
+ public void onSpaceClicked() {
     routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(isPrivate)
         .selectIds(ListUtils.getIdList(spaces))
         .build());
@@ -399,7 +443,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改上课人数
    */
-  @OnClick(R2.id.order_sutdent_count) public void onOrderSutdentCountClicked() {
+ public void onOrderSutdentCountClicked() {
     new DialogList(getContext()).list(
         isPrivate ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
         (parent, view, position, id) -> {
@@ -422,7 +466,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 在线支付 动态价格，私教需要1对多私教，团课需要开启动态价格
    */
-  @OnClick(R2.id.pay_online) public void onPayOnlineClicked() {
+ public void onPayOnlineClicked() {
     routeTo("/batch/pay/online/",
         new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
             .maxPeople(getOrderStudentCount())
@@ -433,7 +477,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 卡支付设置
    */
-  @OnClick(R2.id.pay_card) public void onPayCardClicked() {
+ public void onPayCardClicked() {
     boolean isAdd ;
     if (mSource != null && mSource.contains("add")) {
       isAdd = true;

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.staffkit.R;
@@ -27,13 +23,13 @@ import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
 import cn.qingchengfit.staffkit.views.student.attendance.presenter.NotSignPresenter;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.FilterFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -54,18 +50,18 @@ public class AttendanceNotSignFragment extends BaseFragment
     implements NotSignPresenter.MVPView, FilterCustomFragment.OnBackFilterDataListener,
     FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R.id.text_not_sign_filter_time) TextView textNotSignFilterTime;
-  @BindView(R.id.image_not_sign_filter_time) ImageView imageNotSignFilterTime;
-  @BindView(R.id.layout_not_sign_time) LinearLayout layoutNotSignTime;
-  @BindView(R.id.text_not_sign_filter_count) TextView textNotSignFilterCount;
-  @BindView(R.id.image_not_sign_filter_count) ImageView imageNotSignFilterCount;
-  @BindView(R.id.text_filter_total) TextView textFilterTotal;
-  @BindView(R.id.recycler_not_sign) RecyclerView recyclerNotSign;
+  TextView textNotSignFilterTime;
+  ImageView imageNotSignFilterTime;
+  LinearLayout layoutNotSignTime;
+  TextView textNotSignFilterCount;
+  ImageView imageNotSignFilterCount;
+  TextView textFilterTotal;
+  RecyclerView recyclerNotSign;
   @Inject NotSignPresenter presenter;
-  @BindView(R.id.frag_not_sign_filter) FrameLayout fragNotSignFilter;
-  @BindView(R.id.layout_not_sign_count) LinearLayout layoutNotSignCount;
-  @BindView(R.id.fragment_not_sign_count) FrameLayout fragLayoutCount;
-  @BindView(R.id.shadow) View shadow;
+  FrameLayout fragNotSignFilter;
+  LinearLayout layoutNotSignCount;
+  FrameLayout fragLayoutCount;
+  View shadow;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   private CommonFlexAdapter adapter;
   private FilterFragment timeFilterFragment;
@@ -79,7 +75,28 @@ public class AttendanceNotSignFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_not_sign_class, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    textNotSignFilterTime = (TextView) view.findViewById(R.id.text_not_sign_filter_time);
+    imageNotSignFilterTime = (ImageView) view.findViewById(R.id.image_not_sign_filter_time);
+    layoutNotSignTime = (LinearLayout) view.findViewById(R.id.layout_not_sign_time);
+    textNotSignFilterCount = (TextView) view.findViewById(R.id.text_not_sign_filter_count);
+    imageNotSignFilterCount = (ImageView) view.findViewById(R.id.image_not_sign_filter_count);
+    textFilterTotal = (TextView) view.findViewById(R.id.text_filter_total);
+    recyclerNotSign = (RecyclerView) view.findViewById(R.id.recycler_not_sign);
+    fragNotSignFilter = (FrameLayout) view.findViewById(R.id.frag_not_sign_filter);
+    layoutNotSignCount = (LinearLayout) view.findViewById(R.id.layout_not_sign_count);
+    fragLayoutCount = (FrameLayout) view.findViewById(R.id.fragment_not_sign_count);
+    shadow = (View) view.findViewById(R.id.shadow);
+    view.findViewById(R.id.layout_not_sign_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowTimeFilter();
+      }
+    });
+    view.findViewById(R.id.layout_not_sign_count).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onShowCountFilter();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initView();
     initFilter();
@@ -213,7 +230,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     }
   }
 
-  @OnClick(R.id.layout_not_sign_time) public void onShowTimeFilter() {
+  public void onShowTimeFilter() {
     if (fragNotSignFilter.getLayoutParams().height > MeasureUtils.dpToPx(432f, getResources())) {
       ViewGroup.LayoutParams params = fragNotSignFilter.getLayoutParams();
       params.height = MeasureUtils.dpToPx(432f, getResources());
@@ -251,7 +268,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     return false;
   }
 
-  @OnClick(R.id.layout_not_sign_count) public void onShowCountFilter() {
+  public void onShowCountFilter() {
     if (fragLayoutCount.getLayoutParams().height > MeasureUtils.dpToPx(432f, getResources())) {
       ViewGroup.LayoutParams params = fragLayoutCount.getLayoutParams();
       params.height = MeasureUtils.dpToPx(432f, getResources());
@@ -289,32 +306,12 @@ public class AttendanceNotSignFragment extends BaseFragment
     for (NotSignStudent student : studentList) {
       itemList.add(new NotSignClassItem(student, new NotSignClassItem.OnClickContactListener() {
         @Override public void onContact(final String phone) {
-          new MaterialDialog.Builder(getActivity()).autoDismiss(true)
-              .content(new StringBuilder().append("确定呼叫号码\n").append(phone).append("吗？").toString())
-              .positiveText(R.string.common_comfirm)
-              .negativeText(R.string.common_cancel)
-              .autoDismiss(true)
-              .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                  new RxPermissions(getActivity()).request(Manifest.permission.CALL_PHONE)
-                      .subscribe(new Action1<Boolean>() {
-                        @Override public void call(Boolean aBoolean) {
-                          if (aBoolean) {
-                            Uri uri = Uri.parse(
-                                new StringBuilder().append("tel:").append(phone).toString());
-                            Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
-                            dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(dialntent);
-                          } else {
-                            ToastUtils.show("请在应用设置中开启拨打电话权限");
-                          }
-                        }
-                      });
-                }
-              })
-              .show();
+          DialogUtils.showConfirm(getActivity(), "",
+              new StringBuilder().append("确定呼叫号码\n").append(phone).append("吗？").toString(),
+              (dialog, action) -> {
+                dialog.dismiss();
+                if (action == DialogAction.POSITIVE) callPhone(phone);
+              });
         }
       }));
     }
@@ -322,6 +319,22 @@ public class AttendanceNotSignFragment extends BaseFragment
     textFilterTotal.setText(
         getResources().getString(R.string.text_not_sign_tip, DateUtils.interval(start, end) + 1,
             count, studentList.size()));
+  }
+
+  private void callPhone(String phone) {
+    new RxPermissions(getActivity()).request(Manifest.permission.CALL_PHONE)
+        .subscribe(new Action1<Boolean>() {
+          @Override public void call(Boolean aBoolean) {
+            if (aBoolean) {
+              Uri uri = Uri.parse(new StringBuilder().append("tel:").append(phone).toString());
+              Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
+              dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              startActivity(dialntent);
+            } else {
+              ToastUtils.show("请在应用设置中开启拨打电话权限");
+            }
+          }
+        });
   }
 
   @Override public void onSettingData(String start, String end) {

@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.staffkit.R;
@@ -37,20 +37,20 @@ import javax.inject.Inject;
  */
 public class StatementGlanceFragment extends BaseFragment implements StatementGlanceView {
     public static final String TAG = StatementGlanceFragment.class.getName();
-    @BindView(R.id.statment_glance_month_title) TextView statmentGlanceMonthTitle;
-    @BindView(R.id.statment_glance_month_data) TextView statmentGlanceMonthData;
-    @BindView(R.id.statment_glance_week_title) TextView statmentGlanceWeekTitle;
-    @BindView(R.id.statment_glance_week_data) TextView statmentGlanceWeekData;
-    @BindView(R.id.statment_glance_today_title) TextView statmentGlanceTodayTitle;
-    @BindView(R.id.statment_glance_today_data) TextView statmentGlanceTodayData;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+	TextView statmentGlanceMonthTitle;
+	TextView statmentGlanceMonthData;
+	TextView statmentGlanceWeekTitle;
+	TextView statmentGlanceWeekData;
+	TextView statmentGlanceTodayTitle;
+	TextView statmentGlanceTodayData;
+	SwipeRefreshLayout refresh;
 
     @Inject GlancePresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
     private String mChooseShopId;
 
     public StatementGlanceFragment() {
@@ -58,8 +58,49 @@ public class StatementGlanceFragment extends BaseFragment implements StatementGl
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      statmentGlanceMonthTitle = (TextView) view.findViewById(R.id.statment_glance_month_title);
+      statmentGlanceMonthData = (TextView) view.findViewById(R.id.statment_glance_month_data);
+      statmentGlanceWeekTitle = (TextView) view.findViewById(R.id.statment_glance_week_title);
+      statmentGlanceWeekData = (TextView) view.findViewById(R.id.statment_glance_week_data);
+      statmentGlanceTodayTitle = (TextView) view.findViewById(R.id.statment_glance_today_title);
+      statmentGlanceTodayData = (TextView) view.findViewById(R.id.statment_glance_today_data);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      down = (ImageView) view.findViewById(R.id.down);
+      view.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+      view.findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickTitle();
+        }
+      });
+      view.findViewById(R.id.statement_glance_month).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickMonth();
+        }
+      });
+      view.findViewById(R.id.statement_glance_week).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickWeek();
+        }
+      });
+      view.findViewById(R.id.statement_glance_today).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickToday();
+        }
+      });
+      view.findViewById(R.id.statement_glance_custom)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onClickCustom();
+            }
+          });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
@@ -95,7 +136,7 @@ public class StatementGlanceFragment extends BaseFragment implements StatementGl
         }
     }
 
-    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
+ public void onClickTitle() {
         ChooseGymActivity.start(StatementGlanceFragment.this, 1, PermissionServerUtils.COST_REPORT, getString(R.string.choose_gym),
             mChooseShopId);
     }
@@ -104,28 +145,28 @@ public class StatementGlanceFragment extends BaseFragment implements StatementGl
         presenter.queryClassGlance(null);
     }
 
-    @OnClick(R.id.statement_glance_month) public void onClickMonth() {
+ public void onClickMonth() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), StatementDetailFragment.newInstance(2))
             .addToBackStack(null)
             .commit();
     }
 
-    @OnClick(R.id.statement_glance_week) public void onClickWeek() {
+ public void onClickWeek() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), StatementDetailFragment.newInstance(1))
             .addToBackStack(null)
             .commit();
     }
 
-    @OnClick(R.id.statement_glance_today) public void onClickToday() {
+ public void onClickToday() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), StatementDetailFragment.newInstance(0))
             .addToBackStack(null)
             .commit();
     }
 
-    @OnClick(R.id.statement_glance_custom) public void onClickCustom() {
+ public void onClickCustom() {
         getFragmentManager().beginTransaction()
             .add(mCallbackActivity.getFragId(), new CustomStatmentFragment())
             .addToBackStack(null)

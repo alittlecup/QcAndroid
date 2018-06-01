@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
 import cn.qingchengfit.views.VpFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BaseInfoAdapter;
@@ -33,7 +33,7 @@ public class StudentBaseInfoFragment extends VpFragment {
     private RecyclerView mRecyclerView;
     private BaseInfoAdapter mAdapter;
     private List<BaseInfoBean> datas = new ArrayList<>();
-    private Unbinder unbinder;
+
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
@@ -44,7 +44,7 @@ public class StudentBaseInfoFragment extends VpFragment {
         mAdapter = new BaseInfoAdapter(datas);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-        unbinder = ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -60,6 +60,6 @@ public class StudentBaseInfoFragment extends VpFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -36,9 +36,9 @@ import java.util.Locale;
     public static final int ATTENDANCE = 101;
     public int limitDay;
     @Arg(required = true) String title;
-    @BindView(R.id.edit_absence_start) EditText editAbsenceStart;
-    @BindView(R.id.edit_absence_end) EditText editAbsenceEnd;
-    @BindView(R.id.modify_setting_title) TextView modifySettingTitle;
+	EditText editAbsenceStart;
+	EditText editAbsenceEnd;
+	TextView modifySettingTitle;
     private OnBackFilterDataListener onBackFilterDataListener;
     private TimeDialogWindow pwTime;
     private boolean isSelectTime;
@@ -64,8 +64,23 @@ import java.util.Locale;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_filter_custom, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
+      editAbsenceStart = (EditText) view.findViewById(R.id.edit_absence_start);
+      editAbsenceEnd = (EditText) view.findViewById(R.id.edit_absence_end);
+      modifySettingTitle = (TextView) view.findViewById(R.id.modify_setting_title);
+      view.findViewById(R.id.tv_absence_filter_confirm)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onSetData(v);
+            }
+          });
+      view.findViewById(R.id.tv_absence_filter_reset)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              onSetData(v);
+            }
+          });
+
+      initView();
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View view, MotionEvent motionEvent) {
                 return true;
@@ -104,7 +119,7 @@ import java.util.Locale;
         isSelectTime = selectTime;
     }
 
-    @OnClick({ R.id.tv_absence_filter_confirm, R.id.tv_absence_filter_reset }) public void onSetData(View view) {
+ public void onSetData(View view) {
         switch (view.getId()) {
             case R.id.tv_absence_filter_confirm:
                 if (authDataCorrect()) {

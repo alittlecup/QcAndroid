@@ -10,8 +10,8 @@ import com.tencent.qcloud.timchat.widget.PhotoUtils;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -66,17 +66,23 @@ public class NotificationItem extends AbstractFlexibleItem<NotificationItem.Noti
     }
 
     public class NotificationVH extends FlexibleViewHolder {
-        @BindView(R.id.item_noti_unread) ImageView itemNotiUnread;
-        @BindView(R.id.item_noti_icon) ImageView itemNotiIcon;
-        @BindView(R.id.item_noti_title) TextView itemNotiTitle;
-        @BindView(R.id.item_noti_desc) TextView itemNotiDesc;
-        @BindView(R.id.item_noti_time) TextView itemNotiTime;
-        @BindView(R.id.item_noti_sender) TextView itemNotiSender;
-        @BindView(R.id.icon_right) ImageView iconRight;
+	ImageView itemNotiUnread;
+	ImageView itemNotiIcon;
+	TextView itemNotiTitle;
+	TextView itemNotiDesc;
+	TextView itemNotiTime;
+	TextView itemNotiSender;
+	ImageView iconRight;
 
         public NotificationVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemNotiUnread = (ImageView) view.findViewById(R.id.item_noti_unread);
+          itemNotiIcon = (ImageView) view.findViewById(R.id.item_noti_icon);
+          itemNotiTitle = (TextView) view.findViewById(R.id.item_noti_title);
+          itemNotiDesc = (TextView) view.findViewById(R.id.item_noti_desc);
+          itemNotiTime = (TextView) view.findViewById(R.id.item_noti_time);
+          itemNotiSender = (TextView) view.findViewById(R.id.item_noti_sender);
+          iconRight = (ImageView) view.findViewById(R.id.icon_right);
         }
     }
 }

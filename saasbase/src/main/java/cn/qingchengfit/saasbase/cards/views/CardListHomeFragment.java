@@ -15,13 +15,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -71,17 +71,17 @@ import javax.inject.Inject;
   CardListFilterFragment filterFragment;
   @Inject CardListPresenter presenter;
   @Inject IPermissionModel serPermisAction;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) ViewGroup tl;
-  @BindView(R2.id.tv_card_balance) CompatTextView tvCardBalance;
-  @BindView(R2.id.btn_card_balance) FrameLayout btnCardBalance;
-  @BindView(R2.id.btn_outport) FrameLayout btnOutport;
-  @BindView(R2.id.filter_tpl) QcFilterToggle filterTpl;
-  @BindView(R2.id.filter_status) QcFilterToggle filterStatus;
-  @BindView(R2.id.layout_card_operate) protected LinearLayout layoutCardOperate;
-  @BindView(R2.id.tv_card_count) TextView tvCardCount;
-  @BindView(R2.id.layout_card_list) protected RelativeLayout cardListLayout;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	ViewGroup tl;
+	CompatTextView tvCardBalance;
+	FrameLayout btnCardBalance;
+	FrameLayout btnOutport;
+	QcFilterToggle filterTpl;
+	QcFilterToggle filterStatus;
+	protected LinearLayout layoutCardOperate;
+	TextView tvCardCount;
+	protected RelativeLayout cardListLayout;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -103,7 +103,38 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_card_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tl = (ViewGroup) view.findViewById(R.id.toolbar_layout);
+    tvCardBalance = (CompatTextView) view.findViewById(R.id.tv_card_balance);
+    btnCardBalance = (FrameLayout) view.findViewById(R.id.btn_card_balance);
+    btnOutport = (FrameLayout) view.findViewById(R.id.btn_outport);
+    filterTpl = (QcFilterToggle) view.findViewById(R.id.filter_tpl);
+    filterStatus = (QcFilterToggle) view.findViewById(R.id.filter_status);
+    layoutCardOperate = (LinearLayout) view.findViewById(R.id.layout_card_operate);
+    tvCardCount = (TextView) view.findViewById(R.id.tv_card_count);
+    cardListLayout = (RelativeLayout) view.findViewById(R.id.layout_card_list);
+    view.findViewById(R.id.btn_card_balance).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnCardBalanceClicked();
+      }
+    });
+    view.findViewById(R.id.btn_outport).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnOutportClicked();
+      }
+    });
+    view.findViewById(R.id.filter_tpl).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFilterTplClicked();
+      }
+    });
+    view.findViewById(R.id.filter_status).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFilterStatusClicked();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     return view;
@@ -180,7 +211,7 @@ import javax.inject.Inject;
   /**
    * 余额不足卡提醒
    */
-  @OnClick(R2.id.btn_card_balance) public void onBtnCardBalanceClicked() {
+ public void onBtnCardBalanceClicked() {
     if (!serPermisAction.check(PermissionServerUtils.CARDBALANCE)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
@@ -191,7 +222,7 @@ import javax.inject.Inject;
   /**
    * 会员卡导出
    */
-  @OnClick(R2.id.btn_outport) public void onBtnOutportClicked() {
+ public void onBtnOutportClicked() {
     if (!serPermisAction.check(PermissionServerUtils.CARD_EXPORT) && !serPermisAction.check(
       PermissionServerUtils.CARD_IMPORT)) {
       showAlert(R.string.sorry_for_no_permission);
@@ -203,14 +234,14 @@ import javax.inject.Inject;
   /**
    * 按卡种类筛选
    */
-  @OnClick(R2.id.filter_tpl) public void onFilterTplClicked() {
+ public void onFilterTplClicked() {
     toggleFilter(0);
   }
 
   /**
    * 按状态筛选
    */
-  @OnClick(R2.id.filter_status) public void onFilterStatusClicked() {
+ public void onFilterStatusClicked() {
     toggleFilter(1);
   }
 

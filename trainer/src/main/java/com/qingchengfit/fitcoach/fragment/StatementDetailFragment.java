@@ -24,9 +24,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -84,23 +84,23 @@ public class StatementDetailFragment extends BaseFragment
   public static final int TYPE_MONTH = 2;
   public static final int TYPE_WEEK = 1;
   public static final int TYPE_DAY = 0;
-  @BindView(R.id.statement_detail_less) ImageButton statementDetailLess;
-  @BindView(R.id.statement_detail_more) ImageButton statementDetailMore;
-  @BindView(R.id.statement_detail_time) TextView statementDetailTime;
-  @BindView(R.id.statement_detail_filter) TextView statementDetailFilter;
-  @BindView(R.id.item_statement_time_shop) TextView itemStatementDetailContent;
-  @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
-  @BindView(R.id.statement_detail_change) Button statementDetailChange;
-  @BindView(R.id.viewpager) ViewPager viewpager;
-  @BindView(R.id.indicator) CircleIndicator indicator;
-  @BindView(R.id.scroll_root) CoordinatorLayout scrollRoot;
+	ImageButton statementDetailLess;
+	ImageButton statementDetailMore;
+	TextView statementDetailTime;
+	TextView statementDetailFilter;
+	TextView itemStatementDetailContent;
+	RecycleViewWithNoImg recyclerview;
+	Button statementDetailChange;
+	ViewPager viewpager;
+	CircleIndicator indicator;
+	CoordinatorLayout scrollRoot;
   @Inject StatementDetailPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
-  @BindView(R.id.btn_filter) CheckBox btnFilter;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	AppBarLayout myhomeAppBar;
+	CheckBox btnFilter;
   private StatementDetailAdapter mStatementDetailAdapter;
   private List<QcResponseStatementDetail.StatamentSchedule> statementBeans = new ArrayList<>();
   private List<QcResponseStatementDetail.StatamentSchedule> mAllSchedule = new ArrayList<>();
@@ -202,7 +202,37 @@ public class StatementDetailFragment extends BaseFragment
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_statement_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    statementDetailLess = (ImageButton) view.findViewById(R.id.statement_detail_less);
+    statementDetailMore = (ImageButton) view.findViewById(R.id.statement_detail_more);
+    statementDetailTime = (TextView) view.findViewById(R.id.statement_detail_time);
+    statementDetailFilter = (TextView) view.findViewById(R.id.statement_detail_filter);
+    itemStatementDetailContent = (TextView) view.findViewById(R.id.item_statement_time_shop);
+    recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+    statementDetailChange = (Button) view.findViewById(R.id.statement_detail_change);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    indicator = (CircleIndicator) view.findViewById(R.id.indicator);
+    scrollRoot = (CoordinatorLayout) view.findViewById(R.id.scroll_root);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    myhomeAppBar = (AppBarLayout) view.findViewById(R.id.myhome_appBar);
+    btnFilter = (CheckBox) view.findViewById(R.id.btn_filter);
+
+    view.findViewById(R.id.statement_detail_less).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickLess();
+      }
+    });
+    view.findViewById(R.id.statement_detail_more).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickMore();
+      }
+    });
+    view.findViewById(R.id.btn_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        btnFilter();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
 
@@ -334,11 +364,11 @@ public class StatementDetailFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @OnClick(R.id.statement_detail_less) public void onClickLess() {
+ public void onClickLess() {
     changeCalendar(-1);
   }
 
-  @OnClick(R.id.statement_detail_more) public void onClickMore() {
+ public void onClickMore() {
     changeCalendar(1);
   }
 
@@ -410,7 +440,7 @@ public class StatementDetailFragment extends BaseFragment
         });
   }
 
-  @OnClick(R.id.btn_filter) public void btnFilter() {
+ public void btnFilter() {
     Intent toFilter = new Intent(getActivity(), StatmentFilterActivity.class);
     toFilter.putParcelableArrayListExtra("course", mFilterCourse);
     toFilter.putParcelableArrayListExtra("coach", mFilterCoaches);
@@ -630,21 +660,33 @@ public class StatementDetailFragment extends BaseFragment
    * recycle view
    */
   class StatementDetailVH extends RecyclerView.ViewHolder {
-    @BindView(R.id.item_statement_detail_bottomdivier) View itemStatementDetailBottomdivier;
-    @BindView(R.id.item_statement_detail_headerdivier) View itemStatementDetailHeaderdivier;
-    @BindView(R.id.item_statement_detail_day) TextView itemStatementDetailDay;
-    @BindView(R.id.item_statement_detail_month) TextView itemStatementDetailMonth;
-    @BindView(R.id.item_statement_detail_date) LinearLayout itemStatementDetailDate;
-    @BindView(R.id.item_statement_detail_pic) ImageView itemStatementDetailPic;
-    @BindView(R.id.item_statement_detail_name) TextView itemStatementDetailName;
-    @BindView(R.id.item_statement_time_shop) TextView itemStatementDetailContent;
-    @BindView(R.id.item_card_cost) TextView itemUsers;
-    @BindView(R.id.text_real_income) TextView textRealIncome;
-    @BindView(R.id.image_course_type) ImageView imageCourseType;
+	View itemStatementDetailBottomdivier;
+	View itemStatementDetailHeaderdivier;
+	TextView itemStatementDetailDay;
+	TextView itemStatementDetailMonth;
+	LinearLayout itemStatementDetailDate;
+	ImageView itemStatementDetailPic;
+	TextView itemStatementDetailName;
+	TextView itemStatementDetailContent;
+	TextView itemUsers;
+	TextView textRealIncome;
+	ImageView imageCourseType;
 
-    public StatementDetailVH(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    public StatementDetailVH(View view) {
+      super(view);
+      itemStatementDetailBottomdivier =
+          (View) view.findViewById(R.id.item_statement_detail_bottomdivier);
+      itemStatementDetailHeaderdivier =
+          (View) view.findViewById(R.id.item_statement_detail_headerdivier);
+      itemStatementDetailDay = (TextView) view.findViewById(R.id.item_statement_detail_day);
+      itemStatementDetailMonth = (TextView) view.findViewById(R.id.item_statement_detail_month);
+      itemStatementDetailDate = (LinearLayout) view.findViewById(R.id.item_statement_detail_date);
+      itemStatementDetailPic = (ImageView) view.findViewById(R.id.item_statement_detail_pic);
+      itemStatementDetailName = (TextView) view.findViewById(R.id.item_statement_detail_name);
+      itemUsers = (TextView) view.findViewById(R.id.item_card_cost);
+      textRealIncome = (TextView) view.findViewById(R.id.text_real_income);
+      imageCourseType = (ImageView) view.findViewById(R.id.image_course_type);
+
     }
   }
 

@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.article.presenter.ArticleReplyPresenter;
 import cn.qingchengfit.saasbase.items.ArticleReplyItem;
 import cn.qingchengfit.utils.CrashUtils;
@@ -55,10 +55,10 @@ import javax.inject.Inject;
 public class ArticleReplyFragment extends BaseFragment
   implements ArticleReplyPresenter.MVPView, FlexibleAdapter.EndlessScrollListener {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout toolbarLayout;
+	RecyclerView recyclerview;
 
   @Inject ArticleReplyPresenter presenter;
 
@@ -68,7 +68,11 @@ public class ArticleReplyFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_article_reply, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));

@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.R;
@@ -44,10 +44,10 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     @Arg int type;
     @Arg FollowUpDataStatistic.NewCreateUsersBean data;
 
-    @BindView(R.id.tv_title) TextView tvTitle;
-    @BindView(R.id.tv_data_today) TextView tvDataToday;
-    @BindView(R.id.tv_data_7day) TextView tvData7day;
-    @BindView(R.id.tv_data_30day) TextView tvData30day;
+	TextView tvTitle;
+	TextView tvDataToday;
+	TextView tvData7day;
+	TextView tvData30day;
     FollowUpDataStatisticsBaseFragment fragment;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,8 +57,22 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.item_followup_glance, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        try {
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvDataToday = (TextView) view.findViewById(R.id.tv_data_today);
+      tvData7day = (TextView) view.findViewById(R.id.tv_data_7day);
+      tvData30day = (TextView) view.findViewById(R.id.tv_data_30day);
+      view.findViewById(R.id.layout_title).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickTitle();
+        }
+      });
+      view.findViewById(R.id.layout_data).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          clickTitle();
+        }
+      });
+
+      try {
 
             switch (type) {
                 case 1:
@@ -90,7 +104,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
         fragment.setData(data, 30);
     }
 
-    @OnClick({ R.id.layout_title, R.id.layout_data }) public void clickTitle() {
+ public void clickTitle() {
         EventRouter eventRouter = new EventRouter(RouterFollowUp.NEW_REGISTE_TODAY);
         switch (type) {
             case 1:

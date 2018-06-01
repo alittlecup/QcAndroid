@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
@@ -63,9 +63,9 @@ import rx.schedulers.Schedulers;
  */
 public class OutExcelFragment extends BaseFragment {
     private static final int Length_ = 20;
-    @BindView(R.id.title) CommonInputView title;
-    @BindView(R.id.email) CommonInputView email;
-    @BindView(R.id.comfirm) Button comfirm;
+	CommonInputView title;
+	CommonInputView email;
+	Button comfirm;
 
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
@@ -120,8 +120,21 @@ public class OutExcelFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_out_excel, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //
+      title = (CommonInputView) view.findViewById(R.id.title);
+      email = (CommonInputView) view.findViewById(R.id.email);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      view.findViewById(R.id.title).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OutExcelFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          OutExcelFragment.this.onClick(v);
+        }
+      });
+
+      //
         mCallbackActivity.setToolbar(getString(R.string.out_excel), false, null, 0, null);
 
         title.addTextWatcher(new TextWatcher() {
@@ -217,7 +230,7 @@ public class OutExcelFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.title, R.id.comfirm }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title:
                 WriteDescFragment.start(this, 1, getString(R.string.title_edit_email), "", titleStr);

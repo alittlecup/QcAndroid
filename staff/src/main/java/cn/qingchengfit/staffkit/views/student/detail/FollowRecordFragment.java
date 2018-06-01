@@ -15,9 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -67,13 +67,13 @@ import rx.schedulers.Schedulers;
  */
 public class FollowRecordFragment extends BaseFragment implements FollowRecordView, TitleFragment {
 
-    @BindView(R.id.cardnum) TextView cardnum;
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	TextView cardnum;
+	RecycleViewWithNoImg recycleview;
 
     List<FollowRecord> datas = new ArrayList<>();
 
-    @BindView(R.id.chat_input) ChatInputView chatInput;
-    @BindView(R.id.disable_input) View disableInput;
+	ChatInputView chatInput;
+	View disableInput;
     @Inject StudentWrapper studentBean;
     @Inject FollowRecordPresenter presenter;
     @Inject LoginStatus loginStatus;
@@ -86,8 +86,17 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_follow_record, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      cardnum = (TextView) view.findViewById(R.id.cardnum);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+      chatInput = (ChatInputView) view.findViewById(R.id.chat_input);
+      disableInput = (View) view.findViewById(R.id.disable_input);
+      view.findViewById(R.id.disable_input).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickDisable();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         adapter = new ChatAdatper(datas);
         manager = new LinearLayoutManager(getContext());
         recycleview.setLayoutManager(manager);
@@ -186,7 +195,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
         return view;
     }
 
-    @OnClick(R.id.disable_input) public void onClickDisable() {
+ public void onClickDisable() {
         showAlert(getString(R.string.alert_permission_forbid));
     }
 

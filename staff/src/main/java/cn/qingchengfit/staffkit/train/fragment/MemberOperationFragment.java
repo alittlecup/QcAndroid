@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -48,16 +48,16 @@ public class MemberOperationFragment extends BaseFragment implements FlexibleAda
 
     public final static int REQUEST_ADD_MEMBER = 1;
 
-    @BindView(R.id.recycle_data) RecyclerView recycleData;
-    @BindView(R.id.alphaTextDialog) TextView alphaTextDialog;
-    @BindView(R.id.alphabetview) AlphabetView alphabetview;
-    @BindView(R.id.text_select_count) TextView textSelectCount;
-    @BindView(R.id.img_down) ImageView imgDown;
-    @BindView(R.id.ll_show_select) LinearLayout llShowSelect;
-    @BindView(R.id.ll_bottom) LinearLayout llBottom;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	RecyclerView recycleData;
+	TextView alphaTextDialog;
+	AlphabetView alphabetview;
+	TextView textSelectCount;
+	ImageView imgDown;
+	LinearLayout llShowSelect;
+	LinearLayout llBottom;
+	Toolbar toolbar;
+	TextView textToolbarRight;
+	TextView toolbarTitile;
     @Inject SignUpPersonalPresenter presenter;
     @Inject SignUpGroupDetailPresenter groupDetail;
     @Inject TrainIds trainIds;
@@ -67,8 +67,23 @@ public class MemberOperationFragment extends BaseFragment implements FlexibleAda
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_with_select, container, false);
-        ButterKnife.bind(this, view);
-        setToolbar();
+      recycleData = (RecyclerView) view.findViewById(R.id.recycle_data);
+      alphaTextDialog = (TextView) view.findViewById(R.id.alphaTextDialog);
+      alphabetview = (AlphabetView) view.findViewById(R.id.alphabetview);
+      textSelectCount = (TextView) view.findViewById(R.id.text_select_count);
+      imgDown = (ImageView) view.findViewById(R.id.img_down);
+      llShowSelect = (LinearLayout) view.findViewById(R.id.ll_show_select);
+      llBottom = (LinearLayout) view.findViewById(R.id.ll_bottom);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      textToolbarRight = (TextView) view.findViewById(R.id.text_toolbar_right);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.ll_show_select).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          showSelect();
+        }
+      });
+
+      setToolbar();
 
         delegatePresenter(presenter, this);
 
@@ -117,7 +132,7 @@ public class MemberOperationFragment extends BaseFragment implements FlexibleAda
         });
     }
 
-    @OnClick(R.id.ll_show_select) public void showSelect() {
+ public void showSelect() {
         BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
         selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
             @Override public void onBottomStudents(List<Personage> list) {

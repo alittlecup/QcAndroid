@@ -9,9 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -46,7 +44,7 @@ public class FlexableListFragment extends BaseFragment {
     @DrawableRes public int customNoImage;
     public String customNoStr;
     public String customNoStrTitle;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mFlexAdapter;
     private FlexibleAdapter.OnItemClickListener mItemClickListener;

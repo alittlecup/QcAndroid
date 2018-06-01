@@ -17,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.common.FilterTimesFragment;
 import cn.qingchengfit.common.FilterTimesFragmentBuilder;
@@ -96,18 +96,18 @@ public class FollowUpStatusFragment extends BaseFragment
   public static final int FILTER_BOTTOM_GENDER = 6;
   public static final int FILTER_BOTTOM_FILTER = 7;
   public int studentStatus;
-  @BindView(R.id.recycler_view_today) RecyclerView recyclerViewToday;
-  @BindView(R.id.layout_collapsed) AppBarLayout layoutCollapsed;
+	RecyclerView recyclerViewToday;
+	AppBarLayout layoutCollapsed;
   StudentSearchFragment studentSearchFragment;
-  @BindView(R.id.qft_status) QcFilterToggle qftStatus;
-  @BindView(R.id.qft_times) QcFilterToggle qftTime;
-  @BindView(R.id.qft_saler) QcFilterToggle qftSaler;
-  @BindView(R.id.qtb_filter) QcToggleButton qtbFilter;
-  @BindView(R.id.qft_gender) QcFilterToggle qftGender;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R.id.frag_chart) FrameLayout fragChart;
-  @BindView(R.id.frag_filter) FrameLayout fragContaiter;
+	QcFilterToggle qftStatus;
+	QcFilterToggle qftTime;
+	QcFilterToggle qftSaler;
+	QcToggleButton qtbFilter;
+	QcFilterToggle qftGender;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout fragChart;
+	FrameLayout fragContaiter;
   FollowUpFilterFragment filterFragment;
   TopFilterSaleFragment saleFragment;
   FilterTimesFragment registerFragment;
@@ -119,7 +119,7 @@ public class FollowUpStatusFragment extends BaseFragment
   @Inject SerPermisAction serPermisAction;
   @Inject BusEventThrowable busEventThrowable;
   ProgressItem progress;
-  @BindView(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
+	CoordinatorLayout coordinatorLayout;
   /**
    * 与type一一对应，不可修改，除非type修改
    */
@@ -137,7 +137,49 @@ public class FollowUpStatusFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_follow_up_status, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerViewToday = (RecyclerView) view.findViewById(R.id.recycler_view_today);
+    layoutCollapsed = (AppBarLayout) view.findViewById(R.id.layout_collapsed);
+    qftStatus = (QcFilterToggle) view.findViewById(R.id.qft_status);
+    qftTime = (QcFilterToggle) view.findViewById(R.id.qft_times);
+    qftSaler = (QcFilterToggle) view.findViewById(R.id.qft_saler);
+    qtbFilter = (QcToggleButton) view.findViewById(R.id.qtb_filter);
+    qftGender = (QcFilterToggle) view.findViewById(R.id.qft_gender);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    fragChart = (FrameLayout) view.findViewById(R.id.frag_chart);
+    fragContaiter = (FrameLayout) view.findViewById(R.id.frag_filter);
+    coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
+    view.findViewById(R.id.frag_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBackClick();
+      }
+    });
+    view.findViewById(R.id.qft_saler).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpStatusFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.qft_times).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpStatusFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.qft_status).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpStatusFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.qtb_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpStatusFragment.this.onClick(v);
+      }
+    });
+    view.findViewById(R.id.qft_gender).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        FollowUpStatusFragment.this.onClick(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     setToolbar(toolbar);
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup) {
@@ -567,7 +609,7 @@ public class FollowUpStatusFragment extends BaseFragment
   /**
    * 背景点击
    */
-  @OnClick(R.id.frag_filter) public void onBackClick() {
+ public void onBackClick() {
     hideAll(null);
   }
 
@@ -576,9 +618,7 @@ public class FollowUpStatusFragment extends BaseFragment
    *
    * @param view 点击的view
    */
-  @OnClick({
-      R.id.qft_saler, R.id.qft_times, R.id.qft_status, R.id.qtb_filter, R.id.qft_gender
-  }) public void onClick(View view) {
+ public void onClick(View view) {
     switch (view.getId()) {
       case R.id.qft_saler:
         if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {

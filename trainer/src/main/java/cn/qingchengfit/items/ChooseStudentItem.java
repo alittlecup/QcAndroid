@@ -6,8 +6,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.utils.BusinessUtils;
 import com.bumptech.glide.Glide;
@@ -98,18 +98,25 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
     }
 
     public class ChooseStudentVH extends FlexibleViewHolder {
-        @BindView(R.id.cb) CheckBox cb;
-        @BindView(R.id.item_person_header) ImageView itemPersonHeader;
-        @BindView(R.id.item_person_header_loop) RelativeLayout itemPersonHeaderLoop;
-        @BindView(R.id.item_person_name) TextView itemPersonName;
-        @BindView(R.id.item_person_gender) ImageView itemPersonGender;
-        @BindView(R.id.item_person_phonenum) TextView itemPersonPhonenum;
-        @BindView(R.id.item_person_desc) TextView itemPersonDesc;
-        @BindView(R.id.status) TextView status;
+	CheckBox cb;
+	ImageView itemPersonHeader;
+	RelativeLayout itemPersonHeaderLoop;
+	TextView itemPersonName;
+	ImageView itemPersonGender;
+	TextView itemPersonPhonenum;
+	TextView itemPersonDesc;
+	TextView status;
 
         public ChooseStudentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          cb = (CheckBox) view.findViewById(R.id.cb);
+          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
+          itemPersonHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_person_header_loop);
+          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
+          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
+          itemPersonPhonenum = (TextView) view.findViewById(R.id.item_person_phonenum);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
+          status = (TextView) view.findViewById(R.id.status);
         }
     }
 }

@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.HireWardrobeBody;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -66,14 +66,14 @@ import rx.functions.Action1;
  */
 public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLongHirePresenter.MVPView {
 
-    @BindView(R.id.card_id) TextView cardId;
-    @BindView(R.id.balance) TextView balance;
-    @BindView(R.id.start_day) CommonInputView startDay;
-    @BindView(R.id.end_day) CommonInputView endDay;
+	TextView cardId;
+	TextView balance;
+	CommonInputView startDay;
+	CommonInputView endDay;
 
     @Inject WardrobeLongHirePresenter mPresenter;
-    @BindView(R.id.choose_student) CommonInputView chooseStudent;
-    @BindView(R.id.cv_cost) CommonInputView cvCost;
+	CommonInputView chooseStudent;
+	CommonInputView cvCost;
 
     private Locker mLocker;
     private TimeDialogWindow pwTime;
@@ -98,9 +98,40 @@ public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLo
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_long_hire, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+      cardId = (TextView) view.findViewById(R.id.card_id);
+      balance = (TextView) view.findViewById(R.id.balance);
+      startDay = (CommonInputView) view.findViewById(R.id.start_day);
+      endDay = (CommonInputView) view.findViewById(R.id.end_day);
+      chooseStudent = (CommonInputView) view.findViewById(R.id.choose_student);
+      cvCost = (CommonInputView) view.findViewById(R.id.cv_cost);
+      view.findViewById(R.id.choose_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeLongHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.start_day).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeLongHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.end_day).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeLongHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.layout_pay_method).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeLongHireFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeLongHireFragment.this.onClick(v);
+        }
+      });
+      getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        unbinder = ButterKnife.bind(this, view);
+
         //
         delegatePresenter(mPresenter, this);
         RxBusAdd(PayWardrobeItem.class).subscribe(new Action1<PayWardrobeItem>() {
@@ -160,7 +191,7 @@ public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLo
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.choose_student, R.id.start_day, R.id.end_day, R.id.layout_pay_method, R.id.comfirm }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_student://选择会员
                 //Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);

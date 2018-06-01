@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.event.EventLimitBuyCount;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
@@ -48,7 +48,7 @@ import java.util.ArrayList;
 public class BottomBuyLimitFragment extends BaseDialogFragment {
 
     private static final int mMaxLimitCount = 10;
-    @BindView(R2.id.limit_count_whellview) WheelView mLimitCountWhellview;
+	WheelView mLimitCountWhellview;
     private ArrayList<String> mLimitCountlist;
 
     public static BottomBuyLimitFragment newInstance(int count) {
@@ -68,8 +68,14 @@ public class BottomBuyLimitFragment extends BaseDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom_limit_buy, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mLimitCountlist = new ArrayList<>();
+      mLimitCountWhellview = (WheelView) view.findViewById(R.id.limit_count_whellview);
+      view.findViewById(R.id.comfirm_btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomBuyLimitFragment.this.onClick(v);
+        }
+      });
+
+      mLimitCountlist = new ArrayList<>();
         mLimitCountlist.add(getString(R.string.buy_card_no_limit));
         for (int i = 0; i < mMaxLimitCount; i++) {
             mLimitCountlist.add(getString(R.string.card_count_unit, i + 1));
@@ -103,7 +109,7 @@ public class BottomBuyLimitFragment extends BaseDialogFragment {
         super.onDestroyView();
     }
 
-    @OnClick({ R2.id.comfirm_btn }) public void onClick(View view) {
+ public void onClick(View view) {
                 RxBus.getBus()
                     .post(new EventLimitBuyCount.Builder().buy_count(mLimitCountWhellview.getCurrentItem())
                         .text(mLimitCountlist.get(mLimitCountWhellview.getCurrentItem()))

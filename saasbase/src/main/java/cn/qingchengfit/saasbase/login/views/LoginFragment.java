@@ -15,16 +15,16 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.constant.WebRouters;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.login.bean.LoginBody;
@@ -61,14 +61,14 @@ import rx.android.schedulers.AndroidSchedulers;
 public class LoginFragment extends BaseFragment
     implements CheckProtocolPresenter.MVPView, LoginView {
 
-  @BindView(R2.id.forgetpw_btn) ToggleButton mForgetpwBtn;
-  @BindView(R2.id.login_btn) Button mLoginBtn;
+	ToggleButton mForgetpwBtn;
+	Button mLoginBtn;
   Observable<SendMsgEvent> RxObMsg;
-  @BindView(R2.id.root_view) LinearLayout rootView;
-  @BindView(R2.id.login_phone) PhoneEditText loginPhone;
-  @BindView(R2.id.pw_view) PasswordView pwView;
-  @BindView(R2.id.btn_agree_protocol) CheckBox btnAgreeProtocol;
-  @BindView(R2.id.layout_protocol) LinearLayout layoutProtocol;
+	LinearLayout rootView;
+	PhoneEditText loginPhone;
+	PasswordView pwView;
+	CheckBox btnAgreeProtocol;
+	LinearLayout layoutProtocol;
   @Inject CheckProtocolPresenter presenter;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository restRepository;
@@ -91,7 +91,39 @@ public class LoginFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.f_login, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    mForgetpwBtn = (ToggleButton) view.findViewById(R.id.forgetpw_btn);
+    mLoginBtn = (Button) view.findViewById(R.id.login_btn);
+    rootView = (LinearLayout) view.findViewById(R.id.root_view);
+    loginPhone = (PhoneEditText) view.findViewById(R.id.login_phone);
+    pwView = (PasswordView) view.findViewById(R.id.pw_view);
+    btnAgreeProtocol = (CheckBox) view.findViewById(R.id.btn_agree_protocol);
+    layoutProtocol = (LinearLayout) view.findViewById(R.id.layout_protocol);
+    view.findViewById(R.id.btn_agree_protocol).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onAgree();
+      }
+    });
+    view.findViewById(R.id.text_protocol_detail).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onProtocol();
+      }
+    });
+    view.findViewById(R.id.btn_login_wx).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        loginWx();
+      }
+    });
+    view.findViewById(R.id.forgetpw_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        toggle();
+      }
+    });
+    view.findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        LoginFragment.this.onClick();
+      }
+    });
+
     delegatePresenter(presenter, this);
     delegatePresenter(loginPresenter, this);
 
@@ -214,15 +246,15 @@ public class LoginFragment extends BaseFragment
     return true;
   }
 
-  @OnClick(R2.id.btn_agree_protocol) public void onAgree() {
+ public void onAgree() {
     mLoginBtn.setEnabled(btnAgreeProtocol.isChecked());
   }
 
-  @OnClick(R2.id.text_protocol_detail) public void onProtocol() {
+ public void onProtocol() {
     WebActivity.startWeb(restRepository.getHost() + WebRouters.USER_PROTOCOL_URL,
         getContext());
   }
-  @OnClick(R2.id.btn_login_wx) public void loginWx(){
+ public void loginWx(){
     if (!api.isWXAppInstalled()) {
       showAlert("您还未安装微信客户端");
       return;
@@ -233,11 +265,11 @@ public class LoginFragment extends BaseFragment
     api.sendReq(req);
   }
 
-  @OnClick(R2.id.forgetpw_btn) public void toggle() {
+ public void toggle() {
     pwView.toggle();
   }
 
-  @OnClick(R2.id.login_btn) public void onClick() {
+ public void onClick() {
     if (loginPhone.checkPhoneNum() && pwView.checkValid()) {
       loginPresenter.doLogin(new LoginBody.Builder().phone(loginPhone.getPhoneNum())
           .code(pwView.isPwMode() ? null : pwView.getCode())

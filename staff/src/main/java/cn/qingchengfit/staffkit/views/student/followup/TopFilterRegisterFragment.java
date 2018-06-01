@@ -10,9 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
@@ -50,9 +50,9 @@ import java.util.Locale;
  */
 public class TopFilterRegisterFragment extends BaseFragment implements View.OnTouchListener {
 
-    @BindView(R.id.tv_follow_up_register_start) public TextView tvFollowUpRegisterStart;
-    @BindView(R.id.tv_follow_up_register_end) public TextView tvFollowUpRegisterEnd;
-    @BindView(R.id.tv_desc) public TextView tvDesc;
+	public TextView tvFollowUpRegisterStart;
+	public TextView tvFollowUpRegisterEnd;
+	public TextView tvDesc;
     public StudentFilter filter = new StudentFilter();
     public TimeDialogWindow pwTime;
 
@@ -63,8 +63,33 @@ public class TopFilterRegisterFragment extends BaseFragment implements View.OnTo
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_follow_up_top_filter_register, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
+      tvFollowUpRegisterStart = (TextView) view.findViewById(R.id.tv_follow_up_register_start);
+      tvFollowUpRegisterEnd = (TextView) view.findViewById(R.id.tv_follow_up_register_end);
+      tvDesc = (TextView) view.findViewById(R.id.tv_desc);
+      view.findViewById(R.id.tv_follow_up_register_start)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              TopFilterRegisterFragment.this.onClick(v);
+            }
+          });
+      view.findViewById(R.id.tv_follow_up_register_end)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              TopFilterRegisterFragment.this.onClick(v);
+            }
+          });
+      view.findViewById(R.id.btn_reset).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onConfirmClick(v);
+        }
+      });
+      view.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onConfirmClick(v);
+        }
+      });
+
+      initView();
         view.setOnTouchListener(this);
         return view;
     }
@@ -94,7 +119,7 @@ public class TopFilterRegisterFragment extends BaseFragment implements View.OnTo
         return this.getClass().getName();
     }
 
-    @OnClick({ R.id.tv_follow_up_register_start, R.id.tv_follow_up_register_end }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_up_register_start:
                 if (pwTime == null) {
@@ -131,7 +156,7 @@ public class TopFilterRegisterFragment extends BaseFragment implements View.OnTo
         }
     }
 
-    @OnClick({ R.id.btn_reset, R.id.btn_confirm }) public void onConfirmClick(View view) {
+ public void onConfirmClick(View view) {
         switch (view.getId()) {
             case R.id.btn_reset:
                 new MaterialDialog.Builder(getContext()).content("确认重置所有筛选项么？")

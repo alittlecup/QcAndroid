@@ -2,8 +2,8 @@ package cn.qingchengfit.items;
 
 import android.view.View;
 import android.widget.CompoundButton;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.SigninNoticeConfig;
 import cn.qingchengfit.staffkit.R;
@@ -61,12 +61,13 @@ public class SignInNoticeConfigItem extends AbstractFlexibleItem<SignInNoticeCon
 
     public static class ItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R.id.sw_signin_config) SwitcherLayout swSigninConfig;
-        @BindView(R.id.sw_signin_config_fee) CommonInputView swSigninConfigFee;
+	SwitcherLayout swSigninConfig;
+	CommonInputView swSigninConfigFee;
 
         public ItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          swSigninConfig = (SwitcherLayout) view.findViewById(R.id.sw_signin_config);
+          swSigninConfigFee = (CommonInputView) view.findViewById(R.id.sw_signin_config_fee);
         }
     }
 }

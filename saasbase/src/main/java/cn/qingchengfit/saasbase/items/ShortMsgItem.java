@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.ShortMsg;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.utils.FlexibleUtils;
@@ -78,15 +78,19 @@ public class ShortMsgItem extends AbstractFlexibleItem<ShortMsgItem.ShortMsgVH> 
   //}
 
   public class ShortMsgVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_title) TextView tvTitle;
-    @BindView(R2.id.tv_content) TextView tvContent;
-    @BindView(R2.id.img_status) ImageView imgStatus;
-    @BindView(R2.id.tv_status) TextView tvStatus;
-    @BindView(R2.id.tv_time) TextView tvTime;
+	TextView tvTitle;
+	TextView tvContent;
+	ImageView imgStatus;
+	TextView tvStatus;
+	TextView tvTime;
 
     public ShortMsgVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvTitle = (TextView) view.findViewById(R.id.tv_title);
+      tvContent = (TextView) view.findViewById(R.id.tv_content);
+      imgStatus = (ImageView) view.findViewById(R.id.img_status);
+      tvStatus = (TextView) view.findViewById(R.id.tv_status);
+      tvTime = (TextView) view.findViewById(R.id.tv_time);
     }
   }
 }

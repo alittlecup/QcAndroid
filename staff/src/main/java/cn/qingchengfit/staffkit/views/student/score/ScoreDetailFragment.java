@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
@@ -55,9 +55,9 @@ public class ScoreDetailFragment extends BaseFragment implements ScoreDetailPres
     @Inject ScoreDetailPresenter presenter;
     @Inject ScoreModifyFragment scoreModifyFragment;
 
-    @BindView(R.id.user_name) TextView userName;
-    @BindView(R.id.score) TextView tvScore;
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+	TextView userName;
+	TextView tvScore;
+	RecycleViewWithNoImg recycleview;
     private String score;
     private CommonFlexAdapter flexibleAdapter;
     private List<AbstractFlexibleItem> items = new ArrayList();
@@ -72,8 +72,21 @@ public class ScoreDetailFragment extends BaseFragment implements ScoreDetailPres
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      userName = (TextView) view.findViewById(R.id.user_name);
+      tvScore = (TextView) view.findViewById(R.id.score);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+      view.findViewById(R.id.ll_student_score_sub).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ScoreDetailFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.ll_student_score_plus).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          ScoreDetailFragment.this.onClick(v);
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initTitle();
         initView();
         presenter.getScore();
@@ -104,7 +117,7 @@ public class ScoreDetailFragment extends BaseFragment implements ScoreDetailPres
         return ScoreDetailFragment.class.getName();
     }
 
-    @OnClick({ R.id.ll_student_score_sub, R.id.ll_student_score_plus }) public void onClick(View view) {
+ public void onClick(View view) {
         scoreModifyFragment.setCurScore(score);
         switch (view.getId()) {
             case R.id.ll_student_score_sub:

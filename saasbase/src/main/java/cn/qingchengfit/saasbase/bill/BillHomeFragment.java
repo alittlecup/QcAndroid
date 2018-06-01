@@ -15,12 +15,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.bill.beans.BillTotal;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.event.BillFilterEvent;
@@ -61,20 +61,20 @@ import rx.functions.Action1;
     ItemMoreFooter.OnFooterClickListener, FlexibleAdapter.OnItemClickListener,
     SwipeRefreshLayout.OnRefreshListener {
 
-  @BindView(R2.id.tv_bill_total_amount) TextView tvBillTotalAmount;
-  @BindView(R2.id.tv_bill_withdraw) TextView tvBillWithdraw;
-  @BindView(R2.id.tv_bill_can_withdraw) TextView tvBillCanWithdraw;
-  @BindView(R2.id.tv_bill_settlement) TextView tvBillSettlement;
-  @BindView(R2.id.recycler_bill) RecyclerView recyclerBill;
-  @BindView(R2.id.container) LinearLayout filterContainer;
-  @BindView(R2.id.tv_filter) TextView tvFilter;
-  @BindView(R2.id.frag_bill_filter) FrameLayout fragBillFilter;
-  @BindView(R2.id.drawer_filter) DrawerLayout drawerFilter;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
+	TextView tvBillTotalAmount;
+	TextView tvBillWithdraw;
+	TextView tvBillCanWithdraw;
+	TextView tvBillSettlement;
+	RecyclerView recyclerBill;
+	LinearLayout filterContainer;
+	TextView tvFilter;
+	FrameLayout fragBillFilter;
+	DrawerLayout drawerFilter;
+	Toolbar toolbar;
   @Inject BillTotalPresenter presenter;
   @Inject GymWrapper gymWrapper;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.bill_swipe) SwipeRefreshLayout billSwipe;
+	TextView toolbarTitle;
+	SwipeRefreshLayout billSwipe;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
 
@@ -104,7 +104,24 @@ import rx.functions.Action1;
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_bill_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvBillTotalAmount = (TextView) view.findViewById(R.id.tv_bill_total_amount);
+    tvBillWithdraw = (TextView) view.findViewById(R.id.tv_bill_withdraw);
+    tvBillCanWithdraw = (TextView) view.findViewById(R.id.tv_bill_can_withdraw);
+    tvBillSettlement = (TextView) view.findViewById(R.id.tv_bill_settlement);
+    recyclerBill = (RecyclerView) view.findViewById(R.id.recycler_bill);
+    filterContainer = (LinearLayout) view.findViewById(R.id.container);
+    tvFilter = (TextView) view.findViewById(R.id.tv_filter);
+    fragBillFilter = (FrameLayout) view.findViewById(R.id.frag_bill_filter);
+    drawerFilter = (DrawerLayout) view.findViewById(R.id.drawer_filter);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    billSwipe = (SwipeRefreshLayout) view.findViewById(R.id.bill_swipe);
+    view.findViewById(R.id.tv_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFilter();
+      }
+    });
+
     delegatePresenter(presenter, this);
     setToolbar(toolbar);
     if (filterMap.size() > 0) {
@@ -185,7 +202,7 @@ import rx.functions.Action1;
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.tv_filter) public void onFilter() {
+ public void onFilter() {
     if (drawerFilter.isDrawerOpen(GravityCompat.END)) {
       drawerFilter.closeDrawer(GravityCompat.END);
     } else {

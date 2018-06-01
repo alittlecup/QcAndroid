@@ -18,9 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
@@ -70,14 +70,14 @@ public class StudentSearchFragment extends BaseFragment
 
     public static final int TYPE_SEARCH_STUDENT_LIST = 318;
     public static final int TYPE_SEARCH_FOLLOW_LIST = 80;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
-    @BindView(R.id.img_describ) ImageView imgDescrib;
-    @BindView(R.id.tv_describ) TextView tvDescrib;
-    @BindView(R.id.ll_discrib) LinearLayout llDiscrib;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
+	RecyclerView recycleview;
+	ImageView imgDescrib;
+	TextView tvDescrib;
+	LinearLayout llDiscrib;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
     @Inject StudentSearchPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -130,8 +130,26 @@ public class StudentSearchFragment extends BaseFragment
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_search_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //presenter.attachView(this);
+      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+      imgDescrib = (ImageView) view.findViewById(R.id.img_describ);
+      tvDescrib = (TextView) view.findViewById(R.id.tv_describ);
+      llDiscrib = (LinearLayout) view.findViewById(R.id.ll_discrib);
+      searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) view.findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) view.findViewById(R.id.searchview);
+      view.findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      view.findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickCancel();
+        }
+      });
+
+      //presenter.attachView(this);
 
         initDI();
         initView();
@@ -237,12 +255,12 @@ public class StudentSearchFragment extends BaseFragment
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
         searchviewEt.setText("");
     }
 
     //取消搜索
-    @OnClick(R.id.searchview_cancle) public void onClickCancel() {
+ public void onClickCancel() {
         if (searchviewEt.getText().toString().length() > 0) {
             searchviewEt.setText("");
         }

@@ -3,8 +3,8 @@ package com.qingchengfit.fitcoach.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -82,16 +82,21 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
     public static class CourseVh extends FlexibleViewHolder {
 
-        @BindView(R.id.course_img) ImageView courseImg;
-        @BindView(R.id.course_type_img) ImageView courseTypeImg;
-        @BindView(R.id.course_name) TextView courseName;
-        @BindView(R.id.course_length) TextView courseLength;
-        @BindView(R.id.del) ImageView del;
+	ImageView courseImg;
+	ImageView courseTypeImg;
+	TextView courseName;
+	TextView courseLength;
+	ImageView del;
 
         public CourseVh(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
-            del.setOnClickListener(new View.OnClickListener() {
+          courseImg = (ImageView) view.findViewById(R.id.course_img);
+          courseTypeImg = (ImageView) view.findViewById(R.id.course_type_img);
+          courseName = (TextView) view.findViewById(R.id.course_name);
+          courseLength = (TextView) view.findViewById(R.id.course_length);
+          del = (ImageView) view.findViewById(R.id.del);
+
+          del.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     if (mAdapter.getItem(getFlexibleAdapterPosition()) instanceof CourseItem) {
                         boolean isPrivate = ((CourseItem) mAdapter.getItem(getFlexibleAdapterPosition())).courseDetail.is_private();

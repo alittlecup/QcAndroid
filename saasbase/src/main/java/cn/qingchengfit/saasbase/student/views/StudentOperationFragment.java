@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.utils.GymUtils;
@@ -31,7 +31,7 @@ import javax.inject.Inject;
 public class StudentOperationFragment extends BaseFragment
   implements FlexibleAdapter.OnItemClickListener {
 
-  @BindView(R2.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
@@ -48,7 +48,8 @@ public class StudentOperationFragment extends BaseFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
-    unbinder = ButterKnife.bind(this, v);
+    recycleview = (RecyclerView) v.findViewById(R.id.recycleview);
+
     dispos = gymBaseInfoAction.getGymByModel(gymWrapper.id(), gymWrapper.model())
       .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
       .subscribe(now -> {

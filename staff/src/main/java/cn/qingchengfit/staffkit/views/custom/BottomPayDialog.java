@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.utils.IntentUtils;
@@ -33,13 +33,13 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
  * Created by Paper on 16/3/25 2016.
  */
 @FragmentWithArgs public class BottomPayDialog extends BaseBottomSheetDialogFragment {
-    public Unbinder unbinder;
+
     @Arg boolean hasEditPermission;
-    @BindView(R.id.pay_offline) TextView payOffline;
-    @BindView(R.id.cash) RelativeLayout cash;
-    @BindView(R.id.card) RelativeLayout card;
-    @BindView(R.id.transfer) RelativeLayout transfer;
-    @BindView(R.id.others) RelativeLayout others;
+	TextView payOffline;
+	RelativeLayout cash;
+	RelativeLayout card;
+	RelativeLayout transfer;
+	RelativeLayout others;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +48,43 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pay_bottom, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        payOffline.setVisibility(hasEditPermission ? View.VISIBLE : View.GONE);
+      payOffline = (TextView) view.findViewById(R.id.pay_offline);
+      cash = (RelativeLayout) view.findViewById(R.id.cash);
+      card = (RelativeLayout) view.findViewById(R.id.card);
+      transfer = (RelativeLayout) view.findViewById(R.id.transfer);
+      others = (RelativeLayout) view.findViewById(R.id.others);
+      view.findViewById(R.id.wechat_code).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomPayDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.wechat_pay).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomPayDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.cash).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomPayDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.card).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomPayDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.transfer).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomPayDialog.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.others).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          BottomPayDialog.this.onClick(v);
+        }
+      });
+
+      payOffline.setVisibility(hasEditPermission ? View.VISIBLE : View.GONE);
         cash.setVisibility(hasEditPermission ? View.VISIBLE : View.GONE);
         card.setVisibility(hasEditPermission ? View.VISIBLE : View.GONE);
         transfer.setVisibility(hasEditPermission ? View.VISIBLE : View.GONE);
@@ -58,11 +93,11 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     }
 
     @Override public void onDestroyView() {
-        unbinder.unbind();
+
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.wechat_code, R.id.wechat_pay, R.id.cash, R.id.card, R.id.transfer, R.id.others }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.wechat_code:
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, IntentUtils.instanceStringIntent("0"));

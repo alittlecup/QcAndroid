@@ -12,12 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindArray;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.bill.beans.BillScheduleOrder;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
@@ -58,19 +53,19 @@ import javax.inject.Inject;
 @Leaf(module = "bill", path = "/detail/") public class BillDetailFragment extends SaasBaseFragment
   implements BillDetailPresenterPresenter.MVPView {
 
-  @BindView(R2.id.tv_bill_amount) public TextView tvBillAmount;
-  @BindView(R2.id.tv_bill_status) TextView tvBillStatus;
-  @BindView(R2.id.tv_remarks) public TextView tvRemarks;
-  @BindView(R2.id.divider_remarks) View dividerRemark;
-  @BindView(R2.id.rv_common) RecyclerView rvCommon;
-  @BindView(R2.id.rv_extra) RecyclerView rvExtra;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindArray(R2.array.bill_type) String[] arrayOrderType;
-  @BindView(R2.id.btn_print) Button btnPrint;
-  @BindView(R2.id.btn_remarks) Button btnRemarks;
-  @BindView(R2.id.btn_card) Button btnCard;
-  @BindView(R2.id.divider_extra) View dividerExtra;
+	public TextView tvBillAmount;
+	TextView tvBillStatus;
+	public TextView tvRemarks;
+	View dividerRemark;
+	RecyclerView rvCommon;
+	RecyclerView rvExtra;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	String[] arrayOrderType;
+	Button btnPrint;
+	Button btnRemarks;
+	Button btnCard;
+	View dividerExtra;
   protected CommonFlexAdapter commonAdapter;
   protected CommonFlexAdapter extraAdapter;
 
@@ -86,7 +81,35 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_bill_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvBillAmount = (TextView) view.findViewById(R.id.tv_bill_amount);
+    tvBillStatus = (TextView) view.findViewById(R.id.tv_bill_status);
+    tvRemarks = (TextView) view.findViewById(R.id.tv_remarks);
+    dividerRemark = (View) view.findViewById(R.id.divider_remarks);
+    rvCommon = (RecyclerView) view.findViewById(R.id.rv_common);
+    rvExtra = (RecyclerView) view.findViewById(R.id.rv_extra);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    btnPrint = (Button) view.findViewById(R.id.btn_print);
+    btnRemarks = (Button) view.findViewById(R.id.btn_remarks);
+    btnCard = (Button) view.findViewById(R.id.btn_card);
+    dividerExtra = (View) view.findViewById(R.id.divider_extra);
+    arrayOrderType=getResources().getStringArray(R.array.bill_type);
+    view.findViewById(R.id.btn_print).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnPrintClicked();
+      }
+    });
+    view.findViewById(R.id.btn_remarks).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnRemarksClicked();
+      }
+    });
+    view.findViewById(R.id.btn_card).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBtnCardClicked();
+      }
+    });
+
     delegatePresenter(presenter,this);
     presenter.setBillId(orderNo);
     initToolbar(toolbar);
@@ -203,11 +226,11 @@ import javax.inject.Inject;
 
   }
 
-  @OnClick(R2.id.btn_print) public void onBtnPrintClicked() {
+ public void onBtnPrintClicked() {
     //打印
   }
 
-  @OnClick(R2.id.btn_remarks) public void onBtnRemarksClicked() {
+ public void onBtnRemarksClicked() {
     //填写备注
     routeTo("common","/input/",new CommonInputParams()
       .title("填写备注")
@@ -216,7 +239,7 @@ import javax.inject.Inject;
       .build());
   }
 
-  @OnClick(R2.id.btn_card) public void onBtnCardClicked() {
+ public void onBtnCardClicked() {
     if (TextUtils.isEmpty(presenter.getCardId())) {
       showAlert("没有会员卡信息");
       return;

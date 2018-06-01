@@ -2,11 +2,11 @@ package cn.qingchengfit.saasbase.course.batch.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -48,15 +48,21 @@ public class BatchCopyItem extends AbstractFlexibleItem<BatchCopyItem.BatchCopyV
   }
 
   public class BatchCopyVH extends FlexibleViewHolder {
-    @BindView(R2.id.tv_sticker_content) TextView tvStickerContent;
-    @BindView(R2.id.tv_print) TextView tvPrint;
+	TextView tvStickerContent;
+	TextView tvPrint;
 
     public BatchCopyVH(View view, FlexibleAdapter adapter) {
       super(view, adapter, true);
-      ButterKnife.bind(this, view);
+      tvStickerContent = (TextView) view.findViewById(R.id.tv_sticker_content);
+      tvPrint = (TextView) view.findViewById(R.id.tv_print);
+      view.findViewById(R.id.tv_print).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickPrint();
+        }
+      });
     }
 
-    @OnClick(R2.id.tv_print) public void onClickPrint() {
+ public void onClickPrint() {
       if (listener != null){
         listener.onPrint();
       }

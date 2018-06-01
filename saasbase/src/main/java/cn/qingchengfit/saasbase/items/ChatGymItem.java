@@ -4,10 +4,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -61,14 +58,17 @@ public class ChatGymItem extends AbstractFlexibleItem<ChatGymItem.ChatGymVH> {
 
     public class ChatGymVH extends FlexibleViewHolder {
 
-        @BindView(R2.id.checkbox) CheckBox checkbox;
-        @BindView(R2.id.img_avatar) ImageView imgAvatar;
-        @BindView(R2.id.tv_gym_name) TextView tvGymName;
-        @BindView(R2.id.tv_staff_count) TextView tvStaffCount;
+	CheckBox checkbox;
+	ImageView imgAvatar;
+	TextView tvGymName;
+	TextView tvStaffCount;
 
         public ChatGymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+          imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+          tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+          tvStaffCount = (TextView) view.findViewById(R.id.tv_staff_count);
         }
     }
 }

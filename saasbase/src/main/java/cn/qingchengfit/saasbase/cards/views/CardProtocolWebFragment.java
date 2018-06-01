@@ -13,10 +13,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.WebFragment;
@@ -29,13 +29,13 @@ import java.io.Serializable;
 
 public class CardProtocolWebFragment extends WebFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.tv_read_protocol) TextView tvReadProtocol;
-  @BindView(R2.id.refresh_network) Button refreshNetwork;
-  @BindView(R2.id.no_newwork) LinearLayout noNewwork;
-  @BindView(R2.id.webview_root) LinearLayout webviewRoot;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TextView tvReadProtocol;
+	Button refreshNetwork;
+	LinearLayout noNewwork;
+	LinearLayout webviewRoot;
   private String content;
   private String url;
   @MenuRes
@@ -79,7 +79,14 @@ public class CardProtocolWebFragment extends WebFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_protocol_web, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvReadProtocol = (TextView) view.findViewById(R.id.tv_read_protocol);
+    refreshNetwork = (Button) view.findViewById(R.id.refresh_network);
+    noNewwork = (LinearLayout) view.findViewById(R.id.no_newwork);
+    webviewRoot = (LinearLayout) view.findViewById(R.id.webview_root);
+
     setToolbar();
     tvReadProtocol = (TextView) view.findViewById(R.id.tv_read_protocol);
     mWebviewWebView = (WebView) view.findViewById(R.id.webview);

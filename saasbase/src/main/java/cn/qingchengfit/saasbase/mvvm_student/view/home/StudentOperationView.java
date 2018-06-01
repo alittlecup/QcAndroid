@@ -10,10 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotStaffListPageParams;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentHomeViewModel;
@@ -35,10 +35,10 @@ import java.util.List;
 public class StudentOperationView extends BaseFragment
         implements FlexibleAdapter.OnItemClickListener, MySnapHelper.OnSelectListener {
 
-    @BindView(R2.id.recycleview)
+
     RecyclerView recycleview;
 
-    @BindView(R2.id.indicator)
+
     MyIndicator indicator;
 
     StudentHomeViewModel viewModel;
@@ -51,9 +51,10 @@ public class StudentOperationView extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
-        unbinder = ButterKnife.bind(this, v);
+      recycleview = (RecyclerView) v.findViewById(R.id.recycleview);
+      indicator = (MyIndicator) v.findViewById(R.id.indicator);
 
-        viewModel = ViewModelProviders.of(getParentFragment()).get(StudentHomeViewModel.class);
+      viewModel = ViewModelProviders.of(getParentFragment()).get(StudentHomeViewModel.class);
 //        RxRegiste(
 //            gymBaseInfoAction.getGymByModel(gymWrapper.id(),gymWrapper.model())
 //            .filter(new Func1<List<CoachService>, Boolean>() {

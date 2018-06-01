@@ -6,7 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
-import butterknife.Unbinder;
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
@@ -39,7 +39,7 @@ import rx.Subscription;
 public abstract class BaseDialogFragment extends DialogFragment {
     //    abstract   void start(Fragment fragment, int requestCode);
 
-    public Unbinder unbinder;
+
     List<Subscription> sps = new ArrayList<>();
     private PresenterDelegate delegate;
     private boolean isVisible;
@@ -119,7 +119,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
         }
 
         if (delegate != null) delegate.unattachView();
-        if (unbinder != null) unbinder.unbind();
         super.onDestroyView();
     }
 }

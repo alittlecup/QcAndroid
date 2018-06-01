@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.Configs;
@@ -32,19 +32,19 @@ import java.util.Locale;
  */
 public class CourseCardFormFragment extends BaseFragment {
 
-    @BindView(R.id.data_server_num) TextView dataServerNum;
-    @BindView(R.id.times_server_num) TextView timesServerNum;
-    @BindView(R.id.times_course_income) TextView timesCourseIncome;
-    @BindView(R.id.times_real_incomes) TextView timesRealIncomes;
-    @BindView(R.id.value_server_num) TextView valueServerNum;
-    @BindView(R.id.value_course_income) TextView valueCourseIncome;
-    @BindView(R.id.value_real_income) TextView valueRealIncome;
-    @BindView(R.id.total_server_num) TextView totalServerNum;
-    @BindView(R.id.total_course_income) TextView totalCourseIncome;
-    @BindView(R.id.total_real_income) TextView totalRealIncome;
-    @BindView(R.id.online_server_num) TextView onlineServerNum;
-    @BindView(R.id.online_course_income) TextView onlineCourseIncome;
-    @BindView(R.id.online_real_income) TextView onlineRealIncome;
+	TextView dataServerNum;
+	TextView timesServerNum;
+	TextView timesCourseIncome;
+	TextView timesRealIncomes;
+	TextView valueServerNum;
+	TextView valueCourseIncome;
+	TextView valueRealIncome;
+	TextView totalServerNum;
+	TextView totalCourseIncome;
+	TextView totalRealIncome;
+	TextView onlineServerNum;
+	TextView onlineCourseIncome;
+	TextView onlineRealIncome;
 
     public static CourseCardFormFragment newInstance(List<CourseCardForm> cardglances) {
 
@@ -58,8 +58,21 @@ public class CourseCardFormFragment extends BaseFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_card_form, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (getArguments() != null) {
+      dataServerNum = (TextView) view.findViewById(R.id.data_server_num);
+      timesServerNum = (TextView) view.findViewById(R.id.times_server_num);
+      timesCourseIncome = (TextView) view.findViewById(R.id.times_course_income);
+      timesRealIncomes = (TextView) view.findViewById(R.id.times_real_incomes);
+      valueServerNum = (TextView) view.findViewById(R.id.value_server_num);
+      valueCourseIncome = (TextView) view.findViewById(R.id.value_course_income);
+      valueRealIncome = (TextView) view.findViewById(R.id.value_real_income);
+      totalServerNum = (TextView) view.findViewById(R.id.total_server_num);
+      totalCourseIncome = (TextView) view.findViewById(R.id.total_course_income);
+      totalRealIncome = (TextView) view.findViewById(R.id.total_real_income);
+      onlineServerNum = (TextView) view.findViewById(R.id.online_server_num);
+      onlineCourseIncome = (TextView) view.findViewById(R.id.online_course_income);
+      onlineRealIncome = (TextView) view.findViewById(R.id.online_real_income);
+
+      if (getArguments() != null) {
             ArrayList<CourseCardForm> gs = getArguments().getParcelableArrayList("form");
             if (gs != null) {
                 for (int i = 0; i < gs.size(); i++) {

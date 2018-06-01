@@ -15,13 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.constant.WebRouters;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.login.bean.RegisteBody;
@@ -46,19 +46,19 @@ import rx.functions.Action1;
  */
 public class RegisteFragment extends BaseFragment implements LoginView {
 
-  @BindView(R2.id.comple_gender_label) TextView compleGenderLabel;
-  @BindView(R2.id.comple_gender_male) RadioButton compleGenderMale;
-  @BindView(R2.id.comple_gender_female) RadioButton compleGenderFemale;
-  @BindView(R2.id.comple_gender) RadioGroup compleGender;
-  @BindView(R2.id.registe_gender) LinearLayout registeGender;
-  @BindView(R2.id.registe_btn) Button registeBtn;
-  @BindView(R2.id.registe_rootview) LinearLayout registeRootview;
-  @BindView(R2.id.phone_num) PhoneEditText phoneNum;
-  @BindView(R2.id.checkcode) PasswordView checkcode;
-  @BindView(R2.id.password) PasswordView password;
-  @BindView(R2.id.et_username) EditText etUsername;
-  @BindView(R2.id.btn_agree_protocol) CheckBox btnAgreeProtocol;
-  @BindView(R2.id.layout_protocol) LinearLayout layoutProtocol;
+	TextView compleGenderLabel;
+	RadioButton compleGenderMale;
+	RadioButton compleGenderFemale;
+	RadioGroup compleGender;
+	LinearLayout registeGender;
+	Button registeBtn;
+	LinearLayout registeRootview;
+	PhoneEditText phoneNum;
+	PasswordView checkcode;
+	PasswordView password;
+	EditText etUsername;
+	CheckBox btnAgreeProtocol;
+	LinearLayout layoutProtocol;
   private Observable<SendMsgEvent> RxObMsg;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository qcRestRepository;
@@ -70,7 +70,40 @@ public class RegisteFragment extends BaseFragment implements LoginView {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.f_regist, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    compleGenderLabel = (TextView) view.findViewById(R.id.comple_gender_label);
+    compleGenderMale = (RadioButton) view.findViewById(R.id.comple_gender_male);
+    compleGenderFemale = (RadioButton) view.findViewById(R.id.comple_gender_female);
+    compleGender = (RadioGroup) view.findViewById(R.id.comple_gender);
+    registeGender = (LinearLayout) view.findViewById(R.id.registe_gender);
+    registeBtn = (Button) view.findViewById(R.id.registe_btn);
+    registeRootview = (LinearLayout) view.findViewById(R.id.registe_rootview);
+    phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+    checkcode = (PasswordView) view.findViewById(R.id.checkcode);
+    password = (PasswordView) view.findViewById(R.id.password);
+    etUsername = (EditText) view.findViewById(R.id.et_username);
+    btnAgreeProtocol = (CheckBox) view.findViewById(R.id.btn_agree_protocol);
+    layoutProtocol = (LinearLayout) view.findViewById(R.id.layout_protocol);
+    view.findViewById(R.id.btn_login_wx).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        loginWx();
+      }
+    });
+    view.findViewById(R.id.btn_agree_protocol).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onAgree();
+      }
+    });
+    view.findViewById(R.id.text_protocol_detail).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onProtocol();
+      }
+    });
+    view.findViewById(R.id.registe_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onRegiste();
+      }
+    });
+
     delegatePresenter(loginPresenter, this);
 
     registeBtn.setEnabled(false);
@@ -109,7 +142,7 @@ public class RegisteFragment extends BaseFragment implements LoginView {
           .build());
     }
   }
-  @OnClick(R2.id.btn_login_wx) public void loginWx(){
+ public void loginWx(){
     if (!api.isWXAppInstalled()) {
       showAlert("您还未安装微信客户端");
       return;
@@ -120,11 +153,11 @@ public class RegisteFragment extends BaseFragment implements LoginView {
     api.sendReq(req);
   }
 
-  @OnClick(R2.id.btn_agree_protocol) public void onAgree() {
+ public void onAgree() {
     registeBtn.setEnabled(btnAgreeProtocol.isChecked());
   }
 
-  @OnClick(R2.id.text_protocol_detail) public void onProtocol() {
+ public void onProtocol() {
     WebActivity.startWeb(qcRestRepository.getHost() + WebRouters.USER_PROTOCOL_URL,
         getContext());
   }
@@ -132,7 +165,7 @@ public class RegisteFragment extends BaseFragment implements LoginView {
   /**
    * 确认注册
    */
-  @OnClick(R2.id.registe_btn) public void onRegiste() {
+ public void onRegiste() {
 
     if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()) {
       loginPresenter.registe(

@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.notisetting.bean.NotiSettingMsgDetail;
@@ -61,18 +61,18 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
     implements NotiSettingSendListDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
     FlexibleAdapter.EndlessScrollListener {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.qft_channel) QcFilterToggle qftChannel;
-  @BindView(R.id.qft_status) QcFilterToggle qftStatus;
-  @BindView(R.id.qft_times) QcFilterToggle qftTimes;
-  @BindView(R.id.tv_total_title) TextView tvTotalTitle;
-  @BindView(R.id.tv_msg) TextView tvMsg;
-  @BindView(R.id.tv_wechat) TextView tvWechat;
-  @BindView(R.id.tv_app) TextView tvApp;
-  @BindView(R.id.layout_total) RelativeLayout layoutTotal;
-  @BindView(R.id.rv) RecyclerView rv;
-  @BindView(R.id.frag_noti_list) FrameLayout fragNotiList;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	QcFilterToggle qftChannel;
+	QcFilterToggle qftStatus;
+	QcFilterToggle qftTimes;
+	TextView tvTotalTitle;
+	TextView tvMsg;
+	TextView tvWechat;
+	TextView tvApp;
+	RelativeLayout layoutTotal;
+	RecyclerView rv;
+	FrameLayout fragNotiList;
   int curM = 0, curY = 0, curD = 0;
   @Inject NotiSettingSendListDetailPresenter presenter;
   private NotiSettingFilterFragment filterFragment;
@@ -88,7 +88,39 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_noti_setting_msg_list_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    qftChannel = (QcFilterToggle) view.findViewById(R.id.qft_channel);
+    qftStatus = (QcFilterToggle) view.findViewById(R.id.qft_status);
+    qftTimes = (QcFilterToggle) view.findViewById(R.id.qft_times);
+    tvTotalTitle = (TextView) view.findViewById(R.id.tv_total_title);
+    tvMsg = (TextView) view.findViewById(R.id.tv_msg);
+    tvWechat = (TextView) view.findViewById(R.id.tv_wechat);
+    tvApp = (TextView) view.findViewById(R.id.tv_app);
+    layoutTotal = (RelativeLayout) view.findViewById(R.id.layout_total);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    fragNotiList = (FrameLayout) view.findViewById(R.id.frag_noti_list);
+    view.findViewById(R.id.qft_channel).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onQftChannelClicked();
+      }
+    });
+    view.findViewById(R.id.qft_status).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onQftStatusClicked();
+      }
+    });
+    view.findViewById(R.id.qft_times).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onQftTimesClicked();
+      }
+    });
+    view.findViewById(R.id.frag_noti_list).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFragNotiListClicked();
+      }
+    });
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     SmoothScrollLinearLayoutManager linearLayoutManager =
@@ -176,19 +208,19 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
       FlexibleUtils.highlightWords(tvApp, "APP推送" + c, c);
   }
 
-  @OnClick(R.id.qft_channel) public void onQftChannelClicked() {
+ public void onQftChannelClicked() {
     toggleFilter(0);
   }
 
-  @OnClick(R.id.qft_status) public void onQftStatusClicked() {
+ public void onQftStatusClicked() {
     toggleFilter(1);
   }
 
-  @OnClick(R.id.qft_times) public void onQftTimesClicked() {
+ public void onQftTimesClicked() {
     toggleFilter(2);
   }
 
-  @OnClick(R.id.frag_noti_list) public void onFragNotiListClicked() {
+ public void onFragNotiListClicked() {
     hideFilter();
   }
 

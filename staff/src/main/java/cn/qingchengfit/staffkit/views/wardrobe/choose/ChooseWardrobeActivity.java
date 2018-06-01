@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
@@ -39,18 +39,38 @@ public class ChooseWardrobeActivity extends BaseActivity
     implements ChooseWardrobePresenter.MVPView, FragCallBack {
   public static final String LOCKER = "locker";
 
-  @BindView(R.id.search_et) EditText searchEt;
+	EditText searchEt;
   @Inject ChooseWardrobePresenter presenter;
-  @BindView(R.id.clear) ImageView clear;
-  @BindView(R.id.chosen_info) TextView chosenInfo;
-  @BindView(R.id.chosen_layout) LinearLayout chosenLayout;
-  @BindView(R.id.layout_wardrobe_toolbar) LinearLayout layoutWardrobeToolbar;
+	ImageView clear;
+	TextView chosenInfo;
+	LinearLayout chosenLayout;
+	LinearLayout layoutWardrobeToolbar;
   private Locker mChosenLocker;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chooose_wardrobe);
-    ButterKnife.bind(this);
+    searchEt = (EditText) findViewById(R.id.search_et);
+    clear = (ImageView) findViewById(R.id.clear);
+    chosenInfo = (TextView) findViewById(R.id.chosen_info);
+    chosenLayout = (LinearLayout) findViewById(R.id.chosen_layout);
+    layoutWardrobeToolbar = (LinearLayout) findViewById(R.id.layout_wardrobe_toolbar);
+    findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChooseWardrobeActivity.this.onClick(v);
+      }
+    });
+    findViewById(R.id.clear).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChooseWardrobeActivity.this.onClick(v);
+      }
+    });
+    findViewById(R.id.del_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChooseWardrobeActivity.this.onClick(v);
+      }
+    });
+
     presenter.attachView(this);
     presenter.onNewSps();
     //获取已选择的locker
@@ -97,7 +117,7 @@ public class ChooseWardrobeActivity extends BaseActivity
     AppUtils.hideKeyboard(this);
   }
 
-  @OnClick({ R.id.back, R.id.clear, R.id.del_btn }) public void onClick(View view) {
+ public void onClick(View view) {
     switch (view.getId()) {
       case R.id.back:
         AppUtils.hideKeyboard(this);

@@ -10,8 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -49,14 +49,14 @@ public class ScoreDetailActivity extends BaseActivity implements FragCallBack {
 
     //@Extra User_Student student;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.rb_select_all) CheckBox rbSelectAll;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview) LinearLayout searchview;
+	Toolbar toolbar;
+	CheckBox rbSelectAll;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	LinearLayout searchview;
 
-    @BindView(R.id.frag) FrameLayout frag;
+	FrameLayout frag;
 
     @Inject ScoreDetailFragment scoreDetailFragment;
 
@@ -65,8 +65,15 @@ public class ScoreDetailActivity extends BaseActivity implements FragCallBack {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_score);
-        ButterKnife.bind(this);
-        initView();
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      rbSelectAll = (CheckBox) findViewById(R.id.rb_select_all);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      frag = (FrameLayout) findViewById(R.id.frag);
+
+      initView();
         initToolBar();
     }
 

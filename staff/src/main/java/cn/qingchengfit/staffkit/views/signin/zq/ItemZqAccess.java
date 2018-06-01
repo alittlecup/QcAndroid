@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.signin.zq;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -95,15 +95,19 @@ public class ItemZqAccess extends AbstractFlexibleItem<ItemZqAccess.ZqAccessVH> 
   }
 
   class ZqAccessVH extends FlexibleViewHolder {
-    @BindView(R.id.text_access_no) TextView textAccessNo;
-    @BindView(R.id.text_access_equip_no) TextView textAccessEquipNo;
-    @BindView(R.id.text_equip_features) TextView textEquipFeatures;
-    @BindView(R.id.text_signout_time) TextView textSignoutTime;
-    @BindView(R.id.text_zq_status) TextView textZqStatus;
+	TextView textAccessNo;
+	TextView textAccessEquipNo;
+	TextView textEquipFeatures;
+	TextView textSignoutTime;
+	TextView textZqStatus;
 
     public ZqAccessVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      textAccessNo = (TextView) view.findViewById(R.id.text_access_no);
+      textAccessEquipNo = (TextView) view.findViewById(R.id.text_access_equip_no);
+      textEquipFeatures = (TextView) view.findViewById(R.id.text_equip_features);
+      textSignoutTime = (TextView) view.findViewById(R.id.text_signout_time);
+      textZqStatus = (TextView) view.findViewById(R.id.text_zq_status);
     }
   }
 }

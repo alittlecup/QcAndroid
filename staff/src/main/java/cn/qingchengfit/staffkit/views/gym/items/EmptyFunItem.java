@@ -1,11 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -38,11 +34,11 @@ public class EmptyFunItem extends AbstractFlexibleItem<EmptyFunItem.EmptyFunVH> 
     }
 
     public class EmptyFunVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_hint) TextView tvHint;
+	TextView tvHint;
 
         public EmptyFunVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          tvHint = (TextView) view.findViewById(R.id.tv_hint);
         }
     }
 }

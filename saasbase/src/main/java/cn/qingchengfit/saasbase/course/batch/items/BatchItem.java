@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.course.batch.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -82,13 +82,15 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
   public class BatchVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.img) ImageView img;
-    @BindView(R2.id.text1) TextView text1;
-    @BindView(R2.id.text2) TextView text2;
+	ImageView img;
+	TextView text1;
+	TextView text2;
 
     public BatchVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      img = (ImageView) view.findViewById(R.id.img);
+      text1 = (TextView) view.findViewById(R.id.text1);
+      text2 = (TextView) view.findViewById(R.id.text2);
     }
   }
 }

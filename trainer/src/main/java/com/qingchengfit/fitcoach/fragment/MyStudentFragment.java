@@ -26,10 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.SpinnerBean;
 import cn.qingchengfit.bean.StudentBean;
@@ -68,20 +68,20 @@ import rx.schedulers.Schedulers;
  */
 public class MyStudentFragment extends BaseFragment {
     public static final String TAG = MyStudentFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.searchview_et) EditText searchviewEt;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.spinner_nav) Spinner spinnerNav;
-    @BindView(R.id.student_no_layout) LinearLayout studentNoLayout;
-    @BindView(R.id.alphabetview) AlphabetView alphabetView;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.student_add) Button studentAdd;
-    @BindView(R.id.student_no_text) TextView studentNoText;
-    @BindView(R.id.student_no_img) ImageView studentNoImg;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	EditText searchviewEt;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
+	RecyclerView recyclerview;
+	Spinner spinnerNav;
+	LinearLayout studentNoLayout;
+	AlphabetView alphabetView;
+	SwipeRefreshLayout refresh;
+	Button studentAdd;
+	TextView studentNoText;
+	ImageView studentNoImg;
+	TextView toolbarTitle;
     private LinearLayoutManager mLinearLayoutManager;
     private QcAllStudentResponse mQcAllStudentResponse;
     private List<StudentBean> adapterData = new ArrayList<>();
@@ -102,7 +102,7 @@ public class MyStudentFragment extends BaseFragment {
     private String curModel;
     private String mTitle;
     private boolean hasPrivate = false;
-    private Unbinder unbinder;
+
 
     public MyStudentFragment() {
     }
@@ -110,8 +110,38 @@ public class MyStudentFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_student, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      searchviewEt = (EditText) view.findViewById(R.id.searchview_et);
+      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) view.findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) view.findViewById(R.id.searchview);
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      spinnerNav = (Spinner) view.findViewById(R.id.spinner_nav);
+      studentNoLayout = (LinearLayout) view.findViewById(R.id.student_no_layout);
+      alphabetView = (AlphabetView) view.findViewById(R.id.alphabetview);
+      refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+      studentAdd = (Button) view.findViewById(R.id.student_add);
+      studentNoText = (TextView) view.findViewById(R.id.student_no_text);
+      studentNoImg = (ImageView) view.findViewById(R.id.student_no_img);
+      toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+
+      view.findViewById(R.id.student_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onAddstudent();
+        }
+      });
+      view.findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClear();
+        }
+      });
+      view.findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickCancel();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.menu_students);
         mTitle = getString(R.string.mystudents_title);
@@ -211,7 +241,7 @@ public class MyStudentFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -455,7 +485,7 @@ public class MyStudentFragment extends BaseFragment {
     //}
 
     //新增学员
-    @OnClick(R.id.student_add) public void onAddstudent() {
+ public void onAddstudent() {
         Intent intent = new Intent(getActivity(), FragActivity.class);
         intent.putExtra("type", 7);
         if (getActivity() instanceof FragActivity) {
@@ -479,13 +509,13 @@ public class MyStudentFragment extends BaseFragment {
     }
 
     //搜索栏清除按钮
-    @OnClick(R.id.searchview_clear) public void onClear() {
+ public void onClear() {
         searchviewEt.setText("");
         handleResponse(mQcAllStudentResponse);
     }
 
     //取消搜索
-    @OnClick(R.id.searchview_cancle) public void onClickCancel() {
+ public void onClickCancel() {
 
         if (searchviewEt.getText().toString().length() > 0) {
             searchviewEt.setText("");
@@ -499,18 +529,25 @@ public class MyStudentFragment extends BaseFragment {
      * recycle adapter
      */
     public static class StudentsHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_student_header) ImageView itemStudentHeader;
-        @BindView(R.id.item_student_name) TextView itemStudentName;
-        @BindView(R.id.item_student_phonenum) TextView itemStudentPhonenum;
-        @BindView(R.id.item_student_gymname) TextView itemStudentGymname;
-        @BindView(R.id.item_student_gender) ImageView itemStudentGender;
-        @BindView(R.id.item_student_alpha) TextView itemStudentAlpha;
-        @BindView(R.id.item_student_divider) View itemStudentDivder;
-        @BindView(R.id.item_student_header_loop) RelativeLayout itemHeaderLoop;
+	ImageView itemStudentHeader;
+	TextView itemStudentName;
+	TextView itemStudentPhonenum;
+	TextView itemStudentGymname;
+	ImageView itemStudentGender;
+	TextView itemStudentAlpha;
+	View itemStudentDivder;
+	RelativeLayout itemHeaderLoop;
 
-        public StudentsHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public StudentsHolder(View view) {
+            super(view);
+          itemStudentHeader = (ImageView) view.findViewById(R.id.item_student_header);
+          itemStudentName = (TextView) view.findViewById(R.id.item_student_name);
+          itemStudentPhonenum = (TextView) view.findViewById(R.id.item_student_phonenum);
+          itemStudentGymname = (TextView) view.findViewById(R.id.item_student_gymname);
+          itemStudentGender = (ImageView) view.findViewById(R.id.item_student_gender);
+          itemStudentAlpha = (TextView) view.findViewById(R.id.item_student_alpha);
+          itemStudentDivder = (View) view.findViewById(R.id.item_student_divider);
+          itemHeaderLoop = (RelativeLayout) view.findViewById(R.id.item_student_header_loop);
         }
     }
 

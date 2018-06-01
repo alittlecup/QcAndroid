@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.allocate.coach.item;
 import android.os.Parcel;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.CommonAllocateDetailItem;
@@ -50,11 +50,11 @@ public class CoachStudentDetailItem extends CommonAllocateDetailItem<CoachStuden
 
     class CoachStudentDetailVH extends CommonAllocateDetailItem.AllocateDetailVH {
 
-        @BindView(R.id.item_person_desc) TextView itemPersonDesc;
+	TextView itemPersonDesc;
 
         public CoachStudentDetailVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
         }
     }
 

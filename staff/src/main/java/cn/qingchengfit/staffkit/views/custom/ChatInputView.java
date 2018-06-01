@@ -12,9 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.AppUtils;
 
@@ -33,102 +30,132 @@ import cn.qingchengfit.utils.AppUtils;
  */
 public class ChatInputView extends LinearLayout {
 
-    @BindView(R.id.add_other) ImageView addOther;
-    @BindView(R.id.btn_send) Button btnSend;
-    @BindView(R.id.add_camera) LinearLayout addCamera;
-    @BindView(R.id.add_pic) LinearLayout addPic;
-    @BindView(R.id.expand_layout) LinearLayout expandLayout;
-    @BindView(R.id.input_et) EditText inputEt;
-    OnSendCallback callback;
+  ImageView addOther;
+  Button btnSend;
+  LinearLayout addCamera;
+  LinearLayout addPic;
+  LinearLayout expandLayout;
+  EditText inputEt;
+  OnSendCallback callback;
 
-    public ChatInputView(Context context) {
-        super(context);
-        init();
-    }
+  public ChatInputView(Context context) {
+    super(context);
+    init();
+  }
 
-    public ChatInputView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
+  public ChatInputView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init();
+  }
 
-    public ChatInputView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+  public ChatInputView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init();
+  }
 
-    public void init() {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_chatinput, this, true);
-    }
+  public void init() {
+    LayoutInflater.from(getContext()).inflate(R.layout.layout_chatinput, this, true);
+  }
 
-    public void close() {
-        expandLayout.setVisibility(GONE);
-    }
+  public void close() {
+    expandLayout.setVisibility(GONE);
+  }
 
-    @Override protected void onFinishInflate() {
-        super.onFinishInflate();
-        ButterKnife.bind(this, this);
-        inputEt.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+  @Override protected void onFinishInflate() {
+    super.onFinishInflate();
+    addOther = (ImageView) findViewById(R.id.add_other);
+    btnSend = (Button) findViewById(R.id.btn_send);
+    addCamera = (LinearLayout) findViewById(R.id.add_camera);
+    addPic = (LinearLayout) findViewById(R.id.add_pic);
+    expandLayout = (LinearLayout) findViewById(R.id.expand_layout);
+    inputEt = (EditText) findViewById(R.id.input_et);
+    findViewById(R.id.input_et).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChatInputView.this.onClick(v);
+      }
+    });
+    findViewById(R.id.add_other).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChatInputView.this.onClick(v);
+      }
+    });
+    findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChatInputView.this.onClick(v);
+      }
+    });
+    findViewById(R.id.add_camera).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChatInputView.this.onClick(v);
+      }
+    });
+    findViewById(R.id.add_pic).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ChatInputView.this.onClick(v);
+      }
+    });
+    inputEt.addTextChangedListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+      }
 
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
+      }
 
-            @Override public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s.toString())) {
-                    btnSend.setVisibility(GONE);
-                } else {
-                    btnSend.setVisibility(VISIBLE);
-                }
-            }
-        });
-    }
-
-    @OnClick({ R.id.input_et, R.id.add_other, R.id.btn_send, R.id.add_camera, R.id.add_pic }) public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.input_et://输入
-                expandLayout.setVisibility(GONE);
-                break;
-            case R.id.add_other:
-                if (expandLayout.getVisibility() == VISIBLE) {
-                    expandLayout.setVisibility(GONE);
-                } else {
-                    expandLayout.setVisibility(VISIBLE);
-                }
-                if (getContext() instanceof Activity) {
-                    AppUtils.hideKeyboard((Activity) getContext());
-                }
-                break;
-            case R.id.btn_send:
-                if (callback != null) {
-                    callback.onSendMsg(inputEt.getText().toString());
-                    inputEt.setText("");
-                }
-                break;
-            case R.id.add_camera:
-                if (callback != null) {
-                    callback.onCamara();
-                }
-                break;
-            case R.id.add_pic:
-                if (callback != null) {
-                    callback.onPicture();
-                }
-                break;
+      @Override public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(s.toString())) {
+          btnSend.setVisibility(GONE);
+        } else {
+          btnSend.setVisibility(VISIBLE);
         }
+      }
+    });
+  }
+
+  public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.input_et://输入
+        expandLayout.setVisibility(GONE);
+        break;
+      case R.id.add_other:
+        if (expandLayout.getVisibility() == VISIBLE) {
+          expandLayout.setVisibility(GONE);
+        } else {
+          expandLayout.setVisibility(VISIBLE);
+        }
+        if (getContext() instanceof Activity) {
+          AppUtils.hideKeyboard((Activity) getContext());
+        }
+        break;
+      case R.id.btn_send:
+        if (callback != null) {
+          callback.onSendMsg(inputEt.getText().toString());
+          inputEt.setText("");
+        }
+        break;
+      case R.id.add_camera:
+        if (callback != null) {
+          callback.onCamara();
+        }
+        break;
+      case R.id.add_pic:
+        if (callback != null) {
+          callback.onPicture();
+        }
+        break;
     }
+  }
 
-    public void setSendCallback(OnSendCallback callback) {
-        this.callback = callback;
-    }
+  public void setSendCallback(OnSendCallback callback) {
+    this.callback = callback;
+  }
 
-    public interface OnSendCallback {
-        void onSendMsg(String s);
+  public interface OnSendCallback {
+    void onSendMsg(String s);
 
-        void onPicture();
+    void onPicture();
 
-        void onCamara();
-    }
+    void onCamara();
+  }
 }

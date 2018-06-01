@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.StringUtils;
@@ -22,19 +22,23 @@ public class GenCodeActivity extends BaseActivity {
     public static final String GEN_CODE_URL = "gen.code.url";
     public static final String GEN_CODE_TITLE = "gen.code.title";
     public static final String GEN_CODE_BG = "gen.code.bg";
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.qr_img) ImageView qrImg;
-    @BindView(R.id.tv_title) TextView tvTitle;
-    @BindView(R.id.bg) FrameLayout bg;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView qrImg;
+	TextView tvTitle;
+	FrameLayout bg;
     private Bitmap bitmap;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gen_code);
-        ButterKnife.bind(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      qrImg = (ImageView) findViewById(R.id.qr_img);
+      tvTitle = (TextView) findViewById(R.id.tv_title);
+      bg = (FrameLayout) findViewById(R.id.bg);
 
-        initToolbar(toolbar);
+      initToolbar(toolbar);
         String tilte = getIntent().getStringExtra(GEN_CODE_TITLE);
         String url = getIntent().getStringExtra(GEN_CODE_URL);
         int bgRes = getIntent().getIntExtra(GEN_CODE_BG, R.drawable.bg_qr_code);

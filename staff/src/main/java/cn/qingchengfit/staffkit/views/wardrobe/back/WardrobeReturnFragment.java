@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.Locker;
@@ -54,17 +54,17 @@ import rx.functions.Action1;
  */
 public class WardrobeReturnFragment extends BaseFragment implements WardrobeReturnPresenter.MVPView {
 
-    @BindView(R.id.return_money) CommonInputView returnMoney;
-    @BindView(R.id.name) TextView name;
-    @BindView(R.id.region) TextView region;
+	CommonInputView returnMoney;
+	TextView name;
+	TextView region;
 
     @Inject WardrobeReturnPresenter mPresenter;
-    @BindView(R.id.expand_layout) ExpandedLayout expandLayout;
-    @BindView(R.id.card_id) TextView cardId;
-    @BindView(R.id.balance) TextView balance;
-    @BindView(R.id.layout_pay_method) LinearLayout layoutPayMethod;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	ExpandedLayout expandLayout;
+	TextView cardId;
+	TextView balance;
+	LinearLayout layoutPayMethod;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private Locker mLocker;
     private int mPayMode;
@@ -86,8 +86,27 @@ public class WardrobeReturnFragment extends BaseFragment implements WardrobeRetu
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_return, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      returnMoney = (CommonInputView) view.findViewById(R.id.return_money);
+      name = (TextView) view.findViewById(R.id.name);
+      region = (TextView) view.findViewById(R.id.region);
+      expandLayout = (ExpandedLayout) view.findViewById(R.id.expand_layout);
+      cardId = (TextView) view.findViewById(R.id.card_id);
+      balance = (TextView) view.findViewById(R.id.balance);
+      layoutPayMethod = (LinearLayout) view.findViewById(R.id.layout_pay_method);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          WardrobeReturnFragment.this.onClick();
+        }
+      });
+      view.findViewById(R.id.pay_method).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          chooseMethod();
+        }
+      });
+
+      initToolbar(toolbar);
         delegatePresenter(mPresenter, this);
 
         name.setText(mLocker.name);
@@ -153,7 +172,7 @@ public class WardrobeReturnFragment extends BaseFragment implements WardrobeRetu
         super.onDestroyView();
     }
 
-    @OnClick(R.id.comfirm) public void onClick() {
+ public void onClick() {
         if (expandLayout.isExpanded()) {
             if (mPayMode <= 0 || (mPayMode == 1 && mChooseCard == null) || (returnMoney.getVisibility() == View.VISIBLE
                 && returnMoney.isEmpty())) {
@@ -177,7 +196,7 @@ public class WardrobeReturnFragment extends BaseFragment implements WardrobeRetu
         }
     }
 
-    @OnClick(R.id.pay_method) public void chooseMethod() {
+ public void chooseMethod() {
         WardrobePayBottomFragment.newInstance(mLocker.user.getId(),
             DateUtils.interval(new Date(), DateUtils.formatDateFromServer(mLocker.end)) < 0).show(getFragmentManager(), "");
     }

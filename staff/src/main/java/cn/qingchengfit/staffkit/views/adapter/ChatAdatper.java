@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.FollowRecord;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -100,15 +100,19 @@ public class ChatAdatper extends RecyclerView.Adapter<ChatAdatper.ChatViewHolder
     }
 
     public class ChatViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.avatar) ImageView avatar;
-        @BindView(R.id.name) TextView name;
-        @BindView(R.id.time) TextView time;
-        @BindView(R.id.chat_text) TextView chatText;
-        @BindView(R.id.chat_img) ImageView chatImg;
+	ImageView avatar;
+	TextView name;
+	TextView time;
+	TextView chatText;
+	ImageView chatImg;
 
         public ChatViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+          avatar = (ImageView) itemView.findViewById(R.id.avatar);
+          name = (TextView) itemView.findViewById(R.id.name);
+          time = (TextView) itemView.findViewById(R.id.time);
+          chatText = (TextView) itemView.findViewById(R.id.chat_text);
+          chatImg = (ImageView) itemView.findViewById(R.id.chat_img);
         }
     }
 }

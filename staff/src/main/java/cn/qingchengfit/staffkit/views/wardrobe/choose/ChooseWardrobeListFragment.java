@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.R;
@@ -46,11 +46,11 @@ import java.util.List;
  */
 public class ChooseWardrobeListFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, TitleFragment {
 
-    @BindView(R.id.free_count) TextView freeCount;
-    @BindView(R.id.rv) RecyclerView rv;
+	TextView freeCount;
+	RecyclerView rv;
     List<AbstractFlexibleItem> mData = new ArrayList<>();
     CommonFlexAdapter mAdatper;
-    @BindView(R.id.count_title) TextView countTitle;
+	TextView countTitle;
 
     public static ChooseWardrobeListFragment newInstance(List<Locker> l, LockerRegion lr) {
 
@@ -64,8 +64,11 @@ public class ChooseWardrobeListFragment extends BaseFragment implements Flexible
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mAdatper = new CommonFlexAdapter(mData, this);
+      freeCount = (TextView) view.findViewById(R.id.free_count);
+      rv = (RecyclerView) view.findViewById(R.id.rv);
+      countTitle = (TextView) view.findViewById(R.id.count_title);
+
+      mAdatper = new CommonFlexAdapter(mData, this);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
         List<Locker> lockers = getArguments().getParcelableArrayList("l");

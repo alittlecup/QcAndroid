@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
@@ -41,7 +41,7 @@ import rx.schedulers.Schedulers;
  */
 public class CalendarFragment extends BaseFragment {
 
-    @BindView(R.id.calendar) RobotoCalendarView calendarView;
+	RobotoCalendarView calendarView;
 
     public static CalendarFragment newInstance(int pos) {
         Bundle args = new Bundle();
@@ -53,7 +53,8 @@ public class CalendarFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        calendarView = (RobotoCalendarView) view.findViewById(R.id.calendar);
+
         Calendar mCurCalendar = Calendar.getInstance(Locale.getDefault());
         Calendar today = Calendar.getInstance(Locale.getDefault());
         mCurCalendar.add(Calendar.MONTH, getArguments().getInt("p"));

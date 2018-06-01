@@ -23,9 +23,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -76,20 +76,20 @@ import rx.schedulers.Schedulers;
 //@SuppressWarnings("unused")
 public class AddNewCoachFragment extends BaseDialogFragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.down_trainer_app) TextView downTrainerApp;
-    @BindView(R.id.name) CommonInputView name;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView headerImg;
+	TextView downTrainerApp;
+	CommonInputView name;
     //    @BindView(R.id.gender_male)
     //    RadioButton genderMale;
     //    @BindView(R.id.gender_female)
     //    RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
+	RadioGroup courseTypeRg;
     //    @BindView(R.id.gender_layout)
     //    RelativeLayout genderLayout;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
+	Button btn;
+	PhoneEditText phoneNum;
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -141,8 +141,36 @@ public class AddNewCoachFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_coach, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        name.addTextWatcher(textChange);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      downTrainerApp = (TextView) view.findViewById(R.id.down_trainer_app);
+      name = (CommonInputView) view.findViewById(R.id.name);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      btn = (Button) view.findViewById(R.id.btn);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      view.findViewById(R.id.gender_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          changeGender();
+        }
+      });
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onHeaderClick();
+        }
+      });
+      view.findViewById(R.id.down_trainer_app).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          AddNewCoachFragment.this.onClick();
+        }
+      });
+
+      name.addTextWatcher(textChange);
         phoneNum.addTextChangedListener(textChange);
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -184,11 +212,11 @@ public class AddNewCoachFragment extends BaseDialogFragment {
         return view;
     }
 
-    @OnClick(R.id.gender_layout) public void changeGender() {
+ public void changeGender() {
         courseTypeRg.check(courseTypeRg.getCheckedRadioButtonId() == R.id.gender_male ? R.id.gender_female : R.id.gender_male);
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         if (TextUtils.isEmpty(name.getContent())) {
             ToastUtils.show("请填写教练姓名");
             return;
@@ -235,7 +263,7 @@ public class AddNewCoachFragment extends BaseDialogFragment {
 
     }
 
-    @OnClick(R.id.header_layout) public void onHeaderClick() {
+ public void onHeaderClick() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
             @Override public void onChoosePicResult(boolean isSuccess, final String filePath) {
@@ -276,7 +304,7 @@ public class AddNewCoachFragment extends BaseDialogFragment {
         choosePictureFragmentDialog.show(getFragmentManager(), "");
     }
 
-    @OnClick(R.id.down_trainer_app) public void onClick() {
+ public void onClick() {
         WebActivity.startWebForResult(Configs.DOWNLOAD_TRAINER, getContext(), 444);
     }
 

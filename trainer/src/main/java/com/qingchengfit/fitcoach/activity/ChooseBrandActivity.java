@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -40,15 +40,18 @@ public class ChooseBrandActivity extends AppCompatActivity {
     protected Subscription sp;
     protected List<Brand> datas = new ArrayList<>();
     protected BrandManageAdapterAdapter adapter;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	Toolbar toolbar;
+	RecyclerView recycleview;
+	TextView toolbarTitle;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recyleview_toolbar);
-        ButterKnife.bind(this);
-        toolbarTitle.setText(R.string.choose_brand);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      recycleview = (RecyclerView) findViewById(R.id.recycleview);
+      toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
+      toolbarTitle.setText(R.string.choose_brand);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

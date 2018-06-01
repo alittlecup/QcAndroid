@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
@@ -59,16 +59,29 @@ import rx.schedulers.Schedulers;
  */
 public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.btn_add) Button btnAdd;
-    @BindView(R.id.del) TextView del;
+	RecyclerView recyclerview;
+	Button btnAdd;
+	TextView del;
     private CommonFlexAdapter commonFlexAdapter;
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_images_wall, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(R.menu.menu_edit, R.drawable.ic_arrow_left, "照片墙");
+      recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+      btnAdd = (Button) view.findViewById(R.id.btn_add);
+      del = (TextView) view.findViewById(R.id.del);
+      view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          uploadImages();
+        }
+      });
+      view.findViewById(R.id.del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          deleteImages();
+        }
+      });
+
+      fragmentCallBack.onToolbarMenu(R.menu.menu_edit, R.drawable.ic_arrow_left, "照片墙");
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 changeMode();
@@ -160,7 +173,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
         commonFlexAdapter.updateDataSet(datas);
     }
 
-    @OnClick(R.id.btn_add) void uploadImages() {
+ void uploadImages() {
         if (datas.size() >= 5) {
             cn.qingchengfit.utils.ToastUtils.show("您最多只能上传五张图片");
             return;
@@ -169,7 +182,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
         ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
     }
 
-    @OnClick(R.id.del) public void deleteImages() {
+ public void deleteImages() {
         String ids = "";
         for (int i = 0; i < commonFlexAdapter.getSelectedPositions().size(); i++) {
             int pos = commonFlexAdapter.getSelectedPositions().get(i);

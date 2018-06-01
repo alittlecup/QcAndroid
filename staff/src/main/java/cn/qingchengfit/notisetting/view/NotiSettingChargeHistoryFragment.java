@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.notisetting.bean.ShopOrder;
@@ -51,9 +51,9 @@ import javax.inject.Inject;
 public class NotiSettingChargeHistoryFragment extends BaseFragment
     implements NotiSettingChargeHistoryPresenter.MVPView, FlexibleAdapter.EndlessScrollListener {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.recycleview) RecyclerView recycleview;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	RecyclerView recycleview;
 
   @Inject NotiSettingChargeHistoryPresenter presenter;
 
@@ -68,7 +68,10 @@ public class NotiSettingChargeHistoryFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.recyleview_toolbar, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());

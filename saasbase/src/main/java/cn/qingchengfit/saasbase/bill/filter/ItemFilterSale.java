@@ -3,11 +3,11 @@ package cn.qingchengfit.saasbase.bill.filter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;
@@ -68,14 +68,17 @@ public class ItemFilterSale extends AbstractFlexibleItem<ItemFilterSale.FilterSa
 
   class FilterSaleVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.filter_seller_head) ImageView filterSellerHead;
-    @BindView(R2.id.tv_filter_seller_name) TextView tvFilterSellerName;
-    @BindView(R2.id.tv_filter_seller_phone) TextView tvFilterSellerPhone;
-    @BindView(R2.id.img_hook) ImageView imgHook;
+	ImageView filterSellerHead;
+	TextView tvFilterSellerName;
+	TextView tvFilterSellerPhone;
+	ImageView imgHook;
 
     public FilterSaleVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      filterSellerHead = (ImageView) view.findViewById(R.id.filter_seller_head);
+      tvFilterSellerName = (TextView) view.findViewById(R.id.tv_filter_seller_name);
+      tvFilterSellerPhone = (TextView) view.findViewById(R.id.tv_filter_seller_phone);
+      imgHook = (ImageView) view.findViewById(R.id.img_hook);
     }
   }
 }

@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import cn.qingchengfit.model.common.BriefInfo;
 import cn.qingchengfit.views.VpFragment;
 import com.bumptech.glide.Glide;
@@ -38,7 +38,7 @@ public class BaseInfoFragment extends VpFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_COACH = "coach";
     private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.baseinfo_recyclerview) RecyclerViewInScroll baseinfoRecyclerview;
+	RecyclerViewInScroll baseinfoRecyclerview;
 
     // TODO: Rename and change types of parameters
     private String mCoachInfo;
@@ -47,7 +47,7 @@ public class BaseInfoFragment extends VpFragment {
     private boolean canScrollup;
     private ArrayList<BaseInfoBean> datas;
     private Gson gson = new Gson();
-    private Unbinder unbinder;
+
 
     public BaseInfoFragment() {
     }
@@ -73,8 +73,10 @@ public class BaseInfoFragment extends VpFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_info, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        //        isPrepared = true;
+      baseinfoRecyclerview = (RecyclerViewInScroll) view.findViewById(R.id.baseinfo_recyclerview);
+
+
+      //        isPrepared = true;
         lazyLoad();
         return view;
     }
@@ -136,7 +138,7 @@ public class BaseInfoFragment extends VpFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @Override public String getTitle() {
@@ -145,14 +147,18 @@ public class BaseInfoFragment extends VpFragment {
 
     public static class BaseInfoVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.baseinfo_item_icon) ImageView itemImg;
-        @BindView(R.id.baseinfo_item_label) TextView itemLabel;
-        @BindView(R.id.baseinfo_item_content) TextView itemContent;
-        @BindView(R.id.item_divider) View itemDivider;
+	ImageView itemImg;
+	TextView itemLabel;
+	TextView itemContent;
+	View itemDivider;
 
-        public BaseInfoVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public BaseInfoVH(View view) {
+            super(view);
+            itemImg = (ImageView) view.findViewById(R.id.baseinfo_item_icon);
+            itemLabel = (TextView) view.findViewById(R.id.baseinfo_item_label);
+            itemContent = (TextView) view.findViewById(R.id.baseinfo_item_content);
+            itemDivider = (View) view.findViewById(R.id.item_divider);
+
         }
     }
 

@@ -6,10 +6,10 @@ import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.DrawableUtils;
@@ -67,15 +67,20 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
 
 
   public class CardTplVH extends FlexibleViewHolder implements AnimatedViewHolder {
-    @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
-    @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.tv_card_id) TextView tvCardId;
-    @BindView(R2.id.cardview) RelativeLayout cardview;
-    @BindView(R2.id.img_stutus) TextView imgStatus;
+	TextView tvCardTplType;
+	TextView tvCardtplName;
+	TextView tvGymName;
+	TextView tvCardId;
+	RelativeLayout cardview;
+	TextView imgStatus;
     public CardTplVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      tvCardTplType = (TextView) view.findViewById(R.id.tv_card_tpl_type);
+      tvCardtplName = (TextView) view.findViewById(R.id.tv_cardtpl_name);
+      tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
+      tvCardId = (TextView) view.findViewById(R.id.tv_card_id);
+      cardview = (RelativeLayout) view.findViewById(R.id.cardview);
+      imgStatus = (TextView) view.findViewById(R.id.img_stutus);
     }
 
     @Override public void scrollAnimators(@NonNull List<Animator> animators, int position,

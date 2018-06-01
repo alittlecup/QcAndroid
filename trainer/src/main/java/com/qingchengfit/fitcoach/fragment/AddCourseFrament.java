@@ -14,10 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.LogUtil;
@@ -51,18 +51,18 @@ public class AddCourseFrament extends Fragment {
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
     public static final int TYPE_DEL = 3;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.gym_addcourse_img) ImageView gymAddcourseImg;
-    @BindView(R.id.gym_addcourse_img_layout) RelativeLayout gymAddcourseImgLayout;
-    @BindView(R.id.course_type_private) RadioButton courseTypePrivate;
-    @BindView(R.id.course_type_group) RadioButton courseTypeGroup;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.course_name) CommonInputView courseName;
-    @BindView(R.id.course_time) CommonInputView courseTime;
-    @BindView(R.id.gym_course_detail_layout) LinearLayout gymCourseDetailLayout;
-    @BindView(R.id.add_gym_course_btn) Button addGymCourseBtn;
-    @BindView(R.id.course_type_layout) RelativeLayout courseTypeLayout;
-    @BindView(R.id.course_capacity) CommonInputView courseCapacity;
+	Toolbar toolbar;
+	ImageView gymAddcourseImg;
+	RelativeLayout gymAddcourseImgLayout;
+	RadioButton courseTypePrivate;
+	RadioButton courseTypeGroup;
+	RadioGroup courseTypeRg;
+	CommonInputView courseName;
+	CommonInputView courseTime;
+	LinearLayout gymCourseDetailLayout;
+	Button addGymCourseBtn;
+	RelativeLayout courseTypeLayout;
+	CommonInputView courseCapacity;
     private int mType;
     private String mModel;
     private int mId;
@@ -77,7 +77,7 @@ public class AddCourseFrament extends Fragment {
     private Boolean upIsPrivate = true;
     private MaterialDialog delDialog;
     private MaterialDialog loadingDialog;
-    private Unbinder unbinder;
+
 
     public AddCourseFrament() {
     }
@@ -122,7 +122,30 @@ public class AddCourseFrament extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_course_frament, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        gymAddcourseImg = (ImageView) view.findViewById(R.id.gym_addcourse_img);
+        gymAddcourseImgLayout = (RelativeLayout) view.findViewById(R.id.gym_addcourse_img_layout);
+        courseTypePrivate = (RadioButton) view.findViewById(R.id.course_type_private);
+        courseTypeGroup = (RadioButton) view.findViewById(R.id.course_type_group);
+        courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+        courseName = (CommonInputView) view.findViewById(R.id.course_name);
+        courseTime = (CommonInputView) view.findViewById(R.id.course_time);
+        gymCourseDetailLayout = (LinearLayout) view.findViewById(R.id.gym_course_detail_layout);
+        addGymCourseBtn = (Button) view.findViewById(R.id.add_gym_course_btn);
+        courseTypeLayout = (RelativeLayout) view.findViewById(R.id.course_type_layout);
+        courseCapacity = (CommonInputView) view.findViewById(R.id.course_capacity);
+        view.findViewById(R.id.add_gym_course_btn).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onAddCourse();
+            }
+        });
+        view.findViewById(R.id.gym_addcourse_img_layout)
+            .setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    addPhoto();
+                }
+            });
+
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -210,7 +233,7 @@ public class AddCourseFrament extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.add_gym_course_btn) public void onAddCourse() {
+ public void onAddCourse() {
         if (TextUtils.isEmpty(courseName.getContent())) {
             ToastUtils.showDefaultStyle("请填写课程名称");
             return;
@@ -293,7 +316,7 @@ public class AddCourseFrament extends Fragment {
     /**
      * 新增图片
      */
-    @OnClick(R.id.gym_addcourse_img_layout) public void addPhoto() {
+ public void addPhoto() {
         ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
         dialog.show(getFragmentManager(), "");
         dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
@@ -354,67 +377,67 @@ public class AddCourseFrament extends Fragment {
         if (addSp != null) addSp.unsubscribe();
         if (upPic != null) upPic.unsubscribe();
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     /**
      * 删除课程
      */
-    private void delCourse() {
-        if (delDialog == null) {
-            delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
-                .content("是否删除课程?")
-                .positiveText("确定")
-                .negativeText("取消")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                        dialog.dismiss();
-                        HashMap<String, String> params = new HashMap<String, String>();
-                        params.put("id", mId + "");
-                        params.put("course_id", mCourseId + "");
-                        params.put("model", mModel);
-
-                        //                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
-                        //                                    .observeOn(AndroidSchedulers.mainThread())
-                      //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
-                        //                                    .subscribe(new Subscriber<QcResponse>() {
-                        //                                        @Override
-                        //                                        public void onCompleted() {
-                        //
-                        //                                        }
-                        //
-                        //                                        @Override
-                        //                                        public void onError(Throwable e) {
-                        //
-                        //                                        }
-                        //
-                        //                                        @Override
-                        //                                        public void onNext(QcResponse qcResponse) {
-                        //                                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                        //                                                ToastUtils.show("删除成功");
-                        //                                                getActivity().onBackPressed();
-                        //                                                getActivity().onBackPressed();
-                        //                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
-                        //                                            } else {
-                        //
-                        //                                            }
-                        //                                        }
-                        //                                    });
-                        //
-                        //
-                    }
-
-                    @Override public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        dialog.dismiss();
-                    }
-                })
-                .cancelable(false)
-                .build();
-        }
-        delDialog.show();
-    }
+    //private void delCourse() {
+    //    if (delDialog == null) {
+    //        delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
+    //            .content("是否删除课程?")
+    //            .positiveText("确定")
+    //            .negativeText("取消")
+    //            .callback(new MaterialDialog.ButtonCallback() {
+    //                @Override public void onPositive(MaterialDialog dialog) {
+    //                    super.onPositive(dialog);
+    //                    dialog.dismiss();
+    //                    HashMap<String, String> params = new HashMap<String, String>();
+    //                    params.put("id", mId + "");
+    //                    params.put("course_id", mCourseId + "");
+    //                    params.put("model", mModel);
+    //
+    //                    //                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
+    //                    //                                    .observeOn(AndroidSchedulers.mainThread())
+    //                  //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
+    //                    //                                    .subscribe(new Subscriber<QcResponse>() {
+    //                    //                                        @Override
+    //                    //                                        public void onCompleted() {
+    //                    //
+    //                    //                                        }
+    //                    //
+    //                    //                                        @Override
+    //                    //                                        public void onError(Throwable e) {
+    //                    //
+    //                    //                                        }
+    //                    //
+    //                    //                                        @Override
+    //                    //                                        public void onNext(QcResponse qcResponse) {
+    //                    //                                            if (qcResponse.status == ResponseResult.SUCCESS) {
+    //                    //                                                ToastUtils.show("删除成功");
+    //                    //                                                getActivity().onBackPressed();
+    //                    //                                                getActivity().onBackPressed();
+    //                    //                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
+    //                    //                                            } else {
+    //                    //
+    //                    //                                            }
+    //                    //                                        }
+    //                    //                                    });
+    //                    //
+    //                    //
+    //                }
+    //
+    //                @Override public void onNegative(MaterialDialog dialog) {
+    //                    super.onNegative(dialog);
+    //                    dialog.dismiss();
+    //                }
+    //            })
+    //            .cancelable(false)
+    //            .build();
+    //    }
+    //    delDialog.show();
+    //}
 
     public void ShowLoading(String content) {
         if (loadingDialog == null) {

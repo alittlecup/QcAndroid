@@ -3,8 +3,8 @@ package com.qingchengfit.fitcoach.items;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import com.qingchengfit.fitcoach.R;
 import cn.qingchengfit.bean.FunctionBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -41,12 +41,13 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
     }
 
     public class DailyWorkVH extends FlexibleViewHolder {
-        @BindView(R.id.img) ImageView img;
-        @BindView(R.id.text) TextView text;
+	ImageView img;
+	TextView text;
 
         public DailyWorkVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          img = (ImageView) view.findViewById(R.id.img);
+          text = (TextView) view.findViewById(R.id.text);
         }
     }
 }

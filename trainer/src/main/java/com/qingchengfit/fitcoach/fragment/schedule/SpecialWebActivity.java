@@ -2,8 +2,7 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import android.view.View;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import com.qingchengfit.fitcoach.App;
@@ -17,8 +16,13 @@ public class SpecialWebActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_order_preview);
-        ButterKnife.bind(this);
-        int to = getIntent().getIntExtra("to", 0);
+      findViewById(R.id.send_friend).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SpecialWebActivity.this.onClick();
+        }
+      });
+
+      int to = getIntent().getIntExtra("to", 0);
         Fragment fragment = new Fragment();
         switch (to) {
             case 1:
@@ -32,7 +36,7 @@ public class SpecialWebActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.activity_student_order_preview, fragment).commit();
     }
 
-    @OnClick(R.id.send_friend) public void onClick() {
+ public void onClick() {
         ShareDialogFragment.newInstance(App.gUser.username + "教练的主页", getString(R.string.share_hint_open_desc, App.gUser.username),
             App.gUser.avatar, Configs.Server + String.format(Configs.HOST_STUDENT_PREVIEW, App.coachid + ""))
             .show(getSupportFragmentManager(), "");

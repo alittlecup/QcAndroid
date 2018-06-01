@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.presenters.AddCardtplStandardPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
@@ -54,25 +54,46 @@ import rx.schedulers.Schedulers;
     extends SaasBaseFragment implements AddCardtplStandardPresenter.MVPView {
 
   @Inject AddCardtplStandardPresenter presenter;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.civ_charge_money) CommonInputView civChargeMoney;
-  @BindView(R2.id.civ_real_money) CommonInputView civRealMoney;
-  @BindView(R2.id.civ_valid_day) CommonInputView civValidDay;
-  @BindView(R2.id.el_valid_day) ExpandedLayout elValidDay;
-  @BindView(R2.id.el_use_create) ExpandedLayout elUseCreate;
-  @BindView(R2.id.el_use_charge) ExpandedLayout elUseCharge;
-  @BindView(R2.id.el_only_staff) ExpandedLayout elOnlyStaff;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	CommonInputView civChargeMoney;
+	CommonInputView civRealMoney;
+	CommonInputView civValidDay;
+	ExpandedLayout elValidDay;
+	ExpandedLayout elUseCreate;
+	ExpandedLayout elUseCharge;
+	ExpandedLayout elOnlyStaff;
 
   @Need public String cardTplId;
   @Need public Integer cardCate;
-  @BindView(R2.id.civ_price_desc) CommonInputView civPriceDesc;
+	CommonInputView civPriceDesc;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtpl_option_add, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    civChargeMoney = (CommonInputView) view.findViewById(R.id.civ_charge_money);
+    civRealMoney = (CommonInputView) view.findViewById(R.id.civ_real_money);
+    civValidDay = (CommonInputView) view.findViewById(R.id.civ_valid_day);
+    elValidDay = (ExpandedLayout) view.findViewById(R.id.el_valid_day);
+    elUseCreate = (ExpandedLayout) view.findViewById(R.id.el_use_create);
+    elUseCharge = (ExpandedLayout) view.findViewById(R.id.el_use_charge);
+    elOnlyStaff = (ExpandedLayout) view.findViewById(R.id.el_only_staff);
+    civPriceDesc = (CommonInputView) view.findViewById(R.id.civ_price_desc);
+    view.findViewById(R.id.civ_price_desc).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onDesc();
+      }
+    });
+    view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        delOption();
+      }
+    });
+
     delegatePresenter(presenter, this);
     presenter.setTplId(cardTplId);
     initToolbar(toolbar);
@@ -125,7 +146,7 @@ import rx.schedulers.Schedulers;
 
   }
 
-  @OnClick(R2.id.civ_price_desc)
+
   public void onDesc(){
     routeTo("common", "/input/",
         new CommonInputParams().content(presenter.getDesc())
@@ -161,7 +182,7 @@ import rx.schedulers.Schedulers;
     });
   }
 
-  @OnClick(R2.id.btn_del) public void delOption() {
+ public void delOption() {
   }
 
   @Override public String getFragmentName() {

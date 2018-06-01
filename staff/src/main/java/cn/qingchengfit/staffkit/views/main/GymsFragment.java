@@ -11,8 +11,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventFreshGyms;
@@ -58,7 +58,7 @@ import rx.Observable;
 public class GymsFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, GymListPresenter.GymListView {
 
-  @BindView(R.id.recycleview) RecyclerView recycleview;
+	RecyclerView recycleview;
 
   @Inject GymListPresenter gymListPresenter;
   @Inject GymWrapper gymWrapper;
@@ -70,7 +70,8 @@ public class GymsFragment extends BaseFragment
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_gyms, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+
     initDI();
     initView();
     mFreshOb = RxBus.getBus().register(EventFreshGyms.class);

@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.DateUtils;
 import com.marcohc.robotocalendar.CalendarFragment;
 import com.qingchengfit.fitcoach.R;
@@ -37,10 +37,10 @@ import java.util.Date;
  */
 public class DatePicker extends DialogFragment {
 
-    @BindView(R.id.vp) ViewPager vp;
-    @BindView(R.id.bg) View bg;
-    @BindView(R.id.tv_month) TextView tvMonth;
-    private Unbinder unbinder;
+	ViewPager vp;
+	View bg;
+	TextView tvMonth;
+
     private DatePickerChange listener;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +51,21 @@ public class DatePicker extends DialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_datepicker, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        tvMonth.setText(DateUtils.getChineseMonth(new Date()));
+      vp = (ViewPager) view.findViewById(R.id.vp);
+      bg = (View) view.findViewById(R.id.bg);
+      tvMonth = (TextView) view.findViewById(R.id.tv_month);
+      view.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBg();
+        }
+      });
+      view.findViewById(R.id.bg_up).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onBg();
+        }
+      });
+
+      tvMonth.setText(DateUtils.getChineseMonth(new Date()));
         vp.setAdapter(new CalendarAdapter(getChildFragmentManager()));
         vp.setCurrentItem(50);
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -91,7 +104,7 @@ public class DatePicker extends DialogFragment {
         super.onResume();
     }
 
-    @OnClick({ R.id.bg, R.id.bg_up }) public void onBg() {
+ public void onBg() {
         this.dismiss();
     }
 
@@ -106,7 +119,7 @@ public class DatePicker extends DialogFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     public interface DatePickerChange {

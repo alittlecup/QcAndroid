@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -22,7 +22,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
@@ -70,12 +70,12 @@ import rx.schedulers.Schedulers;
   @Inject LoginStatus loginStatus;
   @Inject IPermissionModel serPermisAction;
   @Inject public ICourseModel courseApi;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) public TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) ViewGroup toolbarLayout;
-  @BindView(R2.id.rv) RecyclerView rv;
-  @BindView(R2.id.srl) public SwipeRefreshLayout srl;
-  @BindView(R2.id.add_course_btn) public FloatingActionButton floatingActionButton;
+	Toolbar toolbar;
+	public TextView toolbarTitle;
+	ViewGroup toolbarLayout;
+	RecyclerView rv;
+	public SwipeRefreshLayout srl;
+	public FloatingActionButton floatingActionButton;
   @Need public Boolean mIsPrivate = false;
 
   protected CommonFlexAdapter commonFlexAdapter;
@@ -98,7 +98,18 @@ import rx.schedulers.Schedulers;
   @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_course_list, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (ViewGroup) view.findViewById(R.id.toolbar_layout);
+    rv = (RecyclerView) view.findViewById(R.id.rv);
+    srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    floatingActionButton = (FloatingActionButton) view.findViewById(R.id.add_course_btn);
+    view.findViewById(R.id.add_course_btn).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onViewClicked();
+      }
+    });
+
     initToolbar(toolbar);
     if ((!mIsPrivate && !serPermisAction.checkInBrand(PermissionServerUtils.TEAMSETTING)) || (
       mIsPrivate
@@ -158,7 +169,7 @@ import rx.schedulers.Schedulers;
   /**
    * 新增课程
    */
-  @OnClick(R2.id.add_course_btn) public void onViewClicked() {
+ public void onViewClicked() {
     if ( !serPermisAction.checkInBrand(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_WRITE:PermissionServerUtils.TEAMSETTING_CAN_WRITE)){
       showAlert(R.string.sorry_for_no_permission);
       return ;

@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.adapter.CoachCommentAdapter;
 import cn.qingchengfit.saasbase.course.course.bean.CourseTeacher;
@@ -34,19 +34,19 @@ import rx.schedulers.Schedulers;
 @Leaf(module = "course",path = "/coach/comment/")
 public class CoachCommentListFragment extends SaasBaseFragment {
 
-    @BindView(R2.id.viewpager) ViewPager viewpager;
-    @BindView(R2.id.strip) PagerSlidingTabImageStrip strip;
+	ViewPager viewpager;
+	PagerSlidingTabImageStrip strip;
 
-    @BindView(R2.id.shop_img) ImageView shopImg;
-    @BindView(R2.id.shop_name) TextView shopName;
-    @BindView(R2.id.coach_score) TextView coachScore;
-    @BindView(R2.id.course_score) TextView courseScore;
-    @BindView(R2.id.server_score) TextView serverScore;
-    @BindView(R2.id.img) ImageView img;
-    @BindView(R2.id.hint) TextView hint;
-    @BindView(R2.id.no_data_layout) LinearLayout noDataLayout;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	ImageView shopImg;
+	TextView shopName;
+	TextView coachScore;
+	TextView courseScore;
+	TextView serverScore;
+	ImageView img;
+	TextView hint;
+	LinearLayout noDataLayout;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject ICourseModel courseModel;
@@ -60,8 +60,20 @@ public class CoachCommentListFragment extends SaasBaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_comment_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+      strip = (PagerSlidingTabImageStrip) view.findViewById(R.id.strip);
+      shopImg = (ImageView) view.findViewById(R.id.shop_img);
+      shopName = (TextView) view.findViewById(R.id.shop_name);
+      coachScore = (TextView) view.findViewById(R.id.coach_score);
+      courseScore = (TextView) view.findViewById(R.id.course_score);
+      serverScore = (TextView) view.findViewById(R.id.server_score);
+      img = (ImageView) view.findViewById(R.id.img);
+      hint = (TextView) view.findViewById(R.id.hint);
+      noDataLayout = (LinearLayout) view.findViewById(R.id.no_data_layout);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
+      initToolbar(toolbar);
         RxRegiste(courseModel
             .qcGetCourseTeacher(course_id,shop_id)
             .onBackpressureBuffer()

@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.ToastUtils;
@@ -77,15 +77,19 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
     }
 
     public class BrandShopsVH extends FlexibleViewHolder {
-        @BindView(R.id.img_bg) ImageView imgBg;
-        @BindView(R.id.img_brand) ImageView imgBrand;
-        @BindView(R.id.btn_manage_brand) TextView btnManageBrand;
-        @BindView(R.id.tv_brand_name) TextView tvBrandName;
-        @BindView(R.id.recycler_insert) RecyclerView recyclerInsert;
+	ImageView imgBg;
+	ImageView imgBrand;
+	TextView btnManageBrand;
+	TextView tvBrandName;
+	RecyclerView recyclerInsert;
 
         public BrandShopsVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this, view);
+          imgBg = (ImageView) view.findViewById(R.id.img_bg);
+          imgBrand = (ImageView) view.findViewById(R.id.img_brand);
+          btnManageBrand = (TextView) view.findViewById(R.id.btn_manage_brand);
+          tvBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
+          recyclerInsert = (RecyclerView) view.findViewById(R.id.recycler_insert);
         }
     }
 }

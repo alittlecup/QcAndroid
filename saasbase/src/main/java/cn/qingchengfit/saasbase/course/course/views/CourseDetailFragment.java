@@ -17,14 +17,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.adapter.ViewPaperEndlessAdapter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.adapter.CourseTeacherAdapter;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -50,29 +50,29 @@ import javax.inject.Inject;
   extends SaasBaseFragment
   implements CourseDetailPresenter.CourseDetailView, ViewPager.OnPageChangeListener {
 
-  @BindView(R2.id.student_judge_coach_score) TextView studentJudgeCoachScore;
-  @BindView(R2.id.student_judge_coach_star) RatingBarVectorFix studentJudgeCoachStar;
-  @BindView(R2.id.student_judge_course_score) TextView studentJudgeCourseScore;
-  @BindView(R2.id.student_judge_course_star) RatingBarVectorFix studentJudgeCourseStar;
-  @BindView(R2.id.server_score) TextView serverScore;
-  @BindView(R2.id.server_rate) RatingBarVectorFix serverRate;
-  @BindView(R2.id.course_impression) TagContainerLayout courseImpression;
-  @BindView(R2.id.jacket_vp) ViewPager jacketVp;
-  @BindView(R2.id.desc_html) TextView descHtml;
-  @BindView(R2.id.no_impression) TextView noImpression;
-  @BindView(R2.id.course_teacher_rv) RecyclerView courseTeacherRv;
+	TextView studentJudgeCoachScore;
+	RatingBarVectorFix studentJudgeCoachStar;
+	TextView studentJudgeCourseScore;
+	RatingBarVectorFix studentJudgeCourseStar;
+	TextView serverScore;
+	RatingBarVectorFix serverRate;
+	TagContainerLayout courseImpression;
+	ViewPager jacketVp;
+	TextView descHtml;
+	TextView noImpression;
+	RecyclerView courseTeacherRv;
 
-  @BindView(R2.id.no_jacket) TextView noJacket;
-  @BindView(R2.id.comments_detail) FrameLayout commentsDetail;
-  @BindView(R2.id.go_to_scan) TextView goToScan;
-  @BindView(R2.id.web_desc) TouchyWebView webDesc;
-  @BindView(R2.id.no_teacher) TextView noTeacher;
-  @BindView(R2.id.srl) SwipeRefreshLayout srl;
-  @BindView(R2.id.splash_indicator) CircleIndicator splashIndicator;
-  @BindView(R2.id.edit_jacket) TextView editJacket;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.scroll_root) NestedScrollView scrollView;
+	TextView noJacket;
+	FrameLayout commentsDetail;
+	TextView goToScan;
+	TouchyWebView webDesc;
+	TextView noTeacher;
+	SwipeRefreshLayout srl;
+	CircleIndicator splashIndicator;
+	TextView editJacket;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	NestedScrollView scrollView;
   boolean isJumped = false;
   @Inject CourseDetailPresenter mPresenter;
   @Inject GymWrapper gymWrapper;
@@ -82,7 +82,49 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_course_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    studentJudgeCoachScore = (TextView) view.findViewById(R.id.student_judge_coach_score);
+    studentJudgeCoachStar = (RatingBarVectorFix) view.findViewById(R.id.student_judge_coach_star);
+    studentJudgeCourseScore = (TextView) view.findViewById(R.id.student_judge_course_score);
+    studentJudgeCourseStar = (RatingBarVectorFix) view.findViewById(R.id.student_judge_course_star);
+    serverScore = (TextView) view.findViewById(R.id.server_score);
+    serverRate = (RatingBarVectorFix) view.findViewById(R.id.server_rate);
+    courseImpression = (TagContainerLayout) view.findViewById(R.id.course_impression);
+    jacketVp = (ViewPager) view.findViewById(R.id.jacket_vp);
+    descHtml = (TextView) view.findViewById(R.id.desc_html);
+    noImpression = (TextView) view.findViewById(R.id.no_impression);
+    courseTeacherRv = (RecyclerView) view.findViewById(R.id.course_teacher_rv);
+    noJacket = (TextView) view.findViewById(R.id.no_jacket);
+    commentsDetail = (FrameLayout) view.findViewById(R.id.comments_detail);
+    goToScan = (TextView) view.findViewById(R.id.go_to_scan);
+    webDesc = (TouchyWebView) view.findViewById(R.id.web_desc);
+    noTeacher = (TextView) view.findViewById(R.id.no_teacher);
+    srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    splashIndicator = (CircleIndicator) view.findViewById(R.id.splash_indicator);
+    editJacket = (TextView) view.findViewById(R.id.edit_jacket);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    scrollView = (NestedScrollView) view.findViewById(R.id.scroll_root);
+    view.findViewById(R.id.edit_jacket).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onJacketVp();
+      }
+    });
+    view.findViewById(R.id.comments_detail).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        checkComments();
+      }
+    });
+    view.findViewById(R.id.go_to_scan).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        gotoScan();
+      }
+    });
+    view.findViewById(R.id.edit_base_info).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        editBaseInfo();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(mPresenter, this);
     initView(mCourseDetail);
@@ -290,7 +332,7 @@ import javax.inject.Inject;
   /**
    * 封面管理
    */
-  @OnClick(R2.id.edit_jacket) public void onJacketVp() {
+ public void onJacketVp() {
     if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
     routeTo("/jacket/manager/",
       new cn.qingchengfit.saasbase.course.course.views.JacketManagerParams().courseid(
@@ -303,7 +345,7 @@ import javax.inject.Inject;
   /**
    * 查看评价详情
    */
-  @OnClick(R2.id.comments_detail) public void checkComments() {
+ public void checkComments() {
     if (gymWrapper.inBrand()) {
       routeTo("/shop/comment/",
         new cn.qingchengfit.saasbase.course.course.views.ShopCommentsParams().mCourseId(
@@ -318,7 +360,7 @@ import javax.inject.Inject;
   /**
    * 编辑简介 跳转二维码扫码
    */
-  @OnClick(R2.id.go_to_scan) public void gotoScan() {
+ public void gotoScan() {
     if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
     QRActivity.start(getContext(), mCourseDetail.getEdit_url());
   }
@@ -326,7 +368,7 @@ import javax.inject.Inject;
   /**
    * 编辑基本信息
    */
-  @OnClick(R2.id.edit_base_info) public void editBaseInfo() {
+ public void editBaseInfo() {
     routeTo("/edit/",
       new cn.qingchengfit.saasbase.course.course.views.EditCourseParams().courseType(mCourseDetail)
         .build());

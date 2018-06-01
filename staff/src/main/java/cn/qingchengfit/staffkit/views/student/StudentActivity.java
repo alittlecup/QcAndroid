@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
@@ -52,7 +52,7 @@ import timber.log.Timber;
  */
 public class StudentActivity extends BaseActivity implements FragCallBack, HasSupportFragmentInjector {
 
-    @BindView(R.id.student_frag) FrameLayout studentFrag;
+	FrameLayout studentFrag;
     @Inject Provider<StudentWrapperComponent.Builder> requestComponentProvider;
     @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
     @Inject RestRepository restRepository;
@@ -64,8 +64,9 @@ public class StudentActivity extends BaseActivity implements FragCallBack, HasSu
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_no_toolbar);
-        ButterKnife.bind(this);
-        initView();
+      studentFrag = (FrameLayout) findViewById(R.id.student_frag);
+
+      initView();
     }
 
     private void initView() {

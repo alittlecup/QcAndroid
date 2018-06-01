@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
@@ -36,15 +36,18 @@ import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
 
 public class PopFromBottomActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.frag) FrameLayout frag;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	FrameLayout frag;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar_frag);
-        ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      frag = (FrameLayout) findViewById(R.id.frag);
+
+      toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         Fragment f = new Fragment();
         int to = getIntent().getIntExtra("to", 0);

@@ -19,10 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
@@ -49,21 +49,21 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class MyHomeFragment extends Fragment {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.myhome_header) ImageView myhomeHeader;
-    @BindView(R.id.myhome_tab) TabLayout myhomeTab;
-    @BindView(R.id.myhome_name) TextView myhomeName;
-    @BindView(R.id.myhome_brief) TextView myhomeBrief;
-    @BindView(R.id.myhome_student_judge) FrameLayout myhomeStudentJudge;
-    @BindView(R.id.myhome_scroller) HalfScrollView myhomeScroller;
-    @BindView(R.id.myhome_bg) View myhomeBg;
-    @BindView(R.id.myhome_gender) ImageView myhomeGender;
-    @BindView(R.id.myhome_location) TextView myhomeLocation;
-    @BindView(R.id.myhome_sawtooth) ImageView myhomeSawtooth;
-    @BindView(R.id.myhome_tab_layout) RelativeLayout myhomeTabLayout;
-    @BindView(R.id.myhome_viewpager) MyhomeViewPager myhomeViewpager;
-    @BindView(R.id.halfscroll_first) LinearLayout halfscrollFirst;
-    @BindView(R.id.sfl) SwipeRefreshLayout sfl;
+	Toolbar toolbar;
+	ImageView myhomeHeader;
+	TabLayout myhomeTab;
+	TextView myhomeName;
+	TextView myhomeBrief;
+	FrameLayout myhomeStudentJudge;
+	HalfScrollView myhomeScroller;
+	View myhomeBg;
+	ImageView myhomeGender;
+	TextView myhomeLocation;
+	ImageView myhomeSawtooth;
+	RelativeLayout myhomeTabLayout;
+	MyhomeViewPager myhomeViewpager;
+	LinearLayout halfscrollFirst;
+	SwipeRefreshLayout sfl;
     private int mHomeBgHeight = 1;
     private boolean isFresh = false;
     private Gson gson;
@@ -90,7 +90,7 @@ public class MyHomeFragment extends Fragment {
             handleResponse(qcMyhomeResponse);
         }
     };
-    private Unbinder unbinder;
+
 
     public MyHomeFragment() {
     }
@@ -98,8 +98,28 @@ public class MyHomeFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        gson = new Gson();
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      myhomeHeader = (ImageView) view.findViewById(R.id.myhome_header);
+      myhomeTab = (TabLayout) view.findViewById(R.id.myhome_tab);
+      myhomeName = (TextView) view.findViewById(R.id.myhome_name);
+      myhomeBrief = (TextView) view.findViewById(R.id.myhome_brief);
+      myhomeStudentJudge = (FrameLayout) view.findViewById(R.id.myhome_student_judge);
+      myhomeScroller = (HalfScrollView) view.findViewById(R.id.myhome_scroller);
+      myhomeBg = (View) view.findViewById(R.id.myhome_bg);
+      myhomeGender = (ImageView) view.findViewById(R.id.myhome_gender);
+      myhomeLocation = (TextView) view.findViewById(R.id.myhome_location);
+      myhomeSawtooth = (ImageView) view.findViewById(R.id.myhome_sawtooth);
+      myhomeTabLayout = (RelativeLayout) view.findViewById(R.id.myhome_tab_layout);
+      myhomeViewpager = (MyhomeViewPager) view.findViewById(R.id.myhome_viewpager);
+      halfscrollFirst = (LinearLayout) view.findViewById(R.id.halfscroll_first);
+      sfl = (SwipeRefreshLayout) view.findViewById(R.id.sfl);
+      view.findViewById(R.id.myhome_student_judge).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onJudge();
+        }
+      });
+
+      gson = new Gson();
         toolbar.setTitle("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> {
@@ -211,7 +231,7 @@ public class MyHomeFragment extends Fragment {
         sfl.setRefreshing(false);
     }
 
-    @OnClick(R.id.myhome_student_judge) public void onJudge() {
+ public void onJudge() {
         //        myhomeScroller.fullScroll(View.FOCUS_DOWN);
         myhomeScroller.smoothScrollTo(0, myhomeScroller.getHeight());
         myhomeTab.setScrollPosition(3, 0, true);
@@ -259,7 +279,7 @@ public class MyHomeFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     public interface TouchListener {

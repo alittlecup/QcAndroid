@@ -19,8 +19,10 @@ import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotMultiStaffViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -187,16 +189,12 @@ import java.util.List;
   }
 
   private void showDialog() {
-    new MaterialDialog.Builder(getContext()).autoDismiss(true)
-        .content("确认将选中会员从" + getActivityViewModel().getAllotStaff().getValue().username + "名下移除?")
-        .positiveText(cn.qingchengfit.saasbase.R.string.common_comfirm)
-        .negativeText(cn.qingchengfit.saasbase.R.string.common_cancel)
-        .autoDismiss(true)
-        .onPositive((dialog, which) -> {
-          // 批量移除
-          mViewModel.removeStudentIds(concat(getSelectIds()));
-        })
-        .show();
+    DialogUtils.showConfirm(getContext(), "",
+        "确认将选中会员从" + getActivityViewModel().getAllotStaff().getValue().username + "名下移除?",
+        (dialog, action) -> {
+          dialog.dismiss();
+          if (action == DialogAction.POSITIVE) mViewModel.removeStudentIds(concat(getSelectIds()));
+        });
   }
 
   private String concat(ArrayList<String> list) {
@@ -223,21 +221,19 @@ import java.util.List;
     switch (getActivityViewModel().getAllotType()) {
       case 0:
         Uri toSaler = Uri.parse("qcstaff://student/allot/choosesaler");
-        routeTo(toSaler,
-           new AllotChooseCoachPageParams().title(title)
-                .studentIds(ids)
-                .textContent(
-                    getString(cn.qingchengfit.saasbase.R.string.choose_saler) + "\n" + getString(
-                        cn.qingchengfit.saasbase.R.string.choose_saler_tips))
-                .build());
+        routeTo(toSaler, new AllotChooseCoachPageParams().title(title)
+            .studentIds(ids)
+            .textContent(
+                getString(cn.qingchengfit.saasbase.R.string.choose_saler) + "\n" + getString(
+                    cn.qingchengfit.saasbase.R.string.choose_saler_tips))
+            .build());
         break;
       case 1:
         Uri toCoach = Uri.parse("qcstaff://student/allot/choosecoach");
-        routeTo(toCoach,
-           new AllotChooseSalerPageParams().title(title)
-                .studentIds(ids)
-                .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_coach))
-                .build());
+        routeTo(toCoach, new AllotChooseSalerPageParams().title(title)
+            .studentIds(ids)
+            .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_coach))
+            .build());
         break;
     }
     mViewModel.getSelectAll().setValue(false);

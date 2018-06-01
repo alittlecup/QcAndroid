@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.saasbase.login.LoginActivity;
@@ -44,18 +44,32 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class UnLoginScheduleAdFragment extends BaseFragment {
 
-    @BindView(R.id.btn_use_now) Button btnUseNow;
-    @BindView(R.id.btn_login) Button btnLogin;
+	Button btnUseNow;
+	Button btnLogin;
     @Inject LoginStatus loginStatus;
-    @BindView(R.id.img) ImageView img;
-    @BindView(R.id.tv1) TextView tv1;
+	ImageView img;
+	TextView tv1;
 
-    Unbinder unbinder;
+
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlog_schedules, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        Glide.with(getContext()).load(R.drawable.img_guide2).into(img);
+      btnUseNow = (Button) view.findViewById(R.id.btn_use_now);
+      btnLogin = (Button) view.findViewById(R.id.btn_login);
+      img = (ImageView) view.findViewById(R.id.img);
+      tv1 = (TextView) view.findViewById(R.id.tv1);
+      view.findViewById(R.id.btn_use_now).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickUseNow();
+        }
+      });
+      view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onLogin();
+        }
+      });
+
+      Glide.with(getContext()).load(R.drawable.img_guide2).into(img);
         tv1.setText(R.string.str_guide_title_1);
         if (!loginStatus.isLogined()) {
             btnLogin.setVisibility(View.VISIBLE);
@@ -80,7 +94,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
     /**
      * 注册
      */
-    @OnClick(R.id.btn_use_now) public void onClickUseNow() {
+ public void onClickUseNow() {
         if (!loginStatus.isLogined()) {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
             toLogin.putExtra("isRegiste", true);
@@ -93,7 +107,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
     /**
      * 立即登录
      */
-    @OnClick(R.id.btn_login) public void onLogin() {
+ public void onLogin() {
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
         toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
@@ -101,6 +115,6 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

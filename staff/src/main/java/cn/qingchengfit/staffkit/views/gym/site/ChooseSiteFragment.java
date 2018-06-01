@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -45,10 +45,10 @@ import javax.inject.Inject;
  */
 public class ChooseSiteFragment extends BaseDialogFragment implements ChooseSiteView {
 
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
     private int type = 0;//0 是初始化 1是创建新的健身房 2 是单独管理site
     private ChooseSiteAdapter adapter;
@@ -95,8 +95,17 @@ public class ChooseSiteFragment extends BaseDialogFragment implements ChooseSite
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycleview, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        presenter.attachView(this);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickAdd();
+        }
+      });
+
+      presenter.attachView(this);
 
         initView();
         return view;
@@ -157,7 +166,7 @@ public class ChooseSiteFragment extends BaseDialogFragment implements ChooseSite
         btn.setText("添加新场地");
     }
 
-    @OnClick(R.id.btn) public void onClickAdd() {
+ public void onClickAdd() {
         AddNewSiteFragment.start(getTargetFragment(), getTargetRequestCode(), type);
         //        dismiss();
     }

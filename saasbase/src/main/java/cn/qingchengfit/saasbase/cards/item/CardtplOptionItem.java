@@ -6,11 +6,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -120,19 +120,27 @@ public class CardtplOptionItem extends AbstractFlexibleItem<CardtplOptionItem.Ca
   }
 
   public class CardtplStandardVH extends FlexibleViewHolder {
-    @BindView(R2.id.title) TextView title;
-    @BindView(R2.id.real_income) TextView realIncome;
-    @BindView(R2.id.valid_date) TextView validDate;
-    @BindView(R2.id.support_type) TextView supportType;
-    @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
-    @BindView(R2.id.img_custom_card_option) ImageView imgCardOption;
-    @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
-    @BindView(R2.id.shadow_card_option) View shadow;
-    @BindView(R2.id.layout_card_option) FrameLayout layoutCardOption;
+	TextView title;
+	TextView realIncome;
+	TextView validDate;
+	TextView supportType;
+	LinearLayout chargeLayout;
+	ImageView imgCardOption;
+	ImageView tagOnlyStaff;
+	View shadow;
+	FrameLayout layoutCardOption;
 
     public CardtplStandardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      ButterKnife.bind(this, view);
+      title = (TextView) view.findViewById(R.id.title);
+      realIncome = (TextView) view.findViewById(R.id.real_income);
+      validDate = (TextView) view.findViewById(R.id.valid_date);
+      supportType = (TextView) view.findViewById(R.id.support_type);
+      chargeLayout = (LinearLayout) view.findViewById(R.id.charge_layout);
+      imgCardOption = (ImageView) view.findViewById(R.id.img_custom_card_option);
+      tagOnlyStaff = (ImageView) view.findViewById(R.id.tag_only_staff);
+      shadow = (View) view.findViewById(R.id.shadow_card_option);
+      layoutCardOption = (FrameLayout) view.findViewById(R.id.layout_card_option);
     }
   }
 }

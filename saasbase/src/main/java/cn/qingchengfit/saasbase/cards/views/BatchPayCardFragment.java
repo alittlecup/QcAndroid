@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.ButterKnife;
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.R;
@@ -80,7 +80,7 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_batch_pay_by_cards, container, false);
-    unbinder = ButterKnife.bind(this, view);
+
     delegatePresenter(presenter, this);
     toolbar = view.findViewById(R.id.toolbar);
     toolbarTitile = view.findViewById(R.id.toolbar_title);

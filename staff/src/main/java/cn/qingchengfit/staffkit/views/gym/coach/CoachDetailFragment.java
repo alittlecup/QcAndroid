@@ -24,9 +24,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
@@ -66,22 +66,22 @@ import rx.functions.Action1;
  */
 public class CoachDetailFragment extends BaseFragment implements CoachDetailView {
 
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.civ_name) CommonInputView civName;
-    @BindView(R.id.gender_male) RadioButton genderMale;
-    @BindView(R.id.gender_female) RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.gender_layout) RelativeLayout genderLayout;
+	ImageView headerImg;
+	CommonInputView civName;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
 
     @Inject EditCoachInfoPresenter presenter;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.down_trainer_app) TextView downTrainerApp;
-    @BindView(R.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R.id.btn_del) RelativeLayout btnDel;
-    @BindView(R.id.deny_layout) View denyLayout;
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	TextView downTrainerApp;
+	RelativeLayout headerLayout;
+	RelativeLayout btnDel;
+	View denyLayout;
+	PhoneEditText phoneNum;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     private boolean isAdd = false;
     private Staff mCoach;
@@ -112,8 +112,41 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_coach_info, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      civName = (CommonInputView) view.findViewById(R.id.civ_name);
+      genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+      genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+      downTrainerApp = (TextView) view.findViewById(R.id.down_trainer_app);
+      headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+      btnDel = (RelativeLayout) view.findViewById(R.id.btn_del);
+      denyLayout = (View) view.findViewById(R.id.deny_layout);
+      phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.down_trainer_app).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CoachDetailFragment.this.onClick();
+        }
+      });
+      view.findViewById(R.id.deny_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onDeny();
+        }
+      });
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CoachDetailFragment.this.onClick();
+        }
+      });
+      view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          CoachDetailFragment.this.onClick();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
         boolean eP = serPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_CHANGE);
 
@@ -219,7 +252,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
         }
     }
 
-    @OnClick(R.id.down_trainer_app) public void onClick() {
+ public void onClick() {
         WebActivity.startWebForResult(Configs.DOWNLOAD_TRAINER, getContext(), 444);
     }
 
@@ -231,11 +264,11 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
         super.onDestroyView();
     }
 
-    @OnClick(R.id.deny_layout) public void onDeny() {
+ public void onDeny() {
         showAlert(R.string.alert_permission_forbid);
     }
 
-    @OnClick({ R.id.header_layout, R.id.btn_del }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.header_layout:
                 ChoosePictureFragmentDialog f = ChoosePictureFragmentDialog.newInstance();

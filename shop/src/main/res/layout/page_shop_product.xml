@@ -220,7 +220,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_common_input_60dp"
                 android:layout_marginTop="14dp"
-                android:background="@color/colorPrimary"
                 android:enabled="@{viewModel.isEdit}"
                 android:onClick="@{view->viewModel.toDeliverChannel()}"
                 app:civ_hint=""

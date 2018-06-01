@@ -15,13 +15,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.student.presenters.EditStudentPresenter;
 import cn.qingchengfit.support.widgets.CompatTextView;
@@ -49,26 +49,26 @@ public class EditStudentInfoFragment extends BaseFragment {
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.tv_add_hint) CompatTextView tvAddHint;
-  @BindView(R2.id.tv_avatar) TextView tvAvatar;
-  @BindView(R2.id.img_avatar) ImageView imgAvatar;
-  @BindView(R2.id.header_layout) RelativeLayout headerLayout;
-  @BindView(R2.id.civ_name) CommonInputView civName;
-  @BindView(R2.id.gender_male) RadioButton genderMale;
-  @BindView(R2.id.gender_female) RadioButton genderFemale;
-  @BindView(R2.id.course_type_rg) RadioGroup courseTypeRg;
-  @BindView(R2.id.gender_layout) RelativeLayout genderLayout;
-  @BindView(R2.id.phone_num) PhoneEditText phoneNum;
-  @BindView(R2.id.civ_birthday) CommonInputView civBirthday;
-  @BindView(R2.id.civ_address) CommonInputView civAddress;
-  @BindView(R2.id.support_shops) CommonInputView supportShops;
-  @BindView(R2.id.civ_remark) CommonInputView civRemark;
-  @BindView(R2.id.civ_salers) CommonInputView civSalers;
-  @BindView(R2.id.civ_coaches) CommonInputView civCoaches;
-  @BindView(R2.id.civ_come_from) CommonInputView civComeFrom;
-  @BindView(R2.id.civ_recomend) CommonInputView civRecomend;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	CompatTextView tvAddHint;
+	TextView tvAvatar;
+	ImageView imgAvatar;
+	RelativeLayout headerLayout;
+	CommonInputView civName;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
+	PhoneEditText phoneNum;
+	CommonInputView civBirthday;
+	CommonInputView civAddress;
+	CommonInputView supportShops;
+	CommonInputView civRemark;
+	CommonInputView civSalers;
+	CommonInputView civCoaches;
+	CommonInputView civComeFrom;
+	CommonInputView civRecomend;
 
   @Inject EditStudentPresenter presenter;
 
@@ -90,7 +90,27 @@ public class EditStudentInfoFragment extends BaseFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_edit_student_info, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    tvAddHint = (CompatTextView) view.findViewById(R.id.tv_add_hint);
+    tvAvatar = (TextView) view.findViewById(R.id.tv_avatar);
+    imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+    headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+    civName = (CommonInputView) view.findViewById(R.id.civ_name);
+    genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+    genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+    courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+    genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+    phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
+    civBirthday = (CommonInputView) view.findViewById(R.id.civ_birthday);
+    civAddress = (CommonInputView) view.findViewById(R.id.civ_address);
+    supportShops = (CommonInputView) view.findViewById(R.id.support_shops);
+    civRemark = (CommonInputView) view.findViewById(R.id.civ_remark);
+    civSalers = (CommonInputView) view.findViewById(R.id.civ_salers);
+    civCoaches = (CommonInputView) view.findViewById(R.id.civ_coaches);
+    civComeFrom = (CommonInputView) view.findViewById(R.id.civ_come_from);
+    civRecomend = (CommonInputView) view.findViewById(R.id.civ_recomend);
+
     initToolbar(toolbar);
 
     civName.setContent(presenter.getQcStudent().getUsername());

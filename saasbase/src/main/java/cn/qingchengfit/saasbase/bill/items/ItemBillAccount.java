@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.bill.items;
 
 import android.view.View;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -63,13 +63,15 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
 
   class ItemBillAccountVH extends FlexibleViewHolder {
 
-    @BindView(R2.id.tv_bill_time) TextView tvBillTime;
-    @BindView(R2.id.tv_bill_income) TextView tvBillIncome;
-    @BindView(R2.id.tv_bill_reduce) TextView tvBillReduce;
+	TextView tvBillTime;
+	TextView tvBillIncome;
+	TextView tvBillReduce;
 
     public ItemBillAccountVH(View view, FlexibleAdapter adapter) {
       super(view, adapter,true);
-      ButterKnife.bind(this, view);
+      tvBillTime = (TextView) view.findViewById(R.id.tv_bill_time);
+      tvBillIncome = (TextView) view.findViewById(R.id.tv_bill_income);
+      tvBillReduce = (TextView) view.findViewById(R.id.tv_bill_reduce);
     }
   }
 }

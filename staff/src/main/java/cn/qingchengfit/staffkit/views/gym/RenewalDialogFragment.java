@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -28,21 +28,21 @@ import cn.qingchengfit.utils.DateUtils;
 
 @Deprecated public class RenewalDialogFragment extends BaseDialogFragment {
 
-    @BindView(R.id.close) TextView close;
-    @BindView(R.id.first_first) TextView firstFirst;
-    @BindView(R.id.first_second) TextView firstSecond;
-    @BindView(R.id.second_first) TextView secondFirst;
-    @BindView(R.id.second_second) TextView secondSecond;
-    @BindView(R.id.price) TextView price;
-    @BindView(R.id.comfirm) TextView comfirm;
+	TextView close;
+	TextView firstFirst;
+	TextView firstSecond;
+	TextView secondFirst;
+	TextView secondSecond;
+	TextView price;
+	TextView comfirm;
 
     CoachService mCoachService;
     GymDetail.Recharge mRecharge;
-    @BindView(R.id.layout_first_first) LinearLayout layoutFirstFirst;
-    @BindView(R.id.layout_first_second) LinearLayout layoutFirstSecond;
-    @BindView(R.id.layout_second_first) LinearLayout layoutSecondFirst;
-    @BindView(R.id.layout_second_second) LinearLayout layoutSecondSecond;
-    @BindView(R.id.hint) TextView hint;
+	LinearLayout layoutFirstFirst;
+	LinearLayout layoutFirstSecond;
+	LinearLayout layoutSecondFirst;
+	LinearLayout layoutSecondSecond;
+	TextView hint;
 
     public static RenewalDialogFragment newInstance(GymDetail.Recharge recharge, CoachService coachService) {
 
@@ -66,8 +66,35 @@ import cn.qingchengfit.utils.DateUtils;
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_renewal, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        try {
+      close = (TextView) view.findViewById(R.id.close);
+      firstFirst = (TextView) view.findViewById(R.id.first_first);
+      firstSecond = (TextView) view.findViewById(R.id.first_second);
+      secondFirst = (TextView) view.findViewById(R.id.second_first);
+      secondSecond = (TextView) view.findViewById(R.id.second_second);
+      price = (TextView) view.findViewById(R.id.price);
+      comfirm = (TextView) view.findViewById(R.id.comfirm);
+      layoutFirstFirst = (LinearLayout) view.findViewById(R.id.layout_first_first);
+      layoutFirstSecond = (LinearLayout) view.findViewById(R.id.layout_first_second);
+      layoutSecondFirst = (LinearLayout) view.findViewById(R.id.layout_second_first);
+      layoutSecondSecond = (LinearLayout) view.findViewById(R.id.layout_second_second);
+      hint = (TextView) view.findViewById(R.id.hint);
+      view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          RenewalDialogFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          RenewalDialogFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.history).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          RenewalDialogFragment.this.onClick();
+        }
+      });
+
+      try {
 
             if (mRecharge.is_first_shop && !mRecharge.is_recharged) {//第一年第一家店
                 layoutFirstFirst.setBackgroundResource(R.color.bg_orange);
@@ -136,7 +163,7 @@ import cn.qingchengfit.utils.DateUtils;
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.close, R.id.comfirm }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.close:
                 getFragmentManager().popBackStackImmediate();
@@ -147,7 +174,7 @@ import cn.qingchengfit.utils.DateUtils;
         }
     }
 
-    @OnClick(R.id.history) public void onClick() {
+ public void onClick() {
         Intent toHistory = new Intent(getActivity(), GymActivity.class);
         toHistory.putExtra(GymActivity.GYM_TO, GymActivity.GYM_HISORY);
         toHistory.putExtra(Configs.EXTRA_BRAND, new Brand(mCoachService.getBrand_id()));

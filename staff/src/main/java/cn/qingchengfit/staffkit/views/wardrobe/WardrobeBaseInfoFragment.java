@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CompatUtils;
@@ -39,10 +39,10 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  */
 public class WardrobeBaseInfoFragment extends BaseFragment {
 
-    @BindView(R.id.tv_status) TextView tvStatus;
-    @BindView(R.id.tv_time_limit) TextView tvTimeLimit;
-    @BindView(R.id.tv_student) TextView tvStudent;
-    @BindView(R.id.tv_remind_day) TextView tvRemindDay;
+	TextView tvStatus;
+	TextView tvTimeLimit;
+	TextView tvStudent;
+	TextView tvRemindDay;
 
     private Locker mLocker;
 
@@ -62,8 +62,12 @@ public class WardrobeBaseInfoFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_base, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        tvStatus.setText(getString(R.string.long_term_hire));
+      tvStatus = (TextView) view.findViewById(R.id.tv_status);
+      tvTimeLimit = (TextView) view.findViewById(R.id.tv_time_limit);
+      tvStudent = (TextView) view.findViewById(R.id.tv_student);
+      tvRemindDay = (TextView) view.findViewById(R.id.tv_remind_day);
+
+      tvStatus.setText(getString(R.string.long_term_hire));
         tvStudent.setText(getString(R.string.user_phone, mLocker.user.getUsername(), mLocker.user.getPhone()));
         tvTimeLimit.setText(
             getString(R.string.start_to_end, DateUtils.getYYYYMMDDfromServer(mLocker.start), DateUtils.getYYYYMMDDfromServer(mLocker.end)));

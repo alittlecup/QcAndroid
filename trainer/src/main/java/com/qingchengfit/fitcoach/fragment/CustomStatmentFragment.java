@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -41,15 +41,15 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
   public static final String TAG = CustomStatmentFragment.class.getName();
 
   TimeDialogWindow pwTime;
-  @BindView(R.id.rootview) LinearLayout rootview;
+	LinearLayout rootview;
 
   @Inject CustomStatmentPresenter presenter;
-  @BindView(R.id.custom_statment_start) CommonInputView customStatmentStart;
-  @BindView(R.id.custom_statment_end) CommonInputView customStatmentEnd;
-  @BindView(R.id.custom_statment_course) CommonInputView customStatmentCourse;
-  @BindView(R.id.custom_statment_generate) Button customStatmentGenerate;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
+	CommonInputView customStatmentStart;
+	CommonInputView customStatmentEnd;
+	CommonInputView customStatmentCourse;
+	Button customStatmentGenerate;
+	Toolbar toolbar;
+	TextView toolbarTitle;
 
   private Calendar date;
   private List<String> gymStrings = new ArrayList<>();
@@ -69,7 +69,34 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_custom_statment, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    rootview = (LinearLayout) view.findViewById(R.id.rootview);
+    customStatmentStart = (CommonInputView) view.findViewById(R.id.custom_statment_start);
+    customStatmentEnd = (CommonInputView) view.findViewById(R.id.custom_statment_end);
+    customStatmentCourse = (CommonInputView) view.findViewById(R.id.custom_statment_course);
+    customStatmentGenerate = (Button) view.findViewById(R.id.custom_statment_generate);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    view.findViewById(R.id.custom_statment_course).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickCourse();
+      }
+    });
+    view.findViewById(R.id.custom_statment_end).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickEnd();
+      }
+    });
+    view.findViewById(R.id.custom_statment_start).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickStart();
+      }
+    });
+    view.findViewById(R.id.custom_statment_generate).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickGenerate();
+      }
+    });
+
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     initView();
@@ -121,12 +148,12 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
   }
 
 
-  @OnClick(R.id.custom_statment_course) public void onClickCourse() {
+ public void onClickCourse() {
     CourseChooseDialogFragment fragment = new CourseChooseDialogFragment();
     fragment.show(getFragmentManager(), "");
   }
 
-  @OnClick(R.id.custom_statment_end) public void onClickEnd() {
+ public void onClickEnd() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -160,7 +187,7 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
   }
 
-  @OnClick(R.id.custom_statment_start) public void onClickStart() {
+ public void onClickStart() {
 
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
@@ -210,7 +237,7 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
       //
       //}
 
-  @OnClick(R.id.custom_statment_generate) public void onClickGenerate() {
+ public void onClickGenerate() {
     try {
       long start = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent()).getTime();
       long end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent()).getTime();

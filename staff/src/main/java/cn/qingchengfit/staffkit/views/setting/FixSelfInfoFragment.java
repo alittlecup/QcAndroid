@@ -16,9 +16,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.App;
@@ -58,18 +58,18 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/2/23 2016.
  */
 public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPView {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R.id.username) CommonInputView username;
-    @BindView(R.id.gender_male) RadioButton genderMale;
-    @BindView(R.id.gender_female) RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.gender_layout) RelativeLayout genderLayout;
-    @BindView(R.id.phone) CommonInputView phone;
-    @BindView(R.id.city) CommonInputView city;
-    @BindView(R.id.comfirm) Button comfirm;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView headerImg;
+	RelativeLayout headerLayout;
+	CommonInputView username;
+	RadioButton genderMale;
+	RadioButton genderFemale;
+	RadioGroup courseTypeRg;
+	RelativeLayout genderLayout;
+	CommonInputView phone;
+	CommonInputView city;
+	Button comfirm;
     @Inject FixSelfInofPresneter presneter;
 
     private String uploadImageUrl;
@@ -113,8 +113,35 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fix_self_info, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presneter,this);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      headerImg = (ImageView) view.findViewById(R.id.header_img);
+      headerLayout = (RelativeLayout) view.findViewById(R.id.header_layout);
+      username = (CommonInputView) view.findViewById(R.id.username);
+      genderMale = (RadioButton) view.findViewById(R.id.gender_male);
+      genderFemale = (RadioButton) view.findViewById(R.id.gender_female);
+      courseTypeRg = (RadioGroup) view.findViewById(R.id.course_type_rg);
+      genderLayout = (RelativeLayout) view.findViewById(R.id.gender_layout);
+      phone = (CommonInputView) view.findViewById(R.id.phone);
+      city = (CommonInputView) view.findViewById(R.id.city);
+      comfirm = (Button) view.findViewById(R.id.comfirm);
+      view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onHeaderClick();
+        }
+      });
+      view.findViewById(R.id.city).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCity();
+        }
+      });
+      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onOk();
+        }
+      });
+
+      delegatePresenter(presneter,this);
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -197,12 +224,12 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
         return view;
     }
 
-    @OnClick(R.id.header_layout) public void onHeaderClick() {
+ public void onHeaderClick() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.show(getFragmentManager(), "");
     }
 
-    @OnClick(R.id.city) public void onCity() {
+ public void onCity() {
         citiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
             @Override public void onCityChoosen(String provice, String city, String district, int id) {
                 String content;
@@ -218,7 +245,7 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
         citiesChooser.show(getView());
     }
 
-    @OnClick(R.id.comfirm) public void onOk() {
+ public void onOk() {
         if (TextUtils.isEmpty(username.getContent())) {
             ToastUtils.show("请填写用户名");
             return;

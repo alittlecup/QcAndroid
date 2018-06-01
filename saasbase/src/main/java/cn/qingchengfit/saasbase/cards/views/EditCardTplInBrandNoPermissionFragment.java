@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
@@ -39,15 +39,15 @@ import javax.inject.Inject;
 @Leaf(module = "card", path = "/path/edit/card/nopermission")
 public class EditCardTplInBrandNoPermissionFragment extends SaasBaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.tv_card_tpl_name_brand) TextView tvCardTplNameBrand;
-  @BindView(R2.id.tv_card_tpl_desc) TextView tvCardTplDesc;
-  @BindView(R2.id.tv_card_tpl_limit) TextView tvCardTplLimit;
-  @BindView(R2.id.tv_card_tpl_term) TextView tvCardTplTerm;
-  @BindView(R2.id.input_card_tpl_brand_term) CommonInputView inputCardTplBrandTerm;
-  @BindView(R2.id.input_card_tpl_brand_support_gym) CommonInputView inputCardTplBrandSupportGym;
+	Toolbar toolbar;
+	TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	TextView tvCardTplNameBrand;
+	TextView tvCardTplDesc;
+	TextView tvCardTplLimit;
+	TextView tvCardTplTerm;
+	CommonInputView inputCardTplBrandTerm;
+	CommonInputView inputCardTplBrandSupportGym;
   @Inject CardTplDetailPresenter presenter;
   @Need CardTpl cardTpl;
   private CardtplBody body = new CardtplBody();
@@ -57,12 +57,34 @@ public class EditCardTplInBrandNoPermissionFragment extends SaasBaseFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_edit_cardtpl_no_permission, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvCardTplNameBrand = (TextView) view.findViewById(R.id.tv_card_tpl_name_brand);
+    tvCardTplDesc = (TextView) view.findViewById(R.id.tv_card_tpl_desc);
+    tvCardTplLimit = (TextView) view.findViewById(R.id.tv_card_tpl_limit);
+    tvCardTplTerm = (TextView) view.findViewById(R.id.tv_card_tpl_term);
+    inputCardTplBrandTerm = (CommonInputView) view.findViewById(R.id.input_card_tpl_brand_term);
+    inputCardTplBrandSupportGym =
+        (CommonInputView) view.findViewById(R.id.input_card_tpl_brand_support_gym);
+    view.findViewById(R.id.input_card_tpl_brand_term)
+        .setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            onTerm();
+          }
+        });
+    view.findViewById(R.id.input_card_tpl_brand_support_gym)
+        .setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            onSupportGym();
+          }
+        });
+
     initView();
     return view;
   }
 
-  @OnClick(R2.id.input_card_tpl_brand_term)
+
   public void onTerm(){
     CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(), true,
         "", cardTpl);
@@ -93,7 +115,7 @@ public class EditCardTplInBrandNoPermissionFragment extends SaasBaseFragment {
     }
   }
 
-  @OnClick(R2.id.input_card_tpl_brand_support_gym)
+
   public void onSupportGym(){
     if (!TextUtils.isEmpty(body.shops)) {
       MutiChooseGymFragment.start(EditCardTplInBrandNoPermissionFragment.this, false,

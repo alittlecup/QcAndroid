@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
+
+
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -23,14 +23,14 @@ import rx.schedulers.Schedulers;
  */
 public class NotiDetailFragment extends Fragment {
     public static final String TAG = NotiDetailFragment.class.getName();
-    @BindView(R.id.notidetail_time) TextView notidetailTime;
-    @BindView(R.id.notidetail_sender) TextView notidetailSender;
-    @BindView(R.id.notidetail_img) ImageView notidetailImg;
-    @BindView(R.id.notidetail_content) TextView notidetailContent;
-    @BindView(R.id.notidetail_title) TextView notidetailTitle;
-    @BindView(R.id.notidetail_content_webview) WebView notidetailContentWebview;
+	TextView notidetailTime;
+	TextView notidetailSender;
+	ImageView notidetailImg;
+	TextView notidetailContent;
+	TextView notidetailTitle;
+	WebView notidetailContentWebview;
     private int id = 0;
-    private Unbinder unbinder;
+
 
     public NotiDetailFragment() {
     }
@@ -54,7 +54,12 @@ public class NotiDetailFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_noti_detail, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      notidetailTime = (TextView) view.findViewById(R.id.notidetail_time);
+      notidetailSender = (TextView) view.findViewById(R.id.notidetail_sender);
+      notidetailImg = (ImageView) view.findViewById(R.id.notidetail_img);
+      notidetailContent = (TextView) view.findViewById(R.id.notidetail_content);
+      notidetailTitle = (TextView) view.findViewById(R.id.notidetail_title);
+      notidetailContentWebview = (WebView) view.findViewById(R.id.notidetail_content_webview);
 
       if (id != 0) {
         QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, id + "")
@@ -81,6 +86,6 @@ public class NotiDetailFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 }

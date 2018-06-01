@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.Configs;
@@ -32,16 +32,16 @@ import java.util.Locale;
  */
 public class SaleTradeTypeFormFragment extends BaseFragment {
 
-    @BindView(R.id.new_buy_trade_times) TextView newBuyTradeTimes;
-    @BindView(R.id.new_buy_realincome) TextView newBuyRealincome;
-    @BindView(R.id.charge_trade_times) TextView chargeTradeTimes;
-    @BindView(R.id.present_trade_times) TextView presentTradeTimes;
-    @BindView(R.id.present_real_income) TextView presentRealIncome;
-    @BindView(R.id.fefund_trade_times) TextView fefundTradeTimes;
-    @BindView(R.id.refund_real_income) TextView refundRealIncome;
-    @BindView(R.id.total_trade_times) TextView totalTradeTimes;
-    @BindView(R.id.total_real_income) TextView totalRealIncome;
-    @BindView(R.id.charge_real_incomes) TextView chargeRealIncomes;
+	TextView newBuyTradeTimes;
+	TextView newBuyRealincome;
+	TextView chargeTradeTimes;
+	TextView presentTradeTimes;
+	TextView presentRealIncome;
+	TextView fefundTradeTimes;
+	TextView refundRealIncome;
+	TextView totalTradeTimes;
+	TextView totalRealIncome;
+	TextView chargeRealIncomes;
 
     public static SaleTradeTypeFormFragment newInstance(List<SaleTradeForm> ts) {
 
@@ -55,8 +55,18 @@ public class SaleTradeTypeFormFragment extends BaseFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sale_trade_form, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        if (getArguments() != null) {
+      newBuyTradeTimes = (TextView) view.findViewById(R.id.new_buy_trade_times);
+      newBuyRealincome = (TextView) view.findViewById(R.id.new_buy_realincome);
+      chargeTradeTimes = (TextView) view.findViewById(R.id.charge_trade_times);
+      presentTradeTimes = (TextView) view.findViewById(R.id.present_trade_times);
+      presentRealIncome = (TextView) view.findViewById(R.id.present_real_income);
+      fefundTradeTimes = (TextView) view.findViewById(R.id.fefund_trade_times);
+      refundRealIncome = (TextView) view.findViewById(R.id.refund_real_income);
+      totalTradeTimes = (TextView) view.findViewById(R.id.total_trade_times);
+      totalRealIncome = (TextView) view.findViewById(R.id.total_real_income);
+      chargeRealIncomes = (TextView) view.findViewById(R.id.charge_real_incomes);
+
+      if (getArguments() != null) {
             ArrayList<SaleTradeForm> ts = getArguments().getParcelableArrayList("form");
             if (ts != null) {
                 for (int i = 0; i < ts.size(); i++) {

@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
@@ -37,10 +37,10 @@ import javax.inject.Inject;
 
 @FragmentWithArgs public class DeleteMemberFragment extends BaseFragment implements SignUpView, FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.recycler_member_delete) RecyclerView recyclerMemberDelete;
+	Toolbar toolbar;
+	TextView textToolbarRight;
+	TextView toolbarTitile;
+	RecyclerView recyclerMemberDelete;
 
     @Arg ArrayList<QcStudentBean> memberList;
     @Arg String teamId;
@@ -58,9 +58,12 @@ import javax.inject.Inject;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_delete_member, container, false);
-        unbinder = ButterKnife.bind(this, view);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      textToolbarRight = (TextView) view.findViewById(R.id.text_toolbar_right);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      recyclerMemberDelete = (RecyclerView) view.findViewById(R.id.recycler_member_delete);
 
-        initView();
+      initView();
 
         delegatePresenter(presenter, this);
         recyclerMemberDelete.setLayoutManager(new LinearLayoutManager(getContext()));

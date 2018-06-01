@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.CitiesChooser;
@@ -37,11 +37,11 @@ import cn.qingchengfit.widgets.CommonInputView;
 public class WriteAddressFragment extends BaseDialogFragment {
     public static final String TAG = WriteAddressFragment.class.getSimpleName();
 
-    @BindView(R.id.city) CommonInputView city;
-    @BindView(R.id.address) LargeInputView address;
-    @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	CommonInputView city;
+	LargeInputView address;
+	Button btn;
+	Toolbar toolbar;
+	TextView toolbarTitile;
     private CitiesChooser citiesChooser;
 
     public static void start(Fragment fragment, int requestCode, String city, String address) {
@@ -65,7 +65,7 @@ public class WriteAddressFragment extends BaseDialogFragment {
         citiesChooser = new CitiesChooser(getContext());
     }
 
-    @OnClick(R.id.city) public void onCity() {
+ public void onCity() {
         citiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
             @Override public void onCityChoosen(String provice, String city, String district, int id) {
                 String content;
@@ -82,8 +82,23 @@ public class WriteAddressFragment extends BaseDialogFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_write_address, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+      city = (CommonInputView) view.findViewById(R.id.city);
+      address = (LargeInputView) view.findViewById(R.id.address);
+      btn = (Button) view.findViewById(R.id.btn);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.city).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCity();
+        }
+      });
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onComfirm();
+        }
+      });
+
+      toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 dismiss();
@@ -96,7 +111,7 @@ public class WriteAddressFragment extends BaseDialogFragment {
         return view;
     }
 
-    @OnClick(R.id.btn) public void onComfirm() {
+ public void onComfirm() {
         getTargetFragment().onActivityResult(getTargetRequestCode(), IntentUtils.RESULT_OK,
             IntentUtils.instanceStringIntent(city.getContent(), address.getContent()));
         this.dismiss();

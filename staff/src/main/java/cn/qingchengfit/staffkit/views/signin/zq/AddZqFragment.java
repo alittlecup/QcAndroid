@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.R;
@@ -45,15 +45,15 @@ public class AddZqFragment extends BaseFragment implements
 
   public static final String FIND_NO_URL = "https://mp.weixin.qq.com/s/eyKfbS8cRHNt_bqHk6DfJQ";
 
-  @BindView(R.id.toolbar) public Toolbar toolbar;
-  @BindView(R.id.toolbar_title) public TextView toolbarTitle;
-  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R.id.input_gym_name) CommonInputView inputGymName;
-  @BindView(R.id.input_gym_address) CommonInputView inputGymAddress;
-  @BindView(R.id.btn_find_equip) TextView btnFindEquip;
-  @BindView(R.id.input_gym_fun) CommonInputView inputGymFun;
-  @BindView(R.id.input_gym_start) CommonInputView inputGymStart;
-  @BindView(R.id.input_gym_end) CommonInputView inputGymEnd;
+	public Toolbar toolbar;
+	public TextView toolbarTitle;
+	FrameLayout toolbarLayout;
+	CommonInputView inputGymName;
+	CommonInputView inputGymAddress;
+	TextView btnFindEquip;
+	CommonInputView inputGymFun;
+	CommonInputView inputGymStart;
+	CommonInputView inputGymEnd;
   @Inject ZqAccessPresenter presenter;
   public AccessBody body;
   BottomListFragment listFragment;
@@ -62,7 +62,36 @@ public class AddZqFragment extends BaseFragment implements
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_add_zq_access, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    inputGymName = (CommonInputView) view.findViewById(R.id.input_gym_name);
+    inputGymAddress = (CommonInputView) view.findViewById(R.id.input_gym_address);
+    btnFindEquip = (TextView) view.findViewById(R.id.btn_find_equip);
+    inputGymFun = (CommonInputView) view.findViewById(R.id.input_gym_fun);
+    inputGymStart = (CommonInputView) view.findViewById(R.id.input_gym_start);
+    inputGymEnd = (CommonInputView) view.findViewById(R.id.input_gym_end);
+    view.findViewById(R.id.btn_find_equip).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onFind();
+      }
+    });
+    view.findViewById(R.id.input_gym_fun).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        selectFun();
+      }
+    });
+    view.findViewById(R.id.input_gym_start).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTime(v);
+      }
+    });
+    view.findViewById(R.id.input_gym_end).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTime(v);
+      }
+    });
+
     delegatePresenter(presenter, this);
     if (body == null){
       body = new AccessBody();
@@ -97,7 +126,7 @@ public class AddZqFragment extends BaseFragment implements
     });
   }
 
-  @OnClick(R.id.btn_find_equip)
+
   public void onFind(){
     WebActivity.startWeb(FIND_NO_URL, getContext());
   }
@@ -125,12 +154,12 @@ public class AddZqFragment extends BaseFragment implements
     listFragment.setListener(this);
   }
 
-  @OnClick(R.id.input_gym_fun)
+
   public void selectFun(){
     listFragment.show(getFragmentManager(), null);
   }
 
-  @OnClick({R.id.input_gym_start, R.id.input_gym_end})
+
   public void onTime(final View v){
     TimeDialogWindow timeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS);
     timeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {

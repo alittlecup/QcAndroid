@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GymExtra;
@@ -56,13 +56,13 @@ public class SignInConfigScreenFragment extends BaseFragment {
 
     @Inject RestRepository mRestRepository;
     @Inject GymFunctionFactory gymFunctionFactory;
-    @BindView(R.id.tv_screen_url) TextView tvScreenUrl;
+	TextView tvScreenUrl;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +70,21 @@ public class SignInConfigScreenFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_screen, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+      tvScreenUrl = (TextView) view.findViewById(R.id.tv_screen_url);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.layout_screen).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          SignInConfigScreenFragment.this.onClick();
+        }
+      });
+      view.findViewById(R.id.btn_cpoy_link).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onCopyLink();
+        }
+      });
+
+      initToolbar(toolbar);
         RxRegiste(mRestRepository.getGet_api()
             .qcGetGymExtra(App.staffId, gymWrapper.getParams())
             .onBackpressureBuffer()
@@ -105,7 +118,7 @@ public class SignInConfigScreenFragment extends BaseFragment {
         return SignInConfigScreenFragment.class.getName();
     }
 
-    @OnClick(R.id.layout_screen) public void onClick() {
+ public void onClick() {
         if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SCREEN_CAN_CHANGE)) {
             showAlert(R.string.sorry_for_no_permission);
             return;
@@ -113,7 +126,7 @@ public class SignInConfigScreenFragment extends BaseFragment {
         gymFunctionFactory.goQrScan(this, QRActivity.SIGNIN_SCREEN, null, gymWrapper.getCoachService());
     }
 
-    @OnClick(R.id.btn_cpoy_link) public void onCopyLink() {
+ public void onCopyLink() {
         ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(tvScreenUrl.getText());
         ToastUtils.showS(getString(R.string.link_has_copied));

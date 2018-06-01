@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -56,18 +56,18 @@ import rx.functions.Action1;
 public class MutiChooseStudentActivity extends BaseActivity implements MutiChooseStudentPresenterPresenter.MVPView {
 
     public static final String EXTRA_STUDENTS = "choose_students";
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.down) ImageView down;
-    @BindView(R.id.titile_layout) LinearLayout titileLayout;
-    @BindView(R.id.searchview_clear) ImageView searchviewClear;
-    @BindView(R.id.searchview_cancle) Button searchviewCancle;
-    @BindView(R.id.searchview) LinearLayout searchview;
-    @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    @BindView(R.id.inter_searchview_et) EditText searchviewEt;
-    @BindView(R.id.add_student) ImageView addStudent;
-    @BindView(R.id.recycleview) RecyclerView recyclerView;
-    @BindView(R.id.alphabetview) AlphabetView alphabetview;
+	Toolbar toolbar;
+	TextView toolbarTitile;
+	ImageView down;
+	LinearLayout titileLayout;
+	ImageView searchviewClear;
+	Button searchviewCancle;
+	LinearLayout searchview;
+	RelativeLayout toolbarLayout;
+	EditText searchviewEt;
+	ImageView addStudent;
+	RecyclerView recyclerView;
+	AlphabetView alphabetview;
     @Inject RestRepository restRepository;
     @Inject MutiChooseStudentPresenterPresenter presenter;
     @Inject LoginStatus loginStatus;
@@ -85,8 +85,36 @@ public class MutiChooseStudentActivity extends BaseActivity implements MutiChoos
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_muti_choose_student);
-        ButterKnife.bind(this);
-        presenter.attachView(this);
+      toolbar = (Toolbar) findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
+      down = (ImageView) findViewById(R.id.down);
+      titileLayout = (LinearLayout) findViewById(R.id.titile_layout);
+      searchviewClear = (ImageView) findViewById(R.id.searchview_clear);
+      searchviewCancle = (Button) findViewById(R.id.searchview_cancle);
+      searchview = (LinearLayout) findViewById(R.id.searchview);
+      toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
+      searchviewEt = (EditText) findViewById(R.id.inter_searchview_et);
+      addStudent = (ImageView) findViewById(R.id.add_student);
+      recyclerView = (RecyclerView) findViewById(R.id.recycleview);
+      alphabetview = (AlphabetView) findViewById(R.id.alphabetview);
+
+      findViewById(R.id.titile_layout).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MutiChooseStudentActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.searchview_cancle).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MutiChooseStudentActivity.this.onClick(v);
+        }
+      });
+      findViewById(R.id.add_student).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MutiChooseStudentActivity.this.onClick(v);
+        }
+      });
+
+      presenter.attachView(this);
         initToolbar();
         initData();
     }
@@ -286,7 +314,7 @@ public class MutiChooseStudentActivity extends BaseActivity implements MutiChoos
         hideLoading();
     }
 
-    @OnClick({ R.id.titile_layout, R.id.searchview_cancle, R.id.add_student }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.titile_layout:
                 break;
@@ -324,19 +352,25 @@ public class MutiChooseStudentActivity extends BaseActivity implements MutiChoos
      * recycle adapter
      */
     public static class StudentsHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_student_header) ImageView itemStudentHeader;
-        @BindView(R.id.item_student_name) TextView itemStudentName;
-        @BindView(R.id.item_student_phonenum) TextView itemStudentPhonenum;
-        @BindView(R.id.item_checkbox) CheckBox itemCheckbox;
-        @BindView(R.id.item_student_alpha) TextView itemStudentAlpha;
+	ImageView itemStudentHeader;
+	TextView itemStudentName;
+	TextView itemStudentPhonenum;
+	CheckBox itemCheckbox;
+	TextView itemStudentAlpha;
         //        @BindView(R.id.item_student_divider)
         //        View itemStudentDivder;
 
-        @BindView(R.id.item_delete) ImageView itemDel;
+	ImageView itemDel;
 
         public StudentsHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            itemStudentHeader = (ImageView) itemView.findViewById(R.id.item_student_header);
+            itemStudentName = (TextView) itemView.findViewById(R.id.item_student_name);
+            itemStudentPhonenum = (TextView) itemView.findViewById(R.id.item_student_phonenum);
+            itemCheckbox = (CheckBox) itemView.findViewById(R.id.item_checkbox);
+            itemStudentAlpha = (TextView) itemView.findViewById(R.id.item_student_alpha);
+            itemDel = (ImageView) itemView.findViewById(R.id.item_delete);
+
         }
     }
 

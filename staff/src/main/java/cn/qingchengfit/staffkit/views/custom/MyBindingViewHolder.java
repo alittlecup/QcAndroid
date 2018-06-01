@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 
 /**
@@ -13,12 +11,14 @@ import cn.qingchengfit.staffkit.R;
  */
 
 public class MyBindingViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.item_sales_header) public ImageView itemSalesHeader;
-    @BindView(R.id.tv_sale_name) public TextView tvSaleName;
-    @BindView(R.id.tv_sale_stucount) public TextView tvSaleStucount;
+  public ImageView itemSalesHeader;
+  public TextView tvSaleName;
+  public TextView tvSaleStucount;
 
-    public MyBindingViewHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
+  public MyBindingViewHolder(View itemView) {
+    super(itemView);
+    itemSalesHeader = itemView.findViewById(R.id.item_sales_header);
+    tvSaleName = itemView.findViewById(R.id.tv_sale_name);
+    tvSaleStucount = itemView.findViewById(R.id.tv_sale_stucount);
+  }
 }

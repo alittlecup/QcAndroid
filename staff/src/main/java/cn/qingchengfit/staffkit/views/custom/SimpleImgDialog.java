@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import com.bumptech.glide.Glide;
@@ -29,7 +29,7 @@ import uk.co.senab.photoview.PhotoView;
  */
 public class SimpleImgDialog extends BaseDialogFragment {
 
-    @BindView(R.id.photoview) PhotoView photoview;
+	PhotoView photoview;
 
     public static SimpleImgDialog newInstance(String url) {
 
@@ -48,8 +48,9 @@ public class SimpleImgDialog extends BaseDialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_simple_img, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        photoview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      photoview = (PhotoView) view.findViewById(R.id.photoview);
+
+      photoview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         Glide.with(getActivity()).load(getArguments().getString("url")).placeholder(R.drawable.img_loadingimage).into(photoview);
         //        photoview.setScale(photoview.getMinimumScale());
         return view;

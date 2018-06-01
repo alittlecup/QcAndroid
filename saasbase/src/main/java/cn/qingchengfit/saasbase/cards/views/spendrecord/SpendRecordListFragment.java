@@ -9,10 +9,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.cards.bean.StatementBean;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -39,9 +39,9 @@ import javax.inject.Inject;
 @Leaf(module = "card", path = "/consumption/list")
 public class SpendRecordListFragment extends BaseFragment implements SpendRecordListView {
 
-    @BindView(R2.id.add_sum) TextView addSum;
-    @BindView(R2.id.minus_sum) TextView minusSum;
-    @BindView(R2.id.recyclerview) RecycleViewWithNoImg recycleview;
+	TextView addSum;
+	TextView minusSum;
+	RecycleViewWithNoImg recycleview;
     @Inject SpendRecordListPresenter presenter;
     private StudentClassRecordAdapter adater;
     private List<StatementBean> datas = new ArrayList<>();
@@ -72,8 +72,11 @@ public class SpendRecordListFragment extends BaseFragment implements SpendRecord
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_card_spend_record_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      addSum = (TextView) view.findViewById(R.id.add_sum);
+      minusSum = (TextView) view.findViewById(R.id.minus_sum);
+      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
+
+      delegatePresenter(presenter, this);
         final LinearLayoutManager manger = new LinearLayoutManager(getContext());
         recycleview.setLayoutManager(manger);
         adater = new StudentClassRecordAdapter(datas);

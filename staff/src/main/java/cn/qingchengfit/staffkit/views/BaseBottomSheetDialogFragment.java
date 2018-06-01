@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.util.Pair;
-import butterknife.Unbinder;
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
@@ -39,14 +39,13 @@ import rx.Observable;
  */
 
 public class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment {
-    public Unbinder unbinder;
+
     private List<Pair<String, Observable>> observables = new ArrayList<>();
 
     @Override public void onDestroyView() {
         for (int i = 0; i < observables.size(); i++) {
             RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }
-        if (unbinder != null) unbinder.unbind();
         super.onDestroyView();
     }
 

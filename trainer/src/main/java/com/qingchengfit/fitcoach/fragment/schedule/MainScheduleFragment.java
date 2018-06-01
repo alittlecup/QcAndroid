@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -61,14 +61,14 @@ import rx.schedulers.Schedulers;
  */
 public class MainScheduleFragment extends BaseFragment {
 
-    @BindView(R.id.title) TextView title;
-    @BindView(R.id.layout_title) LinearLayout layoutTitle;
-    @BindView(R.id.student_order) TextView studentOrder;
-    @BindView(R.id.schedule_notification) ImageView scheduleNotification;
-    @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;
-    @BindView(R.id.schedule_notification_layout) RelativeLayout scheduleNotificationLayout;
-    @BindView(R.id.schedule_frag) FrameLayout scheduleFrag;
-    @BindView(R.id.view_p) View viewP;
+	TextView title;
+	LinearLayout layoutTitle;
+	TextView studentOrder;
+	ImageView scheduleNotification;
+	TextView scheduleNotificationCount;
+	RelativeLayout scheduleNotificationLayout;
+	FrameLayout scheduleFrag;
+	View viewP;
     @Inject LoginStatus loginStatus;
     private CoachService mCoachService;
     private boolean isWeekView;
@@ -113,8 +113,38 @@ public class MainScheduleFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        isWeekView = PreferenceUtils.getPrefBoolean(getContext(), "is_week_view", false);
+      title = (TextView) view.findViewById(R.id.title);
+      layoutTitle = (LinearLayout) view.findViewById(R.id.layout_title);
+      studentOrder = (TextView) view.findViewById(R.id.student_order);
+      scheduleNotification = (ImageView) view.findViewById(R.id.schedule_notification);
+      scheduleNotificationCount = (TextView) view.findViewById(R.id.schedule_notification_count);
+      scheduleNotificationLayout =
+          (RelativeLayout) view.findViewById(R.id.schedule_notification_layout);
+      scheduleFrag = (FrameLayout) view.findViewById(R.id.schedule_frag);
+      viewP = (View) view.findViewById(R.id.view_p);
+      view.findViewById(R.id.student_order).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onStuOrder();
+        }
+      });
+      view.findViewById(R.id.layout_title).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MainScheduleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.student_order).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          MainScheduleFragment.this.onClick(v);
+        }
+      });
+      view.findViewById(R.id.schedule_notification_layout)
+          .setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              MainScheduleFragment.this.onClick(v);
+            }
+          });
+
+      isWeekView = PreferenceUtils.getPrefBoolean(getContext(), "is_week_view", false);
         RxBusAdd(EventGoPreview.class).subscribe(new Action1<EventGoPreview>() {
             @Override public void call(EventGoPreview eventGoPreview) {
                 goStudentPreview(eventGoPreview.mCoachService);
@@ -184,7 +214,7 @@ public class MainScheduleFragment extends BaseFragment {
         queryNotify();
     }
 
-    @OnClick(R.id.student_order) public void onStuOrder() {
+ public void onStuOrder() {
         try {
             hideHint();
             goStudentPreview(mCoachService);
@@ -246,7 +276,7 @@ public class MainScheduleFragment extends BaseFragment {
         return MainScheduleFragment.class.getName();
     }
 
-    @OnClick({ R.id.layout_title, R.id.student_order, R.id.schedule_notification_layout }) public void onClick(View view) {
+ public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_title://选择场馆
                 Intent toChooseGym = new Intent(getContext(), ChooseActivity.class);

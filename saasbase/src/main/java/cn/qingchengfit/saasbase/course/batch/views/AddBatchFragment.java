@@ -18,14 +18,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
@@ -79,18 +79,18 @@ import rx.android.schedulers.AndroidSchedulers;
   extends SaasBaseFragment implements IBatchPresenter.MVPView,
   FlexibleAdapter.OnItemClickListener,BatchDetailCommonView.BatchTempleListener {
 
-  @BindView(R2.id.add) TextView add;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
+	TextView add;
+	TextView toolbarTitile;
+	Toolbar toolbar;
 
-  @BindView(R2.id.tv_batch_loop_hint) TextView tvBatchLoopHint;
-  @BindView(R2.id.starttime) CommonInputView starttime;
-  @BindView(R2.id.endtime) CommonInputView endtime;
-  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
+	TextView tvBatchLoopHint;
+	CommonInputView starttime;
+	CommonInputView endtime;
+	RecyclerView recyclerview;
 
-  @BindView(R2.id.tv_clear_auto_batch) TextView tvClearAutoBatch;
-  @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
-  @BindView(R2.id.scroll_root) NestedScrollView scrollRoot;
+	TextView tvClearAutoBatch;
+	CommonInputView civOpenTime;
+	NestedScrollView scrollRoot;
   String[] arrayOpenTime;
   boolean loadTemplate = false;
   @Inject AddBatchPresenter presenter;
@@ -147,7 +147,42 @@ import rx.android.schedulers.AndroidSchedulers;
     @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_add_batch, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    add = (TextView) view.findViewById(R.id.add);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    tvBatchLoopHint = (TextView) view.findViewById(R.id.tv_batch_loop_hint);
+    starttime = (CommonInputView) view.findViewById(R.id.starttime);
+    endtime = (CommonInputView) view.findViewById(R.id.endtime);
+    recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
+    tvClearAutoBatch = (TextView) view.findViewById(R.id.tv_clear_auto_batch);
+    civOpenTime = (CommonInputView) view.findViewById(R.id.civ_to_open_time);
+    scrollRoot = (NestedScrollView) view.findViewById(R.id.scroll_root);
+    view.findViewById(R.id.starttime).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onStartTime();
+      }
+    });
+    view.findViewById(R.id.endtime).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onEndTime();
+      }
+    });
+    view.findViewById(R.id.civ_to_open_time).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onOpenTime();
+      }
+    });
+    view.findViewById(R.id.tv_clear_auto_batch).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        clearBatch();
+      }
+    });
+    view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        addBatchLoop();
+      }
+    });
+
     delegatePresenter(presenter, this);
     presenter.setPrivate(mCourse == null || mCourse.is_private());
 
@@ -318,7 +353,7 @@ import rx.android.schedulers.AndroidSchedulers;
   /**
    * 选择开始时间
    */
-  @OnClick(R2.id.starttime) public void onStartTime() {
+ public void onStartTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -339,7 +374,7 @@ import rx.android.schedulers.AndroidSchedulers;
   /**
    * 选择结束时间
    */
-  @OnClick(R2.id.endtime) public void onEndTime() {
+ public void onEndTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -366,7 +401,7 @@ import rx.android.schedulers.AndroidSchedulers;
         : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
-  @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {
+ public void onOpenTime() {
     if (openDialog == null) {
       openDialog =
         DialogList.builder(getContext()).list(arrayOpenTime, new AdapterView.OnItemClickListener() {
@@ -434,7 +469,7 @@ import rx.android.schedulers.AndroidSchedulers;
   /**
    * 清除自动填充排期
    */
-  @OnClick(R2.id.tv_clear_auto_batch) public void clearBatch() {
+ public void clearBatch() {
     commonFlexAdapter.clear();
     tvBatchLoopHint.setText(presenter.isPrivate()?"课程周期":"课程周期");
     tvClearAutoBatch.setVisibility(View.GONE);
@@ -468,7 +503,7 @@ import rx.android.schedulers.AndroidSchedulers;
   /**
    * 添加课程周期
    */
-  @OnClick(R2.id.add) public void addBatchLoop() {
+ public void addBatchLoop() {
       routeTo("/batch/loop/add/", AddBatchLoopParams.builder()
         .courseLength(presenter.isPrivate()?0:mCourse.getLength())
         .slice(10)

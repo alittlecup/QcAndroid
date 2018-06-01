@@ -9,10 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
+
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.constant.ShopConfigs;
 import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
@@ -32,22 +32,22 @@ import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/msgnoti/") public class MsgNotiFragment extends SaasBaseFragment
   implements MsgNotiPresenter.MVPView {
-  @BindView(R2.id.sw_begin_noti_min) CommonInputView swBeginNotiMin;
-  @BindView(R2.id.sw_begin_noti) ExpandedLayout swBeginNoti;
-  @BindView(R2.id.sw_less_noti_min) CommonInputView swLessNotiMin;
-  @BindView(R2.id.sw_less_noti) ExpandedLayout swLessNoti;
-  @BindView(R2.id.sw_new_noti) ExpandedLayout swNewNoti;
-  @BindView(R2.id.sw_order_noti) ExpandedLayout swOrderNoti;
-  @BindView(R2.id.sw_cancle_noti) ExpandedLayout swCancleNoti;
-  @BindView(R2.id.sw_seed_to_subtitute) ExpandedLayout swSeedToSubtitute;
+	CommonInputView swBeginNotiMin;
+	ExpandedLayout swBeginNoti;
+	CommonInputView swLessNotiMin;
+	ExpandedLayout swLessNoti;
+	ExpandedLayout swNewNoti;
+	ExpandedLayout swOrderNoti;
+	ExpandedLayout swCancleNoti;
+	ExpandedLayout swSeedToSubtitute;
 
   /**
    * 是否为私教
    */
   @Need public Boolean mIsPrivate;
   @Inject MsgNotiPresenter mMsgNotiPresenter;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
   private String mBeginNotiId;
   private String mBeginMinuteId;
@@ -65,7 +65,17 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_msg_noti, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    swBeginNotiMin = (CommonInputView) view.findViewById(R.id.sw_begin_noti_min);
+    swBeginNoti = (ExpandedLayout) view.findViewById(R.id.sw_begin_noti);
+    swLessNotiMin = (CommonInputView) view.findViewById(R.id.sw_less_noti_min);
+    swLessNoti = (ExpandedLayout) view.findViewById(R.id.sw_less_noti);
+    swNewNoti = (ExpandedLayout) view.findViewById(R.id.sw_new_noti);
+    swOrderNoti = (ExpandedLayout) view.findViewById(R.id.sw_order_noti);
+    swCancleNoti = (ExpandedLayout) view.findViewById(R.id.sw_cancle_noti);
+    swSeedToSubtitute = (ExpandedLayout) view.findViewById(R.id.sw_seed_to_subtitute);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+
     delegatePresenter(mMsgNotiPresenter, this);
     initToolbar(toolbar);
     String courseTypeStr =

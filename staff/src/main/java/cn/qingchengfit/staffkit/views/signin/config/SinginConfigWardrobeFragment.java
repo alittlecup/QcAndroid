@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+
+
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
@@ -46,8 +46,8 @@ import javax.inject.Inject;
  */
 public class SinginConfigWardrobeFragment extends BaseFragment implements SigninConfigWradrobePresenter.MVPView {
 
-    @BindView(R.id.swt_signin_config_locker) SwitcherLayout swtSigninConfigLocker;
-    @BindView(R.id.swt_signin_config_locker_back) SwitcherLayout swtSigninConfigLockerBack;
+	SwitcherLayout swtSigninConfigLocker;
+	SwitcherLayout swtSigninConfigLockerBack;
 
     @Inject SigninConfigWradrobePresenter presenter;
 
@@ -61,9 +61,9 @@ public class SinginConfigWardrobeFragment extends BaseFragment implements Signin
      * 签出是否自动归还更衣柜
      */
     List<SignInConfig.Config> signOutConfig = new ArrayList<>();
-    @BindView(R.id.view_no_permission) View viewNoPermission;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+	View viewNoPermission;
+	Toolbar toolbar;
+	TextView toolbarTitile;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +71,19 @@ public class SinginConfigWardrobeFragment extends BaseFragment implements Signin
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signin_config_wardrobe, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
+      swtSigninConfigLocker = (SwitcherLayout) view.findViewById(R.id.swt_signin_config_locker);
+      swtSigninConfigLockerBack =
+          (SwitcherLayout) view.findViewById(R.id.swt_signin_config_locker_back);
+      viewNoPermission = (View) view.findViewById(R.id.view_no_permission);
+      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+      view.findViewById(R.id.view_no_permission).setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickNopermiss();
+        }
+      });
+
+      delegatePresenter(presenter, this);
         initToolbar(toolbar);
 
         swtSigninConfigLocker.setOnCheckListener(new CompoundButton.OnCheckedChangeListener() {
@@ -130,7 +141,7 @@ public class SinginConfigWardrobeFragment extends BaseFragment implements Signin
         }
     }
 
-    @OnClick(R.id.view_no_permission) void onClickNopermiss() {
+ void onClickNopermiss() {
         showAlert(R.string.sorry_for_no_permission);
     }
 

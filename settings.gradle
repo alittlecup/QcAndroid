@@ -1,6 +1,6 @@
 include ':saasbase',
-//    ':trainer',
+    ':trainer',
     //    ':atest',
     ':staff',
-':shop'
+    ':shop'
 
