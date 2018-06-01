@@ -269,6 +269,11 @@ import rx.android.schedulers.AndroidSchedulers;
           }
           Float b = Float.parseFloat(s.toString());
           Float a = card.getBalance();
+          if (a - b < 0) {
+            ToastUtils.show("扣费后余额不能小于0");
+            deductionMoney.setContent(s.toString().substring(0, s.toString().length() - 1));
+            return;
+          }
           balance.setText("当前卡余额："
               + CardBusinessUtils.getCardBlance(card)
               + "  扣费后卡余额："

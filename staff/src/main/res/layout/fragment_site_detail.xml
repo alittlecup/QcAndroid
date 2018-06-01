@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_inputnum="true"
+        app:civ_max_length="8"
         app:civ_lable="@string/site_count"
         />
 
