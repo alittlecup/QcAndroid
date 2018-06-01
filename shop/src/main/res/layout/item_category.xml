@@ -63,11 +63,11 @@
           android:id="@+id/category_inventory"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dimen_common_input_60dp"
-          app:civ_content='@={good.inventoryStr}'
+          app:civ_content='@{good.inventoryStr}'
           app:civ_hint="@string/input_product_inventory"
           app:civ_inputnum="true"
           app:civ_lable="@string/inventory"
-          app:civ_max_length="4"
+          app:civ_max_length="5"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />

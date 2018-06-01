@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopCategoryBinding;
+import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListPage;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.ShopSensorsConstants;
@@ -84,6 +85,7 @@ import rx.functions.Action1;
   private Observer<Boolean> result = new Observer<Boolean>() {
     @Override public void onChanged(@Nullable Boolean aBoolean) {
       ToastUtils.show(getString(aBoolean ? R.string.operator_success : R.string.operator_fail));
+      RxBus.getBus().post(ShopCategoryListPage.class,aBoolean);
       dismiss();
     }
   };

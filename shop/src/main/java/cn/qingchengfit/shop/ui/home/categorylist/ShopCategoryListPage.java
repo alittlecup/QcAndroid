@@ -124,6 +124,18 @@ public class ShopCategoryListPage
           }
         }));
     RxRegiste(RxBus.getBus()
+        .register(ShopCategoryListPage.class, Boolean.class)
+        .subscribeOn(rx.schedulers.Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<Boolean>() {
+          @Override public void call(Boolean aBoolean) {
+            if (aBoolean) {
+              mViewModel.loadSource(new HashMap<>());
+            }
+          }
+        }));
+
+    RxRegiste(RxBus.getBus()
         .register(SwipeRefreshLayout.class, Boolean.class)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
