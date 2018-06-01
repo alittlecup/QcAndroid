@@ -152,8 +152,8 @@ public class AddNewSiteFragment extends BaseDialogFragment {
             DialogUtils.showAlert(getContext(), "请完善信息");
             return;
         }
-        if (Integer.parseInt(count.getContent()) < 0){
-            DialogUtils.showAlert(getContext(), "可容纳人数不可为负数");
+        if (Integer.parseInt(count.getContent()) <=0){
+            DialogUtils.showAlert(getContext(), "可容纳人数至少为1");
             return;
         }
         //是用户新建 还是

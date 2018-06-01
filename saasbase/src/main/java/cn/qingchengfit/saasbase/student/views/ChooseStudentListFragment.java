@@ -38,7 +38,7 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
 
   public static ChooseStudentListFragment newInstance(int choosetype) {
     Bundle args = new Bundle();
-    args.putInt("c", SelectableAdapter.Mode.MULTI);
+    args.putInt("c", choosetype);
     ChooseStudentListFragment fragment = new ChooseStudentListFragment();
     fragment.setArguments(args);
     return fragment;

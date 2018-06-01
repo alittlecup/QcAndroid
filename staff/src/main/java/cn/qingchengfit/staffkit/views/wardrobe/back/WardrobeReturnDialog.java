@@ -106,7 +106,7 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
       });
       view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          WardrobeReturnDialog.this.onClick(v);
+          WardrobeReturnDialog.this.onClick();
         }
       });
 
