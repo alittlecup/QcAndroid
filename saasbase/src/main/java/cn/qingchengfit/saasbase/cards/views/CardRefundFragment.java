@@ -65,25 +65,25 @@ import rx.android.schedulers.AndroidSchedulers;
 @Leaf(module = "card", path = "/deduction/") public class CardRefundFragment
     extends SaasBaseFragment implements CardBuyPresenter.MVPView {
 
-	CommonInputView deductionMoney;
-	CommonInputView refundMoney;
-	TextView balance;
-	SwitcherLayout swDeduction;
-	SwitcherLayout swTime;
-	LinearLayout llDeduction;
-	CommonInputView startTime;
-	CommonInputView endTime;
-	LinearLayout extraPeriod;
-	CommonInputView deductionWay;
+  CommonInputView deductionMoney;
+  CommonInputView refundMoney;
+  TextView balance;
+  SwitcherLayout swDeduction;
+  SwitcherLayout swTime;
+  LinearLayout llDeduction;
+  CommonInputView startTime;
+  CommonInputView endTime;
+  LinearLayout extraPeriod;
+  CommonInputView deductionWay;
 
-	CommonInputView sale;
-	CommonInputView mark;
+  CommonInputView sale;
+  CommonInputView mark;
   @Inject CardBuyPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Need Card card;
-	Toolbar toolbar;
-	TextView toolbarTitle;
+  Toolbar toolbar;
+  TextView toolbarTitle;
   private TimeDialogWindow pwTime;
   private String shopid;
 
@@ -96,7 +96,7 @@ import rx.android.schedulers.AndroidSchedulers;
     initBus();
   }
 
- public void onComfirm() {
+  public void onComfirm() {
     //先全判断通过再赋值，避免应该反复开关导致数据错乱
     if (TextUtils.isEmpty(deductionMoney.getContent())) {
       ToastUtils.show("请填写" + deductionMoney.getLable());
@@ -301,7 +301,9 @@ import rx.android.schedulers.AndroidSchedulers;
         llDeduction.setVisibility(View.VISIBLE);
         setRefundMoney(deductionMoney.getContent());
         if (seller == null) {
-          presenter.getDefineSeller(card.getSeller().getId());
+          if (card.getSeller() != null) {
+            presenter.getDefineSeller(card.getSeller().getId());
+          }
         }
         if (TextUtils.isEmpty(deductionWay.getContent())) {
           deductionWay.setContent("其他");
@@ -348,7 +350,6 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   private BottomPayDialog dialog;
-
 
   public void onClick(View view) {
     int i = view.getId();

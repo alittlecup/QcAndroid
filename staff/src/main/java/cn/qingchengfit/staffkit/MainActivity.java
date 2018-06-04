@@ -431,7 +431,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   @Override public void onBackPressed() {
     if (!getSupportFragmentManager().popBackStackImmediate()) {
       if (exitDialog == null) {
-        exitDialog = DialogUtils.initConfirmDialog(this, "", "退出应用?", (dialog, action) -> {
+        exitDialog = DialogUtils.initConfirmDialog(this, "退出应用?", "", (dialog, action) -> {
           dialog.dismiss();
           if (action == DialogAction.POSITIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
