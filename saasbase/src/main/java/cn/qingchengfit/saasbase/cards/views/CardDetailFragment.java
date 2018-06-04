@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.cards.views.offday.OffDayListParams;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordParams;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
@@ -174,8 +175,8 @@ import javax.inject.Inject;
         .icon(R.drawable.vd_card_bills)
         .title("消费记录")
         .clickable(false)
-        .desc(getResources().getString(R.string.card_detail_cost, card.getTotal_account(),
-            card.getTotal_cost()))
+        //.desc(getResources().getString(R.string.card_detail_cost, card.getTotal_account(), card.getTotal_cost()))
+        .desc(getBillsString(card))
         .build());
     items.add(new ActionDescItem.Builder().action(4)
         .icon(R.drawable.vd_card_no)
@@ -202,6 +203,21 @@ import javax.inject.Inject;
     }
     clearItems();
     setDatas(items,1);
+  }
+
+  private String getBillsString(Card card) {
+    String detail="";
+    switch (card.getType()) {
+      case Configs.CATEGORY_VALUE:
+        detail=getResources().getString(R.string.card_detail_cost_account,card.getTotal_account(),card.getTotal_cost());
+        break;
+      case Configs.CATEGORY_TIMES:
+        detail=getResources().getString(R.string.card_detail_cost_time,card.getTotal_times(),card.getTotal_cost());
+        break;
+      case Configs.CATEGORY_DATE:
+        break;
+    }
+    return detail;
   }
 
   @Override public boolean onItemClick(int position) {

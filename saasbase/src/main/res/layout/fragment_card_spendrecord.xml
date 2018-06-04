@@ -42,73 +42,79 @@
 
         />
   </RelativeLayout>
-
-  <RelativeLayout
+  <LinearLayout
+      android:id="@+id/ll_container"
       android:layout_width="match_parent"
-      android:layout_height="38dp"
-      android:layout_marginTop="0.5dp"
-      android:background="@color/grey"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
       >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/grey"
+        >
 
-    <TextView
+      <TextView
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="累计充值"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:text="累计充值"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          />
 
-    <TextView
-        android:id="@+id/addup_charge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:textColor="@color/white"
-        tools:text="120000"
+      <TextView
+          android:id="@+id/addup_charge"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:textColor="@color/white"
+          tools:text="120000"
 
-        />
-  </RelativeLayout>
+          />
+    </RelativeLayout>
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="38dp"
-      android:background="@color/grey"
-      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@color/grey"
+        >
 
-    <TextView
+      <TextView
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="累计消费"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:text="累计消费"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          />
 
-    <TextView
-        android:id="@+id/addup_spend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:textColor="@color/white"
-        tools:text="120000"
+      <TextView
+          android:id="@+id/addup_spend"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:textColor="@color/white"
+          tools:text="120000"
 
-        />
-  </RelativeLayout>
+          />
+    </RelativeLayout>
+  </LinearLayout>
 
   <LinearLayout
       android:layout_width="match_parent"

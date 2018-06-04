@@ -87,7 +87,9 @@
   <string formatted="false" name="card_can_work_month">每月%d节</string>
   <string formatted="false" name="card_can_work_in_time">每天%s节, 每周%s节, 每月%s节</string>
   <string name="edit_card_tpl_back_tips">内容已被修改，是否保存？</string>
-  <string formatted="false" name="card_detail_cost">累计充值%.2f天, 累计消费%.2f元</string>
+  <string formatted="false" name="card_detail_cost_date">累计充值%.2f天, 累计消费%.2f天</string>
+  <string formatted="false" name="card_detail_cost_time">累计充值%.2f次, 累计消费%.2f次</string>
+  <string formatted="false" name="card_detail_cost_account">累计充值%.2f元, 累计消费%.2f元</string>
   <string name="card_not_select_gym">至少选择一家场馆</string>
 
 </resources>
