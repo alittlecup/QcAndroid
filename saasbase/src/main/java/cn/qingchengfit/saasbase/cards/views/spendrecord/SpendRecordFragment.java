@@ -150,9 +150,6 @@ import java.util.Locale;
     @Override public Fragment getItem(int position) {
       SpendRecordListFragment spendRecordListFragment =
           SpendRecordListFragment.newInstance(card.getId(), mCurYear, position);
-      if (card.getType() == 3) {
-        spendRecordListFragment.setShowAddIcon(false);
-      }
       return spendRecordListFragment;
     }
 
