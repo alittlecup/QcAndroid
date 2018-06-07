@@ -579,6 +579,11 @@
   <string name="module_op_koubei">接入口碑网</string>
   <string name="module_op_registe">注册送会员卡</string>
   <string name="module_op_anounce">场馆公告</string>
+  <string name="module_op_discount">优惠卷</string>
+  <string name="module_op_hongbao">健身红包</string>
+  <string name="module_op_private_share">私教拼课</string>
+  <string name="module_op_group_share">组队拼课</string>
+  <string name="module_op_more">更多功能</string>
 
 
   <string name="module_fi_online">在线支付</string>
@@ -587,6 +592,9 @@
   <string name="module_fi_mark_statement">评分报表</string>
   <string name="module_fi_card_statement">会员卡报表</string>
   <string name="module_fi_signin_statement">签到报表</string>
+  <string name="module_fi_class_statement">预约报表</string>
+  <string name="module_fi_visual_statement">可视化报表</string>
+
 
 
   <string name="module_gym_info">场馆信息</string>
@@ -596,6 +604,13 @@
   <string name="module_gym_wardrobe">更衣柜</string>
   <string name="module_gym_homepage">会员端配置</string>
   <string name="module_gym_wechat">微信公众号</string>
+  <string name="module_data_sale">销售收入</string>
+  <string name="module_data_member">会员数据</string>
+  <string name="module_data_group">团课数据</string>
+  <string name="module_data_private">私教数据</string>
+  <string name="module_data_big">宏观数据</string>
+  <string name="module_data_wihtepaper">白皮书</string>
+  <string name="module_smartgym">智能健身房</string>
   <string name="more">全部功能</string>
 
 
