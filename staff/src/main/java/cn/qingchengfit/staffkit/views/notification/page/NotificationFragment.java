@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,11 +18,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.reactivex.Maybe;
+import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 
@@ -58,6 +62,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -209,6 +214,7 @@ public class NotificationFragment extends BaseFragment
                                         if (ResponseConstant.checkSuccess(qcResponse)) {
                                             serPermisAction.writePermiss(qcResponse.data.permissions);
                                             Intent toActivity = null;
+
                                             if (!StringUtils.isEmpty(msg.getUrl())) {
                                                 toActivity =
                                                     new Intent(getContext().getPackageName(),
@@ -231,7 +237,18 @@ public class NotificationFragment extends BaseFragment
                                                 new GymStatus.Builder().isGuide(false).isSingle(false).build());
                                             toActivity.putExtra(Configs.EXTRA_BRAND,
                                                 new Brand.Builder().id(coachService1.brand_id()).build());
-                                            startActivity(toActivity);
+                                            Single.just(toActivity)
+                                                .subscribeOn(Schedulers.computation())
+                                                .delay(2000, TimeUnit.MILLISECONDS)
+                                                .observeOn(
+                                                    AndroidSchedulers.mainThread())
+                                                .subscribe(s1 -> {
+                                                    if (getContext()!= null)
+                                                        startActivity(s1);
+                                                },throwable -> {
+
+                                                });
+
                                         } else {
                                             Timber.e(qcResponse.getMsg());
                                         }

@@ -88,6 +88,22 @@ public class GymFunctionFactory {
         return R.drawable.moudule_fi_sale_statement;
       case MODULE_FINANCE_SIGN_IN:
         return R.drawable.moudule_fi_signin_statement;
+      case MODULE_OPERATE_COUPON:
+        return R.drawable.vd_module_operate_coupon;
+      case MODULE_OPERATE_RED_EVELOP_TPL:
+        return R.drawable.vd_module_operate_redpacket;
+      case MODULE_OPERATE_PRIVATE_SHARE:
+        return R.drawable.vd_module_operate_privatetogether;
+      case MODULE_OPERATE_GROUP_SHARE:
+        return R.drawable.vd_module_operate_grouptogether;
+      case MODULE_OPERATE_MORE:
+        return R.drawable.vd_module_operate_more;
+      case MODULE_FINANCE_ORDER:
+        return R.drawable.vd_module_finance_orderreport;
+      case MODULE_FINANCE_VISUAL_REPORT:
+        return R.drawable.vd_module_finance_visualreport;
+
+
 
       case MODULE_OPERATE_ACTIVITY:
         return R.drawable.moudule_op_activity;
@@ -144,6 +160,25 @@ public class GymFunctionFactory {
         return R.drawable.moudule_student_body_test;
       case REPORT_EXPORT:
         return R.drawable.ic_module_report_export;
+
+      case MODULE_DATA_BIG:
+        return R.drawable.vd_module_data_microscope;
+      case MODULE_DATA_GROUP:
+        return R.drawable.vd_module_data_group;
+      case MODULE_DATA_INCOME:
+        return R.drawable.vd_module_data_sale;
+      case MODULE_DATA_MEMBER:
+        return R.drawable.vd_module_data_membership;
+      case MODULE_DATA_PRIVATE:
+        return R.drawable.vd_module_data_private;
+      case MODULE_DATA_WHITEPAPER:
+        return R.drawable.vd_module_data_whitebook;
+
+      case MODULE_SMARTGYM_SMART:
+        return R.drawable.vd_module_aigym;
+
+
+
       default:
         return 0;
     }
@@ -164,10 +199,21 @@ public class GymFunctionFactory {
       case MODULE_OPERATE_REGIST:
       case MODULE_OPERTAT_KOUBEI:
       case MODULE_OPERATE_SCORE:
-
       case MODULE_WECHAT:
       case MODULE_GYM_SITE:
-        return 1;
+      case MODULE_OPERATE_COUPON:
+      case MODULE_OPERATE_RED_EVELOP_TPL:
+      case MODULE_FINANCE_ORDER:
+      case MODULE_FINANCE_VISUAL_REPORT:
+      case MODULE_DATA_BIG:
+      case MODULE_DATA_GROUP:
+      case MODULE_DATA_INCOME:
+      case MODULE_DATA_MEMBER:
+      case MODULE_DATA_PRIVATE:
+      case MODULE_DATA_WHITEPAPER:
+      case MODULE_SMARTGYM_SMART:
+
+      return 1;
 
       case MODULE_WORKSPACE_ORDER_LIST:
       case MODULE_WORKSPACE_GROUP:
@@ -233,6 +279,21 @@ public class GymFunctionFactory {
         return R.string.module_op_score;
       case MODULE_OPERATE_COMPETITION:
         return R.string.competition;
+      case MODULE_OPERATE_COUPON:
+        return R.string.module_op_discount;
+      case MODULE_OPERATE_RED_EVELOP_TPL:
+        return R.string.module_op_hongbao;
+      case MODULE_OPERATE_PRIVATE_SHARE:
+        return R.string.module_op_private_share;
+      case MODULE_OPERATE_GROUP_SHARE:
+        return R.string.module_op_group_share;
+      case MODULE_OPERATE_MORE:
+        return R.string.module_op_more;
+      case MODULE_FINANCE_ORDER:
+        return R.string.module_fi_class_statement;
+      case MODULE_FINANCE_VISUAL_REPORT:
+        return R.string.module_fi_visual_statement;
+
 
       case MODULE_MANAGE_COACH:
         return R.string.module_manage_trainer;
@@ -273,6 +334,24 @@ public class GymFunctionFactory {
         return R.string.module_student_bodytest;
       case REPORT_EXPORT:
         return R.string.module_export_name;
+
+      case MODULE_DATA_BIG:
+        return R.string.module_data_big;
+      case MODULE_DATA_GROUP:
+        return R.string.module_data_group;
+      case MODULE_DATA_INCOME:
+        return R.string.module_data_sale;
+      case MODULE_DATA_MEMBER:
+        return R.string.module_data_member;
+      case MODULE_DATA_PRIVATE:
+        return R.string.module_data_private;
+      case MODULE_DATA_WHITEPAPER:
+        return R.string.module_data_wihtepaper;
+
+      case MODULE_SMARTGYM_SMART:
+        return R.string.module_smartgym;
+
+
 
       default:
         return R.string.none;
@@ -561,6 +640,36 @@ public class GymFunctionFactory {
         return;
       case MODULE_MANAGE_STAFF_ADD:
         break;
+
+      case MODULE_DATA_WHITEPAPER:
+        WebActivity.startWeb("https://cloud.qingchengfit.cn/mobile/white-paper/2018/",fragment.getContext());
+        return;
+
+      case MODULE_OPERATE_COUPON:
+      case MODULE_OPERATE_RED_EVELOP_TPL:
+      case MODULE_FINANCE_ORDER:
+      case MODULE_FINANCE_VISUAL_REPORT:
+      case MODULE_DATA_BIG:
+      case MODULE_DATA_GROUP:
+      case MODULE_DATA_INCOME:
+      case MODULE_DATA_MEMBER:
+      case MODULE_DATA_PRIVATE:
+      case MODULE_SMARTGYM_SMART:
+        goQrScan(fragment,module,null,coachService);
+        return;
+
+      case MODULE_OPERATE_PRIVATE_SHARE:
+        WebActivity.startWeb("https://mp.weixin.qq.com/s/DWhORKKp47nNBZMsqWGRkg",fragment.getContext());
+
+        return;
+      case MODULE_OPERATE_GROUP_SHARE:
+        WebActivity.startWeb("https://mp.weixin.qq.com/s/lZ0vA34ryUNMmm6Dlca-OA",fragment.getContext());
+
+        return;
+      case MODULE_OPERATE_MORE:
+        WebActivity.startWeb("https://mp.weixin.qq.com/s?__biz=MzAxODAyODE5OQ==&mid=502626906&idx=2&sn=23c0318cc8547d43d658ac2b87214e0b&chksm=03dd599234aad0840fd8766dff29ee51732734908142b505b99a526b932929e9efe9745a362b#rd",fragment.getContext());
+        return;
+
       default:
         return;
     }

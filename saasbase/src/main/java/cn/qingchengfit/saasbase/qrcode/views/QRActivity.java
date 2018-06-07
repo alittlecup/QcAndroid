@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -151,6 +152,11 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_OPERATE_REGIST = "/giftcard";
     public static final String MODULE_OPERATE_ANOUNCE = "/notice";
     public static final String MODULE_OPERATE_COMPETITION = "/competition";
+    public static final String MODULE_OPERATE_COUPON = "/coupons/list";
+    public static final String MODULE_OPERATE_RED_EVELOP_TPL = "/red-envelope-tpls/list";
+    public static final String MODULE_OPERATE_PRIVATE_SHARE = "/private/collage";
+    public static final String MODULE_OPERATE_GROUP_SHARE = "/group/collage";
+    public static final String MODULE_OPERATE_MORE = "/spread/more";
 
     /**
      * 财务
@@ -161,6 +167,8 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_FINANCE_MARK = "/comments/report";
     public static final String MODULE_FINANCE_CARD = "/card/report";
     public static final String MODULE_FINANCE_SIGN_IN = "/checkin/report";
+    public static final String MODULE_FINANCE_ORDER = "/class/report";
+    public static final String MODULE_FINANCE_VISUAL_REPORT = "/visual/reports";
 
     /**
      * 场馆信息
@@ -172,6 +180,23 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_WARDROBE = "/locker/setting";
     public static final String MODULE_HOME = "/shop/home";
     public static final String MODULE_WECHAT = "/shop/weixin/setting";// 微信公众号
+
+    /**
+     * 数据实验室
+     *
+     */
+    public static final String MODULE_DATA_INCOME = "/data-lab/sales-revenue-analysis";// 营销收入
+    public static final String MODULE_DATA_MEMBER = "/data-lab/members-analysis";// 会员数据
+    public static final String MODULE_DATA_GROUP = "/data-lab/team-course-analysis";// 团课数据
+    public static final String MODULE_DATA_PRIVATE = "/data-lab/private-course-analysis";// 私教数据
+    public static final String MODULE_DATA_BIG = "/data-lab/macro-analysis";// 宏观数据
+    public static final String MODULE_DATA_WHITEPAPER = "/datalab/whitepaper";// 白皮书
+    /**
+     * 智能健身房
+     */
+    public static final String MODULE_SMARTGYM_SMART = "/smart_gym";// 白皮书
+
+
 
     /**
      * article 文章回复 资讯
@@ -424,16 +449,14 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
                     toolbarTitile.setText("扫码成功");
                     RxBus.getBus().post(new OnBackEvent());
                 } else {
-                    DialogUtils.showAlert(QRActivity.this, R.string.err_sacn_qrcode, new MaterialDialog.SingleButtonCallback() {
-                        @Override public void onClick(MaterialDialog materialDialog,
-                            DialogAction dialogAction) {
-                            materialDialog.dismiss();
+                    DialogUtils.instanceDelDialog(QRActivity.this, getString(R.string.err_sacn_qrcode),
+                        (dialog, which) -> {
+                            dialog.dismiss();
                             if (qrdecoderview != null) {
                                 qrdecoderview.getCameraManager().startPreview();
                                 toolbarTitile.setText("扫码二维码");
                             }
-                        }
-                    });
+                        });
                 }
             }
         });
