@@ -10,19 +10,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.activity.BaseActivity;
-import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -116,17 +114,15 @@ public class AddBrandActivity extends BaseActivity {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                 if (isSuccess) {
                     showLoading();
-                    sp = UpYunClient.rxUpLoad("brand/", filePath).subscribe(new Action1<String>() {
-                        @Override public void call(String s) {
+                    sp = UpYunClient.rxUpLoad("brand/", filePath).subscribe((Action1<String>) s -> {
 
-                            hideLoading();
-                            uploadImg = s;
-                            Glide.with(AddBrandActivity.this)
-                                .load(PhotoUtils.getSmall(s))
-                                .asBitmap()
-                                .into(new CircleImgWrapper(brandPhoto, AddBrandActivity.this));
-                        }
-                    });
+                      hideLoading();
+                      uploadImg = s;
+                      Glide.with(AddBrandActivity.this)
+                          .load(PhotoUtils.getSmall(s))
+                          .asBitmap()
+                          .into(new CircleImgWrapper(brandPhoto, AddBrandActivity.this));
+                    },new HttpThrowable());
                 }
             }
         });

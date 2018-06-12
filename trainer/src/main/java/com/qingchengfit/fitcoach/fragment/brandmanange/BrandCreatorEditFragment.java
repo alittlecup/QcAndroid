@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-
-
+import cn.qingchengfit.bean.ChangeBrandCreatorBody;
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.ToastUtils;
@@ -24,7 +24,6 @@ import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
-import cn.qingchengfit.bean.ChangeBrandCreatorBody;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import java.util.concurrent.TimeUnit;
@@ -125,7 +124,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                                             ToastUtils.show("修改失败");
                                         }
                                     }
-                                }));
+                                },new HttpThrowable()));
                         }
 
                         return false;
@@ -171,7 +170,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                                     ToastUtils.show("验证码发送失败");
                                 }
                             }
-                        }));
+                        },new HttpThrowable()));
                 }
             }
         });

@@ -11,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.UpYunClient;
@@ -22,7 +21,6 @@ import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import cn.qingchengfit.events.EventChooseImage;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.items.ImageItem;
@@ -132,7 +130,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                 hideLoading();
                 ToastUtils.show("上传失败");
             });
-        });
+        },new HttpThrowable());
         freshData();
         return view;
     }
@@ -210,7 +208,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                             del.setVisibility(View.GONE);
                         }
                     }
-                }));
+                },new HttpThrowable()));
         } else {
             cn.qingchengfit.utils.ToastUtils.show("您没有选择删除的照片");
         }

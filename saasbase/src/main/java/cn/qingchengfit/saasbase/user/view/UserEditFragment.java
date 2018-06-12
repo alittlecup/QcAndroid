@@ -140,7 +140,7 @@ import rx.android.schedulers.AndroidSchedulers;
     routeTo("common", "/input/", CommonInputParams.builder()
       .title("修改昵称")
       .hint("输入昵称")
-      .content(presenter.getUser().username)
+      .content(presenter.getUser()==null?"":presenter.getUser().username)
       .build());
   }
 

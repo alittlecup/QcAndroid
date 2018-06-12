@@ -11,6 +11,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.recruit.model.ChatGym;
 import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
@@ -85,7 +86,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
         tvAllotsaleSelectCount.setText(
             DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
       }
-    });
+    },new HttpThrowable());
     tvAllotsaleSelectCount.setText(
         DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
   }

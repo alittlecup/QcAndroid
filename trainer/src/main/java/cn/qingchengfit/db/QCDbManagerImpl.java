@@ -7,6 +7,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.db.GymFunctionDao;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.utils.LogUtil;
@@ -74,7 +75,7 @@ public class QCDbManagerImpl implements QcDbManager {
   public void delStudentByBrand(String brandid, final String id) {
     appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
       appDatabase.studentDao().delStudent(qcStudentBean);
-    });
+    },new HttpThrowable());
   }
 
   public void delAllStudent() {
@@ -88,7 +89,7 @@ public class QCDbManagerImpl implements QcDbManager {
   public void delStudentByGym(final String gymid, final String gymmodel, final String id) {
     appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
       appDatabase.studentDao().delStudent(qcStudentBean);
-    });
+    },new HttpThrowable());
   }
 
 
@@ -135,21 +136,21 @@ public class QCDbManagerImpl implements QcDbManager {
         }
         appDatabase.studentDao().insertStudent(qcStudent);
       }
-    });
+    } ,new HttpThrowable());
   }
 
   public void saveStudent(List<QcStudentBean> studentBeens, String brandid) {
     appDatabase.studentDao().getAllStudent().subscribe(qcStudentBeans -> {
       appDatabase.studentDao().delStudentAll();
       appDatabase.studentDao().insertStudent(studentBeens.toArray(new QcStudentBean[] {}));
-    });
+    },new HttpThrowable());
   }
 
   public void updateStudentCheckin(String avatar, String id) {
     appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
       qcStudentBean.setCheckin_avatar(avatar);
       appDatabase.studentDao().updataStudent(qcStudentBean);
-    });
+    },new HttpThrowable());
   }
 
   public void delByBrandId(String brandId) {
@@ -289,6 +290,6 @@ public class QCDbManagerImpl implements QcDbManager {
         list.add(f1);
       }
       appDatabase.functionDao().insert(list);
-    });
+    } ,new HttpThrowable());
   }
 }

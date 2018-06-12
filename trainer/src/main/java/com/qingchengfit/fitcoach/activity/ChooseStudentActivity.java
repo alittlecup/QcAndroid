@@ -14,11 +14,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-
+import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Contact;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PhoneFuncUtils;
@@ -28,7 +27,6 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
-import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -174,7 +172,7 @@ public class ChooseStudentActivity extends BaseActivity {
                     ChooseStudentActivity.this.finish();
                 }
             }
-        });
+        },new HttpThrowable());
 
         choosestudentAll.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

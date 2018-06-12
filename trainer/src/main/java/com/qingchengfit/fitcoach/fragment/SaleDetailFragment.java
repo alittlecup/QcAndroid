@@ -19,13 +19,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -37,7 +36,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.statement.RxNetWorkEvent;
@@ -234,7 +232,7 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
                     hideLoading();
                 }
             }
-        });
+        },new HttpThrowable());
         return view;
     }
 

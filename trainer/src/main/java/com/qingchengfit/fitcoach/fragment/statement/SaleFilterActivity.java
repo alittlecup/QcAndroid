@@ -10,12 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.utils.BusinessUtils;
@@ -196,7 +194,7 @@ public class SaleFilterActivity extends BaseActivity {
 
                 mSaleFilter.card_category = -1;
             }
-        });
+        } ,new HttpThrowable());
         obCardType = RxBus.getBus().register(CardTypeEvent.class);
         obCardType.subscribe(new Action1<CardTypeEvent>() {
             @Override public void call(CardTypeEvent cardTypeEvent) {

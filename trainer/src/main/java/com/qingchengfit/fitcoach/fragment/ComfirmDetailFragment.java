@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.DialogSheet;
@@ -132,7 +130,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
                                     }
                                 }
-                            });
+                            },new HttpThrowable());
                     } else {
                         QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(true))
                             .onBackpressureBuffer()
@@ -144,7 +142,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                         freshData();
                                     }
                                 }
-                            });
+                            },new HttpThrowable());
                     }
 
                     return true;
@@ -259,7 +257,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                                     initData();
                                                 }
                                             }
-                                        });
+                                        },new HttpThrowable());
                                 } else {
                                     QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(true))
                                         .onBackpressureBuffer()
@@ -271,7 +269,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                                     initData();
                                                 }
                                             }
-                                        });
+                                        },new HttpThrowable());
                                     }
 
                                 return true;
@@ -363,8 +361,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                     }
                 });
                 }
-        }, throwable -> {
-        }, () -> {
+        },new HttpThrowable(), () -> {
         });
     }
 
@@ -389,8 +386,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                             } else {
                                 ToastUtils.show(R.drawable.ic_share_fail, "删除失败");
                             }
-                        }, throwable -> {
-                        }, () -> {
+                        },new HttpThrowable(), () -> {
                         });
                         dialog.dismiss();
                     }

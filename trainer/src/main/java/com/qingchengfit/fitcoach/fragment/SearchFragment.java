@@ -24,12 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.bean.SearchItemBean;
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.recruit.views.organization.AddGymBean;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
 import cn.qingchengfit.utils.LogUtil;
@@ -217,8 +214,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                     //                                    else searchresultRv.setVisibility(View.GONE);
                 }
                 ;
-            }, throwable -> {
-            }, () -> {
+            },new HttpThrowable(), () -> {
             });
         } else if (type == TYPE_ORGANASITON) {
             searchHottable.setText("热门机构");
@@ -253,8 +249,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                         }
                     }
                     ;
-                }, throwable -> {
-                }, () -> {
+                },new HttpThrowable(), () -> {
                 });
         }
     }
@@ -345,8 +340,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                     }
                 }
                 ;
-            }, throwable -> {
-            }, () -> {
+            }, new HttpThrowable(), () -> {
             });
         } else if (type == TYPE_ORGANASITON) {
           QcCloudClient.getApi().getApi.qcSearchOrganization(params)
@@ -383,8 +377,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                         searchresultRv.setVisibility(View.GONE);
                     }
                 }
-            }, throwable -> {
-            }, () -> {
+            }, new HttpThrowable(), () -> {
             });
         }
     }

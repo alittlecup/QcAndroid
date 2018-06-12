@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.UpYunClient;
 import com.qingchengfit.fitcoach.R;
@@ -68,7 +69,7 @@ public class UpyunService extends IntentService {
                                 RxBus.getBus().post(new UpYunResult(s));
                             }
                         }
-                    });
+                    },new HttpThrowable());
 
                 //boolean issuccees = UpYunClient.upLoadImg("/header/", filename, file);
                 //if (issuccees) {

@@ -13,10 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
@@ -25,6 +21,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
@@ -251,8 +248,7 @@ public class ManageFragment extends BaseFragment
           setGymInfo(coachService.getCoachService());
         }
       }
-    }, throwable -> {
-    });
+    }, new HttpThrowable());
     String s = PreferenceUtils.getPrefString(getContext(), App.coachid + "permission", "");
     if (s != null && !s.isEmpty()) {
       QcResponsePermission.Data d = gson.fromJson(s, QcResponsePermission.Data.class);
@@ -342,7 +338,7 @@ public class ManageFragment extends BaseFragment
           } else {//无场馆状态
             RxBus.getBus().post(new EventLoginChange());
           }
-        });
+        },new HttpThrowable());
   }
 
   @Override protected void lazyLoad() {

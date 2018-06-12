@@ -12,12 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -221,8 +218,7 @@ public class AddSelfGymFragment extends Fragment {
         }).subscribe(s -> {
             if (id > 0) addselfgymName.setContent(reponse.data.system.name);
             addselfgymTime.setContent(s);
-        }, throwable -> {
-        }, () -> {
+        }, new HttpThrowable(), () -> {
         });
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {

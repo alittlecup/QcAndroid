@@ -11,7 +11,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.HttpThrowable;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
@@ -27,30 +37,13 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.smtt.sdk.QbSdk;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import io.reactivex.Maybe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
-
-
-
-
-import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.saasbase.login.LoginActivity;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.BaseActivity;
-import io.reactivex.Maybe;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -217,7 +210,7 @@ public class SplashActivity extends BaseActivity {
                     .start();
               }
             });
-          });
+          },new HttpThrowable());
     } else {
             /*
              *未登录 直接进入主页
@@ -232,7 +225,7 @@ public class SplashActivity extends BaseActivity {
           startActivity(toMain);
           overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
           SplashActivity.this.finish();
-        },throwable -> {});
+        },new HttpThrowable());
 
     }
   }
