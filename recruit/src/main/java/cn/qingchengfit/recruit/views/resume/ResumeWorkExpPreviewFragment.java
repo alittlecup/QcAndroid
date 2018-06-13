@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
@@ -32,6 +31,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import java.util.Calendar;
@@ -64,27 +64,27 @@ import rx.schedulers.Schedulers;
  */
 public class ResumeWorkExpPreviewFragment extends BaseFragment {
 
-	ImageView gymImg;
-	TextView gymTime;
-	TextView workexpDetailHiden;
-	TextView workexpDetailPosition;
-	TextView workexpDetailDesc;
-	TextView workexpDetailGroupCount;
-	TextView workexpDetailGroupServer;
-	LinearLayout workexpDetailGroupLayout;
-	TextView workexpDetailPrivateCount;
-	TextView workexpDetailPrivateServer;
-	LinearLayout workexpDetailPrivateLayout;
-	TextView workexpDetailSale;
-	LinearLayout workexpDetailSaleLayout;
-	TextView gymName;
-	TextView gymAddress;
-	ImageView gymIdentify;
+  ImageView gymImg;
+  TextView gymTime;
+  TextView workexpDetailHiden;
+  TextView workexpDetailPosition;
+  TextView workexpDetailDesc;
+  TextView workexpDetailGroupCount;
+  TextView workexpDetailGroupServer;
+  LinearLayout workexpDetailGroupLayout;
+  TextView workexpDetailPrivateCount;
+  TextView workexpDetailPrivateServer;
+  LinearLayout workexpDetailPrivateLayout;
+  TextView workexpDetailSale;
+  LinearLayout workexpDetailSaleLayout;
+  TextView gymName;
+  TextView gymAddress;
+  ImageView gymIdentify;
 
   @Inject QcRestRepository qcRestRepository;
 
-	Toolbar toolbar;
-	TextView toolbarTitle;
+  Toolbar toolbar;
+  TextView toolbarTitle;
   @Inject RecruitRouter recruitRouter;
   WorkExp experiencesEntity;
   private String mExpId;
@@ -138,8 +138,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
     RxBusAdd(EventResumeFresh.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<EventResumeFresh>() {
           @Override public void call(EventResumeFresh eventResumeFresh) {
-            if (eventResumeFresh.flag >= 0)
-              freshData();
+            if (eventResumeFresh.flag >= 0) freshData();
           }
         });
     return view;
@@ -268,34 +267,28 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
           .content("删除此条工作经历?")
           .positiveText("确定")
           .negativeText("取消")
-          .callback(new MaterialDialog.ButtonCallback() {
-            @Override public void onPositive(MaterialDialog dialog) {
-              super.onPositive(dialog);
-              showLoading();
-
-              RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-                  .delWorkExp(mExpId).onBackpressureBuffer().subscribeOn(Schedulers.io())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new Action1<QcResponse>() {
-                    @Override public void call(QcResponse qcResponse) {
-                      hideLoading();
-                      if (qcResponse.status == 200) {
-                        ToastUtils.show("删除成功");
-                        RxBus.getBus().post(new EventResumeFresh(-1));
-                        getActivity().onBackPressed();
-                      } else {
-                        ToastUtils.show("删除失败");
-                      }
+          .onPositive((materialDialog, dialogAction) -> {
+            showLoading();
+            RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+                .delWorkExp(mExpId)
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<QcResponse>() {
+                  @Override public void call(QcResponse qcResponse) {
+                    hideLoading();
+                    if (qcResponse.status == 200) {
+                      ToastUtils.show("删除成功");
+                      RxBus.getBus().post(new EventResumeFresh(-1));
+                      getActivity().onBackPressed();
+                    } else {
+                      ToastUtils.show("删除失败");
                     }
-                  }, new NetWorkThrowable()));
-              dialog.dismiss();
-            }
-
-            @Override public void onNegative(MaterialDialog dialog) {
-              super.onNegative(dialog);
-              dialog.dismiss();
-            }
+                  }
+                }, new NetWorkThrowable()));
+            materialDialog.dismiss();
           })
+          .onNegative((materialDialog, dialogAction) -> materialDialog.dismiss())
           .cancelable(false)
           .build();
     }

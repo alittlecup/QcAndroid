@@ -27,7 +27,6 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.Util;
-import cn.qingchengfit.widgets.R2;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;

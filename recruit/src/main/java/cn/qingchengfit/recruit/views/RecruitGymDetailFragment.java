@@ -107,9 +107,7 @@ public class RecruitGymDetailFragment extends BaseFragment
     super.initToolbar(toolbar);
     ToolbarModel tm = new ToolbarModel("公司详情");
     tm.setMenu(R.menu.menu_share);
-    db.setToolbarModel(tm);
-    //((TextView)getView().findViewById(R.id.toolbar_title)).setText("公司详情")
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    tm.setListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         String title = gym != null ? gym.getBrand_name() + "|" + gym.getName() : "";
         String content = "热招职位：" + RecruitBusinessUtils.getHotJob(tempJob);
@@ -121,6 +119,8 @@ public class RecruitGymDetailFragment extends BaseFragment
         return false;
       }
     });
+    db.setToolbarModel(tm);
+    //((TextView)getView().findViewById(R.id.toolbar_title)).setText("公司详情")
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
