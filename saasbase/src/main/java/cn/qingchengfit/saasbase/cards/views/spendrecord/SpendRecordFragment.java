@@ -11,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
 
 import cn.qingchengfit.saasbase.R;
 
@@ -42,18 +41,19 @@ import java.util.Locale;
 @Leaf(module = "card", path = "/consumption/record/") public class SpendRecordFragment
     extends SaasBaseFragment {
 
-	TextView addupCharge;
-	TextView addupSpend;
-	TextView balance;
-	ImageView minusYear;
-	TextView year;
-	ImageView addYear;
-	PagerSlidingTabStrip monthTab;
-	ViewPager viewpager;
+  TextView addupCharge;
+  TextView addupSpend;
+  TextView balance;
+  ImageView minusYear;
+  TextView year;
+  ImageView addYear;
+  LinearLayout linearLayout;
+  PagerSlidingTabStrip monthTab;
+  ViewPager viewpager;
 
   @Need Card card;
-	Toolbar toolbar;
-	TextView toolbarTitle;
+  Toolbar toolbar;
+  TextView toolbarTitle;
   private int mCurYear, mCurMonth;
   private FragmentAdapter mFragmentAdapter;
 
@@ -68,6 +68,7 @@ import java.util.Locale;
     year = (TextView) view.findViewById(R.id.year);
     addYear = (ImageView) view.findViewById(R.id.add_year);
     monthTab = (PagerSlidingTabStrip) view.findViewById(R.id.month_tab);
+    linearLayout = view.findViewById(R.id.ll_container);
     viewpager = (ViewPager) view.findViewById(R.id.viewpager);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
@@ -104,6 +105,9 @@ import java.util.Locale;
         card.getTotal_account() + StringUtils.getUnit(getContext(), card.getType()));
     addupSpend.setText(card.getTotal_cost() + "元");
     year.setText(mCurYear + "年");
+    if (card.getType() == 3) {
+      linearLayout.setVisibility(View.GONE);
+    }
     return view;
   }
 
@@ -126,7 +130,7 @@ import java.util.Locale;
     super.onDestroyView();
   }
 
- public void onClick(View view) {
+  public void onClick(View view) {
     int i = view.getId();
     if (i == R.id.minus_year) {
       mCurYear--;
@@ -144,7 +148,9 @@ import java.util.Locale;
     }
 
     @Override public Fragment getItem(int position) {
-      return SpendRecordListFragment.newInstance(card.getId(), mCurYear, position);
+      SpendRecordListFragment spendRecordListFragment =
+          SpendRecordListFragment.newInstance(card.getId(), mCurYear, position);
+      return spendRecordListFragment;
     }
 
     @Override public int getCount() {

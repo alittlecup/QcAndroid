@@ -409,8 +409,12 @@ public class ModifyBodyTestFragment extends Fragment {
                 commonInputView.setTag(R.id.tag_0, extra.name);
                 commonInputView.setTag(R.id.tag_1, extra.id);
                 commonInputView.setTag(R.id.tag_2, extra.unit);
+                commonInputView.setEditable(true);
                 otherData.addView(commonInputView);
-                commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                commonInputView.setLabel(extra.name);
+                if (!TextUtils.isEmpty(extra.unit)) {
+                  commonInputView.setUnit(extra.unit);
+                }
                 commonInputView.setContent(extra.value);
                 commonInputView.setContentColor(
                     ContextCompat.getColor(getContext(), R.color.text_dark));

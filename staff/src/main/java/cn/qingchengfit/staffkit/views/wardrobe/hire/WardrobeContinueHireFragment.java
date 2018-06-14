@@ -191,7 +191,6 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
 
                 break;
             case R.id.btn_comfirm:
-                showLoading();
                 try {
                     HashMap<String, Object> body = new HashMap<>();
                     body.put("locker_id", mLocker.id + "");
@@ -220,7 +219,8 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
                         DialogUtils.showAlert(getContext(), "请完善续租信息");
                         return;
                     }
-                    mPresenter.comfirContinue(App.staffId, body);
+                  showLoading();
+                  mPresenter.comfirContinue(App.staffId, body);
                 } catch (Exception e) {
 
                 }

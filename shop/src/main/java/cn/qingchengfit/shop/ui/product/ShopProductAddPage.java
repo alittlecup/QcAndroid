@@ -104,12 +104,11 @@ import java.util.regex.Pattern;
     ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_add_product),
         (dialog, which) -> {
           dialog.dismiss();
-          if(which== DialogAction.POSITIVE){
-          sensorsTrack(ShopSensorsConstants.SHOP_ADD_COMMODITY_CANCEL_BTN_CLICK);
-          setBackPressNull();
-          getActivity().onBackPressed();
+          if (which == DialogAction.POSITIVE) {
+            sensorsTrack(ShopSensorsConstants.SHOP_ADD_COMMODITY_CANCEL_BTN_CLICK);
+            setBackPressNull();
+            getActivity().onBackPressed();
           }
-
         }).show();
     return ((BaseActivity) getActivity()).getBackPress() != null;
   }

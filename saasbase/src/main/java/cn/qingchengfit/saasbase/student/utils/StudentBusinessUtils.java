@@ -188,7 +188,6 @@ public class StudentBusinessUtils {
 //            Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.shape_fade_line_chart_0);
 //            set1.setFillDrawable(drawable);
 //        } else {
-        // REFACTOR: 2017/11/6 这里drawableColor的设置
         set1.setFillColor(fillColor);
 //        }
 

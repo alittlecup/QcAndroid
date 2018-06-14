@@ -19,6 +19,7 @@ import cn.qingchengfit.shop.databinding.PageShopProductDetailBinding;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.RichTxtFragment;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -105,7 +106,12 @@ import com.anbillon.flabellum.annotations.Need;
             }).show();
       } else {
         ViewUtil.instanceDelDialog(getContext(), getString(R.string.sure_give_up_modify),
-            (dialog, which) -> getActivity().onBackPressed()).show();
+            (dialog, which) -> {
+              dialog.dismiss();
+              if (which == DialogAction.POSITIVE) {
+                getActivity().onBackPressed();
+              }
+            }).show();
       }
     });
   }
