@@ -26,6 +26,7 @@ import cn.qingchengfit.model.common.PayEvent;
 import cn.qingchengfit.model.common.PlatformInfo;
 import cn.qingchengfit.model.common.ShareBean;
 import cn.qingchengfit.model.common.ToolbarAction;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BitmapUtils;
 import cn.qingchengfit.utils.ChoosePicUtils;
@@ -555,7 +556,7 @@ public class WebActivityWithShare extends BaseActivity
           //                                ToastUtils.show(R.drawable.ic_share_fail,"资源服务器错误");
           //                            }
         });
-      });
+      },new HttpThrowable());
     } else {
       if (mValueCallback != null) mValueCallback.onReceiveValue(null);
       if (mValueCallbackNew != null) mValueCallbackNew.onReceiveValue(null);

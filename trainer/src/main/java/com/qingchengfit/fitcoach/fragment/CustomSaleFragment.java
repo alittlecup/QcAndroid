@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -147,7 +145,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
                 card.card_tpl_id = card_tpl.getId();
                 mSaleFilter.card = card;
             }
-        });
+        },new HttpThrowable());
         RxBusAdd(CardTypeEvent.class).subscribe(new Action1<CardTypeEvent>() {
             @Override public void call(CardTypeEvent cardTypeEvent) {
 
@@ -176,7 +174,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
                         break;
                 }
             }
-        });
+        },new HttpThrowable());
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {

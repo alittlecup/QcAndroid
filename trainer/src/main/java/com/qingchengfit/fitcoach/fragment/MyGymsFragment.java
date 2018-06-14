@@ -12,11 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -194,8 +191,7 @@ public class MyGymsFragment extends BaseFragment {
                 mGymAdapter.notifyDataSetChanged();
                 refresh.setRefreshing(false);
                 refreshNodata.setRefreshing(false);
-            }, throwable -> {
-            }, () -> {
+            },new HttpThrowable(), () -> {
             });
     }
 

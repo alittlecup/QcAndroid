@@ -9,6 +9,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -107,7 +108,7 @@ public class UnLoginHomeFragment extends BaseFragment {
                           .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
                           .show(mainScheduleFragment).hide(homeBannerFragment).commitAllowingStateLoss();
                     }
-                }));
+                },new HttpThrowable()));
             //}
         } else {
             //未登录

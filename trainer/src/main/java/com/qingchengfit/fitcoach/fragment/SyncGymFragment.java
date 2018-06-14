@@ -8,10 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -115,7 +114,7 @@ public class SyncGymFragment extends BaseFragment {
                                 syncItem.isDone = true;
                                 commonFlexAdapter.notifyItemChanged(mData.size() - 1);
                             }
-                        }));
+                        },new HttpThrowable()));
                 } else {
                     ToastUtils.showDefaultStyle("数据同步失败");
                 }

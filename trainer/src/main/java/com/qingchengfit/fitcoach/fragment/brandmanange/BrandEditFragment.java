@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.bean.BrandBody;
+import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
@@ -29,8 +29,6 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
-import cn.qingchengfit.bean.BrandBody;
-import cn.qingchengfit.events.EventChooseImage;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import rx.android.schedulers.AndroidSchedulers;
@@ -133,7 +131,7 @@ public class BrandEditFragment extends BaseFragment {
                                             ToastUtils.show("修改失败");
                                         }
                                     }
-                                }));
+                                },new HttpThrowable()));
 
                             return false;
                         }
@@ -184,7 +182,7 @@ public class BrandEditFragment extends BaseFragment {
                         postBrand.photo = s;
                         hideLoading();
                     }
-                }));
+                },new HttpThrowable()));
             }
         });
         return view;

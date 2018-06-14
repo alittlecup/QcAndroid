@@ -11,10 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -176,7 +175,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     mCoachService = eventScheduleService.mCoachService;
                 inflateData();
             }
-        });
+        },new HttpThrowable());
         weekView.setPostion(getArguments().getInt("pos"));
         return view;
     }

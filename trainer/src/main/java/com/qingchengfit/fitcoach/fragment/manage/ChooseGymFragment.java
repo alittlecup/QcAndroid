@@ -8,12 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -106,7 +104,7 @@ import rx.schedulers.Schedulers;
         RxBusAdd(EventChooseGym.class).subscribe(eventChooseGym -> {
             gymWrapper.setCoachService(eventChooseGym.getCoachService());
             getActivity().onBackPressed();
-        });
+        },new HttpThrowable());
         /**
          * 管理品牌
          */
@@ -114,7 +112,7 @@ import rx.schedulers.Schedulers;
             Intent toBrand = new Intent(getContext(), BrandManageActivity.class);
             toBrand.putExtra("brand", eventClickManageBrand.getBrand());
             startActivity(toBrand);
-        });
+        },new HttpThrowable());
         refresh();
         return view;
     }

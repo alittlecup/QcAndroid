@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.VpFragment;
@@ -101,8 +99,7 @@ public class RecordComfirmFragment extends VpFragment {
                     recordConfirmNone.setVisibility(View.VISIBLE);
                     }
             }
-        }, throwable -> {
-        }, () -> {
+        }, new HttpThrowable(), () -> {
         });
     }
 

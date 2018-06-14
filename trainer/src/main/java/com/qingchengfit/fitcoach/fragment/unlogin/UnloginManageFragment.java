@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.LazyloadFragment;
@@ -100,7 +101,7 @@ public class UnloginManageFragment extends LazyloadFragment {
                     getChildFragmentManager().beginTransaction()
                       .show(manageFragment).hide(homeBannerFragment).commitAllowingStateLoss();
                 }
-            }));
+            },new HttpThrowable()));
 
         } else {
             getChildFragmentManager().beginTransaction()

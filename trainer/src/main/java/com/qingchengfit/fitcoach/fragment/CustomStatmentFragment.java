@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -125,7 +123,7 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
           customStatmentCourse.setContent(course.getName());
         }
       }
-    });
+    },new HttpThrowable());
 
     return view;
   }

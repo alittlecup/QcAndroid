@@ -8,12 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -82,7 +79,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
             } else {
                 btnLogin.setVisibility(View.GONE);
             }
-        });
+        },new HttpThrowable());
 
         return view;
     }

@@ -12,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-
-
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -110,7 +108,7 @@ public class HomeBannerFragment extends BaseFragment {
                         btnLogin.setVisibility(View.VISIBLE);
                     } else btnLogin.setVisibility(View.GONE);
                 }
-        });
+        },new HttpThrowable());
 
         return view;
     }

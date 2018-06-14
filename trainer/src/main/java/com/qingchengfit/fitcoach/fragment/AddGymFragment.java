@@ -95,12 +95,9 @@ public class AddGymFragment extends GuideSetGymFragment {
                             searchListener.onSearchResult(100, Long.parseLong(qcResponse.data.gym_id),qcResponse.data.name,qcResponse.data.brand_name,qcResponse.data.photo,false);
                         } else ToastUtils.showDefaultStyle(qcResponse.msg);
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideLoading();
-                        ToastUtils.showDefaultStyle("error!");
-                    }
+                }, throwable -> {
+                    hideLoading();
+                    ToastUtils.showDefaultStyle("error!");
                 })
         );
 

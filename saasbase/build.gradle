@@ -54,65 +54,65 @@ android {
     resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
     resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
     resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
-    }
-    sourceSets {
-      main {
-        res.srcDirs = ['src/main/res/layout/student',
-                       'src/main/res']
-      }
+  }
+  sourceSets {
+    main {
+      res.srcDirs = ['src/main/res/layout/student',
+                     'src/main/res']
     }
   }
+}
 
-  dependencies {
+dependencies {
 
   api "cn.qingchengfit.widgets:qcbase:1.0.180601"
   api "cn.qingchengfit.recruit:recruit:1.1.180601"
   api "cn.qingchengfit.weex:weex:1.0.180601"
 
 
-    annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-    annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-    api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
-      exclude group: 'com.google.googlejavaformat'
-    }
-    api('com.hkm.taglib:tag:1.6.0') {
-      exclude group: 'com.android.support'
-    }
-    annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-    annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-    api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-    api("android.arch.lifecycle:extensions:1.0.0") {
-      exclude group: 'android.arch.lifecycle', module: 'runtime'
-    }
-    api "android.arch.lifecycle:reactivestreams:1.0.0"
-    api "io.reactivex:rxjava-reactive-streams:1.2.1"
-
-    annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
-
-    api 'me.gujun.android.taggroup:library:1.4@aar'
-
-    api "android.arch.lifecycle:common-java8:1.0.0"
-    //    // Room
-    api "android.arch.persistence.room:runtime:1.0.0"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
+    exclude group: 'com.google.googlejavaformat'
   }
-
-
-  group 'cn.qingchengfit.saas'
-  version '1.0.5'
-
-  uploadArchives {
-
-    repositories {
-      mavenDeployer {
-        repository(url: uri('../repo'))
-        pom.artifactId = 'sass'
-      }
-    }
+  api('com.hkm.taglib:tag:1.6.0') {
+    exclude group: 'com.android.support'
   }
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+  api("android.arch.lifecycle:extensions:1.0.0") {
+    exclude group: 'android.arch.lifecycle', module: 'runtime'
+  }
+  api "android.arch.lifecycle:reactivestreams:1.0.0"
+  api "io.reactivex:rxjava-reactive-streams:1.2.1"
+
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+
+  api 'me.gujun.android.taggroup:library:1.4@aar'
+
+  api "android.arch.lifecycle:common-java8:1.0.0"
+  //    // Room
+  api "android.arch.persistence.room:runtime:1.0.0"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+  api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+
+
+group 'cn.qingchengfit.saas'
+version '1.0.5'
+
+uploadArchives {
+
   repositories {
-    mavenCentral()
+    mavenDeployer {
+      repository(url: uri('../repo'))
+      pom.artifactId = 'sass'
+    }
   }
+}
+repositories {
+  mavenCentral()
+}
 

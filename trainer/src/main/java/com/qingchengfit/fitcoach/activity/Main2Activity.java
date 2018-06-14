@@ -16,7 +16,29 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.UpdateVersion;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventCloseApp;
+import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.events.EventSessionError;
+import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.HttpThrowable;
+import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.recruit.views.RecruitActivity;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.NetWorkUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.widgets.GuideWindow;
+import cn.qingchengfit.widgets.TabViewNoVp;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -39,10 +61,8 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,37 +70,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
-
 import javax.inject.Inject;
-
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.bean.UpdateVersion;
-import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.events.EventCloseApp;
-import cn.qingchengfit.events.EventLoginChange;
-import cn.qingchengfit.events.EventSessionError;
-import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.recruit.views.RecruitActivity;
-import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.CrashUtils;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.NetWorkUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.BaseActivity;
-import cn.qingchengfit.views.activity.WebActivity;
-import cn.qingchengfit.widgets.GuideWindow;
-import cn.qingchengfit.widgets.TabViewNoVp;
-import im.fir.sdk.FIR;
-import im.fir.sdk.VersionCheckCallback;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -353,7 +349,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                 (!PreferenceUtils.getPrefBoolean(this, App.coachid + "_has_show_orders", false)
                     && qcResponsePage.data.total_count > 0));
             ordersCount = qcResponsePage.data.total_count;
-          });
+          },new HttpThrowable());
     }
   }
 

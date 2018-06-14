@@ -7,13 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CoachInitBean;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -90,7 +87,7 @@ public class GuideSetBrandFragment extends BaseFragment {
                                 .into(new CircleImgWrapper(brandImg, getContext()));
                             imgUrl = s;
                         }
-                    });
+                    },new HttpThrowable());
             }
         });
         //if (App.gUser != null && App.gUser.id != null) {
