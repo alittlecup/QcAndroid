@@ -1,61 +1,31 @@
 package cn.qingchengfit.saasbase.mvvm_student.view.home;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageStudentHomeBinding;
-import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
-import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentHomeViewModel;
-import cn.qingchengfit.saasbase.student.items.StudentItem;
-import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/5.
  */
-@Leaf(module = "student", path = "/home/student") public class StudentHomePage
-    extends SaasBindingFragment<PageStudentHomeBinding, StudentHomeViewModel>
-    implements FlexibleAdapter.OnItemClickListener {
-
-  CommonFlexAdapter adapter;
-  StudentFilterViewModel filterViewModel;
-  StudentFilterView filterView;
+@Leaf(module = "student", path = "/student/home") public class StudentHomePage
+    extends StudentBaseFragment<PageStudentHomeBinding, StudentHomeViewModel>
+    implements OnChartValueSelectedListener {
 
   @Override protected void subscribeUI() {
-    mViewModel.getLiveItems().observe(this, studentItems -> {
-      mViewModel.isLoading.set(false);
-      if (studentItems == null || studentItems.isEmpty()) return;
-      mViewModel.items.set(mViewModel.getSortViewModel().sortItems(studentItems));
-      mBinding.includeFilter.setItems(new ArrayList<>(studentItems));
-    });
-    mViewModel.getSortViewModel().getFilterEvent().observe(this, aVoid -> {
-      openDrawer();
-      filterViewModel =
-          ViewModelProviders.of(filterView, factory).get(StudentFilterViewModel.class);
-      filterViewModel.getmFilterMap().observe(this, map -> {
-        // REFACTOR: 2017/12/6 Map与Studentfilter的对决
-        if (map != null) {
-          closeDrawer();
-          mViewModel.loadSource(map);
-          filterViewModel.getmFilterMap().setValue(null);
-        }
-      });
-    });
+
   }
 
   @Override
@@ -63,72 +33,53 @@ import java.util.List;
       Bundle savedInstanceState) {
     mBinding = PageStudentHomeBinding.inflate(inflater, container, false);
     initToolbar();
-    initFragment();
-    initRecyclerView();
-
-    mBinding.setViewModel(mViewModel);
-    mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
-
-    adapter.setFastScroller(mBinding.fastScroller);
-    mViewModel.loadSource(new HashMap<>());
+    initListener();
+    initChart();
     return mBinding;
   }
 
-  private void initRecyclerView() {
-    mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(),this));
-    initFastScroller();
-    mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+  private void initChart() {
+    mBinding.pieChart.setOnChartValueSelectedListener(this);
+    setData();
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
+  private void setData() {
+    ArrayList<PieEntry> entries = new ArrayList<>();
+    entries.add(new PieEntry(33));
+    entries.add(new PieEntry(33));
+    entries.add(new PieEntry(33));
+    PieDataSet dataSet = new PieDataSet(entries, "");
+    dataSet.setDrawValues(false);
+    dataSet.setSelectionShift(3f);
+    dataSet.setSliceSpace(0f);
+    ArrayList<Integer> colors = new ArrayList<>();
+    colors.add(Color.rgb(110, 184, 241));
+    colors.add(Color.rgb(249, 148, 78));
+    colors.add(Color.rgb(88, 184, 122));
+    dataSet.setColors(colors);
+    PieData data = new PieData(dataSet);
+    mBinding.pieChart.setData(data);
+    mBinding.pieChart.highlightValue(null);
+    mBinding.pieChart.invalidate();
   }
 
-  private void initFastScroller() {
-    mBinding.fastScroller.setBarClickListener(letter -> {
-      List<StudentItem> itemList = mViewModel.items.get();
-      int position = 0;
-      for (int i = 0; i < itemList.size(); i++) {
-        if (itemList.get(i).getHeader() != null) {
-          if (itemList.get(i).getHeader() instanceof StickerDateItem) {
-            if (((StickerDateItem) itemList.get(i).getHeader()).getDate()
-                .equalsIgnoreCase(letter)) {
-              position = i;
-            }
-          }
-        }
-      }
-      return position;
+  private void initListener() {
+    mBinding.commAllotStudent.setOnClickListener(view -> {
+
     });
-  }
-
-  private void openDrawer() {
-    mBinding.drawer.openDrawer(GravityCompat.END);
-  }
-
-  private void closeDrawer() {
-    mBinding.drawer.closeDrawer(GravityCompat.END);
-  }
-
-  private void initFragment() {
-    stuff(R.id.frame_student_operation, new StudentOperationView());
-    filterView = new StudentFilterView();
-    stuff(R.id.frame_student_filter, filterView);
   }
 
   private void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel("会员");
-    toolbarModel.setMenu(cn.qingchengfit.saasbase.R.menu.menu_search);
-    toolbarModel.setListener(item -> {
-      ToastUtils.show("click");
-      return true;
-    });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
-  @Override public boolean onItemClick(int position) {
-    routeTo(Uri.parse("qcstaff://student/common/select_member"),null);
-    return false;
+  @Override public void onValueSelected(Entry e, Highlight h) {
+
+  }
+
+  @Override public void onNothingSelected() {
+
   }
 }

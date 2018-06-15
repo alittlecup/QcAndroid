@@ -2,11 +2,7 @@ package cn.qingchengfit.saasbase.mvvm_student;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotChooseCoachPage;
@@ -48,10 +44,7 @@ import cn.qingchengfit.saasbase.student.views.followup.FollowUpTopSalerView;
 import cn.qingchengfit.saasbase.student.views.home.StudentHomeFragment;
 import cn.qingchengfit.saasbase.student.views.home.StudentOperationFragment;
 import cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment;
-import cn.qingchengfit.views.FragCallBack;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Trunk;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -76,14 +69,17 @@ import rx.functions.Action1;
     FollowUpStatusFragment.class, FollowUpFilterFragment.class, FilterTimesFragment.class,
     FollowUpTopSalerView.class, StudentTransferFragment.class, StudentAttendanceFragment.class,
     AttendanceStudentListFragment.class, AttendanceRankFragment.class,
+
     AttendanceNoSignFragment.class, AttendanceStudentPage.class, AttendanceAbsentPage.class,
     AttendanceRankPage.class, AttendanceNosignPage.class, TransferStudentPage.class,
     FollowUpStudentPage.class, FollowUpStatusPage.class, AllotStaffListPage.class,
     AllotStaffDetailPage.class, AllotMultiStaffPage.class, AllotChooseSalerPage.class,
-    AllotChooseCoachPage.class, StudentHomePage.class, StudentFilterView.class, ChooseStaffPage.class,
+    AllotChooseCoachPage.class,  StudentFilterView.class, ChooseStaffPage.class,
     FollowUpFilterEndView.class, ViewModelModule.class,
-    StudentAddFragment.class
-}) public class StudentActivity extends SaasContainerActivity implements FragCallBack {
+    StudentAddFragment.class,
+
+    StudentHomePage.class
+}) public class StudentActivity extends SaasContainerActivity {
 
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,86 +92,4 @@ import rx.functions.Action1;
   }
 
 
-
-  //@Override protected void onCreate(Bundle savedInstanceState) {
-  //  super.onCreate(savedInstanceState);
-  //  setContentView(R.layout.activity_base_frag);
-  //  ButterKnife.bind(this);
-  //  initView();
-  //  onNewIntent(getIntent());
-  //}
-
-  private void initView() {
-
-    //routerCenter.getFragment(Uri.parse("xx"), ;
-
-    // TODO: 2017/8/10 权限的检查
-    //if (getIntent() != null && getIntent().getExtras() != null) {
-    //    if (getIntent().getExtras().containsKey(Configs.EXTRA_GYM_SERVICE)) {
-    //        CoachService c = getIntent().getExtras().getParcelable(Configs.EXTRA_GYM_SERVICE);
-    //        gymWrapper.setCoachService(c);
-    //        restRepository.getGet_api()
-    //            .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
-    //            .onBackpressureBuffer()
-    //            .subscribeOn(Schedulers.io())
-    //            .observeOn(AndroidSchedulers.mainThread())
-    //            .subscribe(new Action1<QcResponsePermission>() {
-    //                @Override public void call(QcResponsePermission qcResponse) {
-    //                    if (ResponseConstant.checkSuccess(qcResponse)) {
-    //                        SerPermisAction.writePermiss(qcResponse.data.permissions);
-    //                        if (!SerPermisAction.checkAll(PermissionServerUtils.MANAGE_MEMBERS)) {
-    //                            new MaterialDialog.Builder(StudentActivity.this).autoDismiss(true)
-    //                                .content(R.string.alert_permission_forbid)
-    //                                .positiveText(R.string.common_i_konw)
-    //                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-    //                                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-    //                                        StudentActivity.this.finish();
-    //                                    }
-    //                                })
-    //                                .show();
-    //                        } else {
-    //                            getSupportFragmentManager().beginTransaction().replace(getFragId(), new StudentListFragment()).commit();
-    //                        }
-    //                    } else {
-    //                        Timber.e(qcResponse.getMsg());
-    //                    }
-    //                }
-    //            }, new Action1<Throwable>() {
-    //                @Override public void call(Throwable throwable) {
-    //                    LogUtil.e(throwable.getMessage());
-    //                }
-    //            });
-    //    } else {
-    //        getSupportFragmentManager().beginTransaction().replace(getFragId(), new StudentListFragment()).commit();
-    //    }
-    //} else {
-    //    getSupportFragmentManager().beginTransaction().replace(getFragId(), new StudentListFragment()).commit();
-    //}
-
-  }
-
-  @Override public void setToolbar(String title, boolean showRight, View.OnClickListener titleClick,
-      @MenuRes int menu, Toolbar.OnMenuItemClickListener listener) {
-
-  }
-
-  @Override public void cleanToolbar() {
-
-  }
-
-  @Override public void openSeachView(String hint, Action1<CharSequence> action1) {
-
-  }
-
-  @Override public void onChangeFragment(BaseFragment fragment) {
-
-  }
-
-  @Override public void setBar(ToolbarBean bar) {
-
-  }
-
-  //@Override public int getFragId() {
-  //  return R.id.web_frag_layout;
-  //}
 }

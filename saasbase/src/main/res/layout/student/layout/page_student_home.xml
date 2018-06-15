@@ -2,127 +2,335 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="itemClickListener"
-            type="eu.davidea.flexibleadapter.FlexibleAdapter.OnItemClickListener" />
-
-        <variable
-            name="toolbarModel"
-            type="cn.qingchengfit.model.others.ToolbarModel" />
-
-        <variable
-            name="viewModel"
-            type="cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentHomeViewModel" />
-
-
-    </data>
-
-    <cn.qingchengfit.saasbase.student.other.MyDrawerLayout
-        android:id="@+id/drawer"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <include
-                android:id="@+id/include_toolbar"
-                layout="@layout/common_simple_toolbar"
-                bind:toolbarModel="@{toolbarModel}" />
-
-
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/scroll_root"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:orientation="vertical">
-
-                <android.support.design.widget.AppBarLayout
-                    android:id="@+id/myhome_appBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/bg_grey"
-                    android:fitsSystemWindows="true"
-                    app:elevation="0dp">
-
-                    <FrameLayout
-                        android:id="@+id/frame_student_operation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_scrollFlags="scroll|enterAlways" />
-
-                    <include
-                        android:id="@+id/include_filter"
-                        layout="@layout/view_layout_filter" />
-
-                    <include layout="@layout/divider_grey" />
-                </android.support.design.widget.AppBarLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                    <android.support.v4.widget.SwipeRefreshLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:onRefreshListener="@{()->viewModel.refresh()}"
-                        app:refreshing="@{viewModel.isLoading}">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:items="@{viewModel.items}"
-                            app:itemClickListenter="@{itemClickListener}"
-                            />
-
-                    </android.support.v4.widget.SwipeRefreshLayout>
-
-                    <cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller
-                        android:id="@+id/fast_scroller"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        app:enable="@{!viewModel.getSortViewModel().latestChecked}"
-                        app:fastScrollerAutoHideDelayInMillis="50"
-                        app:fastScrollerAutoHideEnabled="false"
-                        app:fastScrollerBubbleEnabled="true"
-                        app:fastScrollerBubblePosition="center"
-                        app:visibleGone="@{!viewModel.getSortViewModel().latestChecked}" />
-                </RelativeLayout>
-            </android.support.design.widget.CoordinatorLayout>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_add_student"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:background="@color/bg_white"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:padding="11dp"
+              android:text="今日新增会员  (人)"
+              style="@style/QcTextStyleMediumGrey"
+              />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="33dp"
+              android:layout_marginTop="57dp"
+              android:divider="@color/bg_grey"
+              android:dividerPadding="1px"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:showDividers="middle"
+              >
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                app:ct_text="新增注册"
+                />
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                app:ct_text="已接洽"
+                />
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                app:ct_text="会员"
+                />
+          </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/bg_white"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:padding="11dp"
+              android:text="今日新增跟进  (人)"
+              style="@style/QcTextStyleMediumGrey"
+              />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="33dp"
+              android:layout_marginTop="57dp"
+              android:divider="@color/bg_grey"
+              android:dividerPadding="1px"
+              android:orientation="horizontal"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:showDividers="middle"
+              >
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                app:ct_text="新接洽跟进"
+                />
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                app:ct_text="会员维护"
+                />
+          </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/bg_white"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:padding="11dp"
+              android:text="全部会员  (人)"
+              style="@style/QcTextStyleMediumGrey"
+              />
+          <LinearLayout
+              android:id="@+id/ll_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="50dp"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              >
+            <TextView
+                android:id="@+id/tv_all_student"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:onClick="@{()->viewModel.onFABClick()}"
-                android:scaleType="fitXY"
-                app:fabSize="normal"
-                app:srcCompat="@drawable/ic_add_staff" />
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/vd_arrow_right_grey_small"
+                android:drawableTint="@color/colorPrimary"
+                android:text="- -"
+                android:textColor="@color/colorPrimary"
+                android:textSize="36dp"
+                tools:text="138,174"
+                />
+            <Button
+                android:id="@+id/btn_add_student"
+                android:layout_width="96dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:text="+ 添加会员"
+                style="@style/QcBtnPrimarySecond"
+                />
+          </LinearLayout>
+          <View
+              android:id="@+id/divider"
+              android:layout_width="match_parent"
+              android:layout_height="2px"
+              android:layout_below="@+id/ll_count"
+              android:layout_marginLeft="42dp"
+              android:layout_marginRight="42dp"
+              android:layout_marginTop="35dp"
+              android:background="@color/bg_grey"
+              />
+          <cn.qingchengfit.saasbase.mvvm_student.widget.QcPieChart
+              android:id="@+id/pie_chart"
+              android:layout_width="116dp"
+              android:layout_height="116dp"
+              android:layout_below="@+id/divider"
+              android:layout_marginBottom="32dp"
+              android:layout_marginLeft="40dp"
+              android:layout_marginTop="32dp"
+              />
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_alignTop="@+id/pie_chart"
+              android:layout_marginRight="66dp"
+              android:layout_marginTop="10dp"
+              android:orientation="vertical"
+              >
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawableLeft="@drawable/circle_orange"
+                  android:drawablePadding="5dp"
+                  android:drawableTint="@color/lightblue"
+                  android:text="新注册"
+                  style="@style/QcTextStyleSmallGrey"
+                  />
+              <TextView
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:drawablePadding="10dp"
+                  android:drawableRight="@drawable/vd_arrow_right_grey_small"
+                  android:gravity="end"
+                  android:textSize="16sp"
+                  tools:text="1567"
+                  style="@style/QcTextStyleMediumDark"
+                  />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                >
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawableLeft="@drawable/circle_orange"
+                  android:drawablePadding="5dp"
+                  android:text="已接洽"
+                  style="@style/QcTextStyleSmallGrey"
+                  />
+              <TextView
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:drawablePadding="10dp"
+                  android:drawableRight="@drawable/vd_arrow_right_grey_small"
+                  android:gravity="end"
+                  android:textSize="16sp"
+                  tools:text="1567"
+                  style="@style/QcTextStyleMediumDark"
+                  />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                >
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawableLeft="@drawable/circle_orange"
+                  android:drawablePadding="5dp"
+                  android:drawableTint="@color/success_green"
+                  android:text="会员"
+                  style="@style/QcTextStyleSmallGrey"
+                  />
+              <TextView
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:drawablePadding="10dp"
+                  android:drawableRight="@drawable/vd_arrow_right_grey_small"
+                  android:gravity="end"
+                  android:textSize="16sp"
+                  tools:text="1567"
+                  style="@style/QcTextStyleMediumDark"
+                  />
+            </LinearLayout>
+          </LinearLayout>
         </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/frame_student_filter"
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/comm_allot_student"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:orientation="vertical" />
-    </cn.qingchengfit.saasbase.student.other.MyDrawerLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            app:civ_clickable="true"
+            app:civ_is_show_left="true"
+            app:civ_lable="会员分配"
+            app:civ_showright="true"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/comm_transfer_student"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:civ_clickable="true"
+            app:civ_is_show_left="true"
+            app:civ_lable="会员转化"
+            app:civ_showright="true"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/comm_attend_student"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:civ_clickable="true"
+            app:civ_is_show_left="true"
+            app:civ_lable="会员出勤"
+            app:civ_showright="true"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/comm_day_student"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:civ_clickable="true"
+            app:civ_is_show_left="true"
+            app:civ_lable="会员生日"
+            app:civ_showright="true"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/comm_send_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:civ_clickable="true"
+            app:civ_is_show_left="true"
+            app:civ_lable="群发短信"
+            app:civ_showright="true"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/comm_export_import"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:civ_clickable="true"
+            app:civ_is_show_left="true"
+            app:civ_lable="导入导出"
+            app:civ_showright="true"
+            />
+      </LinearLayout>
+    </ScrollView>
+  </LinearLayout>
+
+
 </layout>

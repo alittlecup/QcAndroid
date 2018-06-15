@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="CountTextView">
+    <attr format="string" name="ct_text"/>
+    <attr format="integer" name="ct_count"/>
+  </declare-styleable>
+</resources>
