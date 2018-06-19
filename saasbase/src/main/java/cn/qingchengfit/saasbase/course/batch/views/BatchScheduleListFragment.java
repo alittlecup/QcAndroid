@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
@@ -62,18 +60,19 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/22.
  */
-@Leaf(module = "course", path = "/batch/schedule/list/")
-public class BatchScheduleListFragment extends SaasBaseFragment implements
-    FlexibleAdapter.OnItemClickListener,BatchScheduleListPresenter.MVPView,SwipeRefreshLayout.OnRefreshListener{
+@Leaf(module = "course", path = "/batch/schedule/list/") public class BatchScheduleListFragment
+    extends SaasBaseFragment
+    implements FlexibleAdapter.OnItemClickListener, BatchScheduleListPresenter.MVPView,
+    SwipeRefreshLayout.OnRefreshListener {
 
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	RecyclerView rv;
-	SwipeRefreshLayout srl;
-	Button btnDelSelected;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  RecyclerView rv;
+  SwipeRefreshLayout srl;
+  Button btnDelSelected;
 
   @Inject BatchScheduleListPresenter presenter;
-  CommonFlexAdapter adapter ;
+  CommonFlexAdapter adapter;
   @Need String batchId;
   @Need Boolean isPrivate = false;
 
@@ -106,9 +105,8 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true).setStickyHeaderElevation(1);
     rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setLayoutManager(new LinearLayoutManager(getContext()));
-    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withOffset(1).withBottomEdge(true)
-    );
+    rv.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withOffset(1).withBottomEdge(true));
     rv.setAdapter(adapter);
     srl.setRefreshing(true);
     srl.setOnRefreshListener(this);
@@ -118,7 +116,6 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -129,7 +126,8 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
   }
 
   boolean editable = true;//是否item可以选中
-  public void toggleAction(){
+
+  public void toggleAction() {
     editable = !editable;
     if (!editable) {
       toolbar.getMenu().clear();
@@ -142,7 +140,7 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
           return false;
         }
       });
-    }else {
+    } else {
       toolbar.getMenu().clear();
       toolbar.getMenu().add("取消").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -156,7 +154,6 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     }
   }
 
-
   @Override public String getFragmentName() {
     return BatchScheduleListFragment.class.getName();
   }
@@ -168,43 +165,43 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);
     if (item == null) return true;
-    if (editable){
+    if (editable) {
       adapter.toggleSelection(position);
       adapter.notifyItemChanged(position);
-      btnDelSelected.setVisibility(adapter.getSelectedPositions().size() > 0?View.VISIBLE:View.GONE);
-    }else {
+      btnDelSelected.setVisibility(
+          adapter.getSelectedPositions().size() > 0 ? View.VISIBLE : View.GONE);
+    } else {
       if (item instanceof BatchScheduleItem) {
         BatchSchedule batchLoop = ((BatchScheduleItem) item).getBatchSchedule();
         if (batchLoop == null) return true;
         if (!DateUtils.isOutOfDate(DateUtils.formatDateFromServer(batchLoop.start))) {
           //跳去单个排课页面
           routeTo("/batch/schedule/single/",
-            new cn.qingchengfit.saasbase.course.batch.views.BatchSingleParams()
-              .scheduleId(batchLoop.id)
-              .isPrivate(isPrivate)
-              .build());
+              new cn.qingchengfit.saasbase.course.batch.views.BatchSingleParams().scheduleId(
+                  batchLoop.id).isPrivate(isPrivate).build());
         }
       }
     }
     return true;
   }
 
-
-  public void del(){
-    DialogUtils.instanceDelDialog(getContext(), "确认删除已选课程？", new MaterialDialog.SingleButtonCallback() {
-      @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        presenter.del();
-      }
-    }).show();
+  public void del() {
+    DialogUtils.instanceDelDialog(getContext(), "确认删除已选课程？",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            presenter.del();
+          }
+        }).show();
   }
 
   @Override public void onList(List<BatchSchedule> list) {
     srl.setRefreshing(false);
     try {
       List<IFlexible> datas = new ArrayList<>();
-      if (list.size() == 0){
-        datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe,"暂无排期"));
-      }else {
+      if (list.size() == 0) {
+        datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无排期"));
+      } else {
         String curDay = "";
         for (BatchSchedule batchSchedule : list) {
           if (!curDay.equalsIgnoreCase(DateUtils.getYYMMfromServer(batchSchedule.start))) {
@@ -215,11 +212,10 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
         }
       }
       adapter.clear();
-      adapter.updateDataSet(datas ,true);
-    }catch (Exception e){
+      adapter.updateDataSet(datas, true);
+    } catch (Exception e) {
       LogUtil.e(e.getMessage());
     }
-
   }
 
   @Override public void onSuccess() {
@@ -229,11 +225,13 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     List<String> ids = new ArrayList<>();
     for (Integer integer : adapter.getSelectedPositions()) {
       IFlexible item = adapter.getItem(integer);
-      if (item instanceof BatchScheduleItem){
+      if (item instanceof BatchScheduleItem) {
         ids.add(((BatchScheduleItem) item).getBatchSchedule().id);
       }
     }
-    return ListUtils.List2Str(ids);
+    String id = ListUtils.List2Str(ids);
+    id = id.replace("、", ",");
+    return id;
   }
 
   @Override public void onRefresh() {
