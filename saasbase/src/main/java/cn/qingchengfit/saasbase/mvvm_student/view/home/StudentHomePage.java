@@ -67,6 +67,28 @@ import java.util.ArrayList;
     mBinding.commAllotStudent.setOnClickListener(view -> {
 
     });
+    mBinding.commAttendStudent.setOnClickListener(view -> {
+      routeTo("attendance/page", null);
+    });
+    mBinding.commTransferStudent.setOnClickListener(view -> {
+      routeTo("transfer/student", null);
+    });
+    mBinding.commSendMsg.setOnClickListener(view -> {
+      // TODO: 2018/6/19 这里位于staff
+      //if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+      //  showAlert(R.string.alert_permission_forbid);
+      //  return false;
+      //}
+      //Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
+      //toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
+      //startActivity(toChoose);
+    });
+    mBinding.commExportImport.setOnClickListener(view -> {
+      // TODO: 2018/6/19 同样位于staff
+      //Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
+      //exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
+      //startActivity(exportIntent);
+    });
   }
 
   private void initToolbar() {

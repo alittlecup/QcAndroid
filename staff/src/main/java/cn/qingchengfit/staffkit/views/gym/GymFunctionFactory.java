@@ -19,6 +19,7 @@ import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
+import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -483,9 +484,9 @@ public class GymFunctionFactory {
        *
        */
       case MODULE_STUDENT:
-        //Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
-        //fragment.startActivity(toStu);
-        fragment.routeTo("student", "/student/home", null);
+        Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
+        fragment.startActivity(toStu);
+        //fragment.routeTo("student", "/student/home", null);
 
         return;
       case REPORT_EXPORT:
