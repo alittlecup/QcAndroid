@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.items.CmBottomListChosenItem;
 import cn.qingchengfit.items.CmBottomListItem;
 import cn.qingchengfit.notisetting.presenter.NotiSettingChannelPresenter;
+import cn.qingchengfit.notisetting.presenter.NotiSettingWxTemplatePresenter;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -52,14 +51,16 @@ import javax.inject.Inject;
  * Created by Paper on 2017/7/31.
  */
 public class SendChannelTabFragment extends VpFragment
-    implements NotiSettingChannelPresenter.MVPView, TitleFragment {
+    implements NotiSettingChannelPresenter.MVPView, TitleFragment,
+    NotiSettingWxTemplatePresenter.MVPView {
 
-	CompatTextView tvMsgLeft;
-	CompatTextView tvHasVerify;
-	CommonInputView civSendStudent;
-	CommonInputView civSendStaff;
+  CompatTextView tvMsgLeft;
+  CompatTextView tvHasVerify;
+  CommonInputView civSendStudent;
+  CommonInputView civSendStaff;
 
   @Inject NotiSettingChannelPresenter presenter;
+  @Inject NotiSettingWxTemplatePresenter wxPresenter;
   @Inject SerPermisAction serPermisAction;
   BottomListFragment bottomListFragment;
 
@@ -106,13 +107,13 @@ public class SendChannelTabFragment extends VpFragment
         }
       });
       delegatePresenter(presenter, this);
+      delegatePresenter(wxPresenter, this);
       presenter.queryCurSMSleft();
       presenter.querySendChannel();
     } else {
       view = inflater.inflate(R.layout.item_common_no_data, container, false);
-      ((ImageView) view.findViewById( R.id.img)).setImageResource(
-          R.drawable.vd_img_no_permission);
-      ((TextView) view.findViewById( R.id.tv_title)).setText(R.string.no_read_permission);
+      ((ImageView) view.findViewById(R.id.img)).setImageResource(R.drawable.vd_img_no_permission);
+      ((TextView) view.findViewById(R.id.tv_title)).setText(R.string.no_read_permission);
     }
     return view;
   }
@@ -122,10 +123,11 @@ public class SendChannelTabFragment extends VpFragment
   }
 
   @Override public void onDestroyView() {
+    wxPresenter.unattachView();
     super.onDestroyView();
   }
 
- public void onLayoutChannelMsgClicked() {
+  public void onLayoutChannelMsgClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
@@ -133,7 +135,7 @@ public class SendChannelTabFragment extends VpFragment
     routeTo(new NotiSettingMsgChargeFragment());
   }
 
- public void onLayoutChannelWxClicked() {
+  public void onLayoutChannelWxClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
@@ -141,47 +143,49 @@ public class SendChannelTabFragment extends VpFragment
     routeTo(new NotiSettingWxTemplateFragment());
   }
 
- public void onLayoutChannelAppClicked() {
+  public void onLayoutChannelAppClicked() {
     showAlert("通过「青橙健身APP」和「青橙健身教练APP」的推送消息通知工作人员和教练");
   }
 
- public void onCivSendStudentClicked() {
+  public void onCivSendStudentClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
     bottomListFragment = BottomListFragment.newInstance("发送给会员的通知", SelectableAdapter.Mode.SINGLE);
+    bottomListFragment.setSelectedPos(presenter.getToStudentMethod());
     bottomListFragment.loadData(getStudentBottomItems());
     bottomListFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
       @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
         if (selectedPos != null && selectedPos.size() > 0) {
           int realPos = presenter.getRealSendMethodType(selectedPos.get(0));
+          presenter.setToStudentMethod(selectedPos.get(0));
           presenter.postSendStudentNoti(realPos + 1);
           sendToStudentNoti(realPos);
         }
       }
     });
-    bottomListFragment.setSelectedPos(presenter.getToStudentMethod());
     bottomListFragment.show(getChildFragmentManager(), "");
   }
 
- public void onCivSendStaffClicked() {
+  public void onCivSendStaffClicked() {
     if (!serPermisAction.check(PermissionServerUtils.MESSAGESETTING_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
     bottomListFragment = BottomListFragment.newInstance("发送给员工的通知", SelectableAdapter.Mode.SINGLE);
+    bottomListFragment.setSelectedPos(presenter.getToStaffMethod());
     bottomListFragment.loadData(getStaffBottomItems());
     bottomListFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
       @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
         if (selectedPos != null && selectedPos.size() > 0) {
           int realPos = selectedPos.get(0);
+          presenter.setToStaffMethod(realPos);
           presenter.postSendStaffNoti(realPos + 1);//后端对应的是 1234
           sendToStaffNoti(realPos);
         }
       }
     });
-    bottomListFragment.setSelectedPos(presenter.getToStaffMethod());
     bottomListFragment.show(getChildFragmentManager(), "");
   }
 
@@ -190,11 +194,11 @@ public class SendChannelTabFragment extends VpFragment
     int i = 0;
     for (String s : getResources().getStringArray(R.array.noti_setting_methods_user)) {
       if (i == 0) {
-        ret.add(new CmBottomListChosenItem(s, "优先发送微信模板消息，不能发送时自动转为短信发送",true));
-      } else if (i == 1){
-        ret.add(new CmBottomListChosenItem(s, "",true));
+        ret.add(new CmBottomListChosenItem(s, "优先发送微信模板消息，不能发送时自动转为短信发送", true));
+      } else if (i == 1) {
+        ret.add(new CmBottomListChosenItem(s, "", true));
       } else {
-        ret.add(new CmBottomListChosenItem(s, "",presenter.isHasWXbinded()));
+        ret.add(new CmBottomListChosenItem(s, "", presenter.isHasWXbinded()));
       }
       i++;
     }
@@ -252,5 +256,10 @@ public class SendChannelTabFragment extends VpFragment
     } else {
       CrashUtils.sendCrash(new Throwable("消息设置 短信 发送给员工的方式 大于3"));
     }
+  }
+
+  @Override public void onAuthored(int type, boolean author, boolean isReady) {
+    onWeChatleft(author);
+    presenter.setHasWXbinded(author);
   }
 }
