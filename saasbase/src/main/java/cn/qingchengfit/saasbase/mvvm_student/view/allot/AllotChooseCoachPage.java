@@ -34,7 +34,7 @@ import java.util.List;
 
   @Override protected void subscribeUI() {
     mViewModel.setStudents(studentIds);
-    mViewModel.getStaffs().observe(gridListFragment, staffs -> {
+    mViewModel.getStaffs().observe(this, staffs -> {
       gridListFragment.setStaffs(staffs);
       for (int i = 0; i < staffs.size(); i++) {
         if (belongStaffIds.contains(staffs.get(i).id)) {

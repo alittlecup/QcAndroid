@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.mvvm_student.usercase;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,15 +20,13 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.student.bean.SourceBean;
 import cn.qingchengfit.saasbase.student.bean.SourceBeans;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 
 /**
  * Created by huangbaole on 2017/12/11.
  */
 @Singleton
 public class FollowUpFilterUserCase {
-    @Inject
-    StudentRespository studentRespository;
+    @Inject StudentRepository studentRespository;
 
     public LiveData<List<FilterModel>> getFilterModel() {
         return filterModel;

@@ -12,21 +12,25 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
  */
 
 public class ChooseStaffItem extends StaffDetailItem {
-    public ChooseStaffItem(QcStudentBean qcStudentBean, Integer type) {
-        super(qcStudentBean, type);
-    }
+  public ChooseStaffItem(QcStudentBean qcStudentBean, Integer type) {
+    super(qcStudentBean, type);
+  }
 
-    @Override
-    public StudentVH createViewHolder(View view, FlexibleAdapter adapter) {
-        StudentVH vh = super.createViewHolder(view, adapter);
-        vh.cb.setVisibility(View.VISIBLE);
-        return vh;
-    }
+  @Override public StudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+    StudentVH vh = super.createViewHolder(view, adapter);
+    return vh;
+  }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, StudentVH holder, int position,
-                               List payloads) {
-        super.bindViewHolder(adapter, holder, position, payloads);
-        holder.cb.setChecked(adapter.isSelected(position));
-    }
+  @Override public void bindViewHolder(FlexibleAdapter adapter, StudentVH holder, int position,
+      List payloads) {
+    super.bindViewHolder(adapter, holder, position, payloads);
+    holder.cb.setVisibility(visibility ? View.VISIBLE : View.GONE);
+    holder.cb.setChecked(adapter.isSelected(position));
+  }
+
+  private boolean visibility = true;
+
+  public void setCheckBoxVisiblity(boolean visibility) {
+    this.visibility = visibility;
+  }
 }

@@ -40,7 +40,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:padding="11dp"
-              android:text="今日新增会员  (人)"
+              android:text="今日新增 (人)"
               style="@style/QcTextStyleMediumGrey"
               />
           <LinearLayout
@@ -59,14 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:ct_text="新增注册"
-                />
-            <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:ct_text="已接洽"
+                app:ct_text="新注册"
                 />
             <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
                 android:layout_width="0dp"
@@ -87,7 +80,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:padding="11dp"
-              android:text="今日新增跟进  (人)"
+              android:text="今日跟进 (人)"
               style="@style/QcTextStyleMediumGrey"
               />
           <LinearLayout
@@ -107,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:ct_text="新接洽跟进"
+                app:ct_text="新用户跟进"
                 />
             <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
                 android:layout_width="0dp"
@@ -131,41 +124,27 @@
               android:text="全部会员  (人)"
               style="@style/QcTextStyleMediumGrey"
               />
-          <LinearLayout
-              android:id="@+id/ll_count"
+
+          <TextView
+              android:id="@+id/tv_all_student"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_centerHorizontal="true"
               android:layout_marginTop="50dp"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              >
-            <TextView
-                android:id="@+id/tv_all_student"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="10dp"
-                android:drawableRight="@drawable/vd_arrow_right_grey_small"
-                android:drawableTint="@color/colorPrimary"
-                android:text="- -"
-                android:textColor="@color/colorPrimary"
-                android:textSize="36dp"
-                tools:text="138,174"
-                />
-            <Button
-                android:id="@+id/btn_add_student"
-                android:layout_width="96dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="8dp"
-                android:text="+ 添加会员"
-                style="@style/QcBtnPrimarySecond"
-                />
-          </LinearLayout>
+              android:drawablePadding="10dp"
+              android:drawableRight="@drawable/vd_arrow_right_grey_small"
+              android:drawableTint="@color/colorPrimary"
+              android:text="- -"
+              android:textColor="@color/colorPrimary"
+              android:textSize="36dp"
+              tools:text="138,174"
+              />
+
           <View
               android:id="@+id/divider"
               android:layout_width="match_parent"
               android:layout_height="2px"
-              android:layout_below="@+id/ll_count"
+              android:layout_below="@+id/tv_all_student"
               android:layout_marginLeft="42dp"
               android:layout_marginRight="42dp"
               android:layout_marginTop="35dp"
@@ -276,6 +255,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             app:civ_clickable="true"
+            app:civ_left_icon="@drawable/vd_student_distribution"
             app:civ_is_show_left="true"
             app:civ_lable="会员分配"
             app:civ_showright="true"
@@ -286,6 +266,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:civ_clickable="true"
+            app:civ_left_icon="@drawable/vd_student_conversion"
             app:civ_is_show_left="true"
             app:civ_lable="会员转化"
             app:civ_showright="true"
@@ -295,6 +276,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:civ_clickable="true"
+            app:civ_left_icon="@drawable/vd_student_attendance"
+
             app:civ_is_show_left="true"
             app:civ_lable="会员出勤"
             app:civ_showright="true"
@@ -305,6 +288,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:civ_clickable="true"
+            app:civ_left_icon="@drawable/vd_student_birthday"
             app:civ_is_show_left="true"
             app:civ_lable="会员生日"
             app:civ_showright="true"
@@ -315,6 +299,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:civ_clickable="true"
+            app:civ_left_icon="@drawable/vd_student_msg"
             app:civ_is_show_left="true"
             app:civ_lable="群发短信"
             app:civ_showright="true"
@@ -323,10 +308,11 @@
             android:id="@+id/comm_export_import"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
             app:civ_clickable="true"
+            app:civ_left_icon="@drawable/vd_student_importandexport"
             app:civ_is_show_left="true"
             app:civ_lable="导入导出"
-            android:layout_marginBottom="100dp"
             app:civ_showright="true"
             />
       </LinearLayout>

@@ -89,6 +89,9 @@ import java.util.ArrayList;
       //exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
       //startActivity(exportIntent);
     });
+    mBinding.tvAllStudent.setOnClickListener(view -> {
+      routeTo("/student/all", null);
+    });
   }
 
   private void initToolbar() {

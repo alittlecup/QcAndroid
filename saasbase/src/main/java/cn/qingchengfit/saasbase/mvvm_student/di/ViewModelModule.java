@@ -5,8 +5,12 @@ import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespositoryImpl;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepositoryImpl;
+import cn.qingchengfit.saasbase.mvvm_student.view.allot.StudentAllotViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentAllViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.webchoose.ChooseStaffViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotChooseViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotListViewModel;
@@ -39,7 +43,7 @@ import javax.inject.Singleton;
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
   @Binds
-  abstract StudentRespository bindStudentRespository(StudentRespositoryImpl studentRespository);
+  abstract StudentRepository bindStudentRespository(StudentRepositoryImpl studentRespository);
 
   //@Binds abstract IStudentModel bindStudentModel(StudentModel studentModel);
 
@@ -99,4 +103,25 @@ import javax.inject.Singleton;
   @Named("topFilter") @Singleton @Provides static  StudentFilter providesTopStudentFilter() {
     return new StudentFilter();
   }
+
+  /**
+   * new
+   *
+   */
+  @Binds @IntoMap @ViewModelKey(StudentAllViewModel.class)
+  abstract ViewModel bindStudentAllViewModel(StudentAllViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(StudentRecyclerSortViewModel.class)
+  abstract ViewModel bindStudentRecyclerSortViewModel(StudentRecyclerSortViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(StudentListViewModel.class)
+  abstract ViewModel bindStudentListViewModel(StudentListViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(StudentAllotViewModel.class)
+  abstract ViewModel bindStudentAllotViewModel(StudentAllotViewModel model);
+
+
+
+
+
 }

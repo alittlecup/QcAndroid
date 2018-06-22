@@ -36,7 +36,7 @@ import rx.Observable;
  * 继承自StudentRespository,为Student模块的唯一数据来源
  * 作为M-V-VM中的Model层，应该持有两个两个数据源，一个是服务端数据源，另一个是本地持久化的数据源（目前没有）
  * 在Model层中应该是用RxJava来进行数据的响应式处理，然后在传递给VM层时，统一转换为LiveData.
- * 由于目前是用的RxJava1,在{@link StudentRespository}中写了一个toLiveData()函数，
+ * 由于目前是用的RxJava1,在{@link StudentRepository}中写了一个toLiveData()函数，
  * 用于将Observable转化为Publisher,再变成LiveData，同时在转化的时候，对Observable对象进行了统一的线程处理。
  * <p>
  * 关于从Observablez转化为LiveData的时候，会遇到的一个问题就是由于数据的来源是有一定状态的，比如请求成功，请求失败或者请求中等
@@ -54,7 +54,7 @@ import rx.Observable;
  * Created by huangbaole on 2017/11/17.
  */
 @Singleton
-public class StudentRespositoryImpl implements StudentRespository {
+public class StudentRepositoryImpl implements StudentRepository {
 
     @Inject
     IStudentModel remoteService;
@@ -64,7 +64,7 @@ public class StudentRespositoryImpl implements StudentRespository {
 
 
     @Inject
-    public StudentRespositoryImpl() {
+    public StudentRepositoryImpl() {
     }
 
     static <T> LiveData<T> toLiveData(Observable<QcDataResponse<T>> observable) {

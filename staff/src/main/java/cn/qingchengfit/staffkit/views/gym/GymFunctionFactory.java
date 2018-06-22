@@ -23,7 +23,6 @@ import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.weex.utils.WeexUtil;
 import javax.inject.Inject;
 
 import static cn.qingchengfit.saasbase.qrcode.views.QRActivity.MODULE_DATA_BIG;
@@ -467,16 +466,18 @@ public class GymFunctionFactory {
         //goQrScan(fragment, module, null, coachService);
         return;
       case MODULE_WORKSPACE_COMMODITY_LIST:
-        // TODO: 2018/3/20 商品销售入口页
-        if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
-            PermissionServerUtils.COMMODITY_MARKET)) {
-          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
-          return;
-        }
-        //goQrScan(fragment, module, null, coachService);
-        //fragment.routeTo("shop","/shop/home",null);
-        WeexUtil.loadJsMap(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
-            Configs.WEEX_PAGE_INDEX);
+        //if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
+        //    PermissionServerUtils.COMMODITY_MARKET)) {
+        //  DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+        //  return;
+        //}
+        ////goQrScan(fragment, module, null, coachService);
+        ////fragment.routeTo("shop","/shop/home",null);
+        //WeexUtil.loadJsMap(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
+        //    Configs.WEEX_PAGE_INDEX);
+
+        fragment.routeTo("student", "/student/home", null);
+
         return;
 
       /**会员管理

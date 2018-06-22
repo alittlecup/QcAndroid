@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,6 @@ import cn.qingchengfit.saasbase.student.items.NotSignClassItem;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.utils.DateUtils;
 
 /**
@@ -35,8 +35,7 @@ public class AttendanceNosignViewModel extends FlexibleViewModel<List<StudentWIt
     GymWrapper gymWrapper;
     @Inject
     LoginStatus loginStatus;
-    @Inject
-    StudentRespository respository;
+    @Inject StudentRepository respository;
 
     public ObservableField<List<NotSignClassItem>> items = new ObservableField<>();
     public ObservableField<String> topDayText = new ObservableField<>("未签课7天内");

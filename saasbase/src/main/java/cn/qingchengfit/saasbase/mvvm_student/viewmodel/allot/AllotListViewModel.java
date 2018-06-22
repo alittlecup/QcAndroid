@@ -7,7 +7,7 @@ import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ public class AllotListViewModel extends FlexibleViewModel<List<AllotDataResponse
     LoginStatus loginStatus;
     @Inject
     GymWrapper gymWrapper;
-    @Inject StudentRespository respository;
+    @Inject StudentRepository respository;
     public Integer type ;
 
     @Inject

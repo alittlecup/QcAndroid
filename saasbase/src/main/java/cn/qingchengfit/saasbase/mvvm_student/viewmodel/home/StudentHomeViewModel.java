@@ -18,9 +18,9 @@ import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.mvvm_student.usercase.FilterUserCase;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.HashMap;
 import java.util.List;
@@ -42,8 +42,7 @@ public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>,
     SortViewModel sortViewModel;
     @Inject
     LoginStatus loginStatus;
-    @Inject
-    StudentRespository respository;
+    @Inject StudentRepository respository;
     @Inject
     GymWrapper gymWrapper;
 

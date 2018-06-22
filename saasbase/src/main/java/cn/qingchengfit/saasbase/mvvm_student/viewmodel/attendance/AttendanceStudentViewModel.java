@@ -10,7 +10,7 @@ import android.databinding.ObservableInt;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
@@ -43,7 +43,7 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
   @Inject IStudentModel studentModel;
   @Inject GymWrapper gymWrapper;
 
-  @Inject StudentRespository respository;
+  @Inject StudentRepository respository;
 
   @Inject LoginStatus loginStatus;
 

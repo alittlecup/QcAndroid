@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+  <cn.qingchengfit.saasbase.student.other.MyDrawerLayout
+      android:id="@+id/drawer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+        <include
+            layout="@layout/common_simple_toolbar"
+            android:id="@+id/include_toolbar"
+            bind:toolbarModel="@{toolbarModel}"
+            />
+        <FrameLayout
+            android:id="@+id/list_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bg_grey"
+            />
+      </LinearLayout>
+
+      <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab_add_student"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_marginBottom="65dp"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:scaleType="fitXY"
+          app:fabSize="normal"
+          app:srcCompat="@drawable/ic_add_staff"
+          />
+      <include
+          layout="@layout/layout_bottom_allot_action"
+          android:id="@+id/include_allot"
+          />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_student_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        tools:visibility="gone"
+        />
+
+  </cn.qingchengfit.saasbase.student.other.MyDrawerLayout>
+
+</layout>

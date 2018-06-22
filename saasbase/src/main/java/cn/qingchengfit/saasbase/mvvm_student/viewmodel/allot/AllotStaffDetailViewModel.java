@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import cn.qingchengfit.saasbase.mvvm_student.items.StaffDetailItem;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
     GymWrapper gymWrapper;
     @Inject
     LoginStatus loginStatus;
-    @Inject StudentRespository respository;
+    @Inject StudentRepository respository;
 
     public void setSalerId(String salerId) {
         this.salerId = salerId;

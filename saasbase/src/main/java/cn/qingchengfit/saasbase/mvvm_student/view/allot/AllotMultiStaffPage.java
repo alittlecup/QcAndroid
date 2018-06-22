@@ -184,7 +184,6 @@ import java.util.List;
     adapter.notifyDataSetChanged();
     mViewModel.bottomTextCount.set(adapter.getSelectedItemCount());
     ids = getSelectIds();
-
     return true;
   }
 

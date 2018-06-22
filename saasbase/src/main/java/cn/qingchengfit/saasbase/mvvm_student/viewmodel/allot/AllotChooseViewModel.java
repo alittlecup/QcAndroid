@@ -16,7 +16,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 
 /**
  * Created by huangbaole on 2017/12/1.
@@ -54,7 +54,7 @@ public class AllotChooseViewModel extends BaseViewModel {
 
     LoginStatus loginStatus;
     GymWrapper gymWrapper;
-    StudentRespository respository;
+    StudentRepository respository;
 
     List<String> students;
 
@@ -69,10 +69,10 @@ public class AllotChooseViewModel extends BaseViewModel {
     }
 
     @Inject
-    public AllotChooseViewModel(LoginStatus loginStatus, GymWrapper gymWrapper,StudentRespository studentRespository) {
+    public AllotChooseViewModel(LoginStatus loginStatus, GymWrapper gymWrapper,StudentRepository studentRepository) {
         this.loginStatus = loginStatus;
         this.gymWrapper = gymWrapper;
-        this.respository=studentRespository;
+        this.respository=studentRepository;
 
         staffs = Transformations.map(loadData(), input -> input.teachers);
         responseSuccess = Transformations.switchMap(staffIds, this::allotCoachRemote);

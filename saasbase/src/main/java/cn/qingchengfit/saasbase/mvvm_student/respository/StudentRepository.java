@@ -24,7 +24,7 @@ import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
  * Created by huangbaole on 2017/11/29.
  */
 
-public interface StudentRespository {
+public interface StudentRepository {
 
 
     LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params);

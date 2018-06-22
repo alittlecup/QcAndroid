@@ -14,7 +14,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.ViewAllotMultiStaffBinding;
 import cn.qingchengfit.saasbase.mvvm_student.items.AllotMultiStaffItem;
-import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotMultiStaffViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListViewModel;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -32,12 +32,12 @@ public class AllotSaleShowSelectDialogView extends BottomSheetDialogFragment
 
   private ViewAllotMultiStaffBinding binding;
   private CommonFlexAdapter adapter;
-  AllotMultiStaffViewModel viewModel;
+  StudentListViewModel viewModel;
   List<QcStudentBean> studentBeans;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    viewModel = ViewModelProviders.of(getTargetFragment()).get(AllotMultiStaffViewModel.class);
+    viewModel = ViewModelProviders.of(getTargetFragment()).get(StudentListViewModel.class);
     studentBeans = viewModel.getSelectedDatas().getValue();
   }
 
@@ -79,8 +79,7 @@ public class AllotSaleShowSelectDialogView extends BottomSheetDialogFragment
         (dialog, action) -> {
           dialog.dismiss();
           if (action == DialogAction.POSITIVE) {
-            viewModel.getSelectAll().setValue(false);
-            viewModel.getSelectedDatas().getValue().clear();
+            viewModel.getSelectedDatas().setValue(new ArrayList<>());
             AllotSaleShowSelectDialogView.this.dismiss();
           }
         });

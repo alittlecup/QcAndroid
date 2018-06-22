@@ -18,9 +18,9 @@ import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.mvvm_student.items.ChooseStaffItem;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,8 +107,7 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
     LoginStatus loginStatus;
     @Inject
     GymWrapper gymWrapper;
-    @Inject
-    StudentRespository respository;
+    @Inject StudentRepository respository;
     public Integer type;
     public String salerId;
 

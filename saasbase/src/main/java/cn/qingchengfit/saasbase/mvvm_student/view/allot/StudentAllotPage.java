@@ -1,0 +1,93 @@
+package cn.qingchengfit.saasbase.mvvm_student.view.allot;
+
+import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.databinding.PageStudentAllotBinding;
+import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListView;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortView;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
+import java.util.Map;
+
+@Leaf(module = "student", path = "/student/allot") public class StudentAllotPage
+    extends StudentBaseFragment<PageStudentAllotBinding, StudentAllotViewModel>
+    implements StudentRecyclerSortView.DrawerListener, StudentRecyclerSortView.LoadDataListener {
+  StudentRecyclerSortView listView;
+  StudentFilterView filterView;
+  @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
+
+  @Override protected void subscribeUI() {
+    mViewModel.getLiveItems().observe(this, items -> {
+      listView.setDatas(items);
+    });
+  }
+
+  @Override
+  public PageStudentAllotBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    mBinding = PageStudentAllotBinding.inflate(inflater, container, false);
+    mViewModel.type = curType.equals(StudentListView.SELLER_TYPE) ? 0 : 1;
+    initToolbar();
+    initFragment();
+    initListener();
+    return mBinding;
+  }
+
+  private void initListener() {
+    mBinding.rbSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
+      listView.selectAll(isChecked);
+    });
+  }
+
+  private void initFragment() {
+    listView = StudentRecyclerSortView.newInstanceWithType(curType);
+    filterView = new StudentFilterView();
+    stuff(R.id.frame_student_filter, filterView);
+    stuff(R.id.fragment_sort_container, listView);
+    listView.setListener(this);
+    listView.setFilterView(filterView);
+    listView.setLoadDataListener(this);
+  }
+
+  private void initToolbar() {
+    ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(curType));
+    toolbarModel.setMenu(R.menu.menu_cancel);
+    toolbarModel.setListener(item -> {
+      getActivity().onBackPressed();
+      return false;
+    });
+    mBinding.setToolbarModel(toolbarModel);
+    if (!CompatUtils.less21()
+        && mBinding.includeToolbar.toolbar.getParent() instanceof ViewGroup
+        && this.isfitSystemPadding()) {
+      ((ViewGroup) mBinding.includeToolbar.toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+      RelativeLayout.LayoutParams layoutParams =
+          (RelativeLayout.LayoutParams) mBinding.rbSelectAll.getLayoutParams();
+      layoutParams.setMargins(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+      mBinding.rbSelectAll.setLayoutParams(layoutParams);
+    }
+  }
+
+
+  @Override public void openDrawer() {
+    mBinding.drawer.openDrawer(GravityCompat.END);
+  }
+
+  @Override public void closeDrawer() {
+    mBinding.drawer.closeDrawer(GravityCompat.END);
+  }
+
+  @Override public void loadData(Map<String, ?> params) {
+    mViewModel.loadSource(params);
+  }
+}

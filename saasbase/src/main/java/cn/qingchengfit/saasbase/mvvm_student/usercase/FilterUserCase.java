@@ -11,7 +11,7 @@ import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.filter.model.UserExtra;
 import cn.qingchengfit.saasbase.common.remote.HttpCheckFunc;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.student.bean.SourceBean;
@@ -33,8 +33,7 @@ import rx.Observable;
 @Singleton
 public class FilterUserCase {
     @Inject Application application;
-    @Inject
-    StudentRespository studentRespository;
+    @Inject StudentRepository studentRespository;
 
     @Inject IStudentModel remoteService;
 

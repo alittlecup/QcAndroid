@@ -10,6 +10,7 @@ import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotChooseSalerPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotMultiStaffPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotStaffDetailPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotStaffListPage;
+import cn.qingchengfit.saasbase.mvvm_student.view.allot.StudentAllotPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.attendance.AttendanceStudentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.attendance.absent.AttendanceAbsentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.attendance.nosign.AttendanceNosignPage;
@@ -17,8 +18,11 @@ import cn.qingchengfit.saasbase.mvvm_student.view.attendance.rank.AttendanceRank
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.FollowUpFilterEndView;
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.FollowUpStatusPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.FollowUpStudentPage;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentAllPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentHomePage;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListView;
+import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortView;
 import cn.qingchengfit.saasbase.mvvm_student.view.transfer.TransferStudentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.webchoose.ChooseStaffPage;
 import cn.qingchengfit.saasbase.student.other.ChooseCoachFragment;
@@ -78,7 +82,8 @@ import com.anbillon.flabellum.annotations.Trunk;
     FollowUpFilterEndView.class, ViewModelModule.class,
     StudentAddFragment.class,
 
-    StudentHomePage.class
+    StudentHomePage.class, StudentAllPage.class, StudentRecyclerSortView.class, StudentListView.class,
+    StudentAllotPage.class
 }) public class StudentActivity extends SaasContainerActivity {
 
 

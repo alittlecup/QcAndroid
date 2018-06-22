@@ -14,11 +14,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.saasbase.student.items.FollowUpItem;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.QcStudentBeanWithFollow;
@@ -108,7 +108,7 @@ public class FollowUpStatusViewModel
     return filterIndex;
   }
 
-  @Inject StudentRespository respository;
+  @Inject StudentRepository respository;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
 

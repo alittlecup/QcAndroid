@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
+import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class FollowUpStudentViewModel extends FlexibleViewModel<FollowUpDataStat
 
     @Inject
     GymWrapper gymWrapper;
-    @Inject StudentRespository respository;
+    @Inject StudentRepository respository;
     @Inject
     LoginStatus loginStatus;
     private StudentFilter filter = new StudentFilter();

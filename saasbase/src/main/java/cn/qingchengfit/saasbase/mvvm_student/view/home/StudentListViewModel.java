@@ -1,25 +1,37 @@
 package cn.qingchengfit.saasbase.mvvm_student.view.home;
 
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.items.ChooseStaffItem;
+import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saasbase.student.items.StudentItem;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import javax.inject.Inject;
 
-public class StudentListViewModel extends FlexibleViewModel<List<QcStudentBean>, ChooseStaffItem, Map<String,?>> {
-  @NonNull @Override
-  protected LiveData<List<QcStudentBean>> getSource(@NonNull Map<String, ?> stringMap) {
-    return null;
+public class StudentListViewModel extends BaseViewModel {
+  public ObservableInt mBottomSelectedCount = new ObservableInt(0);
+
+  public MutableLiveData<List<QcStudentBean>> getSelectedDatas() {
+    return selectedDatas;
   }
 
-  @Override protected boolean isSourceValid(@Nullable List<QcStudentBean> qcStudentBeans) {
-    return false;
+  public MutableLiveData<Integer> getRemoveSelectPos() {
+    return removeSelectPos;
   }
 
-  @Override protected List<ChooseStaffItem> map(@NonNull List<QcStudentBean> qcStudentBeans) {
-    return null;
+  private MutableLiveData<Integer> removeSelectPos = new MutableLiveData<>();
+
+  private MutableLiveData<List<QcStudentBean>> selectedDatas = new MutableLiveData<>();
+
+  public ObservableField<List<StudentItem>> items = new ObservableField<>();
+
+  public void setStudentItems(List<? extends StudentItem> items) {
+    this.items.set(new ArrayList<>(items));
+  }
+
+  @Inject public StudentListViewModel() {
+
   }
 }
