@@ -121,6 +121,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     public LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params) {
         return toLiveData(remoteService.qcRemoveStaff(staff_id, type, params).map(qcResponse -> {
             QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
+            objectQcDataResponse.setStatus(qcResponse.getStatus());
             if (qcResponse.status == 200) {
                 objectQcDataResponse.setData(true);
             } else {
@@ -141,6 +142,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     public LiveData<Boolean> qcAllocateCoach(String staff_id, HashMap<String, Object> body) {
         return toLiveData(remoteService.qcAllocateCoach(staff_id, body).map(qcResponse -> {
             QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
+            objectQcDataResponse.setStatus(qcResponse.getStatus());
             if (qcResponse.status == 200) {
                 objectQcDataResponse.setData(true);
             } else {
@@ -159,6 +161,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     public LiveData<Boolean> qcModifySellers(String staff_id, HashMap<String, Object> params, HashMap<String, Object> body) {
         return toLiveData(remoteService.qcModifySellers(staff_id, params, body).map(qcResponse -> {
             QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
+            objectQcDataResponse.setStatus(qcResponse.getStatus());
+
             if (qcResponse.status == 200) {
                 objectQcDataResponse.setData(true);
             } else {

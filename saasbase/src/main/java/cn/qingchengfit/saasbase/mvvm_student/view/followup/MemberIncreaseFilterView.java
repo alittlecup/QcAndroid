@@ -13,7 +13,7 @@ import cn.qingchengfit.views.fragments.EmptyFragment;
  * Created by huangbaole on 2017/11/7.
  */
 
-public class FollowUpFilterView extends BaseFilterFragment {
+public class MemberIncreaseFilterView extends BaseFilterFragment {
     FilterListStringFragment studentStatusFragment;
     FilterListStringFragment genderFragment;
     FollowUpTopSalerView salersView;

@@ -8,6 +8,12 @@ import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepositoryImpl;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.StudentAllotViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberSortViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberTopViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentSortViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentTopViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentAllViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortViewModel;
@@ -89,24 +95,22 @@ import javax.inject.Singleton;
   @Binds @IntoMap @ViewModelKey(ChooseStaffViewModel.class)
   abstract ViewModel bindChooseStaffViewModel(ChooseStaffViewModel model);
 
-
   @Binds @IntoMap @ViewModelKey(FollowUpFilterViewModel.class)
   abstract ViewModel bindFollowUpFilterViewModel(FollowUpFilterViewModel model);
 
   @Binds @IntoMap @ViewModelKey(BatchCopyViewModel.class)
   abstract ViewModel bindBatchCopyViewModel(BatchCopyViewModel model);
 
-  @Named("commonFilter") @Singleton @Provides  static  StudentFilter providesStudentFilter() {
+  @Named("commonFilter") @Singleton @Provides static StudentFilter providesStudentFilter() {
     return new StudentFilter();
   }
 
-  @Named("topFilter") @Singleton @Provides static  StudentFilter providesTopStudentFilter() {
+  @Named("topFilter") @Singleton @Provides static StudentFilter providesTopStudentFilter() {
     return new StudentFilter();
   }
 
   /**
    * new
-   *
    */
   @Binds @IntoMap @ViewModelKey(StudentAllViewModel.class)
   abstract ViewModel bindStudentAllViewModel(StudentAllViewModel model);
@@ -120,8 +124,22 @@ import javax.inject.Singleton;
   @Binds @IntoMap @ViewModelKey(StudentAllotViewModel.class)
   abstract ViewModel bindStudentAllotViewModel(StudentAllotViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(IncreaseStudentViewModel.class)
+  abstract ViewModel bindIncreaseStudentViewModel(IncreaseStudentViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(IncreaseStudentTopViewModel.class)
+  abstract ViewModel bindIncreaseStudentTopViewModel(IncreaseStudentTopViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(IncreaseStudentSortViewModel.class)
+  abstract ViewModel bindIncreaseStudentSortViewModel(IncreaseStudentSortViewModel model);
 
 
+  @Binds @IntoMap @ViewModelKey(IncreaseMemberViewModel.class)
+  abstract ViewModel bindIncreaseMemberViewModel(IncreaseMemberViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(IncreaseMemberTopViewModel.class)
+  abstract ViewModel bindIncreaseFollowViewModel(IncreaseMemberTopViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(IncreaseMemberSortViewModel.class)
+  abstract ViewModel bindIncreaseMemberSortViewModel(IncreaseMemberSortViewModel model);
 }

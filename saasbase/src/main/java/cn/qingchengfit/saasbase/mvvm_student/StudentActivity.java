@@ -18,6 +18,11 @@ import cn.qingchengfit.saasbase.mvvm_student.view.attendance.rank.AttendanceRank
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.FollowUpFilterEndView;
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.FollowUpStatusPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.FollowUpStudentPage;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberPage;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberTopView;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentPage;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentSortView;
+import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentTopView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentAllPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentHomePage;
@@ -83,7 +88,9 @@ import com.anbillon.flabellum.annotations.Trunk;
     StudentAddFragment.class,
 
     StudentHomePage.class, StudentAllPage.class, StudentRecyclerSortView.class, StudentListView.class,
-    StudentAllotPage.class
+    StudentAllotPage.class, IncreaseStudentSortView.class, IncreaseStudentTopView.class,
+    IncreaseStudentPage.class,  IncreaseMemberTopView.class,
+    IncreaseMemberPage.class
 }) public class StudentActivity extends SaasContainerActivity {
 
 

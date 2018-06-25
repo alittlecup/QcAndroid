@@ -57,7 +57,7 @@ public class StudentAllotViewModel
         path = "coaches";
         break;
     }
-    return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), intput -> intput.users);
+    return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), input -> input.users);
 
   }
 

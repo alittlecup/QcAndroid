@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 
-public class IncreaseStudentViewModel
-    extends FlexibleViewModel<StudentListWrappeForFollow, FollowUpItem, Map<String, ?>> {
+public class IncreaseMemberViewModel extends FlexibleViewModel<StudentListWrappeForFollow, FollowUpItem, Map<String, ?>> {
+
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -27,7 +27,7 @@ public class IncreaseStudentViewModel
   public Integer dataType = -1;
 
 
-  @Inject IncreaseStudentViewModel() {
+  @Inject IncreaseMemberViewModel() {
 
   }
 
@@ -58,7 +58,7 @@ public class IncreaseStudentViewModel
 
   @Override
   protected List<FollowUpItem> map(@NonNull StudentListWrappeForFollow studentListWrappeForFollow) {
-    return FlexibleItemProvider.with(new FollowUpItemFactory(dataType))
+    return FlexibleItemProvider.with(new IncreaseStudentViewModel.FollowUpItemFactory(dataType))
         .from(studentListWrappeForFollow.users);
   }
 

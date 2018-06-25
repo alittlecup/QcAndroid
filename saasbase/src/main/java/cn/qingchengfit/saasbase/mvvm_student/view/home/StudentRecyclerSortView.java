@@ -9,12 +9,13 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
 import cn.qingchengfit.saasbase.databinding.ViewStudentRecyclerSortBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saasbase.mvvm_student.inter.DrawerListener;
+import cn.qingchengfit.saasbase.mvvm_student.inter.LoadDataListener;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class StudentRecyclerSortView
     extends StudentBaseFragment<ViewStudentRecyclerSortBinding, StudentRecyclerSortViewModel> {
@@ -49,9 +50,6 @@ public class StudentRecyclerSortView
     }
   }
 
-  public ArrayList<String> getSelectedIds() {
-    return listView.getSelectIds();
-  }
 
   public static StudentRecyclerSortView newInstanceWithType(
       @StudentListView.AllotType String type) {
@@ -132,13 +130,6 @@ public class StudentRecyclerSortView
 
   LoadDataListener loadDataListener;
 
-  public interface LoadDataListener {
-    void loadData(Map<String, ? extends Object> params);
-  }
 
-  public interface DrawerListener {
-    void openDrawer();
 
-    void closeDrawer();
-  }
 }

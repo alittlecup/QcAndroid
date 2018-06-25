@@ -68,15 +68,6 @@
                 android:layout_height="1px"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/item_tv_student_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:drawablePadding="4dp"
-                android:gravity="center"
-                android:textSize="11sp"
-                tools:text="新注册" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,6 +103,16 @@
             android:visibility="gone"
             tools:text="青橙工作室" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_tv_student_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:textSize="11sp"
+        tools:text="新注册" />
 
     <ImageView
         android:id="@+id/icon_right"

@@ -55,6 +55,7 @@
               android:showDividers="middle"
               >
             <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:id="@+id/tv_increase_member"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,6 +63,7 @@
                 app:ct_text="新注册"
                 />
             <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:id="@+id/tv_increase_student"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -96,6 +98,7 @@
               android:showDividers="middle"
               >
             <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:id="@+id/tv_increase_follow"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -103,6 +106,7 @@
                 app:ct_text="新用户跟进"
                 />
             <cn.qingchengfit.saasbase.mvvm_student.widget.CountTextView
+                android:id="@+id/tv_increase_student_follow"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

@@ -3,19 +3,20 @@ package cn.qingchengfit.saasbase.mvvm_student.view.home;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageAllStudentBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saasbase.mvvm_student.inter.DrawerListener;
+import cn.qingchengfit.saasbase.mvvm_student.inter.LoadDataListener;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.StudentAllotPageParams;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.Map;
 
 @Leaf(module = "student", path = "/student/all") public class StudentAllPage
     extends StudentBaseFragment<PageAllStudentBinding, StudentAllViewModel>
-    implements StudentRecyclerSortView.DrawerListener, StudentRecyclerSortView.LoadDataListener {
+    implements DrawerListener, LoadDataListener {
   StudentRecyclerSortView listView;
   private StudentFilterView filterView;
 

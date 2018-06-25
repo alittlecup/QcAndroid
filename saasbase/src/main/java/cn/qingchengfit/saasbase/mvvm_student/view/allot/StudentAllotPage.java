@@ -5,10 +5,13 @@ import android.support.v4.view.GravityCompat;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageStudentAllotBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saasbase.mvvm_student.inter.DrawerListener;
+import cn.qingchengfit.saasbase.mvvm_student.inter.LoadDataListener;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortView;
@@ -16,13 +19,15 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Leaf(module = "student", path = "/student/allot") public class StudentAllotPage
     extends StudentBaseFragment<PageStudentAllotBinding, StudentAllotViewModel>
-    implements StudentRecyclerSortView.DrawerListener, StudentRecyclerSortView.LoadDataListener {
+    implements DrawerListener, LoadDataListener {
   StudentRecyclerSortView listView;
   StudentFilterView filterView;
+  @Need ArrayList<QcStudentBean> items;
   @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
 
   @Override protected void subscribeUI() {
@@ -39,6 +44,7 @@ import java.util.Map;
     initToolbar();
     initFragment();
     initListener();
+    // TODO: 2018/6/25  设置需要展示的数据
     return mBinding;
   }
 
@@ -47,6 +53,7 @@ import java.util.Map;
       listView.selectAll(isChecked);
     });
   }
+
 
   private void initFragment() {
     listView = StudentRecyclerSortView.newInstanceWithType(curType);
@@ -78,7 +85,6 @@ import java.util.Map;
     }
   }
 
-
   @Override public void openDrawer() {
     mBinding.drawer.openDrawer(GravityCompat.END);
   }
@@ -88,6 +94,8 @@ import java.util.Map;
   }
 
   @Override public void loadData(Map<String, ?> params) {
-    mViewModel.loadSource(params);
+    if (items == null) {
+      mViewModel.loadSource(params);
+    }
   }
 }
