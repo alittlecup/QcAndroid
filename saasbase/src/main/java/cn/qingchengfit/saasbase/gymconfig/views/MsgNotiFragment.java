@@ -5,11 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 
 import cn.qingchengfit.saasbase.R;
 
@@ -19,6 +19,7 @@ import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.saasbase.gymconfig.presenter.MsgNotiPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
@@ -31,23 +32,23 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/msgnoti/") public class MsgNotiFragment extends SaasBaseFragment
-  implements MsgNotiPresenter.MVPView {
-	CommonInputView swBeginNotiMin;
-	ExpandedLayout swBeginNoti;
-	CommonInputView swLessNotiMin;
-	ExpandedLayout swLessNoti;
-	ExpandedLayout swNewNoti;
-	ExpandedLayout swOrderNoti;
-	ExpandedLayout swCancleNoti;
-	ExpandedLayout swSeedToSubtitute;
+    implements MsgNotiPresenter.MVPView {
+  CommonInputView swBeginNotiMin;
+  ExpandedLayout swBeginNoti;
+  CommonInputView swLessNotiMin;
+  ExpandedLayout swLessNoti;
+  ExpandedLayout swNewNoti;
+  ExpandedLayout swOrderNoti;
+  ExpandedLayout swCancleNoti;
+  ExpandedLayout swSeedToSubtitute;
 
   /**
    * 是否为私教
    */
   @Need public Boolean mIsPrivate;
   @Inject MsgNotiPresenter mMsgNotiPresenter;
-	Toolbar toolbar;
-	TextView toolbarTitile;
+  Toolbar toolbar;
+  TextView toolbarTitile;
 
   private String mBeginNotiId;
   private String mBeginMinuteId;
@@ -63,7 +64,7 @@ import javax.inject.Inject;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_msg_noti, container, false);
     swBeginNotiMin = (CommonInputView) view.findViewById(R.id.sw_begin_noti_min);
     swBeginNoti = (ExpandedLayout) view.findViewById(R.id.sw_begin_noti);
@@ -79,7 +80,7 @@ import javax.inject.Inject;
     delegatePresenter(mMsgNotiPresenter, this);
     initToolbar(toolbar);
     String courseTypeStr =
-      getString(mIsPrivate ? R.string.course_type_private : R.string.course_type_group);
+        getString(mIsPrivate ? R.string.course_type_private : R.string.course_type_group);
 
     swBeginNoti.setLabel(getString(R.string.msg_noti_before, courseTypeStr));
     if (mIsPrivate) {
@@ -92,6 +93,8 @@ import javax.inject.Inject;
     swNewNoti.setLabel(getString(R.string.msg_new_noti_trainer));
     swOrderNoti.setLabel(getString(R.string.msg_help_order_noti_student, courseTypeStr));
     swSeedToSubtitute.setLabel(getString(R.string.msg_send_to_substitute));
+    swBeginNotiMin.setContent("");
+    swLessNotiMin.setContent("");
     mMsgNotiPresenter.queryShopConfig(getConfigKeys());
     return view;
   }
@@ -101,21 +104,35 @@ import javax.inject.Inject;
     toolbarTitile.setText("预约短信通知");
     toolbar.inflateMenu(R.menu.menu_save);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
-      .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          onComfirm();
-        }
-      });
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .subscribe(new BusSubscribe<Void>() {
+          @Override public void onNext(Void aVoid) {
+            onComfirm();
+          }
+        });
   }
 
   void onComfirm() {
     List<ShopConfigBody.Config> data = new ArrayList<>();
-    data.add(new ShopConfigBody.Config(mBeginNotiId, swBeginNotiMin.getContent()));
     data.add(new ShopConfigBody.Config(mBeginMinuteId, swBeginNoti.isExpanded() ? "1" : "0"));
+    if (swBeginNoti.isExpanded()) {
+      if (TextUtils.isEmpty(swBeginNotiMin.getContent())) {
+        DialogUtils.showAlert(getContext(), "请填写课程开始前多少分钟提醒会员");
+        return;
+      } else {
+        data.add(new ShopConfigBody.Config(mBeginNotiId, swBeginNotiMin.getContent()));
+      }
+    }
     if (!mIsPrivate) {
       data.add(new ShopConfigBody.Config(mLessNotiId, swLessNoti.isExpanded() ? "1" : "0"));
-      data.add(new ShopConfigBody.Config(mLessNotMinuteId, swLessNotiMin.getContent()));
+      if (swLessNoti.isExpanded()) {
+        if (TextUtils.isEmpty(swLessNotiMin.getContent())) {
+          DialogUtils.showAlert(getContext(), "请填写课程开始前多少分钟提醒教练");
+          return;
+        } else {
+          data.add(new ShopConfigBody.Config(mLessNotMinuteId, swLessNotiMin.getContent()));
+        }
+      }
     }
 
     data.add(new ShopConfigBody.Config(mCancelId, swCancleNoti.isExpanded() ? "1" : "0"));
@@ -130,22 +147,22 @@ import javax.inject.Inject;
 
   private String getConfigKeys() {
     return (mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER_MINUTES
-      : ShopConfigs.TEAM_BEFORE_REMIND_USER_MINUTES).concat(",")
-      .concat(
-        mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER : ShopConfigs.TEAM_BEFORE_REMIND_USER)
-      .concat(",")
-      .concat(mIsPrivate ? "" : ShopConfigs.TEAM_COURSE_REMIND_TEACHER)
-      .concat(mIsPrivate ? "" : ",")
-      .concat(mIsPrivate ? "" : ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES)
-      .concat(mIsPrivate ? "" : ",")
-      .concat(mIsPrivate ? ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_CANCEL
-        : ShopConfigs.TEAM_SMS_TEACHER_AFTER_USER_ORDER_CANCEL)
-      .concat(",")
-      .concat(mIsPrivate ? ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_SAVE
-        : ShopConfigs.TEAM_SMS_TEACHER_AFTER_USER_ORDER_SAVE)
-      .concat(",")
-      .concat(mIsPrivate ? ShopConfigs.PRIVATE_SMS_USER_AFTER_TEACHER_ORDER_SAVE
-        : ShopConfigs.TEAM_SMS_USER_AFTER_TEACHER_ORDER_SAVE);
+        : ShopConfigs.TEAM_BEFORE_REMIND_USER_MINUTES).concat(",")
+        .concat(mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER
+            : ShopConfigs.TEAM_BEFORE_REMIND_USER)
+        .concat(",")
+        .concat(mIsPrivate ? "" : ShopConfigs.TEAM_COURSE_REMIND_TEACHER)
+        .concat(mIsPrivate ? "" : ",")
+        .concat(mIsPrivate ? "" : ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES)
+        .concat(mIsPrivate ? "" : ",")
+        .concat(mIsPrivate ? ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_CANCEL
+            : ShopConfigs.TEAM_SMS_TEACHER_AFTER_USER_ORDER_CANCEL)
+        .concat(",")
+        .concat(mIsPrivate ? ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_SAVE
+            : ShopConfigs.TEAM_SMS_TEACHER_AFTER_USER_ORDER_SAVE)
+        .concat(",")
+        .concat(mIsPrivate ? ShopConfigs.PRIVATE_SMS_USER_AFTER_TEACHER_ORDER_SAVE
+            : ShopConfigs.TEAM_SMS_USER_AFTER_TEACHER_ORDER_SAVE);
   }
 
   @Override public String getFragmentName() {

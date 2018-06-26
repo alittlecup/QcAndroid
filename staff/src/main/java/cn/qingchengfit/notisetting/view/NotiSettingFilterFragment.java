@@ -63,7 +63,7 @@ public class NotiSettingFilterFragment extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     FrameLayout frameLayout = new FrameLayout(getContext());
-    frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+    frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.WRAP_CONTENT));
     frameLayout.setId(R.id.frag_noti_setting_filter);
     RxBusAdd(EventFilterDate.class).observeOn(AndroidSchedulers.mainThread())
