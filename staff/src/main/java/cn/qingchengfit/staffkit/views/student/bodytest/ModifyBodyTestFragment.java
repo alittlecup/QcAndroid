@@ -46,7 +46,6 @@ import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -545,10 +544,10 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
           commonInputView.setMaxLines(100);
           otherData.addView(commonInputView);
           commonInputView.setContentColor(ContextCompat.getColor(getContext(), R.color.text_dark));
-          commonInputView.setLabel(extra.name);
           if (!TextUtils.isEmpty(extra.unit)) {
             commonInputView.setUnit(extra.unit);
           }
+          commonInputView.setLabel(extra.name);
           commonInputView.setContent(extra.value);
         }
       }
