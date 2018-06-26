@@ -17,6 +17,7 @@ import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentViewMo
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentAllViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortViewModel;
+import cn.qingchengfit.saasbase.mvvm_student.view.state.StudentStateInfoViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.view.webchoose.ChooseStaffViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotChooseViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotListViewModel;
@@ -142,4 +143,7 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(IncreaseMemberSortViewModel.class)
   abstract ViewModel bindIncreaseMemberSortViewModel(IncreaseMemberSortViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(StudentStateInfoViewModel.class)
+  abstract ViewModel bindStudentStateInfoViewModel(StudentStateInfoViewModel model);
 }

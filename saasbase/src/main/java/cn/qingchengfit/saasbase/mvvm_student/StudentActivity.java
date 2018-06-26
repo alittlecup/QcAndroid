@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentHomePage;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListView;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentRecyclerSortView;
+import cn.qingchengfit.saasbase.mvvm_student.view.state.StudentStateInfoPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.transfer.TransferStudentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.webchoose.ChooseStaffPage;
 import cn.qingchengfit.saasbase.student.other.ChooseCoachFragment;
@@ -90,7 +91,7 @@ import com.anbillon.flabellum.annotations.Trunk;
     StudentHomePage.class, StudentAllPage.class, StudentRecyclerSortView.class, StudentListView.class,
     StudentAllotPage.class, IncreaseStudentSortView.class, IncreaseStudentTopView.class,
     IncreaseStudentPage.class,  IncreaseMemberTopView.class,
-    IncreaseMemberPage.class
+    IncreaseMemberPage.class, StudentStateInfoPage.class
 }) public class StudentActivity extends SaasContainerActivity {
 
 

@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductListBinding;
-import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.util.SpanUtils;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.utils.DateUtils;

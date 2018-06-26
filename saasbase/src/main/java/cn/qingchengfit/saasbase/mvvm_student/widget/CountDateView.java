@@ -76,6 +76,8 @@ public class CountDateView extends LinearLayout implements Checkable {
       _isChecked = checked;
       refreshDrawableState();
       mIndicator.setVisibility(_isChecked ? VISIBLE : INVISIBLE);
+      mCountTv.setTextColor(
+          getResources().getColor(_isChecked ? R.color.text_black : R.color.text_grey));
       if (mOnCheckedChangeListener != null) {
         mOnCheckedChangeListener.onCheckedChanged(this, _isChecked);
       }

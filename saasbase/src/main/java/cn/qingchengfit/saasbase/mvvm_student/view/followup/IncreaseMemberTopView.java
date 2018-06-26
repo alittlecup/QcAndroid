@@ -7,6 +7,7 @@ import android.widget.RadioGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.ViewIncreaseMemberTopBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saasbase.mvvm_student.inter.IncreaseType;
 
 public class IncreaseMemberTopView
     extends StudentBaseFragment<ViewIncreaseMemberTopBinding, IncreaseMemberTopViewModel> {
@@ -21,11 +22,11 @@ public class IncreaseMemberTopView
       Bundle savedInstanceState) {
     mBinding = ViewIncreaseMemberTopBinding.inflate(inflater, container, false);
     initListener();
-    if (type.equals(IncreaseStudentPage.IncreaseType.INCREASE_STUDENT)) {
+    if (type.equals(IncreaseType.INCREASE_STUDENT)) {
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_green_bg);
       mBinding.tvTypeContent.setText("新用户跟进");
       mBinding.tvCount.setTextColor(getResources().getColor(R.color.success_green));
-    } else if (type.equals(IncreaseStudentPage.IncreaseType.INCREASE_FOLLOWUP)) {
+    } else if (type.equals(IncreaseType.INCREASE_FOLLOWUP)) {
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_orange_bg);
       mBinding.tvTypeContent.setText("会员维护");
       mBinding.tvCount.setTextColor(getResources().getColor(R.color.orange));
@@ -44,7 +45,7 @@ public class IncreaseMemberTopView
     });
   }
 
-  public void setType(@IncreaseStudentPage.IncreaseType String type) {
+  public void setType(@IncreaseType String type) {
     this.type = type;
   }
 }

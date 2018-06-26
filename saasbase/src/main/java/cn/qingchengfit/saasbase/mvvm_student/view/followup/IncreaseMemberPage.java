@@ -10,6 +10,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageIncreaseMemberBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saasbase.mvvm_student.inter.IncreaseType;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentListView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -25,8 +26,8 @@ public class IncreaseMemberPage
   IncreaseMemberTopView topView;
   IncreaseMemberSortViewModel mSortViewModel;
 
-  @Need @IncreaseStudentPage.IncreaseType String curType =
-      IncreaseStudentPage.IncreaseType.INCREASE_FOLLOWUP;
+  @Need @IncreaseType String curType =
+      IncreaseType.INCREASE_FOLLOWUP;
 
   @Override protected void subscribeUI() {
     mSortViewModel.filterVisible.observe(this, aBoolean -> {
@@ -57,10 +58,10 @@ public class IncreaseMemberPage
 
   private void initToolbar() {
     topView.setType(curType);
-    if (curType.equals(IncreaseStudentPage.IncreaseType.INCREASE_FOLLOWUP)) {
+    if (curType.equals(IncreaseType.INCREASE_FOLLOWUP)) {
       ToolbarModel toolbarModel = new ToolbarModel("新用户跟进");
       mBinding.setToolbarModel(toolbarModel);
-    } else if (curType.equals(IncreaseStudentPage.IncreaseType.INCREASE_STUDENT)) {
+    } else if (curType.equals(IncreaseType.INCREASE_STUDENT)) {
       ToolbarModel toolbarModel = new ToolbarModel("会员维护");
       mBinding.setToolbarModel(toolbarModel);
     }

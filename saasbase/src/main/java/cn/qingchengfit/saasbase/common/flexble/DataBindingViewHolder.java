@@ -1,4 +1,4 @@
-package cn.qingchengfit.shop.ui.items;
+package cn.qingchengfit.saasbase.common.flexble;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

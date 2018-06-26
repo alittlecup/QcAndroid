@@ -5,7 +5,7 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductInventoryBinding;
-import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.util.SpanUtils;
 import cn.qingchengfit.shop.util.ViewUtil;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

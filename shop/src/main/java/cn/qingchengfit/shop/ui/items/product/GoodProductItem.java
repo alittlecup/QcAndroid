@@ -9,7 +9,7 @@ import android.view.View;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCategoryBinding;
-import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Channel;
 import cn.qingchengfit.shop.vo.Good;

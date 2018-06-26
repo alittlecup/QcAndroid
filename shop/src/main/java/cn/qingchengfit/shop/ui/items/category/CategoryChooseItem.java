@@ -3,7 +3,7 @@ package cn.qingchengfit.shop.ui.items.category;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemChooseCategoryBinding;
-import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;

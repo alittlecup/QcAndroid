@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.databinding.PageStudentHomeBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
-import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberPage;
+import cn.qingchengfit.saasbase.mvvm_student.inter.IncreaseType;
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseMemberPageParams;
-import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.followup.IncreaseStudentPageParams;
+import cn.qingchengfit.saasbase.mvvm_student.view.state.StudentStateInfoPageParams;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentHomeViewModel;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.github.mikephil.charting.data.Entry;
@@ -70,22 +70,37 @@ import java.util.ArrayList;
   private void initListener() {
     mBinding.tvIncreaseMember.setOnClickListener(view -> {
       routeTo("student/increase",
-          new IncreaseStudentPageParams().curType(IncreaseStudentPage.IncreaseType.INCREASE_MEMBER)
+          new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_MEMBER)
               .build());
     });
     mBinding.tvIncreaseStudent.setOnClickListener(view -> {
       routeTo("student/increase",
-          new IncreaseStudentPageParams().curType(IncreaseStudentPage.IncreaseType.INCREASE_STUDENT)
+          new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_STUDENT)
               .build());
     });
     mBinding.tvIncreaseFollow.setOnClickListener(view -> {
       routeTo("increase/member",
-          new IncreaseMemberPageParams().curType(IncreaseStudentPage.IncreaseType.INCREASE_FOLLOWUP)
+          new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_FOLLOWUP)
               .build());
     });
     mBinding.tvIncreaseStudentFollow.setOnClickListener(view -> {
       routeTo("increase/member",
-          new IncreaseMemberPageParams().curType(IncreaseStudentPage.IncreaseType.INCREASE_STUDENT)
+          new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_STUDENT)
+              .build());
+    });
+    mBinding.llMember.setOnClickListener(view -> {
+      routeTo("saler/student",
+          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER)
+              .build());
+    });
+    mBinding.llFollowup.setOnClickListener(view -> {
+      routeTo("saler/student",
+          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_FOLLOWUP)
+              .build());
+    });
+    mBinding.llStudent.setOnClickListener(view -> {
+      routeTo("saler/student",
+          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT)
               .build());
     });
     mBinding.commAllotStudent.setOnClickListener(view -> {

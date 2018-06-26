@@ -4,7 +4,7 @@ import android.view.View;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCardSwitchBinding;
-import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
