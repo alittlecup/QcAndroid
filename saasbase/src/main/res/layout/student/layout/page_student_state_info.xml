@@ -21,16 +21,16 @@
         bind:toolbarModel="@{toolbarModel}"
         />
 
-    <!--<android.support.design.widget.CoordinatorLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--&gt;-->
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
       <android.support.design.widget.AppBarLayout
           android:id="@+id/layout_collapsed"
           android:layout_width="match_parent"
-          android:orientation="vertical"
           android:layout_height="wrap_content"
           android:background="@color/bg_grey"
+          android:orientation="vertical"
           app:elevation="1px"
           >
 
@@ -92,88 +92,95 @@
             android:layout_height="1px"
             android:background="@color/divider_medium"
             />
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_white"
-            android:orientation="horizontal"
-            android:paddingTop="5dp"
             >
-          <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
-              android:id="@+id/count_one"
-              android:layout_width="0dp"
+
+          <LinearLayout
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center_horizontal"
-              />
+              android:background="@color/bg_white"
+              android:orientation="horizontal"
+              android:paddingTop="5dp"
+              >
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
+                android:id="@+id/count_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider_medium"
+                />
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
+                android:id="@+id/count_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider_medium"
+                />
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
+                android:id="@+id/count_eight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider_medium"
+                />
+            <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
+                android:id="@+id/count_fourteen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                />
+          </LinearLayout>
           <View
-              android:layout_width="1dp"
-              android:layout_height="15dp"
-              android:layout_marginTop="10dp"
+              android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:layout_gravity="bottom"
+              android:layout_marginBottom="2dp"
               android:background="@color/divider_medium"
               />
-          <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
-              android:id="@+id/count_four"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center_horizontal"
-              />
-          <View
-              android:layout_width="1dp"
-              android:layout_height="15dp"
-              android:layout_marginTop="10dp"
-              android:background="@color/divider_medium"
-              />
-          <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
-              android:id="@+id/count_eight"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center_horizontal"
-              />
-          <View
-              android:layout_width="1dp"
-              android:layout_height="15dp"
-              android:layout_marginTop="10dp"
-              android:background="@color/divider_medium"
-              />
-          <cn.qingchengfit.saasbase.mvvm_student.widget.CountDateView
-              android:id="@+id/count_fourteen"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center_horizontal"
-              />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:visibility="visible"
-            android:layout_marginTop="-2.5dp"
-            android:background="@color/divider_medium"
-            />
+        </FrameLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
             android:gravity="center"
-            android:layout_marginTop="2dp"
             tools:text="1-3天未跟进用户销售任务统计"
             style="@style/QcTextStyleMediumGrey"
             />
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/divider_medium"
+            android:background="@color/bg_grey"
             />
       </android.support.design.widget.AppBarLayout>
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/recycler_view"
+      <android.support.v4.view.ViewPager
+          android:id="@+id/viewpager"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
           />
-    <!--</android.support.design.widget.CoordinatorLayout>-->
+
+    </android.support.design.widget.CoordinatorLayout>
   </LinearLayout>
 </layout>
