@@ -212,6 +212,7 @@ import javax.inject.Inject;
         }
       }
       adapter.clear();
+      btnDelSelected.setVisibility(View.GONE);
       adapter.updateDataSet(datas, true);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
