@@ -159,6 +159,7 @@ public class WardrobeMainFragment extends BaseFragment
     });
 
     initToolbar(toolbar);
+    showLoadingTrans();
     RxRegiste(restRepository.getGet_api()
         .qcGetAllRegion(App.staffId, gymWrapper.getParams())
         .onBackpressureBuffer()
@@ -176,6 +177,7 @@ public class WardrobeMainFragment extends BaseFragment
                   .subscribeOn(Schedulers.io())
                   .subscribe(new Action1<QcDataResponse<AllLockers>>() {
                     @Override public void call(QcDataResponse<AllLockers> qcResponseAllLockers) {
+                      hideLoadingTrans();
                       if (ResponseConstant.checkSuccess(qcResponseAllLockers)) {
                         handleLockers(qcResponseAllLockers.data.lockers);
                       } else {
@@ -184,7 +186,7 @@ public class WardrobeMainFragment extends BaseFragment
                     }
                   }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
-
+                      hideLoadingTrans();
                     }
                   }));
             }
