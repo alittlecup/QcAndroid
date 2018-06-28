@@ -139,10 +139,12 @@ public class NotiSettingChannelPresenter extends BasePresenter {
                 for (SignInConfig.Config config : qcResponse.data.configs) {
                   if (config.getKey().equalsIgnoreCase(ShopConfigs.NOTI_TO_STAFF)) {
                     view.sendToStaffNoti(config.getValueInt() - 1);//都断对应为 1234、展示层为0123
+                    setToStaffMethod(config.getValueInt() - 1);
                     notiStaffId = config.getId();
                   } else if (config.getKey()
                       .equalsIgnoreCase(ShopConfigs.NOTIFY_TO_MEMBER_METHOD)) {
                     view.sendToStudentNoti(config.getValueInt() - 1);
+                    setToStudentMethod(config.getValueInt() - 1);
                     notiUserId = config.getId();
                   }
                 }
@@ -153,7 +155,6 @@ public class NotiSettingChannelPresenter extends BasePresenter {
           }
         }, new NetWorkThrowable()));
   }
-
 
   @Override public void attachView(PView v) {
     view = (MVPView) v;

@@ -165,7 +165,7 @@ public class BatchCopyViewModel extends BaseViewModel {
       ToastUtils.show("所选日期不能超过31天");
       return;
     }
-    if (DateUtils.interval(startTime.get(), endTime.get()) < 1) {
+    if (DateUtils.interval(startTime.get(), endTime.get()) < 0) {
       ToastUtils.show("结束日期不能早于开始日期");
       return;
     }

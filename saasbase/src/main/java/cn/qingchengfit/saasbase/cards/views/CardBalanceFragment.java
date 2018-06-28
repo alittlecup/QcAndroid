@@ -98,7 +98,7 @@ import rx.android.schedulers.AndroidSchedulers;
     super.onCreate(savedInstanceState);
     cardListFragment = new CardListFragment();
     cardListFragment.initListener(this);
-    filterFragment = new CardListFilterFragment();
+    filterFragment = CardListFilterFragment.newFragmentWithOutStopCardFilter();
     RxBus.getBus()
       .register(EventSaasFresh.CardList.class)
       .compose(this.<EventSaasFresh.CardList>bindToLifecycle())

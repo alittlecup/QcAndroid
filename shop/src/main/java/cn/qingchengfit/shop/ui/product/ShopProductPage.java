@@ -224,7 +224,7 @@ import javax.inject.Inject;
         if (trim.length() > 20) {
           ToastUtils.show(getString(R.string.product_name_over_20));
           mBinding.productName.setContent(trim.substring(0, 20));
-          mViewModel.getProduct().setName(trim.substring(0,20));
+          mViewModel.getProduct().setName(trim.substring(0, 20));
         }
         mViewModel.getProduct().setName(mBinding.productName.getContent());
       }

@@ -127,6 +127,13 @@ public class GoodProductItem
         }
       }
     });
+    dataBinding.categoryName.addTextWatcher(new AfterTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        if(s!=null){
+          good.setName(s.toString());
+        }
+      }
+    });
 
     Boolean hide = (Boolean) ((CommonFlexAdapter) adapter).getTag(HIDE_DELETE_KEY);
     if (hide != null && hide) {

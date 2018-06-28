@@ -30,6 +30,7 @@ import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
 import cn.qingchengfit.staffkit.views.student.followup.RouterFollowUp;
 import cn.qingchengfit.staffkit.views.student.list.StudentOperationItem;
 import cn.qingchengfit.staffkit.views.student.sendmsgs.SendMsgsActivity;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -242,6 +243,7 @@ public class StudentOperationFragment extends BaseFragment
           startActivity(exportIntent);
           break;
         case R.string.qc_student_birthday_notice:
+          DialogUtils.showAlert(getContext(),"即将上线，敬请期待");
           break;
         case R.string.qc_student_vip:
           break;

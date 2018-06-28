@@ -39,154 +39,164 @@ import rx.schedulers.Schedulers;
  */
 public class ChooseSitePresenter extends BasePresenter {
 
-    ChooseSiteView view;
-    GymUseCase useCase;
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
-    private List<Space> spaces;
-    private RestRepository restRepository;
+  ChooseSiteView view;
+  GymUseCase useCase;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  private List<Space> spaces;
+  private RestRepository restRepository;
 
-    @Inject public ChooseSitePresenter(GymUseCase gymUseCase, RestRepository restRepository) {
-        this.useCase = gymUseCase;
-        this.restRepository = restRepository;
-    }
+  @Inject public ChooseSitePresenter(GymUseCase gymUseCase, RestRepository restRepository) {
+    this.useCase = gymUseCase;
+    this.restRepository = restRepository;
+  }
 
-    public List<Space> getSpaces() {
-        return spaces;
-    }
+  public List<Space> getSpaces() {
+    return spaces;
+  }
 
-    public void setSpaces(List<Space> spaces) {
-        this.spaces = spaces;
-    }
+  public void setSpaces(List<Space> spaces) {
+    this.spaces = spaces;
+  }
 
-    @Override public void onStart() {
+  @Override public void onStart() {
 
-    }
+  }
 
-    @Override public void onStop() {
+  @Override public void onStop() {
 
-    }
+  }
 
-    @Override public void onPause() {
+  @Override public void onPause() {
 
-    }
+  }
 
-    @Override public void attachView(PView v) {
-        view = (ChooseSiteView) v;
-    }
+  @Override public void attachView(PView v) {
+    view = (ChooseSiteView) v;
+  }
 
-    @Override public void attachIncomingIntent(Intent intent) {
+  @Override public void attachIncomingIntent(Intent intent) {
 
-    }
+  }
 
-    @Override public void onCreate() {
+  @Override public void onCreate() {
 
-    }
+  }
 
-    @Override public void unattachView() {
-        super.unattachView();
-        view = null;
-    }
+  @Override public void unattachView() {
+    super.unattachView();
+    view = null;
+  }
 
-    public void querSiteListPermiss(final int courseType) {
-        HashMap<String, Object> params = gymWrapper.getParams();
-        params.put("key", PermissionServerUtils.STUDIO_LIST);
-        params.put("method", "get");
-        RxRegiste(restRepository.getGet_api()
-            .qcGetGymSitesPermisson(App.staffId, params)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<GymSites>>() {
-                @Override public void call(QcDataResponse<GymSites> qcResponseGymSite) {
-                    if (qcResponseGymSite.getStatus() == ResponseConstant.SUCCESS) {
-                        spaces = qcResponseGymSite.data.spaces;
-                        List<ImageTwoTextBean> beans = new ArrayList<ImageTwoTextBean>();
-                        for (Space space : qcResponseGymSite.data.spaces) {
-                            String support = "";
-                            if (space.is_support_private() && space.is_support_team()) {
-                                support = "支持私教和团课";
-                            } else if (space.is_support_private()) {
-                                support = "支持私教";
-                            } else if (space.is_support_team()) {
-                                support = "支持团课";
-                            }
-                            ImageTwoTextBean bean =
-                                new ImageTwoTextBean("", space.getName(), "可以容纳" + space.getCapacity() + "人、" + support);
-                            bean.tags.put("id", space.getId());
-                            bean.showRight = true;
-                            if (courseType == Configs.TYPE_PRIVATE) {
-                                bean.showRight = true;
-                                bean.rightIcon = R.drawable.ic_radio_unchecked;
-                            } else {
-                                if (courseType == -1) {
-                                    bean.showRight = true;
-                                    bean.rightIcon = R.drawable.ic_arrow_right;
-                                } else {
-                                    bean.showRight = false;
-                                }
-                            }
-                            if (courseType < 0) {
-                                beans.add(bean);
-                            } else {
-                                if (courseType == Configs.TYPE_PRIVATE && space.is_support_private()) beans.add(bean);
-                                if (courseType == Configs.TYPE_GROUP && space.is_support_team()) beans.add(bean);
-                            }
-                        }
-                        view.onData(beans);
-                    } else {
-                        // ToastUtils.logHttp(qcResponseGymSite);
-                    }
+  public void querSiteListPermiss(final int courseType) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("key", PermissionServerUtils.STUDIO_LIST);
+    params.put("method", "get");
+    RxRegiste(restRepository.getGet_api()
+        .qcGetGymSitesPermisson(App.staffId, params)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<GymSites>>() {
+          @Override public void call(QcDataResponse<GymSites> qcResponseGymSite) {
+            if (qcResponseGymSite.getStatus() == ResponseConstant.SUCCESS) {
+              spaces = qcResponseGymSite.data.spaces;
+              List<ImageTwoTextBean> beans = new ArrayList<ImageTwoTextBean>();
+              for (Space space : qcResponseGymSite.data.spaces) {
+                String support = "";
+                if (space.is_support_private() && space.is_support_team()) {
+                  support = "支持私教和团课";
+                } else if (space.is_support_private()) {
+                  support = "支持私教";
+                } else if (space.is_support_team()) {
+                  support = "支持团课";
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            }));
-    }
-
-    public void querySiteList(final int courseType) {
-        useCase.querySite(gymWrapper.id(), gymWrapper.model(), new Action1<QcDataResponse<GymSites>>() {
-            @Override public void call(QcDataResponse<GymSites> qcResponseGymSite) {
-
-                if (qcResponseGymSite.getStatus() == ResponseConstant.SUCCESS) {
-                    spaces = qcResponseGymSite.data.spaces;
-                    List<ImageTwoTextBean> beans = new ArrayList<ImageTwoTextBean>();
-                    for (Space space : qcResponseGymSite.data.spaces) {
-                        String support = "";
-                        if (space.is_support_private() && space.is_support_team()) {
-                            support = "支持私教和团课";
-                        } else if (space.is_support_private()) {
-                            support = "支持私教";
-                        } else if (space.is_support_team()) {
-                            support = "支持团课";
-                        }
-                        ImageTwoTextBean bean = new ImageTwoTextBean("", space.getName(), "可以容纳" + space.getCapacity() + "人、" + support);
-                        bean.tags.put("id", space.getId());
-                        bean.showRight = true;
-                        if (courseType == Configs.TYPE_PRIVATE) {
-                            bean.showRight = true;
-                            bean.rightIcon = R.drawable.ic_radio_unchecked;
-                        } else {
-                            if (courseType == -1) {
-                                bean.showRight = true;
-                                bean.rightIcon = R.drawable.ic_arrow_right;
-                            } else {
-                                bean.showRight = false;
-                            }
-                        }
-                        if (courseType < 0) {
-                            beans.add(bean);
-                        } else {
-                            if (courseType == Configs.TYPE_PRIVATE && space.is_support_private()) beans.add(bean);
-                            if (courseType == Configs.TYPE_GROUP && space.is_support_team()) beans.add(bean);
-                        }
-                    }
-                    view.onData(beans);
+                ImageTwoTextBean bean = new ImageTwoTextBean("", space.getName(),
+                    "可以容纳" + space.getCapacity() + "人、" + support);
+                bean.tags.put("id", space.getId());
+                bean.showRight = true;
+                if (courseType == Configs.TYPE_PRIVATE) {
+                  bean.showRight = true;
+                  bean.rightIcon = R.drawable.ic_radio_unchecked;
                 } else {
-                    // ToastUtils.logHttp(qcResponseGymSite);
+                  if (courseType == -1) {
+                    bean.showRight = true;
+                    bean.rightIcon = R.drawable.ic_arrow_right;
+                  } else {
+                    bean.showRight = false;
+                  }
                 }
+                if (courseType < 0) {
+                  beans.add(bean);
+                } else {
+                  if (courseType == Configs.TYPE_PRIVATE && space.is_support_private()) {
+                    beans.add(bean);
+                  }
+                  if (courseType == Configs.TYPE_GROUP && space.is_support_team()) beans.add(bean);
+                }
+              }
+              if (view != null) {
+                view.onData(beans);
+              }
+            } else {
+              // ToastUtils.logHttp(qcResponseGymSite);
             }
-        });
-    }
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+
+          }
+        }));
+  }
+
+  public void querySiteList(final int courseType) {
+    RxRegiste(useCase.querySite(gymWrapper.id(), gymWrapper.model(),
+        new Action1<QcDataResponse<GymSites>>() {
+          @Override public void call(QcDataResponse<GymSites> qcResponseGymSite) {
+
+            if (qcResponseGymSite.getStatus() == ResponseConstant.SUCCESS) {
+              spaces = qcResponseGymSite.data.spaces;
+              List<ImageTwoTextBean> beans = new ArrayList<ImageTwoTextBean>();
+              for (Space space : qcResponseGymSite.data.spaces) {
+                String support = "";
+                if (space.is_support_private() && space.is_support_team()) {
+                  support = "支持私教和团课";
+                } else if (space.is_support_private()) {
+                  support = "支持私教";
+                } else if (space.is_support_team()) {
+                  support = "支持团课";
+                }
+                ImageTwoTextBean bean = new ImageTwoTextBean("", space.getName(),
+                    "可以容纳" + space.getCapacity() + "人、" + support);
+                bean.tags.put("id", space.getId());
+                bean.showRight = true;
+                if (courseType == Configs.TYPE_PRIVATE) {
+                  bean.showRight = true;
+                  bean.rightIcon = R.drawable.ic_radio_unchecked;
+                } else {
+                  if (courseType == -1) {
+                    bean.showRight = true;
+                    bean.rightIcon = R.drawable.ic_arrow_right;
+                  } else {
+                    bean.showRight = false;
+                  }
+                }
+                if (courseType < 0) {
+                  beans.add(bean);
+                } else {
+                  if (courseType == Configs.TYPE_PRIVATE && space.is_support_private()) {
+                    beans.add(bean);
+                  }
+                  if (courseType == Configs.TYPE_GROUP && space.is_support_team()) beans.add(bean);
+                }
+              }
+              if (view != null) {
+                view.onData(beans);
+              }
+            } else {
+              // ToastUtils.logHttp(qcResponseGymSite);
+            }
+          }
+        }));
+  }
 }

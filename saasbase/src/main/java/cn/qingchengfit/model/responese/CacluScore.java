@@ -23,5 +23,5 @@ package cn.qingchengfit.model.responese;
 
 public class CacluScore {
     public boolean has_score;
-    public int number;
+    public float number;
 }

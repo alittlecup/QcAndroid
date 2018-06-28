@@ -38,13 +38,22 @@ import cn.qingchengfit.views.fragments.FilterListFragment;
 
 public class CardListFilterFragment extends BaseFilterFragment {
 
-  CardTpl mCardTpl = new CardTpl("全部会员卡",0,null,null,null);
+  CardTpl mCardTpl = new CardTpl("全部会员卡", 0, null, null, null);
   int mStatus;
 
   CardlistFilterListener listener;
+  private boolean noStopCard = false;
 
   public CardlistFilterListener getListener() {
     return listener;
+  }
+
+  public static CardListFilterFragment newFragmentWithOutStopCardFilter() {
+    CardListFilterFragment filterFragment = new CardListFilterFragment();
+    Bundle bundle = new Bundle();
+    bundle.putBoolean("notStopCard", true);
+    filterFragment.setArguments(bundle);
+    return filterFragment;
   }
 
   public void setListener(CardlistFilterListener listener) {
@@ -59,33 +68,32 @@ public class CardListFilterFragment extends BaseFilterFragment {
       @Override public void onNext(CardTpl cardTpl) {
         mCardTpl = cardTpl;
         dismiss();
-
       }
     });
     RxBusAdd(EventCommonFilter.class).subscribe(new BusSubscribe<EventCommonFilter>() {
       @Override public void onNext(EventCommonFilter eventCommonFilter) {
         mStatus = eventCommonFilter.getPos();
         dismiss();
-
       }
     });
+    if (getArguments() != null && getArguments().getBoolean("notStopCard", false)) {
+      noStopCard = true;
+    }
 
     return view;
   }
 
   @Override public void dismiss() {
-    if (listener != null)
-      listener.onFilterResult(mCardTpl, mStatus);
+    if (listener != null) listener.onFilterResult(mCardTpl, mStatus);
     hideAll();
     super.dismiss();
   }
 
-  protected  void hideAll(){
+  protected void hideAll() {
     FragmentTransaction ft = getChildFragmentManager().beginTransaction();
     for (String s : getTags()) {
-     Fragment f = getChildFragmentManager().findFragmentByTag(s);
-     if (f != null)
-       ft.hide(f);
+      Fragment f = getChildFragmentManager().findFragmentByTag(s);
+      if (f != null) ft.hide(f);
     }
     ft.commit();
   }
@@ -98,7 +106,11 @@ public class CardListFilterFragment extends BaseFilterFragment {
     if (tag.equalsIgnoreCase(getTags()[0])) {
       return new CardFilterTplFragment();
     } else if (tag.equalsIgnoreCase(getTags()[1])) {
-      return FilterListFragment.newInstance(R.array.card_filter_status);
+      if (noStopCard) {
+        return FilterListFragment.newInstance(R.array.card_filter_status_no_stop);
+      } else {
+        return FilterListFragment.newInstance(R.array.card_filter_status);
+      }
     }
     return new EmptyFragment();
   }

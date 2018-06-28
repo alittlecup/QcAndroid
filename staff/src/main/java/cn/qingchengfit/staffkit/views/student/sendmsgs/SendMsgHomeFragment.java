@@ -19,8 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.model.responese.ShortMsg;
 import cn.qingchengfit.saasbase.items.ShortMsgItem;
 import cn.qingchengfit.staffkit.R;
@@ -61,219 +59,227 @@ import rx.functions.Action1;
  *
  * {@link }
  */
-public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresentersPresenter.MVPView {
+public class SendMsgHomeFragment extends BaseFragment
+    implements ShortMsgPresentersPresenter.MVPView {
 
-	TabLayout tabview;
-	ViewPager viewpager;
-	EditText etSearch;
+  TabLayout tabview;
+  ViewPager viewpager;
+  EditText etSearch;
 
-    FlexableListFragment allFragment;
-    FlexableListFragment sendedFragment;
-    FlexableListFragment scriptFragment;
+  FlexableListFragment allFragment;
+  FlexableListFragment sendedFragment;
+  FlexableListFragment scriptFragment;
 
-    List<AbstractFlexibleItem> mDatasAll = new ArrayList<>();
-    List<AbstractFlexibleItem> mDatasScript = new ArrayList<>();
-    List<AbstractFlexibleItem> mDatasSended = new ArrayList<>();
+  List<AbstractFlexibleItem> mDatasAll = new ArrayList<>();
+  List<AbstractFlexibleItem> mDatasScript = new ArrayList<>();
+  List<AbstractFlexibleItem> mDatasSended = new ArrayList<>();
 
-    @Inject ShortMsgPresentersPresenter presenter;
-	Toolbar toolbar;
-	TextView toolbarTitile;
-    SendMsgHomeAdapter adapter;
-	ImageView searchviewClear;
+  @Inject ShortMsgPresentersPresenter presenter;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  SendMsgHomeAdapter adapter;
+  ImageView searchviewClear;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_send_msg_home, container, false);
+    tabview = (TabLayout) view.findViewById(R.id.tabview);
+    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
+    etSearch = (EditText) view.findViewById(R.id.et_search);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+    view.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        addMsg();
+      }
+    });
+
+    initToolbar(toolbar);
+    delegatePresenter(presenter, this);
+    if (allFragment == null) {
+      allFragment = new FlexableListFragment();
+      allFragment.customNoStr = "点击右下方按钮新建短信";
+      allFragment.customNoStrTitle = "暂无短信记录";
+      allFragment.customNoImage = R.drawable.img_empty_msg;
+    }
+    if (sendedFragment == null) {
+      sendedFragment = new FlexableListFragment();
+      sendedFragment.customNoStr = "点击右下方按钮新建短信";
+      sendedFragment.customNoStrTitle = "暂无短信记录";
+      sendedFragment.customNoImage = R.drawable.img_empty_msg;
+    }
+    if (scriptFragment == null) {
+      scriptFragment = new FlexableListFragment();
+      scriptFragment.customNoStr = "点击右下方按钮新建短信";
+      scriptFragment.customNoStrTitle = "暂无短信记录";
+      scriptFragment.customNoImage = R.drawable.img_empty_msg;
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_send_msg_home, container, false);
-      tabview = (TabLayout) view.findViewById(R.id.tabview);
-      viewpager = (ViewPager) view.findViewById(R.id.viewpager);
-      etSearch = (EditText) view.findViewById(R.id.et_search);
-      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-      searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
-      view.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          addMsg();
-        }
-      });
-
-      initToolbar(toolbar);
-        delegatePresenter(presenter, this);
-        if (allFragment == null) {
-            allFragment = new FlexableListFragment();
-            allFragment.customNoStr = "点击右下方按钮新建短信";
-            allFragment.customNoStrTitle = "暂无短信记录";
-            allFragment.customNoImage = R.drawable.img_empty_msg;
-        }
-        if (sendedFragment == null) {
-            sendedFragment = new FlexableListFragment();
-            sendedFragment.customNoStr = "点击右下方按钮新建短信";
-            sendedFragment.customNoStrTitle = "暂无短信记录";
-            sendedFragment.customNoImage = R.drawable.img_empty_msg;
-        }
-        if (scriptFragment == null) {
-            scriptFragment = new FlexableListFragment();
-            scriptFragment.customNoStr = "点击右下方按钮新建短信";
-            scriptFragment.customNoStrTitle = "暂无短信记录";
-            scriptFragment.customNoImage = R.drawable.img_empty_msg;
-        }
-
-        etSearch.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_search_24dp_grey), null,
-            null, null);
-        etSearch.setHint(getString(R.string.search_sms_hint));
-        RxTextView.afterTextChangeEvents(etSearch)
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-                @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-                    sendedFragment.setFilterString(etSearch.getText().toString().trim());
-                    allFragment.setFilterString(etSearch.getText().toString().trim());
-                    scriptFragment.setFilterString(etSearch.getText().toString().trim());
-                    presenter.queryShortMsgList(null, etSearch.getText().toString().trim());
-                    searchviewClear.setVisibility(etSearch.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
-                }
-            });
-        RxView.clicks(searchviewClear).subscribe(aVoid -> etSearch.setText(""));
-        allFragment.setItemClickListener(position -> {
-            if (mDatasAll.get(position) instanceof ShortMsgItem) {
-                ShortMsgItem item = (ShortMsgItem) mDatasAll.get(position);
-                getFragmentManager().beginTransaction()
-                    .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-                    .addToBackStack(null)
-                    .commit();
-            }
-            return false;
+    etSearch.setCompoundDrawablesWithIntrinsicBounds(
+        ContextCompat.getDrawable(getContext(), R.drawable.ic_search_24dp_grey), null, null, null);
+    etSearch.setHint(getString(R.string.search_sms_hint));
+    RxTextView.afterTextChangeEvents(etSearch)
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+          @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+            sendedFragment.setFilterString(etSearch.getText().toString().trim());
+            allFragment.setFilterString(etSearch.getText().toString().trim());
+            scriptFragment.setFilterString(etSearch.getText().toString().trim());
+            presenter.queryShortMsgList(null, etSearch.getText().toString().trim());
+            searchviewClear.setVisibility(
+                etSearch.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
+          }
         });
-        sendedFragment.setItemClickListener(position -> {
-            if (mDatasSended.get(position) instanceof ShortMsgItem) {
-                ShortMsgItem item = (ShortMsgItem) mDatasSended.get(position);
-                getFragmentManager().beginTransaction()
-                    .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-                    .addToBackStack(null)
-                    .commit();
-            }
-            return false;
-        });
-        scriptFragment.setItemClickListener(position -> {
-            if (mDatasScript.get(position) instanceof ShortMsgItem) {
-                ShortMsgItem item = (ShortMsgItem) mDatasScript.get(position);
-                getFragmentManager().beginTransaction()
-                    .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-                    .addToBackStack(null)
-                    .commit();
-            }
-            return false;
-        });
-        viewpager.setOffscreenPageLimit(2);
-        if (adapter == null) adapter = new SendMsgHomeAdapter(getChildFragmentManager());
-        viewpager.setAdapter(adapter);
-        tabview.setupWithViewPager(viewpager);
-        tabview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(tabview.getViewTreeObserver(), this);
-                presenter.queryShortMsgList(null, null);
-            }
-        });
-
-        return view;
-    }
-
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
-        super.initToolbar(toolbar);
-        toolbarTitile.setText("群发短信");
-    }
-
-    @Override protected void onVisible() {
-        super.onVisible();
-    }
-
-    @Override public String getFragmentName() {
-        return SendMsgHomeFragment.class.getName();
-    }
-
-    @Override public void onShowError(String e) {
-
-    }
-
-    @Override public void onShowError(@StringRes int e) {
-
-    }
-
-    @Override public void onShortMsgList(List<ShortMsg> list) {
-        if (list != null) {
-            mDatasAll.clear();
-            mDatasScript.clear();
-            mDatasSended.clear();
-            for (int i = 0; i < list.size(); i++) {
-                ShortMsg s = list.get(i);
-                if (s.status == 1) {
-                    mDatasSended.add(new ShortMsgItem(s));
-                } else {
-                    mDatasScript.add(new ShortMsgItem(s));
-                }
-                mDatasAll.add(new ShortMsgItem(s));
-            }
-            allFragment.setData(mDatasAll);
-            sendedFragment.setData(mDatasSended);
-            scriptFragment.setData(mDatasScript);
-        }
-    }
-
-    @Override public void onShortMsgDetail(ShortMsg detail) {
-
-    }
-
-    @Override public void onPostSuccess() {
-
-    }
-
-    @Override public void onPutSuccess() {
-
-    }
-
-    @Override public void onDelSuccess() {
-
-    }
-
- public void addMsg() {
+    RxView.clicks(searchviewClear).subscribe(aVoid -> etSearch.setText(""));
+    allFragment.setItemClickListener(position -> {
+      if (mDatasAll.isEmpty()) return false;
+      if (mDatasAll.get(position) instanceof ShortMsgItem) {
+        ShortMsgItem item = (ShortMsgItem) mDatasAll.get(position);
         getFragmentManager().beginTransaction()
-            .setCustomAnimations(R.anim.slide_bottom_in, R.anim.slide_fade_out, R.anim.slide_fade_in, R.anim.slide_bottom_out)
-            .replace(R.id.frag, new MsgSendFragmentFragment())
+            .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
             .addToBackStack(null)
             .commit();
+      }
+      return false;
+    });
+    sendedFragment.setItemClickListener(position -> {
+      if (mDatasSended.isEmpty()) return false;
+      if (mDatasSended.get(position) instanceof ShortMsgItem) {
+        ShortMsgItem item = (ShortMsgItem) mDatasSended.get(position);
+        getFragmentManager().beginTransaction()
+            .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
+            .addToBackStack(null)
+            .commit();
+      }
+      return false;
+    });
+    scriptFragment.setItemClickListener(position -> {
+      if (mDatasScript.isEmpty()) return false;
+      if (mDatasScript.get(position) instanceof ShortMsgItem) {
+        ShortMsgItem item = (ShortMsgItem) mDatasScript.get(position);
+        getFragmentManager().beginTransaction()
+            .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
+            .addToBackStack(null)
+            .commit();
+      }
+      return false;
+    });
+    viewpager.setOffscreenPageLimit(2);
+    if (adapter == null) adapter = new SendMsgHomeAdapter(getChildFragmentManager());
+    viewpager.setAdapter(adapter);
+    tabview.setupWithViewPager(viewpager);
+    tabview.getViewTreeObserver()
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+          @Override public void onGlobalLayout() {
+            CompatUtils.removeGlobalLayout(tabview.getViewTreeObserver(), this);
+            presenter.queryShortMsgList(null, null);
+          }
+        });
+
+    return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("群发短信");
+  }
+
+  @Override protected void onVisible() {
+    super.onVisible();
+  }
+
+  @Override public String getFragmentName() {
+    return SendMsgHomeFragment.class.getName();
+  }
+
+  @Override public void onShowError(String e) {
+
+  }
+
+  @Override public void onShowError(@StringRes int e) {
+
+  }
+
+  @Override public void onShortMsgList(List<ShortMsg> list) {
+    if (list != null) {
+      mDatasAll.clear();
+      mDatasScript.clear();
+      mDatasSended.clear();
+      for (int i = 0; i < list.size(); i++) {
+        ShortMsg s = list.get(i);
+        if (s.status == 1) {
+          mDatasSended.add(new ShortMsgItem(s));
+        } else {
+          mDatasScript.add(new ShortMsgItem(s));
+        }
+        mDatasAll.add(new ShortMsgItem(s));
+      }
+      allFragment.setData(mDatasAll);
+      sendedFragment.setData(mDatasSended);
+      scriptFragment.setData(mDatasScript);
+    }
+  }
+
+  @Override public void onShortMsgDetail(ShortMsg detail) {
+
+  }
+
+  @Override public void onPostSuccess() {
+
+  }
+
+  @Override public void onPutSuccess() {
+
+  }
+
+  @Override public void onDelSuccess() {
+
+  }
+
+  public void addMsg() {
+    getFragmentManager().beginTransaction()
+        .setCustomAnimations(R.anim.slide_bottom_in, R.anim.slide_fade_out, R.anim.slide_fade_in,
+            R.anim.slide_bottom_out)
+        .replace(R.id.frag, new MsgSendFragmentFragment())
+        .addToBackStack(null)
+        .commit();
+  }
+
+  class SendMsgHomeAdapter extends FragmentStatePagerAdapter {
+
+    public SendMsgHomeAdapter(FragmentManager fm) {
+      super(fm);
     }
 
-    class SendMsgHomeAdapter extends FragmentStatePagerAdapter {
-
-        public SendMsgHomeAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return allFragment;
-                case 1:
-                    return sendedFragment;
-                default:
-                    return scriptFragment;
-            }
-        }
-
-        @Override public int getCount() {
-            return 3;
-        }
-
-        @Override public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "全部";
-                case 1:
-                    return "已发送";
-                default:
-                    return "草稿箱";
-            }
-        }
+    @Override public Fragment getItem(int position) {
+      switch (position) {
+        case 0:
+          return allFragment;
+        case 1:
+          return sendedFragment;
+        default:
+          return scriptFragment;
+      }
     }
+
+    @Override public int getCount() {
+      return 3;
+    }
+
+    @Override public CharSequence getPageTitle(int position) {
+      switch (position) {
+        case 0:
+          return "全部";
+        case 1:
+          return "已发送";
+        default:
+          return "草稿箱";
+      }
+    }
+  }
 }

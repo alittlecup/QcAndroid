@@ -113,9 +113,9 @@ public class NotiSettingFilterFragment extends BaseFragment {
               if (position == 0) {
                 params.put("is_successful", null);
               } else if (position == 1) {//发送成功
-                params.put("is_successful", true);
+                params.put("is_successful", 1);
               } else if (position == 2) {//发送失败
-                params.put("is_successful", false);
+                params.put("is_successful", 0);
               }
               onResult();
             }
@@ -160,7 +160,7 @@ public class NotiSettingFilterFragment extends BaseFragment {
       if (params.get("type") != null) type = (int) params.get("type");
       int status = -1;
       if (params.get("is_successful") != null) {
-        status = (boolean) params.get("is_successful") ? 1 : 0;
+        status = ((int) params.get("is_successful") == 1) ? 1 : 2;
       }
       String t = null;
       if (params.get("start") != null && params.get("end") != null) {
