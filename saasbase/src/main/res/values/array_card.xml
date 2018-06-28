@@ -54,4 +54,11 @@
     <item >已过期</item>
     <item >已停卡</item>
   </string-array>
+
+  <string-array name="card_filter_status_no_stop">
+    <item >默认</item>
+    <item >正常</item>
+    <item >请假中</item>
+    <item >已过期</item>
+  </string-array>
 </resources>

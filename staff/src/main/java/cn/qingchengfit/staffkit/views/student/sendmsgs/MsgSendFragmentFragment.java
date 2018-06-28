@@ -15,9 +15,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -30,6 +27,8 @@ import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.staffkit.views.custom.QcTagContainerLayout;
 import cn.qingchengfit.staffkit.views.custom.QcTagView;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
@@ -64,271 +63,288 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/15.
  */
-@FragmentWithArgs public class MsgSendFragmentFragment extends BaseFragment implements ShortMsgPresentersPresenter.MVPView {
-    @Arg(required = false) String msgid;
+@FragmentWithArgs public class MsgSendFragmentFragment extends BaseFragment
+    implements ShortMsgPresentersPresenter.MVPView {
+  @Arg(required = false) String msgid;
 
-	QcTagContainerLayout layoutTags;
-	EditText etContent;
-	Toolbar toolbar;
-	TextView toolbarTitile;
-	TextView tvLeft;
-	TextView tvSmsCount;
-	RelativeLayout layoutSendHint;
+  QcTagContainerLayout layoutTags;
+  EditText etContent;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  TextView tvLeft;
+  TextView tvSmsCount;
+  RelativeLayout layoutSendHint;
 
-    String smsBegin =
-        "\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020";
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
-    @Inject ShortMsgPresentersPresenter presenter;
+  String smsBegin =
+      "\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020";
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  @Inject ShortMsgPresentersPresenter presenter;
 
-    private List<QcStudentBean> chosenStudent = new ArrayList<>();
+  private List<QcStudentBean> chosenStudent = new ArrayList<>();
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    FragmentArgs.inject(this);
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_msg_send, container, false);
+    layoutTags = (QcTagContainerLayout) view.findViewById(R.id.layout_tags);
+    etContent = (EditText) view.findViewById(R.id.et_content);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    tvLeft = (TextView) view.findViewById(R.id.tv_left);
+    tvSmsCount = (TextView) view.findViewById(R.id.tv_sms_count);
+    layoutSendHint = (RelativeLayout) view.findViewById(R.id.layout_send_hint);
+    view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onClickAdd();
+      }
+    });
+
+    setToolbar(toolbar);
+    delegatePresenter(presenter, this);
+    if (!TextUtils.isEmpty(msgid)) {
+      showLoadingTrans();
+      presenter.queryShortMsgDetail(msgid);
+      toolbarTitile.setText("编辑草稿");
     }
+    TextView textView = new TextView(getContext());
+    textView.setText("收件人:");
+    layoutTags.setHeaderView(textView);
+    layoutTags.setOnTagClickListener(new QcTagView.OnTagClickListener() {
+      @Override public void onTagClick(int position, String text) {
+        layoutTags.removeTag(position);
+        if (position > 0 && position < chosenStudent.size() + 1) chosenStudent.remove(position - 1);
+      }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_msg_send, container, false);
-      layoutTags = (QcTagContainerLayout) view.findViewById(R.id.layout_tags);
-      etContent = (EditText) view.findViewById(R.id.et_content);
-      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-      tvLeft = (TextView) view.findViewById(R.id.tv_left);
-      tvSmsCount = (TextView) view.findViewById(R.id.tv_sms_count);
-      layoutSendHint = (RelativeLayout) view.findViewById(R.id.layout_send_hint);
-      view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          onClickAdd();
-        }
-      });
+      @Override public void onTagLongClick(int position, String text) {
 
-      setToolbar(toolbar);
-        delegatePresenter(presenter, this);
-        if (!TextUtils.isEmpty(msgid)) {
-            showLoadingTrans();
-            presenter.queryShortMsgDetail(msgid);
-            toolbarTitile.setText("编辑草稿");
-        }
-        TextView textView = new TextView(getContext());
-        textView.setText("收件人:");
-        layoutTags.setHeaderView(textView);
-        layoutTags.setOnTagClickListener(new QcTagView.OnTagClickListener() {
-            @Override public void onTagClick(int position, String text) {
-                layoutTags.removeTag(position);
-                if (position > 0 && position < chosenStudent.size() + 1) chosenStudent.remove(position - 1);
-            }
+      }
 
-            @Override public void onTagLongClick(int position, String text) {
-
-            }
-
-            @Override public void onTailClick() {
-                Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
-                toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
-                toChooseStudent.putExtra("open", true);
-                DirtySender.studentList.clear();
-                DirtySender.studentList.addAll(chosenStudent);
-                startActivityForResult(toChooseStudent, 11);
-            }
-        });
-        etContent.setText(smsBegin);
-        etContent.setSelection(etContent.getText().length());
-        etContent.requestFocus();
-
-        RxTextView.textChangeEvents(etContent).subscribe(new Action1<TextViewTextChangeEvent>() {
-            @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
-                if (textViewTextChangeEvent.text().length() < smsBegin.length()) {
-                    etContent.setText(smsBegin);
-                    etContent.setSelection(etContent.getText().length());
-                }
-                if ((textViewTextChangeEvent.text().toString().length()-24) > 59) {
-                    layoutSendHint.setVisibility(View.VISIBLE);
-                } else {
-                    layoutSendHint.setVisibility(View.GONE);
-                }
-                tvSmsCount.setText((textViewTextChangeEvent.text().toString().length()-24) + "");
-            }
-        });
-        return view;
-    }
-
-    private void setToolbar(@NonNull Toolbar toolbar) {
-        initToolbar(toolbar);
-        toolbarTitile.setText("新建群发短信");
-        toolbar.inflateMenu(R.menu.menu_send);
-        tvLeft.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null || chosenStudent.size() == 0)) {
-                    getActivity().onBackPressed();
-                    return;
-                }
-
-                //点击取消
-                DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        saveMsg();
-                    }
-                }).addButton("不保存", new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        getActivity().onBackPressed();
-                    }
-                }).show();
-            }
-        });
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == android.R.id.home) {
-                    //点击取消
-                    DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
-                        @Override public void onClick(View v) {
-                            saveMsg();
-                        }
-                    }).addButton("不保存", new View.OnClickListener() {
-                        @Override public void onClick(View v) {
-                            getActivity().onBackPressed();
-                        }
-                    }).show();
-                } else if (item.getItemId() == R.id.action_send) {
-                    sendMsg();
-                }
-                return false;
-            }
-        });
-    }
-
-    @Override public void onDestroyView() {
-
-        super.onDestroyView();
-    }
-
-    @Override public String getFragmentName() {
-        return MsgSendFragmentFragment.class.getName();
-    }
-
-    /**
-     * 点击添加学员
-     */
- public void onClickAdd() {
+      @Override public void onTailClick() {
         Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
         toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
-        //toChooseStudent.putExtra("")
+        toChooseStudent.putExtra("open", true);
         DirtySender.studentList.clear();
         DirtySender.studentList.addAll(chosenStudent);
         startActivityForResult(toChooseStudent, 11);
-    }
+      }
+    });
+    etContent.setText(smsBegin);
+    etContent.setSelection(etContent.getText().length());
+    etContent.requestFocus();
 
-    /**
-     * 发送短信
-     */
-    public void sendMsg() {
-        if (TextUtils.isEmpty(etContent.getText().toString().trim())) {
-            ToastUtils.show("请填写短信内容");
-            return;
+    RxTextView.textChangeEvents(etContent).subscribe(new Action1<TextViewTextChangeEvent>() {
+      @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
+        if (textViewTextChangeEvent.text().length() < smsBegin.length()) {
+          etContent.setText(smsBegin);
+          etContent.setSelection(etContent.getText().length());
         }
-        if (chosenStudent == null || chosenStudent.size() == 0) {
-            ToastUtils.show("请选择发送会员");
-            return;
-        }
-        String ids = "";
-        for (int i = 0; i < chosenStudent.size(); i++) {
-            if (i < chosenStudent.size() - 1) {
-                ids = TextUtils.concat(ids, chosenStudent.get(i).getId(), ",").toString();
-            } else {
-                ids = TextUtils.concat(ids, chosenStudent.get(i).getId()).toString();
-            }
-        }
-
-        presenter.sendMsg(new ShortMsgBody.Builder().content(etContent.getText().toString().substring(24)).send(1).user_ids(ids).build());
-    }
-
-    /**
-     * 保存为草稿
-     */
-    public void saveMsg() {
-        String ids = "";
-        for (int i = 0; i < chosenStudent.size(); i++) {
-            if (i < chosenStudent.size() - 1) {
-                ids = TextUtils.concat(ids, chosenStudent.get(i).getId(), ",").toString();
-            } else {
-                ids = TextUtils.concat(ids, chosenStudent.get(i).getId()).toString();
-            }
-        }
-        if (!TextUtils.isEmpty(msgid)) {
-            presenter.updateShortMsg(
-                new ShortMsgBody.Builder().content(etContent.getText().toString().trim()).user_ids(ids).message_id(msgid).build());
+        if ((textViewTextChangeEvent.text().toString().length() - 24) > 59) {
+          layoutSendHint.setVisibility(View.VISIBLE);
         } else {
-            presenter.sendMsg(new ShortMsgBody.Builder().content(etContent.getText().toString().trim()).send(0).user_ids(ids).build());
+          layoutSendHint.setVisibility(View.GONE);
         }
-    }
+        tvSmsCount.setText((textViewTextChangeEvent.text().toString().length() - 24) + "");
+      }
+    });
+    return view;
+  }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 11) {
-                //List<QcStudentBean> students = (ArrayList) data.getParcelableArrayListExtra("student");
-                List<String> s = new ArrayList<>();
-                if (DirtySender.studentList != null) {
-                    for (int i = 0; i < DirtySender.studentList.size(); i++) {
-                        s.add(DirtySender.studentList.get(i).getUsername());
-                    }
-                }
-                chosenStudent.clear();
-                chosenStudent.addAll(DirtySender.studentList);
-                DirtySender.studentList.clear();
-
-                layoutTags.removeAllTags();
-                layoutTags.setTags(s);
-            }
+  private void setToolbar(@NonNull Toolbar toolbar) {
+    toolbarTitile.setText("新建群发短信");
+    toolbar.setNavigationContentDescription(R.string.common_cancel);
+    toolbar.inflateMenu(R.menu.menu_send);
+    tvLeft.setText("取消");
+    tvLeft.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null
+            || chosenStudent.size() == 0)) {
+          getActivity().onBackPressed();
+          return;
         }
-    }
 
-    @Override public void onShowError(String e) {
-        hideLoading();
-        ToastUtils.show(e);
-    }
-
-    @Override public void onShowError(@StringRes int e) {
-        onShowError(getString(e));
-    }
-
-    @Override public void onShortMsgList(List<ShortMsg> list) {
-
-    }
-
-    @Override public void onShortMsgDetail(ShortMsg detail) {
-        hideLoadingTrans();
-        if (detail != null) {
-            if (detail.users != null) {
-                chosenStudent.clear();
-                chosenStudent.addAll(detail.users);
-
-                List<String> s = new ArrayList<>();
-                if (chosenStudent != null) {
-                    for (int i = 0; i < chosenStudent.size(); i++) {
-                        s.add(chosenStudent.get(i).getUsername());
-                    }
-                }
-                layoutTags.removeAllTags();
-                layoutTags.setTags(s);
+        //点击取消
+        DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            saveMsg();
+          }
+        }).addButton("不保存", new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            getActivity().onBackPressed();
+          }
+        }).show();
+      }
+    });
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+          //点击取消
+          DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              saveMsg();
             }
-            if (detail.content != null) {
-                etContent.setText(smsBegin + detail.content);
+          }).addButton("不保存", new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              getActivity().onBackPressed();
             }
+          }).show();
+        } else if (item.getItemId() == R.id.action_send) {
+          sendMsg();
         }
+        return false;
+      }
+    });
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && this.isfitSystemPadding()) {
+      ((ViewGroup)toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+    }
+  }
+
+  @Override public void onDestroyView() {
+
+    super.onDestroyView();
+  }
+
+  @Override public String getFragmentName() {
+    return MsgSendFragmentFragment.class.getName();
+  }
+
+  /**
+   * 点击添加学员
+   */
+  public void onClickAdd() {
+    Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
+    toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
+    //toChooseStudent.putExtra("")
+    DirtySender.studentList.clear();
+    DirtySender.studentList.addAll(chosenStudent);
+    startActivityForResult(toChooseStudent, 11);
+  }
+
+  /**
+   * 发送短信
+   */
+  public void sendMsg() {
+    if (TextUtils.isEmpty(etContent.getText().toString().trim())) {
+      ToastUtils.show("请填写短信内容");
+      return;
+    }
+    if (chosenStudent == null || chosenStudent.size() == 0) {
+      ToastUtils.show("请选择发送会员");
+      return;
+    }
+    String ids = "";
+    for (int i = 0; i < chosenStudent.size(); i++) {
+      if (i < chosenStudent.size() - 1) {
+        ids = TextUtils.concat(ids, chosenStudent.get(i).getId(), ",").toString();
+      } else {
+        ids = TextUtils.concat(ids, chosenStudent.get(i).getId()).toString();
+      }
     }
 
-    @Override public void onPostSuccess() {
-        getActivity().onBackPressed();
-        ToastUtils.show(R.drawable.vector_hook_white, "发送成功");
-    }
+    presenter.sendMsg(
+        new ShortMsgBody.Builder().content(etContent.getText().toString().substring(24))
+            .send(1)
+            .user_ids(ids)
+            .build());
+  }
 
-    @Override public void onPutSuccess() {
-        getActivity().onBackPressed();
-        ToastUtils.show("保存成功");
+  /**
+   * 保存为草稿
+   */
+  public void saveMsg() {
+    String ids = "";
+    for (int i = 0; i < chosenStudent.size(); i++) {
+      if (i < chosenStudent.size() - 1) {
+        ids = TextUtils.concat(ids, chosenStudent.get(i).getId(), ",").toString();
+      } else {
+        ids = TextUtils.concat(ids, chosenStudent.get(i).getId()).toString();
+      }
     }
-
-    @Override public void onDelSuccess() {
-
+    if (!TextUtils.isEmpty(msgid)) {
+      presenter.updateShortMsg(
+          new ShortMsgBody.Builder().content(etContent.getText().toString().trim())
+              .user_ids(ids)
+              .message_id(msgid)
+              .build());
+    } else {
+      presenter.sendMsg(new ShortMsgBody.Builder().content(etContent.getText().toString().trim())
+          .send(0)
+          .user_ids(ids)
+          .build());
     }
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == 11) {
+        //List<QcStudentBean> students = (ArrayList) data.getParcelableArrayListExtra("student");
+        List<String> s = new ArrayList<>();
+        if (DirtySender.studentList != null) {
+          for (int i = 0; i < DirtySender.studentList.size(); i++) {
+            s.add(DirtySender.studentList.get(i).getUsername());
+          }
+        }
+        chosenStudent.clear();
+        chosenStudent.addAll(DirtySender.studentList);
+        DirtySender.studentList.clear();
+
+        layoutTags.removeAllTags();
+        layoutTags.setTags(s);
+      }
+    }
+  }
+
+  @Override public void onShowError(String e) {
+    hideLoading();
+    ToastUtils.show(e);
+  }
+
+  @Override public void onShowError(@StringRes int e) {
+    onShowError(getString(e));
+  }
+
+  @Override public void onShortMsgList(List<ShortMsg> list) {
+
+  }
+
+  @Override public void onShortMsgDetail(ShortMsg detail) {
+    hideLoadingTrans();
+    if (detail != null) {
+      if (detail.users != null) {
+        chosenStudent.clear();
+        chosenStudent.addAll(detail.users);
+
+        List<String> s = new ArrayList<>();
+        if (chosenStudent != null) {
+          for (int i = 0; i < chosenStudent.size(); i++) {
+            s.add(chosenStudent.get(i).getUsername());
+          }
+        }
+        layoutTags.removeAllTags();
+        layoutTags.setTags(s);
+      }
+      if (detail.content != null) {
+        etContent.setText(smsBegin + detail.content);
+      }
+    }
+  }
+
+  @Override public void onPostSuccess() {
+    getActivity().onBackPressed();
+    ToastUtils.show(R.drawable.vector_hook_white, "发送成功");
+  }
+
+  @Override public void onPutSuccess() {
+    getActivity().onBackPressed();
+    ToastUtils.show("保存成功");
+  }
+
+  @Override public void onDelSuccess() {
+
+  }
 }
