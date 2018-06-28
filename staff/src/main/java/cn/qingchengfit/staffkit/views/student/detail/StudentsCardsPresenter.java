@@ -29,56 +29,59 @@ import rx.functions.Action1;
  */
 public class StudentsCardsPresenter extends BasePresenter {
 
-    @Inject StudentUsecase usecase;
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentWrapper;
-    StudentsCardsView view;
+  @Inject StudentUsecase usecase;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  @Inject StudentWrapper studentWrapper;
+  StudentsCardsView view;
 
-    @Inject public StudentsCardsPresenter() {
-    }
+  @Inject public StudentsCardsPresenter() {
+  }
 
-    @Override public void onStart() {
+  @Override public void onStart() {
 
-    }
+  }
 
-    @Override public void onStop() {
+  @Override public void onStop() {
 
-    }
+  }
 
-    @Override public void onPause() {
+  @Override public void onPause() {
 
-    }
+  }
 
-    @Override public void attachView(PView v) {
-        view = (StudentsCardsView) v;
-    }
+  @Override public void attachView(PView v) {
+    view = (StudentsCardsView) v;
+  }
 
-    @Override public void attachIncomingIntent(Intent intent) {
+  @Override public void attachIncomingIntent(Intent intent) {
 
-    }
+  }
 
-    @Override public void onCreate() {
+  @Override public void onCreate() {
 
-    }
+  }
 
-    @Override public void unattachView() {
-        super.unattachView();
-        view = null;
-    }
+  @Override public void unattachView() {
+    super.unattachView();
+    view = null;
+  }
 
-    public void querData() {
-        usecase.queryCards(studentWrapper.id(), gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id(),
-            new Action1<QcResponseStudentCards>() {
-                @Override public void call(QcResponseStudentCards qcResponseStudentCards) {
-                    List<Card> mData = new ArrayList<>();
-                    if (qcResponseStudentCards.data != null && qcResponseStudentCards.data.cards != null) {
-
-                        view.onData(mData.size(), qcResponseStudentCards.data.cards);
-                    } else {
-                        view.onData(0, mData);
-                    }
-                }
-            });
-    }
+  public void querData() {
+    RxRegiste(usecase.queryCards(studentWrapper.id(), gymWrapper.id(), gymWrapper.model(),
+        gymWrapper.brand_id(), new Action1<QcResponseStudentCards>() {
+          @Override public void call(QcResponseStudentCards qcResponseStudentCards) {
+            List<Card> mData = new ArrayList<>();
+            if (qcResponseStudentCards.data != null && qcResponseStudentCards.data.cards != null) {
+              if (view != null) {
+                view.onData(mData.size(), qcResponseStudentCards.data.cards);
+              }
+            } else {
+              if (view != null) {
+                view.onData(0, mData);
+              }
+            }
+          }
+        }));
+  }
 }
