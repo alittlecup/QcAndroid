@@ -1,0 +1,114 @@
+Properties localProperties = new Properties()
+try {
+  def localFile = project.rootProject.file('local.properties')
+  if (localFile != null && localFile.exists()) {
+    localProperties.load(localFile.newDataInputStream())
+  }
+} catch (Exception ignored) {
+  println("local.properties not found")
+}
+def runAsApp = 'true' == localProperties.getProperty(project.name)
+println(runAsApp)
+ext.runAsApp = runAsApp
+
+if (runAsApp) {
+  apply plugin: 'com.android.application'
+} else {
+  apply plugin: 'com.android.library'
+}
+
+
+def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+android {
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+  dataBinding {
+    enabled true
+  }
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    multiDexEnabled true
+    vectorDrawables.useSupportLibrary true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true',
+                     packageName                   : 'cn.qingchengfit.checkout']
+      }
+    }
+    manifestPlaceholders = [APP_NAME          : "内部测试",
+                            APP_SCHAME        : "qcpos",
+                            bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
+                            APP_PACKAGE       : "cn.qingchengfit.staffkit.internaltest",
+                            file_provider     : "cn.qingchengfit.staffkit.internaltest.provider"]
+  }
+  resourcePrefix "ck_"
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    debug {
+
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  buildToolsVersion '27.0.3'
+
+  sourceSets {
+    main {
+      //默认的作为application运行时Manifest文件路径
+      def debugManifest = 'src/main/debug/AndroidManifest.xml'
+      if (runAsApp && project.file(debugManifest).exists()) {
+        manifest.srcFile debugManifest
+      } else {
+        manifest.srcFile 'src/main/AndroidManifest.xml'
+        //集成开发模式下自动排除debug文件夹中的所有Java文件
+        // 可以将debug代码放在这个包内，例如：Application子类
+        java {
+          exclude 'debug/**'
+        }
+      }
+      if (runAsApp) {
+        //debug模式下，如果存在src/main/debug/assets，则自动将其添加到assets源码目录
+        if (project.file('src/main/debug/assets').exists()) {
+          assets.srcDirs = ['src/main/assets', 'src/main/debug/assets']
+        }
+        //debug模式下，如果存在src/main/debug/java，则自动将其添加到java源码目录
+        if (project.file('src/main/debug/java').exists()) {
+          java.srcDirs = ['src/main/java', 'src/main/debug/java']
+        }
+        //debug模式下，如果存在src/main/debug/res，则自动将其添加到资源目录
+        if (project.file('src/main/debug/res').exists()) {
+          res.srcDirs = ['src/main/res', 'src/main/debug/res']
+        }
+      }
+    }
+  }
+}
+
+dependencies {
+  implementation(project(':saasbase'))
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+
+  implementation "com.github.akarnokd:rxjava2-interop:0.11.5"
+
+  api "io.reactivex.rxjava2:rxjava:2.1.8"
+  api "io.reactivex.rxjava2:rxandroid:2.0.1"
+  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+}

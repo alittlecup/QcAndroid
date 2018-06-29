@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.qingchengfit.checkout">
+
+  <application
+      android:name="debug.MyApp"
+      android:allowBackup="false"
+      android:theme="@style/QcBaseTheme"
+      tools:replace="allowBackup">
+    <activity
+        android:name=".CheckoutCounterActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="checkout"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+
+    </activity>
+    <activity android:name="debug.SplashActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+  </application>
+
+</manifest>

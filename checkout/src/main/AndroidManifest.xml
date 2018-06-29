@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.qingchengfit.checkout">
+  <application>
+    <activity android:name=".CheckoutCounterActivity"/>
+  </application>
+
+</manifest>
