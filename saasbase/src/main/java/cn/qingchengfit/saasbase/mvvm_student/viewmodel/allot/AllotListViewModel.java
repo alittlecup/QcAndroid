@@ -24,60 +24,55 @@ import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
  * Created by huangbaole on 2017/11/21.
  */
 
-public class AllotListViewModel extends FlexibleViewModel<List<AllotDataResponse>, AllotStaffItem, Integer> {
+public class AllotListViewModel
+    extends FlexibleViewModel<List<AllotDataResponse>, AllotStaffItem, Integer> {
 
-    public final ObservableField<List<AllotStaffItem>> items = new ObservableField<>();
-    public final ObservableBoolean isLoading = new ObservableBoolean(false);
+  public final ObservableField<List<AllotStaffItem>> items = new ObservableField<>();
+  public final ObservableBoolean isLoading = new ObservableBoolean(false);
 
-    @Inject
-    LoginStatus loginStatus;
-    @Inject
-    GymWrapper gymWrapper;
-    @Inject StudentRepository respository;
-    public Integer type ;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  @Inject StudentRepository repository;
+  public Integer type = 0;
 
-    @Inject
-    public AllotListViewModel() {
+  @Inject public AllotListViewModel() {
+  }
+
+  public void refresh() {
+  }
+
+  @NonNull @Override
+  protected LiveData<List<AllotDataResponse>> getSource(@NonNull Integer integer) {
+    isLoading.set(true);
+    String path = "";
+    switch (integer) {
+      case 0:
+        path = "sellers";
+        break;
+      case 1:
+        path = "coaches";
+        break;
     }
+    return Transformations.map(
+        repository.qcGetStaffList(loginStatus.staff_id(), path, gymWrapper.getParams()), input -> {
+          type = integer;
+          return input.sellers;
+        });
+  }
 
-    public void refresh() {
-        identifier.setValue(1);
+  @Override protected boolean isSourceValid(@Nullable List<AllotDataResponse> response) {
+    return response != null;
+  }
+
+  @Override protected List<AllotStaffItem> map(@NonNull List<AllotDataResponse> response) {
+    return FlexibleItemProvider.with(new AllotStaffItemFactory()).from(response);
+  }
+
+  static class AllotStaffItemFactory
+      implements FlexibleItemProvider.Factory<AllotDataResponse, AllotStaffItem> {
+
+    @NonNull @Override public AllotStaffItem create(AllotDataResponse response) {
+      return FlexibleFactory.create(AllotStaffItem.class, response);
     }
-
-    @NonNull
-    @Override
-    protected LiveData<List<AllotDataResponse>> getSource(@NonNull Integer integer) {
-        isLoading.set(true);
-        String path = "";
-        switch (type) {
-            case 0:
-                path = "sellers";
-                break;
-            case 1:
-                path = "coaches";
-                break;
-        }
-        return Transformations.map(respository.qcGetStaffList(loginStatus.staff_id(), path
-                , gymWrapper.getParams()), input -> input.sellers);
-    }
-
-
-    @Override
-    protected boolean isSourceValid(@Nullable List<AllotDataResponse> response) {
-        return response != null;
-    }
-
-    @Override
-    protected List<AllotStaffItem> map(@NonNull List<AllotDataResponse> response) {
-        return FlexibleItemProvider.with(new AllotStaffItemFactory()).from(response);
-    }
-
-    static class AllotStaffItemFactory implements FlexibleItemProvider.Factory<AllotDataResponse, AllotStaffItem> {
-
-        @NonNull
-        @Override
-        public AllotStaffItem create(AllotDataResponse response) {
-            return FlexibleFactory.create(AllotStaffItem.class, response);
-        }
-    }
+  }
 }

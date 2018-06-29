@@ -38,6 +38,14 @@ public class SalerStudentListView extends SaasBaseFragment {
     }
   }
 
+  public boolean isEmpty() {
+    if (adapter == null) {
+      return items == null || items.isEmpty();
+    } else {
+      return adapter.isEmpty();
+    }
+  }
+
   private void initRecyclerView() {
     adapter = new CommonFlexAdapter(items == null ? new ArrayList() : items);
     root.setAdapter(adapter);

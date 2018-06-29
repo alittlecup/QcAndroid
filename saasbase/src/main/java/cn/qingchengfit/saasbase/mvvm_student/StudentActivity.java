@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotMultiStaffPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotStaffDetailPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.AllotStaffListPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.allot.StudentAllotPage;
+import cn.qingchengfit.saasbase.mvvm_student.view.allot.StudentAllotStaffPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.attendance.AttendanceStudentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.attendance.absent.AttendanceAbsentPage;
 import cn.qingchengfit.saasbase.mvvm_student.view.attendance.nosign.AttendanceNosignPage;
@@ -91,7 +92,7 @@ import com.anbillon.flabellum.annotations.Trunk;
     StudentHomePage.class, StudentAllPage.class, StudentRecyclerSortView.class, StudentListView.class,
     StudentAllotPage.class, IncreaseStudentSortView.class, IncreaseStudentTopView.class,
     IncreaseStudentPage.class,  IncreaseMemberTopView.class,
-    IncreaseMemberPage.class, StudentStateInfoPage.class
+    IncreaseMemberPage.class, StudentStateInfoPage.class,StudentAllotStaffPage.class
 }) public class StudentActivity extends SaasContainerActivity {
 
 

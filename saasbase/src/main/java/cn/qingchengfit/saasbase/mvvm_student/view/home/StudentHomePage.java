@@ -104,7 +104,7 @@ import java.util.ArrayList;
               .build());
     });
     mBinding.commAllotStudent.setOnClickListener(view -> {
-
+      routeTo("/student/allotstaff",null);
     });
     mBinding.commAttendStudent.setOnClickListener(view -> {
       routeTo("attendance/page", null);

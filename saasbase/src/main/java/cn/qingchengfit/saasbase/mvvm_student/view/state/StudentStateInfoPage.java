@@ -22,7 +22,7 @@ import java.util.List;
 
 @Leaf(module = "student", path = "/saler/student") public class StudentStateInfoPage
     extends StudentBaseFragment<PageStudentStateInfoBinding, StudentStateInfoViewModel>
-    implements FlexibleAdapter.OnItemClickListener {
+    implements FlexibleAdapter.OnItemClickListener, CountDateView.OnCheckedChangeListener {
   @Need @IncreaseType String curType = IncreaseType.INCREASE_MEMBER;
   List<SalerStudentListView> fragmentList = new ArrayList<>();
 
@@ -59,12 +59,18 @@ import java.util.List;
     fragmentList.get(1).setItems(getItems());
     fragmentList.get(2).setItems(getItems());
     fragmentList.get(3).setItems(getItems());
-
-
   }
 
   private List<? extends AbstractFlexibleItem> getItems() {
-    List<SalerStudentInfoItem> items=new ArrayList<>();
+    List<SalerStudentInfoItem> items = new ArrayList<>();
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
+    items.add(new SalerStudentInfoItem());
     items.add(new SalerStudentInfoItem());
     items.add(new SalerStudentInfoItem());
     items.add(new SalerStudentInfoItem());
@@ -93,8 +99,11 @@ import java.util.List;
     mBinding.countFourteen.setCount("60");
     mBinding.countFourteen.setContentColor(getResources().getColor(R.color.danger_red_normal));
 
+    mBinding.countOne.setOnCheckedChangeListener(this);
+    mBinding.countFour.setOnCheckedChangeListener(this);
+    mBinding.countEight.setOnCheckedChangeListener(this);
+    mBinding.countFourteen.setOnCheckedChangeListener(this);
   }
-
 
   private void initToolbar() {
     ToolbarModel toolbarModel = null;
@@ -119,6 +128,22 @@ import java.util.List;
   @Override public boolean onItemClick(int position) {
 
     return false;
+  }
+
+  @Override public void onCheckedChanged(CountDateView buttonView, boolean isChecked) {
+    if (isChecked) {
+      if (buttonView == mBinding.countOne) {
+        mBinding.viewpager.setCurrentItem(0);
+      } else if (buttonView == mBinding.countFour) {
+        mBinding.viewpager.setCurrentItem(1);
+      } else if (buttonView == mBinding.countEight) {
+        mBinding.viewpager.setCurrentItem(2);
+      } else if (buttonView == mBinding.countFourteen) {
+        mBinding.viewpager.setCurrentItem(3);
+      }
+      preChecked.setChecked(false);
+      preChecked = buttonView;
+    }
   }
 
   class StateViewPager extends FragmentStatePagerAdapter {

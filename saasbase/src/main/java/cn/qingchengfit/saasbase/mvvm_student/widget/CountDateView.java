@@ -89,14 +89,16 @@ public class CountDateView extends LinearLayout implements Checkable {
   }
 
   @Override public void toggle() {
-    setChecked(!_isChecked);
+    if (!isChecked()) {
+      setChecked(!_isChecked);
+    }
   }
 
   /**
    * Interface definition for a callback to be invoked when the checked state
    * of a compound button changed.
    */
-  public static interface OnCheckedChangeListener {
+  public interface OnCheckedChangeListener {
     /**
      * Called when the checked state of a compound button has changed.
      *
