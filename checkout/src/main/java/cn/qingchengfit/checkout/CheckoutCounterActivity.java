@@ -3,19 +3,23 @@ package cn.qingchengfit.checkout;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.checkout.routers.CheckoutRouterCenter;
-import cn.qingchengfit.checkout.routers.checkoutImpl;
-import cn.qingchengfit.checkout.view.CheckoutHomePage;
+import cn.qingchengfit.checkout.view.checkout.CheckoutMoneyPage;
+import cn.qingchengfit.checkout.view.home.CheckoutHomePage;
+import cn.qingchengfit.checkout.view.pay.CheckoutPayPage;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
 import com.anbillon.flabellum.annotations.Trunk;
+import javax.inject.Inject;
 
 @Trunk(fragments = {
-    PageModelModule.class, CheckoutHomePage.class,
+    PageModelModule.class, CheckoutHomePage.class, CheckoutMoneyPage.class, CheckoutPayPage.class
 }) public class CheckoutCounterActivity extends SaasContainerActivity {
+  @Inject CheckoutRouterCenter routerCenter;
+
   @Override public String getModuleName() {
     return "checkout";
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    return new CheckoutRouterCenter().registe(new checkoutImpl()).getFragment(intent.getData(), intent.getExtras());
+    return routerCenter.getFragment(intent.getData(), intent.getExtras());
   }
 }

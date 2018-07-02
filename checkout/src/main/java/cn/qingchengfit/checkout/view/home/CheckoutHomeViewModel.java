@@ -1,4 +1,4 @@
-package cn.qingchengfit.checkout.view;
+package cn.qingchengfit.checkout.view.home;
 
 import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import javax.inject.Inject;
