@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
@@ -46,24 +44,22 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
       //QcResponsePayWx qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      //onWxPay(payBusinessResponse.get("url").getAsString());
-      if (payMethod() == 12) {
-        QC.obtainBuilder("checkout")
-            .setActionName("/checkout/pay")
-            .setContext(getContext())
-            .addParam("type", "微信")
-            .addParam("count", "100")
-            .build()
-            .callAsync((qc, result) -> Log.d("TAG", "onBusinessOrder: "));
-      }else if(payMethod()==13){
-        QC.obtainBuilder("checkout")
-            .addParam("type", "支付宝")
-            .setActionName("/checkout/pay")
-            .setContext(getContext())
-            .addParam("count", "100")
-            .build()
-            .callAsync((qc, result) -> Log.d("TAG", "onBusinessOrder: "));
-      }
+      onWxPay(payBusinessResponse.get("url").getAsString());
+      //if (payMethod() == 12) {
+      //  QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+      //      .setContext(getContext())
+      //      .addParam("type","微信")
+      //      .addParam("count","100")).callAsync(qcResult -> {
+      //
+      //      });
+      //} else if (payMethod() == 13) {
+      //  QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+      //      .setContext(getContext())
+      //      .addParam("type","支付宝")
+      //      .addParam("count","100")).callAsync(qcResult -> {
+      //
+      //  });
+      //}
     }
   }
 

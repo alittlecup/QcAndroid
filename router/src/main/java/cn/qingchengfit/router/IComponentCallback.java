@@ -7,8 +7,8 @@ package cn.qingchengfit.router;
  */
 public interface IComponentCallback {
     /**
-     * call when cc is received QCResult
-     * @param qc cc
+     * call when qc is received QCResult
+     * @param qc qc
      * @param result the QCResult
      */
     void onResult(QC qc, QCResult result);

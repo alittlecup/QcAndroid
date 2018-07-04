@@ -293,8 +293,8 @@ public class QC {
 
 
         /**
-         * 构建CC对象
-         * @return CC对象
+         * 构建QC对象
+         * @return QC对象
          */
         public QC build() {
             QC cr = this.cr;

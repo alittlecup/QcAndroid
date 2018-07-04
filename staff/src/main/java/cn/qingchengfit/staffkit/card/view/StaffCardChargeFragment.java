@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.cards.views.NewCardChargeFragment;
 import cn.qingchengfit.staffkit.R;
@@ -47,23 +46,25 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
     } else {
       //QcResponsePayWx
       //    qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      if (payBusinessResponse.get("url") == null){
+      if (payBusinessResponse.get("url") == null) {
         return;
       }
-      //onWxPay(payBusinessResponse.get("url").getAsString());
-      if (payMethod() == 12) {
-        QC.obtainBuilder("checkout")
-            .addParam("type", "微信")
-            .addParam("count", "100")
-            .build()
-            .callAsync((qc, result) -> ToastUtils.show("success"));
-      }else if(payMethod()==13){
-        QC.obtainBuilder("checkout")
-            .addParam("type", "支付宝")
-            .addParam("count", "100")
-            .build()
-            .callAsync((qc, result) -> ToastUtils.show("success"));
-      }
+      onWxPay(payBusinessResponse.get("url").getAsString());
+      //if (payMethod() == 12) {
+      //  QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+      //      .setContext(getContext())
+      //      .addParam("type","微信")
+      //      .addParam("count","100")).callAsync(qcResult -> {
+      //
+      //  });
+      //}else if(payMethod()==13){
+      //  QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+      //      .setContext(getContext())
+      //      .addParam("type","支付宝")
+      //      .addParam("count","100")).callAsync(qcResult -> {
+      //
+      //  });
+      //}
     }
   }
 
@@ -73,15 +74,15 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK){
-      switch (requestCode){
+    if (resultCode == Activity.RESULT_OK) {
+      switch (requestCode) {
         case 404:
           if (data != null) {
-              buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
-            }
-          break;
+            buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
           }
-      }else{
+          break;
+      }
+    } else {
       ToastUtils.show("充值失败");
     }
   }
@@ -117,11 +118,11 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
         .content(getString(R.string.caclu_score_hint, s))
         .cancelable(false)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             onSuccess();
           }
         })
         .show();
   }
-
 }
