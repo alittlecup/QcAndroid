@@ -231,5 +231,7 @@
     <orderEntry type="library" name="Gradle: com.google.dagger:dagger-android-support-2.11" level="project" />
     <orderEntry type="library" name="Gradle: com.github.chrisbanes:PhotoView-1.2.6" level="project" />
     <orderEntry type="module" module-name="saasbase" />
+    <orderEntry type="module" module-name="router" />
+    <orderEntry type="module" module-name="saascommon" />
   </component>
 </module>
