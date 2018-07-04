@@ -191,7 +191,8 @@ task buildWithAP(dependsOn: build) {}
 dependencies {
   implementation project(path: ':saasbase')
   implementation project(path: ':shop')
-//  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
+  implementation project(path: ':checkout')
+  //  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -240,5 +241,32 @@ dependencies {
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
   annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+}
 
+apply plugin: 'auto-register'
+autoregister {
+  registerInfo = [[//自动注册组件
+                       'scanInterface'          : 'cn.qingchengfit.router.IComponent'
+                       , 'codeInsertToClassName': 'cn.qingchengfit.router.ComponentManager'
+                       , 'registerMethodName'   : 'registerComponent'
+                       , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                                   'cn.qingchengfit.router.'.replaceAll("\\.",
+                                                       "/") + ".*"]],
+                      [//自动注册全局拦截器
+                       'scanInterface'          : 'cn.qingchengfit.router.IGlobalCCInterceptor'
+                       , 'codeInsertToClassName': 'cn.qingchengfit.router.GlobalCCInterceptorManager'
+                       , 'registerMethodName'   : 'registerGlobalInterceptor'
+                       , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                                   'cn.qingchengfit.router.'.
+                                                       replaceAll("\\.",
+                                                           "/") + ".*"]],
+                      [//自动注册跨进程通信时自定义类型的json转换器，可以用Gson、FastJson等工具来实现
+                       // 参考： demo_base/src/main/java/com.billy.cc.demo.base.GsonParamConverter
+                       'scanInterface'          : 'cn.qingchengfit.router.IParamJsonConverter'
+                       , 'codeInsertToClassName': 'cn.qingchengfit.router.RemoteParamUtil'
+                       , 'registerMethodName'   : 'initRemoteCCParamJsonConverter'
+                       , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                                   'cn.qingchengfit.router.'.
+                                                       replaceAll("\\.",
+                                                           "/") + ".*"]]]
 }

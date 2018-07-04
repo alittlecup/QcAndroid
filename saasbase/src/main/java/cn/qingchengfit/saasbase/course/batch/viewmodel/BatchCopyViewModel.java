@@ -12,7 +12,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.bean.CopySchedule;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;

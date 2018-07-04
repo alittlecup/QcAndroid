@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.ViewStudentFilterBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 
 public class StudentFilterView extends
-    StudentBaseFragment<ViewStudentFilterBinding, StudentFilterViewModel> {
+    SaasBindingFragment<ViewStudentFilterBinding, StudentFilterViewModel> {
     CommonFlexAdapter adapter;
 
     @Override

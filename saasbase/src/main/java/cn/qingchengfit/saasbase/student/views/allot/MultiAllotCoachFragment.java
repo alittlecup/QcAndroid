@@ -25,7 +25,6 @@ import javax.inject.Inject;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentMultiAllotCoachBinding;

@@ -20,9 +20,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.student.bean.Absentce;
 import cn.qingchengfit.saasbase.student.items.AttendanceStudentItem;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 
 /**

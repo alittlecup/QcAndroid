@@ -1,7 +1,7 @@
 package cn.qingchengfit.saasbase.course.module;
 
 import android.arch.lifecycle.ViewModel;
-import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
+import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import dagger.Binds;
 import dagger.Module;

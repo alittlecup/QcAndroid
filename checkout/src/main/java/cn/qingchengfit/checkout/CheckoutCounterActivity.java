@@ -6,13 +6,13 @@ import cn.qingchengfit.checkout.routers.CheckoutRouterCenter;
 import cn.qingchengfit.checkout.view.checkout.CheckoutMoneyPage;
 import cn.qingchengfit.checkout.view.home.CheckoutHomePage;
 import cn.qingchengfit.checkout.view.pay.CheckoutPayPage;
-import cn.qingchengfit.saasbase.SaasContainerActivity;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
 import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
 @Trunk(fragments = {
     PageModelModule.class, CheckoutHomePage.class, CheckoutMoneyPage.class, CheckoutPayPage.class
-}) public class CheckoutCounterActivity extends SaasContainerActivity {
+}) public class CheckoutCounterActivity extends SaasCommonActivity {
   @Inject CheckoutRouterCenter routerCenter;
 
   @Override public String getModuleName() {

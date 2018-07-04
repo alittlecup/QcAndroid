@@ -1,13 +1,10 @@
-package cn.qingchengfit.saasbase.common.mvvm;
+package cn.qingchengfit.saascommon.mvvm;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by huangbaole on 2017/12/6.

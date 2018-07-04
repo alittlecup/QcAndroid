@@ -20,9 +20,9 @@ import cn.qingchengfit.saasbase.student.items.DataStatisticsItem;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.utils.DateUtils;
 
 /**

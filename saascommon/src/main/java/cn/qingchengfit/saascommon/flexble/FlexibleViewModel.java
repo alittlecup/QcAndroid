@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.qingchengfit.saasbase.common.flexble;
+package cn.qingchengfit.saascommon.flexble;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
@@ -24,7 +24,7 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 
 
 /**

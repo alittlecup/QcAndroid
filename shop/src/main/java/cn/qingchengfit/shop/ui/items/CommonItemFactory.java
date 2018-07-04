@@ -1,8 +1,8 @@
 package cn.qingchengfit.shop.ui.items;
 
 import android.support.annotation.NonNull;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 /**

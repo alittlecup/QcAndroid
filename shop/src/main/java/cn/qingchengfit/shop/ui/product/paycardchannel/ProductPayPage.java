@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductPayBinding;
@@ -20,7 +20,6 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 

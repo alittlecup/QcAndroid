@@ -2,20 +2,12 @@ package cn.qingchengfit.saasbase;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.widget.FrameLayout;
 import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.views.activity.BaseActivity;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
 
 /**
@@ -39,26 +31,13 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/15.
  */
 
-public class SaasContainerActivity extends BaseActivity implements HasSupportFragmentInjector {
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+public class SaasContainerActivity extends SaasCommonActivity {
   @Inject SaasbaseRouterCenter routerCenter;
-  FrameLayout webFragLayout;
-
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base_frag);
-    webFragLayout = findViewById(R.id.web_frag_layout);
-    webFragLayout.setOnTouchListener((v, event) -> true);
-    onNewIntent(getIntent());
-  }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
     return routerCenter.getFragment(intent.getData(), intent.getExtras());
   }
 
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingFragmentInjector;
-  }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -107,24 +86,6 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
     routeTo("bill", "/pay/done/", new BillDetailParams().orderNo(orderNo).build());
   }
 
-  protected void routeTo(String model, String path, Bundle bd) {
-    String uri = model + path;
-    try {
-      uri = AppUtils.getCurAppSchema(this) + "://" + model + path;
-      Intent to = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-      to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      if (bd != null) {
-        to.putExtras(bd);
-      }
-      startActivity(to);
-      finish();
-    } catch (Exception e) {
-      LogUtil.e("找不到模块去处理" + uri);
-      CrashUtils.sendCrash(e);
-    }
-  }
 
-  @Override public int getFragId() {
-    return R.id.web_frag_layout;
-  }
+
 }

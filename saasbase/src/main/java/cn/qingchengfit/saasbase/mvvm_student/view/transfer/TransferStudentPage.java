@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageTransferStudentBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.transfer.TransferStudentViewModel;
 import com.anbillon.flabellum.annotations.Leaf;
 
@@ -16,7 +16,7 @@ import com.anbillon.flabellum.annotations.Leaf;
  */
 @Leaf(module = "student",path = "/transfer/student")
 public class TransferStudentPage extends
-    StudentBaseFragment<PageTransferStudentBinding, TransferStudentViewModel> {
+    SaasBindingFragment<PageTransferStudentBinding, TransferStudentViewModel> {
 
     private TransferStudentView filterView;
 

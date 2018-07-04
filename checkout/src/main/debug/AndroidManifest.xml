@@ -6,7 +6,7 @@
   <application
       android:name="debug.MyApp"
       android:allowBackup="false"
-      android:theme="@style/QcBaseTheme"
+      android:theme="@style/AppBaseTheme"
       tools:replace="allowBackup">
     <activity
         android:name=".CheckoutCounterActivity"

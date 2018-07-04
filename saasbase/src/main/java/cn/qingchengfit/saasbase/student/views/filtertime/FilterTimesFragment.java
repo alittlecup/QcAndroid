@@ -7,36 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventFilterDate;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
-import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
-import cn.qingchengfit.saasbase.student.views.followup.FollowUpEvent;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.FilterFragment;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import rx.functions.Action;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Action2;
 import rx.functions.Action3;
 
 /**

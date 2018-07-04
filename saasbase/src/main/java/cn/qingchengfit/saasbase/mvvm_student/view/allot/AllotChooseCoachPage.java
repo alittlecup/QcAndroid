@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.databinding.PageAllotChooseSalerBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotChooseViewModel;
 import cn.qingchengfit.saasbase.student.other.BaseGirdListFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.utils.DialogUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Leaf(module = "student", path = "/allot/choosecoach") public class AllotChooseCoachPage
-    extends StudentBaseFragment<PageAllotChooseSalerBinding, AllotChooseViewModel>
+    extends SaasBindingFragment<PageAllotChooseSalerBinding, AllotChooseViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   @Need String title;
   @Need ArrayList<String> belongStaffIds;

@@ -18,7 +18,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageWebChooseStaffBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
@@ -39,7 +39,7 @@ import java.util.Map;
  * web选择会员的落地页
  */
 @Leaf(module = "student", path = "/select_member/") public class ChooseStaffPage
-    extends StudentBaseFragment<PageWebChooseStaffBinding, ChooseStaffViewModel>
+    extends SaasBindingFragment<PageWebChooseStaffBinding, ChooseStaffViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
   private StudentFilterViewModel filterViewModel;

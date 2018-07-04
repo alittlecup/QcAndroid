@@ -2,17 +2,21 @@ package cn.qingchengfit.checkout.view.pay;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutPayBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
 @Leaf(module = "checkout", path = "/checkout/pay") public class CheckoutPayPage
-    extends StudentBaseFragment<CkPageCheckoutPayBinding, CheckoutPayViewModel> {
+    extends CheckoutCounterFragment<CkPageCheckoutPayBinding, CheckoutPayViewModel> {
   @Need String type = "";
   @Need Float money = 0f;
 
@@ -27,6 +31,7 @@ import com.anbillon.flabellum.annotations.Need;
     initToolbar();
     initUI();
     initListener();
+    mockSuccess();
     return mBinding;
   }
 
@@ -34,6 +39,20 @@ import com.anbillon.flabellum.annotations.Need;
     mBinding.flScan.setOnClickListener(v -> {
 
     });
+  }
+
+  private void mockSuccess() {
+    new Handler().postDelayed(new Runnable() {
+      @Override public void run() {
+        if (getArguments() != null) {
+          String callId = getArguments().getString("callId");
+          if (!TextUtils.isEmpty(callId)) {
+            QC.sendQCResult(callId, QCResult.success());
+            getActivity().finish();
+          }
+        }
+      }
+    }, 2000);
   }
 
   private void initUI() {

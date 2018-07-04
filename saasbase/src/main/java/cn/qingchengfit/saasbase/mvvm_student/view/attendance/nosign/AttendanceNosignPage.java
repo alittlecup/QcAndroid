@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageAttendanceNosignBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 @Leaf(module = "student",path = "/attendance/nosign")
 public class AttendanceNosignPage extends
-    StudentBaseFragment<PageAttendanceNosignBinding,AttendanceNosignViewModel> {
+    SaasBindingFragment<PageAttendanceNosignBinding,AttendanceNosignViewModel> {
     private AttendanceNosignView filterView;
 
     @Override

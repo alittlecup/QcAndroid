@@ -64,36 +64,27 @@ android {
 }
 
 dependencies {
+  api project(':saascommon')
 
-  api "cn.qingchengfit.widgets:qcbase:1.0.180601"
-  api "cn.qingchengfit.weex:weex:1.0.180601"
-  api "cn.qingchengfit.recruit:recruit:1.1.180613"
-
-
+  api 'cn.qingchengfit.weex:weex:1.0.180601'
+  api 'cn.qingchengfit.recruit:recruit:1.1.180613'
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
-    exclude group: 'com.google.googlejavaformat'
-  }
+
   api('com.hkm.taglib:tag:1.6.0') {
     exclude group: 'com.android.support'
   }
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
   api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-  api("android.arch.lifecycle:extensions:1.0.0") {
-    exclude group: 'android.arch.lifecycle', module: 'runtime'
-  }
-  api "android.arch.lifecycle:reactivestreams:1.0.0"
-  api "io.reactivex:rxjava-reactive-streams:1.2.1"
 
+  api 'android.arch.lifecycle:reactivestreams:1.0.0'
+  api 'io.reactivex:rxjava-reactive-streams:1.2.1'
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
-
   api 'me.gujun.android.taggroup:library:1.4@aar'
-
-  api "android.arch.lifecycle:common-java8:1.0.0"
+  api 'android.arch.lifecycle:common-java8:1.0.0'
   //    // Room
-  api "android.arch.persistence.room:runtime:1.0.0"
+  api 'android.arch.persistence.room:runtime:1.0.0'
   annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
   api 'io.reactivex.rxjava2:rxandroid:2.0.1'
   api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"

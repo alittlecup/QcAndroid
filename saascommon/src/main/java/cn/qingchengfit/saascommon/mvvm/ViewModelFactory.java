@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.common.mvvm;
+package cn.qingchengfit.saascommon.mvvm;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

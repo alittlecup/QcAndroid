@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageAttendanceStudentBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.AttendanceStudentViewModel;
 import com.anbillon.flabellum.annotations.Leaf;
 
@@ -16,7 +16,7 @@ import com.anbillon.flabellum.annotations.Leaf;
  */
 @Leaf(module = "student", path = "/attendance/page")
 public class AttendanceStudentPage extends
-    StudentBaseFragment<PageAttendanceStudentBinding, AttendanceStudentViewModel> {
+    SaasBindingFragment<PageAttendanceStudentBinding, AttendanceStudentViewModel> {
 
     private AttendanceFilterView fitlerView;
 

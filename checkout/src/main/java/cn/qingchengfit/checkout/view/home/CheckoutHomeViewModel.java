@@ -1,6 +1,6 @@
 package cn.qingchengfit.checkout.view.home;
 
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import javax.inject.Inject;
 
 public class CheckoutHomeViewModel extends BaseViewModel {

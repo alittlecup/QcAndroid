@@ -42,7 +42,7 @@ android {
       }
     }
     manifestPlaceholders = [APP_NAME          : "内部测试",
-                            APP_SCHAME        : "qcpos",
+                            APP_SCHAME        : "qcstaff",
                             bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
                             APP_PACKAGE       : "cn.qingchengfit.checkout",
                             file_provider     : "cn.qingchengfit.staffkit.internaltest.provider"]
@@ -54,9 +54,7 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    debug {
-
-    }
+    debug {}
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
@@ -97,18 +95,12 @@ android {
 }
 
 dependencies {
-  implementation(project(':saasbase'))
+  implementation(project(':saascommon'))
+
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
 
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-
-
-  implementation "com.github.akarnokd:rxjava2-interop:0.11.5"
-
-  api "io.reactivex.rxjava2:rxjava:2.1.8"
-  api "io.reactivex.rxjava2:rxandroid:2.0.1"
-  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 }
+

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.shop.routers.ShopParamsInjector;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

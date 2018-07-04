@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageAttendanceAbsentBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 @Leaf(module = "student", path = "/attendance/absent")
 public class AttendanceAbsentPage extends
-    StudentBaseFragment<PageAttendanceAbsentBinding, AttendanceAbsentViewModel> {
+    SaasBindingFragment<PageAttendanceAbsentBinding, AttendanceAbsentViewModel> {
 
     private AttendanceAbsentView filterFragment;
 

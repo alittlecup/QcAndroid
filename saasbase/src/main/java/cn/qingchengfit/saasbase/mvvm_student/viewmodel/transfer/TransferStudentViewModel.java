@@ -23,9 +23,9 @@ import cn.qingchengfit.saasbase.student.items.FollowUpItem;
 import cn.qingchengfit.saasbase.student.network.body.QcStudentBeanWithFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.utils.DateUtils;
 

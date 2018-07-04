@@ -2,7 +2,7 @@ package cn.qingchengfit.shop.ui.product.bottom;
 
 import android.arch.lifecycle.LiveData;
 import android.databinding.ObservableField;
-import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
+import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.category.CategoryChooseItem;

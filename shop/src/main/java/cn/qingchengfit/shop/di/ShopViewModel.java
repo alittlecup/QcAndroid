@@ -1,7 +1,7 @@
 package cn.qingchengfit.shop.di;
 
 import android.arch.lifecycle.ViewModel;
-import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
+import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.repository.ShopRepositoryImpl;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;

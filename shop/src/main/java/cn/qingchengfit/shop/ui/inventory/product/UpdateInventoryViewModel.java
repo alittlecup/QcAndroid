@@ -9,7 +9,7 @@ import android.databinding.ObservableInt;
 import android.databinding.ObservableLong;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
+import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.vo.Good;

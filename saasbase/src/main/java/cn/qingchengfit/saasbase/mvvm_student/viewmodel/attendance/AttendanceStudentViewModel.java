@@ -9,7 +9,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;

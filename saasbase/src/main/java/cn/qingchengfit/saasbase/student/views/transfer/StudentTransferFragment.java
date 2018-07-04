@@ -14,10 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;

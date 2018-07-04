@@ -22,8 +22,8 @@ import cn.qingchengfit.saasbase.bill.filter.ItemFilterTime;
 import cn.qingchengfit.saasbase.bill.filter.model.Content;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
-import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saasbase.mvvm_student.items.ItemFilterRecommend;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 

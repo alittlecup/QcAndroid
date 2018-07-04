@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.ViewStudentFilterBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.followup.FollowUpFilterViewModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 
 public class FollowUpFilterEndView extends
-    StudentBaseFragment<ViewStudentFilterBinding, FollowUpFilterViewModel> {
+    SaasBindingFragment<ViewStudentFilterBinding, FollowUpFilterViewModel> {
     CommonFlexAdapter adapter;
 
     @Override

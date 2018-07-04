@@ -2,8 +2,8 @@ package cn.qingchengfit.saasbase.mvvm_student.di;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
-import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
+import cn.qingchengfit.saascommon.di.ViewModelKey;
+import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespository;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRespositoryImpl;

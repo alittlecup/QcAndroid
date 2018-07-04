@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.databinding.PageFollowupStudentBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.followup.FollowUpStudentViewModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Created by huangbaole on 2017/11/20.
  */
 @Leaf(module = "student", path = "/followup/student")
-public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudentBinding, FollowUpStudentViewModel>
+public class FollowUpStudentPage extends SaasBindingFragment<PageFollowupStudentBinding, FollowUpStudentViewModel>
         implements FlexibleAdapter.OnItemClickListener {
     @Override
     protected void subscribeUI() {

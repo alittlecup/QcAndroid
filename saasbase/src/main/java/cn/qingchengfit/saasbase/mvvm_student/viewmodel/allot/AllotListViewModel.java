@@ -16,9 +16,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.student.items.AllotStaffItem;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponse;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 
 /**
  * Created by huangbaole on 2017/11/21.

@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
@@ -44,7 +46,24 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
       //QcResponsePayWx qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      onWxPay(payBusinessResponse.get("url").getAsString());
+      //onWxPay(payBusinessResponse.get("url").getAsString());
+      if (payMethod() == 12) {
+        QC.obtainBuilder("checkout")
+            .setActionName("/checkout/pay")
+            .setContext(getContext())
+            .addParam("type", "微信")
+            .addParam("count", "100")
+            .build()
+            .callAsync((qc, result) -> Log.d("TAG", "onBusinessOrder: "));
+      }else if(payMethod()==13){
+        QC.obtainBuilder("checkout")
+            .addParam("type", "支付宝")
+            .setActionName("/checkout/pay")
+            .setContext(getContext())
+            .addParam("count", "100")
+            .build()
+            .callAsync((qc, result) -> Log.d("TAG", "onBusinessOrder: "));
+      }
     }
   }
 
@@ -54,13 +73,13 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK){
-      switch (requestCode){
+    if (resultCode == Activity.RESULT_OK) {
+      switch (requestCode) {
         case 404:
-            buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
+          buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
           break;
-          }
-      }else{
+      }
+    } else {
       ToastUtils.show("充值失败");
     }
   }
@@ -93,7 +112,8 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
         .content(getString(R.string.caclu_score_hint, s))
         .cancelable(false)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             onSuccess();
           }
         })

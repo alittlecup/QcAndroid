@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageModifyDetailBinding;
 import cn.qingchengfit.utils.CmStringUtils;

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageAttendanceRankBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.rank.AttendanceRankViewModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 @Leaf(module = "student", path = "/attendance/rank")
 public class AttendanceRankPage extends
-    StudentBaseFragment<PageAttendanceRankBinding, AttendanceRankViewModel> {
+    SaasBindingFragment<PageAttendanceRankBinding, AttendanceRankViewModel> {
     private AttendanceRankView rankFilterView;
 
     @Override

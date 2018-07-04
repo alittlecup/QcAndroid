@@ -20,6 +20,7 @@ import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.gymconfig.GymConfigAcitivty;
 import cn.qingchengfit.sass.course.StaffCourseActivity;
 import cn.qingchengfit.staffkit.card.StaffCardActivity;
@@ -112,6 +113,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     //    TinkerPatch.with().fetchPatchUpdate(true);
     //}
     WeexDelegate.initWXSDKEngine(this);
+    QC.init(this);
+    QC.enableDebug(true);
+    QC.enableVerboseLog(true);
     try {
       FIR.init(this);
     } catch (Exception e) {

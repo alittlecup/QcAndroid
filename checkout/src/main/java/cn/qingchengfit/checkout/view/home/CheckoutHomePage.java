@@ -4,15 +4,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutHomeBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 
 @Leaf(module = "checkout", path = "/checkout/home") public class CheckoutHomePage
-    extends StudentBaseFragment<CkPageCheckoutHomeBinding, CheckoutHomeViewModel> {
+    extends CheckoutCounterFragment<CkPageCheckoutHomeBinding, CheckoutHomeViewModel> {
   @Override protected void subscribeUI() {
 
   }
@@ -28,9 +28,10 @@ import com.anbillon.flabellum.annotations.Leaf;
 
   private void initListener() {
     mBinding.flNewCard.setOnClickListener(view -> {
-
+      routeTo("card", "/cardtpl/nonew/", null);
     });
     mBinding.flAppendCard.setOnClickListener(view -> {
+      routeTo("card", "/balance/list/", null);
 
     });
     mBinding.flCheckout.setOnClickListener(view -> {

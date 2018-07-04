@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.cards.views.NewCardChargeFragment;
 import cn.qingchengfit.staffkit.R;
@@ -49,7 +50,20 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
       if (payBusinessResponse.get("url") == null){
         return;
       }
-      onWxPay(payBusinessResponse.get("url").getAsString());
+      //onWxPay(payBusinessResponse.get("url").getAsString());
+      if (payMethod() == 12) {
+        QC.obtainBuilder("checkout")
+            .addParam("type", "微信")
+            .addParam("count", "100")
+            .build()
+            .callAsync((qc, result) -> ToastUtils.show("success"));
+      }else if(payMethod()==13){
+        QC.obtainBuilder("checkout")
+            .addParam("type", "支付宝")
+            .addParam("count", "100")
+            .build()
+            .callAsync((qc, result) -> ToastUtils.show("success"));
+      }
     }
   }
 

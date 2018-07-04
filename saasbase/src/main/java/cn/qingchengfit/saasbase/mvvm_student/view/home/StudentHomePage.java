@@ -13,7 +13,7 @@ import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageStudentHomeBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentHomeViewModel;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
@@ -29,7 +29,7 @@ import java.util.List;
  * Created by huangbaole on 2017/12/5.
  */
 @Leaf(module = "student", path = "/home/student") public class StudentHomePage
-    extends StudentBaseFragment<PageStudentHomeBinding, StudentHomeViewModel>
+    extends SaasBindingFragment<PageStudentHomeBinding, StudentHomeViewModel>
     implements FlexibleAdapter.OnItemClickListener {
 
   CommonFlexAdapter adapter;

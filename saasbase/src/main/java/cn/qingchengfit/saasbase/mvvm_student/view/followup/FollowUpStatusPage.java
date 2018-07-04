@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageFollowupStatusBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.followup.FollowUpFilterViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.followup.FollowUpStatusViewModel;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 @Leaf(module = "student", path = "/followup/status")
 public class FollowUpStatusPage extends
-    StudentBaseFragment<PageFollowupStatusBinding,FollowUpStatusViewModel> {
+    SaasBindingFragment<PageFollowupStatusBinding,FollowUpStatusViewModel> {
 
     @Need
     String title;

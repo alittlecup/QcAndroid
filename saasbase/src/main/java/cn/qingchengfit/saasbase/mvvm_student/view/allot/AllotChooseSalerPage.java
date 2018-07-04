@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.databinding.PageAllotChooseSalerBinding;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotChooseViewModel;
 import cn.qingchengfit.saasbase.student.other.BaseGirdListFragment;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.utils.DialogUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -21,7 +21,7 @@ import java.util.List;
  * Created by huangbaole on 2017/12/1.
  */
 @Leaf(module = "student", path = "/allot/choosesaler")
-public class AllotChooseSalerPage extends StudentBaseFragment<PageAllotChooseSalerBinding, AllotChooseViewModel>
+public class AllotChooseSalerPage extends SaasBindingFragment<PageAllotChooseSalerBinding, AllotChooseViewModel>
         implements FlexibleAdapter.OnItemClickListener {
     @Need
     String title;

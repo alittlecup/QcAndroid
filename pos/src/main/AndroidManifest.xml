@@ -142,7 +142,7 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity">
+    <activity android:name="cn.qingchengfit.saasbase.common.views.SaasCommActivity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
 

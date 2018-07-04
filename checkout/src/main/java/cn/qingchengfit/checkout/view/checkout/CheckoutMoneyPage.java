@@ -6,17 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutMoneyBinding;
 import cn.qingchengfit.checkout.view.pay.CheckoutPayPageParams;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 
 @Leaf(module = "checkout", path = "/checkout/money") public class CheckoutMoneyPage
-    extends StudentBaseFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
+    extends CheckoutCounterFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
     implements View.OnClickListener {
   @Override protected void subscribeUI() {
 
@@ -57,57 +57,51 @@ import com.anbillon.flabellum.annotations.Leaf;
   @Override public void onClick(View v) {
     String s = mBinding.edContent.getText().toString();
 
-    switch (v.getId()) {
-      case R.id.tv_0:
-      case R.id.tv_1:
-      case R.id.tv_2:
-      case R.id.tv_3:
-      case R.id.tv_4:
-      case R.id.tv_5:
-      case R.id.tv_6:
-      case R.id.tv_7:
-      case R.id.tv_8:
-      case R.id.tv_9:
-        if (v instanceof TextView) {
-          if (!TextUtils.isEmpty(s)) {
-            if (s.contains(".") && s.indexOf(".") < s.length() - 2) {
-              return;
-            }
-          }
-          mBinding.edContent.append(((TextView) v).getText());
-        }
-        break;
-      case R.id.tv_c:
-        mBinding.edContent.setText("");
-        break;
-      case R.id.img_delete:
+    int i = v.getId();
+    if (i == R.id.tv_0
+        || i == R.id.tv_1
+        || i == R.id.tv_2
+        || i == R.id.tv_3
+        || i == R.id.tv_4
+        || i == R.id.tv_5
+        || i == R.id.tv_6
+        || i == R.id.tv_7
+        || i == R.id.tv_8
+        || i == R.id.tv_9) {
+      if (v instanceof TextView) {
         if (!TextUtils.isEmpty(s)) {
-          if (s.length() == 1) {
-            mBinding.edContent.setText("");
-          } else {
-            mBinding.edContent.setText(s.subSequence(0, s.length() - 1));
+          if (s.contains(".") && s.indexOf(".") < s.length() - 2) {
+            return;
           }
         }
-        break;
-      case R.id.tv_point:
-        if (!TextUtils.isEmpty(s)) {
-          if (!s.contains(".")) {
-            mBinding.edContent.append(".");
-          }
+        mBinding.edContent.append(((TextView) v).getText());
+      }
+    } else if (i == R.id.tv_c) {
+      mBinding.edContent.setText("");
+    } else if (i == R.id.img_delete) {
+      if (!TextUtils.isEmpty(s)) {
+        if (s.length() == 1) {
+          mBinding.edContent.setText("");
+        } else {
+          mBinding.edContent.setText(s.subSequence(0, s.length() - 1));
         }
-        break;
-      case R.id.fl_alipay:
-        if (checkMoney(s)) {
-          routeTo("checkout/pay",
-              new CheckoutPayPageParams().type("支付宝").money(Float.valueOf(s)).build());
+      }
+    } else if (i == R.id.tv_point) {
+      if (!TextUtils.isEmpty(s)) {
+        if (!s.contains(".")) {
+          mBinding.edContent.append(".");
         }
-        break;
-      case R.id.fl_wxpay:
-        if (checkMoney(s)) {
-          routeTo("checkout/pay",
-              new CheckoutPayPageParams().type("微信").money(Float.valueOf(s)).build());
-        }
-        break;
+      }
+    } else if (i == R.id.fl_alipay) {
+      if (checkMoney(s)) {
+        routeTo("checkout/pay",
+            new CheckoutPayPageParams().type("支付宝").money(Float.valueOf(s)).build());
+      }
+    } else if (i == R.id.fl_wxpay) {
+      if (checkMoney(s)) {
+        routeTo("checkout/pay",
+            new CheckoutPayPageParams().type("微信").money(Float.valueOf(s)).build());
+      }
     }
   }
 

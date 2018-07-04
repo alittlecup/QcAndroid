@@ -97,7 +97,7 @@
 
     <!-- Common 页面 存储一些通用 无业务页面-->
     <activity
-        android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity"
+        android:name="cn.qingchengfit.saasbase.common.views.SaasCommActivity"
         android:screenOrientation="portrait">
 
       <intent-filter>

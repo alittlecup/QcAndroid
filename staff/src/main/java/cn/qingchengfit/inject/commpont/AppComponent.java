@@ -2,6 +2,7 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
@@ -37,7 +38,7 @@ import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindLoginActivity;
-import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
+import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
 import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
@@ -306,9 +307,9 @@ import dagger.multibindings.IntoMap;
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class,
     AppComponent.ContainterModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
     BindStaffCourseActivity.class, BindStaffCardActivity.class, BindImportExportActivity.class,
-    BindStaffStaffActivity.class, BindGymConfigAcitivty.class, BindSaasCommonActivity.class,
+    BindStaffStaffActivity.class, BindGymConfigAcitivty.class, BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
-    BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
+    BindStudentActivity.class, WeexModule.class, ViewModelModule.class,BindCheckoutCounterActivity.class,
     BindShopActivity.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,

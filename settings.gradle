@@ -1,6 +1,6 @@
-include ':saasbase', ':checkout'
+include ':saasbase', ':checkout', ':router',':shop',':staff', ':saascommon'
+
 //    ':trainer',
     //    ':atest',
-//    ':staff',
-//    ':shop'
+
 
