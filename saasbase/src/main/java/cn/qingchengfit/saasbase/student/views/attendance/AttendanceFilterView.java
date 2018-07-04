@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
 import cn.qingchengfit.utils.DateUtils;

@@ -2,8 +2,8 @@ package cn.qingchengfit.saasbase.mvvm_student.view.followup;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
-import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import javax.inject.Inject;
 
 public class IncreaseMemberSortViewModel extends BaseViewModel {

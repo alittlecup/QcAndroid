@@ -14,7 +14,6 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.PageAllotStaffDetailBinding;
 import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
-import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.allot.AllotStaffDetailViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;

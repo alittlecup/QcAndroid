@@ -20,7 +20,6 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentAllotListBinding;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.student.items.AllotStaffItem;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponse;
@@ -37,8 +36,6 @@ public class AllotSellerFragment extends SaasBaseFragment
     FragmentAllotListBinding binding;
 
     AllotListFragment listFragment;
-    @Inject
-    SaasbaseRouterCenter saasbaseRouterCenter;
     @Inject
     IStudentModel studentModel;
     @Inject

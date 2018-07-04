@@ -5,19 +5,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.student.items.FollowUpItem;
 import cn.qingchengfit.saasbase.student.network.body.QcStudentBeanWithFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
+import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
+import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 
-public class IncreaseMemberViewModel extends FlexibleViewModel<StudentListWrappeForFollow, FollowUpItem, Map<String, ?>> {
+public class IncreaseMemberViewModel extends
+    FlexibleViewModel<StudentListWrappeForFollow, FollowUpItem, Map<String, ?>> {
 
 
   @Inject LoginStatus loginStatus;
