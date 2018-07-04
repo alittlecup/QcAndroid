@@ -17,18 +17,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
@@ -121,7 +116,6 @@ import rx.functions.Action1;
 	LinearLayout loInputMoney;
 	TextView tvCardAppend;
 
-	@Inject GymWrapper gymWrapper;
   @Inject public CardBuyPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject IPermissionModel permissionModel;
@@ -469,7 +463,7 @@ import rx.functions.Action1;
   }
 
  public void onSelectPayMethod() {
-    BottomPayDialog f = BottomPayDialog.newInstance(presenter.hasEditPermission(), selectPos,gymWrapper.isPro());
+    BottomPayDialog f = BottomPayDialog.newInstance(presenter.hasEditPermission(), selectPos);
     f.show(getFragmentManager(), "");
   }
 

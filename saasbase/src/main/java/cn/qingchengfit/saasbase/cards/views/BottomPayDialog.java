@@ -121,11 +121,11 @@ public class BottomPayDialog extends BaseDialogFragment
 
   private void initView() {
     itemList.add(new SimpleTextItemItem("在线支付", Gravity.CENTER_VERTICAL));
-    //itemList.add(new ItemPayMethod(new PayMethod(7, getResources().getString(R.string.wechat_scan), R.drawable.ic_wechat_scan)));
-    //itemList.add(new ItemPayMethod(
-    //    new PayMethod(6, getResources().getString(R.string.wechat_pay), R.drawable.ic_wechat)));
-    itemList.add(new ItemPayMethod(new PayMethod(12, "微信收款", R.drawable.vd_payment_wechat, isPro)));
-    itemList.add(new ItemPayMethod(new PayMethod(13, "支付宝收款", R.drawable.vd_payment_alipay, isPro)));
+    itemList.add(new ItemPayMethod(new PayMethod(7, getResources().getString(R.string.wechat_scan), R.drawable.ic_wechat_scan)));
+    itemList.add(new ItemPayMethod(
+        new PayMethod(6, getResources().getString(R.string.wechat_pay), R.drawable.ic_wechat)));
+    //itemList.add(new ItemPayMethod(new PayMethod(12, "微信收款", R.drawable.vd_payment_wechat, isPro)));
+    //itemList.add(new ItemPayMethod(new PayMethod(13, "支付宝收款", R.drawable.vd_payment_alipay, isPro)));
     if (hasEditPermission) {
       itemList.add(new SimpleTextItemItem("线下支付", Gravity.CENTER_VERTICAL));
       itemList.add(new ItemPayMethod(
