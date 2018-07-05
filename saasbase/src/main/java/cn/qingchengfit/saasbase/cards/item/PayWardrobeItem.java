@@ -8,7 +8,7 @@ import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.bean.Card;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;

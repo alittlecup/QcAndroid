@@ -55,9 +55,7 @@
   <string name="hint_login_web">请登录［网页端］管理工作人员身份权限</string>
 
   <!--工具类-->
-  <string name="unit_yuan">元</string>
-  <string name="unit_time">次</string>
-  <string name="unit_day">天</string>
+
   <string formatted="false" name="pay_money">￥%s</string>
 
   <!--账单-->

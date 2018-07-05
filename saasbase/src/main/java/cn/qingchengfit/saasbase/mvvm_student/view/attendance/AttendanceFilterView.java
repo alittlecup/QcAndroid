@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.AttendanceStudentViewModel;
 import java.util.Date;
 
-import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
+import cn.qingchengfit.saascommon.filter.FilterListStringFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;

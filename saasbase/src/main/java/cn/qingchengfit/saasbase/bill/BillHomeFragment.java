@@ -24,7 +24,6 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.bill.beans.BillTotal;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.event.BillFilterEvent;
-import cn.qingchengfit.saasbase.bill.filter.BillFilterFragment;
 import cn.qingchengfit.saasbase.bill.items.ItemBill;
 import cn.qingchengfit.saasbase.bill.items.ItemBillAccount;
 import cn.qingchengfit.saasbase.bill.items.ItemDataEmpty;

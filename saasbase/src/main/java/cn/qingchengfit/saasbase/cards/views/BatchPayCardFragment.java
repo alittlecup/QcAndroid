@@ -22,7 +22,7 @@ import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardHeaderItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.utils.ToastUtils;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="student_status">
+    <item >新注册</item>
+    <item >已接洽</item>
+    <item >会员</item>
+  </string-array>
+
+</resources>

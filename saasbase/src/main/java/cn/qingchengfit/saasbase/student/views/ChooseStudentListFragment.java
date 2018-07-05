@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.student.items.ChosenStudentItem;
-import cn.qingchengfit.saasbase.student.items.StudentItem;
+import cn.qingchengfit.saascommon.item.StudentItem;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.flexibleadapter.items.IHeader;

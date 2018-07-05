@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.student.presenters.home;
 
 import android.text.TextUtils;
-import android.view.View;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,22 +16,11 @@ import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.DistrictEntity;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saas.response.GymWrap;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
-import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.GymUtils;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/10/26.

@@ -6,7 +6,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.saasbase.common.mvvm.LiveDataReactiveStreams;
 import cn.qingchengfit.saasbase.repository.ICardModel;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;

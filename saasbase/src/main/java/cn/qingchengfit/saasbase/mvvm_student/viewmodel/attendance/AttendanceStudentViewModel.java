@@ -10,11 +10,11 @@ import android.databinding.ObservableInt;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
+//import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
+import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import com.github.mikephil.charting.data.LineData;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
   @Inject IStudentModel studentModel;
   @Inject GymWrapper gymWrapper;
 
-  @Inject StudentRepository respository;
+  //@Inject StudentRepository respository;
 
   @Inject LoginStatus loginStatus;
 
@@ -58,7 +58,8 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("start", DateUtils.minusDay(new Date(), offSetDay));
     params.put("end", DateUtils.getStringToday());
-    return respository.qcGetAttendanceChart(loginStatus.staff_id(), params);
+    return null;
+    //return respository.qcGetAttendanceChart(loginStatus.staff_id(), params);
   }
 
   public MutableLiveData<String> getToUri() {
@@ -86,7 +87,8 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
   }
 
   public LineData getData() {
-    return StudentBusinessUtils.transformBean2DataByType(datas.get(), offDay.get());
+    return  null;
+    //return StudentBusinessUtils.transformBean2DataByType(datas.get(), offDay.get());
   }
 
   public LiveData<AttendanceCharDataBean> getResponse() {

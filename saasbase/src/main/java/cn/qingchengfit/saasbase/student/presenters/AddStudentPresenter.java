@@ -10,7 +10,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.student.network.body.EditStudentBody;
-import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
+import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import java.util.List;
 import javax.inject.Inject;

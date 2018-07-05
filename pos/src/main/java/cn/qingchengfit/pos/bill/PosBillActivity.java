@@ -5,7 +5,7 @@ import cn.qingchengfit.pos.bill.view.PosBillDetialForDoneFragment;
 import cn.qingchengfit.pos.bill.view.PosPayRequestListFragment;
 import cn.qingchengfit.saasbase.bill.BillActivity;
 import cn.qingchengfit.saasbase.bill.BillHomeFragment;
-import cn.qingchengfit.saasbase.bill.filter.BillFilterFragment;
+import cn.qingchengfit.saascommon.filter.BillFilterFragment;
 import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 

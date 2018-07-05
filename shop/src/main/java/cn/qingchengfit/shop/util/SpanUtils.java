@@ -1147,7 +1147,7 @@ public final class SpanUtils {
     }
   }
 
-  class CustomImageSpan extends CustomDynamicDrawableSpan {
+ public class CustomImageSpan extends CustomDynamicDrawableSpan {
     private Drawable mDrawable;
     private Uri      mContentUri;
     private int      mResourceId;

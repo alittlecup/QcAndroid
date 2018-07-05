@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
+//import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.student.bean.Absentce;
 import cn.qingchengfit.saasbase.student.items.AttendanceStudentItem;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
@@ -49,7 +49,7 @@ public class AttendanceAbsentViewModel extends FlexibleViewModel<List<Absentce>,
     @Inject
     GymWrapper gymWrapper;
 
-    @Inject StudentRepository respository;
+    //@Inject StudentRepository respository;
 
     @Inject
     LoginStatus loginStatus;
@@ -67,11 +67,12 @@ public class AttendanceAbsentViewModel extends FlexibleViewModel<List<Absentce>,
         HashMap<String, Object> params = gymWrapper.getParams();
         params = handleData(params, pair.first, pair.second);
         params.put("show_all", 1);
-        return Transformations.map(respository.qcGetUsersAbsences(loginStatus.staff_id(), params), input -> {
-            // REFACTOR: 2017/11/17 在这里修改UI是有风险的
-            count.set(input.total_count);
-            return input.attendances;
-        });
+        //return Transformations.map(respository.qcGetUsersAbsences(loginStatus.staff_id(), params), input -> {
+        //    // REFACTOR: 2017/11/17 在这里修改UI是有风险的
+        //    count.set(input.total_count);
+        //    return input.attendances;
+        //});
+      return null;
 
     }
 

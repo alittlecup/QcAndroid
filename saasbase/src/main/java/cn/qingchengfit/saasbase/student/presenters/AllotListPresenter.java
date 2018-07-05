@@ -10,7 +10,7 @@
 //import cn.qingchengfit.di.model.GymWrapper;
 //import cn.qingchengfit.network.response.QcDataResponse;
 //import cn.qingchengfit.saasbase.repository.IStudentModel;
-//import cn.qingchengfit.saasbase.student.network.body.AllotDataResponse;
+//import cn.qingchengfit.student.bean.AllotDataResponse;
 //import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 //import rx.android.schedulers.AndroidSchedulers;
 //import rx.functions.Action1;

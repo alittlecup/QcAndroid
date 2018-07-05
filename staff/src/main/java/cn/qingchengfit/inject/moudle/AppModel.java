@@ -1,6 +1,7 @@
 package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
+import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.CardModel;
@@ -30,6 +31,7 @@ import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.R;
@@ -43,6 +45,7 @@ import cn.qingchengfit.staffkit.staff.StaffModel;
 import cn.qingchengfit.staffkit.student.network.StudentModel;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import java.util.List;

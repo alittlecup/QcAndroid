@@ -5,6 +5,7 @@ import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.annotation.AnimRes;
 import android.support.annotation.AnimatorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
@@ -26,7 +27,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
     private int mIndicatorMargin = -1;
     private int mIndicatorWidth = -1;
     private int mIndicatorHeight = -1;
-    @AnimatorRes private int mAnimatorResId = R.anim.scale_with_alpha;
+    @AnimatorRes private int mAnimatorResId = R.animator.scale_with_alpha;
     private int mAnimatorReverseResId = 0;
     public int mIndicatorBackgroundResId = R.drawable.white_radius;
     public int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
@@ -100,7 +101,6 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
         mIndicatorMargin = (mIndicatorMargin < 0) ? dip2px(DEFAULT_INDICATOR_WIDTH) : mIndicatorMargin;
 
         //        mAnimatorResId = (mAnimatorResId == 0) ? R.anim.scale_with_alpha : mAnimatorResId;
-        mAnimationOut = AnimatorInflater.loadAnimator(context, mAnimatorResId);
         if (mAnimatorReverseResId == 0) {
             mAnimationIn = AnimatorInflater.loadAnimator(context, mAnimatorResId);
             mAnimationIn.setInterpolator(new ReverseInterpolator());
@@ -204,7 +204,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
 
         View Indicator = new View(getContext());
         if (islast) {
-            Indicator.setBackgroundResource(Color.TRANSPARENT);
+            Indicator.setBackgroundColor(Color.TRANSPARENT);
         } else {
             Indicator.setBackgroundResource(backgroundDrawableId);
         }

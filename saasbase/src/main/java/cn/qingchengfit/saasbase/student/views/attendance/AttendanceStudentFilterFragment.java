@@ -11,7 +11,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.student.views.filtertime.FilterCustomFragment;
 import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
-import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
+import cn.qingchengfit.saascommon.filter.FilterListStringFragment;
 import java.util.ArrayList;
 import java.util.List;
 import rx.functions.Action3;

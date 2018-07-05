@@ -1,2 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.qingchengfit.student"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.qingchengfit.student">
+  <application
+      android:name="debug.MyApp"
+      android:allowBackup="false"
+      android:theme="@style/AppBaseTheme"
+      tools:replace="allowBackup">
+
+    <activity android:name="debug.SplashActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>

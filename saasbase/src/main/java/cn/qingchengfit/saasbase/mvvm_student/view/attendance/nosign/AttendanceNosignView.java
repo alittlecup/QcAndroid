@@ -8,7 +8,7 @@ import android.util.Pair;
 
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.saasbase.student.views.attendance.AttendanceNosingTimeFilterFragment;
-import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
+import cn.qingchengfit.saascommon.filter.FilterListStringFragment;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 

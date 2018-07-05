@@ -3,7 +3,7 @@ package cn.qingchengfit.saasbase.staff.common;
 import android.content.Intent;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;

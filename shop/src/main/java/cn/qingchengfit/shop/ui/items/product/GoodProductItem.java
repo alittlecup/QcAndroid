@@ -6,10 +6,10 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCategoryBinding;
-import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Channel;
 import cn.qingchengfit.shop.vo.Good;
@@ -24,7 +24,7 @@ import java.util.List;
  * Created by huangbaole on 2018/1/29.
  */
 
-public class GoodProductItem
+public class  GoodProductItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemCategoryBinding>> {
   public static final int SHOW_CARD_PRICE = 2;
   private boolean isExpend = false;

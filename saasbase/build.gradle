@@ -10,6 +10,7 @@ android {
   dataBinding {
     enabled true
   }
+
   defaultConfig {
     minSdkVersion 16
     targetSdkVersion 27
@@ -18,9 +19,9 @@ android {
     vectorDrawables.useSupportLibrary true
     javaCompileOptions {
       annotationProcessorOptions {
-        arguments = [fragmentArgsLib               : 'true',
+        arguments = [fragmentArgsLib: 'true',
                      fragmentArgsSupportAnnotations: 'true',
-                     packageName                   : 'cn.qingchengfit.saasbase',]
+                     packageName: 'cn.qingchengfit.saasbase',]
       }
     }
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -35,6 +36,7 @@ android {
       minifyEnabled false
       shrinkResources false
       debuggable true
+
       debug {
         ext.enableCrashlytics = false
       }
@@ -57,10 +59,15 @@ android {
   }
   sourceSets {
     main {
-      res.srcDirs = ['src/main/res/layout/student',
-                     'src/main/res']
+      res.srcDirs = ['src/main/res']
     }
   }
+  android {
+    lintOptions {
+      abortOnError false
+    }
+  }
+
 }
 
 dependencies {
@@ -76,7 +83,6 @@ dependencies {
   }
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-  api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
   api 'android.arch.lifecycle:reactivestreams:1.0.0'
   api 'io.reactivex:rxjava-reactive-streams:1.2.1'

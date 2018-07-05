@@ -3,7 +3,7 @@ package cn.qingchengfit.saasbase.mvvm_student.usercase;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
+//import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,20 +13,20 @@ import javax.inject.Singleton;
 
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.saasbase.bill.filter.model.Content;
-import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
-import cn.qingchengfit.saasbase.bill.filter.model.UserExtra;
+import cn.qingchengfit.saascommon.filter.model.Content;
+import cn.qingchengfit.saascommon.filter.model.FilterModel;
+import cn.qingchengfit.saascommon.filter.model.UserExtra;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
-import cn.qingchengfit.saasbase.student.bean.SourceBean;
-import cn.qingchengfit.saasbase.student.bean.SourceBeans;
+//import cn.qingchengfit.saasbase.student.bean.SourceBean;
+//import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 
 /**
  * Created by huangbaole on 2017/12/11.
  */
 @Singleton
 public class FollowUpFilterUserCase {
-    @Inject StudentRepository studentRespository;
+    //@Inject StudentRepository studentRespository;
 
     public LiveData<List<FilterModel>> getFilterModel() {
         return filterModel;
@@ -39,64 +39,64 @@ public class FollowUpFilterUserCase {
 
     }
 
-    public void excute(String id, HashMap<String, Object> params) {
-        //取本地数据
-        LiveData<List<FilterModel>> listLiveData = studentRespository.qcGetFilterModelFromLocal();
-        //取服务端的推荐人列表(不需要额外参数)
-        LiveData<SalerUserListWrap> salerUserListWrapLiveData = studentRespository.qcGetTrackStudentsRecommends(id, params);
-
-        LiveData<SourceBeans> sourceBeansLiveData = studentRespository.qcGetTrackStudentsOrigins(id, params);
-
-        LiveData<SalerListWrap> salerListWrapLiveData = studentRespository.qcGetTrackStudentsFilterSalers(id, params);
-
-        filterModel.addSource(salerUserListWrapLiveData, salerUserListWrap -> {
-            filterModel.removeSource(salerUserListWrapLiveData);
-            List<FilterModel> filterModels = new ArrayList<>();
-            List<FilterModel> value = listLiveData.getValue();
-            SourceBeans value1 = sourceBeansLiveData.getValue();
-            SalerListWrap value2 = salerListWrapLiveData.getValue();
-            filterModels.addAll(value);
-            filterModels.add(salerusersToFilterModel(value2));
-            filterModels.add(salerusersToFilterModel(salerUserListWrap));
-            filterModels.add(sourceBeanToFilterModel(value1));
-            filterModel.setValue(filterModels);
-
-        });
-        filterModel.addSource(sourceBeansLiveData, sourceBeans -> {
-            filterModel.removeSource(sourceBeansLiveData);
-            List<FilterModel> filterModels = new ArrayList<>();
-            List<FilterModel> value = listLiveData.getValue();
-            SalerUserListWrap value1 = salerUserListWrapLiveData.getValue();
-            SalerListWrap value2 = salerListWrapLiveData.getValue();
-            filterModels.addAll(value);
-            filterModels.add(salerusersToFilterModel(value2));
-            filterModels.add(salerusersToFilterModel(value1));
-            filterModels.add(sourceBeanToFilterModel(sourceBeans));
-            filterModel.setValue(filterModels);
-
-        });
-
-        filterModel.addSource(salerListWrapLiveData, salerListWrap -> {
-            filterModel.removeSource(salerListWrapLiveData);
-            List<FilterModel> filterModels = new ArrayList<>();
-            List<FilterModel> value = listLiveData.getValue();
-            SalerUserListWrap value1 = salerUserListWrapLiveData.getValue();
-            SourceBeans value2 = sourceBeansLiveData.getValue();
-
-            filterModels.addAll(value);
-
-            filterModels.add(salerusersToFilterModel(salerListWrap));
-
-            filterModels.add(salerusersToFilterModel(value1));
-
-            filterModels.add(sourceBeanToFilterModel(value2));
-
-            filterModel.setValue(filterModels);
-
-        });
-
-        filterModel.setValue(listLiveData.getValue());
-    }
+    //public void excute(String id, HashMap<String, Object> params) {
+    //    //取本地数据
+    //    LiveData<List<FilterModel>> listLiveData = studentRespository.qcGetFilterModelFromLocal();
+    //    //取服务端的推荐人列表(不需要额外参数)
+    //    LiveData<SalerUserListWrap> salerUserListWrapLiveData = studentRespository.qcGetTrackStudentsRecommends(id, params);
+    //
+    //    LiveData<SourceBeans> sourceBeansLiveData = studentRespository.qcGetTrackStudentsOrigins(id, params);
+    //
+    //    LiveData<SalerListWrap> salerListWrapLiveData = studentRespository.qcGetTrackStudentsFilterSalers(id, params);
+    //
+    //    filterModel.addSource(salerUserListWrapLiveData, salerUserListWrap -> {
+    //        filterModel.removeSource(salerUserListWrapLiveData);
+    //        List<FilterModel> filterModels = new ArrayList<>();
+    //        List<FilterModel> value = listLiveData.getValue();
+    //        SourceBeans value1 = sourceBeansLiveData.getValue();
+    //        SalerListWrap value2 = salerListWrapLiveData.getValue();
+    //        filterModels.addAll(value);
+    //        filterModels.add(salerusersToFilterModel(value2));
+    //        filterModels.add(salerusersToFilterModel(salerUserListWrap));
+    //        filterModels.add(sourceBeanToFilterModel(value1));
+    //        filterModel.setValue(filterModels);
+    //
+    //    });
+    //    filterModel.addSource(sourceBeansLiveData, sourceBeans -> {
+    //        filterModel.removeSource(sourceBeansLiveData);
+    //        List<FilterModel> filterModels = new ArrayList<>();
+    //        List<FilterModel> value = listLiveData.getValue();
+    //        SalerUserListWrap value1 = salerUserListWrapLiveData.getValue();
+    //        SalerListWrap value2 = salerListWrapLiveData.getValue();
+    //        filterModels.addAll(value);
+    //        filterModels.add(salerusersToFilterModel(value2));
+    //        filterModels.add(salerusersToFilterModel(value1));
+    //        filterModels.add(sourceBeanToFilterModel(sourceBeans));
+    //        filterModel.setValue(filterModels);
+    //
+    //    });
+    //
+    //    filterModel.addSource(salerListWrapLiveData, salerListWrap -> {
+    //        filterModel.removeSource(salerListWrapLiveData);
+    //        List<FilterModel> filterModels = new ArrayList<>();
+    //        List<FilterModel> value = listLiveData.getValue();
+    //        SalerUserListWrap value1 = salerUserListWrapLiveData.getValue();
+    //        SourceBeans value2 = sourceBeansLiveData.getValue();
+    //
+    //        filterModels.addAll(value);
+    //
+    //        filterModels.add(salerusersToFilterModel(salerListWrap));
+    //
+    //        filterModels.add(salerusersToFilterModel(value1));
+    //
+    //        filterModels.add(sourceBeanToFilterModel(value2));
+    //
+    //        filterModel.setValue(filterModels);
+    //
+    //    });
+    //
+    //    filterModel.setValue(listLiveData.getValue());
+    //}
 
     private FilterModel salerusersToFilterModel(SalerListWrap bean) {
         FilterModel filterModel = new FilterModel();
@@ -137,29 +137,29 @@ public class FollowUpFilterUserCase {
         return filterModel;
     }
 
-    private FilterModel sourceBeanToFilterModel(SourceBeans beans) {
-        FilterModel filterModel = new FilterModel();
-        filterModel.type = 5;
-        filterModel.name = "来源";
-        filterModel.key = "origin_id";
-        List<Content> contents = new ArrayList<>();
-        filterModel.content = contents;
-        if (beans == null || beans.origins == null || beans.origins.isEmpty()) return filterModel;
-
-        for (SourceBean bean : beans.origins) {
-            Content content = new Content();
-            content.name = bean.name;
-            User user = new User();
-            UserExtra userExtra = new UserExtra();
-            user.username = bean.name;
-            user.id = bean.id;
-            userExtra.user = user;
-            content.extra = userExtra;
-            contents.add(content);
-        }
-
-        return filterModel;
-    }
+    //private FilterModel sourceBeanToFilterModel(SourceBeans beans) {
+    //    FilterModel filterModel = new FilterModel();
+    //    filterModel.type = 5;
+    //    filterModel.name = "来源";
+    //    filterModel.key = "origin_id";
+    //    List<Content> contents = new ArrayList<>();
+    //    filterModel.content = contents;
+    //    if (beans == null || beans.origins == null || beans.origins.isEmpty()) return filterModel;
+    //
+    //    for (SourceBean bean : beans.origins) {
+    //        Content content = new Content();
+    //        content.name = bean.name;
+    //        User user = new User();
+    //        UserExtra userExtra = new UserExtra();
+    //        user.username = bean.name;
+    //        user.id = bean.id;
+    //        userExtra.user = user;
+    //        content.extra = userExtra;
+    //        contents.add(content);
+    //    }
+    //
+    //    return filterModel;
+    //}
 
     private FilterModel salerusersToFilterModel(SalerUserListWrap bean) {
         FilterModel filterModel = new FilterModel();

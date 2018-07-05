@@ -15,7 +15,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.FragmentSaasAttendanceHomeBinding;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.presenters.attendance.StudentAttendancePresenter;
-import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
+import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -83,8 +83,8 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
 
     @Override
     public void onAbsence(AttendanceCharDataBean statistic) {
-        binding.lineChartDate.setData(StudentBusinessUtils.transformBean2Data(statistic.datas, offSetDay
-                , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")));
+        //binding.lineChartDate.setData(StudentBusinessUtils.transformBean2Data(statistic.datas, offSetDay
+        //        , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")));
     }
 
     public void toStudentAbsentce(View v) {

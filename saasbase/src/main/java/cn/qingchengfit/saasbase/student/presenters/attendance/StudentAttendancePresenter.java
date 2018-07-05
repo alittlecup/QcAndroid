@@ -1,7 +1,5 @@
 package cn.qingchengfit.saasbase.student.presenters.attendance;
 
-import android.text.TextUtils;
-
 import java.util.Date;
 import java.util.HashMap;
 
@@ -11,16 +9,11 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.DateUtils;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/11/13.

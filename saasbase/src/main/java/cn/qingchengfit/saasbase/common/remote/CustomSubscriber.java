@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.common.remote;
 
+import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.utils.ToastUtils;
 import rx.Subscriber;
 

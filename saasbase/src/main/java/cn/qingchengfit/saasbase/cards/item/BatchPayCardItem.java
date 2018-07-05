@@ -11,8 +11,8 @@ import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
-import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;

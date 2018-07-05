@@ -2,7 +2,7 @@ package cn.qingchengfit.model.responese;
 
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 
 /**
  * //  ┏┓　　　┏┓

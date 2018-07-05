@@ -2,7 +2,6 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
@@ -309,7 +308,7 @@ import dagger.multibindings.IntoMap;
     BindStaffCourseActivity.class, BindStaffCardActivity.class, BindImportExportActivity.class,
     BindStaffStaffActivity.class, BindGymConfigAcitivty.class, BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
-    BindStudentActivity.class, WeexModule.class, ViewModelModule.class,BindCheckoutCounterActivity.class,
+    BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,

@@ -26,7 +26,7 @@
 //import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 //import cn.qingchengfit.saasbase.cards.presenters.CardChargePresenter;
 //import cn.qingchengfit.saasbase.common.views.CommonInputParams;
-//import cn.qingchengfit.saasbase.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 //import cn.qingchengfit.utils.AppUtils;
 //import cn.qingchengfit.views.fragments.BaseFragment;

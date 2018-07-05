@@ -13,7 +13,7 @@ import org.reactivestreams.Subscription;
 import java.util.concurrent.atomic.AtomicReference;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.common.remote.HttpException;
+import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.utils.ToastUtils;
 import rx.Observable;
 import rx.RxReactiveStreams;

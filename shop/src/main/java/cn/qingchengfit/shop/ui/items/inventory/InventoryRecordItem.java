@@ -2,9 +2,9 @@ package cn.qingchengfit.shop.ui.items.inventory;
 
 import android.text.TextUtils;
 import android.view.View;
+import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemInventoryRecordBinding;
-import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.RecordAction;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

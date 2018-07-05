@@ -1,10 +1,10 @@
 package cn.qingchengfit.shop.ui.items.category;
 
 import android.view.View;
+import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCategotyListBinding;
 import cn.qingchengfit.shop.listener.CategotyItemClickListener;
-import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;

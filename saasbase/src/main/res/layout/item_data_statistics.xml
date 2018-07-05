@@ -126,7 +126,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <cn.qingchengfit.saasbase.student.widget.LineCharDate
+    <cn.qingchengfit.saascommon.widget.LineCharDate
         android:id="@+id/lineChar"
         android:background="@color/white"
         android:layout_width="match_parent"

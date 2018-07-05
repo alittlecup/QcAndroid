@@ -11,7 +11,7 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.student.items.StudentItem;
+import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saasbase.student.utils.StudentCompareByAlphabet;
 import cn.qingchengfit.saasbase.student.utils.StudentCompareJoinAt;
 import cn.qingchengfit.views.fragments.BaseListFragment;

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.course.bean.CoursePlan;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;

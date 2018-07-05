@@ -4,7 +4,7 @@ ext {
   configuration = [package             : "cn.qingchengfit.staffkit",
                    buildToolsVersion   : "27.0.3",
                    compileVersion      : 27,
-                   minSdk              : 15,
+                   minSdk              : 16,
                    targetSdk           : 26,
                    version_code        : 109, //缝10必更
                    version_name        : "0.109.0",

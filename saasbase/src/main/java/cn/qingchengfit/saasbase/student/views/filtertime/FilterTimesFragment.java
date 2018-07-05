@@ -14,7 +14,7 @@ import java.util.List;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
+import cn.qingchengfit.saascommon.filter.FilterListStringFragment;
 import cn.qingchengfit.utils.DateUtils;
 import rx.functions.Action3;
 

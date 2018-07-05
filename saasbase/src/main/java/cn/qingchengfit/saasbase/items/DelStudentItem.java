@@ -11,7 +11,7 @@ import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.student.widget.CircleView;
+import cn.qingchengfit.saascommon.widget.CircleView;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

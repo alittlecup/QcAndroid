@@ -27,7 +27,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
-import cn.qingchengfit.saasbase.student.items.StudentItem;
+import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;

@@ -5,8 +5,8 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import java.util.List;
 
 /**

@@ -12,6 +12,6 @@ import cn.qingchengfit.network.response.QcListData;
 
 public class AllotDataResponseWrap extends QcListData {
     @SerializedName(value = "coaches", alternate = "sellers")
-    public List<AllotDataResponse> sellers;
+    public List<String> sellers;
 
 }

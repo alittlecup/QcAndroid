@@ -2,15 +2,10 @@ package cn.qingchengfit.saasbase.student.views.followup;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -18,7 +13,6 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.FragmentFollowUpDataStatisticsBinding;
@@ -26,7 +20,7 @@ import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.presenters.followup.FollowUpHomePresenter;
-import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
+import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -114,29 +108,29 @@ public class FollowUpStatusTopFragment extends BaseFragment implements FollowUpH
 
     @Override
     public void onFollowUpStatistics(FollowUpDataStatistic statistics) {
-        switch (type) {
-            case NEW_CREATE_USERS:
-                binding.lineChar.setData(StudentBusinessUtils
-                        .transformBean2DataByType(
-                                statistics.new_create_users
-                                , offSetDay
-                                , NEW_CREATE_USERS));
-                break;
-            case NEW_FOLLOWING_USERS:
-                binding.lineChar.setData(StudentBusinessUtils
-                        .transformBean2DataByType(
-                                statistics.new_create_users
-                                , offSetDay
-                                , NEW_FOLLOWING_USERS));
-                break;
-            case NEW_MEMBER_USERS:
-                binding.lineChar.setData(StudentBusinessUtils
-                        .transformBean2DataByType(
-                                statistics.new_create_users
-                                , offSetDay
-                                , NEW_MEMBER_USERS));
-                break;
-        }
+        //switch (type) {
+        //    case NEW_CREATE_USERS:
+        //        binding.lineChar.setData(StudentBusinessUtils
+        //                .transformBean2DataByType(
+        //                        statistics.new_create_users
+        //                        , offSetDay
+        //                        , NEW_CREATE_USERS));
+        //        break;
+        //    case NEW_FOLLOWING_USERS:
+        //        binding.lineChar.setData(StudentBusinessUtils
+        //                .transformBean2DataByType(
+        //                        statistics.new_create_users
+        //                        , offSetDay
+        //                        , NEW_FOLLOWING_USERS));
+        //        break;
+        //    case NEW_MEMBER_USERS:
+        //        binding.lineChar.setData(StudentBusinessUtils
+        //                .transformBean2DataByType(
+        //                        statistics.new_create_users
+        //                        , offSetDay
+        //                        , NEW_MEMBER_USERS));
+        //        break;
+        //}
         binding.lineChar.setVisibleXRange(6);
     }
 

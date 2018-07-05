@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
-import cn.qingchengfit.saasbase.mvvm_student.respository.StudentRepository;
+//import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +57,7 @@ public class AttendanceRankViewModel extends FlexibleViewModel<List<Attendance>,
         return filterIndex;
     }
 
-    @Inject StudentRepository respository;
+    //@Inject StudentRepository respository;
     @Inject
     GymWrapper gymWrapper;
     @Inject
@@ -84,11 +84,12 @@ public class AttendanceRankViewModel extends FlexibleViewModel<List<Attendance>,
         params.put("end", data.getDay().second);
         params.put("show_all", 1);
 
-        return Transformations.map(respository.qcGetUsersAttendances(loginStatus.staff_id(),params),input -> {
-            // REFACTOR: 2017/11/17 在这里修改UI是有风险的
-            textDetail.set(filterText.get() + "出勤会员共" + input.total_count + "人");
-            return input.attendances;
-        });
+        //return Transformations.map(respository.qcGetUsersAttendances(loginStatus.staff_id(),params),input -> {
+        //    // REFACTOR: 2017/11/17 在这里修改UI是有风险的
+        //    textDetail.set(filterText.get() + "出勤会员共" + input.total_count + "人");
+        //    return input.attendances;
+        //});
+        return null;
     }
 
     private boolean isSortChecked = false;

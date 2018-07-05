@@ -6,6 +6,7 @@ package cn.qingchengfit.saasbase.student.items;
 
 import android.view.View;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saascommon.item.StudentItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.List;

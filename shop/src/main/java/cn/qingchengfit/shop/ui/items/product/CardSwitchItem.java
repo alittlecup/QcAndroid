@@ -2,9 +2,9 @@ package cn.qingchengfit.shop.ui.items.product;
 
 import android.view.View;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
+import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCardSwitchBinding;
-import cn.qingchengfit.saasbase.common.flexble.DataBindingViewHolder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;

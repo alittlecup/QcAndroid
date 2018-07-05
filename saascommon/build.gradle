@@ -11,6 +11,7 @@ android {
     targetSdkVersion 27
     versionCode 1
     versionName "1.0"
+    vectorDrawables.useSupportLibrary true
     javaCompileOptions {
       annotationProcessorOptions {
         arguments = [fragmentArgsLib               : 'true',
@@ -46,8 +47,8 @@ dependencies {
   api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
     exclude group: 'com.google.googlejavaformat'
   }
+  api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-
 }
