@@ -5,4 +5,5 @@
     <item name="android:progressDrawable">@drawable/progress_red</item>
     <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
   </style>
+
 </resources>

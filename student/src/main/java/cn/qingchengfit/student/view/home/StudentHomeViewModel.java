@@ -51,7 +51,7 @@ public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>,
 
     String shopid;
 
-    @Inject FilterUserCase filterUserCase;
+    //@Inject FilterUserCase filterUserCase;
 
     @Inject
     public StudentHomeViewModel(GymWrapper gymWrapper) {
@@ -127,10 +127,10 @@ public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>,
         return studentBeans != null && !studentBeans.isEmpty();
     }
 
-    public LiveData<List<FilterModel>> getTest() {
-        return filterUserCase.getFilterModel();
-
-    }
+    //public LiveData<List<FilterModel>> getTest() {
+    //    return filterUserCase.getFilterModel();
+    //
+    //}
 
     /**
      * 刷新数据

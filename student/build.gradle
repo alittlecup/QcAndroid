@@ -4,6 +4,7 @@ apply from: rootProject.file('qc_settings.gradle')
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 
+
 dependencies {
   implementation(project(':saascommon'))
 

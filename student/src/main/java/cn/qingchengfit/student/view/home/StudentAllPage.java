@@ -21,9 +21,9 @@ import java.util.Map;
   private StudentFilterView filterView;
 
   @Override protected void subscribeUI() {
-    mViewModel.getLiveItems().observe(this, items -> {
-      listView.setDatas(items);
-    });
+    //mViewModel.getLiveItems().observe(this, items -> {
+    //  listView.setDatas(items);
+    //});
   }
 
   @Override

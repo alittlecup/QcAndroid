@@ -12,6 +12,7 @@ import cn.qingchengfit.student.databinding.ViewStudentRecyclerSortBinding;
 import cn.qingchengfit.student.inter.DrawerListener;
 import cn.qingchengfit.student.inter.LoadDataListener;
 import cn.qingchengfit.student.viewmodel.SortViewModel;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public class StudentRecyclerSortView
       openDrawer();
       filterViewModel =
           ViewModelProviders.of(filterView, factory).get(StudentFilterViewModel.class);
-      filterViewModel.getmFilterMap().observe(this, map -> {
+      filterViewModel.getmFilterMap().observe(filterView, map -> {
         // REFACTOR: 2017/12/6 Map与Studentfilter的对决
         if (map != null) {
           closeDrawer();
@@ -104,7 +105,7 @@ public class StudentRecyclerSortView
       listView.hideFastScroller();
     }
     listView.setItems(studentItems);
-    mBinding.includeFilter.setItems(new ArrayList<>(studentItems));
+    mBinding.includeFilter.setItems(new ArrayList<AbstractFlexibleItem>(studentItems));
     // TODO: 2018/6/20 选中项
   }
 

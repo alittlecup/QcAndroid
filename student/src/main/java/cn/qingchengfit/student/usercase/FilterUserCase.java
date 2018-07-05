@@ -3,11 +3,15 @@ package cn.qingchengfit.student.usercase;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.text.TextUtils;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.saascommon.filter.model.Content;
 import cn.qingchengfit.saascommon.filter.model.FilterModel;
 import cn.qingchengfit.saascommon.filter.model.FilterWrapper;
 import cn.qingchengfit.saascommon.filter.model.UserExtra;
+import cn.qingchengfit.saascommon.network.HttpCheckFunc;
+import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.SourceBean;
 import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.respository.StudentRepository;
@@ -66,6 +70,7 @@ public class FilterUserCase {
         //    return filterModels;
         //}).compose(RxHelper.schedulersTransformer()).subscribe(
         //    filterModels -> filterModel.setValue(filterModels));
+        filter.compose(RxHelper.schedulersTransformer()).subscribe(filterModels -> filterModel.setValue(filterModels));
 
     }
 

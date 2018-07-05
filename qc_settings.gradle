@@ -19,14 +19,12 @@ if (runAsApp) {
 
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
-
 android {
   dataBinding {
     enabled true
   }
   compileSdkVersion cfg.compileVersion
   buildToolsVersion cfg.buildToolsVersion
-
 
   defaultConfig {
     minSdkVersion cfg.minSdk
@@ -43,12 +41,15 @@ android {
       }
     }
     manifestPlaceholders = [APP_NAME          : "内部测试",
-                            APP_SCHAME        : "qcstaff",
+                            APP_SCHAME        : "qc${project.name}".toString(),
                             bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
-                            APP_PACKAGE       : "cn.qingchengfit.checkout",
+                            APP_PACKAGE       : "cn.qingchengfit.${project.name}".toString(),
                             file_provider     : "cn.qingchengfit.staffkit.internaltest.provider"]
+
+    buildConfigField "String", "PROJECT_NAME", "\"qc${project.name}\""
+    buildConfigField "boolean", "RUN_AS_APP", "${runAsApp}"
   }
-  resourcePrefix "${project.name.substring(0,2)}_".toString()
+  resourcePrefix "${project.name.substring(0, 2)}_".toString()
 
   buildTypes {
     release {
@@ -95,7 +96,7 @@ android {
     }
   }
 }
-if(runAsApp){
+if (runAsApp) {
   apply plugin: 'auto-register'
   autoregister {
     registerInfo = [[//自动注册组件

@@ -1,5 +1,7 @@
 package debug;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -8,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
+import cn.qingchengfit.student.BuildConfig;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.LogUtil;
 
 public class SplashActivity extends SaasCommonActivity {
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,5 +36,22 @@ public class SplashActivity extends SaasCommonActivity {
         routeTo("student", "/student/home", null);
       }
     });
+  }
+
+  protected void routeTo(String model, String path, Bundle bd) {
+    String uri = model + path;
+    try {
+      uri = BuildConfig.PROJECT_NAME + "://" + model + path;
+      Intent to = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+      to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      if (bd != null) {
+        to.putExtras(bd);
+      }
+      startActivity(to);
+      finish();
+    } catch (Exception e) {
+      LogUtil.e("找不到模块去处理" + uri);
+      CrashUtils.sendCrash(e);
+    }
   }
 }

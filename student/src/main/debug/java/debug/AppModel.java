@@ -1,8 +1,10 @@
 package debug;
 
+import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
+import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.student.respository.StudentRepositoryImpl;
 import dagger.Binds;
@@ -22,7 +24,8 @@ import dagger.Provides;
  * <p/>
  * Created by Paper on 15/11/19 2015.
  */
-@Module public abstract class AppModel {
+@Module(includes = { StudentViewModel.class }) public abstract class AppModel {
+
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
   @Provides static LoginStatus provideLogin() {
@@ -32,4 +35,8 @@ import dagger.Provides;
   @Provides static StudentRepository provideStudentRepository() {
     return new StudentRepositoryImpl();
   }
+  @Provides static Application providesApplication(){
+    return MyApp.INSTANCE;
+  }
+
 }

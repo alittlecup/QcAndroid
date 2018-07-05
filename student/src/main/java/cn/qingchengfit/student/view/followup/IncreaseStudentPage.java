@@ -41,9 +41,9 @@ import java.util.HashMap;
       mBinding.drawer.openDrawer(GravityCompat.END);
     });
 
-    mViewModel.getLiveItems().observe(this, items -> {
-
-    });
+    //mViewModel.getLiveItems().observe(this, items -> {
+    //
+    //});
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,13 +98,13 @@ import java.util.HashMap;
   private void initFragment() {
     topView = new IncreaseStudentTopView();
     listView = new StudentListView();
-    filterView = new StudentFilterView();
+    //filterView = new StudentFilterView();
     followUpFilterView = new FollowUpFilterView();
 
     stuff(R.id.frag_chart, topView);
     stuff(R.id.fragment_filter, followUpFilterView);
     stuff(R.id.fragment_list_container, listView);
-    stuff(R.id.frame_student_filter, filterView);
+    //stuff(R.id.frame_student_filter, filterView);
   }
 
 

@@ -4,14 +4,30 @@
   <application
       android:name="debug.MyApp"
       android:allowBackup="false"
-      android:theme="@style/AppBaseTheme"
+      android:theme="@style/QcAppTheme"
       tools:replace="allowBackup">
 
-    <activity android:name="debug.SplashActivity">
+    <activity android:name="debug.SplashActivity"
+        >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity android:name=".StudentActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="student"
+            android:scheme="${APP_SCHAME}"
+            />
       </intent-filter>
     </activity>
   </application>
