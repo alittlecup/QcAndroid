@@ -1,0 +1,76 @@
+
+import org.gradle.api.tasks.options.Option
+
+class GreetingToFileTask extends DefaultTask {
+  private String module;
+  @Option(option = "module", description = "输入modle名")
+  public void setModule(String url) {
+    this.module = url;
+  }
+
+  @Input
+  public String getModule() {
+    return this.module;
+  }
+
+  def destination = project.rootDir.path
+
+  File getDestination() {
+    project.file(destination)
+  }
+
+  @TaskAction
+  def greet() {
+    def rootfile = getDestination()
+    println rootfile.path
+    def moduleFile = project.file(rootfile.path+"/"+getModule())
+    moduleFile.mkdirs()
+    def build_gradle_file = project.file(rootfile.path+"/"+getModule()+"/build.gradle")
+
+    build_gradle_file.write("apply from: rootProject.file('qc_settings.gradle')\n" + "\n" +
+        "\n" +
+        "def libs = rootProject.ext.libraries\n" +
+        "def cfg = rootProject.ext.configuration\n" +
+        "\n" +
+        "\n" +
+        "dependencies {\n" +
+        "  implementation(project(':saascommon'))\n" +
+        "\n" +
+        "  annotationProcessor \"com.anbillon.flabellum:flabellum-processor:\${libs.flabellum}\"\n" +
+        "  annotationProcessor \"com.anbillon.flabellum:dagger2:\${libs.flabellum}\"\n" +
+        "\n" +
+        "  annotationProcessor \"com.google.dagger:dagger-compiler:\${libs.dagger}\"\n" +
+        "  annotationProcessor \"com.google.dagger:dagger-android-processor:\${libs.dagger}\"\n" +
+        "}\n" +
+        "")
+    def ignore_file = project.file(rootfile.path+"/"+getModule()+"/.gitignore")
+    // ignore_file.mkdirs()
+    ignore_file.write("/build\n" +getModule() +".iml")
+    def javaParentFile = project.file(rootfile.path+"/"+getModule()+"/src/main/java/cn.qingchingfit."+getModule())
+    javaParentFile.mkdirs()
+    def java_file = project.file(rootfile.path+"/"+getModule()+"/src/main/java/cn.qingchingfit."+getModule()+"/"+toCamel(getModule()+"Activity.java"))
+    //java_file.mkdirs()
+    def javafileStr = "package cn.qingchengfit."+getModule()+";\n  public class "+toCamel(getModule())+"Activity extends SaasCommonActivity { \n" +
+        " @Override public String getModuleName() {\n" + "    return \""+getModule()+"\";\n" + "  }" +
+        "}"
+    java_file.write(javafileStr)
+    println build_gradle_file.path
+    println "finished!"
+    //build_gradle_file.write("hello world!!")
+  }
+
+  def toCamel(String s){
+    if (s == null || s.length() < 1) {
+      return s
+    }
+    s = s.toLowerCase()
+    return s.charAt(0).toUpperCase().toString()+s.substring(1)
+  }
+
+
+}
+
+task newModule(type: GreetingToFileTask) {
+  //    destination = { project.rootDir.path }
+}
+

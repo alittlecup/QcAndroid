@@ -58,9 +58,9 @@ import javax.inject.Inject;
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 
-  @Override public String getModuleName() {
-    return "student";
-  }
+    @Override public String getModuleName() {
+      return "student";
+    }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
     return studentRouterCenter.getFragment(intent.getData(), intent.getExtras());
