@@ -10,7 +10,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageIncreaseMemberBinding;
-import cn.qingchengfit.student.inter.IncreaseType;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.home.StudentListView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;

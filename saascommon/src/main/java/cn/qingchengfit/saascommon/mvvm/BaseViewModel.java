@@ -1,7 +1,10 @@
 package cn.qingchengfit.saascommon.mvvm;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-
+import cn.qingchengfit.saascommon.network.Resource;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Function;
 
 /**
  * ViewModel 的基本类，用于添加和解除订阅
@@ -16,5 +19,23 @@ import android.arch.lifecycle.ViewModel;
  */
 
 public class BaseViewModel extends ViewModel {
+  public MutableLiveData<String> getErrorMsg() {
+    return errormsg;
+  }
+
+  private MutableLiveData<String> errormsg = new MutableLiveData<>();
+
+  public <T> T dealResource(Resource<T> resource) {
+    switch (resource.status) {
+      case SUCCESS:
+        return resource.data;
+      case ERROR:
+        errormsg.setValue(resource.message);
+        break;
+      case LOADING:
+        break;
+    }
+    return null;
+  }
 
 }

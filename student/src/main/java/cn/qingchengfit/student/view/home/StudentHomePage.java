@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageStudentHomeBinding;
-import cn.qingchengfit.student.inter.IncreaseType;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.followup.IncreaseMemberPageParams;
 import cn.qingchengfit.student.view.followup.IncreaseStudentPageParams;
 import cn.qingchengfit.student.view.state.StudentStateInfoPageParams;
@@ -109,7 +109,7 @@ import java.util.ArrayList;
       routeTo("attendance/page", null);
     });
     mBinding.commTransferStudent.setOnClickListener(view -> {
-      routeTo("transfer/student", null);
+      routeTo("/student/follow_record", null);
     });
     mBinding.commSendMsg.setOnClickListener(view -> {
       // TODO: 2018/6/19 这里位于staff

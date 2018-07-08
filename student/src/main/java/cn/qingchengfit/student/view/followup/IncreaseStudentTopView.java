@@ -7,7 +7,7 @@ import android.widget.RadioGroup;
 import cn.qingchengfit.student.databinding.ViewIncreaseStudentTopBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
-import cn.qingchengfit.student.inter.IncreaseType;
+import cn.qingchengfit.student.listener.IncreaseType;
 
 public class IncreaseStudentTopView
     extends StudentBaseFragment<ViewIncreaseStudentTopBinding, IncreaseStudentTopViewModel> {

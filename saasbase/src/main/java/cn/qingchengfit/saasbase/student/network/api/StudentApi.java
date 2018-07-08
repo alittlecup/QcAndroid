@@ -236,7 +236,7 @@ public interface StudentApi {
     /**
      * @param params 必传start, end，
      *               可选排序字段 加 “-”说明是倒序
-     *               order_by=
+     *               order_by=abase
      *               days      -days
      *               group     -group
      *               private     -private

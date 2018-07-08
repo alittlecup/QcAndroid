@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.inter;
+package cn.qingchengfit.student.listener;
 
 import java.util.Map;
 

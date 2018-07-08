@@ -1,5 +1,14 @@
 package cn.qingchengfit.student.respository;
 
+import android.arch.lifecycle.LiveData;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.network.Resource;
+import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.respository.local.LocalRespository;
+import io.reactivex.Flowable;
+import java.util.HashMap;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -26,20 +35,19 @@ import javax.inject.Singleton;
 @Singleton
 public class StudentRepositoryImpl implements StudentRepository {
 
-    //@Inject
-    //IStudentModel remoteService;
-    //
-    //@Inject
-    //LocalRespository localRespository;
-    //
-    //
-    //@Inject
-    //public StudentRepositoryImpl() {
-    //}
-    //
-    //static <T> LiveData<T> toLiveData(Observable<QcDataResponse<T>> observable) {
-    //    return LiveDataReactiveStreams.fromPublisher(observable.compose(RxHelper.schedulersTransformer()));
-    //}
+    @Inject
+    IStudentModel remoteService;
+
+    @Inject LocalRespository localRespository;
+
+
+    @Inject
+    public StudentRepositoryImpl() {
+    }
+
+    static <T> LiveData<Resource<T>> toLiveData(Flowable<QcDataResponse<T>> observable) {
+        return LiveDataTransfer.fromPublisher(observable.compose(RxHelper.schedulersTransformerFlow()));
+    }
     //
     //public LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params) {
     //    return toLiveData(remoteService.qcGetAttendanceChart(id, params));
@@ -77,11 +85,10 @@ public class StudentRepositoryImpl implements StudentRepository {
     //    return toLiveData(remoteService.qcGetTrackStudents(staff_id, type, params));
     //}
     //
-    //public LiveData<AllotDataResponseWrap> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params) {
-    //    return toLiveData(remoteService
-    //            .qcGetStaffList(staff_id, type, params));
-    //}
-    //
+    public LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params) {
+        return toLiveData(remoteService.qcGetStaffList(staff_id, type, params));
+    }
+
     //public LiveData<StudentListWrapper> qcGetAllotStaffMembers(String staff_id, String type, HashMap<String, Object> params) {
     //    return toLiveData(remoteService
     //            .qcGetAllotStaffMembers(staff_id, type, params));

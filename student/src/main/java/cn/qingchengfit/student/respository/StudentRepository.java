@@ -1,5 +1,10 @@
 package cn.qingchengfit.student.respository;
 
+import android.arch.lifecycle.LiveData;
+import cn.qingchengfit.saascommon.network.Resource;
+import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import java.util.HashMap;
+
 /**
  * Created by huangbaole on 2017/11/29.
  */
@@ -23,7 +28,7 @@ public interface StudentRepository {
     //
     //LiveData<StudentListWrappeForFollow> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params);
     //
-    //LiveData<AllotDataResponseWrap> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params);
+    LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params);
     //
     //LiveData<StudentListWrapper> qcGetAllotStaffMembers(String staff_id, String type, HashMap<String, Object> params);
     //

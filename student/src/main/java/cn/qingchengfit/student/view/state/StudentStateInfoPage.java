@@ -10,7 +10,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.databinding.PageStudentStateInfoBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
-import cn.qingchengfit.student.inter.IncreaseType;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.item.SalerStudentInfoItem;
 import cn.qingchengfit.student.widget.CountDateView;
 import com.anbillon.flabellum.annotations.Leaf;

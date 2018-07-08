@@ -6,6 +6,9 @@ import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
 import cn.qingchengfit.student.view.allot.StudentAllotPage;
 import cn.qingchengfit.student.view.allot.StudentAllotStaffPage;
+import cn.qingchengfit.student.view.followrecord.FollowRecordEditPage;
+import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
+import cn.qingchengfit.student.view.followrecord.FollowRecordStatusPage;
 import cn.qingchengfit.student.view.followup.FollowUpFilterView;
 import cn.qingchengfit.student.view.followup.FollowUpTopSalerView;
 import cn.qingchengfit.student.view.followup.IncreaseMemberPage;
@@ -24,14 +27,12 @@ import javax.inject.Inject;
 
 @Trunk(fragments = {
     StudentFilterView.class,
-
-
-
-    StudentViewModel.class, StudentHomePage.class, StudentAllPage.class,
+    StudentHomePage.class, StudentAllPage.class,
     StudentRecyclerSortView.class, StudentListView.class, StudentAllotPage.class,
     IncreaseStudentSortView.class, IncreaseStudentTopView.class, IncreaseStudentPage.class,
     IncreaseMemberTopView.class, IncreaseMemberPage.class, StudentStateInfoPage.class,
-    StudentAllotStaffPage.class
+    StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordPage.class,FollowRecordStatusPage.class
+
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 

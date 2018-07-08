@@ -1,16 +1,37 @@
 package cn.qingchengfit.student.respository;
 
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import io.reactivex.Flowable;
+import java.util.HashMap;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by huangbaole on 2017/10/26.
  */
+public class StudentModel implements IStudentModel {
+  StudentApi studentApi;
 
-public class StudentModel  {
-  //StudentApi studentApi;
-  //
-  // public StudentModel(QcRestRepository qcRestRepository) {
-  //  studentApi = qcRestRepository.createGetApi(StudentApi.class);
-  //}
+  @Inject public StudentModel(QcRestRepository qcRestRepository) {
+    OkHttpClient client = qcRestRepository.getClient();
+    Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
+
+    Retrofit retrofit = new Retrofit.Builder().client(client)
+        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .baseUrl(qcRestRepository.getHost())
+        .build();
+    studentApi = retrofit.create(StudentApi.class);
+  }
+
   //
   //@Override public Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission() {
   //  return null;
@@ -42,11 +63,11 @@ public class StudentModel  {
   //  return studentApi.qcGetAllotSalesPreView(staff_id, params);
   //}
   //
-  //@Override public Observable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id,
-  //    String type, HashMap<String, Object> params) {
-  //  return studentApi.qcGetStaffList(staff_id, type, params);
-  //}
-  //
+  @Override public Flowable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id,
+      String type, HashMap<String, Object> params) {
+    return studentApi.qcGetStaffList(staff_id, type, params);
+  }
+
   //@Override
   //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params) {

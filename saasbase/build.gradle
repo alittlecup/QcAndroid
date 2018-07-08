@@ -85,7 +85,6 @@ dependencies {
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
 
   api 'android.arch.lifecycle:reactivestreams:1.0.0'
-  api 'io.reactivex:rxjava-reactive-streams:1.2.1'
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
   api 'me.gujun.android.taggroup:library:1.4@aar'
   api 'android.arch.lifecycle:common-java8:1.0.0'

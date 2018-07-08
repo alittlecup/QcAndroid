@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.inter;
+package cn.qingchengfit.student.listener;
 
 import android.support.annotation.StringDef;
 import java.lang.annotation.Retention;

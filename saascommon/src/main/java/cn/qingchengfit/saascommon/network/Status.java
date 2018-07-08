@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.qingchengfit.student.respository;
+package cn.qingchengfit.saascommon.network;
 
 /**
  * Status of a resource that is provided to the UI.

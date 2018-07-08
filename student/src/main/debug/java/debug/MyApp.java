@@ -5,6 +5,7 @@ import android.app.Application;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.student.BuildConfig;
+import cn.qingchengfit.utils.ToastUtils;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -27,6 +28,7 @@ public class MyApp extends Application implements HasActivityInjector {
     INSTANCE = this;
     DaggerAppComponent.create().inject(this);
     QcRouteUtil.init(this);
+    ToastUtils.init(this);
     //初始化神策
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
         SA_SERVER_URL,                      // 数据接收的 URL
