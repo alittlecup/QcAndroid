@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: rootProject.file('qc_new_module.gradle')
+apply from: rootProject.file('init_module_files/qc_new_module.gradle')
 
 ext {
   configuration = [package             : "cn.qingchengfit.staffkit",

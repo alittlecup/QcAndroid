@@ -1,16 +1,25 @@
-
 import org.gradle.api.tasks.options.Option
-
+import groovy.text.GStringTemplateEngine
+import groovy.text.SimpleTemplateEngine
 class GreetingToFileTask extends DefaultTask {
+
+
+  /**
+   * 模块名称
+   */
   private String module;
+  /**
+   * project 目录
+   */
+
   @Option(option = "module", description = "输入modle名")
-  public void setModule(String url) {
-    this.module = url;
+   void setModule(String url) {
+    this.module = url
   }
 
   @Input
-  public String getModule() {
-    return this.module;
+  String getModule() {
+    return this.module
   }
 
   def destination = project.rootDir.path
@@ -19,81 +28,120 @@ class GreetingToFileTask extends DefaultTask {
     project.file(destination)
   }
 
+  def rootfile = getDestination()
   @TaskAction
   def greet() {
-    def rootfile = getDestination()
-    println rootfile.path
-    def moduleFile = project.file(rootfile.path+"/"+getModule())
-    moduleFile.mkdirs()
-    def build_gradle_file = project.file(rootfile.path+"/"+getModule()+"/build.gradle")
+    //println rootfile.path
 
-    build_gradle_file.write("apply from: rootProject.file('qc_settings.gradle')\n" + "\n" +
-        "\n" +
-        "def libs = rootProject.ext.libraries\n" +
-        "def cfg = rootProject.ext.configuration\n" +
-        "\n" +
-        "\n" +
-        "dependencies {\n" +
-        "  implementation(project(':saascommon'))\n" +
-        "\n" +
-        "  annotationProcessor \"com.anbillon.flabellum:flabellum-processor:\${libs.flabellum}\"\n" +
-        "  annotationProcessor \"com.anbillon.flabellum:dagger2:\${libs.flabellum}\"\n" +
-        "\n" +
-        "  annotationProcessor \"com.google.dagger:dagger-compiler:\${libs.dagger}\"\n" +
-        "  annotationProcessor \"com.google.dagger:dagger-android-processor:\${libs.dagger}\"\n" +
-        "}\n" +
-        "")
-    def ignore_file = project.file(rootfile.path+"/"+getModule()+"/.gitignore")
-    // ignore_file.mkdirs()
-    ignore_file.write("/build\n" +getModule() +".iml")
-    def javaParentFile = project.file(rootfile.path+"/"+getModule()+"/src/main/java/cn.qingchingfit."+getModule())
-    javaParentFile.mkdirs()
-    def java_file = project.file(rootfile.path+"/"+getModule()+"/src/main/java/cn.qingchingfit."+getModule()+"/"+toCamel(getModule()+"Activity.java"))
-    //java_file.mkdirs()
-    def javafileStr = "package cn.qingchengfit."+getModule()+";\n  public class "+toCamel(getModule())+"Activity extends SaasCommonActivity { \n" +
-        " @Override public String getModuleName() {\n" + "    return \""+getModule()+"\";\n" + "  }" +
-        "}"
-    java_file.write(javafileStr)
-    println build_gradle_file.path
-
-
-    project.files(
-        rootfile.path+"/"+getModule()+"/src/debug/java",
-        rootfile.path+"/"+getModule()+"/src/debug/res/layout",
-        rootfile.path+"/"+getModule()+"/src/debug/res/values",
-    ).files.forEach({
-      it.mkdirs()
-    })
-
-
-
-
-    addModuleToSettings()
+    copyDirDebug("debug/")
+    copyDirDebug("res/")
+    copyDirTaget("scrpit/","")
+    copyDirTaget("manifest/","/src/main/")
+    copyCodeToPacage("","cn.qingchengfit."+getModule())
+  //  addModuleToSettings()
     println "finished!"
-    //build_gradle_file.write("hello world!!")
+
+  }
+
+  /**
+   * 拷贝文件到 对应路径
+   * @param relativePath
+   * @return
+   */
+  def copyDirDebug(String relativePath) {
+    def debugTemp = project.file(rootfile.path + "/init_module_files/template/" + relativePath)
+    debugTemp.listFiles().findAll().forEach() {
+      if (!it.isDirectory()) {
+        generateByTemplate(rootfile.path + "/" + getModule() + "/src/main/"+relativePath, it)
+      }else {
+        copyDirDebug(relativePath+it.name+"/")
+      }
+    }
+  }
+
+  /**
+   * 拷贝文件到 对应包
+   * @param relativePath
+   * @return
+   */
+  def copyCodeToPacage(String relativePath,String packageName) {
+    def debugTemp = project.file(rootfile.path + "/init_module_files/template/java/" + relativePath)
+    debugTemp.listFiles().findAll().forEach() {
+      if (!it.isDirectory()) {
+        generateByTemplate(rootfile.path + "/" + getModule() + "/src/main/java/"+packageName+"/"+relativePath, it)
+      }else {
+        it.mkdirs()
+        copyCodeToPacage(relativePath+it.name+"/",packageName)
+      }
+    }
   }
 
 
-  private File genrateFile(String path){
-    def file = project.file(path)
-    file.parentFile.mkdirs()
+  /**
+   * 将文件复制到制定目录
+   * @param relativePath
+   * @param target
+   * @return
+   */
+  def copyDirTaget(String relativePath,String target) {
+    def debugTemp = project.file(rootfile.path + "/init_module_files/template/" + relativePath)
+    debugTemp.listFiles().findAll().forEach() {
+      if (!it.isDirectory()) {
+        generateByTemplate(rootfile.path + "/" + getModule() + "/"+target, it)
+      }
+    }
   }
 
-  def addModuleToSettings(){
-    def settingFile = project.file(rootfile.path +"/settings.gradle")
-    settingFile.append("include ':"+getModule()+"'")
+
+
+  /**
+   * 按模板生成文件
+   * @param fp 生成路径
+   * @param templatePath 模板文件
+   */
+  def generateByTemplate(String fp, File templatePath) {
+    /**
+     * 替换字典
+     */
+    def binding = [module       : getModule(),
+                   Module: (toCamel(getModule()))
+                   //                 APP_PACKAGE: "\${APP_PACKAGE}",
+                   //                 APP_SCHAME: "\${APP_SCHAME}"
+    ]
+    // change file contents
+    println templatePath.path
+    def template = project.file(templatePath)
+    def tmp = new GStringTemplateEngine()
+        .createTemplate(template)
+        .make(binding)
+    def filename = new SimpleTemplateEngine().createTemplate(template.name).make(binding).toString()
+    project.file(fp).mkdirs()
+    project.file(fp + filename).write(tmp.toString())
   }
 
+  /**
+   * 在配置中添加当前模块
+   * @return
+   */
+  def addModuleToSettings() {
+    def settingFile = project.file(rootfile.path + "/settings.gradle")
+    def inSetting = false
+    settingFile.readLines().forEach({
+      if(it.contains("':"+getModule())+"'"){
+        inSeting = true
+      }
+    })
+    if (!inSetting)
+      settingFile.append("include ':" + getModule() + "'")
+  }
 
-  def toCamel(String s){
+  def toCamel(String s) {
     if (s == null || s.length() < 1) {
       return s
     }
     s = s.toLowerCase()
-    return s.charAt(0).toUpperCase().toString()+s.substring(1)
+    return s.charAt(0).toUpperCase().toString() + s.substring(1)
   }
-
-
 }
 
 task newModule(type: GreetingToFileTask) {
