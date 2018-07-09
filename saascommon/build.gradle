@@ -45,6 +45,9 @@ dependencies {
   }
   api 'io.reactivex:rxjava-reactive-streams:1.2.1'
 
+  api('com.hkm.taglib:tag:1.6.0') {
+    exclude group: 'com.android.support'
+  }
 
   api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
     exclude group: 'com.google.googlejavaformat'

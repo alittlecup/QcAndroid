@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.custom;
+package cn.qingchengfit.saascommon.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,11 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import cn.qingchengfit.saascommon.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.MeasureUtils;
 import co.hkm.soltag.ColorFactory;
 import co.hkm.soltag.LayouMode;

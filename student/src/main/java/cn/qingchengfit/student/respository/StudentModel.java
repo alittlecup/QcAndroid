@@ -1,8 +1,13 @@
 package cn.qingchengfit.student.respository;
 
+import android.support.annotation.IntRange;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.ShortMsgBody;
+import cn.qingchengfit.student.bean.ShortMsgDetail;
+import cn.qingchengfit.student.bean.ShortMsgList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -13,6 +18,10 @@ import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by huangbaole on 2017/10/26.
@@ -66,6 +75,33 @@ public class StudentModel implements IStudentModel {
   @Override public Flowable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id,
       String type, HashMap<String, Object> params) {
     return studentApi.qcGetStaffList(staff_id, type, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<ShortMsgList>> qcQueryShortMsgList(String id, Integer status,
+      HashMap<String, Object> params) {
+    return studentApi.qcQueryShortMsgList(id, status, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<ShortMsgDetail>> qcQueryShortMsgDetail(String id, String messageid,
+      HashMap<String, Object> params) {
+    return studentApi.qcQueryShortMsgDetail(id, messageid, params);
+  }
+
+  @Override public Flowable<QcResponse> qcPostShortMsg(String staffid, ShortMsgBody body,
+      HashMap<String, Object> params) {
+    return studentApi.qcPostShortMsg(staffid, body, params);
+  }
+
+  @Override public Flowable<QcResponse> qcDelShortMsg(String staffid, String messageid,
+      HashMap<String, Object> params) {
+    return studentApi.qcDelShortMsg(staffid, messageid, params);
+  }
+
+  @Override public Flowable<QcResponse> qcPutShortMsg(String staffid, ShortMsgBody body,
+      HashMap<String, Object> params) {
+    return studentApi.qcPutShortMsg(staffid, body, params);
   }
 
   //@Override

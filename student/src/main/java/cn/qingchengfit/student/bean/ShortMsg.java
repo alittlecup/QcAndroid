@@ -1,4 +1,4 @@
-package cn.qingchengfit.model.responese;
+package cn.qingchengfit.student.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

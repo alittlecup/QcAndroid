@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.student.sendmsgs;
+package cn.qingchengfit.student.view.sendmsg;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,11 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cn.qingchengfit.model.responese.ShortMsg;
-import cn.qingchengfit.saasbase.items.ShortMsgItem;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.presenters.ShortMsgPresentersPresenter;
-import cn.qingchengfit.staffkit.views.FlexableListFragment;
+import cn.qingchengfit.saascommon.widget.FlexableListFragment;
+import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.ShortMsg;
+import cn.qingchengfit.student.item.ShortMsgItem;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.jakewharton.rxbinding.view.RxView;
@@ -92,7 +91,7 @@ public class SendMsgHomeFragment extends BaseFragment
     etSearch = (EditText) view.findViewById(R.id.et_search);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-    searchviewClear = (ImageView) view.findViewById(R.id.searchview_clear);
+    searchviewClear = (ImageView) view.findViewById(R.id.search_clear);
     view.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         addMsg();
@@ -121,7 +120,7 @@ public class SendMsgHomeFragment extends BaseFragment
     }
 
     etSearch.setCompoundDrawablesWithIntrinsicBounds(
-        ContextCompat.getDrawable(getContext(), R.drawable.ic_search_24dp_grey), null, null, null);
+        ContextCompat.getDrawable(getContext(), R.drawable.vd_search_grey_14dp), null, null, null);
     etSearch.setHint(getString(R.string.search_sms_hint));
     RxTextView.afterTextChangeEvents(etSearch)
         .debounce(500, TimeUnit.MILLISECONDS)
@@ -140,10 +139,8 @@ public class SendMsgHomeFragment extends BaseFragment
       if (mDatasAll.isEmpty()) return false;
       if (mDatasAll.get(position) instanceof ShortMsgItem) {
         ShortMsgItem item = (ShortMsgItem) mDatasAll.get(position);
-        getFragmentManager().beginTransaction()
-            .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-            .addToBackStack(null)
-            .commit();
+        stuffToFragment(new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build());
+
       }
       return false;
     });
@@ -151,10 +148,8 @@ public class SendMsgHomeFragment extends BaseFragment
       if (mDatasSended.isEmpty()) return false;
       if (mDatasSended.get(position) instanceof ShortMsgItem) {
         ShortMsgItem item = (ShortMsgItem) mDatasSended.get(position);
-        getFragmentManager().beginTransaction()
-            .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-            .addToBackStack(null)
-            .commit();
+        stuffToFragment(new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build());
+
       }
       return false;
     });
@@ -162,10 +157,7 @@ public class SendMsgHomeFragment extends BaseFragment
       if (mDatasScript.isEmpty()) return false;
       if (mDatasScript.get(position) instanceof ShortMsgItem) {
         ShortMsgItem item = (ShortMsgItem) mDatasScript.get(position);
-        getFragmentManager().beginTransaction()
-            .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-            .addToBackStack(null)
-            .commit();
+        stuffToFragment(new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build());
       }
       return false;
     });
@@ -242,12 +234,11 @@ public class SendMsgHomeFragment extends BaseFragment
   }
 
   public void addMsg() {
-    getFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.slide_bottom_in, R.anim.slide_fade_out, R.anim.slide_fade_in,
-            R.anim.slide_bottom_out)
-        .replace(R.id.frag, new MsgSendFragmentFragment())
-        .addToBackStack(null)
-        .commit();
+    stuffToFragment(new MsgSendFragmentFragment());
+  }
+
+  private void stuffToFragment(Fragment fragment) {
+    stuff(fragment);
   }
 
   class SendMsgHomeAdapter extends FragmentStatePagerAdapter {

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_simple_toolbar"/>
 
   <ScrollView
       xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             >
 
-          <cn.qingchengfit.staffkit.views.custom.QcTagContainerLayout
+          <cn.qingchengfit.saascommon.widget.QcTagContainerLayout
               android:id="@+id/layout_tags"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
               app:vertical_interval="10dp"
               >
 
-          </cn.qingchengfit.staffkit.views.custom.QcTagContainerLayout>
+          </cn.qingchengfit.saascommon.widget.QcTagContainerLayout>
         </FrameLayout>
 
         <ImageView

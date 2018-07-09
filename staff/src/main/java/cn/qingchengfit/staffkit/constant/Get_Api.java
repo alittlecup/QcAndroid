@@ -835,16 +835,6 @@ public interface Get_Api {
     rx.Observable<cn.qingchengfit.network.response.QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(@Path("id") String staffId,
         @QueryMap HashMap<String, Object> params);
 
-    /**
-     * 短信部分
-     */
-    @GET("/api/staffs/{staffid}/group/messages/?order_by=-created_at") rx.Observable<QcDataResponse<ShortMsgList>> qcQueryShortMsgList(
-        @Path("staffid") String id, @IntRange(from = 1, to = 2) @Query("status") Integer status, @QueryMap HashMap<String, Object> params);
-
-    @GET("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcDataResponse<ShortMsgDetail>> qcQueryShortMsgDetail(
-        @Path("staffid") String id, @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
-
-
 
 
     /**

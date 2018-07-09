@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views;
+package cn.qingchengfit.saascommon.widget;
 
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;

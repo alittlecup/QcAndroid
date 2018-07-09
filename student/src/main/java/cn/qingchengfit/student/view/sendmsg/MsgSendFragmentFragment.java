@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.student.sendmsgs;
+package cn.qingchengfit.student.view.sendmsg;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,17 +19,15 @@ import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.body.ShortMsgBody;
-import cn.qingchengfit.model.responese.ShortMsg;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.presenters.ShortMsgPresentersPresenter;
-import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.custom.DialogSheet;
-import cn.qingchengfit.staffkit.views.custom.QcTagContainerLayout;
-import cn.qingchengfit.staffkit.views.custom.QcTagView;
+import cn.qingchengfit.saascommon.widget.QcTagContainerLayout;
+import cn.qingchengfit.saascommon.widget.QcTagView;
+import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.ShortMsg;
+import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -41,7 +39,6 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
-import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENTS;
 
 /**
  * power by
@@ -95,7 +92,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
     etContent = (EditText) view.findViewById(R.id.et_content);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-    tvLeft = (TextView) view.findViewById(R.id.tv_left);
+    //tvLeft = (TextView) view.findViewById(R.id.tv_left);
     tvSmsCount = (TextView) view.findViewById(R.id.tv_sms_count);
     layoutSendHint = (RelativeLayout) view.findViewById(R.id.layout_send_hint);
     view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
@@ -125,12 +122,13 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
       }
 
       @Override public void onTailClick() {
-        Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
-        toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
-        toChooseStudent.putExtra("open", true);
-        DirtySender.studentList.clear();
-        DirtySender.studentList.addAll(chosenStudent);
-        startActivityForResult(toChooseStudent, 11);
+        // TODO: 2018/7/8 choose staff
+        //Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
+        //toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
+        //toChooseStudent.putExtra("open", true);
+        //DirtySender.studentList.clear();
+        //DirtySender.studentList.addAll(chosenStudent);
+        //startActivityForResult(toChooseStudent, 11);
       }
     });
     etContent.setText(smsBegin);
@@ -158,27 +156,28 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
     toolbarTitile.setText("新建群发短信");
     toolbar.setNavigationContentDescription(R.string.common_cancel);
     toolbar.inflateMenu(R.menu.menu_send);
-    tvLeft.setText("取消");
-    tvLeft.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null
-            || chosenStudent.size() == 0)) {
-          getActivity().onBackPressed();
-          return;
-        }
-
-        //点击取消
-        DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            saveMsg();
-          }
-        }).addButton("不保存", new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            getActivity().onBackPressed();
-          }
-        }).show();
-      }
-    });
+    // TODO: 2018/7/8  取消
+    //tvLeft.setText("取消");
+    //tvLeft.setOnClickListener(new View.OnClickListener() {
+    //  @Override public void onClick(View v) {
+    //    if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null
+    //        || chosenStudent.size() == 0)) {
+    //      getActivity().onBackPressed();
+    //      return;
+    //    }
+    //
+    //    //点击取消
+    //    DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
+    //      @Override public void onClick(View v) {
+    //        saveMsg();
+    //      }
+    //    }).addButton("不保存", new View.OnClickListener() {
+    //      @Override public void onClick(View v) {
+    //        getActivity().onBackPressed();
+    //      }
+    //    }).show();
+    //  }
+    //});
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -216,12 +215,12 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
    * 点击添加学员
    */
   public void onClickAdd() {
-    Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
-    toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
-    //toChooseStudent.putExtra("")
-    DirtySender.studentList.clear();
-    DirtySender.studentList.addAll(chosenStudent);
-    startActivityForResult(toChooseStudent, 11);
+    // TODO: 2018/7/8  choosestaff
+    //Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
+    //toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
+    //DirtySender.studentList.clear();
+    //DirtySender.studentList.addAll(chosenStudent);
+    //startActivityForResult(toChooseStudent, 11);
   }
 
   /**
@@ -336,7 +335,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
 
   @Override public void onPostSuccess() {
     getActivity().onBackPressed();
-    ToastUtils.show(R.drawable.vector_hook_white, "发送成功");
+    ToastUtils.show(R.drawable.vd_success_tick_black, "发送成功");
   }
 
   @Override public void onPutSuccess() {

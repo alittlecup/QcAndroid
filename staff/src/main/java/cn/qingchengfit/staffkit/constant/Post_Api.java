@@ -616,17 +616,7 @@ public interface Post_Api {
     @PUT("/api/staffs/{staff_id}/configs/") rx.Observable<QcResponse> qcPostBalanceNotify(@Path("staff_id") String staff_id,
         @Body CardBalanceNotifyBody body);
 
-    /**
-     * 短信相关
-     */
-    @POST("/api/staffs/{staffid}/group/messages/") rx.Observable<QcResponse> qcPostShortMsg(@Path("staffid") String staffid,
-        @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
 
-    @DELETE("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcResponse> qcDelShortMsg(@Path("staffid") String staffid,
-        @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
-
-    @PUT("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcResponse> qcPutShortMsg(@Path("staffid") String staffid,
-        @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
 
 
     //新建分组

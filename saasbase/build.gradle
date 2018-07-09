@@ -78,9 +78,7 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
-  api('com.hkm.taglib:tag:1.6.0') {
-    exclude group: 'com.android.support'
-  }
+
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
 

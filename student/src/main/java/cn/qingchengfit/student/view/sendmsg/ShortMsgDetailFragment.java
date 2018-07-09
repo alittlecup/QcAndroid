@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.student.sendmsgs;
+package cn.qingchengfit.student.view.sendmsg;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -19,10 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.widget.ToggleButton;
-import cn.qingchengfit.model.body.ShortMsgBody;
-import cn.qingchengfit.model.responese.ShortMsg;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.presenters.ShortMsgPresentersPresenter;
+import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.ShortMsg;
+import cn.qingchengfit.student.bean.ShortMsgBody;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -33,7 +33,6 @@ import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -186,7 +185,7 @@ import javax.inject.Inject;
   }
 
   @Override public void onPostSuccess() {
-    ToastUtils.show(R.drawable.vector_hook_white, "发送成功");
+    ToastUtils.show(R.drawable.vd_success_tick_black, "发送成功");
   }
 
   @Override public void onPutSuccess() {
@@ -216,10 +215,7 @@ import javax.inject.Inject;
 
         break;
       case R.id.btn_edit:
-        getFragmentManager().beginTransaction()
-            .replace(R.id.frag, new MsgSendFragmentFragmentBuilder().msgid(msgId).build())
-            .addToBackStack("")
-            .commitAllowingStateLoss();
+        stuff(new MsgSendFragmentFragmentBuilder().msgid(msgId).build());
         break;
       case R.id.btn_send:
         if (TextUtils.isEmpty(shortMsg.content)) {

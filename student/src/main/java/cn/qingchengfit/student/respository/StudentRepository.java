@@ -1,8 +1,13 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.IntRange;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.ShortMsgDetail;
+import cn.qingchengfit.student.bean.ShortMsgList;
+import io.reactivex.Flowable;
 import java.util.HashMap;
 
 /**
@@ -58,7 +63,6 @@ public interface StudentRepository {
     //
     //LiveData<SourceBeans> qcGetTrackStudentsOrigins(String id, HashMap<String, Object> params);
     //LiveData<SalerListWrap> qcGetTrackStudentsFilterSalers(String id, HashMap<String, Object> params);
-
 
 
 

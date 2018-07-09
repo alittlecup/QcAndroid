@@ -91,4 +91,19 @@
   <string name="qc_allotsale_stucount_2">名下会员(%d)</string>
   <string name="qc_allotsale_group_search">搜索分组</string>
   <string name="qc_allotsale_remove_alert">"确认将选中会员从%s名下移除?"</string>
+
+  <string formatted="false" name="sales_sb">销售: %s</string>
+  <string name="has_send">已发送</string>
+  <string name="draft">草稿</string>
+  <string name="search_sms_hint">搜索短信内容/收件人</string>
+
+  <string name="common_send">发送</string>
+
+  <string name="detail">详情</string>
+  <string name="hide">隐藏</string>
+  <string name="err_shortmsg_content_null">短信内容不能为空</string>
+  <string name="err_shortmsg_to_null">收件人不能为空</string>
+  <string name="send">发送</string>
+  <string formatted="false" name="qc_sms_begin">【青橙科技】</string>
+
 </resources>

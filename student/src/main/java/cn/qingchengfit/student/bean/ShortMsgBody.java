@@ -1,4 +1,4 @@
-package cn.qingchengfit.model.body;
+package cn.qingchengfit.student.bean;
 
 /**
  * power by

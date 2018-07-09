@@ -8,7 +8,7 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_simple_toolbar"/>
 
   <ScrollView
       android:layout_width="match_parent"
@@ -67,8 +67,8 @@
 
       <LinearLayout
           android:layout_width="match_parent"
+          android:background="@color/bg_white"
           android:layout_height="wrap_content"
-          android:background="@drawable/top_line_left_16dp"
           android:minHeight="50dp"
           android:orientation="horizontal"
           android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -96,7 +96,7 @@
           android:id="@+id/layout_sender"
           android:layout_width="match_parent"
           android:layout_height="68dp"
-          android:background="@drawable/top_line_left_16dp"
+          android:background="@color/bg_white"
           android:gravity="center_vertical"
           android:orientation="horizontal"
           android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -172,7 +172,7 @@
       android:layout_width="match_parent"
       android:layout_height="50dp"
       android:layout_gravity="bottom"
-      android:background="@drawable/bg_rect_grey"
+      android:background="@drawable/bg_rect_corner_grey"
       android:baselineAligned="true"
       android:orientation="horizontal"
       android:paddingTop="1dp"
@@ -233,7 +233,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/edit"
+          android:text="编辑"
           style="@style/Qc.TextCommonBlack"
           />
     </LinearLayout>

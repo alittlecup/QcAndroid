@@ -78,7 +78,7 @@ import cn.qingchengfit.staffkit.views.ChooseBrandActivity;
 import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.EditTextActivity;
-import cn.qingchengfit.staffkit.views.FlexableListFragment;
+import cn.qingchengfit.saascommon.widget.FlexableListFragment;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.GuideChooseBrandAcitivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;

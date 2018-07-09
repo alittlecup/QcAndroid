@@ -1,11 +1,22 @@
 package cn.qingchengfit.student.respository;
 
+import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.ShortMsgBody;
+import cn.qingchengfit.student.bean.ShortMsgDetail;
+import cn.qingchengfit.student.bean.ShortMsgList;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import java.util.HashMap;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -261,4 +272,26 @@ public interface StudentApi {
 //    Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(
 //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 //
+
+    /**
+     * 短信部分
+     */
+    @GET("/api/staffs/{staffid}/group/messages/?order_by=-created_at")Flowable<QcDataResponse<ShortMsgList>> qcQueryShortMsgList(
+        @Path("staffid") String id, @IntRange(from = 1, to = 2) @Query("status") Integer status, @QueryMap HashMap<String, Object> params);
+
+    @GET("/api/staffs/{staffid}/group/message/detail/") Flowable<QcDataResponse<ShortMsgDetail>> qcQueryShortMsgDetail(
+        @Path("staffid") String id, @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
+
+
+    /**
+     * 短信相关
+     */
+    @POST("/api/staffs/{staffid}/group/messages/") Flowable<QcResponse> qcPostShortMsg(@Path("staffid") String staffid,
+        @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
+
+    @DELETE("/api/staffs/{staffid}/group/message/detail/")Flowable<QcResponse> qcDelShortMsg(@Path("staffid") String staffid,
+        @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
+
+    @PUT("/api/staffs/{staffid}/group/message/detail/") Flowable<QcResponse> qcPutShortMsg(@Path("staffid") String staffid,
+        @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
 }

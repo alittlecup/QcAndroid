@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.items;
+package cn.qingchengfit.student.item;
 
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
@@ -7,10 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import cn.qingchengfit.model.responese.ShortMsg;
-import cn.qingchengfit.saasbase.R;
-
+import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.ShortMsg;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.utils.FlexibleUtils;
