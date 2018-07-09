@@ -191,6 +191,7 @@ task buildWithAP(dependsOn: build) {}
 dependencies {
   implementation project(path: ':saasbase')
   implementation project(path: ':shop')
+  implementation project(path: ':login')
 //  implementation project(path: ':checkout')
   //  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
