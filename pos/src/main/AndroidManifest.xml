@@ -169,7 +169,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="cn.qingchengfit.saasbase.qrcode.views.QRActivity">
+    <activity android:name="cn.qingchengfit.saascommon.qrcode.views.QRActivity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
 

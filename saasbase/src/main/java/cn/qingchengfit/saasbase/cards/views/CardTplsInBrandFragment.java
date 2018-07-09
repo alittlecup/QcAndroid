@@ -7,7 +7,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplListInBrandPresenter;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;

@@ -20,7 +20,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.WebActivity;

@@ -30,7 +30,7 @@ import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
-import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
+import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.report.bean.GymCardtpl;

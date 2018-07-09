@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.items.SimpleTextItemItem;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.signin.zq.event.EventAddZq;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;

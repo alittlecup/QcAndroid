@@ -9,8 +9,9 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.model.QrEvent;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.views.activity.WebActivity;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -85,7 +86,7 @@ public class CardProtocolActivity extends WebActivity{
   }
 
   private void initBus(){
-    RxBus.getBus().register(OnBackEvent.class)
+    RxBus.getBus().register(QrEvent.class)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .subscribe(onBackEvent -> finish());

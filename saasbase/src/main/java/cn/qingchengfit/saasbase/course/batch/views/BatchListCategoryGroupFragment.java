@@ -18,7 +18,7 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseSchedule;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;

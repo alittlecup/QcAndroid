@@ -3,4 +3,10 @@
   <string name="unit_yuan">元</string>
   <string name="unit_time">次</string>
   <string name="unit_day">天</string>
+  <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
+  <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
+
+  <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
+  <string name="scan_url">sao.qingchengfit.cn</string>
+  <string name="realy_open_next">我已经打开，下一步</string>
 </resources>

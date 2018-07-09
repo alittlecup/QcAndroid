@@ -33,7 +33,7 @@ import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
 import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
 import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;

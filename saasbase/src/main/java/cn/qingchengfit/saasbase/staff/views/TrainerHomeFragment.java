@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.presenter.TrainerHomePresenter;
 import cn.qingchengfit.views.DialogSheet;
 import com.anbillon.flabellum.annotations.Leaf;

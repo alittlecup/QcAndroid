@@ -152,9 +152,9 @@ public class ItemFilterList extends AbstractFlexibleItem<ItemFilterList.FilterLi
 
     public FilterListVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      recyclerFilterList = (RecyclerView) view.findViewById(R.id.recycler_filter_list);
-      tvFilterShowAll = (TextView) view.findViewById(R.id.tv_filter_show_all);
-      tvFilterListTitle = (TextView) view.findViewById(R.id.tv_filter_list_title);
+      recyclerFilterList = view.findViewById(R.id.recycler_filter_list);
+      tvFilterShowAll = view.findViewById(R.id.tv_filter_show_all);
+      tvFilterListTitle = view.findViewById(R.id.tv_filter_list_title);
 
       tvFilterShowAll.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {

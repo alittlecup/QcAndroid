@@ -9,7 +9,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.views.CardBalanceFragment;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.DialogUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.IFlexible;

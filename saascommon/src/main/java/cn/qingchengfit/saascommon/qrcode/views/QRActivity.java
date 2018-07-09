@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.qrcode.views;
+package cn.qingchengfit.saascommon.qrcode.views;
 
 import android.Manifest;
 import android.content.Context;
@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.qingchengfit.saascommon.R;
+import cn.qingchengfit.saascommon.network.SaasCommonApi;
+import cn.qingchengfit.saascommon.qrcode.model.QrEvent;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -25,12 +28,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
-import cn.qingchengfit.saasbase.repository.PostApi;
+import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -353,12 +353,12 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saas_qr);
-      toolbar = (Toolbar) findViewById(R.id.toolbar);
-      toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
-      done = (LinearLayout) findViewById(R.id.done);
-      layoutNext = (LinearLayout) findViewById(R.id.layout_next);
-      root = (LinearLayout) findViewById(R.id.root);
-      rootView = (RelativeLayout) findViewById(R.id.root_view);
+      toolbar = findViewById(R.id.toolbar);
+      toolbarTitile = findViewById(R.id.toolbar_title);
+      done = findViewById(R.id.done);
+      layoutNext = findViewById(R.id.layout_next);
+      root = findViewById(R.id.root);
+      rootView = findViewById(R.id.root_view);
       findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           onClickNext();
@@ -425,7 +425,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         } else if (getIntent() != null && getIntent().hasExtra(LINK_URL)) {
             url = getIntent().getStringExtra(LINK_URL);
         }
-        sp = restRepository.createPostApi(PostApi.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
+        sp = restRepository.createPostApi(SaasCommonApi.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
             .build())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -443,7 +443,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
                 if (ResponseConstant.checkSuccess(qcResponse)) {
                     done.setVisibility(View.VISIBLE);
                     toolbarTitile.setText("扫码成功");
-                    RxBus.getBus().post(new OnBackEvent());
+                    RxBus.getBus().post(new QrEvent());
                 } else {
                     DialogUtils.instanceDelDialog(QRActivity.this, getString(R.string.err_sacn_qrcode),
                         (dialog, which) -> {

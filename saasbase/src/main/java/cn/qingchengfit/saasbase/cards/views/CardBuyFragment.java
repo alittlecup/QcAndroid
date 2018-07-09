@@ -34,7 +34,7 @@ import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;

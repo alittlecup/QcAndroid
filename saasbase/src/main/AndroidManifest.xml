@@ -20,7 +20,7 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name=".qrcode.views.QRActivity">
+    <activity android:name="cn.qingchengfit.saascommon.qrcode.views.QRActivity">
 
     </activity>
     <activity android:name=".cards.views.CardProtocolActivity"/>

@@ -32,7 +32,7 @@ import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.saasbase.chat.model.Record;
 import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.saasbase.items.SystemMsgItem;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;

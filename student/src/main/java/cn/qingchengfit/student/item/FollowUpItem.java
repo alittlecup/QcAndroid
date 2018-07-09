@@ -66,7 +66,7 @@ public class FollowUpItem extends AbstractFlexibleItem<DataBindingViewHolder<Ite
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, DataBindingViewHolder<ItemStudentFollowUpStateBinding> holder, int position, List payloads) {
         holder.itemView.setTag(data);
-        ItemStudentFollowUpStateBinding binding = (ItemStudentFollowUpStateBinding) holder.getDataBinding();
+        ItemStudentFollowUpStateBinding binding = holder.getDataBinding();
 
         PhotoUtils.smallCircle(binding.itemPersonHeader,data.avatar);
 
@@ -135,7 +135,6 @@ public class FollowUpItem extends AbstractFlexibleItem<DataBindingViewHolder<Ite
     }
 
     @Override public boolean filter(String constraint) {
-        if (data.username.contains(constraint) || data.phone.contains(constraint)) return true;
-        return false;
+      return data.username.contains(constraint) || data.phone.contains(constraint);
     }
 }

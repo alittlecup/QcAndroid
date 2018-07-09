@@ -90,7 +90,7 @@ public class StudentFilterViewModel extends BaseViewModel implements ItemFilterT
             List<Content> checkedContent = ((ItemFilterCommon) item).getCheckedContent();
             String key = ((ItemFilterCommon) item).getData().key;
             if (checkedContent.isEmpty()) {
-                if (filterMap.containsKey(key)) filterMap.remove(key);
+              filterMap.remove(key);
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (Content content : checkedContent) {
@@ -102,7 +102,7 @@ public class StudentFilterViewModel extends BaseViewModel implements ItemFilterT
             String selectedUser = ((ItemFilterList) item).getSelectedUser();
             String key = ((ItemFilterList) item).getFilterModel().key;
             if (StringUtils.isEmpty(selectedUser)) {
-                if (filterMap.containsKey(key)) filterMap.remove(key);
+              filterMap.remove(key);
             } else {
                 filterMap.put(key, selectedUser);
             }
@@ -110,7 +110,7 @@ public class StudentFilterViewModel extends BaseViewModel implements ItemFilterT
             String selectedUser = ((ItemFilterRecommend) item).getSelectedSaler();
             String key = ((ItemFilterRecommend) item).getFilterModel().key;
             if (StringUtils.isEmpty(selectedUser)) {
-                if (filterMap.containsKey(key)) filterMap.remove(key);
+              filterMap.remove(key);
             } else {
                 filterMap.put(key, selectedUser);
             }
@@ -118,7 +118,7 @@ public class StudentFilterViewModel extends BaseViewModel implements ItemFilterT
             String selectedUser = ((ItemFilterSalerGrid) item).getSelectedSaler();
             String key = ((ItemFilterSalerGrid) item).getFilterModel().key;
             if (StringUtils.isEmpty(selectedUser)) {
-                if (filterMap.containsKey(key)) filterMap.remove(key);
+              filterMap.remove(key);
             } else {
                 filterMap.put(key, selectedUser);
             }

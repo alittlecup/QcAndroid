@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven'
-def libs = rootProject.ext.libraries;
-def cfg = rootProject.ext.configuration;
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
 
 android {
   compileSdkVersion cfg.compileVersion

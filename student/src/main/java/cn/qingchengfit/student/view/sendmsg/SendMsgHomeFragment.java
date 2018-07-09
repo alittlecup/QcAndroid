@@ -95,12 +95,12 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_send_msg_home, container, false);
-    tabview = (TabLayout) view.findViewById(R.id.tabview);
-    viewpager = (ViewPager) view.findViewById(R.id.viewpager);
-    etSearch = (EditText) view.findViewById(R.id.et_search);
-    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-    searchviewClear = (ImageView) view.findViewById(R.id.search_clear);
+    tabview = view.findViewById(R.id.tabview);
+    viewpager = view.findViewById(R.id.viewpager);
+    etSearch = view.findViewById(R.id.et_search);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitile = view.findViewById(R.id.toolbar_title);
+    searchviewClear = view.findViewById(R.id.search_clear);
     view.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         addMsg();

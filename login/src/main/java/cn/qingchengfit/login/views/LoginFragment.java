@@ -92,13 +92,13 @@ public class LoginFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.f_login, container, false);
-    mForgetpwBtn = (ToggleButton) view.findViewById(R.id.forgetpw_btn);
-    mLoginBtn = (Button) view.findViewById(R.id.login_btn);
-    rootView = (LinearLayout) view.findViewById(R.id.root_view);
-    loginPhone = (PhoneEditText) view.findViewById(R.id.login_phone);
-    pwView = (PasswordView) view.findViewById(R.id.pw_view);
-    btnAgreeProtocol = (CheckBox) view.findViewById(R.id.btn_agree_protocol);
-    layoutProtocol = (LinearLayout) view.findViewById(R.id.layout_protocol);
+    mForgetpwBtn = view.findViewById(R.id.forgetpw_btn);
+    mLoginBtn = view.findViewById(R.id.login_btn);
+    rootView = view.findViewById(R.id.root_view);
+    loginPhone = view.findViewById(R.id.login_phone);
+    pwView = view.findViewById(R.id.pw_view);
+    btnAgreeProtocol = view.findViewById(R.id.btn_agree_protocol);
+    layoutProtocol = view.findViewById(R.id.layout_protocol);
     view.findViewById(R.id.btn_agree_protocol).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onAgree();
@@ -241,10 +241,7 @@ public class LoginFragment extends BaseFragment
   public static boolean isStartWithNumber(String str) {
     Pattern pattern = Pattern.compile("[0-9]*");
     Matcher isNum = pattern.matcher(str.charAt(0)+"");
-    if (!isNum.matches()) {
-      return false;
-    }
-    return true;
+    return isNum.matches();
   }
 
  public void onAgree() {

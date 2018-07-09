@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.ViewBottomShopCategoryBinding;

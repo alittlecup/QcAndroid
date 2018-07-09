@@ -27,7 +27,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;

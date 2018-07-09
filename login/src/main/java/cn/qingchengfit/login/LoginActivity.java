@@ -43,8 +43,8 @@ public class LoginActivity extends BaseActivity implements HasSupportFragmentInj
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    viewpager = (ViewPager) findViewById(R.id.viewpager);
-    loginTabview = (TabLayout) findViewById(R.id.login_tabview);
+    viewpager = findViewById(R.id.viewpager);
+    loginTabview = findViewById(R.id.login_tabview);
 
     if (!CompatUtils.less21() ) {
       loginTabview.setPadding(0,

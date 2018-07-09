@@ -96,13 +96,13 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_msg_send, container, false);
-    layoutTags = (QcTagContainerLayout) view.findViewById(R.id.layout_tags);
-    etContent = (EditText) view.findViewById(R.id.et_content);
-    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-    tvLeft = (TextView) view.findViewById(R.id.tv_left);
-    tvSmsCount = (TextView) view.findViewById(R.id.tv_sms_count);
-    layoutSendHint = (RelativeLayout) view.findViewById(R.id.layout_send_hint);
+    layoutTags = view.findViewById(R.id.layout_tags);
+    etContent = view.findViewById(R.id.et_content);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitile = view.findViewById(R.id.toolbar_title);
+    tvLeft = view.findViewById(R.id.tv_left);
+    tvSmsCount = view.findViewById(R.id.tv_sms_count);
+    layoutSendHint = view.findViewById(R.id.layout_send_hint);
     view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onClickAdd();

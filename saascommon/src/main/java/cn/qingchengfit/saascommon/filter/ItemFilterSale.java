@@ -72,10 +72,10 @@ public class ItemFilterSale extends AbstractFlexibleItem<ItemFilterSale.FilterSa
 
     public FilterSaleVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      filterSellerHead = (ImageView) view.findViewById(R.id.filter_seller_head);
-      tvFilterSellerName = (TextView) view.findViewById(R.id.tv_filter_seller_name);
-      tvFilterSellerPhone = (TextView) view.findViewById(R.id.tv_filter_seller_phone);
-      imgHook = (ImageView) view.findViewById(R.id.img_hook);
+      filterSellerHead = view.findViewById(R.id.filter_seller_head);
+      tvFilterSellerName = view.findViewById(R.id.tv_filter_seller_name);
+      tvFilterSellerPhone = view.findViewById(R.id.tv_filter_seller_phone);
+      imgHook = view.findViewById(R.id.img_hook);
     }
   }
 }

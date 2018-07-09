@@ -277,10 +277,7 @@ class RemoteParamUtil {
     private static boolean keepSerializable(Object value) {
         if(value instanceof Serializable) {
             Class<?> clazz = value.getClass();
-            if (CONVERT_NEEDLESS_CLASSES.contains(clazz)) {
-                //基础数据类型和基础数据类型的数组不需要json转换
-                return true;
-            }
+          return CONVERT_NEEDLESS_CLASSES.contains(clazz);
         }
         return false;
     }

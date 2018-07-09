@@ -42,7 +42,7 @@ import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;

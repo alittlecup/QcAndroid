@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
-def libs = rootProject.ext.libraries;
-def cfg = rootProject.ext.configuration;
+apply from: rootProject.file('qc_upload_maven.gradle')
+
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
 android {
   compileSdkVersion 27
 
@@ -35,8 +37,9 @@ android {
 }
 
 dependencies {
-  api project(':router')
   api 'cn.qingchengfit.widgets:qcbase:1.0.180601'
+
+  api 'cn.qingchengfit.router:router:1.0.180709'
 
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 

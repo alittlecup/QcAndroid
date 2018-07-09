@@ -141,9 +141,9 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
 
     public ItemFilterTimeVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      billFilterTitle = (TextView) view.findViewById(R.id.bill_filter_title);
-      tvStudentFilterTimeStart = (TextView) view.findViewById(R.id.tv_student_filter_time_start);
-      tvStudentFilterTimeEnd = (TextView) view.findViewById(R.id.tv_student_filter_time_end);
+      billFilterTitle = view.findViewById(R.id.bill_filter_title);
+      tvStudentFilterTimeStart = view.findViewById(R.id.tv_student_filter_time_start);
+      tvStudentFilterTimeEnd = view.findViewById(R.id.tv_student_filter_time_end);
     }
   }
 

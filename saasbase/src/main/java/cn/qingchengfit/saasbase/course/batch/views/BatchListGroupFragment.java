@@ -18,7 +18,7 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;

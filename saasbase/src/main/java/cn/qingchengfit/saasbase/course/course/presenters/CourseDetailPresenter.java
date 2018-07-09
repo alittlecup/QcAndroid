@@ -13,7 +13,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.bean.TeacherImpression;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;

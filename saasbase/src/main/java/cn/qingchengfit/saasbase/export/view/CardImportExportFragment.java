@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 
 @Leaf(module = "export",path = "/card/")

@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.qingchengfit.saascommon"/>
+    package="cn.qingchengfit.saascommon">
+  <application>
+    <activity android:name=".qrcode.views.QRActivity">
+
+    </activity>
+  </application>
+</manifest>

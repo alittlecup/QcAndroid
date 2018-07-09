@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.repository;
+package cn.qingchengfit.saascommon.permission;
 
 import java.util.List;
 

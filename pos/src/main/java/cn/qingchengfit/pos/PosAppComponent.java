@@ -12,7 +12,7 @@ import cn.qingchengfit.pos.di.BindPosStaffActivity;
 import cn.qingchengfit.pos.di.BindPosStudentActivity;
 import cn.qingchengfit.pos.di.BindSettingActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;

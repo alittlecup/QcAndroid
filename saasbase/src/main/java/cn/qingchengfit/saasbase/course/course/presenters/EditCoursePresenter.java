@@ -9,7 +9,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;

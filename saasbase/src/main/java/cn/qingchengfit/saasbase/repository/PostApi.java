@@ -15,7 +15,7 @@ import cn.qingchengfit.saasbase.network.body.SystemInitBody;
 import cn.qingchengfit.saasbase.network.response.CreatBrand;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
-import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
+import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
@@ -82,11 +82,6 @@ public interface PostApi {
   @POST("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<CoachResponse>> qcAddCoach(@Path("id") String id,
       @Query("id") String gymid, @Query("model") String model, @Body Staff coach);
 
-  /**
-   * 扫描二维码
-   */
-  @PUT("/api/scans/{uuid}/") rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body
-      ScanBody body);
 
   /**
    * 验证验证码

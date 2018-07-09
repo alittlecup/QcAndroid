@@ -87,7 +87,7 @@ public class StudentListView
 
   public void selectAll(boolean selectedAll) {
     if (selectedAll) {
-      adapter.selectAll(new Integer[0]);
+      adapter.selectAll();
     } else {
       adapter.clearSelection();
     }

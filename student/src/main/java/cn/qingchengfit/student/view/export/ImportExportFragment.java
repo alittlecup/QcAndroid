@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.export;
+package cn.qingchengfit.student.view.export;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,49 +10,47 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
-import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
+import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PermissionUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.anbillon.flabellum.annotations.Leaf;
 import java.util.List;
 import javax.inject.Inject;
 
 /**
  * Created by fb on 2017/9/6.
  */
-
-public class ImportExportFragment extends BaseFragment implements ImportExportPresenter.MVPView {
+@Leaf(module = "student", path = "/student/export") public class ImportExportFragment
+    extends BaseFragment implements ImportExportPresenter.MVPView {
 
   public static final String STUDENT_EXPORT_STR = "member";
   public static final String CARD_EXPORT_STR = "member_card";
 
   @Inject GymWrapper gymWrapper;
-  @Inject SerPermisAction serPermisAction;
-	public TextView tvStudentImport;
-	public TextView tvStudentExport;
+  @Inject IPermissionModel permissionModel;
+  public TextView tvStudentImport;
+  public TextView tvStudentExport;
   @Inject public ImportExportPresenter presenter;
-	Toolbar toolbar;
+  Toolbar toolbar;
 
   public TextView toolbarTitle;
-	FrameLayout toolbarLayout;
+  FrameLayout toolbarLayout;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_import_export, container, false);
-    tvStudentImport = (TextView) view.findViewById(R.id.tv_import);
-    tvStudentExport = (TextView) view.findViewById(R.id.tv_export);
-    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-    toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
-    toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
+    tvStudentImport = view.findViewById(R.id.tv_import);
+    tvStudentExport = view.findViewById(R.id.tv_export);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitle = view.findViewById(R.id.toolbar_title);
+    toolbarLayout = view.findViewById(R.id.toolbar_layout);
     view.findViewById(R.id.tv_import).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onImport();
@@ -70,9 +68,8 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
     return view;
   }
 
- public void onImport() {
-    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-        PermissionServerUtils.STUDENT_IMPORT)) {
+  public void onImport() {
+    if (!permissionModel.check(PermissionServerUtils.STUDENT_IMPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
     }
@@ -91,8 +88,8 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
     startActivity(toScan);
   }
 
- public void onExport() {
-    if (!serPermisAction.check(PermissionServerUtils.STUDENT_EXPORT)) {
+  public void onExport() {
+    if (!permissionModel.check(PermissionServerUtils.STUDENT_EXPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
     }
@@ -107,17 +104,9 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
     super.onDestroyView();
   }
 
-  @Override public void onExportRecord(List<ExportRecord> record) {
-
-  }
-
   @Override public void onExportSuccess() {
     DialogUtils.instanceDelDialog(getContext(),
         getResources().getString(R.string.tip_dialog_success_title),
         getResources().getString(R.string.tip_dialog_success_content), null).show();
-  }
-
-  @Override public void onSendEmailSuccess() {
-
   }
 }

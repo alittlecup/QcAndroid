@@ -115,10 +115,7 @@ import javax.inject.Inject;
       routeTo("/student/sendmsg/", null);
     });
     mBinding.commExportImport.setOnClickListener(view -> {
-      // TODO: 2018/6/19 同样位于staff
-      //Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
-      //exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
-      //startActivity(exportIntent);
+      routeTo("/student/export", null);
     });
     mBinding.tvAllStudent.setOnClickListener(view -> {
       routeTo("/student/all", null);

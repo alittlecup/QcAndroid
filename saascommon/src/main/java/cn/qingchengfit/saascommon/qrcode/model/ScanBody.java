@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.qrcode.model;
+package cn.qingchengfit.saascommon.qrcode.model;
 
 /**
  * power by

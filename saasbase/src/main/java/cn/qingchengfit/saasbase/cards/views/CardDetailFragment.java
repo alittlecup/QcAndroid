@@ -26,7 +26,7 @@ import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordParams;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;

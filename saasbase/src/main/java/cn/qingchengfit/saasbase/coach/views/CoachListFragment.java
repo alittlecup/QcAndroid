@@ -14,7 +14,7 @@ import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
 import cn.qingchengfit.saasbase.staff.items.CommonUserItem;

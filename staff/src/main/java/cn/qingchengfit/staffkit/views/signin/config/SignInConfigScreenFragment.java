@@ -19,7 +19,7 @@ import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;

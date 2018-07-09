@@ -120,16 +120,16 @@ public class AllotMultiStaffItem extends AbstractFlexibleItem<AllotMultiStaffIte
 
         public ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-          itemStudentModifyAlpha = (TextView) view.findViewById(R.id.item_student_modify_alpha);
-          itemCheckbox = (CheckBox) view.findViewById(R.id.item_checkbox);
-          itemDelete = (ImageView) view.findViewById(R.id.item_delete);
-          itemPersonHeader = (ImageView) view.findViewById(R.id.item_person_header);
-          itemPersonName = (TextView) view.findViewById(R.id.item_person_name);
-          itemPersonGender = (ImageView) view.findViewById(R.id.item_person_gender);
-          tvReferrerCount = (TextView) view.findViewById(R.id.tv_referrer_count);
-          itemPersonPhonenum = (TextView) view.findViewById(R.id.item_person_phonenum);
-          itemPersonDesc = (TextView) view.findViewById(R.id.item_person_desc);
-          status = (TextView) view.findViewById(R.id.status);
+          itemStudentModifyAlpha = view.findViewById(R.id.item_student_modify_alpha);
+          itemCheckbox = view.findViewById(R.id.item_checkbox);
+          itemDelete = view.findViewById(R.id.item_delete);
+          itemPersonHeader = view.findViewById(R.id.item_person_header);
+          itemPersonName = view.findViewById(R.id.item_person_name);
+          itemPersonGender = view.findViewById(R.id.item_person_gender);
+          tvReferrerCount = view.findViewById(R.id.tv_referrer_count);
+          itemPersonPhonenum = view.findViewById(R.id.item_person_phonenum);
+          itemPersonDesc = view.findViewById(R.id.item_person_desc);
+          status = view.findViewById(R.id.status);
         }
     }
 }

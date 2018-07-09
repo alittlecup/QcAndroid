@@ -30,7 +30,7 @@ import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.adapter.StaffAdapter;
 import cn.qingchengfit.saasbase.staff.common.StaffConstant;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;

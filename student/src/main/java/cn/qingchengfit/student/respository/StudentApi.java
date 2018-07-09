@@ -294,4 +294,9 @@ public interface StudentApi {
 
     @PUT("/api/staffs/{staffid}/group/message/detail/") Flowable<QcResponse> qcPutShortMsg(@Path("staffid") String staffid,
         @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
+
+    //导入导出
+    @POST("/api/staffs/{staff_id}/export/do/") Flowable<QcDataResponse> qcDataImport(
+        @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
+
 }

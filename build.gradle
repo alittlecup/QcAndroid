@@ -37,7 +37,7 @@ ext {
 }
 /**
  *  打印超过50ms的任务*/
-public class BuildTimeListener implements TaskExecutionListener, BuildListener {
+class BuildTimeListener implements TaskExecutionListener, BuildListener {
   private Date clock
   private times = []
 

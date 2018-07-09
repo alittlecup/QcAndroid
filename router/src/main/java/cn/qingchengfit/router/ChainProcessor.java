@@ -18,7 +18,7 @@ class ChainProcessor implements Callable<QCResult> {
     }
 
     @Override
-    public QCResult call() throws Exception {
+    public QCResult call() {
         QC qc = chain.getQC();
         String callId = qc.getCallId();
         //从开始调用的时候就开始进行监控，也许时间设置的很短，可能都不需要执行拦截器调用链

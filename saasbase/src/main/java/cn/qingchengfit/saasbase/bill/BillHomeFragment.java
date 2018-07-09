@@ -31,7 +31,7 @@ import cn.qingchengfit.saasbase.bill.items.ItemMoreFooter;
 import cn.qingchengfit.saasbase.bill.presenter.BillSummary;
 import cn.qingchengfit.saasbase.bill.presenter.BillTotalPresenter;
 import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;

@@ -9,6 +9,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentActivity;
 import cn.qingchengfit.student.StudentViewModel;
@@ -20,6 +21,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
+import java.util.List;
 import javax.inject.Singleton;
 
 /**
@@ -60,5 +62,25 @@ import javax.inject.Singleton;
 
   @Provides static QcRestRepository provideQcRestRepository(Application application) {
     return new QcRestRepository(application, Configs.Server, "staff-qingcheng");
+  }
+
+  @Provides static IPermissionModel providePermission() {
+    return new IPermissionModel() {
+      @Override public boolean check(String permission) {
+        return true;
+      }
+
+      @Override public boolean checkAllGym(String permission) {
+        return false;
+      }
+
+      @Override public boolean checkInBrand(String permission) {
+        return false;
+      }
+
+      @Override public boolean check(String permission, List<String> shopids) {
+        return false;
+      }
+    };
   }
 }

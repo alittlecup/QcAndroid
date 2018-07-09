@@ -114,14 +114,14 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH>
 
     public StudentVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      itemStudentHeader = (ImageView) view.findViewById(R.id.item_student_header);
-      itemStudentName = (TextView) view.findViewById(R.id.item_student_name);
-      itemStudentGender = (ImageView) view.findViewById(R.id.item_student_gender);
-      itemTvStudentStatus = (TextView) view.findViewById(R.id.item_tv_student_status);
-      itemStudentPhonenum = (TextView) view.findViewById(R.id.item_student_phonenum);
-      itemStudentGymname = (TextView) view.findViewById(R.id.item_student_gymname);
-      iconRight = (ImageView) view.findViewById(R.id.icon_right);
-      cb = (CheckBox) view.findViewById(R.id.cb);
+      itemStudentHeader = view.findViewById(R.id.item_student_header);
+      itemStudentName = view.findViewById(R.id.item_student_name);
+      itemStudentGender = view.findViewById(R.id.item_student_gender);
+      itemTvStudentStatus = view.findViewById(R.id.item_tv_student_status);
+      itemStudentPhonenum = view.findViewById(R.id.item_student_phonenum);
+      itemStudentGymname = view.findViewById(R.id.item_student_gymname);
+      iconRight = view.findViewById(R.id.icon_right);
+      cb = view.findViewById(R.id.cb);
 
       cb.setClickable(false);
     }

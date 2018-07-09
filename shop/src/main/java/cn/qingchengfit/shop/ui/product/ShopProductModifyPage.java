@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;

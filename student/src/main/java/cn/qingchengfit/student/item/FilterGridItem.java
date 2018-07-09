@@ -99,9 +99,9 @@ public class FilterGridItem extends AbstractFlexibleItem<FilterGridItem.ChooseSt
 
         public ChooseStaffVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-          salerHeaderImg = (ImageView) view.findViewById(R.id.saler_header_img);
-          chooseImg = (ImageView) view.findViewById(R.id.choose_img);
-          salerNameTv = (TextView) view.findViewById(R.id.saler_name_tv);
+          salerHeaderImg = view.findViewById(R.id.saler_header_img);
+          chooseImg = view.findViewById(R.id.choose_img);
+          salerNameTv = view.findViewById(R.id.saler_name_tv);
         }
 
         @Override

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;

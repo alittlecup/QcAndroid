@@ -21,7 +21,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.beans.SalerData;
 import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.items.SalerDataItem;

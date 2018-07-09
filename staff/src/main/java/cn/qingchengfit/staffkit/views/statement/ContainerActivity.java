@@ -21,7 +21,7 @@ import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
 import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
 import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;

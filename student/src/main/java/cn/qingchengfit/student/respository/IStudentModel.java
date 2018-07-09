@@ -274,4 +274,8 @@ public interface IStudentModel {
 
   Flowable<QcResponse> qcPutShortMsg(String staffid, ShortMsgBody body,
       HashMap<String, Object> params);
+
+Flowable<QcDataResponse> qcDataImport(
+     String staff_id,  HashMap<String, Object> body);
+
 }

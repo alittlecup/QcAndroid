@@ -71,19 +71,19 @@ public class RegisteFragment extends BaseFragment implements LoginView {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.f_regist, container, false);
-    compleGenderLabel = (TextView) view.findViewById(R.id.comple_gender_label);
-    compleGenderMale = (RadioButton) view.findViewById(R.id.comple_gender_male);
-    compleGenderFemale = (RadioButton) view.findViewById(R.id.comple_gender_female);
-    compleGender = (RadioGroup) view.findViewById(R.id.comple_gender);
-    registeGender = (LinearLayout) view.findViewById(R.id.registe_gender);
-    registeBtn = (Button) view.findViewById(R.id.registe_btn);
-    registeRootview = (LinearLayout) view.findViewById(R.id.registe_rootview);
-    phoneNum = (PhoneEditText) view.findViewById(R.id.phone_num);
-    checkcode = (PasswordView) view.findViewById(R.id.checkcode);
-    password = (PasswordView) view.findViewById(R.id.password);
-    etUsername = (EditText) view.findViewById(R.id.et_username);
-    btnAgreeProtocol = (CheckBox) view.findViewById(R.id.btn_agree_protocol);
-    layoutProtocol = (LinearLayout) view.findViewById(R.id.layout_protocol);
+    compleGenderLabel = view.findViewById(R.id.comple_gender_label);
+    compleGenderMale = view.findViewById(R.id.comple_gender_male);
+    compleGenderFemale = view.findViewById(R.id.comple_gender_female);
+    compleGender = view.findViewById(R.id.comple_gender);
+    registeGender = view.findViewById(R.id.registe_gender);
+    registeBtn = view.findViewById(R.id.registe_btn);
+    registeRootview = view.findViewById(R.id.registe_rootview);
+    phoneNum = view.findViewById(R.id.phone_num);
+    checkcode = view.findViewById(R.id.checkcode);
+    password = view.findViewById(R.id.password);
+    etUsername = view.findViewById(R.id.et_username);
+    btnAgreeProtocol = view.findViewById(R.id.btn_agree_protocol);
+    layoutProtocol = view.findViewById(R.id.layout_protocol);
     view.findViewById(R.id.btn_login_wx).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         loginWx();

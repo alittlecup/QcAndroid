@@ -91,17 +91,17 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_send_msg_detail, container, false);
-    tvStudents = (TextView) view.findViewById(R.id.tv_students);
-    tvSaveTime = (TextView) view.findViewById(R.id.tv_save_time);
-    imgSend = (ImageView) view.findViewById(R.id.img_send);
-    tvSenderName = (TextView) view.findViewById(R.id.tv_sender_name);
-    tvSenderPhone = (TextView) view.findViewById(R.id.tv_sender_phone);
-    layoutSender = (LinearLayout) view.findViewById(R.id.layout_sender);
-    tvContent = (TextView) view.findViewById(R.id.tv_content);
-    layoutOpreate = (LinearLayout) view.findViewById(R.id.layout_opreate);
-    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-    labelSaveTime = (TextView) view.findViewById(R.id.label_save_time);
+    tvStudents = view.findViewById(R.id.tv_students);
+    tvSaveTime = view.findViewById(R.id.tv_save_time);
+    imgSend = view.findViewById(R.id.img_send);
+    tvSenderName = view.findViewById(R.id.tv_sender_name);
+    tvSenderPhone = view.findViewById(R.id.tv_sender_phone);
+    layoutSender = view.findViewById(R.id.layout_sender);
+    tvContent = view.findViewById(R.id.tv_content);
+    layoutOpreate = view.findViewById(R.id.layout_opreate);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitile = view.findViewById(R.id.toolbar_title);
+    labelSaveTime = view.findViewById(R.id.label_save_time);
     smsBegin = getString(R.string.qc_sms_begin);
     view.findViewById(R.id.btn_del).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

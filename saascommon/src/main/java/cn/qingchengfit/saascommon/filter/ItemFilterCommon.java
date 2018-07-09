@@ -120,8 +120,8 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
     public ItemFilterVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
-      billFilterCommon = (QcAutoLineRadioGroup) view.findViewById(R.id.filter_common);
-      billFilterTitle = (TextView) view.findViewById(R.id.filter_title);
+      billFilterCommon = view.findViewById(R.id.filter_common);
+      billFilterTitle = view.findViewById(R.id.filter_title);
 
       billFilterCommon.setSingleSelected(false);
       billFilterCommon.setOnCheckoutPositionListener(checkedList -> {

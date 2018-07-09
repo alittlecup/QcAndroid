@@ -104,6 +104,11 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcPutShortMsg(staffid, body, params);
   }
 
+  @Override
+  public Flowable<QcDataResponse> qcDataImport(String staff_id, HashMap<String, Object> body) {
+    return studentApi.qcDataImport(staff_id, body);
+  }
+
   //@Override
   //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params) {

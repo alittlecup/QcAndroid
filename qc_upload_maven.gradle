@@ -1,7 +1,7 @@
 apply plugin: 'maven'
 
 group "cn.qingchengfit.${project.name}".toString()
-version "1.0.$today"
+version "1.0.$today.2"
 
 uploadArchives {
   repositories {

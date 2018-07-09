@@ -84,11 +84,11 @@ public class ShortMsgItem extends AbstractFlexibleItem<ShortMsgItem.ShortMsgVH> 
 
     public ShortMsgVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
-      tvTitle = (TextView) view.findViewById(R.id.tv_title);
-      tvContent = (TextView) view.findViewById(R.id.tv_content);
-      imgStatus = (ImageView) view.findViewById(R.id.img_status);
-      tvStatus = (TextView) view.findViewById(R.id.tv_status);
-      tvTime = (TextView) view.findViewById(R.id.tv_time);
+      tvTitle = view.findViewById(R.id.tv_title);
+      tvContent = view.findViewById(R.id.tv_content);
+      imgStatus = view.findViewById(R.id.img_status);
+      tvStatus = view.findViewById(R.id.tv_status);
+      tvTime = view.findViewById(R.id.tv_time);
     }
   }
 }

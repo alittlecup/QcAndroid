@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply from: rootProject.file('qc_upload_maven.gradle')
+
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 android {

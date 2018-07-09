@@ -11,7 +11,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
