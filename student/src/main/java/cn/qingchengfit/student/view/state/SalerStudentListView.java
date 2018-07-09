@@ -30,6 +30,10 @@ public class SalerStudentListView extends SaasCommonFragment {
     return root;
   }
 
+  @Override public boolean isBlockTouch() {
+    return false;
+  }
+
   public void setItems(List<? extends AbstractFlexibleItem> items) {
     if (adapter != null) {
       adapter.updateDataSet(items);

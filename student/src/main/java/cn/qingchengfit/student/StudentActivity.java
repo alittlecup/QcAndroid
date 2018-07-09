@@ -21,18 +21,22 @@ import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentHomePage;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
+import cn.qingchengfit.student.view.sendmsg.MsgSendFragmentFragment;
+import cn.qingchengfit.student.view.sendmsg.SendMsgHomeFragment;
+import cn.qingchengfit.student.view.sendmsg.ShortMsgDetailFragment;
 import cn.qingchengfit.student.view.state.StudentStateInfoPage;
 import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
 @Trunk(fragments = {
-    StudentFilterView.class,
-    StudentHomePage.class, StudentAllPage.class,
+    StudentFilterView.class, StudentHomePage.class, StudentAllPage.class,
     StudentRecyclerSortView.class, StudentListView.class, StudentAllotPage.class,
     IncreaseStudentSortView.class, IncreaseStudentTopView.class, IncreaseStudentPage.class,
     IncreaseMemberTopView.class, IncreaseMemberPage.class, StudentStateInfoPage.class,
-    StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordPage.class,FollowRecordStatusPage.class
-
+    StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordPage.class,
+    FollowRecordStatusPage.class,
+    SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
+    MsgSendFragmentFragment.class,
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 

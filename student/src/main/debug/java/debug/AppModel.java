@@ -10,6 +10,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.StudentActivity;
 import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.respository.StudentModel;
@@ -18,6 +19,7 @@ import cn.qingchengfit.student.respository.StudentRepositoryImpl;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
 import javax.inject.Singleton;
 
 /**
@@ -35,32 +37,24 @@ import javax.inject.Singleton;
  */
 @Module public abstract class AppModel {
 
+  static LoginStatus loginStatus = new LoginStatus.Builder().build();
+  static GymWrapper gymWrapper = new GymWrapper.Builder().build();
 
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
-
   @Provides static LoginStatus provideLogin() {
-    LoginStatus build = new LoginStatus.Builder().build();
-    Staff staff=new Staff();
-    staff.setId("7505");
-    build.setLoginUser(staff);
-    build.setSession("zmypzucc4rd115a2ny8xjwziom0zkgus");
-    build.setUserId("54405");
-    return build;
+
+    return loginStatus;
   }
 
-
+  @Singleton @ContributesAndroidInjector
+  abstract SplashActivity contributeStudentActivityInjector();
 
   @Provides static Application providesApplication() {
     return MyApp.INSTANCE;
   }
 
-   @Provides static GymWrapper provideGym() {
-    GymWrapper gymWrapper = new GymWrapper.Builder().build();
-    CoachService coachService = new CoachService();
-    coachService.setId("10548");
-    coachService.setModel("staff_gym");
-    gymWrapper.setCoachService(coachService);
+  @Provides static GymWrapper provideGym() {
     return gymWrapper;
   }
 

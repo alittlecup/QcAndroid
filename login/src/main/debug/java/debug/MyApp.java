@@ -32,7 +32,7 @@ public class MyApp extends Application implements HasActivityInjector {
     INSTANCE = this;
     Timber.plant(new Timber.DebugTree());
     DaggerAppComponent.builder()
-      .baseModel(new LoginDepModel(this,new BaseRouter(),new QcRestRepository(this, Configs.Server,"qc-test")))
+      .loginDepModel(new LoginDepModel(this,new BaseRouter(),new QcRestRepository(this, Configs.Server,"qc-test")))
       .build().inject(this);
     QcRouteUtil.init(this);
     ToastUtils.init(this);

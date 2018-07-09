@@ -117,7 +117,7 @@ public class SplashActivity extends AppCompatActivity {
             sp = restRepository.getGet_api()
                 .qcGetSelfInfo(staffid).delay(2500, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())l
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(staffResponseQcResponseData -> {
                     if (ResponseConstant.checkSuccess(staffResponseQcResponseData)) {

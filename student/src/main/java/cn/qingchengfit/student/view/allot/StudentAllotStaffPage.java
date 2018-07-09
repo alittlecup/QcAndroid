@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.allot;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.databinding.PageStudentAllotStaffBinding;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.view.state.SalerStudentListView;
@@ -16,8 +18,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
 import java.util.List;
 
-@Leaf(module = "student",path = "/student/allotstaff")
-public class StudentAllotStaffPage
+@Leaf(module = "student", path = "/student/allotstaff") public class StudentAllotStaffPage
     extends StudentBaseFragment<PageStudentAllotStaffBinding, AllotListViewModel> {
   List<SalerStudentListView> fragmentList = new ArrayList<>();
 
@@ -39,19 +40,14 @@ public class StudentAllotStaffPage
   }
 
   private void initTab() {
-    TabLayout.Tab tab = mBinding.tabBar.newTab();
-    tab.setText("销售");
-    mBinding.tabBar.addTab(tab);
-    TabLayout.Tab tab2 = mBinding.tabBar.newTab();
-    tab2.setText("教练");
-    mBinding.tabBar.addTab(tab2);
-
     fragmentList.add(new SalerStudentListView());
     fragmentList.add(new SalerStudentListView());
-
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
+
     mBinding.tabBar.setupWithViewPager(mBinding.viewpager);
 
+    mBinding.tabBar.setTabTextColors(getResources().getColor(R.color.text_grey),
+        getResources().getColor(R.color.colorPrimary));
 
     mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
@@ -60,7 +56,7 @@ public class StudentAllotStaffPage
       }
 
       @Override public void onPageSelected(int position) {
-        if(fragmentList.get(position).isEmpty()){
+        if (fragmentList.get(position).isEmpty()) {
           mViewModel.loadSource(position);
         }
       }
@@ -69,7 +65,6 @@ public class StudentAllotStaffPage
 
       }
     });
-
   }
 
   private void initToolbar() {
@@ -90,6 +85,16 @@ public class StudentAllotStaffPage
       } else {
         return new Fragment();
       }
+    }
+
+    @Nullable @Override public CharSequence getPageTitle(int position) {
+      switch (position) {
+        case 0:
+          return "销售";
+        case 1:
+          return "教练";
+      }
+      return "";
     }
 
     @Override public int getItemPosition(Object object) {

@@ -2,6 +2,7 @@ package cn.qingchengfit.student.view.sendmsg;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,16 +20,22 @@ import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.widget.QcTagContainerLayout;
 import cn.qingchengfit.saascommon.widget.QcTagView;
+import cn.qingchengfit.student.BuildConfig;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.ShortMsg;
 import cn.qingchengfit.student.bean.ShortMsgBody;
+import cn.qingchengfit.student.routers.StudentParamsInjector;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -60,9 +67,10 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/15.
  */
-@FragmentWithArgs public class MsgSendFragmentFragment extends BaseFragment
+@Leaf(module = "student",path = "/student/msgsend")
+public class MsgSendFragmentFragment extends SaasCommonFragment
     implements ShortMsgPresentersPresenter.MVPView {
-  @Arg(required = false) String msgid;
+  @Need String msgid;
 
   QcTagContainerLayout layoutTags;
   EditText etContent;
@@ -79,11 +87,11 @@ import rx.functions.Action1;
   @Inject ShortMsgPresentersPresenter presenter;
 
   private List<QcStudentBean> chosenStudent = new ArrayList<>();
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
+    StudentParamsInjector.inject(this);
   }
+
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -92,7 +100,7 @@ import rx.functions.Action1;
     etContent = (EditText) view.findViewById(R.id.et_content);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-    //tvLeft = (TextView) view.findViewById(R.id.tv_left);
+    tvLeft = (TextView) view.findViewById(R.id.tv_left);
     tvSmsCount = (TextView) view.findViewById(R.id.tv_sms_count);
     layoutSendHint = (RelativeLayout) view.findViewById(R.id.layout_send_hint);
     view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
@@ -157,36 +165,37 @@ import rx.functions.Action1;
     toolbar.setNavigationContentDescription(R.string.common_cancel);
     toolbar.inflateMenu(R.menu.menu_send);
     // TODO: 2018/7/8  取消
-    //tvLeft.setText("取消");
-    //tvLeft.setOnClickListener(new View.OnClickListener() {
-    //  @Override public void onClick(View v) {
-    //    if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null
-    //        || chosenStudent.size() == 0)) {
-    //      getActivity().onBackPressed();
-    //      return;
-    //    }
-    //
-    //    //点击取消
-    //    DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
-    //      @Override public void onClick(View v) {
-    //        saveMsg();
-    //      }
-    //    }).addButton("不保存", new View.OnClickListener() {
-    //      @Override public void onClick(View v) {
-    //        getActivity().onBackPressed();
-    //      }
-    //    }).show();
-    //  }
-    //});
+    tvLeft.setText("取消");
+    tvLeft.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null
+            || chosenStudent.size() == 0)) {
+          getActivity().onBackPressed();
+          return;
+        }
+
+        //点击取消
+        DialogSheet.builder(getContext()).addButton("保存为草稿", R.color.text_black,new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            saveMsg();
+
+          }
+        }).addButton("不保存",R.color.text_black, new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            getActivity().onBackPressed();
+          }
+        }).show();
+      }
+    });
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
           //点击取消
-          DialogSheet.builder(getContext()).addButton("保存为草稿", new View.OnClickListener() {
+          DialogSheet.builder(getContext()).addButton("保存为草稿",R.color.text_black, new View.OnClickListener() {
             @Override public void onClick(View v) {
               saveMsg();
             }
-          }).addButton("不保存", new View.OnClickListener() {
+          }).addButton("不保存",R.color.text_black, new View.OnClickListener() {
             @Override public void onClick(View v) {
               getActivity().onBackPressed();
             }
@@ -198,8 +207,14 @@ import rx.functions.Action1;
       }
     });
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && this.isfitSystemPadding()) {
-      ((ViewGroup)toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+      ((ViewGroup)toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+      RelativeLayout.LayoutParams layoutParams =
+          (RelativeLayout.LayoutParams)tvLeft.getLayoutParams();
+      layoutParams.setMargins(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+      tvLeft.setLayoutParams(layoutParams);
     }
+
   }
 
   @Override public void onDestroyView() {
@@ -345,5 +360,20 @@ import rx.functions.Action1;
 
   @Override public void onDelSuccess() {
 
+  }
+  @Override protected void routeTo(String uri, Bundle bd, boolean b) {
+    if (BuildConfig.RUN_AS_APP) {
+      if (!uri.startsWith("/")) {
+        uri = "/" + uri;
+      }
+      if (this.getActivity() instanceof BaseActivity) {
+        this.routeTo(Uri.parse(BuildConfig.PROJECT_NAME
+            + "://"
+            + ((BaseActivity) this.getActivity()).getModuleName()
+            + uri), bd, b);
+      }
+    } else {
+      super.routeTo(uri, bd, b);
+    }
   }
 }

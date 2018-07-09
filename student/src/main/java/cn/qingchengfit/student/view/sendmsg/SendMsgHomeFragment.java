@@ -1,5 +1,7 @@
 package cn.qingchengfit.student.view.sendmsg;
 
+import android.icu.util.BuddhistCalendar;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +21,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.widget.FlexableListFragment;
+import cn.qingchengfit.student.BuildConfig;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.ShortMsg;
 import cn.qingchengfit.student.item.ShortMsgItem;
+import cn.qingchengfit.student.routers.StudentParamsInjector;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.anbillon.flabellum.annotations.Leaf;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
@@ -58,8 +65,8 @@ import rx.functions.Action1;
  *
  * {@link }
  */
-public class SendMsgHomeFragment extends BaseFragment
-    implements ShortMsgPresentersPresenter.MVPView {
+@Leaf(module = "student", path = "/student/sendmsg/") public class SendMsgHomeFragment
+    extends SaasCommonFragment implements ShortMsgPresentersPresenter.MVPView {
 
   TabLayout tabview;
   ViewPager viewpager;
@@ -81,7 +88,9 @@ public class SendMsgHomeFragment extends BaseFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    StudentParamsInjector.inject(this);
   }
+
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -139,7 +148,7 @@ public class SendMsgHomeFragment extends BaseFragment
       if (mDatasAll.isEmpty()) return false;
       if (mDatasAll.get(position) instanceof ShortMsgItem) {
         ShortMsgItem item = (ShortMsgItem) mDatasAll.get(position);
-        stuffToFragment(new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build());
+        routeToDetail(new ShortMsgDetailParams().shortMsg(item.getShortMsg()).build());
 
       }
       return false;
@@ -148,7 +157,7 @@ public class SendMsgHomeFragment extends BaseFragment
       if (mDatasSended.isEmpty()) return false;
       if (mDatasSended.get(position) instanceof ShortMsgItem) {
         ShortMsgItem item = (ShortMsgItem) mDatasSended.get(position);
-        stuffToFragment(new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build());
+        routeToDetail(new ShortMsgDetailParams().shortMsg(item.getShortMsg()).build());
 
       }
       return false;
@@ -157,7 +166,7 @@ public class SendMsgHomeFragment extends BaseFragment
       if (mDatasScript.isEmpty()) return false;
       if (mDatasScript.get(position) instanceof ShortMsgItem) {
         ShortMsgItem item = (ShortMsgItem) mDatasScript.get(position);
-        stuffToFragment(new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build());
+        routeToDetail(new ShortMsgDetailParams().shortMsg(item.getShortMsg()).build());
       }
       return false;
     });
@@ -234,11 +243,11 @@ public class SendMsgHomeFragment extends BaseFragment
   }
 
   public void addMsg() {
-    stuffToFragment(new MsgSendFragmentFragment());
+    routeTo("/student/msgsend",null);
   }
 
-  private void stuffToFragment(Fragment fragment) {
-    stuff(fragment);
+  private void routeToDetail(Bundle bundle) {
+    routeTo("/student/msgdetail",bundle);
   }
 
   class SendMsgHomeAdapter extends FragmentStatePagerAdapter {
@@ -271,6 +280,21 @@ public class SendMsgHomeFragment extends BaseFragment
         default:
           return "草稿箱";
       }
+    }
+  }
+  @Override protected void routeTo(String uri, Bundle bd, boolean b) {
+    if (BuildConfig.RUN_AS_APP) {
+      if (!uri.startsWith("/")) {
+        uri = "/" + uri;
+      }
+      if (this.getActivity() instanceof BaseActivity) {
+        this.routeTo(Uri.parse(BuildConfig.PROJECT_NAME
+            + "://"
+            + ((BaseActivity) this.getActivity()).getModuleName()
+            + uri), bd, b);
+      }
+    } else {
+      super.routeTo(uri, bd, b);
     }
   }
 }

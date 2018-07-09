@@ -30,6 +30,7 @@
           android:id="@+id/tab_bar"
           android:layout_width="match_parent"
           android:layout_height="40dp"
+          android:background="@color/bg_white"
           app:tabGravity="fill"
           app:tabIndicatorColor="@color/colorPrimary"
           app:tabIndicatorHeight="3dp"
@@ -38,6 +39,7 @@
           app:tabTextAppearance="@style/Qc.TextCommonGrey"
           app:tabTextColor="@color/text_grey"
           />
+
     </FrameLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

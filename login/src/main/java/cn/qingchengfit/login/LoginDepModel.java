@@ -11,32 +11,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module public class LoginDepModel {
-  LoginStatus loginStatus =new LoginStatus.Builder()
-    .build();
 
-  DefaultLoginModel defaultLoginModel;
-  GymWrapper gymWrapper = new GymWrapper();
-  public LoginDepModel(Application app,BaseRouter router,
-    QcRestRepository qcrestRepository){
-    api = WXAPIFactory.createWXAPI(app, "23423423432");
-    defaultLoginModel = new DefaultLoginModel(gymWrapper, loginStatus, qcrestRepository);
+
+
+
+  @Provides ILoginModel provideIGymModel(GymWrapper gymWrapper,LoginStatus loginStatus,QcRestRepository qcrestRepository){
+    return new DefaultLoginModel(gymWrapper, loginStatus, qcrestRepository);
   }
 
-  @Provides LoginStatus provideLoginstats(){
-    return loginStatus;
-  }
-  @Provides GymWrapper provideGym(){
-    return gymWrapper;
-  }
 
-  @Provides ILoginModel provideIGymModel(){
-    return defaultLoginModel;
-  }
-
-  private IWXAPI api;
-
-  @Provides IWXAPI provideWx() {
-    return api;
+  @Provides IWXAPI provideWx(Application application) {
+    return  WXAPIFactory.createWXAPI(application, "23423423432");
   }
 
 

@@ -44,7 +44,9 @@ import rx.Observable;
  */
 @Module public abstract class AppModel {
 
-
+  LoginStatus loginStatus =new LoginStatus.Builder()
+      .build();
+  GymWrapper gymWrapper = new GymWrapper();
 
 
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
@@ -61,4 +63,14 @@ import rx.Observable;
   @Provides static QcRestRepository provideQcRestRepository(Application application) {
     return new QcRestRepository(application, Configs.Server, "staff-qingcheng");
   }
+
+
+  @Provides  static LoginStatus provideLoginstats(){
+    return loginStatus;
+  }
+  @Provides static GymWrapper provideGym(){
+    return gymWrapper;
+  }
+
 }
+

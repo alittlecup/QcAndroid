@@ -1,5 +1,7 @@
 package debug;
 
+import cn.qingchengfit.login.LoginDepModel;
+import cn.qingchengfit.login.di.BindLoginActivity;
 import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.di.BindStudentActivity;
 import cn.qingchengfit.student.respository.StudentModel;
@@ -15,7 +17,9 @@ import javax.inject.Singleton;
     StudentViewModel.class,
     BindStudentActivity.class,
     AndroidInjectionModule.class,
-    AndroidSupportInjectionModule.class
+    AndroidSupportInjectionModule.class,
+
+    LoginDepModel.class, BindLoginActivity.class,
 }) public interface AppComponent extends AndroidInjector<MyApp> {
 
 }

@@ -41,7 +41,6 @@ public class AllotListViewModel
 
   @NonNull @Override
   protected LiveData<List<AllotDataResponse>> getSource(@NonNull Integer integer) {
-    isLoading.set(true);
     String path = "";
     switch (integer) {
       case 0:
@@ -53,7 +52,10 @@ public class AllotListViewModel
     }
 
     return Transformations.map(
-        repository.qcGetStaffList(loginStatus.staff_id(), path, gymWrapper.getParams()), input ->dealResource(input)!=null?dealResource(input).sellers:null);
+        repository.qcGetStaffList(loginStatus.staff_id(), path, gymWrapper.getParams()), input -> {
+          type = integer;
+          return dealResource(input) != null ? dealResource(input).sellers : null;
+        });
   }
 
   @Override protected boolean isSourceValid(@Nullable List<AllotDataResponse> response) {

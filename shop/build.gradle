@@ -54,6 +54,7 @@ dependencies {
   implementation (project(':saasbase'))
 
 
+
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
 

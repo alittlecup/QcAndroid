@@ -3,6 +3,7 @@ package cn.qingchengfit.student.view.sendmsg;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,16 +20,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.widget.ToggleButton;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.student.BuildConfig;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.ShortMsg;
 import cn.qingchengfit.student.bean.ShortMsgBody;
+import cn.qingchengfit.student.routers.StudentParamsInjector;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -56,10 +63,9 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/14.
  */
-@FragmentWithArgs public class ShortMsgDetailFragment extends BaseFragment
+@Leaf(module = "student", path = "/student/msgdetail") public class ShortMsgDetailFragment extends SaasCommonFragment
     implements ShortMsgPresentersPresenter.MVPView {
-
-  @Arg ShortMsg shortMsg;
+  @Need ShortMsg shortMsg;
 
   TextView tvStudents;
   TextView tvSaveTime;
@@ -79,7 +85,7 @@ import javax.inject.Inject;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
+    StudentParamsInjector.inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -215,7 +221,7 @@ import javax.inject.Inject;
 
         break;
       case R.id.btn_edit:
-        stuff(new MsgSendFragmentFragmentBuilder().msgid(msgId).build());
+        routeTo("/student/msgsend",new MsgSendParamsParams().msgid(msgId).build());
         break;
       case R.id.btn_send:
         if (TextUtils.isEmpty(shortMsg.content)) {
@@ -241,6 +247,21 @@ import javax.inject.Inject;
         presenter.sendMsg(
             new ShortMsgBody.Builder().content(copyStr).send(1).user_ids(ids).build());
         break;
+    }
+  }
+  @Override protected void routeTo(String uri, Bundle bd, boolean b) {
+    if (BuildConfig.RUN_AS_APP) {
+      if (!uri.startsWith("/")) {
+        uri = "/" + uri;
+      }
+      if (this.getActivity() instanceof BaseActivity) {
+        this.routeTo(Uri.parse(BuildConfig.PROJECT_NAME
+            + "://"
+            + ((BaseActivity) this.getActivity()).getModuleName()
+            + uri), bd, b);
+      }
+    } else {
+      super.routeTo(uri, bd, b);
     }
   }
 }

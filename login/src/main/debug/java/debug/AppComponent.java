@@ -13,8 +13,6 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {
     AppModel.class,
   LoginDepModel.class, BindLoginActivity.class,
-    //StudentViewModel.class,
-    //BindStudentActivity.class,
     AndroidInjectionModule.class,
     AndroidSupportInjectionModule.class
 }) public interface AppComponent extends AndroidInjector<MyApp> {

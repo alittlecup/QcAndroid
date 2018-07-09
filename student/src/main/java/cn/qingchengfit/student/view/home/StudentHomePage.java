@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageStudentHomeBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
@@ -19,6 +21,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/5.
@@ -26,7 +29,6 @@ import java.util.ArrayList;
 @Leaf(module = "student", path = "/student/home") public class StudentHomePage
     extends StudentBaseFragment<StPageStudentHomeBinding, StudentHomeViewModel>
     implements OnChartValueSelectedListener {
-
   @Override protected void subscribeUI() {
 
   }
@@ -69,41 +71,34 @@ import java.util.ArrayList;
   private void initListener() {
     mBinding.tvIncreaseMember.setOnClickListener(view -> {
       routeTo("student/increase",
-          new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_MEMBER)
-              .build());
+          new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
     });
     mBinding.tvIncreaseStudent.setOnClickListener(view -> {
       routeTo("student/increase",
-          new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_STUDENT)
-              .build());
+          new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
     });
     mBinding.tvIncreaseFollow.setOnClickListener(view -> {
       routeTo("increase/member",
-          new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_FOLLOWUP)
-              .build());
+          new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_FOLLOWUP).build());
     });
     mBinding.tvIncreaseStudentFollow.setOnClickListener(view -> {
       routeTo("increase/member",
-          new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_STUDENT)
-              .build());
+          new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
     });
     mBinding.llMember.setOnClickListener(view -> {
       routeTo("saler/student",
-          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER)
-              .build());
+          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
     });
     mBinding.llFollowup.setOnClickListener(view -> {
       routeTo("saler/student",
-          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_FOLLOWUP)
-              .build());
+          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_FOLLOWUP).build());
     });
     mBinding.llStudent.setOnClickListener(view -> {
       routeTo("saler/student",
-          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT)
-              .build());
+          new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
     });
     mBinding.commAllotStudent.setOnClickListener(view -> {
-      routeTo("/student/allotstaff",null);
+      routeTo("/student/allotstaff", null);
     });
     mBinding.commAttendStudent.setOnClickListener(view -> {
       routeTo("attendance/page", null);
@@ -117,9 +112,7 @@ import java.util.ArrayList;
       //  showAlert(R.string.alert_permission_forbid);
       //  return false;
       //}
-      //Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
-      //toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
-      //startActivity(toChoose);
+      routeTo("/student/sendmsg/", null);
     });
     mBinding.commExportImport.setOnClickListener(view -> {
       // TODO: 2018/6/19 同样位于staff
