@@ -61,7 +61,7 @@ import javax.inject.Singleton;
   }
 
   @Provides static QcRestRepository provideQcRestRepository(Application application) {
-    return new QcRestRepository(application, Configs.Server, "staff-qingcheng");
+    return new QcRestRepository(application, "http://cloudtest01.qingchengfit.cn/", "staff-qingcheng");
   }
 
   @Provides static IPermissionModel providePermission() {

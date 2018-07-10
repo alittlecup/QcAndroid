@@ -3,11 +3,15 @@ package cn.qingchengfit.student.respository;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerTeachersListWrap;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
 import java.util.HashMap;
@@ -90,11 +94,11 @@ import javax.inject.Singleton;
     return toLiveData(remoteService.qcGetStaffList(staff_id, type, params));
   }
 
-  //public LiveData<StudentListWrapper> qcGetAllotStaffMembers(String staff_id, String type, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService
-  //            .qcGetAllotStaffMembers(staff_id, type, params));
-  //
-  //}
+  public LiveData<Resource<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetAllotStaffMembers(staff_id, type, params));
+  }
+
   //
   //public LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params) {
   //    return toLiveData(remoteService.qcRemoveStaff(staff_id, type, params).map(qcResponse -> {
@@ -110,46 +114,47 @@ import javax.inject.Singleton;
   //
   //}
   //
-  //@Override
-  //public LiveData<SalerTeachersListWrap> qcGetAllAllocateCoaches(String staff_id, HashMap<String, Object> params) {
-  //
-  //    return toLiveData(remoteService.qcGetAllAllocateCoaches(staff_id, params));
-  //}
-  //
-  //@Override
-  //public LiveData<Boolean> qcAllocateCoach(String staff_id, HashMap<String, Object> body) {
-  //    return toLiveData(remoteService.qcAllocateCoach(staff_id, body).map(qcResponse -> {
-  //        QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
-  //        objectQcDataResponse.setStatus(qcResponse.getStatus());
-  //        if (qcResponse.status == 200) {
-  //            objectQcDataResponse.setData(true);
-  //        } else {
-  //            throw new HttpException(qcResponse.getMsg(), 0);
-  //        }
-  //        return objectQcDataResponse;
-  //    }));
-  //}
-  //
-  //@Override
-  //public LiveData<SalerUserListWrap> qcGetSalers(String staff_id, String brandid, String shopid, String gymid, String model) {
-  //    return toLiveData(remoteService.qcGetSalers(staff_id, brandid, shopid, gymid, model));
-  //}
-  //
-  //@Override
-  //public LiveData<Boolean> qcModifySellers(String staff_id, HashMap<String, Object> params, HashMap<String, Object> body) {
-  //    return toLiveData(remoteService.qcModifySellers(staff_id, params, body).map(qcResponse -> {
-  //        QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
-  //        objectQcDataResponse.setStatus(qcResponse.getStatus());
-  //
-  //        if (qcResponse.status == 200) {
-  //            objectQcDataResponse.setData(true);
-  //        } else {
-  //            throw new HttpException(qcResponse.getMsg(), 0);
-  //        }
-  //        return objectQcDataResponse;
-  //    }));
-  //}
-  //
+  @Override public LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
+      String staff_id, HashMap<String, Object> params) {
+
+    return toLiveData(remoteService.qcGetAllAllocateCoaches(staff_id, params));
+  }
+
+  @Override public LiveData<Resource<Boolean>> qcAllocateCoach(String staff_id,
+      HashMap<String, Object> body) {
+    return toLiveData(remoteService.qcAllocateCoach(staff_id, body).map(qcResponse -> {
+      QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
+      objectQcDataResponse.setStatus(qcResponse.getStatus());
+      if (qcResponse.status == 200) {
+        objectQcDataResponse.setData(true);
+      } else {
+        throw new HttpException(qcResponse.getMsg(), qcResponse.getStatus());
+      }
+      return objectQcDataResponse;
+    }));
+  }
+
+  @Override
+  public LiveData<Resource<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
+      String shopid, String gymid, String model) {
+    return toLiveData(remoteService.qcGetSalers(staff_id, brandid, shopid, gymid, model));
+  }
+
+  @Override public LiveData<Resource<Boolean>> qcModifySellers(String staff_id,
+      HashMap<String, Object> params, HashMap<String, Object> body) {
+    return toLiveData(remoteService.qcModifySellers(staff_id, params, body).map(qcResponse -> {
+      QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
+      objectQcDataResponse.setStatus(qcResponse.getStatus());
+
+      if (qcResponse.status == 200) {
+        objectQcDataResponse.setData(true);
+      } else {
+        throw new HttpException(qcResponse.getMsg(), qcResponse.getStatus());
+      }
+      return objectQcDataResponse;
+    }));
+  }
+
   //@Override
   //public LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params) {
   //    return toLiveData(remoteService.qcGetAllStudents(id, params));
@@ -176,6 +181,4 @@ import javax.inject.Singleton;
   //public LiveData<SalerListWrap> qcGetTrackStudentsFilterSalers(String id, HashMap<String, Object> params) {
   //    return toLiveData(remoteService.qcGetTrackStudentsFilterSalers(id,params));
   //}
-
-
 }

@@ -10,6 +10,7 @@ import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,8 +66,7 @@ public class BaseGirdListFragment extends BaseListFragment {
   }
 
   public AbstractFlexibleItem generateItem(Staff item) {
-    return null;
-    //return new ChooseStaffItem(item);
+    return new ChooseSalerItem(item);
   }
 
   public void toggleSelection(int position) {
@@ -74,22 +74,22 @@ public class BaseGirdListFragment extends BaseListFragment {
     commonFlexAdapter.notifyItemChanged(position);
   }
 
-  //public List<String> getSelectedItemIds() {
-  //    List<Integer> integers = get();
-  //    List<String> strings = new ArrayList<>();
-  //    for (Integer pos : integers) {
-  //        strings.add(((ChooseStaffItem)datas.get(pos)).getStaff().getId());
-  //    }
-  //    return strings;
-  //}
-  //public List<String> getSelectedItemNames() {
-  //    List<Integer> integers = get();
-  //    List<String> strings = new ArrayList<>();
-  //    for (Integer pos : integers) {
-  //        strings.add(((ChooseStaffItem)datas.get(pos)).getStaff().getUsername());
-  //    }
-  //    return strings;
-  //}
+  public List<String> getSelectedItemIds() {
+      List<Integer> integers = get();
+      List<String> strings = new ArrayList<>();
+      for (Integer pos : integers) {
+          strings.add(((ChooseSalerItem)datas.get(pos)).getSaler().getId());
+      }
+      return strings;
+  }
+  public List<String> getSelectedItemNames() {
+      List<Integer> integers = get();
+      List<String> strings = new ArrayList<>();
+      for (Integer pos : integers) {
+          strings.add(((ChooseSalerItem)datas.get(pos)).getSaler().getUsername());
+      }
+      return strings;
+  }
 
   public void notifyDataSetChanged() {
     commonFlexAdapter.notifyDataSetChanged();

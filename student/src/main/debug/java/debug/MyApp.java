@@ -15,6 +15,7 @@ import javax.inject.Inject;
 public class MyApp extends Application implements HasActivityInjector {
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   public static Application INSTANCE;
+  public static boolean isLogin;
 
   // 数据接收的 URL
   final String SA_SERVER_URL =

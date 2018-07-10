@@ -15,7 +15,7 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StViewStudentAllotBinding;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
-import cn.qingchengfit.student.view.allot.AllotChooseSalerPageParams;
+import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -129,7 +129,7 @@ public class StudentListView
     adapter.setMode(SelectableAdapter.Mode.MULTI);
     mBinding.recyclerView.setAdapter(adapter);
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.fastScroller.setBarClickListener(new ModifiedFastScroller.onBarClickListener() {
+    mBinding.fastScrollerBar.setBarClickListener(new ModifiedFastScroller.onBarClickListener() {
       @Override public int letterToPosition(String letter) {
         List<? extends StudentItem> itemList = mViewModel.items.get();
         int position = 0;
@@ -146,18 +146,18 @@ public class StudentListView
         return position;
       }
     });
-    adapter.setFastScroller(mBinding.fastScroller);
+    adapter.setFastScroller(mBinding.fastScrollerBar);
     adapter.addListener(this);
   }
 
   public void showFastScroller() {
-    mBinding.fastScroller.setEnabled(true);
-    mBinding.fastScroller.setVisibility(View.VISIBLE);
+    mBinding.fastScrollerBar.setEnabled(true);
+    mBinding.fastScrollerBar.setVisibility(View.VISIBLE);
   }
 
   public void hideFastScroller() {
-    mBinding.fastScroller.setEnabled(false);
-    mBinding.fastScroller.setVisibility(View.GONE);
+    mBinding.fastScrollerBar.setEnabled(false);
+    mBinding.fastScrollerBar.setVisibility(View.GONE);
   }
 
   @Override public boolean onItemClick(int position) {
@@ -172,7 +172,7 @@ public class StudentListView
     ArrayList<String> ids = getSelectIds();
     switch (curType) {
       case StudentListView.SELLER_TYPE:
-        routeTo("allot/choosesaler", new AllotChooseCoachPageParams().title(title)
+        routeTo("allot/chooseseller", new AllotChooseCoachPageParams().title(title)
             .studentIds(ids)
             .textContent(
                 getString(R.string.choose_saler) + "\n" + getString(
@@ -180,7 +180,7 @@ public class StudentListView
             .build());
         break;
       case StudentListView.TRAINER_TYPE:
-        routeTo("/allot/choosecoach", new AllotChooseSalerPageParams().title(title)
+        routeTo("/allot/choosecoach", new AllotChooseSellerPageParams().title(title)
             .studentIds(ids)
             .textContent(getString(R.string.choose_coach))
             .build());

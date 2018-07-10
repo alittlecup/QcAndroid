@@ -9,7 +9,10 @@ import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.student.respository.StudentRepositoryImpl;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
 import cn.qingchengfit.student.routers.studentImpl;
+import cn.qingchengfit.student.view.allot.AllotChooseViewModel;
 import cn.qingchengfit.student.view.allot.AllotListViewModel;
+import cn.qingchengfit.student.view.allot.SalerStudentsPage;
+import cn.qingchengfit.student.view.allot.SalerStudentsViewModel;
 import cn.qingchengfit.student.view.allot.StudentAllotViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel;
@@ -95,4 +98,11 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(AllotListViewModel.class)
   abstract ViewModel bindAllotListViewModel(AllotListViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(SalerStudentsViewModel.class)
+  abstract ViewModel bindSalerStudentsViewModel(SalerStudentsViewModel model);
+
+
+  @Binds @IntoMap @ViewModelKey(AllotChooseViewModel.class)
+  abstract ViewModel bindAllotChooseViewModel(AllotChooseViewModel model);
 }

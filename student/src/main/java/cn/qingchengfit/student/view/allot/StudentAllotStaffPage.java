@@ -13,19 +13,31 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.databinding.PageStudentAllotStaffBinding;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.item.AllotStaffItem;
 import cn.qingchengfit.student.view.state.SalerStudentListView;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Leaf(module = "student", path = "/student/allotstaff") public class StudentAllotStaffPage
-    extends StudentBaseFragment<PageStudentAllotStaffBinding, AllotListViewModel> {
+    extends StudentBaseFragment<PageStudentAllotStaffBinding, AllotListViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
   List<SalerStudentListView> fragmentList = new ArrayList<>();
+  private List<AllotStaffItem> items;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.isLoading.set(false);
+      this.items = items;
       fragmentList.get(mViewModel.type).setItems(items);
+    });
+    mViewModel.loading.observe(this,showLoading->{
+      if(showLoading){
+        showLoading();
+      }else{
+        hideLoading();
+      }
     });
   }
 
@@ -40,8 +52,12 @@ import java.util.List;
   }
 
   private void initTab() {
-    fragmentList.add(new SalerStudentListView());
-    fragmentList.add(new SalerStudentListView());
+    if (fragmentList.isEmpty()) {
+      fragmentList.add(new SalerStudentListView());
+      fragmentList.add(new SalerStudentListView());
+      fragmentList.get(0).setOnItemClickListener(this);
+      fragmentList.get(1).setOnItemClickListener(this);
+    }
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
 
     mBinding.tabBar.setupWithViewPager(mBinding.viewpager);
@@ -71,6 +87,14 @@ import java.util.List;
     ToolbarModel toolbarModel = new ToolbarModel("会员分配");
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
+  }
+
+  @Override public boolean onItemClick(int position) {
+    routeTo("student/seller/student",
+        new SalerStudentsPageParams().staff(items.get(position).data.getSeller())
+            .type(mBinding.viewpager.getCurrentItem())
+            .build());
+    return false;
   }
 
   class StateViewPager extends FragmentStatePagerAdapter {

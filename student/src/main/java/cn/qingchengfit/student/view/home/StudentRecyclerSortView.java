@@ -42,6 +42,9 @@ public class StudentRecyclerSortView
         }
       });
     });
+    mViewModel.getStudentBeans().observe(this, items -> {
+      setData(sortViewModel.sortItems(items));
+    });
   }
 
   public void selectAll(boolean selectedAll) {
@@ -49,7 +52,6 @@ public class StudentRecyclerSortView
       listView.selectAll(selectedAll);
     }
   }
-
 
   public static StudentRecyclerSortView newInstanceWithType(
       @StudentListView.AllotType String type) {
@@ -77,7 +79,7 @@ public class StudentRecyclerSortView
   }
 
   public void setDatas(List<? extends StudentItem> items) {
-    setData(sortViewModel.sortItems(items));
+    mViewModel.getStudentBeans().setValue(items);
   }
 
   @Override public ViewStudentRecyclerSortBinding initDataBinding(LayoutInflater inflater,
@@ -129,7 +131,4 @@ public class StudentRecyclerSortView
   }
 
   LoadDataListener loadDataListener;
-
-
-
 }

@@ -4,9 +4,12 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerTeachersListWrap;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import java.util.HashMap;
@@ -76,11 +79,11 @@ public interface StudentApi {
 //    @GET("/api/v2/staffs/{staff_id}/sellers/users/")
 //    Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(
 //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-//
-//    @GET("/api/v2/staffs/{staff_id}/{type}/users/")
-//    Observable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
-//        @Path("staff_id") String staff_id, @Path("type") String type,
-//        @QueryMap HashMap<String, Object> params);
+
+    @GET("/api/v2/staffs/{staff_id}/{type}/users/")
+    Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
+        @Path("staff_id") String staff_id, @Path("type") String type,
+        @QueryMap HashMap<String, Object> params);
 //
 //
 //    @GET("/api/v2/staffs/{staff_id}/coaches/users/")
@@ -88,42 +91,42 @@ public interface StudentApi {
 //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 //
 //    //获取销售 卖卡  包含销售 不包含教练
-//    @GET("/api/staffs/{staff_id}/sellers-without-coach/")
-//    Observable<QcDataResponse<SalerUserListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
-//        @Query("brand_id") String brandid, @Query("shop_id") String shopid,
-//        @Query("id") String gymid, @Query("model") String model);
-//
-//    /**
-//     * /**
-//     * 批量变更销售
-//     * http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?brand_id=2&shop_id=1
-//     * http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?id=5370&model=staff_gym
-//     * PUT {"user_ids":"1,2,3,4,5", "seller_ids":"10,11"}
-//     *
-//     * @param body user_ids  seller_ids
-//     */
-//    @PUT("/api/v2/staffs/{staff_id}/sellers/users/")
-//    Observable<QcResponse> qcModifySellers(@Path("staff_id") String staff_id,
-//        @QueryMap HashMap<String, Object> params, @Body HashMap<String, Object> body);
-//
-//    /**
-//     * 获取教练列表
-//     *
-//     * @param staff_id
-//     * @param params
-//     * @return
-//     */
-//    @GET("/api/staffs/{staff_id}/coaches/")
-//    Observable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
-//        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-//
-//    /**
-//     * 分配教练
-//     */
-//    @PUT("/api/v2/staffs/{staff_id}/coaches/users/")
-//    Observable<QcResponse> qcAllocateCoach(@Path("staff_id") String staff_id,
-//        @Body HashMap<String, Object> body);
-//
+    @GET("/api/staffs/{staff_id}/sellers-without-coach/")
+    Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
+        @Query("brand_id") String brandid, @Query("shop_id") String shopid,
+        @Query("id") String gymid, @Query("model") String model);
+
+    /**
+     * /**
+     * 批量变更销售
+     * http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?brand_id=2&shop_id=1
+     * http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?id=5370&model=staff_gym
+     * PUT {"user_ids":"1,2,3,4,5", "seller_ids":"10,11"}
+     *
+     * @param body user_ids  seller_ids
+     */
+    @PUT("/api/v2/staffs/{staff_id}/sellers/users/")
+    Flowable<QcResponse> qcModifySellers(@Path("staff_id") String staff_id,
+        @QueryMap HashMap<String, Object> params, @Body HashMap<String, Object> body);
+
+    /**
+     * 获取教练列表
+     *
+     * @param staff_id
+     * @param params
+     * @return
+     */
+    @GET("/api/staffs/{staff_id}/coaches/")
+    Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
+        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+    /**
+     * 分配教练
+     */
+    @PUT("/api/v2/staffs/{staff_id}/coaches/users/")
+    Flowable<QcResponse> qcAllocateCoach(@Path("staff_id") String staff_id,
+        @Body HashMap<String, Object> body);
+
 //    /**
 //     * 移除教练
 //     */

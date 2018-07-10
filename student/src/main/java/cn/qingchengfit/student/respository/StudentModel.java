@@ -1,13 +1,17 @@
 package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
+import android.util.Log;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerTeachersListWrap;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StudentListWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -16,6 +20,7 @@ import java.util.HashMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
@@ -31,9 +36,12 @@ public class StudentModel implements IStudentModel {
 
   @Inject public StudentModel(QcRestRepository qcRestRepository) {
     OkHttpClient client = qcRestRepository.getClient();
+    OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
+      Log.d("HTTP", message);
+    })).build();
     Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
 
-    Retrofit retrofit = new Retrofit.Builder().client(client)
+    Retrofit retrofit = new Retrofit.Builder().client(http)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl(qcRestRepository.getHost())
@@ -115,39 +123,39 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcGetAllotSaleOwenUsers(staff_id, params);
   //}
   //
-  //@Override
-  //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id,
-  //    String type, HashMap<String, Object> params) {
-  //  return studentApi.qcGetAllotStaffMembers(staff_id, type, params);
-  //}
+  @Override
+  public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id,
+      String type, HashMap<String, Object> params) {
+    return studentApi.qcGetAllotStaffMembers(staff_id, type, params);
+  }
   //
   //@Override public Observable<QcDataResponse<StudentWithCoashListWrap>> qcGetCoachStudentDetail(
   //    String staff_id, HashMap<String, Object> params) {
   //  return studentApi.qcGetCoachStudentDetail(staff_id, params);
   //}
   //
-  //@Override
-  //public Observable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
-  //    String shopid, String gymid, String model) {
-  //  return studentApi.qcGetSalers(staff_id, brandid, shopid, gymid, model);
-  //}
+  @Override
+  public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
+      String shopid, String gymid, String model) {
+    return studentApi.qcGetSalers(staff_id, brandid, shopid, gymid, model);
+  }
   //
-  //@Override
-  //public Observable<QcResponse> qcModifySellers(String staff_id, HashMap<String, Object> params,
-  //    HashMap<String, Object> body) {
-  //  return studentApi.qcModifySellers(staff_id, params, body);
-  //}
+  @Override
+  public Flowable<QcResponse> qcModifySellers(String staff_id, HashMap<String, Object> params,
+      HashMap<String, Object> body) {
+    return studentApi.qcModifySellers(staff_id, params, body);
+  }
   //
-  //@Override
-  //public Observable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetAllAllocateCoaches(staff_id, params);
-  //}
+  @Override
+  public Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetAllAllocateCoaches(staff_id, params);
+  }
   //
-  //@Override
-  //public Observable<QcResponse> qcAllocateCoach(String staff_id, HashMap<String, Object> body) {
-  //  return studentApi.qcAllocateCoach(staff_id, body);
-  //}
+  @Override
+  public Flowable<QcResponse> qcAllocateCoach(String staff_id, HashMap<String, Object> body) {
+    return studentApi.qcAllocateCoach(staff_id, body);
+  }
   //
   //@Override
   //public Observable<QcResponse> qcRemoveStudent(String staff_id, HashMap<String, Object> body) {

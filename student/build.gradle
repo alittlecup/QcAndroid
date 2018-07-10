@@ -7,8 +7,8 @@ def cfg = rootProject.ext.configuration
 
 
 dependencies {
-  addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',true)
-  appComponent('login')
+  addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
+  appComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
 
 
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
@@ -18,3 +18,4 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 }
 
+1

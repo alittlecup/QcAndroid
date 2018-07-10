@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
@@ -31,6 +32,8 @@ public class SplashActivity extends SaasCommonActivity {
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
 
+
+
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_splash);
@@ -45,6 +48,7 @@ public class SplashActivity extends SaasCommonActivity {
     login.setOnClickListener(view -> {
       QcRouteUtil.setRouteOptions(new RouteOptions("login").setContext(this).setActionName("open"))
           .call();
+      MyApp.isLogin=true;
     });
   }
 
@@ -58,7 +62,6 @@ public class SplashActivity extends SaasCommonActivity {
         to.putExtras(bd);
       }
       startActivity(to);
-      finish();
     } catch (Exception e) {
       LogUtil.e("找不到模块去处理" + uri);
       CrashUtils.sendCrash(e);
@@ -67,19 +70,21 @@ public class SplashActivity extends SaasCommonActivity {
 
   @Override protected void onResume() {
     super.onResume();
-
     textView.setText(QcRestRepository.getSession(this));
-    if (!TextUtils.isEmpty(textView.getText().toString())) {
-      Staff staff = new Staff();
-      staff.setId("7505");
-      loginStatus.setSession(QcRestRepository.getSession(this));
-      loginStatus.setLoginUser(staff);
-      loginStatus.setUserId("54405");
-
-      CoachService coachService = new CoachService();
-      coachService.setModel("staff-gym");
-      coachService.setId("10548");
-      gymWrapper.setCoachService(coachService);
+    if(MyApp.isLogin){
+      setLoginInfo();
     }
+  }
+  private void setLoginInfo(){
+    Staff staff = new Staff();
+    staff.setId("7505");
+    loginStatus.setSession(QcRestRepository.getSession(this));
+    loginStatus.setLoginUser(staff);
+    loginStatus.setUserId("54405");
+
+    CoachService coachService = new CoachService();
+    coachService.setModel("staff_gym");
+    coachService.setId("10548");
+    gymWrapper.setCoachService(coachService);
   }
 }

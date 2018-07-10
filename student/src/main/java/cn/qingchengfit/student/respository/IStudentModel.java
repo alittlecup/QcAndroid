@@ -2,9 +2,12 @@ package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerTeachersListWrap;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
@@ -98,8 +101,8 @@ public interface IStudentModel {
   //Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params);
   //
-  //Observable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id,
-  //    String type, HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id,
+      String type, HashMap<String, Object> params);
 
   /**
    * 教练名下会员列表接口(无销售的会员列表不需要传seller_id)
@@ -110,8 +113,8 @@ public interface IStudentModel {
   /**
    * 获取销售 卖卡  包含销售 不包含教练
    */
-  //Observable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
-  //    String shopid, String gymid, String model);
+  Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
+      String shopid, String gymid, String model);
 
   /**
    * /**
@@ -122,8 +125,8 @@ public interface IStudentModel {
    *
    * @param body user_ids  seller_ids
    */
-  //Observable<QcResponse> qcModifySellers(String staff_id, HashMap<String, Object> params,
-  //    HashMap<String, Object> body);
+  Flowable<QcResponse> qcModifySellers(String staff_id, HashMap<String, Object> params,
+      HashMap<String, Object> body);
 
   /**
    * 获取教练列表
@@ -133,13 +136,13 @@ public interface IStudentModel {
    * @param params
    * @return
    */
-  //Observable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 分配教练
    */
-  //Observable<QcResponse> qcAllocateCoach(String staff_id, HashMap<String, Object> body);
+  Flowable<QcResponse> qcAllocateCoach(String staff_id, HashMap<String, Object> body);
 
   /**
    * 批量移除某个教练名下会员

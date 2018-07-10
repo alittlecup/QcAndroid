@@ -54,7 +54,6 @@ import java.util.Map;
     });
   }
 
-
   private void initFragment() {
     listView = StudentRecyclerSortView.newInstanceWithType(curType);
     filterView = new StudentFilterView();
@@ -96,6 +95,8 @@ import java.util.Map;
   @Override public void loadData(Map<String, ?> params) {
     if (items == null) {
       mViewModel.loadSource(params);
+    } else {
+      listView.setDatas(mViewModel.map(items));
     }
   }
 }

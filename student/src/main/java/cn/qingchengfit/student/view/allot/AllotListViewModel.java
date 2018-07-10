@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.allot;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
@@ -13,6 +14,7 @@ import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.saascommon.network.Status;
 import cn.qingchengfit.student.bean.AllotDataResponse;
+import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.item.AllotStaffItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.List;
@@ -28,6 +30,8 @@ public class AllotListViewModel
   public final ObservableField<List<AllotStaffItem>> items = new ObservableField<>();
   public final ObservableBoolean isLoading = new ObservableBoolean(false);
 
+  public final MutableLiveData<Boolean> loading=new MutableLiveData<>();
+
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject StudentRepository repository;
@@ -41,6 +45,7 @@ public class AllotListViewModel
 
   @NonNull @Override
   protected LiveData<List<AllotDataResponse>> getSource(@NonNull Integer integer) {
+    loading.setValue(true);
     String path = "";
     switch (integer) {
       case 0:
@@ -54,7 +59,13 @@ public class AllotListViewModel
     return Transformations.map(
         repository.qcGetStaffList(loginStatus.staff_id(), path, gymWrapper.getParams()), input -> {
           type = integer;
-          return dealResource(input) != null ? dealResource(input).sellers : null;
+          AllotDataResponseWrap allotDataResponseWrap = dealResource(input);
+          loading.setValue(false);
+          if (allotDataResponseWrap == null) {
+            return null;
+          } else {
+            return allotDataResponseWrap.sellers;
+          }
         });
   }
 

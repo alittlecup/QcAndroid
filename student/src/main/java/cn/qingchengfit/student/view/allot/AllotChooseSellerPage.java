@@ -15,16 +15,16 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.FlexibleAdapter.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/1.
  */
-
-@Leaf(module = "student", path = "/allot/choosecoach") public class AllotChooseCoachPage
+@Leaf(module = "student", path = "/allot/chooseseller") public class AllotChooseSellerPage
     extends StudentBaseFragment<PageAllotChooseSalerBinding, AllotChooseViewModel>
-    implements FlexibleAdapter.OnItemClickListener {
+    implements OnItemClickListener {
   @Need String title;
   @Need ArrayList<String> belongStaffIds;
   @Need ArrayList<String> studentIds;
@@ -35,7 +35,8 @@ import java.util.List;
 
   @Override protected void subscribeUI() {
     mViewModel.setStudents(studentIds);
-    mViewModel.getStaffs().observe(this, staffs -> {
+    mViewModel.setCurId(curId);
+    mViewModel.getSalerStaffs().observe(this, staffs -> {
       gridListFragment.setStaffs(staffs);
       for (int i = 0; i < staffs.size(); i++) {
         if (belongStaffIds.contains(staffs.get(i).id)) {
@@ -43,8 +44,7 @@ import java.util.List;
         }
       }
     });
-
-    mViewModel.getResponseSuccess().observe(this, aBoolean -> {
+    mViewModel.getSalerResponse().observe(this, aBoolean -> {
       if (aBoolean) {
         int id = getFragmentManager().getBackStackEntryAt(1).getId();
         getFragmentManager().popBackStack(id, 1);
@@ -66,11 +66,12 @@ import java.util.List;
       belongStaffIds.add(curId);
     }
     loadSource();
+
     return mBinding;
   }
 
   public void loadSource() {
-    mViewModel.loadData();
+    mViewModel.loadSalerData();
   }
 
   public void initToolbar() {
@@ -85,18 +86,16 @@ import java.util.List;
       }
 
       String msg = "";
-      if (getString(R.string.coach_choose_student).equals(title)) {//0
+      if (getString(R.string.allot_saler).equals(title)) {//0
         if (selectIds.size() == 0) {
-          DialogUtils.showAlert(getContext(),
-              R.string.alert_choose_one_coach);
+          DialogUtils.showAlert(getContext(), R.string.alert_choose_one_saler);
           return true;
         }
         salernames.deleteCharAt(salernames.length() - 1);
         msg = getString(R.string.alert_comfirm_allot, salernames);
-      } else if (getString(R.string.coach_change_student).equals(
-          title)) {//1
+      } else if (getString(R.string.qc_allotsale_modify_sale).equals(title)) {//1
         if (selectIds.size() == 0) {
-          onShowError(R.string.alert_choose_one_coach);
+          onShowError(R.string.alert_choose_one_saler);
           return true;
         }
         salernames.deleteCharAt(salernames.length() - 1);
@@ -106,15 +105,16 @@ import java.util.List;
           msg = getString(R.string.alert_comfirm_allot, salernames);
         }
       }
+
       DialogUtils.showConfirm(getContext(), "", msg, (dialog, action) -> {
         dialog.dismiss();
-        if (action == DialogAction.POSITIVE) mViewModel.allotCoach(selectIds);
+        if (action == DialogAction.POSITIVE) mViewModel.allotSaler(selectIds);
       });
+
       return true;
     });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
-
   }
 
   private void initFragment() {

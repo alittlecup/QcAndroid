@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.allot;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
+import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.item.ChooseStaffItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.HashMap;
@@ -55,8 +57,14 @@ public class StudentAllotViewModel
         path = "coaches";
         break;
     }
-    //return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), input -> input.users);
-    return null;
+    return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), input -> {
+      StudentListWrapper studentListWrapper = dealResource(input);
+      if(studentListWrapper==null){
+        return null;
+      }else{
+       return studentListWrapper.users;
+      }
+    });
   }
 
   @Override protected boolean isSourceValid(@Nullable List<QcStudentBean> qcStudentBeans) {

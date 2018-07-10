@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
+import cn.qingchengfit.student.view.allot.AllotChooseCoachPage;
+import cn.qingchengfit.student.view.allot.AllotChooseSellerPage;
+import cn.qingchengfit.student.view.allot.SalerStudentsPage;
 import cn.qingchengfit.student.view.allot.StudentAllotPage;
 import cn.qingchengfit.student.view.allot.StudentAllotStaffPage;
 import cn.qingchengfit.student.view.export.ImportExportFragment;
@@ -30,6 +33,7 @@ import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
 @Trunk(fragments = {
+    StudentViewModel.class,
     StudentFilterView.class, StudentHomePage.class, StudentAllPage.class,
     StudentRecyclerSortView.class, StudentListView.class, StudentAllotPage.class,
     IncreaseStudentSortView.class, IncreaseStudentTopView.class, IncreaseStudentPage.class,
@@ -37,7 +41,8 @@ import javax.inject.Inject;
     StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordPage.class,
     FollowRecordStatusPage.class,
     SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
-    MsgSendFragmentFragment.class,ImportExportFragment.class
+    MsgSendFragmentFragment.class,ImportExportFragment.class,SalerStudentsPage.class,
+    AllotChooseSellerPage.class,AllotChooseCoachPage.class
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 
