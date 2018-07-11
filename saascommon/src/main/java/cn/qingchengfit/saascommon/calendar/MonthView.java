@@ -20,6 +20,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.text.TextUtils;
 import android.view.View;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 月视图基础控件,请使用 MonthView替换，没有任何不同，只是规范命名
@@ -110,7 +112,7 @@ public abstract class MonthView extends BaseView {
         int x = j * mItemWidth;
         int y = i * mItemHeight;
         onLoopStart(x, y);
-        boolean isSelected = d == mCurrentItem;
+        boolean isSelected = mSelectedCalendars.contains(calendar);
         boolean hasScheme = calendar.hasScheme();
         if (hasScheme) {
             //标记的日子
@@ -337,6 +339,9 @@ public abstract class MonthView extends BaseView {
                 }
             }
         }
+        if(mDelegate.mSelectedDate!=null){
+            setSelectedDate(mDelegate.mSelectedDate);
+        }
         invalidate();
     }
 
@@ -378,8 +383,14 @@ public abstract class MonthView extends BaseView {
                 a.setSchemes(null);
             }
         }
+
         invalidate();
     }
+    void updateSelected(){
+        setSelectedDate(mDelegate.mSelectedDate);
+        invalidate();
+    }
+
 
 
     int getSelectedIndex(Calendar calendar) {

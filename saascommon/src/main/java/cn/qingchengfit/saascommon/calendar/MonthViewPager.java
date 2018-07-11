@@ -300,6 +300,12 @@ public final class MonthViewPager extends ViewPager {
             view.update();
         }
     }
+    void updateSelectedDates(){
+        for (int i = 0; i < getChildCount(); i++) {
+            MonthView view = (MonthView) getChildAt(i);
+            view.updateSelected();
+        }
+    }
 
 
     /**

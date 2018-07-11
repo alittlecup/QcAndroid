@@ -142,7 +142,6 @@ public abstract class BaseView extends View
    */
   int mCurrentItem = -1;
 
-
   public BaseView(Context context) {
     this(context, null);
   }
@@ -313,6 +312,22 @@ public abstract class BaseView extends View
    */
   protected boolean isSelected(Calendar calendar) {
     return mItems != null && mItems.indexOf(calendar) == mCurrentItem;
+  }
+
+  List<Calendar> mSelectedCalendars = new ArrayList<>();
+
+  List<Calendar> getSelectedDate() {
+    return mSelectedCalendars;
+  }
+
+  void setSelectedDate(List<Calendar> calendars) {
+    if (calendars == null || calendars.isEmpty()) return;
+    this.mSelectedCalendars.clear();
+    for (Calendar c : calendars) {
+      if (mItems.contains(c)) {
+        this.mSelectedCalendars.add(c);
+      }
+    }
   }
 
   abstract void update();

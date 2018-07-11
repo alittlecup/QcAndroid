@@ -47,7 +47,7 @@ public abstract class WeekView extends BaseView {
             int x = i * mItemWidth;
             onLoopStart(x);
             Calendar calendar = mItems.get(i);
-            boolean isSelected = i == mCurrentItem;
+            boolean isSelected = mSelectedCalendars.contains(calendar);
             boolean hasScheme = calendar.hasScheme();
             if (hasScheme) {
                 boolean isDrawSelected = false;//是否继续绘制选中的onDrawScheme
@@ -248,6 +248,9 @@ public abstract class WeekView extends BaseView {
                 }
             }
         }
+        if(mDelegate.mSelectedDate!=null&&!mDelegate.mSelectedDate.isEmpty()){
+            setSelectedDate(mDelegate.mSelectedDate);
+        }
         invalidate();
     }
 
@@ -298,6 +301,10 @@ public abstract class WeekView extends BaseView {
                 a.setSchemes(null);
             }
         }
+        invalidate();
+    }
+    void updateSelected(){
+        setSelectedDate(mDelegate.mSelectedDate);
         invalidate();
     }
 

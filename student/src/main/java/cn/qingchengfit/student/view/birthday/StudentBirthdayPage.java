@@ -36,6 +36,9 @@ import java.util.List;
     return mBinding;
   }
 
+  private int year;
+  private int month;
+
   private void initListener() {
     mBinding.imgNext.setOnClickListener(view -> {
       mBinding.calendarView.scrollToNext(true);
@@ -43,8 +46,14 @@ import java.util.List;
     mBinding.imgPre.setOnClickListener(view -> {
       mBinding.calendarView.scrollToPre(true);
     });
-    mBinding.calendarView.setOnMonthChangeListener((year, month) -> mBinding.tvMonth.setText(
-        year + "年" + month + "月"));
+    mBinding.tvSelectMonth.setOnClickListener(view -> {
+      mBinding.calendarView.setSelectedMonthDate(year, month);
+    });
+    mBinding.calendarView.setOnMonthChangeListener((year, month) -> {
+      this.year = year;
+      this.month = month;
+      mBinding.tvMonth.setText(year + "年" + month + "月");
+    });
   }
 
   private void initRecyclerView() {
@@ -86,6 +95,8 @@ import java.util.List;
   }
 
   private void initCalendarView() {
+    year = mBinding.calendarView.getCurYear();
+    month = mBinding.calendarView.getCurMonth();
     mBinding.calendarView.setOnDateSelectedListener(this);
     mBinding.calendarView.setWeekStarWithMon();
     mBinding.calendarView.setFixMode();
@@ -99,6 +110,8 @@ import java.util.List;
   }
 
   @Override public void onDateSelected(Calendar calendar, boolean b) {
-
+    if (b) {
+      mBinding.calendarView.setSelectedWeekDate(calendar);
+    }
   }
 }
