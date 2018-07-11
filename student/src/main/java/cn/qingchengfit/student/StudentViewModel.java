@@ -14,6 +14,7 @@ import cn.qingchengfit.student.view.allot.AllotListViewModel;
 import cn.qingchengfit.student.view.allot.SalerStudentsPage;
 import cn.qingchengfit.student.view.allot.SalerStudentsViewModel;
 import cn.qingchengfit.student.view.allot.StudentAllotViewModel;
+import cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordViewModel;
@@ -105,4 +106,9 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(AllotChooseViewModel.class)
   abstract ViewModel bindAllotChooseViewModel(AllotChooseViewModel model);
+
+
+  @Binds @IntoMap @ViewModelKey(StudentBirthdayViewModel.class)
+  abstract ViewModel bindStudentBirthdayViewModel(StudentBirthdayViewModel model);
 }
+

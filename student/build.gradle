@@ -5,8 +5,8 @@ apply from: rootProject.file('qc_settings.gradle')
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 
-
 dependencies {
+
   addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
   appComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
 
@@ -18,4 +18,3 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 }
 
-1

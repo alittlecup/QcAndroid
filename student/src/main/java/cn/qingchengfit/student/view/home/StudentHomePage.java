@@ -120,6 +120,10 @@ import javax.inject.Inject;
     mBinding.tvAllStudent.setOnClickListener(view -> {
       routeTo("/student/all", null);
     });
+
+    mBinding.commDayStudent.setOnClickListener(view -> {
+      routeTo("student/birthday", null);
+    });
   }
 
   private void initToolbar() {

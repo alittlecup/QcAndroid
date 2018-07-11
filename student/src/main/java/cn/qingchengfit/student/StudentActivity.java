@@ -9,6 +9,7 @@ import cn.qingchengfit.student.view.allot.AllotChooseSellerPage;
 import cn.qingchengfit.student.view.allot.SalerStudentsPage;
 import cn.qingchengfit.student.view.allot.StudentAllotPage;
 import cn.qingchengfit.student.view.allot.StudentAllotStaffPage;
+import cn.qingchengfit.student.view.birthday.StudentBirthdayPage;
 import cn.qingchengfit.student.view.export.ImportExportFragment;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditPage;
 import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
@@ -42,7 +43,7 @@ import javax.inject.Inject;
     FollowRecordStatusPage.class,
     SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
     MsgSendFragmentFragment.class,ImportExportFragment.class,SalerStudentsPage.class,
-    AllotChooseSellerPage.class,AllotChooseCoachPage.class
+    AllotChooseSellerPage.class,AllotChooseCoachPage.class,StudentBirthdayPage.class
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 

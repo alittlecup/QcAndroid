@@ -13,7 +13,7 @@ ext {
 
   ]
 
-  libraries = [supportVersion  : "27.0.0",
+  libraries = [supportVersion  : "27.1.1",
                dagger          : "2.11",
                rxjava          : "1.1.6",
                rxandroid       : "1.2.1",
@@ -25,15 +25,14 @@ ext {
                fragmentArg     : "3.0.2",
                tinkerpatch     : "1.1.3",
                tinker          : "1.7.7",
-               flabellum       : "0.2.23",
-  ]
+               flabellum       : "0.2.23",]
   bakPath = "tinkeroutput/"
   chat_version = "1.0.0"
   recruit_version = "1.1.1"
-  buildTimeListener =new BuildTimeListener()
+  buildTimeListener = new BuildTimeListener()
   today = new Date().format('yyMMdd').toInteger()
-  ticktime = System.currentTimeMillis()/1000
-//    isApInvalidated = { -> return hasAnyFileRelatedToApChanged() }
+  ticktime = System.currentTimeMillis() / 1000
+  //    isApInvalidated = { -> return hasAnyFileRelatedToApChanged() }
 }
 /**
  *  打印超过50ms的任务*/
@@ -81,13 +80,13 @@ buildscript {
   ext.kotlin_version = '1.2.21'
 
   repositories {
-      maven {
-          url "../repo/"
-      }
+    maven {
+      url "../repo/"
+    }
     maven { url "https://maven.google.com" }
     jcenter()
-        mavenCentral()
-      maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
@@ -95,13 +94,13 @@ buildscript {
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
     }
-      google()
+    google()
   }
 
   dependencies {
     classpath 'com.android.tools.build:gradle:3.1.2'
     //        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
-//    classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
+    //    classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
     //    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath 'com.sensorsdata.analytics.android:android-gradle-plugin2:1.0.3'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -109,30 +108,30 @@ buildscript {
     classpath 'com.billy.android:autoregister:1.3.0'
 
     //    classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.1.3") {
-//      changing = true
-//    }
+    //      changing = true
+    //    }
   }
 }
 
 
 allprojects {
   repositories {
-      maven {
-          url "../../repo/"
-      }
-      flatDir {
-          dirs '../aars'
-      }
+    maven {
+      url "../../repo/"
+    }
+    flatDir {
+      dirs '../aars'
+    }
     maven { url "https://maven.google.com" }
     jcenter()
-      maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
-      maven {
+    maven {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
-//    maven {
-//      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/all/'
-//    }
+    //    maven {
+    //      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/all/'
+    //    }
 
     maven { url "https://jitpack.io" }
 
@@ -143,9 +142,5 @@ allprojects {
     maven {
       url "https://s3.amazonaws.com/repo.commonsware.com"
     }
-
-
-
   }
-
 }
