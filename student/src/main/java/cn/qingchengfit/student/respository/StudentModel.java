@@ -38,7 +38,7 @@ public class StudentModel implements IStudentModel {
     OkHttpClient client = qcRestRepository.getClient();
     OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
       Log.d("HTTP", message);
-    })).build();
+    }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
     Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
 
     Retrofit retrofit = new Retrofit.Builder().client(http)

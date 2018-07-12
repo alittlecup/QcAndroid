@@ -72,7 +72,8 @@
     <cn.qingchengfit.saascommon.calendar.CalendarLayout
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/bg_white"
         android:orientation="vertical"
         app:calendar_content_view_id="@+id/content"
@@ -101,9 +102,9 @@
       <include layout="@layout/divider_grey"/>
       <LinearLayout
           android:id="@+id/content"
-          android:background="@color/bg_white"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:background="@color/bg_white"
           android:orientation="vertical"
           >
         <TextView
@@ -118,13 +119,17 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             />
 
-      </LinearLayout>
 
-      　
+      </LinearLayout>
     </cn.qingchengfit.saascommon.calendar.CalendarLayout>
+    <include
+        layout="@layout/layout_bottom_allot_action"
+        android:id="@+id/bottom_allot"
+        />
 
   </LinearLayout>
 </layout>

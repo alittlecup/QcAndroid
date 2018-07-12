@@ -569,12 +569,16 @@ import java.util.List;
     mWeekPager.updateSelectedDates();
   }
 
+  public List<Calendar> getSelectDates() {
+    return this.mDelegate.mSelectedDate;
+  }
+
   public void setSelectedWeekDate(Calendar calendar) {
     setSelectedDate(
         CalendarUtil.getCalendarsForWeek(calendar, mDelegate, mDelegate.getWeekStart()));
   }
 
-  public void setSelectedMonthDate(int year,int month) {
+  public void setSelectedMonthDate(int year, int month) {
     setSelectedDate(CalendarUtil.getCalendarsForMonth(year, month));
   }
 

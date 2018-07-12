@@ -83,6 +83,9 @@ public class StudentListView
     mBinding.btnModifySale.setOnClickListener(view -> {
       routeTo(getStringByType(curType));
     });
+    mBinding.btnExclude.setOnClickListener(view->{
+
+    });
   }
 
   public void selectAll(boolean selectedAll) {
@@ -96,11 +99,11 @@ public class StudentListView
   }
 
   public List<QcStudentBean> getSelectDataBeans() {
-    List<QcStudentBean> studenBeans = new ArrayList<>();
+    List<QcStudentBean> studentBeans = new ArrayList<>();
     for (Integer pos : adapter.getSelectedPositions()) {
-      studenBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
+      studentBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
     }
-    return studenBeans;
+    return studentBeans;
   }
 
   public static String getStringByType(@NonNull String type) {
@@ -174,6 +177,7 @@ public class StudentListView
       case StudentListView.SELLER_TYPE:
         routeTo("allot/chooseseller", new AllotChooseCoachPageParams().title(title)
             .studentIds(ids)
+            .curId(curID)
             .textContent(
                 getString(R.string.choose_saler) + "\n" + getString(
                     R.string.choose_saler_tips))
@@ -182,6 +186,7 @@ public class StudentListView
       case StudentListView.TRAINER_TYPE:
         routeTo("/allot/choosecoach", new AllotChooseSellerPageParams().title(title)
             .studentIds(ids)
+            .curId(curID)
             .textContent(getString(R.string.choose_coach))
             .build());
         break;
@@ -195,6 +200,13 @@ public class StudentListView
       ids.add(((StudentItem) adapter.getItem(pos)).getId());
     }
     return ids;
+  }
+  private String curID;
+  public void setCurId(String curID){
+    this.curID=curID;
+    if(mBinding!=null){
+      mBinding.btnExclude.setVisibility(TextUtils.isEmpty(curID)?View.GONE:View.VISIBLE);
+    }
   }
 
   @StringDef(value = { SELLER_TYPE, TRAINER_TYPE, MSG_TYPE }) @Retention(RetentionPolicy.RUNTIME)

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.databinding.PageStudentAllotBinding;
 import cn.qingchengfit.student.R;
@@ -28,6 +29,7 @@ import java.util.Map;
   StudentRecyclerSortView listView;
   StudentFilterView filterView;
   @Need ArrayList<QcStudentBean> items;
+  @Need Staff staff;
   @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
 
   @Override protected void subscribeUI() {
@@ -62,6 +64,7 @@ import java.util.Map;
     listView.setListener(this);
     listView.setFilterView(filterView);
     listView.setLoadDataListener(this);
+    listView.setCurId(staff == null ? "" : staff.getId());
   }
 
   private void initToolbar() {

@@ -48,6 +48,7 @@ import java.util.List;
     });
     mBinding.tvSelectMonth.setOnClickListener(view -> {
       mBinding.calendarView.setSelectedMonthDate(year, month);
+      loadStudents(mBinding.calendarView.getSelectDates());
     });
     mBinding.calendarView.setOnMonthChangeListener((year, month) -> {
       this.year = year;
@@ -113,6 +114,11 @@ import java.util.List;
   @Override public void onDateSelected(Calendar calendar, boolean b) {
     if (b) {
       mBinding.calendarView.setSelectedWeekDate(calendar);
+      loadStudents(mBinding.calendarView.getSelectDates());
     }
+  }
+
+  private void loadStudents(List<Calendar> calendars) {
+
   }
 }

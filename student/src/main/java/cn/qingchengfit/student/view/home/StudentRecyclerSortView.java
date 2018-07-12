@@ -78,6 +78,15 @@ public class StudentRecyclerSortView
     }
   }
 
+  private String curID;
+
+  public void setCurId(String curID) {
+    this.curID = curID;
+    if (listView != null) {
+      listView.setCurId(curID);
+    }
+  }
+
   public void setDatas(List<? extends StudentItem> items) {
     mViewModel.getStudentBeans().setValue(items);
   }
@@ -117,6 +126,7 @@ public class StudentRecyclerSortView
     } else {
       listView = new StudentListView();
     }
+    listView.setCurId(curID);
     stuff(R.id.fragment_recycler_container, listView);
   }
 

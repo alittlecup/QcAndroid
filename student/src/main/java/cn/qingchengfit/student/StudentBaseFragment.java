@@ -14,8 +14,8 @@ import cn.qingchengfit.views.activity.BaseActivity;
 public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends BaseViewModel>
     extends SaasBindingFragment<DB, VM> {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     StudentParamsInjector.inject(this);
+    super.onCreate(savedInstanceState);
     if (mViewModel != null) {
       mViewModel.getErrorMsg().observe(this, str -> ToastUtils.show(str));
     }

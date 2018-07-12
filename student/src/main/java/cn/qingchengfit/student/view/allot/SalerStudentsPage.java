@@ -50,11 +50,15 @@ import java.util.Map;
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       routeTo("/student/allot",
-          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans())).curType(StudentListView.TRAINER_TYPE).build());
+          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
+              .staff(staff)
+              .curType(StudentListView.TRAINER_TYPE).build());
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
       routeTo("/student/allot",
-          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans())).curType(StudentListView.SELLER_TYPE).build());
+          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
+              .staff(staff)
+              .curType(StudentListView.SELLER_TYPE).build());
     });
   }
 
