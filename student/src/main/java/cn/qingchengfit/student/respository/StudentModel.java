@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
+import android.text.format.DateUtils;
 import android.util.Log;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -11,12 +12,20 @@ import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StatDate;
+import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import com.google.errorprone.annotations.Var;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import io.reactivex.Flowable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
@@ -117,43 +126,109 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcDataImport(staff_id, body);
   }
 
+  @Override public Flowable<QcDataResponse<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
+      HashMap<String, Object> params) {
+    StudentInfoGlance glance = new StudentInfoGlance();
+    glance.setAll_users_count(1000);
+    glance.setFollowing_users_count(1000);
+    glance.setMember_users_count(1000);
+    glance.setNew_follow_member_users_count(1000);
+    glance.setNew_member_users_count(1000);
+    glance.setNew_register_users_count(1000);
+    glance.setNew_follow_users_count(1000);
+    glance.setRegistered_users_count(1000);
+    QcDataResponse dataResponse = new QcDataResponse();
+    dataResponse.setData(glance);
+    dataResponse.setStatus(200);
+    return Flowable.just(dataResponse);
+    //return studentApi.qcGetHomePageInfo(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
+      HashMap<String, Object> params) {
+    List<StatDate> statDates = new ArrayList<>();
+    String date_group_dimension = (String) params.get("date_group_dimension");
+    String end = (String) params.get("end");
+    Date date = cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD(end);
+    Calendar calendar=Calendar.getInstance();
+    calendar.setTime(date);
+    switch (date_group_dimension){
+      case "day":
+        for (int i = 0; i < 20; i++) {
+          calendar.add(Calendar.DAY_OF_MONTH,-1);
+          StatDate statDate = new StatDate();
+          statDate.setCount(i + 10);
+          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDates.add(0,statDate);
+        }
+        break;
+      case "week":
+        for (int i = 0; i < 20; i++) {
+          calendar.add(Calendar.WEEK_OF_YEAR,-1);
+          StatDate statDate = new StatDate();
+          statDate.setCount(i + 10);
+          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDates.add(0,statDate);
+        }
+        break;
+      case "month":
+        for (int i = 0; i < 20; i++) {
+          calendar.add(Calendar.MONTH,-1);
+          StatDate statDate = new StatDate();
+          statDate.setCount(i + 10);
+          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDates.add(0,statDate);
+        }
+        break;
+    }
+
+    QcDataResponse<List<StatDate>> dataResponse = new QcDataResponse<>();
+    dataResponse.setData(statDates);
+    dataResponse.setStatus(200);
+    return Flowable.just(dataResponse).delay(2,TimeUnit.SECONDS);
+    //return studentApi.qcGetIncreaseStat(staff_id, params);
+  }
+
   //@Override
   //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params) {
   //  return studentApi.qcGetAllotSaleOwenUsers(staff_id, params);
   //}
   //
-  @Override
-  public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id,
-      String type, HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
+      String staff_id, String type, HashMap<String, Object> params) {
     return studentApi.qcGetAllotStaffMembers(staff_id, type, params);
   }
+
   //
   //@Override public Observable<QcDataResponse<StudentWithCoashListWrap>> qcGetCoachStudentDetail(
   //    String staff_id, HashMap<String, Object> params) {
   //  return studentApi.qcGetCoachStudentDetail(staff_id, params);
   //}
   //
-  @Override
-  public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
-      String shopid, String gymid, String model) {
+  @Override public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id,
+      String brandid, String shopid, String gymid, String model) {
     return studentApi.qcGetSalers(staff_id, brandid, shopid, gymid, model);
   }
+
   //
-  @Override
-  public Flowable<QcResponse> qcModifySellers(String staff_id, HashMap<String, Object> params,
-      HashMap<String, Object> body) {
+  @Override public Flowable<QcResponse> qcModifySellers(String staff_id,
+      HashMap<String, Object> params, HashMap<String, Object> body) {
     return studentApi.qcModifySellers(staff_id, params, body);
   }
+
   //
-  @Override
-  public Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
-      HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
+      String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetAllAllocateCoaches(staff_id, params);
   }
+
   //
-  @Override
-  public Flowable<QcResponse> qcAllocateCoach(String staff_id, HashMap<String, Object> body) {
+  @Override public Flowable<QcResponse> qcAllocateCoach(String staff_id,
+      HashMap<String, Object> body) {
     return studentApi.qcAllocateCoach(staff_id, body);
   }
   //

@@ -41,7 +41,7 @@ import javax.inject.Inject;
     IncreaseMemberTopView.class, IncreaseMemberPage.class, StudentStateInfoPage.class,
     StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordPage.class,
     FollowRecordStatusPage.class,
-    SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
+    SendMsgHomeFragment.class, ShortMsgDetailFragment.class,FollowUpTopSalerView.class,FollowUpFilterView.class,
     MsgSendFragmentFragment.class,ImportExportFragment.class,SalerStudentsPage.class,
     AllotChooseSellerPage.class,AllotChooseCoachPage.class,StudentBirthdayPage.class
 }) public class StudentActivity extends SaasCommonActivity {

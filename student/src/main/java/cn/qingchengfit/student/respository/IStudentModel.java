@@ -7,6 +7,8 @@ import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StatDate;
+import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
@@ -101,8 +103,8 @@ public interface IStudentModel {
   //Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params);
   //
-  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id,
-      String type, HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type,
+      HashMap<String, Object> params);
 
   /**
    * 教练名下会员列表接口(无销售的会员列表不需要传seller_id)
@@ -131,10 +133,6 @@ public interface IStudentModel {
   /**
    * 获取教练列表
    * 获取教练列表
-   *
-   * @param staff_id
-   * @param params
-   * @return
    */
   Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
       HashMap<String, Object> params);
@@ -278,7 +276,11 @@ public interface IStudentModel {
   Flowable<QcResponse> qcPutShortMsg(String staffid, ShortMsgBody body,
       HashMap<String, Object> params);
 
-Flowable<QcDataResponse> qcDataImport(
-     String staff_id,  HashMap<String, Object> body);
+  Flowable<QcDataResponse> qcDataImport(String staff_id, HashMap<String, Object> body);
 
+  Flowable<QcDataResponse<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
+      HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
+       HashMap<String, Object> params);
 }

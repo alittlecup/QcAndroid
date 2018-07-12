@@ -4,9 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageStudentHomeBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
@@ -21,7 +19,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
-import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/5.
@@ -30,16 +27,22 @@ import javax.inject.Inject;
     extends StudentBaseFragment<StPageStudentHomeBinding, StudentHomeViewModel>
     implements OnChartValueSelectedListener {
   @Override protected void subscribeUI() {
-
+    mViewModel.increaseFollowers.observe(this,msg->mBinding.tvIncreaseFollow.setCount(msg));
+    mViewModel.increaseStudents.observe(this,msg->mBinding.tvIncreaseStudent.setCount(msg));
+    mViewModel.increaseMembers.observe(this,msg->mBinding.tvIncreaseMember.setCount(msg));
+    mViewModel.followStudents.observe(this,msg->mBinding.tvIncreaseStudentFollow.setCount(msg));
   }
 
   @Override
   public StPageStudentHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = StPageStudentHomeBinding.inflate(inflater, container, false);
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     initToolbar();
     initListener();
     initChart();
+    mViewModel.loadSource();
     return mBinding;
   }
 

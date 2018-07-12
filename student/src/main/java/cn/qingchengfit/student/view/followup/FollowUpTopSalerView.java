@@ -6,6 +6,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.student.item.BaseGirdListFragment;
 import cn.qingchengfit.student.item.ChooseSalerItem;
+import cn.qingchengfit.student.routers.StudentParamsInjector;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -40,6 +41,7 @@ public class FollowUpTopSalerView extends BaseGirdListFragment implements
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        StudentParamsInjector.inject(this);
         super.onCreate(savedInstanceState);
         delegatePresenter(presenter, this);
         presenter.getFilterSelers(loginStatus.staff_id());

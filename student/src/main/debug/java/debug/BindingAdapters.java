@@ -12,6 +12,7 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saascommon.BuildConfig;
 import cn.qingchengfit.saascommon.widget.LineCharDate;
 import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
+import cn.qingchengfit.student.widget.CountTextView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FunnelTwoView;
 import cn.qingchengfit.widgets.QcRadioGroup;
@@ -43,7 +44,7 @@ public class BindingAdapters {
 
     @BindingAdapter(value = "datas")
     public static void setLineDataUnit(LineCharDate lineCharDate, LineData data) {
-        lineCharDate.setData(data);
+        lineCharDate.appData(data);
     }
 
     @BindingAdapter(value = "afterTextChanged")
@@ -69,6 +70,7 @@ public class BindingAdapters {
             }
         });
     }
+
 
     public interface AfterTextChangeListener {
         void afterTextChange(String s);

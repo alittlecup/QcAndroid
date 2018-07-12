@@ -2,7 +2,9 @@ package cn.qingchengfit.student.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.databinding.BindingAdapter;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -44,11 +46,21 @@ public class CountTextView extends LinearLayout {
 
   public void setCount(int count) {
     mCount = count;
-    mCountTv.setText(mCount == 0 ? "- -" : String.valueOf(mCount));
+    mCountTv.setText(String.valueOf(mCount));
+  }
+
+  public void setCount(String count) {
+    mCount = TextUtils.isEmpty(count) ? 0 : Integer.parseInt(count);
+    mCountTv.setText(count);
   }
 
   public void setText(String text) {
     mText = text;
     mTextTv.setText(mText);
+  }
+
+  @BindingAdapter("ct_count")
+  public static void setCountTextViewCount(CountTextView textView, String unit) {
+    textView.setCount(unit);
   }
 }

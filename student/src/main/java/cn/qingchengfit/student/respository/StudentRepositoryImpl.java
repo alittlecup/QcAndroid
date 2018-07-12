@@ -11,10 +11,13 @@ import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.StatDate;
+import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -153,6 +156,16 @@ import javax.inject.Singleton;
       }
       return objectQcDataResponse;
     }));
+  }
+
+  @Override public LiveData<Resource<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetHomePageInfo(staff_id,params));
+  }
+
+  @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetIncreaseStat(staff_id, params));
   }
 
   //@Override

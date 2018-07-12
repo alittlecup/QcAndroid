@@ -46,6 +46,9 @@ public class MyMarkerView extends MarkerView {
         tvContent.setBackground(mutate);
     }
 
+    public void hideDate(){
+        tvDate.setVisibility(GONE);
+    }
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 

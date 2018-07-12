@@ -9,6 +9,10 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.student.view.home.StudentHomeViewModel"
+        />
   </data>
   <LinearLayout
       android:layout_width="match_parent"
@@ -104,6 +108,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:ct_text="新用户跟进"
+
                 />
             <cn.qingchengfit.student.widget.CountTextView
                 android:id="@+id/tv_increase_student_follow"
@@ -112,6 +117,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:ct_text="会员维护"
+
                 />
           </LinearLayout>
         </RelativeLayout>
@@ -138,9 +144,10 @@
               android:drawablePadding="10dp"
               android:drawableRight="@drawable/vd_arrow_right_grey_small"
               android:drawableTint="@color/colorPrimary"
-              android:text="- -"
+              android:text="@{viewModel.totalMembers}"
               android:textColor="@color/colorPrimary"
               android:textSize="36dp"
+
               tools:text="138,174"
               />
 
@@ -185,6 +192,7 @@
                   android:drawablePadding="5dp"
                   android:drawableTint="@color/lightblue"
                   android:text="新注册"
+
                   style="@style/QcTextStyleSmallGrey"
                   />
               <TextView
@@ -194,6 +202,7 @@
                   android:drawablePadding="10dp"
                   android:drawableRight="@drawable/vd_arrow_right_grey_small"
                   android:gravity="end"
+                  android:text="@{viewModel.register}"
                   android:textSize="16sp"
                   tools:text="1567"
                   style="@style/QcTextStyleMediumDark"
@@ -221,6 +230,8 @@
                   android:drawablePadding="10dp"
                   android:drawableRight="@drawable/vd_arrow_right_grey_small"
                   android:gravity="end"
+                  android:text="@{viewModel.follow}"
+
                   android:textSize="16sp"
                   tools:text="1567"
                   style="@style/QcTextStyleMediumDark"
@@ -249,6 +260,7 @@
                   android:drawablePadding="10dp"
                   android:drawableRight="@drawable/vd_arrow_right_grey_small"
                   android:gravity="end"
+                  android:text="@{viewModel.member}"
                   android:textSize="16sp"
                   tools:text="1567"
                   style="@style/QcTextStyleMediumDark"
@@ -262,9 +274,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             app:civ_clickable="true"
-            app:civ_left_icon="@drawable/vd_student_distribution"
             app:civ_is_show_left="true"
             app:civ_lable="会员分配"
+            app:civ_left_icon="@drawable/vd_student_distribution"
             app:civ_showright="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
@@ -273,9 +285,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:civ_clickable="true"
-            app:civ_left_icon="@drawable/vd_student_conversion"
             app:civ_is_show_left="true"
             app:civ_lable="会员转化"
+            app:civ_left_icon="@drawable/vd_student_conversion"
             app:civ_showright="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
@@ -283,10 +295,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:civ_clickable="true"
-            app:civ_left_icon="@drawable/vd_student_attendance"
-
             app:civ_is_show_left="true"
             app:civ_lable="会员出勤"
+            app:civ_left_icon="@drawable/vd_student_attendance"
             app:civ_showright="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
@@ -295,9 +306,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:civ_clickable="true"
-            app:civ_left_icon="@drawable/vd_student_birthday"
             app:civ_is_show_left="true"
             app:civ_lable="会员生日"
+            app:civ_left_icon="@drawable/vd_student_birthday"
             app:civ_showright="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
@@ -306,9 +317,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:civ_clickable="true"
-            app:civ_left_icon="@drawable/vd_student_msg"
             app:civ_is_show_left="true"
             app:civ_lable="群发短信"
+            app:civ_left_icon="@drawable/vd_student_msg"
             app:civ_showright="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
@@ -317,9 +328,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
             app:civ_clickable="true"
-            app:civ_left_icon="@drawable/vd_student_importandexport"
             app:civ_is_show_left="true"
             app:civ_lable="导入导出"
+            app:civ_left_icon="@drawable/vd_student_importandexport"
             app:civ_showright="true"
             />
       </LinearLayout>

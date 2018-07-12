@@ -4,17 +4,18 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.student.respository.IStudentModel;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/11/8.
  */
 
 public class FollowUpSalersPresenter extends BasePresenter<FollowUpSalersPresenter.MVPView> {
-    //@Inject
-    //IStudentModel studentModel;
+    @Inject IStudentModel studentModel;
     @Inject
     GymWrapper gymWrapper;
 
@@ -26,7 +27,7 @@ public class FollowUpSalersPresenter extends BasePresenter<FollowUpSalersPresent
     public void getFilterSelers(String staff_id) {
         HashMap<String, Object> params = gymWrapper.getParams();
         //RxRegiste(studentModel
-        //        .qcGetTrackStudentsFilterSalers(staff_id, params)
+        //        .qcGetTrackStudentbindsFilterSalers(staff_id, params)
         //        .onBackpressureBuffer()
         //        .subscribeOn(Schedulers.io())
         //        .observeOn(AndroidSchedulers.mainThread())
