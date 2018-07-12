@@ -43,7 +43,7 @@ public class SimpleMonthView extends MonthView {
     int cx = x + mItemWidth / 2;
 
     if (isSelected) {
-      canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY, mSelectTextPaint);
+      canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY, calendar.isCurrentMonth() ? mSelectTextPaint : mOtherMonthTextPaint );
     } else if (hasScheme) {
       canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY,
           calendar.isCurrentDay() ? mCurDayTextPaint

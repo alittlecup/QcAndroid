@@ -8,6 +8,7 @@
     android:minHeight="40dp"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
+    android:clickable="false"
     android:paddingTop="8dp"
     tools:ignore="HardcodedText">
 

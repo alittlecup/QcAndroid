@@ -16,14 +16,15 @@ public class SimpleWeekBar extends WeekBar {
     super(context);
     LayoutInflater.from(context).inflate(R.layout.st_week_bar, this, true);
     setBackgroundColor(Color.WHITE);
+    setClickable(false);
   }
 
   @Override
   protected void onDateSelected(Calendar calendar, int weekStart, boolean isClick) {
-    getChildAt(mPreSelectedIndex).setSelected(false);
-    int viewIndex = getViewIndexByCalendar(calendar, weekStart);
-    getChildAt(viewIndex).setSelected(true);
-    mPreSelectedIndex = viewIndex;
+    //getChildAt(mPreSelectedIndex).setSelected(false);
+    //int viewIndex = getViewIndexByCalendar(calendar, weekStart);
+    //getChildAt(viewIndex).setSelected(true);
+    //mPreSelectedIndex = viewIndex;
   }
 
   /**

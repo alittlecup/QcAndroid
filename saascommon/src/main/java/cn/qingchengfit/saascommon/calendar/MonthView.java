@@ -153,11 +153,11 @@ public abstract class MonthView extends BaseView {
                     return;
                 }
 
-                if (!calendar.isCurrentMonth() && mMonthViewPager != null) {
-                    int cur = mMonthViewPager.getCurrentItem();
-                    int position = mCurrentItem < 7 ? cur - 1 : cur + 1;
-                    mMonthViewPager.setCurrentItem(position);
-                }
+                //if (!calendar.isCurrentMonth() && mMonthViewPager != null) {
+                //    int cur = mMonthViewPager.getCurrentItem();
+                //    int position = mCurrentItem < 7 ? cur - 1 : cur + 1;
+                //    mMonthViewPager.setCurrentItem(position);
+                //}
 
                 if (mDelegate.mInnerListener != null) {
                     mDelegate.mInnerListener.onMonthDateSelected(calendar, true);

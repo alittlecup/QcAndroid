@@ -100,6 +100,7 @@ import java.util.List;
     mBinding.calendarView.setOnDateSelectedListener(this);
     mBinding.calendarView.setWeekStarWithMon();
     mBinding.calendarView.setFixMode();
+    mBinding.calendarView.updateWeekBar();
     mBinding.tvMonth.setText(
         mBinding.calendarView.getCurYear() + "年" + mBinding.calendarView.getCurMonth() + "月");
   }

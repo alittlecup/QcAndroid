@@ -546,7 +546,11 @@ final class CalendarUtil {
         calendarDate.setCurrentDay(true);
       }
       LunarCalendar.setupLunarCalendar(calendarDate);
-      calendarDate.setCurrentMonth(true);
+      if (calendar.getMonth() == calendarDate.getMonth()) {
+        calendarDate.setCurrentMonth(true);
+      } else {
+        calendarDate.setCurrentMonth(false);
+      }
       mItems.add(calendarDate);
     }
     return mItems;
@@ -573,7 +577,7 @@ final class CalendarUtil {
     return items;
   }
 
-  static List<Calendar> getCalendarsForMonth(int year,int month) {
+  static List<Calendar> getCalendarsForMonth(int year, int month) {
     List<Calendar> items = new ArrayList<>();
     int count = getMonthDaysCount(year, month);
     for (int i = 1; i <= count; i++) {
