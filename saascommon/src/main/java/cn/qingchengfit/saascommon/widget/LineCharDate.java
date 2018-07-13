@@ -72,11 +72,19 @@ public class LineCharDate extends LinearLayout {
           chart.highlightValue(maxX - 3, 0);
         }
       }
+
+      @Override public void onChartSingleTapped(MotionEvent me) {
+        super.onChartSingleTapped(me);
+        if (lineCharListener != null) {
+          Entry entry = chart.getEntryByTouchPoint(me.getX(), me.getY());
+          lineCharListener.onChartClick((int) entry.getX(), (int) entry.getY());
+        }
+      }
     });
     chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
       @Override public void onValueSelected(Entry entry, Highlight h) {
         if (lineCharListener != null) {
-          lineCharListener.onChartClick((int) entry.getX(), (int) entry.getY());
+          lineCharListener.onChartTranslate((int) entry.getX(), (int) entry.getY());
         }
       }
 
@@ -209,7 +217,7 @@ public class LineCharDate extends LinearLayout {
 
       setYAxisMaximum(getAxisLeftLefeMax(data));
       moveViewToX(19);
-      highlightValue(23,0);
+      highlightValue(23, 0);
       setVisibleXRange(6);
     }
   }
@@ -246,7 +254,7 @@ public class LineCharDate extends LinearLayout {
   private onLineCharListener lineCharListener;
 
   public interface onLineCharListener {
-    void onChartTranslate(int selectPos);
+    void onChartTranslate(int valuePos, int count);
 
     void onChartClick(int clickPos, int count);
   }

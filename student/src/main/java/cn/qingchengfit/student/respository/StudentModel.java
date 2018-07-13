@@ -14,6 +14,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
+import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import com.google.errorprone.annotations.Var;
 import com.google.gson.Gson;
@@ -159,7 +160,7 @@ public class StudentModel implements IStudentModel {
           StatDate statDate = new StatDate();
           statDate.setCount(i + 10);
           statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD( cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(),1)));
           statDates.add(0,statDate);
         }
         break;
@@ -169,7 +170,8 @@ public class StudentModel implements IStudentModel {
           StatDate statDate = new StatDate();
           statDate.setCount(i + 10);
           statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
+              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(),7)));
           statDates.add(0,statDate);
         }
         break;
@@ -179,7 +181,7 @@ public class StudentModel implements IStudentModel {
           StatDate statDate = new StatDate();
           statDate.setCount(i + 10);
           statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(),30)));
           statDates.add(0,statDate);
         }
         break;
@@ -262,11 +264,11 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcGetTrackStudentFollow(staff_id, params);
   //}
   //
-  //@Override
-  //public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
-  //    String type, HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudents(staff_id, type, params);
-  //}
+  @Override
+  public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
+      String type, HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudents(staff_id, type, params);
+  }
   //
   //@Override public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
   //    String staff_id, HashMap<String, Object> params) {

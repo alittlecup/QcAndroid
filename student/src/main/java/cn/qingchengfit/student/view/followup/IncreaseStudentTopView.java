@@ -64,15 +64,16 @@ public class IncreaseStudentTopView
       }
     });
     mBinding.lineChart.setLineCharListener(new LineCharDate.onLineCharListener() {
-      @Override public void onChartTranslate(int selectPos) {
-      }
-
-      @Override public void onChartClick(int clickPos, int count) {
-        int curpos = clickPos - 3 >= 0 ? clickPos - 3 : 0;
+      @Override public void onChartTranslate(int valuePos,int count) {
+        int curpos = valuePos - 3 >= 0 ? valuePos - 3 : 0;
         if(curpos==0){
           mViewModel.loadMore();
         }
         mViewModel.upDateTvContent(curpos,count);
+      }
+
+      @Override public void onChartClick(int clickPos, int count) {
+        mViewModel.updateSelectPos(clickPos,count);
       }
     });
   }

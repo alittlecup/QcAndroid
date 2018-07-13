@@ -77,7 +77,6 @@ public class FollowUpItem extends AbstractFlexibleItem<DataBindingViewHolder<Ite
             binding.itemPersonGender.setImageResource(R.drawable.ic_gender_signal_female);
         }
 
-        binding.tvStudentContactTa.setTag(data.phone);
         binding.itemPersonPhonenum.setText(new StringBuilder().append("手机：").append(data.phone).toString());
         List<String> sellerNames = new ArrayList<>();
         if (data.sellers != null && !data.sellers.isEmpty()) {

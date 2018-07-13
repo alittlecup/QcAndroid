@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.home;
 
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -14,12 +15,15 @@ import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StViewStudentAllotBinding;
+import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
+import cn.qingchengfit.views.statuslayout.StatusLayoutManager;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import io.reactivex.annotations.NonNull;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -35,6 +39,7 @@ public class StudentListView
   CommonFlexAdapter adapter;
   private List<String> ids;
   String curType;
+  private StatusLayoutManager layoutManager;
 
   @Override protected void subscribeUI() {
     mViewModel.getRemoveSelectPos().observe(this, pos -> {
@@ -83,7 +88,7 @@ public class StudentListView
     mBinding.btnModifySale.setOnClickListener(view -> {
       routeTo(getStringByType(curType));
     });
-    mBinding.btnExclude.setOnClickListener(view->{
+    mBinding.btnExclude.setOnClickListener(view -> {
 
     });
   }
@@ -101,7 +106,11 @@ public class StudentListView
   public List<QcStudentBean> getSelectDataBeans() {
     List<QcStudentBean> studentBeans = new ArrayList<>();
     for (Integer pos : adapter.getSelectedPositions()) {
-      studentBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
+      if(adapter.getItem(pos) instanceof StudentItem){
+        studentBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
+      }else if(adapter.getItem(pos) instanceof ChooseDetailItem){
+        studentBeans.add(((ChooseDetailItem) adapter.getItem(pos)).getData());
+      }
     }
     return studentBeans;
   }
@@ -117,9 +126,14 @@ public class StudentListView
     return "";
   }
 
-  public void setItems(List<? extends StudentItem> items) {
-    if (mViewModel != null) {
-      mViewModel.items.set(new ArrayList<>(items));
+  public void setItems(List<? extends AbstractFlexibleItem> items) {
+    if (items == null) {
+      showEmptyLayout(0, "暂无数据", "");
+    } else {
+      restoreLayout();
+      if (mViewModel != null) {
+        mViewModel.items.set(new ArrayList<>(items));
+      }
     }
   }
 
@@ -132,22 +146,22 @@ public class StudentListView
     adapter.setMode(SelectableAdapter.Mode.MULTI);
     mBinding.recyclerView.setAdapter(adapter);
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.fastScrollerBar.setBarClickListener(new ModifiedFastScroller.onBarClickListener() {
-      @Override public int letterToPosition(String letter) {
-        List<? extends StudentItem> itemList = mViewModel.items.get();
-        int position = 0;
-        for (int i = 0; i < itemList.size(); i++) {
-          if (itemList.get(i).getHeader() != null) {
-            if (itemList.get(i).getHeader() instanceof StickerDateItem) {
-              if (((StickerDateItem) itemList.get(i).getHeader()).getDate()
-                  .equalsIgnoreCase(letter)) {
+    mBinding.fastScrollerBar.setBarClickListener(letter -> {
+      List<? extends AbstractFlexibleItem> itemList = mViewModel.items.get();
+      int position = 0;
+      for (int i = 0; i < itemList.size(); i++) {
+        if (itemList.get(i) instanceof StudentItem) {
+          StudentItem item = (StudentItem) itemList.get(i);
+          if (item.getHeader() != null) {
+            if (item.getHeader() instanceof StickerDateItem) {
+              if (((StickerDateItem) item.getHeader()).getDate().equalsIgnoreCase(letter)) {
                 position = i;
               }
             }
           }
         }
-        return position;
       }
+      return position;
     });
     adapter.setFastScroller(mBinding.fastScrollerBar);
     adapter.addListener(this);
@@ -161,6 +175,29 @@ public class StudentListView
   public void hideFastScroller() {
     mBinding.fastScrollerBar.setEnabled(false);
     mBinding.fastScrollerBar.setVisibility(View.GONE);
+  }
+
+  public void setCurType(@AllotType String type) {
+    this.curType = type;
+    if (mBinding != null) {
+      mBinding.btnModifySale.setText(getStringByType(curType));
+      if (type.equals(TRAINER_TYPE)) {
+        adapter.setTag("choose", 1);
+      } else {
+        adapter.setTag("choose", 0);
+      }
+      adapter.notifyDataSetChanged();
+    }
+  }
+
+  public void reset() {
+    this.curType = "";
+    if (mBinding != null) {
+      mBinding.btnModifySale.setText(getStringByType(curType));
+      mBinding.llBottom.setVisibility(View.GONE);
+      adapter.setTag("choose", -1);
+      adapter.notifyDataSetChanged();
+    }
   }
 
   @Override public boolean onItemClick(int position) {
@@ -179,8 +216,7 @@ public class StudentListView
             .studentIds(ids)
             .curId(curID)
             .textContent(
-                getString(R.string.choose_saler) + "\n" + getString(
-                    R.string.choose_saler_tips))
+                getString(R.string.choose_saler) + "\n" + getString(R.string.choose_saler_tips))
             .build());
         break;
       case StudentListView.TRAINER_TYPE:
@@ -197,19 +233,38 @@ public class StudentListView
   public ArrayList<String> getSelectIds() {
     ArrayList<String> ids = new ArrayList<>();
     for (Integer pos : adapter.getSelectedPositions()) {
-      ids.add(((StudentItem) adapter.getItem(pos)).getId());
+      if ((adapter.getItem(pos) instanceof StudentItem)) {
+        ids.add(((StudentItem) adapter.getItem(pos)).getId());
+      } else if (adapter.getItem(pos) instanceof ChooseDetailItem) {
+        ids.add(((ChooseDetailItem) adapter.getItem(pos)).getData().getId());
+      }
     }
     return ids;
   }
+
   private String curID;
-  public void setCurId(String curID){
-    this.curID=curID;
-    if(mBinding!=null){
-      mBinding.btnExclude.setVisibility(TextUtils.isEmpty(curID)?View.GONE:View.VISIBLE);
+
+  public void setCurId(String curID) {
+    this.curID = curID;
+    if (mBinding != null) {
+      mBinding.btnExclude.setVisibility(TextUtils.isEmpty(curID) ? View.GONE : View.VISIBLE);
     }
   }
 
   @StringDef(value = { SELLER_TYPE, TRAINER_TYPE, MSG_TYPE }) @Retention(RetentionPolicy.RUNTIME)
   public @interface AllotType {
+  }
+
+  public void showEmptyLayout(@DrawableRes int drawable, String title, String content) {
+    layoutManager =
+        new StatusLayoutManager.Builder(mBinding.recyclerView).setEmptyLayoutDrawableRes(drawable)
+            .setEmptyLayoutTitle(title)
+            .setEmptyLayoutContent(content)
+            .build();
+    layoutManager.showEmptyLayout();
+  }
+
+  public void restoreLayout() {
+    if (layoutManager != null) layoutManager.restoreLayout();
   }
 }

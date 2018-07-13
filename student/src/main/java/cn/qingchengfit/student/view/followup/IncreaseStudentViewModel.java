@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -10,6 +11,7 @@ import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
+import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.item.FollowUpItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.HashMap;
@@ -18,14 +20,13 @@ import java.util.Map;
 import javax.inject.Inject;
 
 public class IncreaseStudentViewModel
-    extends FlexibleViewModel<StudentListWrappeForFollow, FollowUpItem, Map<String, ?>> {
+    extends FlexibleViewModel<StudentListWrappeForFollow, ChooseDetailItem, Map<String, ?>> {
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject StudentRepository repository;
 
-  public Integer dataType = -1;
-
+  public Integer dataType = -1;//0- 新注册，2-会员
 
   @Inject IncreaseStudentViewModel() {
 
@@ -38,18 +39,19 @@ public class IncreaseStudentViewModel
     if (!map.isEmpty()) {
       params.putAll(map);
     }
+    params.put("show_all", 1);
 
     String type = "";
     switch (dataType) {
       case 0:
         type = "create";
         break;
-      case 1:
+      case 2:
         type = "member";
         break;
     }
-    //return repository.qcGetTrackStudents(loginStatus.staff_id(), type, params);
-    return null;
+    return Transformations.map(repository.qcGetTrackStudents(loginStatus.staff_id(), type, params),
+        this::dealResource);
   }
 
   @Override
@@ -58,21 +60,21 @@ public class IncreaseStudentViewModel
   }
 
   @Override
-  protected List<FollowUpItem> map(@NonNull StudentListWrappeForFollow studentListWrappeForFollow) {
+  protected List<ChooseDetailItem> map(@NonNull StudentListWrappeForFollow studentListWrappeForFollow) {
     return FlexibleItemProvider.with(new FollowUpItemFactory(dataType))
         .from(studentListWrappeForFollow.users);
   }
 
   static class FollowUpItemFactory
-      implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, FollowUpItem> {
+      implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, ChooseDetailItem> {
     private Integer type;
 
     public FollowUpItemFactory(Integer type) {
       this.type = type;
     }
 
-    @NonNull @Override public FollowUpItem create(QcStudentBeanWithFollow beanWithFollow) {
-      return FlexibleFactory.create(FollowUpItem.class, beanWithFollow, type);
+    @NonNull @Override public ChooseDetailItem create(QcStudentBeanWithFollow beanWithFollow) {
+      return FlexibleFactory.create(ChooseDetailItem.class, beanWithFollow, type);
     }
   }
 }

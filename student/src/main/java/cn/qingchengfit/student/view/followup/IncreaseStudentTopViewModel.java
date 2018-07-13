@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.LineData;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -41,10 +42,12 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
 
   private final MediatorLiveData<HashMap<String, String>> dates = new MediatorLiveData<>();
   public final MediatorLiveData<LineData> lineData = new MediatorLiveData<>();
-  public final MutableLiveData<Boolean> showLoading=new MutableLiveData<>();
+  public final MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
+  public final MutableLiveData<HashMap<String, String>> curSelectPositionDate =
+      new MutableLiveData<>();
 
   private final LiveData<List<StatDate>> remoteDatas;
-  private List<StatDate> preStatDates=new ArrayList<>();
+  private List<StatDate> preStatDates = new ArrayList<>();
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -57,6 +60,22 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
       HashMap<String, String> dates = new HashMap<>();
       dates.put("end", stringToday);
       this.dates.setValue(dates);
+      HashMap<String, String> curDates = new HashMap<>();
+      curDates.put("end", stringToday);
+      Calendar calendar = Calendar.getInstance();
+      switch (dimension) {
+        case DateGroupDimension.DAY:
+          calendar.add(Calendar.DAY_OF_MONTH, -1);
+          break;
+        case DateGroupDimension.WEEK:
+          calendar.add(Calendar.WEEK_OF_YEAR, -1);
+          break;
+        case DateGroupDimension.MONTH:
+          calendar.add(Calendar.MONTH, -1);
+          break;
+      }
+      curDates.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
+      curSelectPositionDate.setValue(curDates);
     });
     remoteDatas = Transformations.switchMap(dates,
         params -> Transformations.map(loadSource(params), input -> dealResource(input)));
@@ -65,15 +84,16 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
           .filter(statDates1 -> statDates1 != null && !statDates1.isEmpty())
           .flatMap(statDates12 -> {
             statDates12.addAll(preStatDates);
-            preStatDates=statDates12;
+            preStatDates = statDates12;
             List<Integer> counts = new ArrayList<>();
             for (StatDate statDate : statDates12) {
               counts.add(statDate.getCount());
             }
             return Maybe.just(counts);
           })
-          .map(counts -> StudentBusinessUtils.transformBean2DataByType(counts, counts.size(), type,!preStatDates.isEmpty()))
-          .doAfterTerminate(()->showLoading.setValue(false))
+          .map(counts -> StudentBusinessUtils.transformBean2DataByType(counts, counts.size(), type,
+              !preStatDates.isEmpty()))
+          .doAfterTerminate(() -> showLoading.setValue(false))
           .subscribe(lineData::setValue);
     });
   }
@@ -105,6 +125,7 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
         start = DateUtils.getYYMMfromServer(statDate.getStart());
         break;
     }
+
     int color = Color.parseColor("#6eb8f1");
     switch (type) {
       case IncreaseType.INCREASE_MEMBER:
@@ -123,7 +144,15 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
         .append("人")
         .create());
   }
+  public void updateSelectPos(int curPos,int count){
+    if (dateDimension.getValue() == null) return;
+    StatDate statDate = preStatDates.get(curPos);
+    HashMap<String, String> params = new HashMap<>();
+    params.put("start", statDate.getStart());
+    params.put("end", statDate.getEnd());
+    curSelectPositionDate.setValue(params);
 
+  }
   public void loadMore() {
     showLoading.setValue(true);
     HashMap<String, String> params = new HashMap<>();

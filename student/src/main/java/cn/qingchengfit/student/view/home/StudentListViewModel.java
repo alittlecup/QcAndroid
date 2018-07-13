@@ -6,6 +6,7 @@ import android.databinding.ObservableInt;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class StudentListViewModel extends BaseViewModel {
 
   private MutableLiveData<List<QcStudentBean>> selectedDatas = new MutableLiveData<>();
 
-  public ObservableField<List<StudentItem>> items = new ObservableField<>();
+  public ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
 
   public void setStudentItems(List<? extends StudentItem> items) {
     this.items.set(new ArrayList<>(items));

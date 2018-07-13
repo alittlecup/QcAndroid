@@ -11,6 +11,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
+import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public interface StudentRepository {
   //
   //LiveData<FollowUpDataStatistic> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params);
   //
-  //LiveData<StudentListWrappeForFollow> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params);
+  LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params);
   //
   LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type,
       HashMap<String, Object> params);

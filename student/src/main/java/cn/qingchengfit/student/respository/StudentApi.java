@@ -11,6 +11,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
+import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -159,7 +160,7 @@ public interface StudentApi {
   //    Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-  //
+
   //    /**
   //     * 新增注册
   //     */
@@ -167,15 +168,15 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-  //    /**
-  //     * 新增
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/new/{type}/")
-  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
-  //        @Path("staff_id") String staff_id, @Path("type") String type,
-  //        @QueryMap HashMap<String, Object> params);
-  //
-  //    /**
+      /**
+       * 新增
+       */
+      @GET("/api/staffs/{staff_id}/users/new/{type}/")
+      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+          @Path("staff_id") String staff_id, @Path("type") String type,
+          @QueryMap HashMap<String, Object> params);
+
+      /**
   //     * 新增跟进
   //     */
   //    @GET("/api/staffs/{staff_id}/users/new/follow/")

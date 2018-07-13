@@ -9,6 +9,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
+import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
@@ -181,8 +182,8 @@ public interface IStudentModel {
   /**
    * 新增查询
    */
-  //Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
-  //    String type, HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
+      String type, HashMap<String, Object> params);
 
   /**
    * 新增学员

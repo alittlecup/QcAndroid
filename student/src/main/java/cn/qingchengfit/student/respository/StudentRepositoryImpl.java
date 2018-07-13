@@ -13,6 +13,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
+import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
@@ -87,11 +88,12 @@ import javax.inject.Singleton;
   //
   //}
   //
-  //public LiveData<StudentListWrappeForFollow> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params) {
-  //
-  //    return toLiveData(remoteService.qcGetTrackStudents(staff_id, type, params));
-  //}
-  //
+  public LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
+      String type, HashMap<String, Object> params) {
+
+    return toLiveData(remoteService.qcGetTrackStudents(staff_id, type, params));
+  }
+
   public LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type,
       HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetStaffList(staff_id, type, params));
@@ -160,7 +162,7 @@ import javax.inject.Singleton;
 
   @Override public LiveData<Resource<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
       HashMap<String, Object> params) {
-    return toLiveData(remoteService.qcGetHomePageInfo(staff_id,params));
+    return toLiveData(remoteService.qcGetHomePageInfo(staff_id, params));
   }
 
   @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
