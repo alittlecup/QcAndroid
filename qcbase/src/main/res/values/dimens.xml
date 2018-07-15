@@ -1,0 +1,80 @@
+<resources>
+
+
+  <dimen name="paper_item_height">50dp</dimen>
+  <dimen name="paper_common_padding">16dp</dimen>
+
+
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">15dp</dimen>
+  <dimen name="activity_vertical_margin">15dp</dimen>
+  <dimen name="font_divider">4dp</dimen>
+  <dimen name="fab_margin">16dp</dimen>
+  <dimen name="common_font">14sp</dimen>
+  <dimen name="min_font">12sp</dimen>
+  <dimen name="btn_font">16sp</dimen>
+  <dimen name="large_font">18sp</dimen>
+  <dimen name="max_font">24sp</dimen>
+  <dimen name="txt_stanrdant">@dimen/txt_14sp</dimen>
+  <dimen name="txt_10sp">10sp</dimen>
+  <dimen name="txt_11sp">11sp</dimen>
+  <dimen name="txt_12sp">11sp</dimen>
+  <dimen name="txt_13sp">12sp</dimen>
+  <dimen name="txt_14sp">13sp</dimen>
+  <dimen name="txt_15sp">14sp</dimen>
+  <dimen name="txt_16sp">15sp</dimen>
+  <dimen name="txt_17sp">16sp</dimen>
+  <dimen name="txt_18sp">17sp</dimen>
+  <dimen name="txt_19sp">18sp</dimen>
+  <dimen name="txt_20sp">19sp</dimen>
+
+
+
+  <dimen name="qc_actionbar_height">44dp</dimen>
+
+  <dimen name="qc_common_input_height">50dp</dimen>
+  <dimen name="qc_item_height">44dp</dimen>
+  <dimen name="qc_item_height_outside">54dp</dimen>
+  <dimen name="qc_drawer_item_height">58dp</dimen>
+  <dimen name="qc_edit_drawable_padding">15dp</dimen>
+  <dimen name="qc_notification_size">78.5dp</dimen>
+  <dimen name="qc_dialog_height">200dp</dimen>
+  <dimen name="qc_text_margin">8dp</dimen>
+  <dimen name="qc_icon_size">16dp</dimen>
+  <dimen name="qc_item_height_new">50dp</dimen>
+
+  <dimen name="qc_divider_height">1px</dimen>
+
+  <!-- dateTitleLayout -->
+  <dimen name="dateTitleTextSize">18sp</dimen>
+  <dimen name="dateTitlePaddingBottom">5dp</dimen>
+  <!-- weekLayout -->
+  <dimen name="dayOfWeekTextSize">16sp</dimen>
+  <!-- weekRowLayout -->
+  <dimen name="week_bottom_padding">5dp</dimen>
+  <!-- Day of the month -->
+  <dimen name="underline_weight">4dp</dimen>
+  <dimen name="underline_height">4dp</dimen>
+  <dimen name="day_of_month_background_size">23dp</dimen>
+  <dimen name="dayOfMonthIndicatorSize">3dp</dimen>
+  <dimen name="dayOfMonthImageMarginTop">20dp</dimen>
+  <dimen name="padding">8dp</dimen>
+  <dimen name="padding_sign_tab">6dp</dimen>
+  <dimen name="padding_sign_tab_border">10dp</dimen>
+  <dimen name="form_height">36dp</dimen>
+  <dimen name="little">8dp</dimen>
+  <dimen name="qc_allotsale_search_hight">32dp</dimen>
+
+  <dimen name="qc_civ_label_max_width_phone">209dp</dimen>
+  <dimen name="qc_civ_label_max_width_txt">109dp</dimen>
+  <dimen name="img_120dp">110dp</dimen>
+
+  <dimen name="font_20">18sp</dimen>
+  <dimen name="font_13">13sp</dimen>
+  <dimen name="quarter_width">100dp</dimen>
+
+  <dimen name="grid_expected_size">120dp</dimen>
+
+  <dimen name="dimen_common_input_60dp">60dp</dimen>
+
+</resources>

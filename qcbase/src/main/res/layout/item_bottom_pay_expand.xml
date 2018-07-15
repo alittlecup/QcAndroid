@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:orientation="horizontal"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
+      android:paddingTop="15dp"
+      >
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="在线支付"
+        style="@style/QcTextStyleSmallWarm"
+        />
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/tv_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:visibility="gone"
+        tools:text="去开通"
+        style="@style/QcTextStyleSmallWarm"
+        />
+  </LinearLayout>
+</layout>
