@@ -35,12 +35,18 @@
           android:background="@null"
           android:paddingLeft="15dp"
           android:paddingTop="15dp"
-          tools:text="adsafadsf"
+          android:hint="输入跟进详情&amp;结果，140字以内"
+          android:maxLength="140"
           />
       <Space
           android:layout_width="0dp"
           android:layout_height="0dp"
           android:layout_weight="1"
+          />
+      <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/activity_horizontal_margin"
           />
       <ImageView
           android:id="@+id/choose_img"
@@ -48,7 +54,7 @@
           android:layout_height="40dp"
           android:layout_gravity="right"
           android:tint="@color/text_grey"
-          android:src="@drawable/vd_ic_pic"
+          app:srcCompat="@drawable/vd_ic_pic"
           android:padding="10dp"
           />
 

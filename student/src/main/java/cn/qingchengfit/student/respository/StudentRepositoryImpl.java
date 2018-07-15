@@ -1,6 +1,9 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.Observable;
+import android.databinding.ObservableField;
 import android.support.annotation.IntRange;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -13,6 +16,9 @@ import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordListWrap;
+import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
@@ -65,6 +71,11 @@ import javax.inject.Singleton;
   static <T> LiveData<Resource<T>> toLiveData(Flowable<QcDataResponse<T>> observable) {
     return LiveDataTransfer.fromPublisher(observable.compose(RxHelper.schedulersTransformerFlow()));
   }
+
+  static <T> void bindToLiveData(MutableLiveData<Resource<T>> liveData ,Flowable<QcDataResponse<T>> observable) {
+    BindLiveData.bindLiveData(liveData,observable.compose(RxHelper.schedulersTransformerFlow()));
+  }
+
 
   //
   //public LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params) {
@@ -177,6 +188,15 @@ import javax.inject.Singleton;
 
   @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
       HashMap<String, Object> params) {
+    LiveData<Resource<Boolean>> li = new MutableLiveData<>();
+    ObservableField<Integer> oI = new ObservableField<>();
+    oI.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+      @Override public void onPropertyChanged(Observable sender, int propertyId) {
+        ((ObservableField<Integer>)sender).get();
+
+
+      }
+    });
     return toLiveData(remoteService.qcGetIncreaseStat(staff_id, params));
   }
 
@@ -233,6 +253,34 @@ import javax.inject.Singleton;
     params1.putAll(params);
     return toLiveData(remoteService.qcGetAllStudents(loginStatus.staff_id(), params1));
   }
+  @Override public LiveData<QcDataResponse> qcGetTrackStatus(
+    MutableLiveData<List<FollowRecordStatus>> liveData) {
+    return null;
+  }
+
+
+  @Override public LiveData<Resource<Boolean>> qcAddTrackStatus(HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override public LiveData<Resource<Boolean>> qcDelTrackStatus(String id) {
+    return null;
+  }
+
+  @Override
+  public LiveData<Resource<Boolean>> qcAddTrackRecord(String user_id, FollowRecordAdd body) {
+    return null;
+  }
+
+  @Override public LiveData<Resource<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
+    HashMap<String, Object> params) {
+    return null;
+  }
+
+  //@Override
+  //public LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params) {
+  //    return toLiveData(remoteService.qcGetAllStudents(id, params));
+  //}
   //
   //@Override
   //public LiveData<List<FilterModel>> qcGetFilterModelFromLocal() {

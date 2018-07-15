@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
@@ -9,6 +10,9 @@ import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordListWrap;
+import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
@@ -107,4 +111,19 @@ public interface StudentRepository {
   //
   //LiveData<SourceBeans> qcGetTrackStudentsOrigins(String id, HashMap<String, Object> params);
   //LiveData<SalerListWrap> qcGetTrackStudentsFilterSalers(String id, HashMap<String, Object> params);
+
+
+
+  LiveData<QcDataResponse> qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData);
+
+  /**
+   * @param params track_status
+   */
+  LiveData<Resource<Boolean>> qcAddTrackStatus( HashMap<String, Object> params);
+  LiveData<Resource<Boolean>> qcDelTrackStatus( String id);
+
+  LiveData<Resource<Boolean>> qcAddTrackRecord(String user_id, FollowRecordAdd body);
+
+  LiveData<Resource<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
+    HashMap<String, Object> params);
 }

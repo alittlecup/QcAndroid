@@ -10,6 +10,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageFollowRecordStatusBinding;
+import cn.qingchengfit.student.dialog.InputDialog;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -17,17 +18,19 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
-@Leaf(module = "student",path = "/student/follow_record_status")
+
+@Leaf(module = "student", path = "/student/follow_record_status")
 public class FollowRecordStatusPage
-    extends StudentBaseFragment<StPageFollowRecordStatusBinding, FollowRecordStatusViewModel> {
+  extends StudentBaseFragment<StPageFollowRecordStatusBinding, FollowRecordStatusViewModel> {
   CommonFlexAdapter adapter;
+  private InputDialog inputDialog;
 
   @Override protected void subscribeUI() {
 
   }
 
   @Override public StPageFollowRecordStatusBinding initDataBinding(LayoutInflater inflater,
-      ViewGroup container, Bundle savedInstanceState) {
+    ViewGroup container, Bundle savedInstanceState) {
     mBinding = StPageFollowRecordStatusBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
@@ -52,16 +55,20 @@ public class FollowRecordStatusPage
   }
 
   private void addFollowStatus() {
-
+    if (inputDialog == null) {
+      inputDialog = new InputDialog();
+      inputDialog.setListener(s -> mViewModel.addFollowStatus(s));
+    }
+    if (inputDialog.isVisible()) inputDialog.show(getChildFragmentManager(), "");
   }
 
-  private void deleteFollorStatus() {
+  private void deleteFollorStatus(String id) {
     DialogUtils.showConfirm(getContext(), "确定要删除该跟进状态吗？", "删除后，该状态下会员的跟进状态将变为空",
-        (materialDialog, dialogAction) -> {
-          materialDialog.dismiss();
-          if (dialogAction == DialogAction.POSITIVE) {
-            mViewModel.deleteFollowStatus();
-          }
-        });
+      (materialDialog, dialogAction) -> {
+        materialDialog.dismiss();
+        if (dialogAction == DialogAction.POSITIVE) {
+          mViewModel.deleteFollowStatus(id);
+        }
+      });
   }
 }

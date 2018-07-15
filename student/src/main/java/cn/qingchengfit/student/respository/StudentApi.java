@@ -4,6 +4,8 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -164,7 +166,7 @@ public interface StudentApi {
   //    Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-
+  //
   //    /**
   //     * 新增注册
   //     */
@@ -194,14 +196,14 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-      /**
-       * 具有名下会员的销售列表
-       * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
-       */
-      @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
-      Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-
+  //    /**
+  //     * 具有名下会员的销售列表
+  //     * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+  //     */
+  //    @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
+  //    Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
+  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+  //
   //
   //    /**
   //     * 转换率
@@ -313,7 +315,7 @@ public interface StudentApi {
   //首页-会员首页数据概览
   @GET("/api/staffs/{staff_id}/users/data/glance/")
   Flowable<QcDataResponse<StudentInfoGlance>> qcGetHomePageInfo(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
+      @Body HashMap<String, Object> params);
 
   //今日新增-会员分状态按维度统计
   @GET("/api/staffs/{staff_id}/users/dimension/stat/")
@@ -368,40 +370,33 @@ public interface StudentApi {
 
 
 
+  /**
+   * 跟进状态列表
+   *
+   *
+   */
+  @GET("/api/staffs/{staff_id}/users/track/status/")
+  Flowable<QcDataResponse> qcGetTrackStatus(@Path("staff_id") String staff_id,
+    @QueryMap HashMap<String, Object> params);
+  @POST("/api/staffs/:staff_id/users/track/status/")
+  Flowable<QcDataResponse> qcAddTrackStatus(@Path("staff_id") String staff_id,
+    @Body HashMap<String, Object> params);
 
+  /**
+   * 新增跟进记录
+   *
+   */
+  @POST("/api/staffs/{staff_id}/users/{user_id}/track/records/")
+  Flowable<QcDataResponse> qcAddTrackRecord(@Path("staff_id") String staff_id,
+    @Path("user_id") String user_id,@Body FollowRecordAdd body
+    );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  /**
+   * 跟进记录列表
+   */
+  @GET("/api/staffs/{staff_id}/users/{user_id}/track/records/")
+  Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(@Path("staff_id") String staff_id,
+    @Path("user_id") String user_id,@QueryMap HashMap<String, Object> params);
 
 
 }

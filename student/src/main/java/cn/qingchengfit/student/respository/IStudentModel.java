@@ -2,6 +2,8 @@ package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -76,8 +78,8 @@ public interface IStudentModel {
    * @param params
    * @return
    */
-  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-      HashMap<String, Object> params);
+  //Observable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
+  //    HashMap<String, Object> params);
 
   /**
    * 教练分配
@@ -180,14 +182,14 @@ public interface IStudentModel {
   /**
    * 新增跟进
    */
-  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(String staff_id,
-      HashMap<String, Object> params);
+  //Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(String staff_id,
+  //    HashMap<String, Object> params);
 
   /**
    * 新增查询
    */
-  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
-      String type, HashMap<String, Object> params);
+  //Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
+  //    String type, HashMap<String, Object> params);
 
   /**
    * 新增学员
@@ -199,9 +201,9 @@ public interface IStudentModel {
    * 具有名下会员的销售列表
    * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
    */
-  Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
-      HashMap<String, Object> params);
-  //
+  //Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
+  //    HashMap<String, Object> params);
+
   /**
    * 转换率
    * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
@@ -318,4 +320,17 @@ public interface IStudentModel {
 
   Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(String staff_id,
      HashMap<String, Object> params);
+    HashMap<String, Object> params);
+
+  Flowable<QcDataResponse> qcGetTrackStatus();
+
+  /**
+   * @param params track_status
+   */
+  Flowable<QcDataResponse> qcAddTrackStatus( HashMap<String, Object> params);
+
+  Flowable<QcDataResponse> qcAddTrackRecord(String user_id, FollowRecordAdd body);
+
+  Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
+    HashMap<String, Object> params);
 }
