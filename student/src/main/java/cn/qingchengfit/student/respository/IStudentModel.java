@@ -177,8 +177,8 @@ public interface IStudentModel {
   /**
    * 新增跟进
    */
-  //Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 新增查询
@@ -284,5 +284,8 @@ public interface IStudentModel {
       HashMap<String, Object> params);
 
   Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
+       HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<StatDate>> qcGetFollowStat(String staff_id,
        HashMap<String, Object> params);
 }

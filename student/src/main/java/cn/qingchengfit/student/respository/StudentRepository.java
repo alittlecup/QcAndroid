@@ -17,6 +17,7 @@ import cn.qingchengfit.student.bean.StudentListWrapper;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
 
@@ -74,6 +75,12 @@ public interface StudentRepository {
       HashMap<String, Object> params);
   LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
        HashMap<String, Object> params);
+
+  LiveData<Resource<StatDate>> qcGetFollowStat(
+       HashMap<String, Object> params);
+
+  LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudentFollow(Map<String, Object> params);
+
   //
   //
   //LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params);

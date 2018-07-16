@@ -195,6 +195,11 @@ public class StudentModel implements IStudentModel {
     //return studentApi.qcGetIncreaseStat(staff_id, params);
   }
 
+  @Override public Flowable<QcDataResponse<StatDate>> qcGetFollowStat(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetFollowStat(staff_id, params);
+  }
+
   //@Override
   //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params) {
@@ -260,10 +265,10 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcGetTrackStudentCreate(staff_id, params);
   //}
   //
-  //@Override public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
-  //    String staff_id, HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentFollow(staff_id, params);
-  //}
+  @Override public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
+      String staff_id, HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudentFollow(staff_id, params);
+  }
   //
   @Override
   public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,

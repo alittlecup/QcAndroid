@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseDetailItem
-    extends AbstractFlexibleItem<DataBindingViewHolder<ItemStudentFollowUpStateBinding>> implements
-    ISectionable<DataBindingViewHolder<ItemStudentFollowUpStateBinding>, IHeader> {
+    extends AbstractFlexibleItem<DataBindingViewHolder<ItemStudentFollowUpStateBinding>>
+    implements ISectionable<DataBindingViewHolder<ItemStudentFollowUpStateBinding>, IHeader> {
 
   public QcStudentBeanWithFollow data;
   public int status;
@@ -56,16 +56,16 @@ public class ChooseDetailItem
   public DataBindingViewHolder<ItemStudentFollowUpStateBinding> createViewHolder(View view,
       FlexibleAdapter adapter) {
 
-    return  new DataBindingViewHolder<>(view, adapter);
+    return new DataBindingViewHolder<>(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemStudentFollowUpStateBinding> holder, int position, List payloads) {
     holder.itemView.setTag(data);
-    if(adapter instanceof CommonFlexAdapter){
+    if (adapter instanceof CommonFlexAdapter) {
       Integer choose = (Integer) ((CommonFlexAdapter) adapter).getTag("choose");
-      if(choose!=null){
-        type=choose;
+      if (choose != null) {
+        type = choose;
       }
     }
     ItemStudentFollowUpStateBinding binding = holder.getDataBinding();
@@ -113,7 +113,6 @@ public class ChooseDetailItem
           .toString());
     }
 
-
     binding.tvStudentStatus.setText(binding.tvStudentStatus.getContext()
         .getResources()
         .getStringArray(cn.qingchengfit.saascommon.R.array.student_status)[data.getStatus() % 3]);
@@ -121,7 +120,6 @@ public class ChooseDetailItem
     binding.tvStudentStatus.setCompoundDrawables(
         StudentBusinessUtils.getStudentStatusDrawable(holder.itemView.getContext(),
             data.getStatus() % 3), null, null, null);
-
 
     if (type == Mode.UNDEFINE) {
       String desc = "";
@@ -138,7 +136,13 @@ public class ChooseDetailItem
               .toString();
           break;
         case 1:
-          desc = new StringBuilder().append("最新跟进：").append(data.track_record).toString();
+          desc = new StringBuilder().append("最新跟进：")
+              .append(TextUtils.isEmpty(data.track_record) ? "" : data.track_record)
+              .append("\n跟进状态：")
+              .append(TextUtils.isEmpty(data.track_status) ? "" : data.track_status)
+              .append("\n跟进时间：")
+              .append(TextUtils.isEmpty(data.track_at) ? "" : data.track_at)
+              .toString();
           break;
         case 2:
           if (!TextUtils.isEmpty(data.first_card_info)) {
@@ -174,7 +178,6 @@ public class ChooseDetailItem
 
   IHeader head;
 
-
   public void setSelectMode(@Mode int type) {
     this.type = type;
   }
@@ -184,7 +187,7 @@ public class ChooseDetailItem
   }
 
   @Override public void setHeader(IHeader header) {
-    this.head=header;
+    this.head = header;
   }
 
   @IntDef({

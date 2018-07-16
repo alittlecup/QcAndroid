@@ -37,11 +37,12 @@
             android:layout_weight="1"
             android:background="@color/bg_grey"
             />
+        <include
+            layout="@layout/layout_bottom_allot_action"
+            android:id="@+id/include_allot"
+            />
       </LinearLayout>
-      <include
-          layout="@layout/layout_bottom_allot_action"
-          android:id="@+id/include_allot"
-          />
+
     </FrameLayout>
 
     <FrameLayout

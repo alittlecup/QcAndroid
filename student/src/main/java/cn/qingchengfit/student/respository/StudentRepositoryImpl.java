@@ -2,6 +2,8 @@ package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.IntRange;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;
@@ -19,6 +21,7 @@ import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -48,6 +51,8 @@ import javax.inject.Singleton;
   @Inject IStudentModel remoteService;
 
   @Inject LocalRespository localRespository;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
 
   @Inject public StudentRepositoryImpl() {
   }
@@ -168,6 +173,19 @@ import javax.inject.Singleton;
   @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
       HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetIncreaseStat(staff_id, params));
+  }
+
+  @Override public LiveData<Resource<StatDate>> qcGetFollowStat(HashMap<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return toLiveData(remoteService.qcGetFollowStat(loginStatus.staff_id(), params1));
+  }
+
+  @Override public LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
+      Map<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return toLiveData(remoteService.qcGetTrackStudentFollow(loginStatus.staff_id(), params1));
   }
 
   //@Override
