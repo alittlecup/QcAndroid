@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.item.StudentItem;
@@ -128,7 +129,7 @@ public class StudentListView
 
   public void setItems(List<? extends AbstractFlexibleItem> items) {
     if (items == null||items.isEmpty()) {
-      showEmptyLayout(0, "暂无数据", "");
+      showEmptyLayout(R.drawable.vd_img_empty_universe, "暂无数据", "");
     } else {
       restoreLayout();
       if (mViewModel != null) {
@@ -262,6 +263,10 @@ public class StudentListView
     //        .setEmptyLayoutContent(content)
     //        .build();
     //layoutManager.showEmptyLayout();
+    CommonNoDataItem commonNoDataItem = new CommonNoDataItem(drawable, content, "");
+    List<AbstractFlexibleItem> items=new ArrayList<>();
+    items.add(commonNoDataItem);
+    adapter.updateDataSet(items);
   }
 
   public void restoreLayout() {
