@@ -116,7 +116,7 @@
                 android:background="@drawable/bg_click"
                 app:ft_text_off="跟进时间"
                 app:ft_text_on="跟进时间"
-                android:onClick="@{(view)->viewModel.onRightFilterClick()}"
+                android:onClick="@{(view)->viewModel.onRightFilterClick(((QcFilterToggle)view).isChecked())}"
                 app:ft_vc_drawable_off="@drawable/vd_student_increase_follow_right"
                 app:ft_vc_drawable_on="@drawable/vd_student_increase_follow_left"
                 style="@style/QcFilterStyle"

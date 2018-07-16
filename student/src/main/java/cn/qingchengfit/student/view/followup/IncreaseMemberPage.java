@@ -38,12 +38,16 @@ import com.anbillon.flabellum.annotations.Need;
     mSortViewModel.filterIndex.observe(this, index -> {
       filterView.showPage(index);
     });
-    mSortViewModel.filterAction.observe(this, aVoid -> {
-      // TODO: 2018/6/25  sort
+    mSortViewModel.filterAction.observe(this, aBoolean -> {
+      listView.setItems(mSortViewModel.sortFollowTime(mViewModel.getLiveItems().getValue(),aBoolean));
 
     });
-    mSortViewModel.params.observe(this,params->{
+    mSortViewModel.params.observe(this, params -> {
       mViewModel.loadSource(params);
+    });
+
+    mViewModel.getLiveItems().observe(this, items -> {
+      listView.setItems(items);
     });
   }
 
@@ -139,13 +143,12 @@ import com.anbillon.flabellum.annotations.Need;
       topView.setType(curType);
       if (curType.equals(IncreaseType.INCREASE_FOLLOWUP)) {
         ToolbarModel toolbarModel = new ToolbarModel("新用户跟进");
-        mViewModel.dataType=1;
+        mViewModel.dataType = 1;
         mBinding.setToolbarModel(toolbarModel);
       } else if (curType.equals(IncreaseType.INCREASE_STUDENT)) {
         ToolbarModel toolbarModel = new ToolbarModel("会员维护");
         mBinding.setToolbarModel(toolbarModel);
-        mViewModel.dataType=2;
-
+        mViewModel.dataType = 2;
       }
       initToolbar(mBinding.includeToolbar.toolbar);
 
