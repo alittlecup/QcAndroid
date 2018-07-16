@@ -49,6 +49,9 @@ import java.util.HashMap;
     mSortViewModel.filterAction.observe(this, aVoid -> {
       mBinding.drawer.openDrawer(GravityCompat.END);
     });
+    mSortViewModel.params.observe(this,params->{
+      mViewModel.loadSources(params);
+    });
 
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setItems(items);
@@ -83,7 +86,8 @@ import java.util.HashMap;
         ViewModelProviders.of(topView, factory).get(IncreaseStudentTopViewModel.class);
 
     studentTopViewModel.curSelectPositionDate.observe(this, params -> {
-      mViewModel.loadSource(params);
+
+      mViewModel.loadSources(params);
     });
   }
 
@@ -147,7 +151,9 @@ import java.util.HashMap;
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //收缩布局
       mSortViewModel.appBarLayoutExpanded.set(false);
-
+      ViewGroup.LayoutParams layoutParams = mBinding.fragChart.getLayoutParams();
+      layoutParams.height=0;
+      mBinding.fragChart.setLayoutParams(layoutParams);
       //修改列表内容
       listView.setCurType(type);
     } else {
@@ -162,7 +168,9 @@ import java.util.HashMap;
       mBinding.includeAllot.getRoot().setVisibility(View.VISIBLE);
 
       mSortViewModel.appBarLayoutExpanded.set(true);
-
+      ViewGroup.LayoutParams layoutParams = mBinding.fragChart.getLayoutParams();
+      layoutParams.height=ViewGroup.LayoutParams.WRAP_CONTENT;
+      mBinding.fragChart.setLayoutParams(layoutParams);
       listView.reset();
     }
   }

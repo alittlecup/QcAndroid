@@ -7,6 +7,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
@@ -275,11 +276,11 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcGetTrackStudentMember(staff_id, params);
   //}
   //
-  //@Override
-  //public Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
-  //}
+  @Override
+  public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
+  }
   //
   //@Override
   //public Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,

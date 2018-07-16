@@ -2,6 +2,7 @@ package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
@@ -195,9 +196,9 @@ public interface IStudentModel {
    * 具有名下会员的销售列表
    * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
    */
-  //Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
-  //    HashMap<String, Object> params);
-
+  Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
+      HashMap<String, Object> params);
+  //
   /**
    * 转换率
    * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=

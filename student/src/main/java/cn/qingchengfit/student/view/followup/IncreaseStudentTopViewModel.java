@@ -43,7 +43,7 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
   private final MediatorLiveData<HashMap<String, String>> dates = new MediatorLiveData<>();
   public final MediatorLiveData<LineData> lineData = new MediatorLiveData<>();
   public final MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
-  public final MutableLiveData<HashMap<String, String>> curSelectPositionDate =
+  public final MutableLiveData<HashMap<String, Object>> curSelectPositionDate =
       new MutableLiveData<>();
 
   private final LiveData<List<StatDate>> remoteDatas;
@@ -60,7 +60,7 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
       HashMap<String, String> dates = new HashMap<>();
       dates.put("end", stringToday);
       this.dates.setValue(dates);
-      HashMap<String, String> curDates = new HashMap<>();
+      HashMap<String, Object> curDates = new HashMap<>();
       curDates.put("end", stringToday);
       Calendar calendar = Calendar.getInstance();
       switch (dimension) {
@@ -147,11 +147,10 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
   public void updateSelectPos(int curPos,int count){
     if (dateDimension.getValue() == null) return;
     StatDate statDate = preStatDates.get(curPos);
-    HashMap<String, String> params = new HashMap<>();
+    HashMap<String, Object> params = new HashMap<>();
     params.put("start", statDate.getStart());
     params.put("end", statDate.getEnd());
     curSelectPositionDate.setValue(params);
-
   }
   public void loadMore() {
     showLoading.setValue(true);

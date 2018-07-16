@@ -37,7 +37,7 @@ public class FollowUpFilterView extends BaseFilterFragment {
         studentStatusFragment.setOnSelectListener(position -> {
             mViewModel.studentStatus.setValue(position == 0 ? "会员状态" : status[position]);
             // TODO: 2018/6/22 数据回传
-            //mViewModel.getStatus().setValue(position == 0 ? null : String.valueOf(position - 1));
+            mViewModel.setStudentStatus(position == 0 ? null : String.valueOf(position - 1));
             dismiss();
         });
 
@@ -46,14 +46,14 @@ public class FollowUpFilterView extends BaseFilterFragment {
         genderFragment.setStrings(genders);
         genderFragment.setOnSelectListener(position -> {
             mViewModel.gender.setValue(position == 0 ? "性别" : genders[position]);
-            //mViewModel.getGenderM().setValue(position == 0 ? null : String.valueOf(position - 1));
+            mViewModel.setStudentGender(position == 0 ? null : String.valueOf(position - 1));
             dismiss();
         });
 
         salersView = new FollowUpTopSalerView();
         salersView.setOnItemClick(staff -> {
             mViewModel.salerName.setValue(staff == null ? "销售" : staff.username);
-            //mViewModel.getStaff().setValue(staff);
+            mViewModel.setSaller(staff);
             dismiss();
         });
     }

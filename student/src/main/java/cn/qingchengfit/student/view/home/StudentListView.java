@@ -127,7 +127,7 @@ public class StudentListView
   }
 
   public void setItems(List<? extends AbstractFlexibleItem> items) {
-    if (items == null) {
+    if (items == null||items.isEmpty()) {
       showEmptyLayout(0, "暂无数据", "");
     } else {
       restoreLayout();
@@ -256,15 +256,15 @@ public class StudentListView
   }
 
   public void showEmptyLayout(@DrawableRes int drawable, String title, String content) {
-    layoutManager =
-        new StatusLayoutManager.Builder(mBinding.recyclerView).setEmptyLayoutDrawableRes(drawable)
-            .setEmptyLayoutTitle(title)
-            .setEmptyLayoutContent(content)
-            .build();
-    layoutManager.showEmptyLayout();
+    //layoutManager =
+    //    new StatusLayoutManager.Builder(mBinding.container).setEmptyLayoutDrawableRes(drawable)
+    //        .setEmptyLayoutTitle(title)
+    //        .setEmptyLayoutContent(content)
+    //        .build();
+    //layoutManager.showEmptyLayout();
   }
 
   public void restoreLayout() {
-    if (layoutManager != null) layoutManager.restoreLayout();
+    //if (layoutManager != null) layoutManager.restoreLayout();
   }
 }

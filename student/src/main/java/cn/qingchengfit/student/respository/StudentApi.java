@@ -4,6 +4,7 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
@@ -190,14 +191,14 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-  //    /**
-  //     * 具有名下会员的销售列表
-  //     * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
-  //     */
-  //    @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
-  //    Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
+      /**
+       * 具有名下会员的销售列表
+       * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+       */
+      @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
+      Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
+          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
   //
   //    /**
   //     * 转换率

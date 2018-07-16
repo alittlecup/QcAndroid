@@ -66,6 +66,7 @@ public class IncreaseStudentTopView
     mBinding.lineChart.setLineCharListener(new LineCharDate.onLineCharListener() {
       @Override public void onChartTranslate(int valuePos,int count) {
         int curpos = valuePos - 3 >= 0 ? valuePos - 3 : 0;
+        Log.d("TAG", "onChartTranslate: "+curpos);
         if(curpos==0){
           mViewModel.loadMore();
         }
@@ -73,7 +74,9 @@ public class IncreaseStudentTopView
       }
 
       @Override public void onChartClick(int clickPos, int count) {
-        mViewModel.updateSelectPos(clickPos,count);
+        int curpos = clickPos - 3 >= 0 ? clickPos - 3 : 0;
+        Log.d("TAG", "onChartClick: "+curpos);
+        mViewModel.updateSelectPos(curpos,count);
       }
     });
   }
