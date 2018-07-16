@@ -57,6 +57,7 @@ import com.anbillon.flabellum.annotations.Need;
       Bundle savedInstanceState) {
     mBinding = StPageIncreaseMemberBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mSortViewModel);
+    mBinding.setLifecycleOwner(this);
     initFragment();
     initToolbar();
     initListener();
@@ -133,6 +134,8 @@ import com.anbillon.flabellum.annotations.Need;
     } else {
 
       //修改toolBar
+      mBinding.rbSelectAll.setVisibility(View.GONE);
+
       topView.setType(curType);
       if (curType.equals(IncreaseType.INCREASE_FOLLOWUP)) {
         ToolbarModel toolbarModel = new ToolbarModel("新用户跟进");

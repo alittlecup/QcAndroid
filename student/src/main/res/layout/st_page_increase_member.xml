@@ -92,6 +92,8 @@
                 app:ft_text_off="销售"
                 app:ft_text_on="销售"
                 style="@style/QcFilterStyle"
+                android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),0)}"
+                android:text="@{viewModel.salerName}"
                 />
             <cn.qingchengfit.widgets.QcFilterToggle
                 android:id="@+id/qft_status"
@@ -101,6 +103,8 @@
                 android:background="@drawable/bg_click"
                 app:ft_text_off="跟进状态"
                 app:ft_text_on="跟进状态"
+                android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),1)}"
+                android:text="@{viewModel.followUpStatus}"
                 style="@style/QcFilterStyle"
                 />
 
@@ -112,6 +116,7 @@
                 android:background="@drawable/bg_click"
                 app:ft_text_off="跟进时间"
                 app:ft_text_on="跟进时间"
+                android:onClick="@{(view)->viewModel.onRightFilterClick()}"
                 app:ft_vc_drawable_off="@drawable/vd_student_increase_follow_right"
                 app:ft_vc_drawable_on="@drawable/vd_student_increase_follow_left"
                 style="@style/QcFilterStyle"

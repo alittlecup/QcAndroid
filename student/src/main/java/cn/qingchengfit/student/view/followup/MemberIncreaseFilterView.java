@@ -14,7 +14,6 @@ import cn.qingchengfit.views.fragments.EmptyFragment;
 
 public class MemberIncreaseFilterView extends BaseFilterFragment {
     FilterListStringFragment studentStatusFragment;
-    FilterListStringFragment genderFragment;
     FollowUpTopSalerView salersView;
     IncreaseMemberSortViewModel mViewModel;
 
@@ -51,7 +50,7 @@ public class MemberIncreaseFilterView extends BaseFilterFragment {
 
     @Override
     protected String[] getTags() {
-        return new String[]{"salerList","studentStatus","gender"};
+        return new String[]{"salerList","followStatus"};
     }
 
     @Override
@@ -60,8 +59,6 @@ public class MemberIncreaseFilterView extends BaseFilterFragment {
             return salersView;
         } else if (tag.equalsIgnoreCase(getTags()[1])) {
             return studentStatusFragment;
-        } else if (tag.equalsIgnoreCase(getTags()[4])) {
-            return genderFragment;
         }
         return new EmptyFragment();
     }
