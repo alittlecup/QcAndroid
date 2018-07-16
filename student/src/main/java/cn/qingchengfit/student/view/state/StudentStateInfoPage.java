@@ -120,6 +120,7 @@ import java.util.Map;
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
+
   @Override public boolean onItemClick(int position) {
 
     return false;
@@ -161,4 +162,6 @@ import java.util.Map;
       return fragmentList.size();
     }
   }
+
+
 }

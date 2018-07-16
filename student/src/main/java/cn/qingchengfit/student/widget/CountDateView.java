@@ -40,7 +40,8 @@ public class CountDateView extends LinearLayout implements Checkable {
     mContentTv = findViewById(R.id.tv_content);
     mIndicator = findViewById(R.id.view_indicator);
     setClickable(true);
-    setChecked(_isChecked);
+    mIndicator.setVisibility(INVISIBLE);
+    mCountTv.setTextColor(getResources().getColor(R.color.text_grey));
   }
 
   public void setCount(String count) {

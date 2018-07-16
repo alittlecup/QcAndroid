@@ -105,7 +105,7 @@
               android:orientation="horizontal"
               android:divider="@color/divider_medium"
               android:showDividers="middle"
-              android:dividerPadding="10dp"
+              android:dividerPadding="20dp"
               android:layout_marginTop="5dp"
               >
 
