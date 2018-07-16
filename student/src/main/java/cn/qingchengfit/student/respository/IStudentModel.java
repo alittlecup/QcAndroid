@@ -2,6 +2,8 @@ package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -284,8 +286,32 @@ public interface IStudentModel {
       HashMap<String, Object> params);
 
   Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
-       HashMap<String, Object> params);
+      HashMap<String, Object> params);
 
   Flowable<QcDataResponse<StatDate>> qcGetFollowStat(String staff_id,
-       HashMap<String, Object> params);
+      HashMap<String, Object> params);
+
+  //全部会员-会员用户统计数据
+  Flowable<QcDataResponse<MemberStat>> qcGetMemberStat(String staff_id,
+      HashMap<String, Object> params);
+
+  //全部会员-新注册用户所属销售按时段统计数据
+  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String staff_id,
+      HashMap<String, Object> params);
+
+  //全部会员-新注册用户统计数据
+  Flowable<QcDataResponse<MemberStat>> qcGetRegisterStat(String staff_id,
+      HashMap<String, Object> params);
+
+  //全部会员-新注册用户所属销售按时段统计数据
+  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetRegisterSeller(String staff_id,
+      HashMap<String, Object> params);
+
+  //全部会员-已接洽用户统计数据
+  Flowable<QcDataResponse<MemberStat>> qcGetFollowingStat(String staff_id,
+      HashMap<String, Object> params);
+
+  //全部会员-已接洽用户所属销售按时段统计数据
+  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(String staff_id,
+      HashMap<String, Object> params);
 }

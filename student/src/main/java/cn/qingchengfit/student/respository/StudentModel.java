@@ -7,6 +7,8 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -152,38 +154,40 @@ public class StudentModel implements IStudentModel {
     String date_group_dimension = (String) params.get("date_group_dimension");
     String end = (String) params.get("end");
     Date date = cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD(end);
-    Calendar calendar=Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
-    switch (date_group_dimension){
+    switch (date_group_dimension) {
       case "day":
         for (int i = 0; i < 20; i++) {
-          calendar.add(Calendar.DAY_OF_MONTH,-1);
-          StatDate statDate = new StatDate();
-          statDate.setCount(i + 10);
-          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD( cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(),1)));
-          statDates.add(0,statDate);
-        }
-        break;
-      case "week":
-        for (int i = 0; i < 20; i++) {
-          calendar.add(Calendar.WEEK_OF_YEAR,-1);
+          calendar.add(Calendar.DAY_OF_MONTH, -1);
           StatDate statDate = new StatDate();
           statDate.setCount(i + 10);
           statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
           statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
-              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(),7)));
-          statDates.add(0,statDate);
+              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(), 1)));
+          statDates.add(0, statDate);
+        }
+        break;
+      case "week":
+        for (int i = 0; i < 20; i++) {
+          calendar.add(Calendar.WEEK_OF_YEAR, -1);
+          StatDate statDate = new StatDate();
+          statDate.setCount(i + 10);
+          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
+              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(), 7)));
+          statDates.add(0, statDate);
         }
         break;
       case "month":
         for (int i = 0; i < 20; i++) {
-          calendar.add(Calendar.MONTH,-1);
+          calendar.add(Calendar.MONTH, -1);
           StatDate statDate = new StatDate();
           statDate.setCount(i + 10);
           statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(),30)));
-          statDates.add(0,statDate);
+          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
+              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(), 30)));
+          statDates.add(0, statDate);
         }
         break;
     }
@@ -191,13 +195,60 @@ public class StudentModel implements IStudentModel {
     QcDataResponse<List<StatDate>> dataResponse = new QcDataResponse<>();
     dataResponse.setData(statDates);
     dataResponse.setStatus(200);
-    return Flowable.just(dataResponse).delay(2,TimeUnit.SECONDS);
+    return Flowable.just(dataResponse).delay(2, TimeUnit.SECONDS);
     //return studentApi.qcGetIncreaseStat(staff_id, params);
   }
 
   @Override public Flowable<QcDataResponse<StatDate>> qcGetFollowStat(String staff_id,
       HashMap<String, Object> params) {
     return studentApi.qcGetFollowStat(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<MemberStat>> qcGetMemberStat(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetMemberStat(staff_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetMemberSeller(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<MemberStat>> qcGetRegisterStat(String staff_id,
+      HashMap<String, Object> params) {
+    MemberStat memberStat = new MemberStat();
+    memberStat.setCount(1000);
+    List<MemberStat.UnAttacked> attackeds = new ArrayList<>();
+    MemberStat.UnAttacked unAttacked = new MemberStat.UnAttacked();
+    unAttacked.setCount(200);
+    unAttacked.setDesc("1-3天");
+    unAttacked.setId(103);
+    attackeds.add(unAttacked);
+    attackeds.add(unAttacked);
+    attackeds.add(unAttacked);
+    attackeds.add(unAttacked);
+    memberStat.setUnattacked(attackeds);
+    QcDataResponse<MemberStat> dataResponse = new QcDataResponse<>();
+    dataResponse.setData(memberStat);
+    dataResponse.setStatus(200);
+    return Flowable.just(dataResponse).delay(1,TimeUnit.SECONDS);
+    //return studentApi.qcGetRegisterStat(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetRegisterSeller(
+      String staff_id, HashMap<String, Object> params) {
+    return studentApi.qcGetRegisterSeller(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<MemberStat>> qcGetFollowingStat(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetFollowingStat(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(
+      String staff_id, HashMap<String, Object> params) {
+    return studentApi.qcGetFollowingSeller(staff_id, params);
   }
 
   //@Override
@@ -239,6 +290,7 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> body) {
     return studentApi.qcAllocateCoach(staff_id, body);
   }
+
   //
   //@Override
   //public Observable<QcResponse> qcRemoveStudent(String staff_id, HashMap<String, Object> body) {
@@ -269,21 +321,21 @@ public class StudentModel implements IStudentModel {
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentFollow(staff_id, params);
   }
+
   //
-  @Override
-  public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
-      String type, HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+      String staff_id, String type, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudents(staff_id, type, params);
   }
+
   //
   //@Override public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
   //    String staff_id, HashMap<String, Object> params) {
   //  return studentApi.qcGetTrackStudentMember(staff_id, params);
   //}
   //
-  @Override
-  public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
-      HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
+      String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
   }
   //

@@ -95,61 +95,20 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_white"
             >
 
           <LinearLayout
+              android:id="@+id/ll_stat_info"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/bg_white"
               android:orientation="horizontal"
-              android:paddingTop="5dp"
+              android:divider="@color/divider_medium"
+              android:showDividers="middle"
+              android:dividerPadding="10dp"
+              android:layout_marginTop="5dp"
               >
-            <cn.qingchengfit.student.widget.CountDateView
-                android:id="@+id/count_one"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider_medium"
-                />
-            <cn.qingchengfit.student.widget.CountDateView
-                android:id="@+id/count_four"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider_medium"
-                />
-            <cn.qingchengfit.student.widget.CountDateView
-                android:id="@+id/count_eight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider_medium"
-                />
-            <cn.qingchengfit.student.widget.CountDateView
-                android:id="@+id/count_fourteen"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                />
+
           </LinearLayout>
           <View
               android:layout_width="match_parent"

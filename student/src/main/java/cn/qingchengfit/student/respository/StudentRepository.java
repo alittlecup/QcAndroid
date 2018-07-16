@@ -5,6 +5,8 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -80,6 +82,16 @@ public interface StudentRepository {
        HashMap<String, Object> params);
 
   LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudentFollow(Map<String, Object> params);
+
+
+  //全部会员-会员用户统计数据
+  LiveData<Resource<MemberStat>> qcGetMemberStat(String type);
+
+  //全部会员-新注册用户所属销售按时段统计数据
+  LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String type,
+      Map<String, Object> params);
+
+
 
   //
   //

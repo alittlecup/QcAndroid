@@ -4,21 +4,30 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.databinding.PageStudentStateInfoBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.item.SalerStudentInfoItem;
 import cn.qingchengfit.student.widget.CountDateView;
+import cn.qingchengfit.student.widget.CountTextView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Leaf(module = "student", path = "/saler/student") public class StudentStateInfoPage
     extends StudentBaseFragment<PageStudentStateInfoBinding, StudentStateInfoViewModel>
@@ -27,7 +36,17 @@ import java.util.List;
   List<SalerStudentListView> fragmentList = new ArrayList<>();
 
   @Override protected void subscribeUI() {
+    mViewModel.statInfo.observe(this, statInfo -> {
+      hideLoading();
+      if (statInfo == null) return;
+      if(preChecked!=null)return;
+      mBinding.tvAllStudent.setText(String.valueOf(statInfo.getCount()));
+      initTab(statInfo.getUnattacked());
+    });
 
+    mViewModel.getLiveItems().observe(this, items -> {
+        hideLoading();
+    });
   }
 
   @Override
@@ -35,74 +54,48 @@ import java.util.List;
       Bundle savedInstanceState) {
     mBinding = PageStudentStateInfoBinding.inflate(inflater, container, false);
     initToolbar();
-    initTab();
-    initFragments();
-    initViewPager();
     return mBinding;
-  }
-
-  private void initFragments() {
-    fragmentList.add(new SalerStudentListView());
-    fragmentList.add(new SalerStudentListView());
-    fragmentList.add(new SalerStudentListView());
-    fragmentList.add(new SalerStudentListView());
   }
 
   private void initViewPager() {
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
-    fragmentList.get(0).setOnItemClickListener(this);
-    fragmentList.get(1).setOnItemClickListener(this);
-    fragmentList.get(2).setOnItemClickListener(this);
-    fragmentList.get(3).setOnItemClickListener(this);
-
-    fragmentList.get(0).setItems(getItems());
-    fragmentList.get(1).setItems(getItems());
-    fragmentList.get(2).setItems(getItems());
-    fragmentList.get(3).setItems(getItems());
-  }
-
-  private List<? extends AbstractFlexibleItem> getItems() {
-    List<SalerStudentInfoItem> items = new ArrayList<>();
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    items.add(new SalerStudentInfoItem());
-    return items;
+    mBinding.viewpager.setOnTouchListener((v, event) -> true);
   }
 
   private CountDateView preChecked;
+  private int[] Colors = new int[] {
+      R.color.success_green, R.color.st_student_status_member, R.color.orange,
+      R.color.danger_red_normal
+  };
 
-  private void initTab() {
-    mBinding.countOne.setContent("1-3天");
-    mBinding.countOne.setCount("1000");
-    mBinding.countOne.setContentColor(getResources().getColor(R.color.success_green));
-    mBinding.countOne.setChecked(true);
-    preChecked = mBinding.countOne;
+  private void initTab(List<MemberStat.UnAttacked> attackeds) {
+    if (attackeds == null || attackeds.isEmpty()) return;
+    LinearLayout.LayoutParams layoutParams =
+        new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+    layoutParams.weight = 1;
+    for (int i = 0; i < attackeds.size(); i++) {
+      MemberStat.UnAttacked attacked = attackeds.get(i);
+      CountDateView textView = new CountDateView(getContext());
+      textView.setContent(attacked.getDesc());
+      textView.setCount(String.valueOf(attacked.getCount()));
+      textView.setContentColor(getResources().getColor(Colors[i % 4]));
+      textView.setOnCheckedChangeListener(this);
+      textView.setTag(attacked.getId());
+      textView.setLayoutParams(layoutParams);
+      textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
-    mBinding.countFour.setContent("4-7天");
-    mBinding.countFour.setCount("150");
-    mBinding.countFour.setContentColor(getResources().getColor(R.color.st_student_status_member));
+      if(i==0){
+        preChecked=textView;
+        textView.setChecked(true);
+      }
+      mBinding.llStatInfo.addView(textView);
 
-    mBinding.countEight.setContent("8-14天");
-    mBinding.countEight.setCount("60");
-    mBinding.countEight.setContentColor(getResources().getColor(R.color.orange));
+      SalerStudentListView salerStudentListView = new SalerStudentListView();
+      salerStudentListView.setOnItemClickListener(this);
 
-    mBinding.countFourteen.setContent(">14天");
-    mBinding.countFourteen.setCount("60");
-    mBinding.countFourteen.setContentColor(getResources().getColor(R.color.danger_red_normal));
-
-    mBinding.countOne.setOnCheckedChangeListener(this);
-    mBinding.countFour.setOnCheckedChangeListener(this);
-    mBinding.countEight.setOnCheckedChangeListener(this);
-    mBinding.countFourteen.setOnCheckedChangeListener(this);
+      fragmentList.add(salerStudentListView);
+    }
+    initViewPager();
   }
 
   private void initToolbar() {
@@ -119,6 +112,8 @@ import java.util.List;
         toolbarModel = new ToolbarModel("新注册用户");
         break;
     }
+    showLoading();
+    mViewModel.setCurType(curType);
     if (toolbarModel != null) {
       mBinding.setToolbarModel(toolbarModel);
     }
@@ -132,17 +127,15 @@ import java.util.List;
 
   @Override public void onCheckedChanged(CountDateView buttonView, boolean isChecked) {
     if (isChecked) {
-      if (buttonView == mBinding.countOne) {
-        mBinding.viewpager.setCurrentItem(0);
-      } else if (buttonView == mBinding.countFour) {
-        mBinding.viewpager.setCurrentItem(1);
-      } else if (buttonView == mBinding.countEight) {
-        mBinding.viewpager.setCurrentItem(2);
-      } else if (buttonView == mBinding.countFourteen) {
-        mBinding.viewpager.setCurrentItem(3);
-      }
+      if (preChecked == buttonView) return;
+      mBinding.viewpager.setCurrentItem(mBinding.llStatInfo.indexOfChild(buttonView));
       preChecked.setChecked(false);
       preChecked = buttonView;
+
+      Map<String, Object> params = new HashMap<>();
+      params.put("time_period_id", buttonView.getTag());
+      showLoading();
+      mViewModel.loadSource(params);
     }
   }
 

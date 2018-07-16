@@ -19,6 +19,8 @@ public class QcStudentBeanWithFollow extends QcStudentBean implements Parcelable
     public String origin;
     public Staff recommend_by;//推荐人
 
+    public int unfollowed_count;
+    public int total_count;
     @Override
     public int describeContents() {
         return 0;
@@ -32,6 +34,8 @@ public class QcStudentBeanWithFollow extends QcStudentBean implements Parcelable
         dest.writeString(this.track_at);
         dest.writeString(this.first_card_info);
         dest.writeString(this.origin);
+        dest.writeInt(unfollowed_count);
+        dest.writeInt(total_count);
         dest.writeParcelable(this.recommend_by, flags);
     }
 
@@ -45,6 +49,8 @@ public class QcStudentBeanWithFollow extends QcStudentBean implements Parcelable
         this.track_at = in.readString();
         this.first_card_info = in.readString();
         this.origin = in.readString();
+        this.unfollowed_count=in.readInt();
+        this.total_count=in.readInt();
         this.recommend_by = in.readParcelable(Staff.class.getClassLoader());
     }
 

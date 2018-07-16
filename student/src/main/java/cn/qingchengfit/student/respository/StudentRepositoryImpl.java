@@ -4,11 +4,14 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.IntRange;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
@@ -17,6 +20,7 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
 import java.util.HashMap;
@@ -186,6 +190,35 @@ import javax.inject.Singleton;
     HashMap<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
     return toLiveData(remoteService.qcGetTrackStudentFollow(loginStatus.staff_id(), params1));
+  }
+
+  @Override public LiveData<Resource<MemberStat>> qcGetMemberStat( String type) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    switch (type) {
+      case IncreaseType.INCREASE_FOLLOWUP:
+        return toLiveData(remoteService.qcGetFollowingStat(loginStatus.staff_id(), params1));
+      case IncreaseType.INCREASE_STUDENT:
+        return toLiveData(remoteService.qcGetMemberStat(loginStatus.staff_id(), params1));
+      case IncreaseType.INCREASE_MEMBER:
+        return toLiveData(remoteService.qcGetRegisterStat(loginStatus.staff_id(), params1));
+    }
+    return null;
+  }
+
+  @Override
+  public LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(
+      String type, Map<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    switch (type) {
+      case IncreaseType.INCREASE_FOLLOWUP:
+        return toLiveData(remoteService.qcGetFollowingSeller(loginStatus.staff_id(), params1));
+      case IncreaseType.INCREASE_STUDENT:
+        return toLiveData(remoteService.qcGetMemberSeller(loginStatus.staff_id(), params1));
+      case IncreaseType.INCREASE_MEMBER:
+        return toLiveData(remoteService.qcGetRegisterSeller(loginStatus.staff_id(), params1));
+    }
+    return null;
   }
 
   //@Override
