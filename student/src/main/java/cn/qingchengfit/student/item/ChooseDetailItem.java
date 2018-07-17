@@ -166,7 +166,11 @@ public class ChooseDetailItem
       } else {
         binding.tvStudentDesc.setVisibility(View.VISIBLE);
       }
-      binding.tvStudentDesc.setText(desc);
+      if (TextUtils.isEmpty(desc)) {
+        binding.tvStudentDesc.setVisibility(View.GONE);
+      } else {
+        binding.tvStudentDesc.setText(desc);
+      }
       binding.cb.setVisibility(View.GONE);
       binding.cbSpace.setVisibility(View.GONE);
     } else {

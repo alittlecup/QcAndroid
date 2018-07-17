@@ -28,12 +28,23 @@ import java.util.Map;
     mViewModel.getLiveItems().observe(this, items -> {
       adapter.updateDataSet(items);
     });
+    mViewModel.dates.observe(this, items -> {
+      if (items == null || items.isEmpty()) return;
+      List<Calendar> calendars = new ArrayList<>();
+
+      for (String date : items) {
+        calendars.add(getSchemeCaleander(date));
+      }
+      mBinding.calendarView.setSchemeDate(calendars);
+    });
   }
 
   @Override
   public StPageStudentBirthdayBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = StPageStudentBirthdayBinding.inflate(inflater, container, false);
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     initToolbar();
     initRecyclerView();
     initCalendarView();
@@ -66,6 +77,7 @@ import java.util.Map;
   private void initRecyclerView() {
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    adapter.setTag("choose", -1);
   }
 
   private void initSelect() {
@@ -74,6 +86,14 @@ import java.util.Map;
     calendar.setMonth(mBinding.calendarView.getCurMonth());
     calendar.setDay(mBinding.calendarView.getCurDay());
     onDateSelected(calendar, true);
+  }
+
+  private Calendar getSchemeCaleander(String date) {
+    Date date1 = DateUtils.formatDateFromYYYYMMDD(date);
+    java.util.Calendar calendar = java.util.Calendar.getInstance();
+    calendar.setTime(date1);
+    return getSchemeCalendar(calendar.get(java.util.Calendar.YEAR),
+        calendar.get(java.util.Calendar.MONTH) + 1, calendar.get(java.util.Calendar.DAY_OF_MONTH));
   }
 
   private Calendar getSchemeCalendar(int year, int month, int day) {
@@ -111,11 +131,11 @@ import java.util.Map;
     Calendar start = calendars.get(0);
     Calendar end = calendars.get(calendars.size() - 1);
     java.util.Calendar calendar = java.util.Calendar.getInstance();
-    calendar.set(start.getYear(), start.getMonth(), start.getDay());
+    calendar.set(start.getYear(), start.getMonth() - 1, start.getDay());
     Map<String, Object> params = new HashMap<>();
     params.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
 
-    calendar.set(end.getYear(), end.getMonth(), end.getDay());
+    calendar.set(end.getYear(), end.getMonth() - 1, end.getDay());
     params.put("end", DateUtils.Date2YYYYMMDD(calendar.getTime()));
 
     mViewModel.loadSource(params);

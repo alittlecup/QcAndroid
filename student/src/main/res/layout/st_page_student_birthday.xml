@@ -8,6 +8,9 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel"/>
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -114,7 +117,9 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="4月生日124人"
+            app:birDay="@{viewModel.date}"
+            app:birCount="@{viewModel.count}"
+            tools:text="4月生日124人"
             />
         <include layout="@layout/divider_grey"/>
 
