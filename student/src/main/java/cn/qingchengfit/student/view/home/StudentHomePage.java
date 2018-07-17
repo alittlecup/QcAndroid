@@ -2,6 +2,7 @@ package cn.qingchengfit.student.view.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -32,6 +33,15 @@ import java.util.ArrayList;
     mViewModel.increaseMembers.observe(this,msg->mBinding.tvIncreaseMember.setCount(msg));
     mViewModel.followStudents.observe(this,msg->mBinding.tvIncreaseStudentFollow.setCount(msg));
 
+    mViewModel.glanceLiveData.observe(this,info->{
+      if(info==null)return;
+      int all_users_count = info.getAll_users_count();
+      int member = info.getMember_users_count();
+      int register = info.getRegistered_users_count();
+      int follow = info.getFollowing_users_count();
+      setData(register,follow,member,all_users_count);
+    });
+
     mViewModel.showLoading.observe(this,aBoolean -> {
       if(aBoolean){
         showLoading();
@@ -56,14 +66,20 @@ import java.util.ArrayList;
 
   private void initChart() {
     mBinding.pieChart.setOnChartValueSelectedListener(this);
-    setData();
   }
-
-  private void setData() {
+  private float formateString(String cur,String total){
+    if(TextUtils.isEmpty(total)||TextUtils.isEmpty(cur)){
+      return 0;
+    }
+    Integer totalCount = Integer.valueOf(total);
+    Integer curCount = Integer.valueOf(cur);
+    return curCount*100/totalCount;
+  }
+  private void setData(int register,int follow,int member,int total) {
     ArrayList<PieEntry> entries = new ArrayList<>();
-    entries.add(new PieEntry(33));
-    entries.add(new PieEntry(33));
-    entries.add(new PieEntry(33));
+    entries.add(new PieEntry(register*100/total));
+    entries.add(new PieEntry(follow*100/total));
+    entries.add(new PieEntry(member*100/total));
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
     dataSet.setSelectionShift(3f);

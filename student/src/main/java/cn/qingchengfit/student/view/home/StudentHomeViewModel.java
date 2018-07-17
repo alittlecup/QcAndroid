@@ -27,7 +27,7 @@ public class StudentHomeViewModel extends BaseViewModel {
   public final MediatorLiveData<String> follow = new MediatorLiveData<>();
   public final MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
   public final MediatorLiveData<String> member = new MediatorLiveData<>();
-  private LiveData<StudentInfoGlance> glanceLiveData;
+  public LiveData<StudentInfoGlance> glanceLiveData;
   @Inject LoginStatus loginStatus;
   @Inject StudentRepository repository;
   @Inject GymWrapper gymWrapper;
@@ -47,14 +47,15 @@ public class StudentHomeViewModel extends BaseViewModel {
         String.valueOf(info == null ? "" : info.getNew_follow_users_count())));
     followStudents.addSource(glanceLiveData, info -> followStudents.setValue(
         String.valueOf(info == null ? "" : info.getNew_follow_member_users_count())));
-    totalMembers.addSource(glanceLiveData, info -> totalMembers.setValue(
-        String.valueOf(info == null ? "" : info.getAll_users_count())));
+
     register.addSource(glanceLiveData, info -> register.setValue(
         String.valueOf(info == null ? "" : info.getRegistered_users_count())));
     follow.addSource(glanceLiveData, info -> follow.setValue(
         String.valueOf(info == null ? "" : info.getFollowing_users_count())));
     member.addSource(glanceLiveData,
         info -> member.setValue(String.valueOf(info == null ? "" : info.getMember_users_count())));
+    totalMembers.addSource(glanceLiveData, info -> totalMembers.setValue(
+        String.valueOf(info == null ? "" : info.getAll_users_count())));
   }
 
   void loadSource() {
