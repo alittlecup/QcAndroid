@@ -4,15 +4,12 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.item.ChooseDetailItem;
-import cn.qingchengfit.student.item.FollowUpItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +23,7 @@ public class IncreaseMemberViewModel
 
   public Integer dataType = 1;//1- 已接洽，2- 会员
 
-  private Map<String, Object> params = new HashMap<>();
+  private Map<String, Object> dates = new HashMap<>();
 
   @Inject IncreaseMemberViewModel() {
 
@@ -67,12 +64,20 @@ public class IncreaseMemberViewModel
     }
 
     @NonNull @Override public ChooseDetailItem create(QcStudentBeanWithFollow beanWithFollow) {
-      return FlexibleFactory.create(ChooseDetailItem.class, beanWithFollow, type);
+      return FlexibleFactory.create(ChooseDetailItem.class, beanWithFollow, 1);
     }
   }
 
   @Override public void loadSource(@NonNull Map<String, Object> stringObjectMap) {
-    params.putAll(stringObjectMap);
-    identifier.setValue(new HashMap<>(params));
+    dates.putAll(stringObjectMap);
+    identifier.setValue(new HashMap<>(dates));
   }
+  public void loadSourceByDate(Map<String,Object> map){
+    dates.putAll(map);
+    Map<String, Object> value = identifier.getValue();
+    value.putAll(dates);
+    identifier.setValue(value);
+  }
+
+
 }

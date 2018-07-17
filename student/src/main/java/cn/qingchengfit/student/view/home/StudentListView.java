@@ -1,5 +1,6 @@
 package cn.qingchengfit.student.view.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
@@ -78,6 +79,8 @@ import com.anbillon.flabellum.annotations.Need;
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
+    mBinding.rbSelectAll.setOnCheckedChangeListener(
+        (buttonView, isChecked) -> listView.selectAll(isChecked));
   }
 
   @Override protected void onFinishAnimation() {
@@ -88,7 +91,7 @@ import com.anbillon.flabellum.annotations.Need;
   private void initTopViewModel() {
     topViewModel = ViewModelProviders.of(topView, factory).get(IncreaseMemberTopViewModel.class);
     topViewModel.getDates().observe(this, params -> {
-      mViewModel.loadSource(params);
+      mViewModel.loadSourceByDate(params);
     });
   }
 

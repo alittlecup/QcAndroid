@@ -229,8 +229,10 @@ public class LineCharDate extends LinearLayout {
     if (data != null) {
       addData(data);
     }
-    moveViewToX(pos-3);
-    highlightValue(pos, 0);
+    if (pos > 3) {
+      moveViewToX(pos - 3);
+      highlightValue(pos, 0);
+    }
   }
 
   public void setLeftBottomText(String msg) {

@@ -22,6 +22,7 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
   private final MutableLiveData<HashMap<String, Object>> dates = new MutableLiveData<>();
   public final LiveData<String> count;
   public final MutableLiveData<String> curContent = new MutableLiveData<>();
+  public final MutableLiveData<Integer> selectPos=new MutableLiveData<>();
   public int status = 0;
 
   @Inject IncreaseMemberTopViewModel() {
@@ -45,7 +46,7 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
     String start = (String) params.get("start");
     String end = (String) params.get("end");
 
-    curContent.setValue(end + "至" + start);
+    curContent.setValue(start + "至" + end);
 
     dates.setValue(params);
   }

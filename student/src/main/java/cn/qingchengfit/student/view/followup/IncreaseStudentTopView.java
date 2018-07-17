@@ -50,10 +50,6 @@ public class IncreaseStudentTopView
     mBinding.radioRight.setChecked(true);
   }
 
-  @Override public void onResume() {
-    super.onResume();
-
-  }
 
   private void initLineChart() {
     mBinding.lineChart.hideBottomDate();

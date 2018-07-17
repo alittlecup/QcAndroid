@@ -2,6 +2,7 @@ package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
+import android.text.TextUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
@@ -36,13 +37,21 @@ public class IncreaseMemberSortViewModel extends BaseViewModel {
 
   public void setSaller(Staff staff) {
     HashMap<String, Object> value = params.getValue();
-    value.put("seller_id", staff == null ? null : staff.getId());
+    if (staff == null) {
+      value.remove("seller_id");
+    } else {
+      value.put("seller_id", staff.getId());
+    }
     params.setValue(value);
   }
 
   public void setStudentStatus(String status) {
     HashMap<String, Object> value = params.getValue();
-    value.put("status_ids", status);
+    if (TextUtils.isEmpty(status)) {
+      value.remove("status");
+    } else {
+      value.put("status", status);
+    }
     params.setValue(value);
   }
 

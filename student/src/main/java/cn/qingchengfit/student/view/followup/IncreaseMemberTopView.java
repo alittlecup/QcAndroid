@@ -1,8 +1,10 @@
 package cn.qingchengfit.student.view.followup;
 
+import android.arch.lifecycle.Transformations;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import cn.qingchengfit.student.databinding.ViewIncreaseMemberTopBinding;
 import cn.qingchengfit.student.R;
@@ -26,7 +28,6 @@ public class IncreaseMemberTopView
     initListener();
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
-    mBinding.radioRight.setChecked(true);
     updateUI();
     return mBinding;
   }
@@ -34,22 +35,36 @@ public class IncreaseMemberTopView
   private void initListener() {
     mBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
+        int pos = -1;
         String end = DateUtils.getStringToday();
         String start = "";
         if (checkedId == R.id.radio_left) {
+          pos = 0;
           start = DateUtils.addDay(end, -30);
         } else if (checkedId == R.id.radio_mid) {
           start = DateUtils.addDay(end, -7);
+          pos = 2;
         } else if (checkedId == R.id.radio_right) {
           start = DateUtils.addDay(end, -1);
+          pos = 4;
         }
+        mViewModel.selectPos.setValue(pos);
         HashMap<String, Object> dates = new HashMap<>();
         dates.put("start", start);
         dates.put("end", end);
-
         mViewModel.loadSource(dates);
       }
     });
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    // TODO: 2018/7/17  不能保存状态
+    if (mViewModel.selectPos.getValue()!=null) {
+      ((RadioButton) mBinding.radioGroup.getChildAt(mViewModel.selectPos.getValue())).setChecked(true);
+    } else {
+      mBinding.radioRight.setChecked(true);
+    }
   }
 
   public void setType(@IncreaseType String type) {
