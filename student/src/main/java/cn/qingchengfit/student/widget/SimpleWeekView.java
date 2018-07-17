@@ -43,7 +43,9 @@ public class SimpleWeekView extends WeekView {
     float baselineY = mTextBaseLine;
     int cx = x + mItemWidth / 2;
     if (isSelected) {
-      canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY, calendar.isCurrentMonth() ? mSelectTextPaint : mOtherMonthTextPaint );
+      canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY,
+          calendar.isCurrentDay() ? mCurDayTextPaint
+              : calendar.isCurrentMonth() ? mSelectTextPaint : mOtherMonthTextPaint);
     } else if (hasScheme) {
       canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY,
           calendar.isCurrentDay() ? mCurDayTextPaint
