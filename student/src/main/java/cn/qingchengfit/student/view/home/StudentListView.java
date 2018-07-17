@@ -3,6 +3,7 @@ package cn.qingchengfit.student.view.home;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -167,6 +168,7 @@ public class StudentListView
     });
     adapter.setFastScroller(mBinding.fastScrollerBar);
     adapter.addListener(this);
+    setRefreshEnable(false);
   }
   public void filter(String filter){
     //if (adapter.hasNewFilter(filter)) {
@@ -179,7 +181,9 @@ public class StudentListView
     mBinding.fastScrollerBar.setEnabled(true);
     mBinding.fastScrollerBar.setVisibility(View.VISIBLE);
   }
-
+  public void setRefreshEnable(boolean enable){
+    mBinding.refresh.setEnabled(enable);
+  }
   public void hideFastScroller() {
     mBinding.fastScrollerBar.setEnabled(false);
     mBinding.fastScrollerBar.setVisibility(View.GONE);
@@ -204,6 +208,7 @@ public class StudentListView
       mBinding.btnModifySale.setText(getStringByType(curType));
       mBinding.llBottom.setVisibility(View.GONE);
       adapter.setTag("choose", -1);
+      adapter.clearSelection();
       adapter.notifyDataSetChanged();
     }
   }
@@ -211,7 +216,6 @@ public class StudentListView
   @Override public boolean onItemClick(int position) {
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
-    mViewModel.mBottomSelectedCount.set(adapter.getSelectedItemCount());
     ids = getSelectIds();
     return false;
   }

@@ -58,11 +58,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-          <android.support.design.widget.CoordinatorLayout
-              android:id="@+id/coordinator"
-              xmlns:android="http://schemas.android.com/apk/res/android"
+          <LinearLayout
               android:layout_width="match_parent"
+              android:orientation="vertical"
               android:layout_height="match_parent"
+              >
+
+          <android.support.design.widget.CoordinatorLayout
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/coordinator"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"
               >
 
             <android.support.design.widget.AppBarLayout
@@ -151,27 +158,31 @@
               <include layout="@layout/divider_grey"/>
             </android.support.design.widget.AppBarLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
-                android:background="@color/bg_grey"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                >
-
-              <FrameLayout
-                  android:id="@+id/fragment_list_container"
+              <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  />
-            </FrameLayout>
+                  android:background="@color/bg_grey"
+                  android:orientation="vertical"
+                  app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                  >
 
+                <FrameLayout
+                    android:id="@+id/fragment_list_container"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    />
+
+
+              </LinearLayout>
+
+
+          </android.support.design.widget.CoordinatorLayout>
             <include
                 layout="@layout/layout_bottom_allot_action"
                 android:id="@+id/include_allot"
                 />
-          </android.support.design.widget.CoordinatorLayout>
-
+          </LinearLayout>
 
           <FrameLayout
               android:id="@+id/fragment_filter"

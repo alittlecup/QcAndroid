@@ -110,6 +110,7 @@ import java.util.HashMap;
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
+    mBinding.rbSelectAll.setOnClickListener(view->listView.selectAll(true));
   }
 
   private void initToolbar() {
