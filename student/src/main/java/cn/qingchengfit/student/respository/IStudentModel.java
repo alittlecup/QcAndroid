@@ -4,6 +4,7 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -314,4 +315,7 @@ public interface IStudentModel {
   //全部会员-已接洽用户所属销售按时段统计数据
   Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(String staff_id,
       HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(String staff_id,
+     HashMap<String, Object> params);
 }

@@ -7,6 +7,7 @@ import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by huangbaole on 2017/11/29.
@@ -90,6 +92,8 @@ public interface StudentRepository {
   //全部会员-新注册用户所属销售按时段统计数据
   LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String type,
       Map<String, Object> params);
+  LiveData<Resource<QcStudentBirthdayWrapper>> qcGetStudentBirthday(
+     Map<String, Object> params);
 
 
 

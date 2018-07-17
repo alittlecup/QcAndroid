@@ -1,10 +1,12 @@
 package cn.qingchengfit.student.view.state;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saascommon.filter.FilterListStringFragment;
 import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.view.allot.SalerStudentsViewModel;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.List;
 public class SalerStateFilterView extends BaseFilterFragment {
   FilterListStringFragment fragment;
   private List<MemberStat.UnAttacked> attackeds;
+  SalerStudentStateViewModel viewModel;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     initFragments();
+    viewModel = ViewModelProviders.of(getParentFragment()).get(SalerStudentStateViewModel.class);
   }
 
   public void setUnAttackeds(List<MemberStat.UnAttacked> attackeds) {
@@ -25,11 +29,16 @@ public class SalerStateFilterView extends BaseFilterFragment {
     }
   }
 
+  @Override public void dismiss() {
+    viewModel.filterVisible.setValue(false);
+  }
+
   private void initFragments() {
     fragment = new FilterListStringFragment();
     fragment.setStrings(formatList(attackeds));
     fragment.setOnSelectListener(i -> {
-
+      viewModel.setCurAttack(attackeds.get(i));
+      dismiss();
     });
   }
 

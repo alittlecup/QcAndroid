@@ -6,6 +6,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -357,6 +358,15 @@ public interface StudentApi {
   @GET("/api/staffs/{staff_id}/users/following/seller/stat/")
   Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
+
+
+
+  //会员生日-会员生日统计
+  @GET("/api/staffs/{staff_id}/users/birthday/stat/")
+  Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
+
+
 
 
 

@@ -16,9 +16,10 @@ import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
-
+@Leaf(module = "student",path = "/student/seller_state")
 public class SalerStudentStatePage
     extends StudentBaseFragment<PageSalerStudentStateBinding, SalerStudentStateViewModel> {
   @Need @IncreaseType String type = IncreaseType.INCREASE_MEMBER;
@@ -28,7 +29,7 @@ public class SalerStudentStatePage
   SalerStateFilterView filterView;
 
   @Override protected void subscribeUI() {
-
+    mViewModel.filterContent.observe(this,content->mBinding.qcFilterToggle.setText(content));
   }
 
   @Override

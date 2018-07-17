@@ -14,6 +14,9 @@ import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.item.SalerStudentInfoItem;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.respository.StudentRepository;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
@@ -44,9 +47,11 @@ public class StudentStateInfoViewModel extends
 
   @Override protected List<SalerStudentInfoItem> map(
       @NonNull List<QcStudentBeanWithFollow> qcStudentBeanWithFollows) {
-    return FlexibleItemProvider.with(
+    List<SalerStudentInfoItem> from = FlexibleItemProvider.with(
         new CommonItemFactory<QcStudentBeanWithFollow, SalerStudentInfoItem>(
             SalerStudentInfoItem.class)).from(qcStudentBeanWithFollows);
+    Collections.sort(from, (o1, o2) -> o1.getData().total_count-o2.getData().total_count);
+    return from;
   }
 
   private LiveData<Resource<MemberStat>> loadStatInfo(String type) {

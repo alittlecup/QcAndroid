@@ -39,13 +39,13 @@ import java.util.Map;
     mViewModel.statInfo.observe(this, statInfo -> {
       hideLoading();
       if (statInfo == null) return;
-      if(preChecked!=null)return;
+      if (preChecked != null) return;
       mBinding.tvAllStudent.setText(String.valueOf(statInfo.getCount()));
       initTab(statInfo.getUnattacked());
     });
 
     mViewModel.getLiveItems().observe(this, items -> {
-        hideLoading();
+      hideLoading();
     });
   }
 
@@ -84,8 +84,8 @@ import java.util.Map;
       textView.setLayoutParams(layoutParams);
       textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
-      if(i==0){
-        preChecked=textView;
+      if (i == 0) {
+        preChecked = textView;
         textView.setChecked(true);
       }
       mBinding.llStatInfo.addView(textView);
@@ -120,9 +120,11 @@ import java.util.Map;
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
-
   @Override public boolean onItemClick(int position) {
-
+    routeTo("/student/seller_state", new SalerStudentStatePageParams().type(curType)
+        .attackeds(new ArrayList<>(mViewModel.statInfo.getValue().getUnattacked()))
+        .staff(mViewModel.getLiveItems().getValue().get(position).getData())
+        .build());
     return false;
   }
 
@@ -162,6 +164,4 @@ import java.util.Map;
       return fragmentList.size();
     }
   }
-
-
 }

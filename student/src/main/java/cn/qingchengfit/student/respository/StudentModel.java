@@ -9,6 +9,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -232,7 +233,7 @@ public class StudentModel implements IStudentModel {
     QcDataResponse<MemberStat> dataResponse = new QcDataResponse<>();
     dataResponse.setData(memberStat);
     dataResponse.setStatus(200);
-    return Flowable.just(dataResponse).delay(1,TimeUnit.SECONDS);
+    return Flowable.just(dataResponse).delay(1, TimeUnit.SECONDS);
     //return studentApi.qcGetRegisterStat(staff_id, params);
   }
 
@@ -249,6 +250,13 @@ public class StudentModel implements IStudentModel {
   @Override public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetFollowingSeller(staff_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(String staff_id,
+      HashMap<String, Object> params) {
+
+    return studentApi.qcGetStudentBirthday(staff_id, params);
   }
 
   //@Override

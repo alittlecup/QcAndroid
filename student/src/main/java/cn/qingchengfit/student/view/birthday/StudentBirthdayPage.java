@@ -10,10 +10,14 @@ import cn.qingchengfit.saascommon.calendar.Calendar;
 import cn.qingchengfit.saascommon.calendar.CalendarView;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageStudentBirthdayBinding;
+import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Leaf(module = "student", path = "/student/birthday") public class StudentBirthdayPage
     extends StudentBaseFragment<StPageStudentBirthdayBinding, StudentBirthdayViewModel>
@@ -21,7 +25,9 @@ import java.util.List;
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
-
+    mViewModel.getLiveItems().observe(this, items -> {
+      adapter.updateDataSet(items);
+    });
   }
 
   @Override
@@ -60,31 +66,14 @@ import java.util.List;
   private void initRecyclerView() {
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter.updateDataSet(getItems());
-  }
-
-  private List getItems() {
-    List<FilterCommonLinearItem> items = new ArrayList<>();
-    for (int i = 0; i < 100; i++) {
-      items.add(new FilterCommonLinearItem(String.valueOf(i) + ": position"));
-    }
-    return items;
   }
 
   private void initSelect() {
-    List<Calendar> schemes = new ArrayList<>();
-    int year = mBinding.calendarView.getCurYear();
-    int month = mBinding.calendarView.getCurMonth();
-
-    schemes.add(getSchemeCalendar(year, month, 3));
-    schemes.add(getSchemeCalendar(year, month, 6));
-    schemes.add(getSchemeCalendar(year, month, 9));
-    schemes.add(getSchemeCalendar(year, month, 13));
-    schemes.add(getSchemeCalendar(year, month, 14));
-    schemes.add(getSchemeCalendar(year, month, 15));
-    schemes.add(getSchemeCalendar(year, month, 18));
-    schemes.add(getSchemeCalendar(year, month, 25));
-    mBinding.calendarView.setSchemeDate(schemes);
+    Calendar calendar = new Calendar();
+    calendar.setYear(mBinding.calendarView.getCurYear());
+    calendar.setMonth(mBinding.calendarView.getCurMonth());
+    calendar.setDay(mBinding.calendarView.getCurDay());
+    onDateSelected(calendar, true);
   }
 
   private Calendar getSchemeCalendar(int year, int month, int day) {
@@ -119,6 +108,16 @@ import java.util.List;
   }
 
   private void loadStudents(List<Calendar> calendars) {
+    Calendar start = calendars.get(0);
+    Calendar end = calendars.get(calendars.size() - 1);
+    java.util.Calendar calendar = java.util.Calendar.getInstance();
+    calendar.set(start.getYear(), start.getMonth(), start.getDay());
+    Map<String, Object> params = new HashMap<>();
+    params.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
 
+    calendar.set(end.getYear(), end.getMonth(), end.getDay());
+    params.put("end", DateUtils.Date2YYYYMMDD(calendar.getTime()));
+
+    mViewModel.loadSource(params);
   }
 }

@@ -12,6 +12,7 @@ import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
@@ -219,6 +220,13 @@ import javax.inject.Singleton;
         return toLiveData(remoteService.qcGetRegisterSeller(loginStatus.staff_id(), params1));
     }
     return null;
+  }
+
+  @Override public LiveData<Resource<QcStudentBirthdayWrapper>> qcGetStudentBirthday(
+      Map<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return toLiveData(remoteService.qcGetStudentBirthday(loginStatus.staff_id(),params1));
   }
 
   //@Override
