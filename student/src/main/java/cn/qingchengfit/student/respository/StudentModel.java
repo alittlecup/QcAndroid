@@ -218,22 +218,7 @@ public class StudentModel implements IStudentModel {
 
   @Override public Flowable<QcDataResponse<MemberStat>> qcGetRegisterStat(String staff_id,
       HashMap<String, Object> params) {
-    MemberStat memberStat = new MemberStat();
-    memberStat.setCount(1000);
-    List<MemberStat.UnAttacked> attackeds = new ArrayList<>();
-    MemberStat.UnAttacked unAttacked = new MemberStat.UnAttacked();
-    unAttacked.setCount(200);
-    unAttacked.setDesc("1-3天");
-    unAttacked.setId(103);
-    attackeds.add(unAttacked);
-    attackeds.add(unAttacked);
-    attackeds.add(unAttacked);
-    attackeds.add(unAttacked);
-    memberStat.setUnattacked(attackeds);
-    QcDataResponse<MemberStat> dataResponse = new QcDataResponse<>();
-    dataResponse.setData(memberStat);
-    dataResponse.setStatus(200);
-    //return Flowable.just(dataResponse).delay(1, TimeUnit.SECONDS);
+
     return studentApi.qcGetRegisterStat(staff_id, params);
   }
 

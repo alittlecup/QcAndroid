@@ -51,6 +51,9 @@ public class CountDateView extends LinearLayout implements Checkable {
   public void setContent(String content) {
     mContentTv.setText(content);
   }
+  public String getContent(){
+    return mContentTv.getText().toString();
+  }
 
   public void setContentColor(int color) {
     DrawableCompat.setTint(mContentTv.getCompoundDrawables()[0], color);

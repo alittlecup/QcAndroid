@@ -9,6 +9,7 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 public class IncreaseMemberTopViewModel extends BaseViewModel {
@@ -38,7 +39,9 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
   }
 
   private LiveData<Resource<StatDate>> loadFollowCount(HashMap<String, Object> params) {
-    params.put("status", status);
+    Map<String, Object> datas=new HashMap<>();
+    datas.put("status", status);
+    datas.putAll(params);
     return repository.qcGetFollowStat(params);
   }
 

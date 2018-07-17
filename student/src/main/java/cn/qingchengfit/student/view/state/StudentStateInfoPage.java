@@ -103,13 +103,19 @@ import java.util.Map;
     switch (curType) {
       case IncreaseType.INCREASE_FOLLOWUP:
         toolbarModel = new ToolbarModel("已接洽");
+        mBinding.tvNotFollow.setText("未跟进时长分布 (人)");
+        mBinding.tvAllContent.setText("全部已接洽 (人)");
         break;
       case IncreaseType.INCREASE_STUDENT:
         toolbarModel = new ToolbarModel("会员");
+        mBinding.tvNotFollow.setText("未出勤时长分布 (人)");
+        mBinding.tvAllContent.setText("全部会员 (人)");
 
         break;
       case IncreaseType.INCREASE_MEMBER:
         toolbarModel = new ToolbarModel("新注册用户");
+        mBinding.tvNotFollow.setText("未跟进时长分布 (人)");
+        mBinding.tvAllContent.setText("全部新注册 (人)");
         break;
     }
     showLoading();
@@ -134,11 +140,12 @@ import java.util.Map;
       mBinding.viewpager.setCurrentItem(mBinding.llStatInfo.indexOfChild(buttonView));
       preChecked.setChecked(false);
       preChecked = buttonView;
-
+      mBinding.tvDetail.setText(buttonView.getContent()+"未跟进用户销售任务统计");
       Map<String, Object> params = new HashMap<>();
       params.put("time_period_id", buttonView.getTag());
       showLoading();
       mViewModel.loadSource(params);
+
     }
   }
 

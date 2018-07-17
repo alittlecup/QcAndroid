@@ -108,6 +108,9 @@ import com.anbillon.flabellum.annotations.Need;
 
     topView = new IncreaseMemberTopView();
     stuff(R.id.frag_chart, topView);
+
+    mBinding.qftFollowTime.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_student_increase_follow_right));
+    mBinding.qftFollowTime.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_student_increase_follow_left));
   }
 
   private void toggleToolbar(boolean showCheckBox, String type) {

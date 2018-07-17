@@ -31,7 +31,6 @@ public class IncreaseMemberViewModel
 
   @NonNull @Override
   protected LiveData<StudentListWrappeForFollow> getSource(@NonNull Map<String, Object> map) {
-    map.put("status", dataType);
     map.put("show_all", 1);
 
     return Transformations.map(repository.qcGetTrackStudentFollow(map), input -> {
@@ -69,8 +68,8 @@ public class IncreaseMemberViewModel
   }
 
   @Override public void loadSource(@NonNull Map<String, Object> stringObjectMap) {
-    dates.putAll(stringObjectMap);
-    identifier.setValue(new HashMap<>(dates));
+   stringObjectMap.putAll(dates);
+    identifier.setValue(new HashMap<>(stringObjectMap));
   }
   public void loadSourceByDate(Map<String,Object> map){
     dates.putAll(map);
