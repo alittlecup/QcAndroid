@@ -163,9 +163,6 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
         .create());
   }
 
-  public MutableLiveData<Integer> getCurPostion() {
-    return curPostion;
-  }
 
   public final MutableLiveData<Integer> curPostion = new MutableLiveData<>();
 

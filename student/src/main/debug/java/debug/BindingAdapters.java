@@ -12,7 +12,6 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saascommon.BuildConfig;
 import cn.qingchengfit.saascommon.widget.LineCharDate;
 import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
-import cn.qingchengfit.student.widget.CountTextView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FunnelTwoView;
 import cn.qingchengfit.widgets.QcRadioGroup;
@@ -42,9 +41,13 @@ public class BindingAdapters {
         lineCharDate.setMarkViewUnit(unit);
     }
 
-    @BindingAdapter(value = "datas")
-    public static void setLineDataUnit(LineCharDate lineCharDate, LineData data) {
-        lineCharDate.appData(data);
+    @BindingAdapter(value = {"datas","highlightValue"},requireAll = false)
+    public static void setLineDataUnit(LineCharDate lineCharDate, LineData data,Integer pos) {
+        if(pos==null){
+        lineCharDate.addData(data);
+        }else{
+            lineCharDate.addData(data,pos);
+        }
     }
     @BindingAdapter(value = "highlightValue")
     public static void setLineDataUnit(LineCharDate lineCharDate, Integer  data) {

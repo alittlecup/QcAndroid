@@ -34,14 +34,14 @@ public class IncreaseMemberTopView
   private void initListener() {
     mBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
-        String start = DateUtils.getStringToday();
-        String end = "";
+        String end = DateUtils.getStringToday();
+        String start = "";
         if (checkedId == R.id.radio_left) {
-          end = DateUtils.addDay(start, -30);
+          start = DateUtils.addDay(end, -30);
         } else if (checkedId == R.id.radio_mid) {
-          end = DateUtils.addDay(start, -7);
+          start = DateUtils.addDay(end, -7);
         } else if (checkedId == R.id.radio_right) {
-          end = DateUtils.addDay(start, -1);
+          start = DateUtils.addDay(end, -1);
         }
         HashMap<String, Object> dates = new HashMap<>();
         dates.put("start", start);

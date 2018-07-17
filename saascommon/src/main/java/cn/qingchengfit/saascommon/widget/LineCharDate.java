@@ -199,19 +199,15 @@ public class LineCharDate extends LinearLayout {
     lineChart.setData(data);
     lineChart.invalidate();
     setYAxisMaximum(getAxisLeftLefeMax(data));
-    if(highlightValuePos!=-1){
-      moveViewToX(highlightValuePos);
-      highlightValue(highlightValuePos, 0);
-    }else{
-      moveViewToX(size - 4);
-      highlightValue(size + 2, 0);
-    }
+
+    moveViewToX(size - 4);
+    highlightValue(size + 2, 0);
 
     setVisibleXRange(6);
     setMarkViewTintColor(set1.getColor());
   }
 
-  public void appData(LineData data) {
+  public void addData(LineData data) {
     if (data == null) return;
     if (lineChart.isEmpty()) {
       setData(data);
@@ -222,15 +218,19 @@ public class LineCharDate extends LinearLayout {
 
       setYAxisMaximum(getAxisLeftLefeMax(data));
 
-      if(highlightValuePos!=-1){
-        moveViewToX(highlightValuePos);
-        highlightValue(highlightValuePos, 0);
-      }else{
-        moveViewToX(19);
-        highlightValue(23, 0);
-      }
+      moveViewToX(19);
+      highlightValue(23, 0);
+
       setVisibleXRange(6);
     }
+  }
+
+  public void addData(LineData data, Integer pos) {
+    if (data != null) {
+      addData(data);
+    }
+    moveViewToX(pos-3);
+    highlightValue(pos, 0);
   }
 
   public void setLeftBottomText(String msg) {
@@ -245,9 +245,10 @@ public class LineCharDate extends LinearLayout {
     lineChart.moveViewToX(xValue);
   }
 
-  private float highlightValuePos=-1;
+  private float highlightValuePos = -1;
+
   public void highlightValue(float x, int dataSetIndex) {
-    highlightValuePos=x;
+    highlightValuePos = x;
     lineChart.highlightValue(x, 0);
   }
 

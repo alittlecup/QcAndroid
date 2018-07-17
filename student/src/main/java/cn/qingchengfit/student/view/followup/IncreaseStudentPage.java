@@ -110,7 +110,7 @@ import java.util.HashMap;
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
-    mBinding.rbSelectAll.setOnClickListener(view->listView.selectAll(true));
+    mBinding.rbSelectAll.setOnCheckedChangeListener((view,checked)->listView.selectAll(checked));
   }
 
   private void initToolbar() {
@@ -122,7 +122,7 @@ import java.util.HashMap;
       mViewModel.dataType = 0;
     } else if (curType.equals(IncreaseType.INCREASE_STUDENT)) {
       mBinding.qftStatus.setVisibility(View.GONE);
-      mViewModel.dataType = 1;
+      mViewModel.dataType = 2;
     }
   }
 

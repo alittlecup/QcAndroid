@@ -16,19 +16,18 @@ import cn.qingchengfit.student.listener.IncreaseType;
 public class IncreaseStudentTopView
     extends StudentBaseFragment<ViewIncreaseStudentTopBinding, IncreaseStudentTopViewModel> {
   @IncreaseType String type = IncreaseType.INCREASE_MEMBER;
-  private int selectPos=-1;
+
   @Override protected void subscribeUI() {
     mViewModel.setType(type);
     mViewModel.setDateDimension(DateGroupDimension.DAY);
-    mViewModel.showLoading.observe(this,aBoolean -> {
-      if(aBoolean){
+    mViewModel.showLoading.observe(this, aBoolean -> {
+      if (aBoolean) {
         showLoading();
-      }else{
+      } else {
         hideLoading();
       }
     });
   }
-
 
   @Override
   public ViewIncreaseStudentTopBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -49,15 +48,11 @@ public class IncreaseStudentTopView
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     mBinding.radioRight.setChecked(true);
-
   }
 
   @Override public void onResume() {
     super.onResume();
-    if(selectPos!=-1){
-      mBinding.lineChart.highlightValue(selectPos,0);
-      mBinding.lineChart.moveViewToX(selectPos);
-    }
+
   }
 
   private void initLineChart() {
@@ -78,18 +73,18 @@ public class IncreaseStudentTopView
       }
     });
     mBinding.lineChart.setLineCharListener(new LineCharDate.onLineCharListener() {
-      @Override public void onChartTranslate(int valuePos,int count) {
+      @Override public void onChartTranslate(int valuePos, int count) {
         int curPos = valuePos - 3 >= 0 ? valuePos - 3 : 0;
-        if(curPos==0){
+        if (curPos == 0) {
           mViewModel.loadMore();
         }
-        mViewModel.upDateTvContent(curPos,count);
+        mViewModel.upDateTvContent(curPos, count);
       }
 
       @Override public void onChartClick(int clickPos, int count) {
         int curpos = clickPos - 3 >= 0 ? clickPos - 3 : 0;
-        mViewModel.updateSelectPos(curpos,count);
-        selectPos=clickPos;
+        mViewModel.updateSelectPos(curpos, count);
+        mViewModel.curPostion.setValue(clickPos);
       }
     });
   }

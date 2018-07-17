@@ -171,10 +171,9 @@ public class StudentListView
     setRefreshEnable(false);
   }
   public void filter(String filter){
-    //if (adapter.hasNewFilter(filter)) {
-    //  mAdapter.setFilter(newText);
-    //  mAdapter.filterItems(DatabaseService.getInstance().getListToFilter(), 200L);
-    //}
+    adapter.setSearchText(filter);
+    adapter.filterItems();
+
   }
 
   public void showFastScroller() {
@@ -216,6 +215,7 @@ public class StudentListView
   @Override public boolean onItemClick(int position) {
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
+    mViewModel.mBottomSelectedCount.set(adapter.getSelectedItemCount());
     ids = getSelectIds();
     return false;
   }
