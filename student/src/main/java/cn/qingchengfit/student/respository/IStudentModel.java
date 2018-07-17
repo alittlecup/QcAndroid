@@ -76,8 +76,8 @@ public interface IStudentModel {
    * @param params
    * @return
    */
-  //Observable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
+      HashMap<String, Object> params);
 
   /**
    * 教练分配

@@ -78,11 +78,11 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcGetCardBundldStudents(id, params);
   //}
   //
-  //@Override public Observable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetAllStudents(id, params);
-  //}
-  //
+  @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetAllStudents(id, params);
+  }
+
   //@Override public Observable<QcDataResponse<AllotDataResponseWrap>> qcGetCoachList(String staff_id,
   //    HashMap<String, Object> params) {
   //  return studentApi.qcGetCoachList(staff_id, params);
@@ -145,8 +145,8 @@ public class StudentModel implements IStudentModel {
     QcDataResponse dataResponse = new QcDataResponse();
     dataResponse.setData(glance);
     dataResponse.setStatus(200);
-    return Flowable.just(dataResponse);
-    //return studentApi.qcGetHomePageInfo(staff_id, params);
+    //return Flowable.just(dataResponse);
+    return studentApi.qcGetHomePageInfo(staff_id, params);
   }
 
   @Override public Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
@@ -196,8 +196,8 @@ public class StudentModel implements IStudentModel {
     QcDataResponse<List<StatDate>> dataResponse = new QcDataResponse<>();
     dataResponse.setData(statDates);
     dataResponse.setStatus(200);
-    return Flowable.just(dataResponse).delay(2, TimeUnit.SECONDS);
-    //return studentApi.qcGetIncreaseStat(staff_id, params);
+    //return Flowable.just(dataResponse).delay(2, TimeUnit.SECONDS);
+    return studentApi.qcGetIncreaseStat(staff_id, params);
   }
 
   @Override public Flowable<QcDataResponse<StatDate>> qcGetFollowStat(String staff_id,
@@ -233,8 +233,8 @@ public class StudentModel implements IStudentModel {
     QcDataResponse<MemberStat> dataResponse = new QcDataResponse<>();
     dataResponse.setData(memberStat);
     dataResponse.setStatus(200);
-    return Flowable.just(dataResponse).delay(1, TimeUnit.SECONDS);
-    //return studentApi.qcGetRegisterStat(staff_id, params);
+    //return Flowable.just(dataResponse).delay(1, TimeUnit.SECONDS);
+    return studentApi.qcGetRegisterStat(staff_id, params);
   }
 
   @Override public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetRegisterSeller(

@@ -193,7 +193,7 @@ import javax.inject.Singleton;
     return toLiveData(remoteService.qcGetTrackStudentFollow(loginStatus.staff_id(), params1));
   }
 
-  @Override public LiveData<Resource<MemberStat>> qcGetMemberStat( String type) {
+  @Override public LiveData<Resource<MemberStat>> qcGetMemberStat(String type) {
     HashMap<String, Object> params1 = gymWrapper.getParams();
     switch (type) {
       case IncreaseType.INCREASE_FOLLOWUP:
@@ -206,9 +206,8 @@ import javax.inject.Singleton;
     return null;
   }
 
-  @Override
-  public LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(
-      String type, Map<String, Object> params) {
+  @Override public LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String type,
+      Map<String, Object> params) {
     HashMap<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
     switch (type) {
@@ -226,13 +225,14 @@ import javax.inject.Singleton;
       Map<String, Object> params) {
     HashMap<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
-    return toLiveData(remoteService.qcGetStudentBirthday(loginStatus.staff_id(),params1));
+    return toLiveData(remoteService.qcGetStudentBirthday(loginStatus.staff_id(), params1));
   }
 
-  //@Override
-  //public LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService.qcGetAllStudents(id, params));
-  //}
+  @Override public LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return toLiveData(remoteService.qcGetAllStudents(loginStatus.staff_id(), params1));
+  }
   //
   //@Override
   //public LiveData<List<FilterModel>> qcGetFilterModelFromLocal() {

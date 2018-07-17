@@ -99,7 +99,7 @@ public interface StudentRepository {
 
   //
   //
-  //LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params);
+  LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params);
   //
   //LiveData<List<FilterModel>> qcGetFilterModelFromLocal();
   //

@@ -36,7 +36,7 @@ public class StudentRecyclerSortView
         if (map != null) {
           closeDrawer();
           if (loadDataListener != null) {
-            loadDataListener.loadData(map);
+            loadDataListener.loadData(new HashMap<>(map));
           }
           filterViewModel.getmFilterMap().setValue(null);
         }

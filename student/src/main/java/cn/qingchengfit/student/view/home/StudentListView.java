@@ -5,6 +5,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,6 +167,12 @@ public class StudentListView
     });
     adapter.setFastScroller(mBinding.fastScrollerBar);
     adapter.addListener(this);
+  }
+  public void filter(String filter){
+    //if (adapter.hasNewFilter(filter)) {
+    //  mAdapter.setFilter(newText);
+    //  mAdapter.filterItems(DatabaseService.getInstance().getListToFilter(), 200L);
+    //}
   }
 
   public void showFastScroller() {

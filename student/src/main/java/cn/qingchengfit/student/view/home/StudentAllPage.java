@@ -2,7 +2,12 @@ package cn.qingchengfit.student.view.home;
 
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
@@ -16,14 +21,15 @@ import java.util.Map;
 
 @Leaf(module = "student", path = "/student/all") public class StudentAllPage
     extends StudentBaseFragment<StPageAllStudentBinding, StudentAllViewModel>
-    implements DrawerListener, LoadDataListener {
+    implements DrawerListener, LoadDataListener, SearchView.OnQueryTextListener,
+    SearchView.OnCloseListener {
   StudentRecyclerSortView listView;
   private StudentFilterView filterView;
 
   @Override protected void subscribeUI() {
-    //mViewModel.getLiveItems().observe(this, items -> {
-    //  listView.setDatas(items);
-    //});
+    mViewModel.getLiveItems().observe(this, items -> {
+      listView.setDatas(items);
+    });
   }
 
   @Override
@@ -61,6 +67,15 @@ import java.util.Map;
   private void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel("全部会员");
     toolbarModel.setMenu(R.menu.menu_search);
+    toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        SearchView actionView = (SearchView) item.getActionView();
+        actionView.setQueryHint("输入学员姓名或者手机号");
+        actionView.setOnQueryTextListener(StudentAllPage.this);
+        actionView.setOnCloseListener(StudentAllPage.this);
+        return false;
+      }
+    });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
   }
@@ -73,7 +88,20 @@ import java.util.Map;
     mBinding.drawer.closeDrawer(GravityCompat.END);
   }
 
-  @Override public void loadData(Map<String, ?> params) {
+  @Override public void loadData(Map<String, Object> params) {
     mViewModel.loadSource(params);
+  }
+
+  @Override public boolean onQueryTextSubmit(String query) {
+
+    return false;
+  }
+
+  @Override public boolean onQueryTextChange(String newText) {
+    return false;
+  }
+
+  @Override public boolean onClose() {
+    return false;
   }
 }

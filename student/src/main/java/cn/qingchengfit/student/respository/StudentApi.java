@@ -35,14 +35,14 @@ import retrofit2.http.QueryMap;
  */
 
 public interface StudentApi {
-  //    /**
-  //     * 工作人员下所有会员
-  //     *
-  //     * @GET("/api/staffs/{id}/users/all/?show_all=1")
-  //     */
-  //    @GET("/api/staffs/{id}/users/?show_all=1")
-  //    Observable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(@Path("id") String id,
-  //        @QueryMap HashMap<String, Object> params);
+      /**
+       * 工作人员下所有会员
+       *
+       * @GET("/api/staffs/{id}/users/all/?show_all=1")
+       */
+      @GET("/api/staffs/{id}/users/?show_all=1")
+      Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(@Path("id") String id,
+          @QueryMap HashMap<String, Object> params);
   //
   //    /**
   //     * 会员卡可绑定的会员列表

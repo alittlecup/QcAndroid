@@ -91,7 +91,7 @@ import java.util.Map;
     mBinding.drawer.closeDrawer(GravityCompat.END);
   }
 
-  @Override public void loadData(Map<String, ?> params) {
+  @Override public void loadData(Map<String, Object> params) {
     mViewModel.loadSource(params);
   }
 
