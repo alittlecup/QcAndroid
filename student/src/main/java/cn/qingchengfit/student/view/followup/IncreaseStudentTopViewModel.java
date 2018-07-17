@@ -33,7 +33,9 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
   }
 
   public void setDateDimension(@DateGroupDimension String dateDimension) {
-    this.dateDimension.setValue(dateDimension);
+    if (!dateDimension.equals(this.dateDimension.getValue())) {
+      this.dateDimension.setValue(dateDimension);
+    }
   }
 
   public final MutableLiveData<CharSequence> tvContent = new MutableLiveData<>();
@@ -78,13 +80,29 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
       curSelectPositionDate.setValue(curDates);
     });
     remoteDatas = Transformations.switchMap(dates,
-        params -> Transformations.map(loadSource(params), input -> dealResource(input)));
+        params -> Transformations.map(loadSource(params), input -> {
+          List<StatDate> statDates = dealResource(input);
+          if (statDates == null) {
+            return preStatDates;
+          } else {
+            if (preStatDates.isEmpty()) {
+              statDates.addAll(preStatDates);
+              return preStatDates = statDates;
+            } else {
+              if (!statDates.get(0).getStart().equals(preStatDates.get(0).getStart())) {
+                statDates.addAll(preStatDates);
+                return preStatDates = statDates;
+              } else {
+                return preStatDates;
+              }
+            }
+          }
+        }));
     lineData.addSource(remoteDatas, statDates -> {
+      if (statDates == null) return;
       Single.just(statDates)
-          .filter(statDates1 -> statDates1 != null && !statDates1.isEmpty())
+          .filter(statDates1 -> !statDates1.isEmpty())
           .flatMap(statDates12 -> {
-            statDates12.addAll(preStatDates);
-            preStatDates = statDates12;
             List<Integer> counts = new ArrayList<>();
             for (StatDate statDate : statDates12) {
               counts.add(statDate.getCount());
@@ -144,7 +162,14 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
         .append("人")
         .create());
   }
-  public void updateSelectPos(int curPos,int count){
+
+  public MutableLiveData<Integer> getCurPostion() {
+    return curPostion;
+  }
+
+  public final MutableLiveData<Integer> curPostion = new MutableLiveData<>();
+
+  public void updateSelectPos(int curPos, int count) {
     if (dateDimension.getValue() == null) return;
     StatDate statDate = preStatDates.get(curPos);
     HashMap<String, Object> params = new HashMap<>();
@@ -152,6 +177,8 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
     params.put("end", statDate.getEnd());
     curSelectPositionDate.setValue(params);
   }
+
+
   public void loadMore() {
     showLoading.setValue(true);
     HashMap<String, String> params = new HashMap<>();

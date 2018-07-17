@@ -31,6 +31,14 @@ import java.util.ArrayList;
     mViewModel.increaseStudents.observe(this,msg->mBinding.tvIncreaseStudent.setCount(msg));
     mViewModel.increaseMembers.observe(this,msg->mBinding.tvIncreaseMember.setCount(msg));
     mViewModel.followStudents.observe(this,msg->mBinding.tvIncreaseStudentFollow.setCount(msg));
+
+    mViewModel.showLoading.observe(this,aBoolean -> {
+      if(aBoolean){
+        showLoading();
+      }else{
+        hideLoading();
+      }
+    });
   }
 
   @Override

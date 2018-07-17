@@ -31,6 +31,7 @@ public class IncreaseStudentViewModel
   @Inject StudentRepository repository;
 
   private final MutableLiveData<HashMap<String,Object>> params=new MutableLiveData<>();
+  private final Map<String,Object> dates=new HashMap<>();
   public Integer dataType = -1;//0- 新注册，2-会员
 
   @Inject IncreaseStudentViewModel() {
@@ -64,7 +65,7 @@ public class IncreaseStudentViewModel
 
   @Override
   protected boolean isSourceValid(@Nullable StudentListWrappeForFollow studentListWrappeForFollow) {
-    return studentListWrappeForFollow != null && studentListWrappeForFollow.users != null;
+    return studentListWrappeForFollow != null ;
   }
 
   @Override
@@ -86,9 +87,16 @@ public class IncreaseStudentViewModel
     }
   }
 
-  public void loadSources(@NonNull HashMap<String,Object> map) {
+
+  public void loadSourceByStatus(Map<String,Object> map){
+    map.putAll(dates);
+    params.setValue(new HashMap<>(map));
+  }
+
+  public void loadSoutceByDate(Map<String,Object> map){
+    dates.putAll(map);
     HashMap<String, Object> value = params.getValue();
-    value.putAll(map);
+    value.putAll(dates);
     params.setValue(value);
   }
 }

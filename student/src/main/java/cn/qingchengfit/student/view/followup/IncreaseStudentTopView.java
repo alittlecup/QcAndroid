@@ -16,8 +16,10 @@ import cn.qingchengfit.student.listener.IncreaseType;
 public class IncreaseStudentTopView
     extends StudentBaseFragment<ViewIncreaseStudentTopBinding, IncreaseStudentTopViewModel> {
   @IncreaseType String type = IncreaseType.INCREASE_MEMBER;
-
+  private int selectPos=-1;
   @Override protected void subscribeUI() {
+    mViewModel.setType(type);
+    mViewModel.setDateDimension(DateGroupDimension.DAY);
     mViewModel.showLoading.observe(this,aBoolean -> {
       if(aBoolean){
         showLoading();
@@ -27,23 +29,35 @@ public class IncreaseStudentTopView
     });
   }
 
+
   @Override
   public ViewIncreaseStudentTopBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = ViewIncreaseStudentTopBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
-    initListener();
     if (type.equals(IncreaseType.INCREASE_MEMBER)) {
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_blue_bg);
     } else if (type.equals(IncreaseType.INCREASE_STUDENT)) {
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_green_bg);
     }
-    mViewModel.setType(type);
-    mViewModel.setDateDimension(DateGroupDimension.DAY);
-    mBinding.radioRight.setChecked(true);
     initLineChart();
+    initListener();
     return mBinding;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    mBinding.radioRight.setChecked(true);
+
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    if(selectPos!=-1){
+      mBinding.lineChart.highlightValue(selectPos,0);
+      mBinding.lineChart.moveViewToX(selectPos);
+    }
   }
 
   private void initLineChart() {
@@ -65,18 +79,17 @@ public class IncreaseStudentTopView
     });
     mBinding.lineChart.setLineCharListener(new LineCharDate.onLineCharListener() {
       @Override public void onChartTranslate(int valuePos,int count) {
-        int curpos = valuePos - 3 >= 0 ? valuePos - 3 : 0;
-        Log.d("TAG", "onChartTranslate: "+curpos);
-        if(curpos==0){
+        int curPos = valuePos - 3 >= 0 ? valuePos - 3 : 0;
+        if(curPos==0){
           mViewModel.loadMore();
         }
-        mViewModel.upDateTvContent(curpos,count);
+        mViewModel.upDateTvContent(curPos,count);
       }
 
       @Override public void onChartClick(int clickPos, int count) {
         int curpos = clickPos - 3 >= 0 ? clickPos - 3 : 0;
-        Log.d("TAG", "onChartClick: "+curpos);
         mViewModel.updateSelectPos(curpos,count);
+        selectPos=clickPos;
       }
     });
   }

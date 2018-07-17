@@ -50,7 +50,7 @@ import java.util.HashMap;
       mBinding.drawer.openDrawer(GravityCompat.END);
     });
     mSortViewModel.params.observe(this,params->{
-      mViewModel.loadSources(params);
+      mViewModel.loadSourceByStatus(params);
     });
 
     mViewModel.getLiveItems().observe(this, items -> {
@@ -67,13 +67,20 @@ import java.util.HashMap;
   public StPageIncreaseStudentBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = StPageIncreaseStudentBinding.inflate(inflater, container, false);
-    initFragment();
     mBinding.setViewModel(mSortViewModel);
     mBinding.fragmentFilter.setVisibility(View.GONE);
     mBinding.setLifecycleOwner(this);
+
+    initFragment();
     initToolbar();
     initListener();
+
     return mBinding;
+  }
+
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
+    super.onChildViewCreated(fm, f, v, savedInstanceState);
   }
 
   @Override protected void onFinishAnimation() {
@@ -82,13 +89,15 @@ import java.util.HashMap;
   }
 
   private void loadSource() {
-    studentTopViewModel =
-        ViewModelProviders.of(topView, factory).get(IncreaseStudentTopViewModel.class);
+    if(studentTopViewModel==null){
+      studentTopViewModel = ViewModelProviders.of(topView, factory).get(IncreaseStudentTopViewModel.class);
 
-    studentTopViewModel.curSelectPositionDate.observe(this, params -> {
+      studentTopViewModel.curSelectPositionDate.observe(this, params -> {
 
-      mViewModel.loadSources(params);
-    });
+        mViewModel.loadSoutceByDate(params);
+      });
+    }
+
   }
 
   private void initListener() {
@@ -117,6 +126,7 @@ import java.util.HashMap;
   }
 
   private void initFragment() {
+    if(topView!=null)return;
     topView = new IncreaseStudentTopView();
     listView = new StudentListView();
     filterView = new StudentFilterView();

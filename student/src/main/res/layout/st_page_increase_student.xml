@@ -154,6 +154,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
                 android:background="@color/bg_grey"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 >
@@ -165,12 +166,12 @@
                   />
             </FrameLayout>
 
-
+            <include
+                layout="@layout/layout_bottom_allot_action"
+                android:id="@+id/include_allot"
+                />
           </android.support.design.widget.CoordinatorLayout>
-          <include
-              layout="@layout/layout_bottom_allot_action"
-              android:id="@+id/include_allot"
-              />
+
 
           <FrameLayout
               android:id="@+id/fragment_filter"

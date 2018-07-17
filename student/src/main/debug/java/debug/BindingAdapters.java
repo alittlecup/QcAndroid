@@ -46,6 +46,11 @@ public class BindingAdapters {
     public static void setLineDataUnit(LineCharDate lineCharDate, LineData data) {
         lineCharDate.appData(data);
     }
+    @BindingAdapter(value = "highlightValue")
+    public static void setLineDataUnit(LineCharDate lineCharDate, Integer  data) {
+        if(data==null)return;
+        lineCharDate.highlightValue(data,0);
+    }
 
     @BindingAdapter(value = "afterTextChanged")
     public static void afterTextChanged(EditText view, AfterTextChangeListener listener) {

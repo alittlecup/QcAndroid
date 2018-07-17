@@ -54,4 +54,6 @@ import javax.inject.Inject;
   @Override protected Fragment getRouterFragment(Intent intent) {
     return studentRouterCenter.getFragment(intent.getData(), intent.getExtras());
   }
+
+
 }

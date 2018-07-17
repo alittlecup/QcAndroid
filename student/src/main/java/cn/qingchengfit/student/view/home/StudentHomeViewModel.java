@@ -25,6 +25,7 @@ public class StudentHomeViewModel extends BaseViewModel {
   public final MediatorLiveData<String> totalMembers = new MediatorLiveData<>();
   public final MediatorLiveData<String> register = new MediatorLiveData<>();
   public final MediatorLiveData<String> follow = new MediatorLiveData<>();
+  public final MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
   public final MediatorLiveData<String> member = new MediatorLiveData<>();
   private LiveData<StudentInfoGlance> glanceLiveData;
   @Inject LoginStatus loginStatus;
@@ -34,7 +35,10 @@ public class StudentHomeViewModel extends BaseViewModel {
 
   @Inject public StudentHomeViewModel() {
     glanceLiveData = Transformations.switchMap(loadSourceAction,
-        aVoid -> Transformations.map(loadSourceFromRes(), input -> dealResource(input)));
+        aVoid -> Transformations.map(loadSourceFromRes(), input -> {
+          showLoading.setValue(false);
+          return dealResource(input);
+        }));
     increaseMembers.addSource(glanceLiveData, info -> increaseMembers.setValue(
         String.valueOf(info == null ? "" : info.getNew_register_users_count())));
     increaseStudents.addSource(glanceLiveData, info -> increaseStudents.setValue(
@@ -55,6 +59,7 @@ public class StudentHomeViewModel extends BaseViewModel {
 
   void loadSource() {
     loadSourceAction.call();
+    showLoading.setValue(true);
   }
 
   private LiveData<Resource<StudentInfoGlance>> loadSourceFromRes() {

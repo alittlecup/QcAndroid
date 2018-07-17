@@ -199,9 +199,14 @@ public class LineCharDate extends LinearLayout {
     lineChart.setData(data);
     lineChart.invalidate();
     setYAxisMaximum(getAxisLeftLefeMax(data));
+    if(highlightValuePos!=-1){
+      moveViewToX(highlightValuePos);
+      highlightValue(highlightValuePos, 0);
+    }else{
+      moveViewToX(size - 4);
+      highlightValue(size + 2, 0);
+    }
 
-    moveViewToX(size - 4);
-    highlightValue(size + 2, 0);
     setVisibleXRange(6);
     setMarkViewTintColor(set1.getColor());
   }
@@ -216,8 +221,14 @@ public class LineCharDate extends LinearLayout {
       lineChart.invalidate();
 
       setYAxisMaximum(getAxisLeftLefeMax(data));
-      moveViewToX(19);
-      highlightValue(23, 0);
+
+      if(highlightValuePos!=-1){
+        moveViewToX(highlightValuePos);
+        highlightValue(highlightValuePos, 0);
+      }else{
+        moveViewToX(19);
+        highlightValue(23, 0);
+      }
       setVisibleXRange(6);
     }
   }
@@ -234,7 +245,9 @@ public class LineCharDate extends LinearLayout {
     lineChart.moveViewToX(xValue);
   }
 
+  private float highlightValuePos=-1;
   public void highlightValue(float x, int dataSetIndex) {
+    highlightValuePos=x;
     lineChart.highlightValue(x, 0);
   }
 

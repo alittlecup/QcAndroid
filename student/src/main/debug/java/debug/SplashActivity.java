@@ -71,7 +71,7 @@ public class SplashActivity extends SaasCommonActivity {
   @Override protected void onResume() {
     super.onResume();
     textView.setText(QcRestRepository.getSession(this));
-    if(MyApp.isLogin){
+    if(!TextUtils.isEmpty(textView.getText())){
       setLoginInfo();
     }
   }

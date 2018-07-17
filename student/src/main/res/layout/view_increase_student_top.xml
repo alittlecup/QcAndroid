@@ -94,6 +94,7 @@
         android:layout_marginBottom="10dp"
         app:datas="@{viewModel.lineData}"
         app:markViewUnit='@{"人"}'
+        app:highlightValue='@{viewModel.curPostion}'
         android:layout_marginTop="30dp"
         />
     <View
