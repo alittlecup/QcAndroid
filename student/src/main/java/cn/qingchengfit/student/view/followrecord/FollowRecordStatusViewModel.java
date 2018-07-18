@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 
-public class FollowRecordStatusViewModel extends FlexibleViewModel<List<FollowRecordStatus>,FollowRecordStatusItem,Map<String,Object>> {
+public class FollowRecordStatusViewModel extends FlexibleViewModel<List<FollowRecordStatus>,FollowRecordStatusItem,HashMap<String,Object>> {
   //MutableLiveData<>
   MutableLiveData<List<FollowRecordStatus>> datas = new MutableLiveData<>();
   @Inject StudentRepository studentRepository;
@@ -28,7 +28,8 @@ public class FollowRecordStatusViewModel extends FlexibleViewModel<List<FollowRe
   }
 
   @NonNull @Override
-  protected LiveData<List<FollowRecordStatus>> getSource(@NonNull Map<String, Object> stringObjectMap) {
+  protected LiveData<List<FollowRecordStatus>> getSource(@NonNull HashMap<String, Object> stringObjectMap) {
+    studentRepository.qcGetTrackStatus(datas,defaultResult);
     return datas;
   }
 
@@ -47,11 +48,16 @@ public class FollowRecordStatusViewModel extends FlexibleViewModel<List<FollowRe
   public void addFollowStatus(String status){
     HashMap<String,Object> param = new HashMap<>();
     param.put("track_status",status);
-    studentRepository.qcAddTrackStatus(param);
+    studentRepository.qcAddTrackStatus(param,defaultResult);
+  }
+  public void editFollowStatus(String id,String status){
+    HashMap<String,Object> param = new HashMap<>();
+    param.put("track_status",status);
+    //studentRepository.param);
   }
 
   public void deleteFollowStatus(String id){
-    studentRepository.qcDelTrackStatus(id);
+    studentRepository.qcDelTrackStatus(id,defaultResult);
   }
 
 }

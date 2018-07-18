@@ -16,13 +16,13 @@ import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
+import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
+import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
-import cn.qingchengfit.student.bean.ShortMsgDetail;
-import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
@@ -30,6 +30,7 @@ import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,10 +73,11 @@ import javax.inject.Singleton;
     return LiveDataTransfer.fromPublisher(observable.compose(RxHelper.schedulersTransformerFlow()));
   }
 
-  static <T> void bindToLiveData(MutableLiveData<Resource<T>> liveData ,Flowable<QcDataResponse<T>> observable) {
-    BindLiveData.bindLiveData(liveData,observable.compose(RxHelper.schedulersTransformerFlow()));
+  static <T> void bindToLiveData(MutableLiveData<T> liveData,
+    Flowable<QcDataResponse<T>> observable, MutableLiveData<Resource<Object>> result,String tag) {
+    BindLiveData.bindLiveData(observable.compose(RxHelper.schedulersTransformerFlow()), liveData,
+      result,tag);
   }
-
 
   //
   //public LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params) {
@@ -116,12 +118,12 @@ import javax.inject.Singleton;
   }
 
   public LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type,
-      HashMap<String, Object> params) {
+    HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetStaffList(staff_id, type, params));
   }
 
   public LiveData<Resource<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type,
-      HashMap<String, Object> params) {
+    HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetAllotStaffMembers(staff_id, type, params));
   }
 
@@ -141,13 +143,13 @@ import javax.inject.Singleton;
   //}
   //
   @Override public LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
-      String staff_id, HashMap<String, Object> params) {
+    String staff_id, HashMap<String, Object> params) {
 
     return toLiveData(remoteService.qcGetAllAllocateCoaches(staff_id, params));
   }
 
   @Override public LiveData<Resource<Boolean>> qcAllocateCoach(String staff_id,
-      HashMap<String, Object> body) {
+    HashMap<String, Object> body) {
     return toLiveData(remoteService.qcAllocateCoach(staff_id, body).map(qcResponse -> {
       QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
       objectQcDataResponse.setStatus(qcResponse.getStatus());
@@ -162,12 +164,12 @@ import javax.inject.Singleton;
 
   @Override
   public LiveData<Resource<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
-      String shopid, String gymid, String model) {
+    String shopid, String gymid, String model) {
     return toLiveData(remoteService.qcGetSalers(staff_id, brandid, shopid, gymid, model));
   }
 
   @Override public LiveData<Resource<Boolean>> qcModifySellers(String staff_id,
-      HashMap<String, Object> params, HashMap<String, Object> body) {
+    HashMap<String, Object> params, HashMap<String, Object> body) {
     return toLiveData(remoteService.qcModifySellers(staff_id, params, body).map(qcResponse -> {
       QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
       objectQcDataResponse.setStatus(qcResponse.getStatus());
@@ -187,14 +189,12 @@ import javax.inject.Singleton;
   }
 
   @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
-      HashMap<String, Object> params) {
+    HashMap<String, Object> params) {
     LiveData<Resource<Boolean>> li = new MutableLiveData<>();
     ObservableField<Integer> oI = new ObservableField<>();
     oI.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
       @Override public void onPropertyChanged(Observable sender, int propertyId) {
-        ((ObservableField<Integer>)sender).get();
-
-
+        ((ObservableField<Integer>) sender).get();
       }
     });
     return toLiveData(remoteService.qcGetIncreaseStat(staff_id, params));
@@ -256,25 +256,38 @@ import javax.inject.Singleton;
   @Override public LiveData<QcDataResponse> qcGetTrackStatus(
     MutableLiveData<List<FollowRecordStatus>> liveData) {
     return null;
+  @Override public void qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData,
+    MutableLiveData<Resource<Object>> result) {
+    bindToLiveData(liveData, remoteService.qcGetTrackStatus()
+      .flatMap(
+        (Function<QcDataResponse<FollowRecordStatusListWrap>, Flowable<QcDataResponse<List<FollowRecordStatus>>>>) response -> Flowable
+          .just(response.copyResponse(response.data.getStatuses()))), result,"");
   }
 
-
-  @Override public LiveData<Resource<Boolean>> qcAddTrackStatus(HashMap<String, Object> params) {
-    return null;
+  @Override public void qcAddTrackStatus(HashMap<String, Object> params,
+    MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null,remoteService.qcAddTrackStatus(params)
+    ,rst,"add"
+    );
   }
 
-  @Override public LiveData<Resource<Boolean>> qcDelTrackStatus(String id) {
-    return null;
+  @Override public void qcDelTrackStatus(String id,MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(new MutableLiveData<>(),remoteService.qcDelTrackStatus(id),rst,"del");
   }
 
   @Override
-  public LiveData<Resource<Boolean>> qcAddTrackRecord(String user_id, FollowRecordAdd body) {
-    return null;
+  public void qcAddTrackRecord(String user_id, FollowRecordAdd body,MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null,remoteService.qcAddTrackRecord(user_id,body),rst,"add");
   }
 
-  @Override public LiveData<Resource<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
-    HashMap<String, Object> params) {
-    return null;
+  @Override public void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
+    MutableLiveData<Resource<Object>> rst, String studentId) {
+    bindToLiveData(liveData,
+      remoteService.qcGetTrackRecords(studentId, new HashMap<String, Object>())
+        .flatMap(
+          (Function<QcDataResponse<FollowRecordListWrap>, Flowable<QcDataResponse<List<FollowRecord>>>>) followRecordListWrapQcDataResponse -> Flowable
+            .just(followRecordListWrapQcDataResponse.copyResponse(
+              followRecordListWrapQcDataResponse.getData().getRecords()))), rst,"");
   }
 
   //@Override

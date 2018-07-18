@@ -12,7 +12,7 @@ import android.widget.TextView;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;

@@ -98,7 +98,7 @@ public abstract class BaseFragment extends RxFragment
   private List<Pair<String, Observable>> observables = new ArrayList<>();
   private List<Pair<String, Observable>> observablesAllLife = new ArrayList<>();
 
-  private FragmentManager.FragmentLifecycleCallbacks childrenCB =
+  protected FragmentManager.FragmentLifecycleCallbacks childrenCB =
     new FragmentManager.FragmentLifecycleCallbacks() {
 
       @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v,

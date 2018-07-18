@@ -16,5 +16,11 @@
     <item >周六</item>
   </string-array>
 
+  <string-array name="st_follow_record_method">
+    <item >电话</item>
+    <item >微信</item>
+    <item >客户到馆</item>
+    <item >上门拜访</item>
+  </string-array>
 
 </resources>

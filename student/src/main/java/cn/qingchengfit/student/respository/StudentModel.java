@@ -3,10 +3,15 @@ package cn.qingchengfit.student.respository;
 import android.support.annotation.IntRange;
 import android.text.format.DateUtils;
 import android.util.Log;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordListWrap;
+import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -244,6 +249,39 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcGetStudentBirthday(staff_id, params);
   }
 
+  @Override
+  public Flowable<QcDataResponse<Object>> qcAddTrackStatus(HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return studentApi.qcAddTrackStatus(loginStatus.staff_id(),params);
+  }
+
+  @Override public Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus() {
+    return studentApi.qcGetTrackStatus(loginStatus.staff_id(),gymWrapper.getParams());
+  }
+
+  @Override public Flowable<QcDataResponse<Object>> qcEditTrackStatus(String track_status_id,
+    HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return studentApi.qcEditTrackStatus(loginStatus.staff_id(),track_status_id,params);
+  }
+
+  @Override public Flowable<QcDataResponse<Object>> qcDelTrackStatus(String track_status_id) {
+    return studentApi.qcDelTrackStatus(loginStatus.staff_id(),track_status_id,gymWrapper.getParams());
+  }
+
+  @Override
+  public Flowable<QcDataResponse<Object>> qcAddTrackRecord(String user_id, FollowRecordAdd body) {
+    body.setId(gymWrapper.id());
+    body.setModel(gymWrapper.model());
+    return studentApi.qcAddTrackRecord(loginStatus.staff_id(),user_id,body);
+  }
+
+  @Override public Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
+    HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return studentApi.qcGetTrackRecords(loginStatus.staff_id(),user_id,params);
+  }
+
   //@Override
   //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
   //    HashMap<String, Object> params) {
@@ -283,7 +321,6 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> body) {
     return studentApi.qcAllocateCoach(staff_id, body);
   }
-
   //
   //@Override
   //public Observable<QcResponse> qcRemoveStudent(String staff_id, HashMap<String, Object> body) {

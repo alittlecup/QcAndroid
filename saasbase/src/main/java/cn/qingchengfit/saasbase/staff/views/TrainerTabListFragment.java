@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import eu.davidea.flexibleadapter.items.IFlexible;

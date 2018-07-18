@@ -37,13 +37,12 @@ android {
 }
 
 dependencies {
-  api 'cn.qingchengfit.widgets:qcbase:1.0.180710.1'
-
+  api project(':qcbase')
   api 'cn.qingchengfit.router:router:1.0.180709'
 
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  api('android.arch.lifecycle:extensions:1.0.0') {
+  api('android.arch.lifecycle:extensions:1.1.0') {
     exclude group: 'android.arch.lifecycle', module: 'runtime'
   }
   api 'io.reactivex:rxjava-reactive-streams:1.2.1'

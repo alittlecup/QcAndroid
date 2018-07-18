@@ -11,6 +11,7 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Leaf(module = "student", path = "/student/follow_record") public class FollowRecordPage
     extends StudentBaseFragment<StPageFollowRecordBinding, FollowRecordViewModel>
@@ -25,8 +26,12 @@ import java.util.ArrayList;
   public StPageFollowRecordBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = StPageFollowRecordBinding.inflate(inflater, container, false);
+    mBinding.setLifecycleOwner(this);
+    mBinding.setVm(mViewModel);
     initRecyclerView();
     initListener();
+    HashMap<String,Object> map  = new HashMap<String,Object>();
+    mViewModel.loadSource(map);
     return mBinding;
   }
 
@@ -38,7 +43,9 @@ import java.util.ArrayList;
 
   private void initRecyclerView() {
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
-    mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    LinearLayoutManager manager = new LinearLayoutManager(getContext());
+    manager.setStackFromEnd(true);
+    mBinding.recyclerView.setLayoutManager(manager);
   }
 
   @Override public boolean onItemClick(int position) {

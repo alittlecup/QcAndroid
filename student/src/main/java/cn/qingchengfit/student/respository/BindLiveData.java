@@ -12,7 +12,8 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 public class BindLiveData {
-  public static  <T> void bindLiveData(MutableLiveData<Resource<T>> liveData ,Flowable<QcDataResponse<T>> observable){
+  public static <T> void bindLiveData(Flowable<QcDataResponse<T>> observable,
+    MutableLiveData<T> liveData, MutableLiveData<Resource<Object>> result, String tag) {
     observable.subscribe(new FlowableSubscriber<QcDataResponse<T>>() {
       @Override public void onSubscribe(Subscription s) {
         s.request(1);
@@ -20,14 +21,15 @@ public class BindLiveData {
 
       @Override public void onNext(QcDataResponse<T> item) {
         if (item.status == 200) {
-          liveData.postValue(Resource.success(item.data));
+          if (liveData != null) liveData.postValue(item.data);
+          if (result != null) result.postValue(Resource.success(tag));
         } else {
-          liveData.postValue(Resource.error(item.getMsg(), null));
+          if (result != null) result.postValue(Resource.error(item.getMsg(), null));
         }
       }
 
       @Override public void onError(Throwable ex) {
-        liveData.postValue(Resource.error(ex.getMessage(), null));
+        if (result != null) result.postValue(Resource.error(ex.getMessage(), null));
       }
 
       @Override public void onComplete() {

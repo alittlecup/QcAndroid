@@ -9,11 +9,12 @@
       android:id="@+id/rear_right_view"
       android:visibility="gone"
       android:layout_width="wrap_content"
-      android:layout_height="match_parent"
+      android:layout_height="120dp"
       android:orientation="horizontal"
-      android:gravity="end|right"
+      android:layout_gravity="end|right"
       >
     <ImageView
+        android:id="@+id/btn_edit"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@color/warm_grey"
@@ -21,6 +22,7 @@
         app:srcCompat="@drawable/vd_edit_white_24dp"
         />
     <ImageView
+        android:id="@+id/btn_del"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@color/red"
@@ -30,8 +32,9 @@
   </LinearLayout>
   <FrameLayout
       android:id="@+id/front_view"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
+
       >
     <TextView
         android:id="@+id/tv"

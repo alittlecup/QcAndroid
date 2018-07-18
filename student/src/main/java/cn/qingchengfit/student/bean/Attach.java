@@ -1,7 +1,7 @@
 package cn.qingchengfit.student.bean;
 
 public class Attach {
-  Attach(String l){
+  public Attach(String l){
     this.link = l;
   }
   String link;

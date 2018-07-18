@@ -4,6 +4,8 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
+import cn.qingchengfit.student.bean.FollowRecordStatus;
+import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -100,7 +102,7 @@ public interface IStudentModel {
   //    HashMap<String, Object> params);
   //
   Flowable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   /**
    * 销售名下会员列表接口(无销售的会员列表不需要传seller_id)
@@ -111,7 +113,7 @@ public interface IStudentModel {
   //    HashMap<String, Object> params);
   //
   Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   /**
    * 教练名下会员列表接口(无销售的会员列表不需要传seller_id)
@@ -123,7 +125,7 @@ public interface IStudentModel {
    * 获取销售 卖卡  包含销售 不包含教练
    */
   Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
-      String shopid, String gymid, String model);
+    String shopid, String gymid, String model);
 
   /**
    * /**
@@ -135,14 +137,14 @@ public interface IStudentModel {
    * @param body user_ids  seller_ids
    */
   Flowable<QcResponse> qcModifySellers(String staff_id, HashMap<String, Object> params,
-      HashMap<String, Object> body);
+    HashMap<String, Object> body);
 
   /**
    * 获取教练列表
    * 获取教练列表
    */
   Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   /**
    * 分配教练
@@ -269,24 +271,24 @@ public interface IStudentModel {
    * 短信部分
    */
   Flowable<QcDataResponse<ShortMsgList>> qcQueryShortMsgList(String id,
-      @IntRange(from = 1, to = 2) Integer status, HashMap<String, Object> params);
+    @IntRange(from = 1, to = 2) Integer status, HashMap<String, Object> params);
 
   Flowable<QcDataResponse<ShortMsgDetail>> qcQueryShortMsgDetail(String id, String messageid,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   Flowable<QcResponse> qcPostShortMsg(String staffid, ShortMsgBody body,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   Flowable<QcResponse> qcDelShortMsg(String staffid, String messageid,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   Flowable<QcResponse> qcPutShortMsg(String staffid, ShortMsgBody body,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   Flowable<QcDataResponse> qcDataImport(String staff_id, HashMap<String, Object> body);
 
   Flowable<QcDataResponse<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
       HashMap<String, Object> params);
@@ -322,14 +324,17 @@ public interface IStudentModel {
      HashMap<String, Object> params);
     HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcGetTrackStatus();
+  Flowable<QcDataResponse<Object>> qcAddTrackStatus(HashMap<String, Object> params);
 
-  /**
-   * @param params track_status
-   */
-  Flowable<QcDataResponse> qcAddTrackStatus( HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcAddTrackRecord(String user_id, FollowRecordAdd body);
+  Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus();
+
+  Flowable<QcDataResponse<Object>> qcEditTrackStatus(String track_status_id,
+    HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<Object>> qcDelTrackStatus(String track_status_id);
+
+  Flowable<QcDataResponse<Object>> qcAddTrackRecord(String user_id, FollowRecordAdd body);
 
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
     HashMap<String, Object> params);

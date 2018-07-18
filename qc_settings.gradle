@@ -27,11 +27,11 @@ android {
   buildToolsVersion cfg.buildToolsVersion
 
   defaultConfig {
-    minSdkVersion cfg.minSdk
+    minSdkVersion 21
     targetSdkVersion cfg.targetSdk
     versionCode 1
     versionName "1.0"
-    multiDexEnabled true
+
     vectorDrawables.useSupportLibrary true
     javaCompileOptions {
       annotationProcessorOptions {
@@ -56,7 +56,9 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    debug {}
+    debug {
+
+    }
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8

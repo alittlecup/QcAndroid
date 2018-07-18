@@ -6,6 +6,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
+import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -174,21 +175,21 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-      /**
-       * 新增
-       */
-      @GET("/api/staffs/{staff_id}/users/new/{type}/")
-      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
-          @Path("staff_id") String staff_id, @Path("type") String type,
-          @QueryMap HashMap<String, Object> params);
-
-      /**
+  //    /**
+  //     * 新增
+  //     */
+  //    @GET("/api/staffs/{staff_id}/users/new/{type}/")
+  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+  //        @Path("staff_id") String staff_id, @Path("type") String type,
+  //        @QueryMap HashMap<String, Object> params);
+  //
+  //    /**
   //     * 新增跟进
   //     */
-      @GET("/api/staffs/{staff_id}/users/new/follow/")
-      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-
+  //    @GET("/api/staffs/{staff_id}/users/new/follow/")
+  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
+  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+  //
   //    /**
   //     * 新增学员
   //     */
@@ -376,25 +377,35 @@ public interface StudentApi {
    *
    */
   @GET("/api/staffs/{staff_id}/users/track/status/")
-  Flowable<QcDataResponse> qcGetTrackStatus(@Path("staff_id") String staff_id,
+  Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus(@Path("staff_id") String staff_id,
     @QueryMap HashMap<String, Object> params);
-  @POST("/api/staffs/:staff_id/users/track/status/")
-  Flowable<QcDataResponse> qcAddTrackStatus(@Path("staff_id") String staff_id,
+  @POST("/api/staffs/{staff_id}/users/track/status/")
+  Flowable<QcDataResponse<Object>> qcAddTrackStatus(@Path("staff_id") String staff_id,
     @Body HashMap<String, Object> params);
+
+  @PUT("/api/staffs/{staff_id}/users/track/status/{track_status_id}/")
+  Flowable<QcDataResponse<Object>> qcEditTrackStatus(@Path("staff_id") String staff_id,
+    @Path("track_status_id") String track_status_id,
+    @Body HashMap<String, Object> params);
+
+  @DELETE("/api/staffs/{staff_id}/users/track/status/{track_status_id}/")
+  Flowable<QcDataResponse<Object>> qcDelTrackStatus(@Path("staff_id") String staff_id,
+    @Path("track_status_id") String track_status_id,@QueryMap HashMap<String, Object> params);
+
 
   /**
    * 新增跟进记录
    *
    */
-  @POST("/api/staffs/{staff_id}/users/{user_id}/track/records/")
-  Flowable<QcDataResponse> qcAddTrackRecord(@Path("staff_id") String staff_id,
+  @POST("/api/staffs/{staff_id}/users/{user_id}/records/")
+  Flowable<QcDataResponse<Object>> qcAddTrackRecord(@Path("staff_id") String staff_id,
     @Path("user_id") String user_id,@Body FollowRecordAdd body
     );
 
   /**
    * 跟进记录列表
    */
-  @GET("/api/staffs/{staff_id}/users/{user_id}/track/records/")
+  @GET("/api/staffs/{staff_id}/users/{user_id}/records/?format=app")
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(@Path("staff_id") String staff_id,
     @Path("user_id") String user_id,@QueryMap HashMap<String, Object> params);
 

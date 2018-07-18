@@ -11,7 +11,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.event.BatchCoachEvent;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.utils.CrashUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;

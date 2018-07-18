@@ -19,6 +19,9 @@ import io.reactivex.functions.Function;
  */
 
 public class BaseViewModel extends ViewModel {
+
+  public MutableLiveData<Resource<Object>> defaultResult = new MutableLiveData<>();
+
   public MutableLiveData<String> getErrorMsg() {
     return errormsg;
   }

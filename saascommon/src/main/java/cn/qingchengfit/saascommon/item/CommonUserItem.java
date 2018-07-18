@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.staff.items;
+package cn.qingchengfit.saascommon.item;
 
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 
 import cn.qingchengfit.model.common.ICommonUser;
-import cn.qingchengfit.saasbase.R;
 
+import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

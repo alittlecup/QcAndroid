@@ -6,9 +6,15 @@
     >
   <data>
     <variable
+        name="vm"
+        type="cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel"
+        />
+    <import type="cn.qingchengfit.student.bingdings.BindingUtils"/>
+    <variable
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -37,6 +43,7 @@
           android:paddingTop="15dp"
           android:hint="输入跟进详情&amp;结果，140字以内"
           android:maxLength="140"
+          android:text="@{vm.content}"
           />
       <Space
           android:layout_width="0dp"
@@ -44,6 +51,7 @@
           android:layout_weight="1"
           />
       <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_pics"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:padding="@dimen/activity_horizontal_margin"
@@ -71,6 +79,7 @@
         app:civ_lable="跟进方式"
         app:civ_showright="true"
         app:civ_text_color="@color/text_black"
+        app:civ_content="@{BindingUtils.getFollowRecordMethod(vm.followMethod,context)}"
         />
     <LinearLayout
         android:id="@+id/ll_choose_status"
@@ -108,8 +117,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginRight="10dp"
-          android:text="请选择"
           android:textColor="@color/text_grey"
+          android:text="@{BindingUtils.getFollowRecordStatus(vm.followStatus)}"
           />
 
       <ImageView
@@ -137,6 +146,7 @@
         app:civ_lable="通知他人"
         app:civ_showright="true"
         app:civ_text_color="@color/text_black"
+        app:civ_content="@{BindingUtils.getFollowRecordNotiOhters(vm.notiOthers,context)}"
         />
 
     <cn.qingchengfit.widgets.CommonInputView
@@ -150,6 +160,7 @@
         app:civ_showdivier="false"
         app:civ_showright="true"
         app:civ_text_color="@color/text_black"
+        app:civ_content="@{BindingUtils.getNextFollowTime(vm.nextFollowTime)}"
         />
     <View
         android:layout_width="match_parent"

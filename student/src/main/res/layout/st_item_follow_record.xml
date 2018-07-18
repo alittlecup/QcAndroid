@@ -6,6 +6,7 @@
 
     >
   <data>
+    <import type="android.view.View"/>
     <variable
         name="info"
         type="cn.qingchengfit.student.bean.FollowRecord"/>
@@ -28,6 +29,7 @@
         android:background="@drawable/st_bg_half_trans_black_radius"
         android:padding="2dp"
         android:layout_gravity="center_horizontal"
+
         />
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
@@ -42,6 +44,7 @@
           android:layout_width="50dp"
           android:layout_height="50dp"
           tools:src="@drawable/default_manage_male"
+          app:bindCircleSrc="@{info.getAvatar()}"
           />
       <TextView
           android:id="@+id/tv_name"
@@ -52,9 +55,10 @@
           android:layout_toEndOf="@id/img_avatar"
           android:layout_marginLeft="10dp"
           tools:text="@string/common_comfirm"
-
+          android:text="@{info.getName()}"
           />
       <LinearLayout
+          android:background="@drawable/st_chat_dialog"
           android:layout_marginTop="8dp"
           android:layout_marginLeft="10dp"
           android:layout_toRightOf="@id/img_avatar"
@@ -75,18 +79,69 @@
             android:layout_height="wrap_content"
             style="@style/QcTextStyleMediumDark"
             tools:text="@string/test_long"
+            android:text="@{info.getContent()}"
             />
-        <ImageView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:dividerPadding="8dp"
+            android:showDividers="middle"
+            android:visibility="@{info.getAttachSize() > 0 ?View.VISIBLE:View.GONE}"
+            >
+          <ImageView
+              android:id="@+id/img_01"
+              android:layout_width="0dp"
+              android:layout_height="60dp"
+              android:layout_weight="1"
+              tools:src="@drawable/img_recruit_default"
+              />
+          <ImageView
+              android:id="@+id/img_02"
+              android:layout_width="0dp"
+              android:layout_height="60dp"
+              android:layout_weight="1"
+              tools:src="@drawable/img_recruit_default"
+              android:visibility="@{info.getAttachSize() > 1 ?View.VISIBLE:View.GONE}"
+              />
+          <FrameLayout
+              android:layout_width="0dp"
+              android:layout_height="60dp"
+              android:layout_weight="1"
+              android:visibility="@{info.getAttachSize() > 0 ?View.VISIBLE:View.GONE}"
+              >
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/img_03"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                tools:src="@drawable/img_recruit_default"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/halftrans_background"
+                android:text="+2"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:visibility="@{info.getAttachSize() > 3 ? View.VISIBLE:View.GONE}"
+                />
+          </FrameLayout>
 
-            android:id="@+id/img_01"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            />
+        </LinearLayout>
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider_grey"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,7 +152,7 @@
               style="@style/QcTextStyleStandardWarm"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="跟进方式："
+              android:text="@{`跟进方式：`+info.getFollowMethodString()}"
               />
           <android.support.v4.widget.Space
               android:layout_width="0dp"
@@ -105,22 +160,23 @@
               android:layout_weight="1"
               />
           <TextView
+              style="@style/QcTextStyleStandardWarm"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="跟进状态"
+              android:text="@{`跟进状态：`+info.getFollowStatusString()}"
               />
         </LinearLayout>
         <TextView
             style="@style/QcTextStyleStandardWarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="通知他人："
+            android:text="@{`通知他人：`+info.getNotiOthers()}"
             />
         <TextView
             style="@style/QcTextStyleStandardWarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="下次跟进时间："
+            android:text="@{`下次跟进时间：`+info.getFollowTimeString()}"
             />
       </LinearLayout>
     </RelativeLayout>

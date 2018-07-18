@@ -41,6 +41,16 @@ public class QcDataResponse<T> extends QcResponse {
     //public int total_count;
     //public int current_page;
     //public int pages;
+    public <R>  QcDataResponse<R> copyResponse(R t){
+        QcDataResponse<R> dataResponse = new QcDataResponse<>();
+        dataResponse.setData(t);
+        dataResponse.status = this.status;
+        dataResponse.error_code = this.error_code;
+        dataResponse.info = this.info;
+        dataResponse.level = this.level;
+        dataResponse.msg = this.msg;
+        return dataResponse;
+    }
 
     public T getData() {
         return data;

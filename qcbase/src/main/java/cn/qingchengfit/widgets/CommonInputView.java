@@ -462,6 +462,9 @@ public class CommonInputView extends RelativeLayout {
       onTextChangedListener.onTextChanged();
     }
   }
+  public void setCivContent(String c){
+    setContent(c);
+  }
 
   public void setContent(SpannableString c) {
     edit.setText(c);

@@ -1,4 +1,7 @@
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ResourceName"
+    >
   <string name="qc_student_allotsale">销售分配</string>
   <string name="qc_student_follow_up">会员跟进</string>
   <string name="qc_student_follow_transfer">会员转化</string>
@@ -112,4 +115,6 @@
 
   <string name="text_student_import">会员导入</string>
   <string name="text_student_export">会员导出</string>
+
+  <string name="st_follow_record_noti_others">{name1},{name2}等{count}人</string>
 </resources>

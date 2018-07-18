@@ -10,6 +10,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableWrapper;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.VectorDrawable;
@@ -17,13 +18,14 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableWrapper;
+
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.RatingBar;
+import cn.qingchengfit.utils.CompatUtils;
 
-public class RatingBarVectorFix extends RatingBar {
+public class RatingBarVectorFix extends android.support.v7.widget.AppCompatRatingBar {
 
     private Bitmap mSampleTile;
 
@@ -52,12 +54,28 @@ public class RatingBarVectorFix extends RatingBar {
      * traverse layer and state list drawables.
      */
     private Drawable tileify(Drawable drawable, boolean clip) {
-        if (drawable instanceof DrawableWrapper) {
-            Drawable inner = ((DrawableWrapper) drawable).getWrappedDrawable();
-            if (inner != null) {
-                inner = tileify(inner, clip);
-                ((DrawableWrapper) drawable).setWrappedDrawable(inner);
-            }
+        boolean instanceOfDrawableWrapper = false;
+        if(Build.VERSION.SDK_INT < 23){
+            instanceOfDrawableWrapper = drawable instanceof android.support.v7.graphics.drawable.DrawableWrapper;
+        }else {
+            instanceOfDrawableWrapper = drawable instanceof DrawableWrapper;
+        }
+
+        if (instanceOfDrawableWrapper) {
+            //if (Build.VERSION.SDK_INT < 23){
+            //    Drawable inner = ((android.support.v7.graphics.drawable.DrawableWrapper) drawable).getWrappedDrawable();
+            //    if (inner != null) {
+            //        inner = tileify(inner, clip);
+            //        ((android.support.v7.graphics.drawable.DrawableWrapper) drawable).setWrappedDrawable(inner);
+            //    }
+            //}else {
+            //    Drawable inner = ((DrawableWrapper) drawable).getWrappedDrawable();
+            //    if (inner != null) {
+            //        inner = tileify(inner, clip);
+            //        ((android.support.v7.graphics.drawable.DrawableWrapper) drawable).setWrappedDrawable(inner);
+            //    }
+            //}
+
         } else if (drawable instanceof LayerDrawable) {
             LayerDrawable background = (LayerDrawable) drawable;
             final int N = background.getNumberOfLayers();

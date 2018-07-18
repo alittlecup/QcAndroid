@@ -15,7 +15,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.items.SalerItem;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;

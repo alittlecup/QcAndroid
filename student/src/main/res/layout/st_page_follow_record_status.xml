@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
   <data>
     <variable
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+    <variable
+        name="vm"
+        type="cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel"
         />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,6 +33,7 @@
           android:id="@+id/recycler_view"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          app:items="@{vm.getLiveItems()}"
           />
     </android.support.v4.widget.SwipeRefreshLayout>
 

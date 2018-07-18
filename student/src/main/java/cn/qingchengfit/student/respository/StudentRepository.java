@@ -6,6 +6,7 @@ import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -53,18 +54,18 @@ public interface StudentRepository {
   LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params);
   //
   LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   //
   LiveData<Resource<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   //
   //LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params);
   //
   //
   LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
 
   //
   //
@@ -73,14 +74,15 @@ public interface StudentRepository {
   //
   //
   LiveData<Resource<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid, String shopid,
-      String gymid, String model);
+    String gymid, String model);
 
   //
   LiveData<Resource<Boolean>> qcModifySellers(String staff_id, HashMap<String, Object> params,
-      HashMap<String, Object> body);
+    HashMap<String, Object> body);
 
   LiveData<Resource<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
-      HashMap<String, Object> params);
+    HashMap<String, Object> params);
+
   LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
        HashMap<String, Object> params);
 
@@ -101,6 +103,7 @@ public interface StudentRepository {
 
 
 
+    HashMap<String, Object> params);
   //
   //
   LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params);
@@ -112,18 +115,19 @@ public interface StudentRepository {
   //LiveData<SourceBeans> qcGetTrackStudentsOrigins(String id, HashMap<String, Object> params);
   //LiveData<SalerListWrap> qcGetTrackStudentsFilterSalers(String id, HashMap<String, Object> params);
 
+  void qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData,
+    MutableLiveData<Resource<Object>> rst);
 
-
-  LiveData<QcDataResponse> qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData);
+  void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
+    MutableLiveData<Resource<Object>> rst, String studentId);
 
   /**
    * @param params track_status
    */
-  LiveData<Resource<Boolean>> qcAddTrackStatus( HashMap<String, Object> params);
-  LiveData<Resource<Boolean>> qcDelTrackStatus( String id);
+  void qcAddTrackStatus(HashMap<String, Object> params,MutableLiveData<Resource<Object>> rst);
 
-  LiveData<Resource<Boolean>> qcAddTrackRecord(String user_id, FollowRecordAdd body);
+  void qcDelTrackStatus(String id,MutableLiveData<Resource<Object>> rst);
 
-  LiveData<Resource<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
-    HashMap<String, Object> params);
+  void qcAddTrackRecord(String user_id, FollowRecordAdd body,
+    MutableLiveData<Resource<Object>> rst);
 }

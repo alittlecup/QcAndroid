@@ -3,6 +3,7 @@ package cn.qingchengfit.student;
 import android.arch.lifecycle.ViewModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.respository.StudentModel;
 import cn.qingchengfit.student.respository.StudentRepository;
@@ -37,10 +38,16 @@ import dagger.multibindings.IntoMap;
 import javax.inject.Singleton;
 
 @Module public abstract class StudentViewModel {
-
+  private static StudentWrap studentWrap;
   @Provides static StudentRouterCenter provideStudentRouterCenter() {
     return new StudentRouterCenter().registe(new studentImpl());
   }
+  @Provides static StudentWrap provideStudent(){
+    if (studentWrap == null)
+      studentWrap = new StudentWrap();
+    return studentWrap;
+  }
+
 
   @Binds
   abstract StudentRepository bindStudentRespository(StudentRepositoryImpl studentRespository);

@@ -1,17 +1,29 @@
 apply from: rootProject.file('qc_settings.gradle')
 
-android{
-
-}
-
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
+android{
+  configurations.all {
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+
+    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-fragment:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+    resolutionStrategy.force "android.arch.core:runtime:1.1.0"
+  }
+}
+
+
 
 dependencies {
 
   addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
   appComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
-  appComponent('qcbase','cn.qingchengfit.widgets:qcbase:1.0.180710.1',false)
+
   implementation "com.android.support.constraint:constraint-layout:${libs.constraint_layout}"
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
