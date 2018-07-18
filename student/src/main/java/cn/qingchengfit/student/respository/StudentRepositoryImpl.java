@@ -253,9 +253,7 @@ import javax.inject.Singleton;
     params1.putAll(params);
     return toLiveData(remoteService.qcGetAllStudents(loginStatus.staff_id(), params1));
   }
-  @Override public LiveData<QcDataResponse> qcGetTrackStatus(
-    MutableLiveData<List<FollowRecordStatus>> liveData) {
-    return null;
+
   @Override public void qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData,
     MutableLiveData<Resource<Object>> result) {
     bindToLiveData(liveData, remoteService.qcGetTrackStatus()

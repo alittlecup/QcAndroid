@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/bg_grey"
         android:orientation="horizontal"
-        app:visibleGone="@{viewModel.mBottomSelectedCount>0}"
+
         >
 
       <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:background="@drawable/circle_white"
             android:gravity="center"
-            android:text='@{viewModel.mBottomSelectedCount>99? "..." :viewModel.mBottomSelectedCount+""}'
+
             android:textColor="@color/white"
             android:textSize="@dimen/min_font"
             />

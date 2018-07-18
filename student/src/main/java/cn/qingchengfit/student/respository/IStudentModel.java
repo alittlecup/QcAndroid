@@ -322,7 +322,7 @@ public interface IStudentModel {
 
   Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(String staff_id,
      HashMap<String, Object> params);
-    HashMap<String, Object> params);
+
 
   Flowable<QcDataResponse<Object>> qcAddTrackStatus(HashMap<String, Object> params);
 

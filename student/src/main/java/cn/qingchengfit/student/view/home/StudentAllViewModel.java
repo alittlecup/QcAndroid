@@ -16,7 +16,7 @@ import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.respository.StudentRepository;
-import com.amap.api.maps2d.MapView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

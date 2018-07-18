@@ -103,8 +103,7 @@ public interface StudentRepository {
 
 
 
-    HashMap<String, Object> params);
-  //
+
   //
   LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params);
   //
