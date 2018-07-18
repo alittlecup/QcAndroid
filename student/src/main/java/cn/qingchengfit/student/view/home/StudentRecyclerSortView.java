@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.ViewStudentRecyclerSortBinding;
+import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
 import cn.qingchengfit.student.viewmodel.SortViewModel;
@@ -43,7 +45,13 @@ public class StudentRecyclerSortView
       });
     });
     mViewModel.getStudentBeans().observe(this, items -> {
-      setData(sortViewModel.sortItems(items));
+      if(items==null||items.isEmpty())return;
+      AbstractFlexibleItem abstractFlexibleItem = items.get(0);
+      if(abstractFlexibleItem instanceof IItemData){
+        List data=new ArrayList<>(items);
+        setData(new ArrayList<>(sortViewModel.sortItems(data)));
+      }
+
     });
   }
 
@@ -61,7 +69,9 @@ public class StudentRecyclerSortView
     listView.setArguments(bundle);
     return listView;
   }
-
+  public StudentListView getListView(){
+    return  listView;
+  }
   public void setFilterView(StudentFilterView filterView) {
     this.filterView = filterView;
   }
@@ -77,6 +87,9 @@ public class StudentRecyclerSortView
       listener.closeDrawer();
     }
   }
+  public void filter(String text){
+    listView.filter(text);
+  }
 
   private String curID;
 
@@ -87,7 +100,7 @@ public class StudentRecyclerSortView
     }
   }
 
-  public void setDatas(List<? extends StudentItem> items) {
+  public void setDatas(List<? extends AbstractFlexibleItem> items) {
     mViewModel.getStudentBeans().setValue(items);
   }
 
@@ -105,11 +118,11 @@ public class StudentRecyclerSortView
   private void initSortViewModel() {
     sortViewModel = new SortViewModel();
     sortViewModel.setListener(itemss -> {
-      setData(itemss);
+      setData(new ArrayList(itemss));
     });
   }
 
-  private void setData(List<? extends StudentItem> studentItems) {
+  private void setData(List<? extends AbstractFlexibleItem> studentItems) {
     if (sortViewModel.letterChecked.get()) {
       listView.showFastScroller();
     } else {

@@ -9,10 +9,16 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.calendar.Calendar;
 import cn.qingchengfit.saascommon.calendar.CalendarView;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.StPageStudentBirthdayBinding;
+import cn.qingchengfit.student.item.ChooseDetailItem;
+import cn.qingchengfit.student.view.allot.StudentAllotPageParams;
+import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +32,7 @@ import java.util.Map;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
+
       adapter.updateDataSet(items);
     });
     mViewModel.dates.observe(this, items -> {
@@ -36,6 +43,10 @@ import java.util.Map;
         calendars.add(getSchemeCaleander(date));
       }
       mBinding.calendarView.setSchemeDate(calendars);
+    });
+    mViewModel.selectedCalendar.observe(this,calender->{
+      mBinding.calendarView.setSelectedWeekDate(calender);
+      loadStudents(mBinding.calendarView.getSelectDates());
     });
   }
 
@@ -71,7 +82,48 @@ import java.util.Map;
       this.year = year;
       this.month = month;
       mBinding.tvMonth.setText(year + "年" + month + "月");
+      loadMonthScheme(year, month);
     });
+
+    mBinding.bottomAllot.allotCoach.setOnClickListener(v -> {
+      ArrayList<QcStudentBeanWithFollow> qcStudents = new ArrayList<>(getStudents());
+      if (qcStudents.isEmpty()) {
+        return;
+      }
+      routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
+          .curType(StudentListView.TRAINER_TYPE)
+          .build());
+    });
+    mBinding.bottomAllot.allotSale.setOnClickListener(v -> {
+      ArrayList<QcStudentBeanWithFollow> qcStudents = new ArrayList<>(getStudents());
+      if (qcStudents.isEmpty()) {
+        return;
+      }
+      routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
+          .curType(StudentListView.SELLER_TYPE)
+          .build());
+    });
+  }
+
+  private void loadMonthScheme(int year, int month) {
+    Map<String, Object> dates = new HashMap<>();
+    dates.put("start", DateUtils.getStartDayOfMonth(year, month - 1));
+    dates.put("end", DateUtils.getEndDayOfMonthNew(year, month - 1));
+    mViewModel.loadSchemeDates(dates);
+  }
+
+  private List<QcStudentBeanWithFollow> getStudents() {
+    List mainItems = adapter.getMainItems();
+    List<QcStudentBeanWithFollow> studentBeanWithFollows = new ArrayList<>();
+    if (mainItems != null && !mainItems.isEmpty()) {
+      for (int i = 0; i < mainItems.size(); i++) {
+        IFlexible item = adapter.getItem(i);
+        if (item instanceof ChooseDetailItem) {
+          studentBeanWithFollows.add(((ChooseDetailItem) item).getData());
+        }
+      }
+    }
+    return studentBeanWithFollows;
   }
 
   private void initRecyclerView() {
@@ -85,7 +137,11 @@ import java.util.Map;
     calendar.setYear(mBinding.calendarView.getCurYear());
     calendar.setMonth(mBinding.calendarView.getCurMonth());
     calendar.setDay(mBinding.calendarView.getCurDay());
-    onDateSelected(calendar, true);
+    if (mViewModel.selectedCalendar.getValue() != null) {
+      onDateSelected(mViewModel.selectedCalendar.getValue(), true);
+    }else{
+      onDateSelected(calendar, true);
+    }
   }
 
   private Calendar getSchemeCaleander(String date) {
@@ -122,8 +178,7 @@ import java.util.Map;
 
   @Override public void onDateSelected(Calendar calendar, boolean b) {
     if (b) {
-      mBinding.calendarView.setSelectedWeekDate(calendar);
-      loadStudents(mBinding.calendarView.getSelectDates());
+      mViewModel.selectedCalendar.setValue(calendar);
     }
   }
 

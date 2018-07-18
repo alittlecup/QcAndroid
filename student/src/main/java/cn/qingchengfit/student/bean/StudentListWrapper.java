@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class StudentListWrapper extends QcListData{
-  public List<QcStudentBean> users;
+  public List<QcStudentBeanWithFollow> users;
 }

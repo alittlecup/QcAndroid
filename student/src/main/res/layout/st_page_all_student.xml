@@ -25,11 +25,30 @@
           android:layout_height="match_parent"
           android:orientation="vertical"
           >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <include
             layout="@layout/common_simple_toolbar"
             android:id="@+id/include_toolbar"
             bind:toolbarModel="@{toolbarModel}"
             />
+        <CheckBox
+            android:id="@+id/rb_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/toolbar"
+            android:button="@drawable/selector_qc_checkbox_2"
+            android:padding="6dp"
+            android:text="@string/qc_select_all"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            />
+        </RelativeLayout>
+
         <FrameLayout
             android:id="@+id/list_container"
             android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.item.ChooseStaffItem;
 import cn.qingchengfit.student.respository.StudentRepository;
@@ -20,7 +21,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 public class StudentAllotViewModel
-    extends FlexibleViewModel<List<QcStudentBean>, ChooseStaffItem, Map<String, ?>> {
+    extends FlexibleViewModel<List<QcStudentBeanWithFollow>, ChooseStaffItem, Map<String, ?>> {
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -37,7 +38,7 @@ public class StudentAllotViewModel
   }
 
   @NonNull @Override
-  protected LiveData<List<QcStudentBean>> getSource(@NonNull Map<String, ?> map) {
+  protected LiveData<List<QcStudentBeanWithFollow>> getSource(@NonNull Map<String, ?> map) {
     HashMap<String, Object> params = gymWrapper.getParams();
     if (!TextUtils.isEmpty(salerId)) {
       params.put("seller_id", salerId);
@@ -67,23 +68,23 @@ public class StudentAllotViewModel
     });
   }
 
-  @Override protected boolean isSourceValid(@Nullable List<QcStudentBean> qcStudentBeans) {
+  @Override protected boolean isSourceValid(@Nullable List<QcStudentBeanWithFollow> qcStudentBeans) {
     return qcStudentBeans != null;
   }
 
-  @Override protected List<ChooseStaffItem> map(@NonNull List<QcStudentBean> qcStudentBeans) {
+  @Override protected List<ChooseStaffItem> map(@NonNull List< QcStudentBeanWithFollow> qcStudentBeans) {
     return FlexibleItemProvider.with(new ChooseStaffItemFactory(type)).from(qcStudentBeans);
   }
 
   static class ChooseStaffItemFactory
-      implements FlexibleItemProvider.Factory<QcStudentBean, ChooseStaffItem> {
+      implements FlexibleItemProvider.Factory< QcStudentBeanWithFollow, ChooseStaffItem> {
     private Integer type;
 
     public ChooseStaffItemFactory(Integer type) {
       this.type = type;
     }
 
-    @NonNull @Override public ChooseStaffItem create(QcStudentBean qcStudentBean) {
+    @NonNull @Override public ChooseStaffItem create( QcStudentBeanWithFollow qcStudentBean) {
       return FlexibleFactory.create(ChooseStaffItem.class, qcStudentBean, type);
     }
   }

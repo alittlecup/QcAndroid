@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageStudentAllotBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -28,7 +29,7 @@ import java.util.Map;
     implements DrawerListener, LoadDataListener {
   StudentRecyclerSortView listView;
   StudentFilterView filterView;
-  @Need ArrayList<QcStudentBean> items;
+  @Need ArrayList<QcStudentBeanWithFollow> items;
   @Need Staff staff;
   @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
 

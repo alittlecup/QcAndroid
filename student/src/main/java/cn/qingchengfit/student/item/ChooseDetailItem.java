@@ -4,8 +4,10 @@ import android.databinding.ViewDataBinding;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.view.View;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
@@ -22,11 +24,12 @@ import eu.davidea.flexibleadapter.items.ISectionable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChooseDetailItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemStudentFollowUpStateBinding>>
-    implements ISectionable<DataBindingViewHolder<ItemStudentFollowUpStateBinding>, IHeader> {
+    implements ISectionable<DataBindingViewHolder<ItemStudentFollowUpStateBinding>, IHeader> ,IItemData {
 
   public QcStudentBeanWithFollow data;
   public int status;
@@ -62,10 +65,15 @@ public class ChooseDetailItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemStudentFollowUpStateBinding> holder, int position, List payloads) {
     holder.itemView.setTag(data);
+    boolean showSelected = false;
     if (adapter instanceof CommonFlexAdapter) {
       Integer choose = (Integer) ((CommonFlexAdapter) adapter).getTag("choose");
       if (choose != null) {
         type = choose;
+      }
+      Boolean selected = (Boolean) ((CommonFlexAdapter) adapter).getTag("selected");
+      if (selected != null) {
+        showSelected = selected;
       }
     }
     ItemStudentFollowUpStateBinding binding = holder.getDataBinding();
@@ -171,13 +179,17 @@ public class ChooseDetailItem
       } else {
         binding.tvStudentDesc.setText(desc);
       }
-      binding.cb.setVisibility(View.GONE);
-      binding.cbSpace.setVisibility(View.GONE);
-    } else {
+    }else{
       binding.tvStudentDesc.setVisibility(View.GONE);
+    }
+    if(showSelected){
       binding.cb.setVisibility(View.VISIBLE);
       binding.cbSpace.setVisibility(View.VISIBLE);
+    }else{
+      binding.cb.setVisibility(View.GONE);
+      binding.cbSpace.setVisibility(View.GONE);
     }
+
   }
 
   IHeader head;

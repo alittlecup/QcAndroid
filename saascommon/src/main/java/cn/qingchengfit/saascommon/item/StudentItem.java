@@ -18,7 +18,7 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH>
-    implements IFilterable, ISectionable<StudentItem.StudentVH, IHeader> {
+    implements IFilterable, ISectionable<StudentItem.StudentVH, IHeader> ,IItemData{
 
   QcStudentBean qcStudentBean;
   IHeader head;
@@ -100,6 +100,10 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH>
 
   @Override public void setHeader(IHeader header) {
     this.head = header;
+  }
+
+  @Override public QcStudentBean getData() {
+    return qcStudentBean;
   }
 
   public class StudentVH extends FlexibleViewHolder {

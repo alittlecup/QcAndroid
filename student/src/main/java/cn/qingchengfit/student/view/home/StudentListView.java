@@ -25,6 +25,7 @@ import cn.qingchengfit.student.item.StaffDetailItem;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.statuslayout.StatusLayoutManager;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -152,6 +153,7 @@ public class StudentListView
     adapter = new CommonFlexAdapter(new ArrayList());
     adapter.setMode(SelectableAdapter.Mode.MULTI);
     mBinding.recyclerView.setAdapter(adapter);
+    mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.fastScrollerBar.setBarClickListener(letter -> {
       List<? extends AbstractFlexibleItem> itemList = mViewModel.items.get();
@@ -200,9 +202,12 @@ public class StudentListView
       mBinding.btnModifySale.setText(getStringByType(curType));
       if (type.equals(TRAINER_TYPE)) {
         adapter.setTag("choose", 1);
-      } else {
+      } else if(type.equals(SELLER_TYPE)){
         adapter.setTag("choose", 0);
+      }else {
+        adapter.setTag("choose",-2);
       }
+      adapter.setTag("selected",true);
       adapter.notifyDataSetChanged();
     }
   }
@@ -213,14 +218,14 @@ public class StudentListView
       mBinding.btnModifySale.setText(getStringByType(curType));
       mBinding.llBottom.setVisibility(View.GONE);
       adapter.setTag("choose", -1);
+      adapter.setTag("selected", false);
       adapter.clearSelection();
       adapter.notifyDataSetChanged();
     }
   }
 
   @Override public boolean onItemClick(int position) {
-    if (adapter.getItem(position) instanceof StaffDetailItem && !(adapter.getItem(
-        position) instanceof ChooseStaffItem)) {
+    if(TextUtils.isEmpty(mBinding.btnModifySale.getText())){
       return false;
     }
     adapter.toggleSelection(position);
