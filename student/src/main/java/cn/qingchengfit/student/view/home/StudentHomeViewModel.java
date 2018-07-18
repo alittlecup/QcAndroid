@@ -9,8 +9,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.respository.StudentRepository;
+import cn.qingchengfit.utils.Utils;
 import javax.inject.Inject;
 
 /**
@@ -55,7 +57,7 @@ public class StudentHomeViewModel extends BaseViewModel {
     member.addSource(glanceLiveData,
         info -> member.setValue(String.valueOf(info == null ? "" : info.getMember_users_count())));
     totalMembers.addSource(glanceLiveData, info -> totalMembers.setValue(
-        String.valueOf(info == null ? "" : info.getAll_users_count())));
+        StringUtils.formatePrice(String.valueOf(info == null ? "" : info.getAll_users_count()))));
   }
 
   void loadSource() {

@@ -10,6 +10,8 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.widget.CircleView;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -84,6 +86,15 @@ public class StringUtils {
             ret.add(s);
         }
         return ret;
+    }
+    public static String formatePrice(String s){
+        if (s == null || s.length() < 1) {
+            return "";
+        }
+        DecimalFormat formater =  new DecimalFormat("###,###");
+        double num = Double.parseDouble(s);
+
+        return formater.format(num);
     }
 
     public static String getNumString(String string) {

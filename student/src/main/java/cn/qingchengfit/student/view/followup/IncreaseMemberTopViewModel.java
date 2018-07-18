@@ -23,7 +23,7 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
   private final MutableLiveData<HashMap<String, Object>> dates = new MutableLiveData<>();
   public final LiveData<String> count;
   public final MutableLiveData<String> curContent = new MutableLiveData<>();
-  public final MutableLiveData<Integer> selectPos=new MutableLiveData<>();
+  public final MutableLiveData<Integer> selectPos = new MutableLiveData<>();
   public int status = 0;
 
   @Inject IncreaseMemberTopViewModel() {
@@ -39,7 +39,7 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
   }
 
   private LiveData<Resource<StatDate>> loadFollowCount(HashMap<String, Object> params) {
-    Map<String, Object> datas=new HashMap<>();
+    Map<String, Object> datas = new HashMap<>();
     datas.put("status", status);
     datas.putAll(params);
     return repository.qcGetFollowStat(params);
@@ -48,8 +48,11 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
   public void loadSource(HashMap<String, Object> params) {
     String start = (String) params.get("start");
     String end = (String) params.get("end");
-
-    curContent.setValue(start + "至" + end);
+    if (start.equals(end)) {
+      curContent.setValue(start);
+    } else {
+      curContent.setValue(start + "至" + end);
+    }
 
     dates.setValue(params);
   }

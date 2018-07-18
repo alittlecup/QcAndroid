@@ -20,11 +20,14 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StViewStudentAllotBinding;
 import cn.qingchengfit.student.item.ChooseDetailItem;
+import cn.qingchengfit.student.item.ChooseStaffItem;
+import cn.qingchengfit.student.item.StaffDetailItem;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
 import cn.qingchengfit.views.statuslayout.StatusLayoutManager;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.amap.api.services.poisearch.PoiSearch;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -110,9 +113,9 @@ public class StudentListView
   public List<QcStudentBean> getSelectDataBeans() {
     List<QcStudentBean> studentBeans = new ArrayList<>();
     for (Integer pos : adapter.getSelectedPositions()) {
-      if(adapter.getItem(pos) instanceof StudentItem){
+      if (adapter.getItem(pos) instanceof StudentItem) {
         studentBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
-      }else if(adapter.getItem(pos) instanceof ChooseDetailItem){
+      } else if (adapter.getItem(pos) instanceof ChooseDetailItem) {
         studentBeans.add(((ChooseDetailItem) adapter.getItem(pos)).getData());
       }
     }
@@ -131,7 +134,7 @@ public class StudentListView
   }
 
   public void setItems(List<? extends AbstractFlexibleItem> items) {
-    if (items == null||items.isEmpty()) {
+    if (items == null || items.isEmpty()) {
       showEmptyLayout(R.drawable.vd_img_empty_universe, "暂无数据", "");
     } else {
       restoreLayout();
@@ -171,19 +174,21 @@ public class StudentListView
     adapter.addListener(this);
     setRefreshEnable(false);
   }
-  public void filter(String filter){
+
+  public void filter(String filter) {
     adapter.setSearchText(filter);
     adapter.filterItems();
-
   }
 
   public void showFastScroller() {
     mBinding.fastScrollerBar.setEnabled(true);
     mBinding.fastScrollerBar.setVisibility(View.VISIBLE);
   }
-  public void setRefreshEnable(boolean enable){
+
+  public void setRefreshEnable(boolean enable) {
     mBinding.refresh.setEnabled(enable);
   }
+
   public void hideFastScroller() {
     mBinding.fastScrollerBar.setEnabled(false);
     mBinding.fastScrollerBar.setVisibility(View.GONE);
@@ -214,6 +219,10 @@ public class StudentListView
   }
 
   @Override public boolean onItemClick(int position) {
+    if (adapter.getItem(position) instanceof StaffDetailItem && !(adapter.getItem(
+        position) instanceof ChooseStaffItem)) {
+      return false;
+    }
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
     mViewModel.mBottomSelectedCount.set(adapter.getSelectedItemCount());
@@ -276,7 +285,7 @@ public class StudentListView
     //        .build();
     //layoutManager.showEmptyLayout();
     CommonNoDataItem commonNoDataItem = new CommonNoDataItem(drawable, content, "");
-    List<AbstractFlexibleItem> items=new ArrayList<>();
+    List<AbstractFlexibleItem> items = new ArrayList<>();
     items.add(commonNoDataItem);
     adapter.updateDataSet(items);
   }

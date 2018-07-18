@@ -46,6 +46,11 @@ public class ModifiedFastScroller extends FastScroller {
         setEnabled(false);
         if (bar instanceof SlideBar) {
             letters = ((SlideBar) bar).letters;
+        }else{
+            bar=getChildAt(0);
+            if(bar instanceof SlideBar){
+                letters = ((SlideBar) bar).letters;
+            }
         }
     }
 

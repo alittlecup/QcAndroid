@@ -45,7 +45,7 @@ public class IncreaseMemberTopView
           start = DateUtils.addDay(end, -7);
           pos = 2;
         } else if (checkedId == R.id.radio_right) {
-          start = DateUtils.addDay(end, -1);
+          start = end;
           pos = 4;
         }
         mViewModel.selectPos.setValue(pos);
@@ -59,7 +59,6 @@ public class IncreaseMemberTopView
 
   @Override public void onResume() {
     super.onResume();
-    // TODO: 2018/7/17  不能保存状态
     if (mViewModel.selectPos.getValue()!=null) {
       ((RadioButton) mBinding.radioGroup.getChildAt(mViewModel.selectPos.getValue())).setChecked(true);
     } else {

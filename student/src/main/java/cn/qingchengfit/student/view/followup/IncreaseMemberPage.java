@@ -40,8 +40,8 @@ import com.anbillon.flabellum.annotations.Need;
       filterView.showPage(index);
     });
     mSortViewModel.filterAction.observe(this, aBoolean -> {
-      listView.setItems(mSortViewModel.sortFollowTime(mViewModel.getLiveItems().getValue(),aBoolean));
-
+      listView.setItems(
+          mSortViewModel.sortFollowTime(mViewModel.getLiveItems().getValue(), aBoolean));
     });
     mSortViewModel.params.observe(this, params -> {
       mViewModel.loadSource(params);
@@ -89,10 +89,13 @@ import com.anbillon.flabellum.annotations.Need;
   }
 
   private void initTopViewModel() {
-    topViewModel = ViewModelProviders.of(topView, factory).get(IncreaseMemberTopViewModel.class);
-    topViewModel.getDates().observe(this, params -> {
-      mViewModel.loadSourceByDate(params);
-    });
+    if (topViewModel == null) {
+
+      topViewModel = ViewModelProviders.of(topView, factory).get(IncreaseMemberTopViewModel.class);
+      topViewModel.getDates().observe(this, params -> {
+        mViewModel.loadSourceByDate(params);
+      });
+    }
   }
 
   private void initToolbar() {
@@ -100,6 +103,8 @@ import com.anbillon.flabellum.annotations.Need;
   }
 
   private void initFragment() {
+    if (topView != null) return;
+
     filterView = new MemberIncreaseFilterView();
     stuff(R.id.fragment_filter, filterView);
 
@@ -109,8 +114,10 @@ import com.anbillon.flabellum.annotations.Need;
     topView = new IncreaseMemberTopView();
     stuff(R.id.frag_chart, topView);
 
-    mBinding.qftFollowTime.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_student_increase_follow_right));
-    mBinding.qftFollowTime.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_student_increase_follow_left));
+    mBinding.qftFollowTime.setButtonDrawableOff(
+        getResources().getDrawable(R.drawable.vd_student_increase_follow_right));
+    mBinding.qftFollowTime.setButtonDrawableOn(
+        getResources().getDrawable(R.drawable.vd_student_increase_follow_left));
   }
 
   private void toggleToolbar(boolean showCheckBox, String type) {

@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
-import cn.qingchengfit.saascommon.util.SpanUtils;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.listener.DateGroupDimension;

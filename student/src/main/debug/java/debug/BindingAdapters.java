@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saascommon.BuildConfig;
-import cn.qingchengfit.saascommon.util.SpanUtils;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.widget.LineCharDate;
 import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
 import cn.qingchengfit.student.R;
@@ -22,7 +22,6 @@ import cn.qingchengfit.widgets.QcRadioGroup;
 import com.github.mikephil.charting.data.LineData;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
-import org.w3c.dom.Text;
 
 /**
  * Created by huangbaole on 2017/11/15.
