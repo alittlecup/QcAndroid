@@ -47,7 +47,6 @@ public class StudentListView
   CommonFlexAdapter adapter;
   private List<String> ids;
   String curType;
-  private StatusLayoutManager layoutManager;
 
   @Override protected void subscribeUI() {
     mViewModel.getRemoveSelectPos().observe(this, pos -> {
@@ -102,6 +101,9 @@ public class StudentListView
   }
 
   public void selectAll(boolean selectedAll) {
+    if(adapter.isEmpty()||adapter.getMainItems().get(0) instanceof CommonNoDataItem){
+      return;
+    }
     if (selectedAll) {
       adapter.selectAll();
     } else {
