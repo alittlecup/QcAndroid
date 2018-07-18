@@ -12,7 +12,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.apis.CourseModel;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saasbase.login.ILoginModel;
+import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
@@ -96,7 +96,7 @@ import java.util.List;
     exportModel = new ExportModel(qcrestRepository, gymWrapper, loginStatus);
     courseModel = new CourseModel(qcrestRepository, gymWrapper, loginStatus);
     gymConfigModel = new GymConfigModel(gymWrapper, loginStatus, qcrestRepository);
-    loginModel = new LoginModel(gymWrapper, loginStatus, qcrestRepository);
+    loginModel = new LoginModel(gymWrapper, loginStatus, qcrestRepository,qcDbManager);
     userModel = new UserModel(gymWrapper, loginStatus, qcrestRepository);
     api = WXAPIFactory.createWXAPI(app, app.getString(R.string.wechat_code));
     this.saasbaseRouterCenter = new SaasbaseRouterCenter().registe(new exportImpl())

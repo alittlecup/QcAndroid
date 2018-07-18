@@ -10,6 +10,9 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymFuntion;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
@@ -486,10 +489,10 @@ public class GymFunctionFactory {
        *
        */
       case MODULE_STUDENT:
-        Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
-        fragment.startActivity(toStu);
+        //Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
+        //fragment.startActivity(toStu);
         //fragment.routeTo("student", "/student/home", null);
-
+        QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home")).call();
         return;
       case REPORT_EXPORT:
         Intent toExo = new Intent(fragment.getActivity(), ImportExportActivity.class);

@@ -3,14 +3,10 @@ package cn.qingchengfit.staffkit.views.setting;
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+import cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.SettingUseCase;
-import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * power by

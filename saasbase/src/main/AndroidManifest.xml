@@ -77,23 +77,23 @@
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
-    <activity
-        android:name=".mvvm_student.StudentActivity"
-        android:launchMode="singleTask"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
+    <!--<activity-->
+        <!--android:name=".mvvm_student.StudentActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--&gt;-->
+      <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
+        <!--<action android:name="${APP_PACKAGE}"/>-->
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
+        <!--<category android:name="android.intent.category.DEFAULT"/>-->
+        <!--<category android:name="android.intent.category.BROWSABLE"/>-->
 
-        <data
-            android:host="student"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
+        <!--<data-->
+            <!--android:host="student"-->
+            <!--android:scheme="qcstaff"-->
+            <!--/>-->
+      <!--</intent-filter>-->
+    <!--</activity>-->
 
     <!-- Common 页面 存储一些通用 无业务页面-->
     <activity

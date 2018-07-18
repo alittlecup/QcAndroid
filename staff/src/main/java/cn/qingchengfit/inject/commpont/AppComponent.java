@@ -7,6 +7,7 @@ import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
 import cn.qingchengfit.inject.moudle.StudentWrapperModule;
+import cn.qingchengfit.login.di.BindLoginActivity;
 import cn.qingchengfit.notisetting.view.NotiSettingChargeHistoryFragment;
 import cn.qingchengfit.notisetting.view.NotiSettingChargeResultFragment;
 import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
@@ -36,9 +37,7 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
-import cn.qingchengfit.saasbase.di.BindLoginActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
@@ -93,10 +92,8 @@ import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.course.CourseReverseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
-import cn.qingchengfit.staffkit.views.export.CardImportExportFragment;
 import cn.qingchengfit.staffkit.views.export.ExportRecordFragment;
 import cn.qingchengfit.staffkit.views.export.ExportSendEmailFragment;
-import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
@@ -249,10 +246,6 @@ import cn.qingchengfit.staffkit.views.student.score.ScoreDetailFragment;
 import cn.qingchengfit.staffkit.views.student.score.ScoreHomeFragment;
 import cn.qingchengfit.staffkit.views.student.score.ScoreModifyFragment;
 import cn.qingchengfit.staffkit.views.student.score.ScoreRuleAddFragemnt;
-import cn.qingchengfit.staffkit.views.student.sendmsgs.MsgSendFragmentFragment;
-import cn.qingchengfit.staffkit.views.student.sendmsgs.SendMsgHomeFragment;
-import cn.qingchengfit.staffkit.views.student.sendmsgs.SendMsgsActivity;
-import cn.qingchengfit.staffkit.views.student.sendmsgs.ShortMsgDetailFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobeActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobePayBottomFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.add.DistrictAddFragment;
@@ -271,6 +264,7 @@ import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeLongHireFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeShortHireFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeListFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
+import cn.qingchengfit.student.di.BindStudentActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import cn.qingchengfit.views.fragments.WebFragment;
@@ -305,8 +299,11 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class,
     AppComponent.ContainterModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
-    BindStaffCourseActivity.class, BindStaffCardActivity.class, BindImportExportActivity.class,
-    BindStaffStaffActivity.class, BindGymConfigAcitivty.class, BindSaasCommActivity.class,
+    BindImportExportActivity.class,
+
+    BindStaffCourseActivity.class, BindStaffCardActivity.class,
+    BindStaffStaffActivity.class,
+    BindGymConfigAcitivty.class, BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,
@@ -431,9 +428,11 @@ import dagger.multibindings.IntoMap;
     /**
      * 群发短信
      */
-    AppComponent.MsgSendFragmentModule.class, AppComponent.ShortMsgDetailModule.class,
-    AppComponent.FlexableListModule.class, AppComponent.SendMsgHomeModule.class,
-    AppComponent.SendMsgsModule.class, AppComponent.MultiChooseStudentWithFilterModule.class,
+    //AppComponent.MsgSendFragmentModule.class, AppComponent.ShortMsgDetailModule.class,
+    AppComponent.FlexableListModule.class,
+    //AppComponent.SendMsgHomeModule.class,
+    //AppComponent.SendMsgsModule.class,
+    AppComponent.MultiChooseStudentWithFilterModule.class,
     AppComponent.StudentFilterWithBirthModule.class, AppComponent.ChooseStudentListModule.class,
 
     /**
@@ -504,9 +503,8 @@ import dagger.multibindings.IntoMap;
     AppComponent.NotiSettingChargeResultFragmentModule.class,
     AppComponent.NotiSettingChargeHistoryFragmentModule.class,
     //导入导出
-    AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
+    AppComponent.ExportRecordFragmentModule.class,
     AppComponent.ExportSendEmailFragmentModule.class,
-    AppComponent.CardImportExportFragmentModule.class,
 
     //筛选，签课
     AppComponent.NotSignFilterFragmentModule.class,
@@ -1389,21 +1387,21 @@ public interface AppComponent {
     }
   }
 
-  /**
-   * 群发短信
-   */
-  @Subcomponent() public interface SendMsgsSubcomponent extends AndroidInjector<SendMsgsActivity> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<SendMsgsActivity> {
-    }
-  }
-
-  @Subcomponent() public interface SendMsgHomeSubcomponent
-      extends AndroidInjector<SendMsgHomeFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<SendMsgHomeFragment> {
-    }
-  }
+  ///**
+  // * 群发短信
+  // */
+  //@Subcomponent() public interface SendMsgsSubcomponent extends AndroidInjector<SendMsgsActivity> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<SendMsgsActivity> {
+  //  }
+  //}
+  //
+  //@Subcomponent() public interface SendMsgHomeSubcomponent
+  //    extends AndroidInjector<SendMsgHomeFragment> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<SendMsgHomeFragment> {
+  //  }
+  //}
 
   @Subcomponent() public interface FlexableListSubcomponent
       extends AndroidInjector<FlexableListFragment> {
@@ -1411,20 +1409,20 @@ public interface AppComponent {
         extends AndroidInjector.Builder<FlexableListFragment> {
     }
   }
-
-  @Subcomponent() public interface ShortMsgDetailSubcomponent
-      extends AndroidInjector<ShortMsgDetailFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<ShortMsgDetailFragment> {
-    }
-  }
-
-  @Subcomponent() public interface MsgSendFragmentSubcomponent
-      extends AndroidInjector<MsgSendFragmentFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<MsgSendFragmentFragment> {
-    }
-  }
+  //
+  //@Subcomponent() public interface ShortMsgDetailSubcomponent
+  //    extends AndroidInjector<ShortMsgDetailFragment> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<ShortMsgDetailFragment> {
+  //  }
+  //}
+  //
+  //@Subcomponent() public interface MsgSendFragmentSubcomponent
+  //    extends AndroidInjector<MsgSendFragmentFragment> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<MsgSendFragmentFragment> {
+  //  }
+  //}
 
   @Subcomponent() public interface MultiChooseStudentWithFilterSubcomponent
       extends AndroidInjector<MultiChooseStudentWithFilterFragment> {
@@ -3093,18 +3091,18 @@ public interface AppComponent {
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         StudentSignInImageFragmentSubcomponent.Builder builder);
   }
-
-  @Module(subcomponents = SendMsgsSubcomponent.class) abstract class SendMsgsModule {
-    @Binds @IntoMap @ActivityKey(SendMsgsActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-        SendMsgsSubcomponent.Builder builder);
-  }
-
-  @Module(subcomponents = SendMsgHomeSubcomponent.class) abstract class SendMsgHomeModule {
-    @Binds @IntoMap @FragmentKey(SendMsgHomeFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        SendMsgHomeSubcomponent.Builder builder);
-  }
+  //
+  //@Module(subcomponents = SendMsgsSubcomponent.class) abstract class SendMsgsModule {
+  //  @Binds @IntoMap @ActivityKey(SendMsgsActivity.class)
+  //  abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+  //      SendMsgsSubcomponent.Builder builder);
+  //}
+  //
+  //@Module(subcomponents = SendMsgHomeSubcomponent.class) abstract class SendMsgHomeModule {
+  //  @Binds @IntoMap @FragmentKey(SendMsgHomeFragment.class)
+  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+  //      SendMsgHomeSubcomponent.Builder builder);
+  //}
 
   @Module(subcomponents = FlexableListSubcomponent.class) abstract class FlexableListModule {
     @Binds @IntoMap @FragmentKey(FlexableListFragment.class)
@@ -3112,17 +3110,17 @@ public interface AppComponent {
         FlexableListSubcomponent.Builder builder);
   }
 
-  @Module(subcomponents = ShortMsgDetailSubcomponent.class) abstract class ShortMsgDetailModule {
-    @Binds @IntoMap @FragmentKey(ShortMsgDetailFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        ShortMsgDetailSubcomponent.Builder builder);
-  }
-
-  @Module(subcomponents = MsgSendFragmentSubcomponent.class) abstract class MsgSendFragmentModule {
-    @Binds @IntoMap @FragmentKey(MsgSendFragmentFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        MsgSendFragmentSubcomponent.Builder builder);
-  }
+  //@Module(subcomponents = ShortMsgDetailSubcomponent.class) abstract class ShortMsgDetailModule {
+  //  @Binds @IntoMap @FragmentKey(ShortMsgDetailFragment.class)
+  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+  //      ShortMsgDetailSubcomponent.Builder builder);
+  //}
+  //
+  //@Module(subcomponents = MsgSendFragmentSubcomponent.class) abstract class MsgSendFragmentModule {
+  //  @Binds @IntoMap @FragmentKey(MsgSendFragmentFragment.class)
+  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+  //      MsgSendFragmentSubcomponent.Builder builder);
+  //}
 
   @Module(subcomponents = MultiChooseStudentWithFilterSubcomponent.class)
   abstract class MultiChooseStudentWithFilterModule {
@@ -3953,20 +3951,20 @@ public interface AppComponent {
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ExportRecordFragmentSubcomponent.Builder builder);
   }
-
-  @Subcomponent() public interface ImportExportFragmentSubcomponent
-      extends AndroidInjector<ImportExportFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<ImportExportFragment> {
-    }
-  }
-
-  @Module(subcomponents = ImportExportFragmentSubcomponent.class)
-  abstract class ImportExportFragmentModule {
-    @Binds @IntoMap @FragmentKey(ImportExportFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        ImportExportFragmentSubcomponent.Builder builder);
-  }
+  //
+  //@Subcomponent() public interface ImportExportFragmentSubcomponent
+  //    extends AndroidInjector<ImportExportFragment> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<ImportExportFragment> {
+  //  }
+  //}
+  //
+  //@Module(subcomponents = ImportExportFragmentSubcomponent.class)
+  //abstract class ImportExportFragmentModule {
+  //  @Binds @IntoMap @FragmentKey(ImportExportFragment.class)
+  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+  //      ImportExportFragmentSubcomponent.Builder builder);
+  //}
 
   @Subcomponent() public interface ExportSendEmailFragmentSubcomponent
       extends AndroidInjector<ExportSendEmailFragment> {
@@ -3982,19 +3980,19 @@ public interface AppComponent {
         ExportSendEmailFragmentSubcomponent.Builder builder);
   }
 
-  @Subcomponent() public interface CardImportExportFragmentSubcomponent
-      extends AndroidInjector<CardImportExportFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<CardImportExportFragment> {
-    }
-  }
-
-  @Module(subcomponents = CardImportExportFragmentSubcomponent.class)
-  abstract class CardImportExportFragmentModule {
-    @Binds @IntoMap @FragmentKey(CardImportExportFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        CardImportExportFragmentSubcomponent.Builder builder);
-  }
+  //@Subcomponent() public interface CardImportExportFragmentSubcomponent
+  //    extends AndroidInjector<CardImportExportFragment> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<CardImportExportFragment> {
+  //  }
+  //}
+  //
+  //@Module(subcomponents = CardImportExportFragmentSubcomponent.class)
+  //abstract class CardImportExportFragmentModule {
+  //  @Binds @IntoMap @FragmentKey(CardImportExportFragment.class)
+  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+  //      CardImportExportFragmentSubcomponent.Builder builder);
+  //}
 
   @Subcomponent() public interface NotSignFilterFragmentSubcomponent
       extends AndroidInjector<NotSignFilterFragment> {

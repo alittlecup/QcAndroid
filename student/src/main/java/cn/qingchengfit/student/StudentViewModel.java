@@ -52,7 +52,7 @@ import javax.inject.Singleton;
 
 
   @Binds
-  abstract StudentRepository bindStudentRespository(StudentRepositoryImpl studentRespository);
+  abstract StudentRepository bindStudentRepository(StudentRepositoryImpl studentRepository);
 
   @Binds abstract IStudentModel bindStudentModel(StudentModel studentModel);
 

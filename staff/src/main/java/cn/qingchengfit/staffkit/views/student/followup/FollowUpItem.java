@@ -7,7 +7,7 @@ import android.view.View;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.databinding.ItemStudentFollowUpStateBinding;
+import cn.qingchengfit.student.databinding.ItemStudentFollowUpStateBinding;
 import cn.qingchengfit.staffkit.views.custom.MyBindingFelxibleViewHolder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
@@ -70,11 +70,11 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
             DataBindingUtil.bind(view);
         MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
         holder.setBinding(binding);
-        binding.tvStudentContactTa.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                ContactTaDialog.start(fragment, 11, (String) view.getTag());
-            }
-        });
+        //binding.tvStudentContactTa.setOnClickListener(new View.OnClickListener() {
+        //    @Override public void onClick(View view) {
+        //        ContactTaDialog.start(fragment, 11, (String) view.getTag());
+        //    }
+        //});
         return holder;
     }
 
@@ -88,17 +88,17 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
             .asBitmap()
             .placeholder(R.drawable.ic_default_head_nogender)
             .error(R.drawable.ic_default_head_nogender)
-            .into(new CircleImgWrapper(binding.header.itemPersonHeader, holder.itemView.getContext()));
+            .into(new CircleImgWrapper(binding.itemPersonHeader, holder.itemView.getContext()));
 
-        binding.person.itemPersonName.setText(data.username);
+        binding.itemPersonName.setText(data.username);
         if (0 == data.gender) { // 男
-            binding.person.itemPersonGender.setImageResource(R.drawable.ic_gender_signal_male);
+            binding.itemPersonGender.setImageResource(R.drawable.ic_gender_signal_male);
         } else {
-            binding.person.itemPersonGender.setImageResource(R.drawable.ic_gender_signal_female);
+            binding.itemPersonGender.setImageResource(R.drawable.ic_gender_signal_female);
         }
 
-        binding.tvStudentContactTa.setTag(data.phone);
-        binding.person.itemPersonPhonenum.setText(new StringBuilder().append("手机：").append(data.phone).toString());
+        //binding.tvStudentContactTa.setTag(data.phone);
+        binding.itemPersonPhonenum.setText(new StringBuilder().append("手机：").append(data.phone).toString());
         List<String> sellerNames = new ArrayList<>();
         if (data.sellers != null && !data.sellers.isEmpty()) {
             for (Staff saler : data.sellers) {
@@ -106,7 +106,7 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
             }
         }
 
-        binding.person.itemPersonDesc.setText(
+        binding.itemPersonDesc.setText(
             new StringBuilder().append("销售：").append(StringUtils.List2StrWithChineseSplit(sellerNames)).toString());
 
         StringUtils.studentStatusWithArrow(binding.tvStudentStatus, data.status);

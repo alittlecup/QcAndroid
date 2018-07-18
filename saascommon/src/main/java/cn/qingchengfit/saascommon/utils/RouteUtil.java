@@ -1,4 +1,4 @@
-package cn.qingchengfit.checkout.component;
+package cn.qingchengfit.saascommon.utils;
 
 import android.content.Context;
 import android.content.Intent;

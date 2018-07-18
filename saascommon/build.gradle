@@ -42,7 +42,7 @@ dependencies {
   api project(':qcbase')
   api 'cn.qingchengfit.router:router:1.0.180709'
 
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  api fileTree(dir: 'libs', include: ['*.jar'])
 
   api('android.arch.lifecycle:extensions:1.1.0') {
     exclude group: 'android.arch.lifecycle', module: 'runtime'

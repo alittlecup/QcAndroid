@@ -18,7 +18,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
-import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -117,7 +117,7 @@ public class SplashActivity extends AppCompatActivity {
             sp = restRepository.getGet_api()
                 .qcGetSelfInfo(staffid).delay(2500, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
-                .subscribeOn(Schedulers.io())l
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(staffResponseQcResponseData -> {
                     if (ResponseConstant.checkSuccess(staffResponseQcResponseData)) {

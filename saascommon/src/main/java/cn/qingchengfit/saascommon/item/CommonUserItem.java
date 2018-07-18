@@ -26,7 +26,7 @@ import java.util.List;
 public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUserVH>
   implements IFilterable {
 
-  ICommonUser user;
+ public ICommonUser user;
 
   public CommonUserItem(ICommonUser user) {
     this.user = user;
@@ -110,15 +110,15 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
   }
 
   public class CommonUserVH extends FlexibleViewHolder {
-	CheckBox cb;
-	ImageView itemStudentHeader;
-	RelativeLayout itemStudentHeaderLoop;
-	TextView tvTitle;
-	TextView tvSubTitle;
-	TextView tvSubContent;
-	TextView tvEnd;
-	ImageView iconRight;
-	ImageView del;
+public 	CheckBox cb;
+    public	ImageView itemStudentHeader;
+    public	RelativeLayout itemStudentHeaderLoop;
+    public	TextView tvTitle;
+    public	TextView tvSubTitle;
+    public	TextView tvSubContent;
+    public	TextView tvEnd;
+    public	ImageView iconRight;
+    ImageView del;
     ImageView gender;
 
     public CommonUserVH(View view, FlexibleAdapter adapter) {

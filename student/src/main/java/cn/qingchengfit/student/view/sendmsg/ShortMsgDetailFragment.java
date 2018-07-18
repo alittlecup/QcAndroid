@@ -209,44 +209,39 @@ import javax.inject.Inject;
   }
 
   public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.btn_del:
-        DialogUtils.instanceDelDialog(getContext(), "确定删除此草稿？",
-            new MaterialDialog.SingleButtonCallback() {
-              @Override
-              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                presenter.delShortMsg(msgId);
-              }
-            }).show();
-
-        break;
-      case R.id.btn_edit:
-        routeTo("/student/msgsend",new MsgSendParamsParams().msgid(msgId).build());
-        break;
-      case R.id.btn_send:
-        if (TextUtils.isEmpty(shortMsg.content)) {
-          onShowError(R.string.err_shortmsg_content_null);
-          return;
+    int i1 = view.getId();
+    if (i1 == R.id.btn_del) {
+      DialogUtils.instanceDelDialog(getContext(), "确定删除此草稿？",
+          new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              presenter.delShortMsg(msgId);
+            }
+          }).show();
+    } else if (i1 == R.id.btn_edit) {
+      routeTo("/student/msgsend", new MsgSendParamsParams().msgid(msgId).build());
+    } else if (i1 == R.id.btn_send) {
+      if (TextUtils.isEmpty(shortMsg.content)) {
+        onShowError(R.string.err_shortmsg_content_null);
+        return;
+      }
+      if (shortMsg.users == null || shortMsg.users.size() == 0) {
+        onShowError(R.string.err_shortmsg_to_null);
+        return;
+      }
+      String ids = "";
+      for (int i = 0; i < shortMsg.users.size(); i++) {
+        if (i < shortMsg.users.size() - 1) {
+          ids = TextUtils.concat(ids, shortMsg.users.get(i).getId(), ",").toString();
+        } else {
+          ids = TextUtils.concat(ids, shortMsg.users.get(i).getId()).toString();
         }
-        if (shortMsg.users == null || shortMsg.users.size() == 0) {
-          onShowError(R.string.err_shortmsg_to_null);
-          return;
-        }
-        String ids = "";
-        for (int i = 0; i < shortMsg.users.size(); i++) {
-          if (i < shortMsg.users.size() - 1) {
-            ids = TextUtils.concat(ids, shortMsg.users.get(i).getId(), ",").toString();
-          } else {
-            ids = TextUtils.concat(ids, shortMsg.users.get(i).getId()).toString();
-          }
-        }
-        String copyStr = tvContent.getText().toString().trim();
-        if (copyStr.contains(smsBegin)) {
-          copyStr.replace(smsBegin, "");
-        }
-        presenter.sendMsg(
-            new ShortMsgBody.Builder().content(copyStr).send(1).user_ids(ids).build());
-        break;
+      }
+      String copyStr = tvContent.getText().toString().trim();
+      if (copyStr.contains(smsBegin)) {
+        copyStr.replace(smsBegin, "");
+      }
+      presenter.sendMsg(new ShortMsgBody.Builder().content(copyStr).send(1).user_ids(ids).build());
     }
   }
   @Override protected void routeTo(String uri, Bundle bd, boolean b) {

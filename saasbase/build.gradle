@@ -72,6 +72,7 @@ android {
 
 dependencies {
   api project(':saascommon')
+  api project(':login')
 
   api 'cn.qingchengfit.weex:weex:1.0.180601'
   api 'cn.qingchengfit.recruit:recruit:1.1.180613'

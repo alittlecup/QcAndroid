@@ -1,7 +1,7 @@
 package cn.qingchengfit.saasbase.repository;
 
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
+import cn.qingchengfit.login.bean.Login;
+import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import rx.Observable;
 

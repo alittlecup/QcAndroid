@@ -1,21 +1,20 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.login.bean.CheckCodeBody;
+import cn.qingchengfit.login.bean.GetCodeBody;
+import cn.qingchengfit.login.bean.Login;
+import cn.qingchengfit.login.bean.LoginBody;
+import cn.qingchengfit.login.bean.RegisteBody;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.coach.model.CoachResponse;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
-import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.body.FeedBackBody;
 import cn.qingchengfit.saasbase.network.body.SystemInitBody;
-import cn.qingchengfit.saasbase.network.response.CreatBrand;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
-import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
@@ -47,7 +46,7 @@ public interface PostApi {
 
   //修改密码
   @POST("/api/staffs/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") String id, @Body
-    ModifyPwBody modifyPwBean);
+      ModifyPwBody modifyPwBean);
 
   //修改电话号码
   @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") String id,

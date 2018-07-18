@@ -23,12 +23,12 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
+import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.article.presenter.ArticleCommentsPresenter;
 import cn.qingchengfit.saasbase.items.ArticleCommentItem;
-import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;

@@ -4,12 +4,16 @@ import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saascommon.BuildConfig;
+import cn.qingchengfit.saascommon.R;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.widget.LineCharDate;
 import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -42,9 +46,26 @@ public class BindingAdapters {
         lineCharDate.setMarkViewUnit(unit);
     }
 
-    @BindingAdapter(value = "datas")
-    public static void setLineDataUnit(LineCharDate lineCharDate, LineData data) {
-        lineCharDate.setData(data);
+
+    @BindingAdapter(value = { "datas", "highlightValue" }, requireAll = false)
+    public static void setLineDataUnit(LineCharDate lineCharDate, LineData data, Integer pos) {
+        if (pos == null) {
+            lineCharDate.addData(data);
+        } else {
+            lineCharDate.addData(data, pos);
+        }
+    }
+
+    @BindingAdapter(value = { "birDay", "birCount" }, requireAll = true)
+    public static void setBirthContent(TextView textView, String day, String count) {
+        if(TextUtils.isEmpty(day)||TextUtils.isEmpty(count))return;
+        textView.setText(new SpanUtils().append(day)
+            .setForegroundColor(textView.getResources().getColor(R.color.text_black))
+            .append(count)
+            .setForegroundColor(textView.getResources().getColor(R.color.colorPrimary))
+            .append("人")
+            .setForegroundColor(textView.getResources().getColor(R.color.text_black))
+            .create());
     }
 
     @BindingAdapter(value = "afterTextChanged")

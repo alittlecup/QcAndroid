@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+import  cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.presenter.SuNewPresenter;

@@ -32,7 +32,7 @@ import javax.inject.Inject;
   public static final String STUDENT_EXPORT_STR = "member";
   public static final String CARD_EXPORT_STR = "member_card";
 
-  @Inject GymWrapper gymWrapper;
+  @Inject public GymWrapper gymWrapper;
   @Inject IPermissionModel permissionModel;
   public TextView tvStudentImport;
   public TextView tvStudentExport;
