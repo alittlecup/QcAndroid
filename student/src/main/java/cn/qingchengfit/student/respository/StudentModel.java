@@ -52,6 +52,8 @@ import retrofit2.http.QueryMap;
  */
 public class StudentModel implements IStudentModel {
   StudentApi studentApi;
+  @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
 
   @Inject public StudentModel(QcRestRepository qcRestRepository) {
     OkHttpClient client = qcRestRepository.getClient();

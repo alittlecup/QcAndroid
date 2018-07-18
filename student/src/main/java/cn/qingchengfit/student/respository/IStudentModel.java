@@ -80,8 +80,8 @@ public interface IStudentModel {
    * @param params
    * @return
    */
-  //Observable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
+      HashMap<String, Object> params);
 
   /**
    * 教练分配
@@ -184,14 +184,14 @@ public interface IStudentModel {
   /**
    * 新增跟进
    */
-  //Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 新增查询
    */
-  //Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
-  //    String type, HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
+      String type, HashMap<String, Object> params);
 
   /**
    * 新增学员
@@ -203,8 +203,8 @@ public interface IStudentModel {
    * 具有名下会员的销售列表
    * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
    */
-  //Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 转换率

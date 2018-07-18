@@ -175,21 +175,21 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-  //    /**
-  //     * 新增
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/new/{type}/")
-  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
-  //        @Path("staff_id") String staff_id, @Path("type") String type,
-  //        @QueryMap HashMap<String, Object> params);
-  //
-  //    /**
-  //     * 新增跟进
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/new/follow/")
-  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
+      /**
+       * 新增
+       */
+      @GET("/api/staffs/{staff_id}/users/new/{type}/")
+      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+          @Path("staff_id") String staff_id, @Path("type") String type,
+          @QueryMap HashMap<String, Object> params);
+
+      /**
+       * 新增跟进
+       */
+      @GET("/api/staffs/{staff_id}/users/new/follow/")
+      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
+          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
   //    /**
   //     * 新增学员
   //     */
@@ -197,15 +197,15 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-  //    /**
-  //     * 具有名下会员的销售列表
-  //     * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
-  //     */
-  //    @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
-  //    Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
-  //
+      /**
+       * 具有名下会员的销售列表
+       * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+       */
+      @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
+      Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
+          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+
   //    /**
   //     * 转换率
   //     * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=

@@ -190,13 +190,6 @@ import javax.inject.Singleton;
 
   @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
     HashMap<String, Object> params) {
-    LiveData<Resource<Boolean>> li = new MutableLiveData<>();
-    ObservableField<Integer> oI = new ObservableField<>();
-    oI.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-      @Override public void onPropertyChanged(Observable sender, int propertyId) {
-        ((ObservableField<Integer>) sender).get();
-      }
-    });
     return toLiveData(remoteService.qcGetIncreaseStat(staff_id, params));
   }
 
