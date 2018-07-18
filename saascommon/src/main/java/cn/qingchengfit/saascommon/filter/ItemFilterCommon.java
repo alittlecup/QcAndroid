@@ -82,8 +82,8 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
     boolean isEmpty = false;
     for (int i = 0; i < filterModel.content.size(); i++) {
       LinearLayout.LayoutParams params =
-          new LinearLayout.LayoutParams(MeasureUtils.dpToPx(100f, holder.itemView.getResources()),
-              MeasureUtils.dpToPx(40f, holder.itemView.getResources()));
+          new LinearLayout.LayoutParams(MeasureUtils.dpToPx(70f, holder.itemView.getResources()),
+              MeasureUtils.dpToPx(30f, holder.itemView.getResources()));
 
       if (!isEmpty && valueList.size() > 0){
         if (valueList.contains(filterModel.content.get(i).value)){

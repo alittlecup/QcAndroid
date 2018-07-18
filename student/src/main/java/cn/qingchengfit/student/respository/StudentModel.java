@@ -21,6 +21,7 @@ import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
@@ -399,15 +400,15 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcGetNotSignStudent(staffId, params);
   //}
   //
-  //@Override
-  //public Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentsRecommends(staff_id, params);
-  //}
-  //
-  //@Override
-  //public Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentsOrigins(staff_id, params);
-  //}
+  @Override
+  public Flowable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudentsRecommends(staff_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudentsOrigins(staff_id, params);
+  }
 }

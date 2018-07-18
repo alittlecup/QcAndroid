@@ -22,6 +22,16 @@ public class MemberIncreaseFilterView extends BaseFilterFragment {
         super.onCreate(savedInstanceState);
         mViewModel = ViewModelProviders.of(getParentFragment()).get(IncreaseMemberSortViewModel.class);
         initFragment();
+        mViewModel.loadFollorStatus();
+        mViewModel.recordStatus.observe(this,items->{
+            if(items==null)return;
+            String[] status=new String[items.size()+1];
+            status[0]="全部";
+            for(int i=0;i<items.size();i++){
+                status[i+1]=items.get(i).getTrack_status();
+            }
+            studentStatusFragment.setStrings(status);
+        });
     }
 
     @Override
@@ -31,12 +41,9 @@ public class MemberIncreaseFilterView extends BaseFilterFragment {
 
     private void initFragment() {
         studentStatusFragment = new FilterListStringFragment();
-        String[] status = new String[]{"全部", "新注册", "已接洽", "会员"};
-        studentStatusFragment.setStrings(status);
         studentStatusFragment.setOnSelectListener(position -> {
-            mViewModel.followUpStatus.setValue(position == 0 ? "跟进状态" : status[position]);
-            // TODO: 2018/6/22 数据回传
-            mViewModel.setStudentStatus(position == 0 ? null : String.valueOf(position - 1));
+            mViewModel.followUpStatus.setValue(position == 0 ? "跟进状态" : mViewModel.recordStatus.getValue().get(position).getTrack_status());
+            mViewModel.setStudentStatus(position == 0 ? null : mViewModel.recordStatus.getValue().get(position).getId());
             dismiss();
         });
 

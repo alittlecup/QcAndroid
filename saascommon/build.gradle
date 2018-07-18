@@ -6,7 +6,7 @@ def cfg = rootProject.ext.configuration
 android {
   compileSdkVersion 27
 
-  dataBinding{
+  dataBinding {
     enabled true
   }
 

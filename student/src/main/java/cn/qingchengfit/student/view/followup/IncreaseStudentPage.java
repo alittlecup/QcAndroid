@@ -19,6 +19,7 @@ import cn.qingchengfit.student.databinding.StPageIncreaseStudentBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.allot.StudentAllotPageParams;
 import cn.qingchengfit.student.view.home.StudentFilterView;
+import cn.qingchengfit.student.view.home.StudentFilterViewModel;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -91,7 +92,6 @@ import java.util.HashMap;
   private void loadSource() {
     if(studentTopViewModel==null){
       studentTopViewModel = ViewModelProviders.of(topView, factory).get(IncreaseStudentTopViewModel.class);
-
       studentTopViewModel.curSelectPositionDate.observe(this, params -> {
 
         mViewModel.loadSoutceByDate(params);

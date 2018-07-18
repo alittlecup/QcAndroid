@@ -35,16 +35,17 @@ import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
 @Trunk(fragments = {
-    StudentViewModel.class,
-    StudentFilterView.class, StudentHomePage.class, StudentAllPage.class,
+    StudentViewModel.class, StudentFilterView.class, StudentHomePage.class, StudentAllPage.class,
     StudentRecyclerSortView.class, StudentListView.class, StudentAllotPage.class,
     IncreaseStudentSortView.class, IncreaseStudentTopView.class, IncreaseStudentPage.class,
     IncreaseMemberTopView.class, IncreaseMemberPage.class, StudentStateInfoPage.class,
     StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordPage.class,
-    FollowRecordStatusPage.class,
-    SendMsgHomeFragment.class, ShortMsgDetailFragment.class,FollowUpTopSalerView.class,FollowUpFilterView.class,
-    MsgSendFragmentFragment.class,ImportExportFragment.class,SalerStudentsPage.class,
-    AllotChooseSellerPage.class,AllotChooseCoachPage.class,StudentBirthdayPage.class, NotiOthersPage.class
+    FollowRecordStatusPage.class, SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
+    FollowUpTopSalerView.class, FollowUpFilterView.class, MsgSendFragmentFragment.class,
+    ImportExportFragment.class, SalerStudentsPage.class, AllotChooseSellerPage.class,
+    AllotChooseCoachPage.class, StudentBirthdayPage.class, NotiOthersPage.class
+
+
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 
@@ -55,6 +56,4 @@ import javax.inject.Inject;
   @Override protected Fragment getRouterFragment(Intent intent) {
     return studentRouterCenter.getFragment(intent.getData(), intent.getExtras());
   }
-
-
 }

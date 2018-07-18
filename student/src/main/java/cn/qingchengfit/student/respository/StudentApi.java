@@ -16,6 +16,7 @@ import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
@@ -264,23 +265,23 @@ public interface StudentApi {
   //        @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
   //
   //
-  //    /**
-  //     * 推荐人列表
-  //     * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1")
-  //    Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
-  //    //
-  //    /**
-  //     * 来源列表
-  //     * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=
-  //     */
-  //    @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1")
-  //    Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
+      /**
+       * 推荐人列表
+       * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=
+       */
+      @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1")
+      Flowable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(
+          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+      //
+      /**
+       * 来源列表
+       * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=
+       */
+      @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1")
+      Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(
+          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
 
   /**
    * 短信部分

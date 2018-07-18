@@ -15,6 +15,7 @@ import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.ShortMsgBody;
 import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
+import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
@@ -258,14 +259,14 @@ public interface IStudentModel {
    * 推荐人列表
    *
    */
-  //Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 来源列表
    */
-  //Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 短信部分

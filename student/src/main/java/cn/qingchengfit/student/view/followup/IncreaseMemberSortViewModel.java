@@ -6,7 +6,9 @@ import android.text.TextUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.item.ChooseDetailItem;
+import cn.qingchengfit.student.respository.StudentRepository;
 import io.reactivex.Flowable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class IncreaseMemberSortViewModel extends BaseViewModel {
+  @Inject StudentRepository repository;
 
   public final ObservableBoolean appBarLayoutExpanded = new ObservableBoolean(true);
   public final MutableLiveData<Integer> filterIndex = new MutableLiveData<>();
@@ -22,6 +25,10 @@ public class IncreaseMemberSortViewModel extends BaseViewModel {
 
   public final MutableLiveData<String> salerName = new MutableLiveData<>();
   public final MutableLiveData<String> followUpStatus = new MutableLiveData<>();
+
+  public final MutableLiveData<List<FollowRecordStatus>> recordStatus=new MutableLiveData<>();
+
+
 
   public void onQcButtonFilterClick(boolean isChecked, int index) {
     if (isChecked) {
@@ -32,6 +39,9 @@ public class IncreaseMemberSortViewModel extends BaseViewModel {
       filterVisible.setValue(false);
     }
   }
+public void loadFollorStatus(){
+  repository.qcGetTrackStatus(recordStatus,defaultResult);
+}
 
   public final MutableLiveData<HashMap<String, Object>> params = new MutableLiveData<>();
 
