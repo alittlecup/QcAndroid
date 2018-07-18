@@ -7,11 +7,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.events.EventCommonUserList;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.databinding.StPageFollowRecordEditBinding;
 import cn.qingchengfit.student.item.ItemGridImage;
 import cn.qingchengfit.student.item.ItemGridImageAdd;
@@ -23,6 +29,7 @@ import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.bigkoo.pickerview.lib.SimpleScrollPicker;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -42,7 +49,26 @@ import java.util.Objects;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    RxBus.getBus()
+      .register(EventCommonUserList.class)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .compose(this.bindToLifecycle())
+      .subscribe(new BusSubscribe<EventCommonUserList>() {
+        @Override public void onNext(EventCommonUserList eventCommonUserList) {
+          if (eventCommonUserList.getCommonUsers() != null){
+            List<User> users = new ArrayList<>();
+            for (ICommonUser iCommonUser : eventCommonUserList.getCommonUsers()) {
+              User u = new User();
+              u.setId(iCommonUser.getId());
+              u.setUsername(iCommonUser.getTitle());
+              u.setAvatar(iCommonUser.getAvatar());
+              users.add(u);
+            }
+            mViewModel.notiOthers.setValue(users);
+          }
+        }
+      });
   }
 
   @Override protected void handleHttpSuccess(String s) {
@@ -78,7 +104,13 @@ import java.util.Objects;
       showFollowTimeDialog();
     });
     mBinding.cmNotifyOther.setOnClickListener(view -> {
-
+      ArrayList<Staff> staffs = new ArrayList<>();
+      staffs.add(new Staff(new User("志恒","123123","123123",1),"25"));
+      staffs.add(new Staff(new User("志恒1","123123","123123",1),"26"));
+      staffs.add(new Staff(new User("志恒2","123123","123123",1),"27"));
+      routeTo("/followrecord/notiothers/",NotiOthersPageParams.builder()
+        .staffs(staffs)
+        .build());
     });
     mBinding.tvEditStatus.setOnClickListener(view -> {
       routeTo("/student/follow_record_status", null);

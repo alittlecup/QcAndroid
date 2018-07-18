@@ -38,15 +38,12 @@ public class BindingUtils {
     if (users != null &&users.size() >0){
 
       if (users.size() > 2){
-        return Phrase.from(context,R.string.st_follow_record_noti_others)
-          .put("name1",users.get(0).username)
-          .put("name2",users.get(1).username)
-          .format().toString();
+        return
+          users.get(0).username+","+users.get(1).username+"等"+users.size()+"人";
       }else if (users.size() == 2){
-        return Phrase.from("{name1},{name2}")
-          .put("name1",users.get(0).username)
-          .put("name2",users.get(1).username)
-          .format().toString();
+        return users.get(0).username+","+
+          users.get(1).username;
+
       }else {
         return users.get(0).username;
       }

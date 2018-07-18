@@ -14,6 +14,7 @@ import cn.qingchengfit.student.view.export.ImportExportFragment;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditPage;
 import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusPage;
+import cn.qingchengfit.student.view.followrecord.NotiOthersPage;
 import cn.qingchengfit.student.view.followup.FollowUpFilterView;
 import cn.qingchengfit.student.view.followup.FollowUpTopSalerView;
 import cn.qingchengfit.student.view.followup.IncreaseMemberPage;
@@ -43,7 +44,7 @@ import javax.inject.Inject;
     FollowRecordStatusPage.class,
     SendMsgHomeFragment.class, ShortMsgDetailFragment.class,FollowUpTopSalerView.class,FollowUpFilterView.class,
     MsgSendFragmentFragment.class,ImportExportFragment.class,SalerStudentsPage.class,
-    AllotChooseSellerPage.class,AllotChooseCoachPage.class,StudentBirthdayPage.class
+    AllotChooseSellerPage.class,AllotChooseCoachPage.class,StudentBirthdayPage.class, NotiOthersPage.class
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 

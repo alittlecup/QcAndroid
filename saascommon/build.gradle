@@ -6,7 +6,9 @@ def cfg = rootProject.ext.configuration
 android {
   compileSdkVersion 27
 
-
+  dataBinding{
+    enabled true
+  }
 
   defaultConfig {
     minSdkVersion 15

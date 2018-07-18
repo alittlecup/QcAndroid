@@ -8,12 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.model.common.ICommonUser;
 
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
@@ -45,13 +47,27 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
   @Override public CommonUserVH createViewHolder(View view, FlexibleAdapter adapter) {
     return new CommonUserVH(view, adapter);
   }
-
+  private boolean isDel(FlexibleAdapter adapter){
+    if (adapter instanceof CommonFlexAdapter){
+      Object del = ((CommonFlexAdapter) adapter).getTag("del");
+      if (del instanceof Boolean && ((Boolean)del)){
+        return true;
+      }
+    }
+    return false;
+  }
   @Override public void bindViewHolder(FlexibleAdapter adapter, CommonUserVH holder, int position,
     List payloads) {
     if (adapter.getMode() != FlexibleAdapter.Mode.IDLE) {
       holder.cb.setVisibility(View.VISIBLE);
+      holder.cb.setChecked(adapter.isSelected(position));
+      holder.iconRight.setVisibility(View.GONE);
     } else {
       holder.cb.setVisibility(View.GONE);
+    }
+    holder.del.setVisibility(isDel(adapter)?View.VISIBLE:View.GONE);
+    if (isDel(adapter)){
+      holder.iconRight.setVisibility(View.GONE);
     }
     PhotoUtils.smallCircle(holder.itemStudentHeader, user.getAvatar());
 
@@ -66,10 +82,9 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
     holder.tvEnd.setText(user.getRight());
     holder.tvEnd.setTextColor(ContextCompat.getColor(holder.tvEnd.getContext(),
       user.getRightColor() > 0 ? user.getRightColor() : R.color.text_dark));
-    holder.tvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null,
-      ContextCompat.getDrawable(holder.tvTitle.getContext(),
+    holder.gender.setImageResource(
         user.getGender() == 0 ? R.drawable.ic_gender_signal_male
-          : R.drawable.ic_gender_signal_female), null);
+          : R.drawable.ic_gender_signal_female);
 
     if (CmStringUtils.isEmpty(adapter.getSearchText())) {
       holder.tvTitle.setText(user.getTitle());
@@ -83,8 +98,8 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
   }
 
   @Override public boolean equals(Object o) {
-    if (o instanceof CommonUserItem && ((CommonUserItem) o).getUser() == null){
-      return true;
+    if (((CommonUserItem) o).getUser() == null){
+      return false;
     }
     return o instanceof CommonUserItem && TextUtils.equals(((CommonUserItem) o).getUser().getId(),
       getUser().getId());
@@ -103,6 +118,8 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
 	TextView tvSubContent;
 	TextView tvEnd;
 	ImageView iconRight;
+	ImageView del;
+    ImageView gender;
 
     public CommonUserVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
@@ -114,8 +131,12 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
       tvSubContent = (TextView) view.findViewById(R.id.tv_sub_content);
       tvEnd = (TextView) view.findViewById(R.id.tv_end);
       iconRight = (ImageView) view.findViewById(R.id.icon_right);
-
+      del = view.findViewById(R.id.item_delete);
+      del.setOnClickListener(v -> {
+        RxBus.getBus().post(new EventClickViewPosition.Builder().id(v.getId()).position(getFlexibleAdapterPosition()).build());
+      });
       cb.setClickable(false);
+      gender = view.findViewById(R.id.img_gender);
     }
   }
 }

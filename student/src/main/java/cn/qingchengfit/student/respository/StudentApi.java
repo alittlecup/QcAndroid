@@ -316,7 +316,7 @@ public interface StudentApi {
   //首页-会员首页数据概览
   @GET("/api/staffs/{staff_id}/users/data/glance/")
   Flowable<QcDataResponse<StudentInfoGlance>> qcGetHomePageInfo(@Path("staff_id") String staff_id,
-      @Body HashMap<String, Object> params);
+      @QueryMap HashMap<String, Object> params);
 
   //今日新增-会员分状态按维度统计
   @GET("/api/staffs/{staff_id}/users/dimension/stat/")

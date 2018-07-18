@@ -2,7 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-  <data></data>
+  <data>
+    <variable
+        name="page"
+        type="cn.qingchengfit.saascommon.views.commonuserselect.CommonUserSelectView"/>
+  </data>
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -13,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+
         />
     <LinearLayout
         android:id="@+id/ll_bottom"
@@ -38,11 +43,11 @@
             android:layout_height="20dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:background="@drawable/circle_white"
             android:gravity="center"
-
+            android:text="@{page.selectItems.size() > 99 ?`…`:(``+page.selectItems.size())}"
             android:textColor="@color/white"
             android:textSize="@dimen/min_font"
+            android:background="@drawable/cm_vd_circle_qing"
             />
 
         <TextView
@@ -93,6 +98,7 @@
             android:gravity="center"
             android:textColor="@color/qc_allotsale_green"
             android:textSize="@dimen/min_font"
+            android:visibility="gone"
             />
         <Button
             android:id="@+id/btn_right"

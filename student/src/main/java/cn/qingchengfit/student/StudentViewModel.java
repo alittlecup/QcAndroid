@@ -19,6 +19,8 @@ import cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordViewModel;
+import cn.qingchengfit.student.view.followrecord.NotiOthersPage;
+import cn.qingchengfit.student.view.followrecord.NotiOthersVM;
 import cn.qingchengfit.student.view.followup.IncreaseMemberSortViewModel;
 import cn.qingchengfit.student.view.followup.IncreaseMemberTopViewModel;
 import cn.qingchengfit.student.view.followup.IncreaseMemberViewModel;
@@ -114,6 +116,8 @@ import javax.inject.Singleton;
   @Binds @IntoMap @ViewModelKey(AllotChooseViewModel.class)
   abstract ViewModel bindAllotChooseViewModel(AllotChooseViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(NotiOthersVM.class)
+  abstract ViewModel bindNotiOtherViewModel(NotiOthersVM model);
 
   @Binds @IntoMap @ViewModelKey(StudentBirthdayViewModel.class)
   abstract ViewModel bindStudentBirthdayViewModel(StudentBirthdayViewModel model);
