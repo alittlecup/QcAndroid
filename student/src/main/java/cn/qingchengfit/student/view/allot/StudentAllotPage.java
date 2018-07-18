@@ -34,6 +34,7 @@ import java.util.Map;
   @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
 
   @Override protected void subscribeUI() {
+    mViewModel.setSalerId(staff == null ? "" : staff.getId());
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setDatas(items);
     });
@@ -66,6 +67,11 @@ import java.util.Map;
     listView.setFilterView(filterView);
     listView.setLoadDataListener(this);
     listView.setCurId(staff == null ? "" : staff.getId());
+
+    filterView.setListener(params -> {
+      mViewModel.loadSource(params);
+      mBinding.drawer.closeDrawer(GravityCompat.END);
+    });
   }
 
   private void initToolbar() {

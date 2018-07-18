@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saascommon.calendar.BaseView;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
@@ -32,6 +33,7 @@ public class IncreaseStudentViewModel
 
   private final MutableLiveData<HashMap<String,Object>> params=new MutableLiveData<>();
   private final Map<String,Object> dates=new HashMap<>();
+  private final Map<String,Object> status=new HashMap<>();
   public Integer dataType = -1;//0- 新注册，2-会员
 
   @Inject IncreaseStudentViewModel() {
@@ -87,16 +89,28 @@ public class IncreaseStudentViewModel
     }
   }
 
-
+  private Map<String,Object> filter=new HashMap<>();
   public void loadSourceByStatus(Map<String,Object> map){
-    map.putAll(dates);
-    params.setValue(new HashMap<>(map));
+    status.clear();
+    status.putAll(map);
+    loadData();
+  }
+  public void loadSourceRight(Map<String,Object> map ){
+    filter.clear();
+    filter.putAll(map);
+    loadData();
   }
 
   public void loadSoutceByDate(Map<String,Object> map){
+    dates.clear();
     dates.putAll(map);
-    HashMap<String, Object> value = params.getValue();
+    loadData();
+  }
+  private void loadData(){
+    HashMap<String,Object> value=new HashMap<>();
     value.putAll(dates);
+    value.putAll(status);
+    value.putAll(filter);
     params.setValue(value);
   }
 }

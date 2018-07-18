@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.ViewStudentFilterBinding;
+import cn.qingchengfit.student.listener.onRightFilterCloseListener;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -32,6 +33,11 @@ public class StudentFilterView
     mViewModel.getmResetEvent().observe(this, aVoid -> {
       showDialog();
     });
+    mViewModel.getmFilterMap().observe(this,params->{
+      if(listener!=null){
+        listener.onConfirm(new HashMap<>(params));
+      }
+    });
     mViewModel.loadfilterModel();
   }
 
@@ -51,12 +57,18 @@ public class StudentFilterView
         .show();
   }
 
+  public void setListener(onRightFilterCloseListener listener) {
+    this.listener = listener;
+  }
+
+  private onRightFilterCloseListener listener;
   private void doReset() {
     for (int i = 0; i < adapter.getItemCount(); i++) {
       adapter.addSelection(i);
     }
     adapter.notifyDataSetChanged();
   }
+
 
   @Override
   public ViewStudentFilterBinding initDataBinding(LayoutInflater inflater, ViewGroup container,

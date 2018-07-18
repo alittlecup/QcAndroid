@@ -31,27 +31,14 @@ public class StudentRecyclerSortView
     sortViewModel.getFilterEvent().observe(this, aVoid -> {
       if (filterView == null) return;
       openDrawer();
-      filterViewModel =
-          ViewModelProviders.of(filterView, factory).get(StudentFilterViewModel.class);
-      filterViewModel.getmFilterMap().observe(filterView, map -> {
-        // REFACTOR: 2017/12/6 Map与Studentfilter的对决
-        if (map != null) {
-          closeDrawer();
-          if (loadDataListener != null) {
-            loadDataListener.loadData(new HashMap<>(map));
-          }
-          filterViewModel.getmFilterMap().setValue(null);
-        }
-      });
     });
     mViewModel.getStudentBeans().observe(this, items -> {
-      if(items==null||items.isEmpty())return;
+      if (items == null || items.isEmpty()) return;
       AbstractFlexibleItem abstractFlexibleItem = items.get(0);
-      if(abstractFlexibleItem instanceof IItemData){
-        List data=new ArrayList<>(items);
+      if (abstractFlexibleItem instanceof IItemData) {
+        List data = new ArrayList<>(items);
         setData(new ArrayList<>(sortViewModel.sortItems(data)));
       }
-
     });
   }
 
@@ -69,9 +56,11 @@ public class StudentRecyclerSortView
     listView.setArguments(bundle);
     return listView;
   }
-  public StudentListView getListView(){
-    return  listView;
+
+  public StudentListView getListView() {
+    return listView;
   }
+
   public void setFilterView(StudentFilterView filterView) {
     this.filterView = filterView;
   }
@@ -87,7 +76,8 @@ public class StudentRecyclerSortView
       listener.closeDrawer();
     }
   }
-  public void filter(String text){
+
+  public void filter(String text) {
     listView.filter(text);
   }
 

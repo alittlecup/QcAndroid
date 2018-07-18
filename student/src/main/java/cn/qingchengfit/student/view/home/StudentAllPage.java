@@ -79,6 +79,11 @@ import java.util.Map;
     listView.setFilterView(filterView);
     listView.setListener(this);
     listView.setLoadDataListener(this);
+
+    filterView.setListener(params -> {
+      mViewModel.loadSource(params);
+      mBinding.drawer.closeDrawer(GravityCompat.END);
+    });
   }
 
   private void initToolbar() {

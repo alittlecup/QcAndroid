@@ -17,6 +17,7 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageIncreaseStudentBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
+import cn.qingchengfit.student.listener.onRightFilterCloseListener;
 import cn.qingchengfit.student.view.allot.StudentAllotPageParams;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentFilterViewModel;
@@ -28,6 +29,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 @Leaf(module = "student", path = "/student/increase") public class IncreaseStudentPage
     extends StudentBaseFragment<StPageIncreaseStudentBinding, IncreaseStudentViewModel> {
@@ -137,6 +139,11 @@ import java.util.HashMap;
     stuff(R.id.fragment_filter, followUpFilterView);
     stuff(R.id.fragment_list_container, listView);
     stuff(R.id.frame_student_filter, filterView);
+
+    filterView.setListener(params -> {
+      mViewModel.loadSourceRight(params);
+      mBinding.drawer.closeDrawer(GravityCompat.END);
+    });
   }
 
   private void toggleToolbar(boolean showCheckBox, String type) {
