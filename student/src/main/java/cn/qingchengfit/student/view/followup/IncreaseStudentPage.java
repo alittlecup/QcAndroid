@@ -133,6 +133,7 @@ import java.util.Map;
     topView = new IncreaseStudentTopView();
     listView = new StudentListView();
     filterView = new StudentFilterView();
+    filterView.setFilterTimeVisible(false);
     followUpFilterView = new FollowUpFilterView();
 
     stuff(R.id.frag_chart, topView);

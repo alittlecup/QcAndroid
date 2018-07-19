@@ -128,7 +128,8 @@ import java.util.ArrayList;
       routeTo("/attendance/page", null);
     });
     mBinding.commTransferStudent.setOnClickListener(view -> {
-      routeTo("/transfer/student", null);
+      //routeTo("/transfer/student", null);
+      routeTo("/select_member/", null);
     });
     mBinding.commSendMsg.setOnClickListener(view -> {
       routeTo("/student/sendmsg/", null);

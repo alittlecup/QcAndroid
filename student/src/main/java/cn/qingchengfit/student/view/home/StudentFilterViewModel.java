@@ -28,141 +28,135 @@ import javax.inject.Inject;
  * Created by huangbaole on 2017/12/6.
  */
 
-public class StudentFilterViewModel extends BaseViewModel implements ItemFilterTime.OnTimeChooseListener {
+public class StudentFilterViewModel extends BaseViewModel
+    implements ItemFilterTime.OnTimeChooseListener {
 
-    public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
-    private final ActionLiveEvent mResetEvent = new ActionLiveEvent();
-    private String salerId;
+  public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
+  private final ActionLiveEvent mResetEvent = new ActionLiveEvent();
+  private String salerId;
 
-    public MutableLiveData<Map<String, String>> getmFilterMap() {
-        return mFilterMap;
+  public MutableLiveData<Map<String, String>> getmFilterMap() {
+    return mFilterMap;
+  }
+
+  private final MutableLiveData<Map<String, String>> mFilterMap = new MutableLiveData<>();
+
+  public ActionLiveEvent getmResetEvent() {
+    return mResetEvent;
+  }
+
+  public LiveData<List<FilterModel>> getRemoteFilters() {
+    return remoteFilters;
+  }
+
+  protected final LiveData<List<FilterModel>> remoteFilters;
+
+  public void setFilterTimeVisible(boolean filterTimeVisible) {
+    this.filterTimeVisible = filterTimeVisible;
+  }
+
+  private boolean filterTimeVisible = true;
+
+  @Inject protected FilterUserCase filterUserCase;
+  @Inject protected LoginStatus loginStatus;
+  @Inject protected GymWrapper gymWrapper;
+
+  @Inject public StudentFilterViewModel(FilterUserCase filterUserCase) {
+    remoteFilters = Transformations.map(filterUserCase.getFilterModel(), input -> input);
+  }
+
+  public void loadfilterModel() {
+
+    filterUserCase.excute(loginStatus.staff_id(), salerId, gymWrapper.getParams());
+  }
+
+  public void onReset() {
+    mResetEvent.call();
+  }
+
+  public void onConfirm() {
+    for (AbstractFlexibleItem item : items.get()) {
+      getDataFromItem(item);
     }
+    mFilterMap.setValue(filterMap);
+  }
 
-    private final MutableLiveData<Map<String, String>> mFilterMap = new MutableLiveData<>();
+  public Map<String, String> filterMap = new HashMap<>();
 
-    public ActionLiveEvent getmResetEvent() {
-        return mResetEvent;
-    }
-
-    public LiveData<List<FilterModel>> getRemoteFilters() {
-        return remoteFilters;
-    }
-
-    protected final LiveData<List<FilterModel>> remoteFilters;
-
-
-    @Inject
-    protected FilterUserCase filterUserCase;
-    @Inject
-    protected LoginStatus loginStatus;
-    @Inject
-    protected GymWrapper gymWrapper;
-
-
-    @Inject
-    public StudentFilterViewModel(FilterUserCase filterUserCase) {
-        remoteFilters = Transformations.map(filterUserCase.getFilterModel(), input -> input);
-    }
-
-    public void loadfilterModel() {
-
-        filterUserCase.excute(loginStatus.staff_id(), salerId,gymWrapper.getParams());
-
-    }
-
-
-    public void onReset() {
-        mResetEvent.call();
-    }
-
-    public void onConfirm() {
-        for (AbstractFlexibleItem item : items.get()) {
-            getDataFromItem(item);
+  private void getDataFromItem(AbstractFlexibleItem item) {
+    if (item instanceof ItemFilterCommon) {
+      List<Content> checkedContent = ((ItemFilterCommon) item).getCheckedContent();
+      String key = ((ItemFilterCommon) item).getData().key;
+      if (checkedContent.isEmpty()) {
+        filterMap.remove(key);
+      } else {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Content content : checkedContent) {
+          stringBuilder.append(content.value).append(",");
         }
-        mFilterMap.setValue(filterMap);
-
+        filterMap.put(key, stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString());
+      }
+    } else if (item instanceof ItemFilterList) {
+      String selectedUser = ((ItemFilterList) item).getSelectedUser();
+      String key = ((ItemFilterList) item).getFilterModel().key;
+      if (StringUtils.isEmpty(selectedUser)) {
+        filterMap.remove(key);
+      } else {
+        filterMap.put(key, selectedUser);
+      }
+    } else if (item instanceof ItemFilterRecommend) {
+      String selectedUser = ((ItemFilterRecommend) item).getSelectedSaler();
+      String key = ((ItemFilterRecommend) item).getFilterModel().key;
+      if (StringUtils.isEmpty(selectedUser)) {
+        filterMap.remove(key);
+      } else {
+        filterMap.put(key, selectedUser);
+      }
+    } else if (item instanceof ItemFilterSalerGrid) {
+      String selectedUser = ((ItemFilterSalerGrid) item).getSelectedSaler();
+      String key = ((ItemFilterSalerGrid) item).getFilterModel().key;
+      if (StringUtils.isEmpty(selectedUser)) {
+        filterMap.remove(key);
+      } else {
+        filterMap.put(key, selectedUser);
+      }
     }
+  }
 
-    public Map<String, String> filterMap = new HashMap<>();
+  /**
+   * 用于避免在VM中持有Recycyler,Adapter等，但是不可避免的会持有Item,有待优化。
+   */
+  public List<AbstractFlexibleItem> getItems(List<FilterModel> filters) {
+    List<AbstractFlexibleItem> itemList = new ArrayList<>();
+    if (filters == null || filters.isEmpty()) return itemList;
 
-    private void getDataFromItem(AbstractFlexibleItem item) {
-        if (item instanceof ItemFilterCommon) {
-            List<Content> checkedContent = ((ItemFilterCommon) item).getCheckedContent();
-            String key = ((ItemFilterCommon) item).getData().key;
-            if (checkedContent.isEmpty()) {
-              filterMap.remove(key);
-            } else {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (Content content : checkedContent) {
-                    stringBuilder.append(content.value).append(",");
-                }
-                filterMap.put(key, stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString());
-            }
-        } else if (item instanceof ItemFilterList) {
-            String selectedUser = ((ItemFilterList) item).getSelectedUser();
-            String key = ((ItemFilterList) item).getFilterModel().key;
-            if (StringUtils.isEmpty(selectedUser)) {
-              filterMap.remove(key);
-            } else {
-                filterMap.put(key, selectedUser);
-            }
-        } else if (item instanceof ItemFilterRecommend) {
-            String selectedUser = ((ItemFilterRecommend) item).getSelectedSaler();
-            String key = ((ItemFilterRecommend) item).getFilterModel().key;
-            if (StringUtils.isEmpty(selectedUser)) {
-              filterMap.remove(key);
-            } else {
-                filterMap.put(key, selectedUser);
-            }
-        } else if (item instanceof ItemFilterSalerGrid) {
-            String selectedUser = ((ItemFilterSalerGrid) item).getSelectedSaler();
-            String key = ((ItemFilterSalerGrid) item).getFilterModel().key;
-            if (StringUtils.isEmpty(selectedUser)) {
-              filterMap.remove(key);
-            } else {
-                filterMap.put(key, selectedUser);
-            }
+    for (FilterModel filter : filters) {
+      if (filter.type == 2) {
+        if (filterTimeVisible) {
+          itemList.add(new ItemFilterTime(filter, this));
         }
+      } else if (filter.type == 3) {
+        itemList.add(new ItemFilterList(filter));
+      } else if (filter.type == 5) {
+        itemList.add(new ItemFilterRecommend(filter));
+      } else if (filter.type == 6) {
+        itemList.add(new ItemFilterSalerGrid(filter));
+      } else {
+        itemList.add(new ItemFilterCommon(filter, true));
+      }
     }
+    return itemList;
+  }
 
-    /**
-     * 用于避免在VM中持有Recycyler,Adapter等，但是不可避免的会持有Item,有待优化。
-     *
-     * @param filters
-     * @return
-     */
-    public List<AbstractFlexibleItem> getItems(List<FilterModel> filters) {
-        List<AbstractFlexibleItem> itemList = new ArrayList<>();
-        if (filters == null || filters.isEmpty()) return itemList;
+  @Override public void onTimeStart(String start, String key) {
+    filterMap.put("start", start);
+  }
 
-        for (FilterModel filter : filters) {
-            if (filter.type == 2) {
-                itemList.add(new ItemFilterTime(filter, this));
-            } else if (filter.type == 3) {
-                itemList.add(new ItemFilterList(filter));
-            } else if (filter.type == 5) {
-                itemList.add(new ItemFilterRecommend(filter));
-            } else if (filter.type == 6) {
-                itemList.add(new ItemFilterSalerGrid(filter));
-            } else {
-                itemList.add(new ItemFilterCommon(filter, true));
-            }
+  @Override public void onTimeEnd(String end, String key) {
+    filterMap.put("end", end);
+  }
 
-        }
-        return itemList;
-    }
-
-    @Override
-    public void onTimeStart(String start, String key) {
-        filterMap.put("start", start);
-    }
-
-    @Override
-    public void onTimeEnd(String end, String key) {
-        filterMap.put("end", end);
-    }
-
-    public void setSalerId(String salerId) {
-        this.salerId = salerId;
-    }
+  public void setSalerId(String salerId) {
+    this.salerId = salerId;
+  }
 }

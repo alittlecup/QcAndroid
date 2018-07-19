@@ -59,13 +59,13 @@ public class FilterUserCase {
             Flowable.just("filter.json").map(s -> new Gson().fromJson(
                 FileUtils.getJsonFromAssert("filter.json", application), FilterWrapper.class).filters);
 
-        Flowable<FollowRecordStatusListWrap> recordStatus =
-            remoteService.qcGetTrackStatus().map(followRecordStatusListWrapQcDataResponse -> {
-                if(followRecordStatusListWrapQcDataResponse.status==200){
-                    return followRecordStatusListWrapQcDataResponse.data;
-                }
-                throw new HttpException(followRecordStatusListWrapQcDataResponse.getMsg(),0);
-            });
+        //Flowable<FollowRecordStatusListWrap> recordStatus =
+        //    remoteService.qcGetTrackStatus().map(followRecordStatusListWrapQcDataResponse -> {
+        //        if(followRecordStatusListWrapQcDataResponse.status==200){
+        //            return followRecordStatusListWrapQcDataResponse.data;
+        //        }
+        //        throw new HttpException(followRecordStatusListWrapQcDataResponse.getMsg(),0);
+        //    });
 
         Flowable<SalerUserListWrap> salers = remoteService.qcGetTrackStudentsRecommends(id, params).map(
             salerUserListWrapQcDataResponse -> {
@@ -88,8 +88,8 @@ public class FilterUserCase {
             throw new HttpException(salerUserListWrapQcDataResponse.getMsg(),0);
         });
 
-        Flowable.zip(filter, recordStatus,salers, sources, (filterModels,recordStatusListWrap, salerUserListWrap, sourceBeans) -> {
-            filterModels.add(recordStatusToFilteModel(recordStatusListWrap));
+        Flowable.zip(filter,salers, sources, (filterModels, salerUserListWrap, sourceBeans) -> {
+            //filterModels.add(recordStatusToFilteModel(recordStatusListWrap));
             filterModels.add(salerusersToFilterModel(salerUserListWrap));
             filterModels.add(sourceBeanToFilterModel(sourceBeans));
             return filterModels;

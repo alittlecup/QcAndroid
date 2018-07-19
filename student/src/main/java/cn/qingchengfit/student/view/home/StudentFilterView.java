@@ -27,14 +27,15 @@ public class StudentFilterView
 
   @Override protected void subscribeUI() {
     // REFACTOR: 2017/12/11
+    mViewModel.setFilterTimeVisible(filterTimeVisible);
     mViewModel.getRemoteFilters().observe(this, filterModels -> {
       mViewModel.items.set(mViewModel.getItems(filterModels));
     });
     mViewModel.getmResetEvent().observe(this, aVoid -> {
       showDialog();
     });
-    mViewModel.getmFilterMap().observe(this,params->{
-      if(listener!=null){
+    mViewModel.getmFilterMap().observe(this, params -> {
+      if (listener != null) {
         listener.onConfirm(new HashMap<>(params));
       }
     });
@@ -56,19 +57,26 @@ public class StudentFilterView
         })
         .show();
   }
+  private boolean filterTimeVisible=true;
+  public void setFilterTimeVisible(boolean visible) {
+    filterTimeVisible=visible;
+    if (mViewModel != null) {
+      mViewModel.setFilterTimeVisible(visible);
+    }
+  }
 
   public void setListener(onRightFilterCloseListener listener) {
     this.listener = listener;
   }
 
   private onRightFilterCloseListener listener;
+
   private void doReset() {
     for (int i = 0; i < adapter.getItemCount(); i++) {
       adapter.addSelection(i);
     }
     adapter.notifyDataSetChanged();
   }
-
 
   @Override
   public ViewStudentFilterBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
