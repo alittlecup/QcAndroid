@@ -90,7 +90,6 @@ public class AllotChooseViewModel extends BaseViewModel {
     salerResponse = Transformations.switchMap(salserStaffids, this::allotSalerRemote);
   }
 
-  // TODO: 2018/7/5
   public LiveData<Resource<SalerTeachersListWrap>> loadData() {
     return studentRepository.qcGetAllAllocateCoaches(loginStatus.staff_id(),
         gymWrapper.getParams());

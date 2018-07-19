@@ -70,7 +70,6 @@ public class FollowUpTopSalerView extends BaseGirdListFragment implements
         }
         commonFlexAdapter.notifyItemChanged(i);
         commonFlexAdapter.notifyItemChanged(tmp);
-        // REFACTOR: 2017/11/20 adapter选中效果有延迟
         if (commonFlexAdapter.getItem(i) instanceof ChooseSalerItem) {
             if (commonFlexAdapter.isSelected(i)) {
                 Staff saler = ((ChooseSalerItem) datas.get(i)).getSaler();

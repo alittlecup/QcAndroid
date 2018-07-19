@@ -48,7 +48,6 @@ import java.util.Map;
     initToolbar();
     initFragment();
     initListener();
-    // TODO: 2018/6/25  设置需要展示的数据
     return mBinding;
   }
 

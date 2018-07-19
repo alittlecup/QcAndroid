@@ -26,7 +26,6 @@ public class StudentFilterView
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
-    // REFACTOR: 2017/12/11
     mViewModel.setFilterTimeVisible(filterTimeVisible);
     mViewModel.getRemoteFilters().observe(this, filterModels -> {
       mViewModel.items.set(mViewModel.getItems(filterModels));

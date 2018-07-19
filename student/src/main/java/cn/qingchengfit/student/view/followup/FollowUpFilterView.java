@@ -36,7 +36,6 @@ public class FollowUpFilterView extends BaseFilterFragment {
         studentStatusFragment.setStrings(status);
         studentStatusFragment.setOnSelectListener(position -> {
             mViewModel.studentStatus.setValue(position == 0 ? "会员状态" : status[position]);
-            // TODO: 2018/6/22 数据回传
             mViewModel.setStudentStatus(position == 0 ? null : String.valueOf(position - 1));
             dismiss();
         });

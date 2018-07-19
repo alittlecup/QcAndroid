@@ -164,7 +164,6 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
     toolbarTitile.setText("新建群发短信");
     toolbar.setNavigationContentDescription(R.string.common_cancel);
     toolbar.inflateMenu(R.menu.menu_send);
-    // TODO: 2018/7/8  取消
     tvLeft.setText("取消");
     tvLeft.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

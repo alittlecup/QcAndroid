@@ -86,7 +86,6 @@ public class AttendanceRankViewModel extends
         params.put("show_all", 1);
 
         return Transformations.map(respository.qcGetUsersAttendances(loginStatus.staff_id(),params),input -> {
-            // REFACTOR: 2017/11/17 在这里修改UI是有风险的
             AttendanceListWrap attendanceListWrap = dealResource(input);
             if(attendanceListWrap==null)return null;
             textDetail.set(filterText.get() + "出勤会员共" + attendanceListWrap.total_count + "人");

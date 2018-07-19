@@ -120,7 +120,6 @@ public class StudentRecyclerSortView
     }
     listView.setItems(studentItems);
     mBinding.includeFilter.setItems(new ArrayList<AbstractFlexibleItem>(studentItems));
-    // TODO: 2018/6/20 选中项
   }
 
   private void initFragment() {

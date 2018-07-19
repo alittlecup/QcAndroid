@@ -19,7 +19,6 @@ import java.util.List;
  */
 
 public class SortViewModel {
-  // REFACTOR: 2017/11/23 按钮选中之后点击颜色变化
   public final ObservableBoolean latestChecked = new ObservableBoolean(true);
   public final ObservableBoolean letterChecked = new ObservableBoolean(false);
   public final ObservableBoolean filterChecked = new ObservableBoolean(false);
