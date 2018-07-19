@@ -124,6 +124,7 @@ public interface StudentRepository {
    * @param params track_status
    */
   void qcAddTrackStatus(HashMap<String, Object> params,MutableLiveData<Resource<Object>> rst);
+  void qcEditTrackStatus(String status_id,HashMap<String, Object> params,MutableLiveData<Resource<Object>> rst);
 
   void qcDelTrackStatus(String id,MutableLiveData<Resource<Object>> rst);
 

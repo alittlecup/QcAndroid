@@ -1,7 +1,10 @@
 package cn.qingchengfit.student.bean;
 
+import android.content.Context;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.student.bingdings.BindingUtils;
+import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,26 +13,49 @@ public class FollowRecord {
   String id;
   String content;
   String track_type_id;
-  String track_status_id;
+  String track_status;
   List<User> notice_users;
   String next_track_time;
   List<Attach> image_attachments;//附件列表，图片
   User created_by;
+  String created_at;
+  public String getFollowMethodString(Context context){
 
-  public String getFollowMethodString(){
-    return "";
+    try {
+      int x = Integer.parseInt(track_type_id);
+      return BindingUtils.getFollowRecordMethod(x,context);
+    }catch (Exception e){
+      return "";
+    }
+
+  }
+
+
+  public String getImagePos(int pos){
+    if (image_attachments != null &&pos < image_attachments.size() ){
+      return image_attachments.get(pos).getLink();
+    }else return "";
   }
 
   public String getFollowStatusString(){
-    return "";
+    if (track_status == null)
+      return "";
+    return track_status;
   }
 
   public String getNotiOthers(){
-    return "";
+    if (notice_users != null){
+      return BindingUtils.getFollowRecordNotiOhters(notice_users,null);
+
+    }else return "";
+
   }
 
   public String getFollowTimeString(){
-    return "2017-12-20 11:00";
+    if (next_track_time == null)
+      return "";
+    else
+      return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(next_track_time));
   }
 
   public String getAvatar(){
@@ -65,7 +91,7 @@ public class FollowRecord {
     fr.image_attachments.add(attach);
     fr.image_attachments.add(attach);
     fr.image_attachments.add(attach);
-    fr.track_status_id = UUID.randomUUID().toString();
+    fr.track_status = UUID.randomUUID().toString();
     return fr;
   }
 }

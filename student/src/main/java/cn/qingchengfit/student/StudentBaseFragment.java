@@ -5,6 +5,7 @@ import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.network.Resource;
@@ -29,7 +30,9 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
   public <T> void dealResource(Resource<T> resource) {
     switch (resource.status) {
       case SUCCESS:
-        if (resource.data instanceof String){
+        if (resource.data != null && resource.data instanceof String
+          && !TextUtils.isEmpty((String)resource.data)
+          ){
           handleHttpSuccess((String) resource.data);
         }
         break;

@@ -76,9 +76,9 @@ public abstract class FlexibleViewModel<Source, AdapterItem, Identifier> extends
      * @param identifier the {@code Source} identifier to provide to the repository
      */
     public void loadSource(@NonNull Identifier identifier) {
-        if (!identifier.equals(this.identifier.getValue())) {
+       // if (!identifier.equals(this.identifier.getValue())) {
             this.identifier.setValue(identifier);
-        }
+        //}
     }
 
     /**

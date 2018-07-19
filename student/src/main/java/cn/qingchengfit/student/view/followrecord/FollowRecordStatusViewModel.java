@@ -53,7 +53,7 @@ public class FollowRecordStatusViewModel extends FlexibleViewModel<List<FollowRe
   public void editFollowStatus(String id,String status){
     HashMap<String,Object> param = new HashMap<>();
     param.put("track_status",status);
-    //studentRepository.param);
+    studentRepository.qcEditTrackStatus(id,param,defaultResult);
   }
 
   public void deleteFollowStatus(String id){

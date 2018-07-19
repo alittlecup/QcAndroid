@@ -28,7 +28,7 @@ public class BindingUtils {
   public static String getFollowRecordStatus(FollowRecordStatus status){
     if (status != null)
       return status.getTrack_status();
-    else return "";
+    else return "请填写";
   }
 
   /**

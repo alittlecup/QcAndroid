@@ -13,6 +13,12 @@ public class DataBindings {
     PhotoUtils.smallCircle(v,url);
   }
 
+  @BindingAdapter(value = {"bindSmallSrc"},requireAll = false)
+  public static void bindSmallSrc(ImageView v,String url){
+    PhotoUtils.small(v,url);
+  }
+
+
   @BindingAdapter(value = {"civ_content"},requireAll = false)
   public static void setContent(CommonInputView v,String c){
     v.setContent(c);

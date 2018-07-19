@@ -23,14 +23,17 @@ import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import eu.davidea.flexibleadapter.helpers.ItemTouchHelperCallback;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 @Leaf(module = "student", path = "/student/follow_record_status")
 public class FollowRecordStatusPage
-  extends StudentBaseFragment<StPageFollowRecordStatusBinding, FollowRecordStatusViewModel> {
+  extends StudentBaseFragment<StPageFollowRecordStatusBinding, FollowRecordStatusViewModel>
+  implements FlexibleAdapter.OnItemClickListener{
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
@@ -45,7 +48,6 @@ public class FollowRecordStatusPage
     initToolbar();
     initRecyclerView();
     HashMap<String,Object> map = new HashMap<>();
-
     mViewModel.loadSource(map);
     RxBusAdd(EventClickViewPosition.class)
       .subscribe(new BusSubscribe<EventClickViewPosition>() {
@@ -71,8 +73,9 @@ public class FollowRecordStatusPage
       .withBottomEdge(true));
     adapter = new CommonFlexAdapter(new ArrayList(), this);
     mBinding.recyclerView.setAdapter(adapter);
+
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter.setSwipeEnabled(true);
+
   }
 
   private void initToolbar() {
@@ -101,7 +104,7 @@ public class FollowRecordStatusPage
     DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称",conent, "取消", "确定", new MaterialDialog.SingleButtonCallback() {
       @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
         if (materialDialog.getInputEditText() != null && materialDialog.getInputEditText().getText()!=null)
-          mViewModel.addFollowStatus(
+          mViewModel.editFollowStatus(statusId,
             materialDialog.getInputEditText() != null ? Objects.requireNonNull(
               materialDialog.getInputEditText()).getText().toString().trim() : null);
       }
@@ -117,5 +120,15 @@ public class FollowRecordStatusPage
           mViewModel.deleteFollowStatus(id);
         }
       });
+  }
+
+  @Override protected void handleHttpSuccess(String s) {
+
+    mViewModel.loadSource(new HashMap<>());
+  }
+
+  @Override public boolean onItemClick(int position) {
+
+    return true;
   }
 }

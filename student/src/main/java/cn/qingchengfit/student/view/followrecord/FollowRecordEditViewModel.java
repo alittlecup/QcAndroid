@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.followrecord;
 
 import android.arch.lifecycle.MutableLiveData;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
@@ -29,6 +30,14 @@ public class FollowRecordEditViewModel extends BaseViewModel {
   @Inject StudentRepository studentRepository;
   @Inject StudentWrap studentWrap;
 
+  public ArrayList<Staff> getSalers(){
+    ArrayList<Staff> ret = new ArrayList<>();
+    if (studentWrap.getStudentBean() != null){
+      ret.addAll(studentWrap.getStudentBean().sellers);
+    }
+    return ret;
+  }
+
   public void loadFollowRecordStatus(){
     studentRepository.qcGetTrackStatus(followRecordStatus,defaultResult);
   }
@@ -42,7 +51,7 @@ public class FollowRecordEditViewModel extends BaseViewModel {
       .content(content.getValue())
       .next_track_time(nextFollowTime.getValue())
       .notice_users(notiOthers.getValue())
-      .track_type_id(followMethod.getValue()+"")
+      .track_type_id(followMethod.getValue()==null?null:(followMethod.getValue()+""))
       .track_status_id(followStatus.getValue()==null?null:followStatus.getValue().getId())
       .attachments(attaches.size() > 0?attaches:null)
       .build(),defaultResult);

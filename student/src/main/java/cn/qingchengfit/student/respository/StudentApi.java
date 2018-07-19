@@ -405,7 +405,7 @@ public interface StudentApi {
   /**
    * 跟进记录列表
    */
-  @GET("/api/staffs/{staff_id}/users/{user_id}/records/?format=app")
+  @GET("/api/staffs/{staff_id}/users/{user_id}/records/?format=app&order_by=created_at&show_all=1")
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(@Path("staff_id") String staff_id,
     @Path("user_id") String user_id,@QueryMap HashMap<String, Object> params);
 

@@ -5,49 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     >
-  <LinearLayout
-      android:id="@+id/rear_right_view"
-      android:visibility="gone"
-      android:layout_width="wrap_content"
-      android:layout_height="120dp"
-      android:orientation="horizontal"
-      android:layout_gravity="end|right"
-      >
-    <ImageView
-        android:id="@+id/btn_edit"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@color/warm_grey"
-        android:scaleType="center"
-        app:srcCompat="@drawable/vd_edit_white_24dp"
-        />
-    <ImageView
-        android:id="@+id/btn_del"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@color/red"
-        android:scaleType="center"
-        app:srcCompat="@drawable/vd_delete_forever_white_24dp"
-        />
-  </LinearLayout>
-  <FrameLayout
-      android:id="@+id/front_view"
+  <cn.qingchengfit.widgets.SwipeLayout
+      android:id="@+id/ly_swipe"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-
+      android:layout_height="match_parent"
       >
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        style="@style/QcTextStyleStandardDark"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:text="@string/common_comfirm"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        />
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|right"
+        >
 
-  </FrameLayout>
+      <ImageView
+          android:id="@+id/btn_edit"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:background="@color/warm_grey"
+          android:scaleType="center"
+          app:srcCompat="@drawable/vd_edit_white_24dp"
+          />
+      <ImageView
+          android:id="@+id/btn_del"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:background="@color/red"
+          android:scaleType="center"
+          app:srcCompat="@drawable/vd_delete_forever_white_24dp"
+          />
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/front_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+      <TextView
+          android:id="@+id/tv"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:background="@color/white"
+          style="@style/QcTextStyleStandardDark"
+          xmlns:tools="http://schemas.android.com/tools"
+          tools:text="@string/common_comfirm"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          />
+    </FrameLayout>
+
+  </cn.qingchengfit.widgets.SwipeLayout>
 
 </FrameLayout>
 

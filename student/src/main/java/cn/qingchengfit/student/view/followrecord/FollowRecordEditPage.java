@@ -104,12 +104,9 @@ import java.util.Objects;
       showFollowTimeDialog();
     });
     mBinding.cmNotifyOther.setOnClickListener(view -> {
-      ArrayList<Staff> staffs = new ArrayList<>();
-      staffs.add(new Staff(new User("志恒","123123","123123",1),"25"));
-      staffs.add(new Staff(new User("志恒1","123123","123123",1),"26"));
-      staffs.add(new Staff(new User("志恒2","123123","123123",1),"27"));
+
       routeTo("/followrecord/notiothers/",NotiOthersPageParams.builder()
-        .staffs(staffs)
+        .staffs(mViewModel.getSalers())
         .build());
     });
     mBinding.tvEditStatus.setOnClickListener(view -> {
@@ -139,6 +136,7 @@ import java.util.Objects;
         }
         if (uris.size() < 5)
           adapter.addItem(new ItemGridImageAdd());
+        mBinding.chooseImg.setVisibility(uris.size() > 0?View.GONE:View.VISIBLE);
       });
     }
     if (!picDialog.isVisible()) picDialog.show(getChildFragmentManager(), "");

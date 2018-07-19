@@ -6,6 +6,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
+import cn.qingchengfit.widgets.SwipeLayout;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -35,12 +36,10 @@ public class FollowRecordStatusItem
 
   @Override public ViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
     ViewHolder vh = new ViewHolder(view, adapter);
+
     return vh;
   }
 
-  @Override public boolean isSwipeable() {
-    return true;
-  }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ViewHolder holder, int position,
     List payloads) {
@@ -49,33 +48,56 @@ public class FollowRecordStatusItem
 
   class ViewHolder extends FlexibleViewHolder {
     TextView t;
-    View rightView;
-    View fontView;
 
-    private View.OnClickListener listener = v -> RxBus.getBus()
+    View fontView;
+    SwipeLayout swipeLayout;
+    private View.OnClickListener listener = v -> {
+      RxBus.getBus()
       .post(new EventClickViewPosition.Builder().id(v.getId())
         .position(getFlexibleAdapterPosition())
         .build());
+      swipeLayout.close();
+    };
 
     public ViewHolder(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       t = view.findViewById(R.id.tv);
-      rightView = view.findViewById(R.id.rear_right_view);
+      swipeLayout = view.findViewById(R.id.ly_swipe);
+      swipeLayout.addDrag(SwipeLayout.DragEdge.Left, view.findViewById(R.id.bottom_wrapper));
+      swipeLayout.setRightSwipeEnabled(true);
+      swipeLayout.setLeftSwipeEnabled(false);
+      swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+        @Override public void onStartOpen(SwipeLayout layout) {
+
+        }
+
+        @Override public void onOpen(SwipeLayout layout) {
+
+        }
+
+        @Override public void onStartClose(SwipeLayout layout) {
+
+        }
+
+        @Override public void onClose(SwipeLayout layout) {
+
+        }
+
+        @Override public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+        }
+
+        @Override public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+        }
+      });
       fontView = view.findViewById(R.id.front_view);
+      swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+      view.findViewById(R.id.btn_edit).setClickable(true);
       view.findViewById(R.id.btn_edit).setOnClickListener(listener);
       view.findViewById(R.id.btn_del).setOnClickListener(listener);
     }
 
-    @Override protected boolean shouldActivateViewWhileSwiping() {
-      return true;
-    }
 
-    @Override public View getFrontView() {
-      return fontView;
-    }
-
-    @Override public View getRearRightView() {
-      return rightView;
-    }
   }
 }

@@ -97,6 +97,7 @@
               android:layout_height="60dp"
               android:layout_weight="1"
               tools:src="@drawable/img_recruit_default"
+              app:bindSmallSrc="@{info.getImagePos(0)}"
               />
           <ImageView
               android:id="@+id/img_02"
@@ -105,6 +106,7 @@
               android:layout_weight="1"
               tools:src="@drawable/img_recruit_default"
               android:visibility="@{info.getAttachSize() > 1 ?View.VISIBLE:View.GONE}"
+              app:bindSmallSrc="@{info.getImagePos(1)}"
               />
           <FrameLayout
               android:layout_width="0dp"
@@ -118,6 +120,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 tools:src="@drawable/img_recruit_default"
+                app:bindSmallSrc="@{info.getImagePos(2)}"
                 />
             <TextView
                 android:layout_gravity="center"
@@ -152,7 +155,7 @@
               style="@style/QcTextStyleStandardWarm"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@{`跟进方式：`+info.getFollowMethodString()}"
+              android:text="@{`跟进方式：`+info.getFollowMethodString(context)}"
               />
           <android.support.v4.widget.Space
               android:layout_width="0dp"
