@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
+import cn.qingchengfit.saascommon.filtertime.FilterTimesFragment;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="cn.qingchengfit.widgets.QcFilterToggle" />
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+        <variable
+            name="viewModel"
+            type="cn.qingchengfit.student.view.transfer.TransferStudentViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/common_simple_toolbar"
+            bind:toolbarModel="@{toolbarModel}" />
+
+        <cn.qingchengfit.widgets.QcRadioGroup
+            android:id="@+id/qc_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            app:clearCheck="@{!viewModel.filterVisible}">
+
+            <cn.qingchengfit.widgets.QcFilterToggle
+                android:id="@+id/qft_saler"
+                style="@style/QcFilterStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_click"
+                android:onClick="@{(view)->viewModel.onTopFilterClick(((QcFilterToggle)view).isChecked(),0)}"
+                android:text="@{viewModel.staffName}"
+                app:ft_text_off="销售"
+                app:ft_text_on="销售"
+                app:ft_text_size="13sp" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/divider_grey" />
+
+            <cn.qingchengfit.widgets.QcFilterToggle
+                android:id="@+id/qft_times"
+                style="@style/QcFilterStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_click"
+                android:onClick="@{(view)->viewModel.onTopFilterClick(((QcFilterToggle)view).isChecked(),1)}"
+                android:text="@{viewModel.days}"
+                app:ft_text_off="最近7天"
+                app:ft_text_on="最近7天"
+                app:ft_text_size="13sp" />
+        </cn.qingchengfit.widgets.QcRadioGroup>
+
+        <include layout="@layout/divider_grey" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/divider_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/bg_grey"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+
+            <include layout="@layout/divider_grey" />
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/scroll_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/myhome_appBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_grey"
+                    android:fitsSystemWindows="true"
+                    app:elevation="0dp"
+                    app:expanded="@{viewModel.appBarLayoutExpend}">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="@color/white"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
+
+                        <TextView
+                            android:id="@+id/tv_lable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="24dp"
+                            android:gravity="center"
+                            android:text="@{@string/transfer_student_sign_text(viewModel.days)}"
+                            android:textColor="@color/qc_text_black"
+                            android:textSize="@dimen/common_font" />
+
+                        <View
+                            android:layout_width="24dp"
+                            android:layout_height="3dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/divider_grey" />
+
+                        <cn.qingchengfit.widgets.FunnelTwoView
+                            android:id="@+id/funnelview2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            app:datas="@{viewModel.funnelTwoViewDatas}"
+                            android:background="@color/white" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_student_list_hint"
+                        style="@style/TextTitleHint"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text='@{viewModel.days+"注册的会员"}' />
+
+                </android.support.design.widget.AppBarLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:items="@{viewModel.items}"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            </android.support.design.widget.CoordinatorLayout>
+
+
+            <FrameLayout
+                android:id="@+id/frag_filter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/halftransparent_grey"
+                app:visibleGone="@{viewModel.filterVisible}" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

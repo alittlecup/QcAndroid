@@ -268,7 +268,7 @@ public class StudentBusinessUtils {
   //  }
   //  return null;
   //}
-  //
+
   public static LineData transformBean2DataByType(List<Integer> bean, int offSetDay, String type,
       boolean first) {
     switch (type) {

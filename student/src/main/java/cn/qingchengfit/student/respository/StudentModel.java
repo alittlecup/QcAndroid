@@ -8,7 +8,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.AttendanceCharDataBean;
+import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
@@ -26,6 +29,8 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.bean.StudentTransferBean;
+import cn.qingchengfit.student.bean.StudentWIthCount;
 import com.google.errorprone.annotations.Var;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -372,34 +377,34 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
   }
   //
-  //@Override
-  //public Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentsConver(staff_id, params);
-  //}
+  @Override
+  public Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudentsConver(staff_id, params);
+  }
   //
-  //@Override
-  //public Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetAttendanceChart(id, params);
-  //}
-  //
-  //@Override public Observable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetUsersAbsences(id, params);
-  //}
-  //
-  //@Override public Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetUsersAttendances(id, params);
-  //}
-  //
-  //@Override
-  //public Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetNotSignStudent(staffId, params);
-  //}
-  //
+  @Override
+  public Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetAttendanceChart(id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetUsersAbsences(id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetUsersAttendances(id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetNotSignStudent(staffId, params);
+  }
+
   @Override
   public Flowable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id,
       HashMap<String, Object> params) {

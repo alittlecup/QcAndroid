@@ -1,7 +1,10 @@
 package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
+import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.AttendanceCharDataBean;
+import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
@@ -20,6 +23,8 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.bean.StudentTransferBean;
+import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
@@ -212,14 +217,14 @@ public interface IStudentModel {
    * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
    * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
    */
-  //Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
+      HashMap<String, Object> params);
 
   /**
    * 获取缺勤图表数据
    */
-  //Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
+      HashMap<String, Object> params);
 
   /**
    * 缺勤列表
@@ -231,8 +236,8 @@ public interface IStudentModel {
    * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
    * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
    */
-  //Observable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id,
+      HashMap<String, Object> params);
 
   /**
    * @param params 必传start, end，
@@ -246,14 +251,14 @@ public interface IStudentModel {
    * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
    * 142},
    */
-  //Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id,
+      HashMap<String, Object> params);
 
   /**
    * 获取未签课的学员
    */
-  //Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId,
-  //HashMap<String, Object> params);
+  Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId,
+  HashMap<String, Object> params);
 
   /**
    * 推荐人列表

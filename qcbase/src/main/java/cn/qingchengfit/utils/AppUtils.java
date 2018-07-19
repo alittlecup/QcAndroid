@@ -63,9 +63,9 @@ public class AppUtils {
     Uri uri = null;
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       uri = FileProvider.getUriForFile(context,
-        context.getApplicationContext().getPackageName() + ".provider", file);
+          context.getApplicationContext().getPackageName() + ".provider", file);
       context.grantUriPermission(context.getApplicationContext().getPackageName(), uri,
-        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -80,7 +80,7 @@ public class AppUtils {
 
   public static void showKeyboard(Context context, View v) {
     InputMethodManager imm =
-      (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
     //        ((InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -88,7 +88,7 @@ public class AppUtils {
 
   public static void hideKeyboard(Activity activity) {
     InputMethodManager inputManager =
-      (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
     // check if no view has focus:
     View v = activity.getCurrentFocus();
@@ -105,6 +105,15 @@ public class AppUtils {
     }
   }
 
+  public static void doCallPhoneTo(Context context, String phoneNumber) {
+    if (PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
+      Uri uri = Uri.parse(new StringBuilder().append("tel:").append(phoneNumber).toString());
+      Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
+      dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      context.startActivity(dialntent);
+    }
+  }
+
   /**
    * 判断应用是否已经启动
    *
@@ -114,24 +123,24 @@ public class AppUtils {
    */
   public static boolean isAppAlive(Context context, String packageName) {
     ActivityManager activityManager =
-      (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     List<ActivityManager.RunningAppProcessInfo> processInfos =
-      activityManager.getRunningAppProcesses();
+        activityManager.getRunningAppProcesses();
     for (int i = 0; i < processInfos.size(); i++) {
       if (processInfos.get(i).processName.equals(packageName)) {
         Log.i("NotificationLaunch",
-          String.format("the %s is running, isAppAlive return true", packageName));
+            String.format("the %s is running, isAppAlive return true", packageName));
         return true;
       }
     }
     Log.i("NotificationLaunch",
-      String.format("the %s is not running, isAppAlive return false", packageName));
+        String.format("the %s is not running, isAppAlive return false", packageName));
     return false;
   }
 
   public static void hideKeyboardFore(Context context) {
     InputMethodManager inputMethodManager =
-      (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
   }
 
@@ -142,9 +151,9 @@ public class AppUtils {
   }
 
   public static String getManifestData(Activity context, String dataname)
-    throws PackageManager.NameNotFoundException {
+      throws PackageManager.NameNotFoundException {
     ApplicationInfo info = context.getPackageManager()
-      .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+        .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
     return info.metaData.getString(dataname);
   }
 
@@ -161,8 +170,8 @@ public class AppUtils {
 
   public static String getCurAppName(Context context) {
     switch (getCurApp(context)) {
-        case 0:
-            return "Trainer";
+      case 0:
+        return "Trainer";
       case 1:
         return "Staff";
       case 2:
@@ -173,29 +182,29 @@ public class AppUtils {
   }
 
   public static String getCurAppSchema(Context context) {
-//      if (context.getApplicationContext().getPackageName().endsWith("staffkit")
-//              ||context.getApplicationContext().getPackageName().endsWith("pos")||
-//              context.getApplicationContext().getPackageName().contains("fitcoach")) {
-          switch (getCurApp(context)) {
-              case 1:
-                  return "qcstaff";
-              case 2:
-                  return "qcpos";
-              default:
-                  return "qccoach";
-          }
-//      }else {
-//          int p = context.getPackageName().lastIndexOf(".");
-//          String append = context.getPackageName().substring(p+1);
-//          switch (getCurApp(context)) {
-//              case 1:
-//                  return "qcstaff"+append;
-//              case 2:
-//                  return "qcpos"+ append;
-//              default:
-//                  return "qccoach"+ append;
-//          }
-//      }
+    //      if (context.getApplicationContext().getPackageName().endsWith("staffkit")
+    //              ||context.getApplicationContext().getPackageName().endsWith("pos")||
+    //              context.getApplicationContext().getPackageName().contains("fitcoach")) {
+    switch (getCurApp(context)) {
+      case 1:
+        return "qcstaff";
+      case 2:
+        return "qcpos";
+      default:
+        return "qccoach";
+    }
+    //      }else {
+    //          int p = context.getPackageName().lastIndexOf(".");
+    //          String append = context.getPackageName().substring(p+1);
+    //          switch (getCurApp(context)) {
+    //              case 1:
+    //                  return "qcstaff"+append;
+    //              case 2:
+    //                  return "qcpos"+ append;
+    //              default:
+    //                  return "qccoach"+ append;
+    //          }
+    //      }
   }
 
   public static Uri getRouterUri(Context context, String path) {
@@ -208,7 +217,7 @@ public class AppUtils {
    */
   public static int getHeaderDrawable(int gender) {
     return gender == 1 ? R.drawable.ic_default_staff_women_head
-      : R.drawable.ic_default_staff_man_head;
+        : R.drawable.ic_default_staff_man_head;
   }
 
   /**
@@ -226,18 +235,16 @@ public class AppUtils {
 
   public boolean isAppOnForeground(Context context) {
     ActivityManager activityManager =
-      (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
     List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
     if (tasksInfo.size() > 0) {
 
       // 应用程序位于堆栈的顶层
       if (TextUtils.equals(tasksInfo.get(0).topActivity.getPackageName(),
-        context.getPackageName())) {
+          context.getPackageName())) {
         return true;
       }
     }
     return false;
   }
-
-
 }

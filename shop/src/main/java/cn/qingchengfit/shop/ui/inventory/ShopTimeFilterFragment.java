@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import cn.qingchengfit.saasbase.student.views.filtertime.FilterCustomFragment;
+import cn.qingchengfit.saascommon.filtertime.FilterCustomFragment;
 import cn.qingchengfit.shop.R;
 
 /**

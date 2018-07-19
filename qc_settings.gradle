@@ -31,7 +31,7 @@ android {
     targetSdkVersion cfg.targetSdk
     versionCode 1
     versionName "1.0"
-
+    multiDexEnabled true
     vectorDrawables.useSupportLibrary true
     javaCompileOptions {
       annotationProcessorOptions {

@@ -3,7 +3,10 @@ package cn.qingchengfit.student.respository;
 import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.AttendanceCharDataBean;
+import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
@@ -21,6 +24,8 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.bean.StudentTransferBean;
+import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import java.util.HashMap;
@@ -207,64 +212,64 @@ public interface StudentApi {
           @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
 
-  //    /**
-  //     * 转换率
-  //     * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
-  //     * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/conver/stat/")
-  //    Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
-  //
-  //    /**
-  //     * 获取缺勤图表数据
-  //     */
-  //    @GET("/api/staffs/{id}/users/attendance/glance/")
-  //    Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(@Path("id") String id,
-  //        @QueryMap HashMap<String, Object> params);
-  //
-  //
-  //    /**
-  //     * 缺勤列表
-  //     *
-  //     * @param params 缺勤<7： absence__lt=7，
-  //     *               7-30天：absence__gte=7&absence__lte=30,
-  //     *               缺勤>60天：absence__ge=60
-  //     * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
-  //     * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
-  //     * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/absence/")
-  //    Observable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(@Path("staff_id") String id,
-  //        @QueryMap HashMap<String, Object> params);
-  //
-  //
-  //    /**
-  //     * @param params 必传start, end，
-  //     *               可选排序字段 加 “-”说明是倒序
-  //     *               order_by=
-  //     *               days      -days
-  //     *               group     -group
-  //     *               private     -private
-  //     *               checkin   -checkin
-  //     * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
-  //     * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
-  //     * 142},
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/attendance/")
-  //    Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(
-  //        @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
-  //
-  //
-  //    /**
-  //     * 获取未签课的学员
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/checkin/records/")
-  //    Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
-  //        @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
-  //
-  //
+      /**
+       * 转换率
+       * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
+       * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
+       */
+      @GET("/api/staffs/{staff_id}/users/conver/stat/")
+      Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
+          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+
+      /**
+       * 获取缺勤图表数据
+       */
+      @GET("/api/staffs/{id}/users/attendance/glance/")
+      Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(@Path("id") String id,
+          @QueryMap HashMap<String, Object> params);
+
+
+      /**
+       * 缺勤列表
+       *
+       * @param params 缺勤<7： absence__lt=7，
+       *               7-30天：absence__gte=7&absence__lte=30,
+       *               缺勤>60天：absence__ge=60
+       * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
+       * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
+       * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
+       */
+      @GET("/api/staffs/{staff_id}/users/absence/")
+      Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(@Path("staff_id") String id,
+          @QueryMap HashMap<String, Object> params);
+
+
+      /**
+       * @param params 必传start, end，
+       *               可选排序字段 加 “-”说明是倒序
+       *               order_by=
+       *               days      -days
+       *               group     -group
+       *               private     -private
+       *               checkin   -checkin
+       * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
+       * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
+       * 142},
+       */
+      @GET("/api/staffs/{staff_id}/users/attendance/")
+      Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(
+          @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
+
+
+      /**
+       * 获取未签课的学员
+       */
+      @GET("/api/staffs/{staff_id}/users/checkin/records/")
+      Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
+          @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
+
+
       /**
        * 推荐人列表
        * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=

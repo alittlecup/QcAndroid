@@ -1,5 +1,6 @@
 package cn.qingchengfit.student;
 
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
@@ -15,6 +16,10 @@ import cn.qingchengfit.student.view.allot.AllotListViewModel;
 import cn.qingchengfit.student.view.allot.SalerStudentsPage;
 import cn.qingchengfit.student.view.allot.SalerStudentsViewModel;
 import cn.qingchengfit.student.view.allot.StudentAllotViewModel;
+import cn.qingchengfit.student.view.attendance.AttendanceStudentViewModel;
+import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentViewModel;
+import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignViewModel;
+import cn.qingchengfit.student.view.attendance.rank.AttendanceRankViewModel;
 import cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel;
@@ -33,6 +38,7 @@ import cn.qingchengfit.student.view.home.StudentHomeViewModel;
 import cn.qingchengfit.student.view.home.StudentListViewModel;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortViewModel;
 import cn.qingchengfit.student.view.state.StudentStateInfoViewModel;
+import cn.qingchengfit.student.view.transfer.TransferStudentViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -121,5 +127,22 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(StudentBirthdayViewModel.class)
   abstract ViewModel bindStudentBirthdayViewModel(StudentBirthdayViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(TransferStudentViewModel.class)
+  abstract ViewModel bindTransferStudentViewModel(TransferStudentViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(AttendanceStudentViewModel.class)
+  abstract ViewModel bindAttendanceStudentViewModel(AttendanceStudentViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(AttendanceRankViewModel.class)
+  abstract ViewModel bindAttendanceRankViewModel(AttendanceRankViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(AttendanceNosignViewModel.class)
+  abstract ViewModel bindAttendanceNosignViewModel(AttendanceNosignViewModel model);
+
+  @Binds @IntoMap @ViewModelKey(AttendanceAbsentViewModel.class)
+  abstract ViewModel bindAttendanceAbsentViewModel(AttendanceAbsentViewModel model);
+
+
 }
 

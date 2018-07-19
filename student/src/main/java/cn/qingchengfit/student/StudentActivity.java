@@ -9,6 +9,10 @@ import cn.qingchengfit.student.view.allot.AllotChooseSellerPage;
 import cn.qingchengfit.student.view.allot.SalerStudentsPage;
 import cn.qingchengfit.student.view.allot.StudentAllotPage;
 import cn.qingchengfit.student.view.allot.StudentAllotStaffPage;
+import cn.qingchengfit.student.view.attendance.AttendanceStudentPage;
+import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentPage;
+import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
+import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
 import cn.qingchengfit.student.view.birthday.StudentBirthdayPage;
 import cn.qingchengfit.student.view.export.ImportExportFragment;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditPage;
@@ -31,6 +35,7 @@ import cn.qingchengfit.student.view.sendmsg.MsgSendFragmentFragment;
 import cn.qingchengfit.student.view.sendmsg.SendMsgHomeFragment;
 import cn.qingchengfit.student.view.sendmsg.ShortMsgDetailFragment;
 import cn.qingchengfit.student.view.state.StudentStateInfoPage;
+import cn.qingchengfit.student.view.transfer.TransferStudentPage;
 import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
@@ -43,9 +48,9 @@ import javax.inject.Inject;
     FollowRecordStatusPage.class, SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
     FollowUpTopSalerView.class, FollowUpFilterView.class, MsgSendFragmentFragment.class,
     ImportExportFragment.class, SalerStudentsPage.class, AllotChooseSellerPage.class,
-    AllotChooseCoachPage.class, StudentBirthdayPage.class, NotiOthersPage.class
-
-
+    AllotChooseCoachPage.class, StudentBirthdayPage.class,TransferStudentPage.class,
+    AttendanceStudentPage.class, AttendanceRankPage.class, AttendanceNosignPage.class,
+    AttendanceAbsentPage.class, NotiOthersPage.class
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 

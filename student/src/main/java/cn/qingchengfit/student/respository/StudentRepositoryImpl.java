@@ -12,7 +12,10 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.AttendanceCharDataBean;
+import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
@@ -27,6 +30,8 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.bean.StudentTransferBean;
+import cn.qingchengfit.student.bean.StudentWIthCount;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
@@ -74,36 +79,39 @@ import javax.inject.Singleton;
   }
 
   static <T> void bindToLiveData(MutableLiveData<T> liveData,
-    Flowable<QcDataResponse<T>> observable, MutableLiveData<Resource<Object>> result,String tag) {
+      Flowable<QcDataResponse<T>> observable, MutableLiveData<Resource<Object>> result,
+      String tag) {
     BindLiveData.bindLiveData(observable.compose(RxHelper.schedulersTransformerFlow()), liveData,
-      result,tag);
+        result, tag);
   }
 
-  //
-  //public LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService.qcGetAttendanceChart(id, params));
-  //}
-  //
-  //public LiveData<AbsentceListWrap> qcGetUsersAbsences(String id, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService.qcGetUsersAbsences(id, params));
-  //}
-  //
-  //
-  //public LiveData<AttendanceListWrap> qcGetUsersAttendances(String id, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService.qcGetUsersAttendances(id, params));
-  //
-  //}
-  //
-  //
-  //public LiveData<List<StudentWIthCount>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService.qcGetNotSignStudent(staffId, params));
-  //}
+  public LiveData<Resource<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetAttendanceChart(id, params));
+  }
+
+  public LiveData<Resource<AbsentceListWrap>> qcGetUsersAbsences(String id,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetUsersAbsences(id, params));
+  }
+
+  public LiveData<Resource<AttendanceListWrap>> qcGetUsersAttendances(String id,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetUsersAttendances(id, params));
+  }
   //
   //
-  //public LiveData<StudentTransferBean> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params) {
-  //
-  //    return toLiveData(remoteService.qcGetTrackStudentsConver(staff_id, params));
-  //}
+  public LiveData<Resource<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
+      return toLiveData(remoteService.qcGetNotSignStudent(staffId, params));
+  }
+
+
+  public LiveData<Resource<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
+      HashMap<String, Object> params) {
+
+    return toLiveData(remoteService.qcGetTrackStudentsConver(staff_id, params));
+  }
+
   //
   //
   //public LiveData<FollowUpDataStatistic> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params) {
@@ -118,12 +126,12 @@ import javax.inject.Singleton;
   }
 
   public LiveData<Resource<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type,
-    HashMap<String, Object> params) {
+      HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetStaffList(staff_id, type, params));
   }
 
   public LiveData<Resource<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type,
-    HashMap<String, Object> params) {
+      HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetAllotStaffMembers(staff_id, type, params));
   }
 
@@ -143,13 +151,13 @@ import javax.inject.Singleton;
   //}
   //
   @Override public LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
-    String staff_id, HashMap<String, Object> params) {
+      String staff_id, HashMap<String, Object> params) {
 
     return toLiveData(remoteService.qcGetAllAllocateCoaches(staff_id, params));
   }
 
   @Override public LiveData<Resource<Boolean>> qcAllocateCoach(String staff_id,
-    HashMap<String, Object> body) {
+      HashMap<String, Object> body) {
     return toLiveData(remoteService.qcAllocateCoach(staff_id, body).map(qcResponse -> {
       QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
       objectQcDataResponse.setStatus(qcResponse.getStatus());
@@ -164,12 +172,12 @@ import javax.inject.Singleton;
 
   @Override
   public LiveData<Resource<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
-    String shopid, String gymid, String model) {
+      String shopid, String gymid, String model) {
     return toLiveData(remoteService.qcGetSalers(staff_id, brandid, shopid, gymid, model));
   }
 
   @Override public LiveData<Resource<Boolean>> qcModifySellers(String staff_id,
-    HashMap<String, Object> params, HashMap<String, Object> body) {
+      HashMap<String, Object> params, HashMap<String, Object> body) {
     return toLiveData(remoteService.qcModifySellers(staff_id, params, body).map(qcResponse -> {
       QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
       objectQcDataResponse.setStatus(qcResponse.getStatus());
@@ -189,7 +197,7 @@ import javax.inject.Singleton;
   }
 
   @Override public LiveData<Resource<List<StatDate>>> qcGetIncreaseStat(String staff_id,
-    HashMap<String, Object> params) {
+      HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetIncreaseStat(staff_id, params));
   }
 
@@ -241,49 +249,43 @@ import javax.inject.Singleton;
     return toLiveData(remoteService.qcGetStudentBirthday(loginStatus.staff_id(), params1));
   }
 
-  @Override public LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params) {
+  @Override
+  public LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params) {
     HashMap<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
     return toLiveData(remoteService.qcGetAllStudents(loginStatus.staff_id(), params1));
   }
 
   @Override public void qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData,
-    MutableLiveData<Resource<Object>> result) {
+      MutableLiveData<Resource<Object>> result) {
     bindToLiveData(liveData, remoteService.qcGetTrackStatus()
-      .flatMap(
-        (Function<QcDataResponse<FollowRecordStatusListWrap>, Flowable<QcDataResponse<List<FollowRecordStatus>>>>) response -> Flowable
-          .just(response.copyResponse(response.data.getStatuses()))), result,"");
+        .flatMap(
+            (Function<QcDataResponse<FollowRecordStatusListWrap>, Flowable<QcDataResponse<List<FollowRecordStatus>>>>) response -> Flowable
+                .just(response.copyResponse(response.data.getStatuses()))), result, "");
   }
 
   @Override public void qcAddTrackStatus(HashMap<String, Object> params,
-    MutableLiveData<Resource<Object>> rst) {
-    bindToLiveData(null,remoteService.qcAddTrackStatus(params)
-    ,rst,"add"
-    );
+      MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null, remoteService.qcAddTrackStatus(params), rst, "add");
   }
 
-  @Override public void qcEditTrackStatus(String status_id,HashMap<String, Object> params,
-    MutableLiveData<Resource<Object>> rst) {
-    bindToLiveData(null,remoteService.qcEditTrackStatus(status_id,params),rst,"edit");
+  @Override public void qcDelTrackStatus(String id, MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(new MutableLiveData<>(), remoteService.qcDelTrackStatus(id), rst, "del");
   }
 
-  @Override public void qcDelTrackStatus(String id,MutableLiveData<Resource<Object>> rst) {
-    bindToLiveData(new MutableLiveData<>(),remoteService.qcDelTrackStatus(id),rst,"del");
-  }
-
-  @Override
-  public void qcAddTrackRecord(String user_id, FollowRecordAdd body,MutableLiveData<Resource<Object>> rst) {
-    bindToLiveData(null,remoteService.qcAddTrackRecord(user_id,body),rst,"add");
+  @Override public void qcAddTrackRecord(String user_id, FollowRecordAdd body,
+      MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null, remoteService.qcAddTrackRecord(user_id, body), rst, "add");
   }
 
   @Override public void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
-    MutableLiveData<Resource<Object>> rst, String studentId) {
+      MutableLiveData<Resource<Object>> rst, String studentId) {
     bindToLiveData(liveData,
-      remoteService.qcGetTrackRecords(studentId, new HashMap<String, Object>())
-        .flatMap(
-          (Function<QcDataResponse<FollowRecordListWrap>, Flowable<QcDataResponse<List<FollowRecord>>>>) followRecordListWrapQcDataResponse -> Flowable
-            .just(followRecordListWrapQcDataResponse.copyResponse(
-              followRecordListWrapQcDataResponse.getData().getRecords()))), rst,"");
+        remoteService.qcGetTrackRecords(studentId, new HashMap<String, Object>())
+            .flatMap(
+                (Function<QcDataResponse<FollowRecordListWrap>, Flowable<QcDataResponse<List<FollowRecord>>>>) followRecordListWrapQcDataResponse -> Flowable
+                    .just(followRecordListWrapQcDataResponse.copyResponse(
+                        followRecordListWrapQcDataResponse.getData().getRecords()))), rst, "");
   }
 
   //@Override

@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
+import cn.qingchengfit.saascommon.filtertime.FilterTimesFragment;
 import cn.qingchengfit.saascommon.filter.FilterListStringFragment;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;

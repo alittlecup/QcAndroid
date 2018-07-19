@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    >
+
+  <TextView
+      android:id="@+id/absence_sort_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="16dp"
+      android:text="出勤天数"
+      />
+
+  <LinearLayout
+      android:id="@+id/absence_high_to_low"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginRight="10dp"
+      android:layout_toLeftOf="@+id/absence_low_to_high"
+      android:background="@drawable/bg_cornor_sort_grey"
+      android:gravity="center"
+      android:paddingBottom="4dp"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp"
+      android:paddingTop="4dp"
+      >
+
+    <TextView
+        android:id="@+id/text_absence_high_to_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从高到低"
+        android:textColor="@color/qc_text_grey"
+        android:textSize="11sp"
+        />
+
+    <ImageView
+        android:id="@+id/image_absence_high_to_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_downward_black"
+        />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/absence_low_to_high"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:background="@drawable/bg_cornor_sort_grey"
+      android:gravity="center"
+      android:paddingBottom="4dp"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp"
+      android:paddingTop="4dp"
+      >
+
+    <TextView
+        android:id="@+id/text_absence_low_to_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从低到高"
+        android:textColor="@color/qc_text_grey"
+        android:textSize="11sp"
+        />
+
+    <ImageView
+        android:id="@+id/image_absence_low_to_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
+        />
+
+  </LinearLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:layout_marginTop="41dp"
+      />
+
+</RelativeLayout>

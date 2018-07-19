@@ -5,7 +5,10 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.IntRange;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
+import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
+import cn.qingchengfit.student.bean.AttendanceCharDataBean;
+import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.bean.MemberStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
@@ -22,6 +25,8 @@ import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.bean.StudentTransferBean;
+import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
@@ -37,17 +42,17 @@ import retrofit2.http.QueryMap;
 public interface StudentRepository {
 
   //
-  //LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params);
+  LiveData<Resource<AttendanceCharDataBean>> qcGetAttendanceChart(String id, HashMap<String, Object> params);
   //
-  //LiveData<AbsentceListWrap> qcGetUsersAbsences(String id, HashMap<String, Object> params);
+  LiveData<Resource<AbsentceListWrap>> qcGetUsersAbsences(String id, HashMap<String, Object> params);
   //
-  //LiveData<AttendanceListWrap> qcGetUsersAttendances(String id, HashMap<String, Object> params);
-  //
-  //
-  //LiveData<List<StudentWIthCount>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params);
+  LiveData<Resource<AttendanceListWrap>> qcGetUsersAttendances(String id, HashMap<String, Object> params);
   //
   //
-  //LiveData<StudentTransferBean> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params);
+  LiveData<Resource<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params);
+  //
+  //
+  LiveData<Resource<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params);
   //
   //LiveData<FollowUpDataStatistic> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params);
   //
