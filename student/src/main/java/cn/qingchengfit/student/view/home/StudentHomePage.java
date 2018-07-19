@@ -134,7 +134,8 @@ import java.util.ArrayList;
       routeTo("/student/sendmsg/", null);
     });
     mBinding.commExportImport.setOnClickListener(view -> {
-      routeTo("/student/export", null);
+      //routeTo("/student/export", null);
+      routeTo("/student/follow_record", null);
     });
     mBinding.tvAllStudent.setOnClickListener(view -> {
       routeTo("/student/all", null);

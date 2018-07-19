@@ -255,6 +255,12 @@ import javax.inject.Singleton;
       MutableLiveData<Resource<Object>> rst) {
     bindToLiveData(null, remoteService.qcAddTrackStatus(params), rst, "add");
   }
+  @Override public void qcEditTrackStatus(String status_id,HashMap<String, Object> params,
+      MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null,remoteService.qcEditTrackStatus(status_id,params),rst,"edit");
+  }
+
+
 
   @Override public void qcDelTrackStatus(String id, MutableLiveData<Resource<Object>> rst) {
     bindToLiveData(new MutableLiveData<>(), remoteService.qcDelTrackStatus(id), rst, "del");
