@@ -23,9 +23,12 @@ import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.widget.CountDateView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +39,8 @@ import java.util.Map;
 
 @Leaf(module = "student", path = "/saler/student") public class StudentStateInfoPage
     extends StudentBaseFragment<PageStudentStateInfoBinding, StudentStateInfoViewModel>
-    implements FlexibleAdapter.OnItemClickListener, CountDateView.OnCheckedChangeListener {
+    implements FlexibleAdapter.OnItemClickListener, CountDateView.OnCheckedChangeListener,
+    OnChartValueSelectedListener {
   @Need @IncreaseType String curType = IncreaseType.INCREASE_MEMBER;
   List<SalerStudentListView> fragmentList = new ArrayList<>();
 
@@ -51,15 +55,24 @@ import java.util.Map;
       Bundle savedInstanceState) {
     mBinding = PageStudentStateInfoBinding.inflate(inflater, container, false);
     initToolbar();
+    initPieChart();
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
     return mBinding;
   }
 
+  private void initPieChart() {
+    for (int color : Colors) {
+      colors.add(getResources().getColor(color));
+    }
+    mBinding.pieChart.setOnChartValueSelectedListener(this);
+    mBinding.pieChart.setHoleRadius(66f);
+  }
+
   private void initViewPager() {
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
-    mBinding.viewpager.setOnTouchListener((v, event) -> true);
-    mBinding.viewpager.setClickable(false);
+    mBinding.viewpager.setOffscreenPageLimit(4);
+    mBinding.viewpager.setScrollble(false);
   }
 
   private CountDateView preChecked;
@@ -67,6 +80,8 @@ import java.util.Map;
       R.color.success_green, R.color.st_student_status_member, R.color.orange,
       R.color.danger_red_normal
   };
+  int total;
+  List<Integer> colors = new ArrayList<>();
 
   private void initTab(List<InactiveBean> inactiveBeans) {
     if (inactiveBeans == null || inactiveBeans.isEmpty()) return;
@@ -74,27 +89,21 @@ import java.util.Map;
         new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
     layoutParams.weight = 1;
     ArrayList<PieEntry> entries = new ArrayList<>();
-    List<Integer> colors = new ArrayList<>();
 
     for (int i = 0; i < inactiveBeans.size(); i++) {
       InactiveBean inactiveBean = inactiveBeans.get(i);
       CountDateView textView = new CountDateView(getContext());
       textView.setContent(inactiveBean.getPeriod());
-      textView.setCount(String.valueOf(inactiveBean.getCount()));
-      int color = getResources().getColor(Colors[i % 4]);
-      colors.add(color);
-      textView.setContentColor(color);
+      textView.setCount(inactiveBean.getCount());
+      textView.setContentColor(colors.get(i % 4));
       textView.setOnCheckedChangeListener(this);
       textView.setTag(inactiveBean.getId());
       textView.setLayoutParams(layoutParams);
       textView.setGravity(Gravity.CENTER_HORIZONTAL);
-      if (i == 0) {
-        textView.setChecked(true);
-      }
       mBinding.llStatInfo.addView(textView);
       fragmentList.add(generateListView(inactiveBean.getSeller_stat()));
-
-      entries.add(new PieEntry(inactiveBean.getCount()));
+      total += inactiveBean.getCount();
+      entries.add(new PieEntry(inactiveBean.getCount(), i));
     }
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
@@ -106,6 +115,10 @@ import java.util.Map;
     mBinding.pieChart.highlightValue(null);
     mBinding.pieChart.invalidate();
     initViewPager();
+    View childAt = mBinding.llStatInfo.getChildAt(0);
+    if (childAt instanceof CountDateView) {
+      ((CountDateView) childAt).setChecked(true);
+    }
   }
 
   private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
@@ -159,7 +172,6 @@ import java.util.Map;
         .getSeller();
     if (seller == null) {
       seller = new Staff();
-      seller.setId("0");
       seller.setUsername("未分配");
     }
     routeTo("/student/seller_state", new SalerStudentStatePageParams().type(curType)
@@ -172,13 +184,30 @@ import java.util.Map;
   @Override public void onCheckedChanged(CountDateView buttonView, boolean isChecked) {
     if (isChecked) {
       if (preChecked == buttonView) return;
-      mBinding.viewpager.setCurrentItem(mBinding.llStatInfo.indexOfChild(buttonView));
+      int i = mBinding.llStatInfo.indexOfChild(buttonView);
+      mBinding.viewpager.setCurrentItem(i);
       if (preChecked != null) {
         preChecked.setChecked(false);
       }
       preChecked = buttonView;
       mBinding.tvDetail.setText(buttonView.getContent() + "未跟进用户销售任务统计");
+      mBinding.pieChart.highlightValue(i, buttonView.getCount(), 0, true);
     }
+  }
+
+  @Override public void onValueSelected(Entry e, Highlight h) {
+    int y = (int) e.getY();
+    mBinding.pieChart.setCenterText(y * 100 / total + "%");
+    int data = (int) e.getData();
+    mBinding.pieChart.setCenterTextColor(colors.get(data % 4));
+    View childAt = mBinding.llStatInfo.getChildAt(data);
+    if (childAt instanceof CountDateView) {
+      ((CountDateView) childAt).setChecked(true);
+    }
+  }
+
+  @Override public void onNothingSelected() {
+
   }
 
   class StateViewPager extends FragmentStatePagerAdapter {

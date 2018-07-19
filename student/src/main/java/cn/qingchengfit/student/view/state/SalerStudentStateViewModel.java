@@ -1,7 +1,10 @@
 package cn.qingchengfit.student.view.state;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
@@ -26,10 +29,15 @@ public class SalerStudentStateViewModel
 
   private final MutableLiveData<List<QcStudentBeanWithFollow>> studentBeans =
       new MutableLiveData<>();
+  public final MediatorLiveData<List<ChooseDetailItem>> items =new MediatorLiveData<>();
   public int type = -1;
 
   @Inject public SalerStudentStateViewModel() {
-
+    items.addSource(studentBeans, qcStudentBeanWithFollows -> {
+      if(isSourceValid(qcStudentBeanWithFollows)){
+        items.setValue(map(qcStudentBeanWithFollows));
+      }
+    });
   }
   public void onQcButtonFilterClick(boolean isChecked, int index) {
     if (isChecked) {
@@ -67,9 +75,12 @@ public class SalerStudentStateViewModel
       return FlexibleFactory.create(ChooseDetailItem.class, beanWithFollow, type);
     }
   }
+  private void loadSource(int id){
+    studentRepository.qcGetSellerInactiveUsers(studentBeans, defaultResult, type, id);
+  }
 
   public void setCurAttack(InactiveBean inactiveBean) {
     filterContent.setValue(inactiveBean.getPeriod() + "未跟进");
-    identifier.setValue(inactiveBean.getId());
+    loadSource(inactiveBean.getId());
   }
 }

@@ -31,10 +31,12 @@ import java.util.ArrayList;
 
   @Override protected void subscribeUI() {
     mViewModel.filterContent.observe(this, content -> mBinding.qcFilterToggle.setText(content));
-    mViewModel.getLiveItems().observe(this, items -> listView.setItems(items));
+    mViewModel.items.observe(this, items -> listView.setItems(items));
     mViewModel.filterVisible.observe(this, ab -> {
       if (ab) {
         filterView.showPage(0);
+      }else{
+        mBinding.qcFilterToggle.setChecked(false);
       }
     });
   }

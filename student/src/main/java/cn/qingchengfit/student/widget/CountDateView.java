@@ -44,8 +44,16 @@ public class CountDateView extends LinearLayout implements Checkable {
     mCountTv.setTextColor(getResources().getColor(R.color.text_grey));
   }
 
-  public void setCount(String count) {
-    mCountTv.setText(count);
+  public void setCount(int count) {
+    mCountTv.setText(String.valueOf(count));
+  }
+  public int getCount(){
+    try {
+
+    return mCountTv.getText()==null?0:Integer.valueOf(mCountTv.getText().toString());
+    }catch (Exception e){
+      return 0;
+    }
   }
 
   public void setContent(String content) {

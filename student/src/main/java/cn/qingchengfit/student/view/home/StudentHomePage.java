@@ -27,6 +27,7 @@ import java.util.ArrayList;
 @Leaf(module = "student", path = "/student/home") public class StudentHomePage
     extends StudentBaseFragment<StPageStudentHomeBinding, StudentHomeViewModel>
     implements OnChartValueSelectedListener {
+  private int total;
   @Override protected void subscribeUI() {
     mViewModel.increaseFollowers.observe(this,msg->mBinding.tvIncreaseFollow.setCount(msg));
     mViewModel.increaseStudents.observe(this,msg->mBinding.tvIncreaseStudent.setCount(msg));
@@ -39,6 +40,7 @@ import java.util.ArrayList;
       int member = info.getMember_users_count();
       int register = info.getRegistered_users_count();
       int follow = info.getFollowing_users_count();
+      total=all_users_count;
       setData(register,follow,member);
     });
 
@@ -65,29 +67,23 @@ import java.util.ArrayList;
   }
 
   private void initChart() {
+    colors.add(Color.rgb(110, 184, 241));
+    colors.add(Color.rgb(249, 148, 78));
+    colors.add(Color.rgb(88, 184, 122));
     mBinding.pieChart.setOnChartValueSelectedListener(this);
   }
-  private float formateString(String cur,String total){
-    if(TextUtils.isEmpty(total)||TextUtils.isEmpty(cur)){
-      return 0;
-    }
-    Integer totalCount = Integer.valueOf(total);
-    Integer curCount = Integer.valueOf(cur);
-    return curCount*100/totalCount;
-  }
+  ArrayList<Integer> colors = new ArrayList<>();
+
   private void setData(int register,int follow,int member) {
     ArrayList<PieEntry> entries = new ArrayList<>();
-    entries.add(new PieEntry(register));
-    entries.add(new PieEntry(follow));
-    entries.add(new PieEntry(member));
+    entries.add(new PieEntry(register,0));
+    entries.add(new PieEntry(follow,1));
+    entries.add(new PieEntry(member,2));
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
     dataSet.setSelectionShift(3f);
     dataSet.setSliceSpace(0f);
-    ArrayList<Integer> colors = new ArrayList<>();
-    colors.add(Color.rgb(110, 184, 241));
-    colors.add(Color.rgb(249, 148, 78));
-    colors.add(Color.rgb(88, 184, 122));
+
     dataSet.setColors(colors);
     PieData data = new PieData(dataSet);
     mBinding.pieChart.setData(data);
@@ -157,7 +153,10 @@ import java.util.ArrayList;
   }
 
   @Override public void onValueSelected(Entry e, Highlight h) {
-
+    int y = (int) e.getY();
+    mBinding.pieChart.setCenterText(y*100/total+"%");
+    int data = (int) e.getData();
+    mBinding.pieChart.setCenterTextColor(colors.get(data));
   }
 
   @Override public void onNothingSelected() {
