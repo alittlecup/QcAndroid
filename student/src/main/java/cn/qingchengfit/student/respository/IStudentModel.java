@@ -7,9 +7,8 @@ import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
-import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
-import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
@@ -31,15 +30,9 @@ import java.util.List;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import rx.Observable;
 
 /**
  * power by
@@ -302,29 +295,14 @@ public interface IStudentModel {
   Flowable<QcDataResponse<StatDate>> qcGetFollowStat(String staff_id,
       HashMap<String, Object> params);
 
-  //全部会员-会员用户统计数据
-  Flowable<QcDataResponse<MemberStat>> qcGetMemberStat(String staff_id,
-      HashMap<String, Object> params);
 
-  //全部会员-新注册用户所属销售按时段统计数据
-  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String staff_id,
-      HashMap<String, Object> params);
+  //全部会员-用户不活跃情况统计数据
+  Flowable<QcDataResponse<InactiveStat>> qcGetInactiveStat( String staff_id,
+       HashMap<String, Object> params);
 
-  //全部会员-新注册用户统计数据
-  Flowable<QcDataResponse<MemberStat>> qcGetRegisterStat(String staff_id,
-      HashMap<String, Object> params);
-
-  //全部会员-新注册用户所属销售按时段统计数据
-  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetRegisterSeller(String staff_id,
-      HashMap<String, Object> params);
-
-  //全部会员-已接洽用户统计数据
-  Flowable<QcDataResponse<MemberStat>> qcGetFollowingStat(String staff_id,
-      HashMap<String, Object> params);
-
-  //全部会员-已接洽用户所属销售按时段统计数据
-  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(String staff_id,
-      HashMap<String, Object> params);
+  //全部会员-销售名下会员列表
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetSellerInactiveUsers( String staff_id,
+       HashMap<String, Object> params);
 
   Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(String staff_id,
      HashMap<String, Object> params);

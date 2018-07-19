@@ -39,7 +39,7 @@ import java.util.ArrayList;
       int member = info.getMember_users_count();
       int register = info.getRegistered_users_count();
       int follow = info.getFollowing_users_count();
-      setData(register,follow,member,all_users_count);
+      setData(register,follow,member);
     });
 
     mViewModel.showLoading.observe(this,aBoolean -> {
@@ -75,11 +75,11 @@ import java.util.ArrayList;
     Integer curCount = Integer.valueOf(cur);
     return curCount*100/totalCount;
   }
-  private void setData(int register,int follow,int member,int total) {
+  private void setData(int register,int follow,int member) {
     ArrayList<PieEntry> entries = new ArrayList<>();
-    entries.add(new PieEntry(register*100/total));
-    entries.add(new PieEntry(follow*100/total));
-    entries.add(new PieEntry(member*100/total));
+    entries.add(new PieEntry(register));
+    entries.add(new PieEntry(follow));
+    entries.add(new PieEntry(member));
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
     dataSet.setSelectionShift(3f);
@@ -93,6 +93,7 @@ import java.util.ArrayList;
     mBinding.pieChart.setData(data);
     mBinding.pieChart.highlightValue(null);
     mBinding.pieChart.invalidate();
+
   }
 
   private void initListener() {
@@ -146,6 +147,7 @@ import java.util.ArrayList;
     mBinding.commDayStudent.setOnClickListener(view -> {
       routeTo("student/birthday", null);
     });
+
   }
 
   private void initToolbar() {

@@ -1,7 +1,5 @@
 package cn.qingchengfit.student.respository;
 
-import android.support.annotation.IntRange;
-import android.text.format.DateUtils;
 import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -15,7 +13,7 @@ import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
-import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
@@ -31,7 +29,6 @@ import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
-import com.google.errorprone.annotations.Var;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -41,17 +38,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by huangbaole on 2017/10/26.
@@ -218,36 +209,15 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcGetFollowStat(staff_id, params);
   }
 
-  @Override public Flowable<QcDataResponse<MemberStat>> qcGetMemberStat(String staff_id,
+  @Override public Flowable<QcDataResponse<InactiveStat>> qcGetInactiveStat(String staff_id,
       HashMap<String, Object> params) {
-    return studentApi.qcGetMemberStat(staff_id, params);
+    return studentApi.qcGetInactiveStat(staff_id, params);
   }
 
   @Override
-  public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String staff_id,
+  public Flowable<QcDataResponse<StudentListWrapper>> qcGetSellerInactiveUsers(String staff_id,
       HashMap<String, Object> params) {
-    return studentApi.qcGetMemberSeller(staff_id, params);
-  }
-
-  @Override public Flowable<QcDataResponse<MemberStat>> qcGetRegisterStat(String staff_id,
-      HashMap<String, Object> params) {
-
-    return studentApi.qcGetRegisterStat(staff_id, params);
-  }
-
-  @Override public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetRegisterSeller(
-      String staff_id, HashMap<String, Object> params) {
-    return studentApi.qcGetRegisterSeller(staff_id, params);
-  }
-
-  @Override public Flowable<QcDataResponse<MemberStat>> qcGetFollowingStat(String staff_id,
-      HashMap<String, Object> params) {
-    return studentApi.qcGetFollowingStat(staff_id, params);
-  }
-
-  @Override public Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(
-      String staff_id, HashMap<String, Object> params) {
-    return studentApi.qcGetFollowingSeller(staff_id, params);
+    return studentApi.qcGetSellerInactiveUsers(staff_id, params);
   }
 
   @Override

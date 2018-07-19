@@ -1,7 +1,10 @@
 package cn.qingchengfit.student.item;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.SellerStat;
 import cn.qingchengfit.student.databinding.ItemSalerStudentInfoBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.student.R;
@@ -13,13 +16,13 @@ import java.util.List;
 
 public class SalerStudentInfoItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemSalerStudentInfoBinding>> {
-  private QcStudentBeanWithFollow data;
+  private SellerStat data;
 
-  public SalerStudentInfoItem(QcStudentBeanWithFollow data) {
+  public SalerStudentInfoItem(SellerStat data) {
     this.data = data;
   }
 
-  public QcStudentBeanWithFollow getData() {
+  public SellerStat getData() {
     return data;
   }
 
@@ -39,25 +42,36 @@ public class SalerStudentInfoItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemSalerStudentInfoBinding> holder, int position, List payloads) {
     ItemSalerStudentInfoBinding binding = holder.getDataBinding();
+    if (data.getSeller() == null) {
+      binding.imgAvatar.setImageResource(R.drawable.ic_nosales_normal);
+      binding.tvName.setText("未分配");
+    } else {
+      PhotoUtils.smallCircle(binding.imgAvatar, data.getSeller().getAvatar());
+      binding.tvName.setText(data.getSeller().getUsername());
+    }
 
-    PhotoUtils.smallCircle(binding.imgAvatar, data.avatar);
-    binding.tvNotFollow.setText(data.unfollowed_count);
-    binding.tvFollowTotal.setText(data.total_count);
-    binding.tvName.setText(data.username);
+    binding.tvNotFollow.setText(String.valueOf(data.getInactive_count()));
+    binding.tvFollowTotal.setText(String.valueOf(data.getTotal_count()));
 
     if (position == 0) {
       if (adapter instanceof CommonFlexAdapter) {
-        ((CommonFlexAdapter) adapter).setTag("total", data.total_count);
+        ((CommonFlexAdapter) adapter).setTag("total", data.getTotal_count());
       }
-      binding.progressBar.setMax(data.total_count);
-      binding.progressBar.setSecondaryProgress(data.total_count);
-      binding.progressBar.setProgress(data.unfollowed_count);
+      binding.progressBar.setMax(data.getTotal_count());
+      LinearLayout.LayoutParams layoutParams =
+          (LinearLayout.LayoutParams) binding.space.getLayoutParams();
+      layoutParams.weight = 0;
+      binding.space.setLayoutParams(layoutParams);
+      binding.progressBar.setProgress(data.getInactive_count());
     } else {
       if (adapter instanceof CommonFlexAdapter) {
         int total = (int) ((CommonFlexAdapter) adapter).getTag("total");
-        binding.progressBar.setMax(total);
-        binding.progressBar.setSecondaryProgress(data.total_count);
-        binding.progressBar.setProgress(data.unfollowed_count);
+        LinearLayout.LayoutParams layoutParams =
+            (LinearLayout.LayoutParams) binding.space.getLayoutParams();
+        layoutParams.weight = (total - data.getTotal_count()) * 100 / data.getTotal_count();
+        binding.space.setLayoutParams(layoutParams);
+        binding.progressBar.setMax(data.getTotal_count());
+        binding.progressBar.setProgress(data.getInactive_count());
       }
     }
   }

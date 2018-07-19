@@ -1,30 +1,35 @@
 package cn.qingchengfit.student.view.state;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.InactiveBean;
+import cn.qingchengfit.student.bean.SellerStat;
 import cn.qingchengfit.student.databinding.PageStudentStateInfoBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
-import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.item.SalerStudentInfoItem;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.widget.CountDateView;
-import cn.qingchengfit.student.widget.CountTextView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,16 +41,8 @@ import java.util.Map;
   List<SalerStudentListView> fragmentList = new ArrayList<>();
 
   @Override protected void subscribeUI() {
-    mViewModel.statInfo.observe(this, statInfo -> {
-      hideLoading();
-      if (statInfo == null) return;
-      if (preChecked != null) return;
-      mBinding.tvAllStudent.setText(String.valueOf(statInfo.getCount()));
-      initTab(statInfo.getUnattacked());
-    });
-
-    mViewModel.getLiveItems().observe(this, items -> {
-      hideLoading();
+    mViewModel.inactiveStat.observe(this, inactiveStat -> {
+      initTab(inactiveStat.getInactive());
     });
   }
 
@@ -54,12 +51,15 @@ import java.util.Map;
       Bundle savedInstanceState) {
     mBinding = PageStudentStateInfoBinding.inflate(inflater, container, false);
     initToolbar();
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     return mBinding;
   }
 
   private void initViewPager() {
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
     mBinding.viewpager.setOnTouchListener((v, event) -> true);
+    mBinding.viewpager.setClickable(false);
   }
 
   private CountDateView preChecked;
@@ -68,34 +68,56 @@ import java.util.Map;
       R.color.danger_red_normal
   };
 
-  private void initTab(List<MemberStat.UnAttacked> attackeds) {
-    if (attackeds == null || attackeds.isEmpty()) return;
+  private void initTab(List<InactiveBean> inactiveBeans) {
+    if (inactiveBeans == null || inactiveBeans.isEmpty()) return;
     LinearLayout.LayoutParams layoutParams =
         new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
     layoutParams.weight = 1;
-    for (int i = 0; i < attackeds.size(); i++) {
-      MemberStat.UnAttacked attacked = attackeds.get(i);
+    ArrayList<PieEntry> entries = new ArrayList<>();
+    List<Integer> colors = new ArrayList<>();
+
+    for (int i = 0; i < inactiveBeans.size(); i++) {
+      InactiveBean inactiveBean = inactiveBeans.get(i);
       CountDateView textView = new CountDateView(getContext());
-      textView.setContent(attacked.getDesc());
-      textView.setCount(String.valueOf(attacked.getCount()));
-      textView.setContentColor(getResources().getColor(Colors[i % 4]));
+      textView.setContent(inactiveBean.getPeriod());
+      textView.setCount(String.valueOf(inactiveBean.getCount()));
+      int color = getResources().getColor(Colors[i % 4]);
+      colors.add(color);
+      textView.setContentColor(color);
       textView.setOnCheckedChangeListener(this);
-      textView.setTag(attacked.getId());
+      textView.setTag(inactiveBean.getId());
       textView.setLayoutParams(layoutParams);
       textView.setGravity(Gravity.CENTER_HORIZONTAL);
-
       if (i == 0) {
-        preChecked = textView;
         textView.setChecked(true);
       }
       mBinding.llStatInfo.addView(textView);
+      fragmentList.add(generateListView(inactiveBean.getSeller_stat()));
 
-      SalerStudentListView salerStudentListView = new SalerStudentListView();
-      salerStudentListView.setOnItemClickListener(this);
-
-      fragmentList.add(salerStudentListView);
+      entries.add(new PieEntry(inactiveBean.getCount()));
     }
+    PieDataSet dataSet = new PieDataSet(entries, "");
+    dataSet.setDrawValues(false);
+    dataSet.setSelectionShift(3f);
+    dataSet.setSliceSpace(0f);
+    dataSet.setColors(colors);
+    PieData data = new PieData(dataSet);
+    mBinding.pieChart.setData(data);
+    mBinding.pieChart.highlightValue(null);
+    mBinding.pieChart.invalidate();
     initViewPager();
+  }
+
+  private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
+    SalerStudentListView salerStudentListView = new SalerStudentListView();
+    salerStudentListView.setOnItemClickListener(this);
+    Collections.sort(seller_stat, (o1, o2) -> o2.getTotal_count() - o1.getTotal_count());
+    List<SalerStudentInfoItem> items = new ArrayList<>();
+    for (int i = 0; i < seller_stat.size(); i++) {
+      items.add(new SalerStudentInfoItem(seller_stat.get(i)));
+    }
+    salerStudentListView.setItems(items);
+    return salerStudentListView;
   }
 
   private void initToolbar() {
@@ -105,21 +127,22 @@ import java.util.Map;
         toolbarModel = new ToolbarModel("已接洽");
         mBinding.tvNotFollow.setText("未跟进时长分布 (人)");
         mBinding.tvAllContent.setText("全部已接洽 (人)");
+        mViewModel.loadSource(1);
+
         break;
       case IncreaseType.INCREASE_STUDENT:
         toolbarModel = new ToolbarModel("会员");
         mBinding.tvNotFollow.setText("未出勤时长分布 (人)");
         mBinding.tvAllContent.setText("全部会员 (人)");
-
+        mViewModel.loadSource(2);
         break;
       case IncreaseType.INCREASE_MEMBER:
         toolbarModel = new ToolbarModel("新注册用户");
         mBinding.tvNotFollow.setText("未跟进时长分布 (人)");
         mBinding.tvAllContent.setText("全部新注册 (人)");
+        mViewModel.loadSource(0);
         break;
     }
-    showLoading();
-    mViewModel.setCurType(curType);
     if (toolbarModel != null) {
       mBinding.setToolbarModel(toolbarModel);
     }
@@ -127,9 +150,21 @@ import java.util.Map;
   }
 
   @Override public boolean onItemClick(int position) {
+    int currentItem = mBinding.viewpager.getCurrentItem();
+    Staff seller = mViewModel.inactiveStat.getValue()
+        .getInactive()
+        .get(currentItem)
+        .getSeller_stat()
+        .get(position)
+        .getSeller();
+    if (seller == null) {
+      seller = new Staff();
+      seller.setId("0");
+      seller.setUsername("未分配");
+    }
     routeTo("/student/seller_state", new SalerStudentStatePageParams().type(curType)
-        .attackeds(new ArrayList<>(mViewModel.statInfo.getValue().getUnattacked()))
-        .staff(mViewModel.getLiveItems().getValue().get(position).getData())
+        .staff(seller)
+        .beans(new ArrayList<>(mViewModel.inactiveStat.getValue().getInactive()))
         .build());
     return false;
   }
@@ -138,14 +173,11 @@ import java.util.Map;
     if (isChecked) {
       if (preChecked == buttonView) return;
       mBinding.viewpager.setCurrentItem(mBinding.llStatInfo.indexOfChild(buttonView));
-      preChecked.setChecked(false);
+      if (preChecked != null) {
+        preChecked.setChecked(false);
+      }
       preChecked = buttonView;
-      mBinding.tvDetail.setText(buttonView.getContent()+"未跟进用户销售任务统计");
-      Map<String, Object> params = new HashMap<>();
-      params.put("time_period_id", buttonView.getTag());
-      showLoading();
-      mViewModel.loadSource(params);
-
+      mBinding.tvDetail.setText(buttonView.getContent() + "未跟进用户销售任务统计");
     }
   }
 

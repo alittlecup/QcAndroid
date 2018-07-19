@@ -37,6 +37,7 @@ import cn.qingchengfit.student.view.home.StudentFilterViewModel;
 import cn.qingchengfit.student.view.home.StudentHomeViewModel;
 import cn.qingchengfit.student.view.home.StudentListViewModel;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortViewModel;
+import cn.qingchengfit.student.view.state.SalerStudentStateViewModel;
 import cn.qingchengfit.student.view.state.StudentStateInfoViewModel;
 import cn.qingchengfit.student.view.transfer.TransferStudentViewModel;
 import dagger.Binds;
@@ -143,6 +144,8 @@ import javax.inject.Singleton;
   @Binds @IntoMap @ViewModelKey(AttendanceAbsentViewModel.class)
   abstract ViewModel bindAttendanceAbsentViewModel(AttendanceAbsentViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(SalerStudentStateViewModel.class)
+  abstract ViewModel bindSalerStudentStateViewModel(SalerStudentStateViewModel model);
 
 }
 

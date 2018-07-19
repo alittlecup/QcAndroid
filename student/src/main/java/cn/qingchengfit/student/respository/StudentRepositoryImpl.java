@@ -2,12 +2,8 @@ package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.Observable;
-import android.databinding.ObservableField;
-import android.support.annotation.IntRange;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;
@@ -16,7 +12,7 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
-import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.FollowRecord;
@@ -99,12 +95,13 @@ import javax.inject.Singleton;
       HashMap<String, Object> params) {
     return toLiveData(remoteService.qcGetUsersAttendances(id, params));
   }
-  //
-  //
-  public LiveData<Resource<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
-      return toLiveData(remoteService.qcGetNotSignStudent(staffId, params));
-  }
 
+  //
+  //
+  public LiveData<Resource<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetNotSignStudent(staffId, params));
+  }
 
   public LiveData<Resource<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
       HashMap<String, Object> params) {
@@ -214,32 +211,22 @@ import javax.inject.Singleton;
     return toLiveData(remoteService.qcGetTrackStudentFollow(loginStatus.staff_id(), params1));
   }
 
-  @Override public LiveData<Resource<MemberStat>> qcGetMemberStat(String type) {
-    HashMap<String, Object> params1 = gymWrapper.getParams();
-    switch (type) {
-      case IncreaseType.INCREASE_FOLLOWUP:
-        return toLiveData(remoteService.qcGetFollowingStat(loginStatus.staff_id(), params1));
-      case IncreaseType.INCREASE_STUDENT:
-        return toLiveData(remoteService.qcGetMemberStat(loginStatus.staff_id(), params1));
-      case IncreaseType.INCREASE_MEMBER:
-        return toLiveData(remoteService.qcGetRegisterStat(loginStatus.staff_id(), params1));
-    }
-    return null;
+  @Override public void qcGetInactiveStat(MutableLiveData<InactiveStat> liveData,
+      MutableLiveData<Resource<Object>> rst, int status) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("status", status);
+    bindToLiveData(liveData, remoteService.qcGetInactiveStat(loginStatus.staff_id(), params), rst,
+        "");
   }
 
-  @Override public LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String type,
-      Map<String, Object> params) {
-    HashMap<String, Object> params1 = gymWrapper.getParams();
-    params1.putAll(params);
-    switch (type) {
-      case IncreaseType.INCREASE_FOLLOWUP:
-        return toLiveData(remoteService.qcGetFollowingSeller(loginStatus.staff_id(), params1));
-      case IncreaseType.INCREASE_STUDENT:
-        return toLiveData(remoteService.qcGetMemberSeller(loginStatus.staff_id(), params1));
-      case IncreaseType.INCREASE_MEMBER:
-        return toLiveData(remoteService.qcGetRegisterSeller(loginStatus.staff_id(), params1));
-    }
-    return null;
+  @Override
+  public void qcGetSellerInactiveUsers(MutableLiveData<List<QcStudentBeanWithFollow>> liveData,
+      MutableLiveData<Resource<Object>> rst, int status, int time_period_id) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("status", status);
+    params.put("time_period_id", time_period_id);
+    bindToLiveData(liveData, remoteService.qcGetSellerInactiveUsers(loginStatus.staff_id(), params)
+        .map(response -> response.copyResponse(response.data.users)), rst, "");
   }
 
   @Override public LiveData<Resource<QcStudentBirthdayWrapper>> qcGetStudentBirthday(

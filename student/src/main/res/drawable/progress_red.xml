@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+    >
   <item android:id="@android:id/background">
-    <shape>
-      <solid android:color="@android:color/transparent"/>
-      <size android:height="10dp"/>
-    </shape>
-  </item>
-
-  <item android:id="@android:id/secondaryProgress">
+    <!--<shape>-->
+      <!--<solid android:color="@android:color/transparent"/>-->
+      <!--<size android:height="10dp"/>-->
+    <!--</shape>-->
     <shape>
       <corners
-          android:bottomLeftRadius="5dp"
-          android:topLeftRadius="5dp"/>
+          android:radius="5dp"/>
       <solid android:color="@color/divider_medium"/>
-
     </shape>
   </item>
+
+  <!--<item android:id="@android:id/secondaryProgress">-->
+    <!--<clip>-->
+      <!--<shape>-->
+        <!--<corners-->
+            <!--android:radius="5dp"/>-->
+        <!--<solid android:color="@color/divider_medium"/>-->
+      <!--</shape>-->
+    <!--</clip>-->
+
+  <!--</item>-->
 
   <item android:id="@android:id/progress">
-    <shape>
-      <corners
-          android:bottomLeftRadius="5dp"
-          android:topLeftRadius="5dp"/>
+    <clip>
+      <shape>
+        <corners
+            android:radius="5dp"/>
+        <solid android:color="@color/danger_red_normal"/>
+      </shape>
+    </clip>
 
-      <solid android:color="@color/danger_red_normal"/>
-    </shape>
   </item>
 
 

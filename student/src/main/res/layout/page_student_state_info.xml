@@ -9,6 +9,9 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.student.view.state.StudentStateInfoViewModel"/>
   </data>
   <LinearLayout
       android:layout_width="match_parent"
@@ -57,7 +60,7 @@
               android:layout_gravity="center_horizontal"
               android:layout_marginBottom="24dp"
               android:layout_marginTop="46dp"
-              android:text="- -"
+              android:text="@{viewModel.totalCount}"
               android:textColor="@color/text_black"
               android:textSize="36dp"
               tools:text="138,174"

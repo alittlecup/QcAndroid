@@ -10,9 +10,9 @@ import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
-import cn.qingchengfit.student.bean.MemberStat;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
+import cn.qingchengfit.student.bean.QcStudentWithUsers;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -27,7 +27,6 @@ import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.http.Body;
@@ -44,14 +43,14 @@ import retrofit2.http.QueryMap;
  */
 
 public interface StudentApi {
-      /**
-       * 工作人员下所有会员
-       *
-       * @GET("/api/staffs/{id}/users/all/?show_all=1")
-       */
-      @GET("/api/staffs/{id}/users/list/?show_all=1")
-      Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(@Path("id") String id,
-          @QueryMap HashMap<String, Object> params);
+  /**
+   * 工作人员下所有会员
+   *
+   * @GET("/api/staffs/{id}/users/all/?show_all=1")
+   */
+  @GET("/api/staffs/{id}/users/list/?show_all=1")
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(@Path("id") String id,
+      @QueryMap HashMap<String, Object> params);
   //
   //    /**
   //     * 会员卡可绑定的会员列表
@@ -181,20 +180,21 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-      /**
-       * 新增
-       */
-      @GET("/api/staffs/{staff_id}/users/new/{type}/")
-      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
-          @Path("staff_id") String staff_id, @Path("type") String type,
-          @QueryMap HashMap<String, Object> params);
 
-      /**
-       * 新增跟进
-       */
-      @GET("/api/staffs/{staff_id}/users/new/follow/")
-      Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+  /**
+   * 新增
+   */
+  @GET("/api/staffs/{staff_id}/users/new/{type}/")
+  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+      @Path("staff_id") String staff_id, @Path("type") String type,
+      @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 新增跟进
+   */
+  @GET("/api/staffs/{staff_id}/users/new/follow/")
+  Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
   //    /**
   //     * 新增学员
@@ -203,90 +203,88 @@ public interface StudentApi {
   //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
-      /**
-       * 具有名下会员的销售列表
-       * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
-       */
-      @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
-      Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
+  /**
+   * 具有名下会员的销售列表
+   * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+   */
+  @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
+  Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-      /**
-       * 转换率
-       * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
-       * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
-       */
-      @GET("/api/staffs/{staff_id}/users/conver/stat/")
-      Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+  /**
+   * 转换率
+   * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
+   * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
+   */
+  @GET("/api/staffs/{staff_id}/users/conver/stat/")
+  Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
+  /**
+   * 获取缺勤图表数据
+   */
+  @GET("/api/staffs/{id}/users/attendance/glance/")
+  Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(@Path("id") String id,
+      @QueryMap HashMap<String, Object> params);
 
-      /**
-       * 获取缺勤图表数据
-       */
-      @GET("/api/staffs/{id}/users/attendance/glance/")
-      Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(@Path("id") String id,
-          @QueryMap HashMap<String, Object> params);
+  /**
+   * 缺勤列表
+   *
+   * @param params 缺勤<7： absence__lt=7，
+   * 7-30天：absence__gte=7&absence__lte=30,
+   * 缺勤>60天：absence__ge=60
+   * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
+   * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
+   * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title":
+   * "娜娜私教 杨娜娜"},]
+   */
+  @GET("/api/staffs/{staff_id}/users/absence/")
+  Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(@Path("staff_id") String id,
+      @QueryMap HashMap<String, Object> params);
 
+  /**
+   * @param params 必传start, end，
+   * 可选排序字段 加 “-”说明是倒序
+   * order_by=
+   * days      -days
+   * group     -group
+   * private     -private
+   * checkin   -checkin
+   * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id":
+   * 2219,"avatar":
+   * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone":
+   * "18536668518"},"private_count": 8,"days":
+   * 142},
+   */
+  @GET("/api/staffs/{staff_id}/users/attendance/")
+  Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(@Path("staff_id") String id,
+      @QueryMap HashMap<String, Object> params);
 
-      /**
-       * 缺勤列表
-       *
-       * @param params 缺勤<7： absence__lt=7，
-       *               7-30天：absence__gte=7&absence__lte=30,
-       *               缺勤>60天：absence__ge=60
-       * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
-       * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
-       * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
-       */
-      @GET("/api/staffs/{staff_id}/users/absence/")
-      Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(@Path("staff_id") String id,
-          @QueryMap HashMap<String, Object> params);
+  /**
+   * 获取未签课的学员
+   */
+  @GET("/api/staffs/{staff_id}/users/checkin/records/")
+  Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
+      @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
 
+  /**
+   * 推荐人列表
+   * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=
+   */
+  @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1")
+  Flowable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-      /**
-       * @param params 必传start, end，
-       *               可选排序字段 加 “-”说明是倒序
-       *               order_by=
-       *               days      -days
-       *               group     -group
-       *               private     -private
-       *               checkin   -checkin
-       * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
-       * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
-       * 142},
-       */
-      @GET("/api/staffs/{staff_id}/users/attendance/")
-      Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(
-          @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
+  //
 
-
-      /**
-       * 获取未签课的学员
-       */
-      @GET("/api/staffs/{staff_id}/users/checkin/records/")
-      Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
-          @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
-
-
-      /**
-       * 推荐人列表
-       * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=
-       */
-      @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1")
-      Flowable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-
-      //
-      /**
-       * 来源列表
-       * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=
-       */
-      @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1")
-      Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(
-          @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-
+  /**
+   * 来源列表
+   * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=
+   */
+  @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1")
+  Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 
   /**
    * 短信部分
@@ -334,79 +332,47 @@ public interface StudentApi {
   Flowable<QcDataResponse<StatDate>> qcGetFollowStat(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
 
-
-  //全部会员-会员用户统计数据
-  @GET("/api/staffs/{staff_id}/users/member/stat/")
-  Flowable<QcDataResponse<MemberStat>> qcGetMemberStat(@Path("staff_id") String staff_id,
+  //全部会员-用户不活跃情况统计数据
+  @GET("/api/staffs/{staff_id}/users/inactive/stat/")
+  Flowable<QcDataResponse<InactiveStat>> qcGetInactiveStat(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
 
-
-  //全部会员-新注册用户所属销售按时段统计数据
-  @GET("/api/staffs/{staff_id}/users/member/seller/stat/")
-  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(@Path("staff_id") String staff_id,
+  //全部会员-销售名下会员列表
+  @GET("/api/v2/staffs/{staff_id}/sellers/users/")
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetSellerInactiveUsers(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
-
-
-  //全部会员-新注册用户统计数据
-  @GET("/api/staffs/{staff_id}/users/registered/stat/")
-  Flowable<QcDataResponse<MemberStat>> qcGetRegisterStat(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
-
-
-  //全部会员-新注册用户所属销售按时段统计数据
-  @GET("/api/staffs/{staff_id}/users/registered/seller/stat/")
-  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetRegisterSeller(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
-
-  //全部会员-已接洽用户统计数据
-  @GET("/api/staffs/{staff_id}/users/following/stat/")
-  Flowable<QcDataResponse<MemberStat>> qcGetFollowingStat(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
-
-  //全部会员-已接洽用户所属销售按时段统计数据
-  @GET("/api/staffs/{staff_id}/users/following/seller/stat/")
-  Flowable<QcDataResponse<List<QcStudentBeanWithFollow>>> qcGetFollowingSeller(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
-
 
 
   //会员生日-会员生日统计
   @GET("/api/staffs/{staff_id}/users/birthday/stat/")
-  Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
-
-
+  Flowable<QcDataResponse<QcStudentBirthdayWrapper>> qcGetStudentBirthday(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 跟进状态列表
-   *
-   *
    */
   @GET("/api/staffs/{staff_id}/users/track/status/")
-  Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus(@Path("staff_id") String staff_id,
-    @QueryMap HashMap<String, Object> params);
+  Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
   @POST("/api/staffs/{staff_id}/users/track/status/")
   Flowable<QcDataResponse<Object>> qcAddTrackStatus(@Path("staff_id") String staff_id,
-    @Body HashMap<String, Object> params);
+      @Body HashMap<String, Object> params);
 
   @PUT("/api/staffs/{staff_id}/users/track/status/{track_status_id}/")
   Flowable<QcDataResponse<Object>> qcEditTrackStatus(@Path("staff_id") String staff_id,
-    @Path("track_status_id") String track_status_id,
-    @Body HashMap<String, Object> params);
+      @Path("track_status_id") String track_status_id, @Body HashMap<String, Object> params);
 
   @DELETE("/api/staffs/{staff_id}/users/track/status/{track_status_id}/")
   Flowable<QcDataResponse<Object>> qcDelTrackStatus(@Path("staff_id") String staff_id,
-    @Path("track_status_id") String track_status_id,@QueryMap HashMap<String, Object> params);
-
+      @Path("track_status_id") String track_status_id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 新增跟进记录
-   *
    */
   @POST("/api/staffs/{staff_id}/users/{user_id}/records/")
   Flowable<QcDataResponse<Object>> qcAddTrackRecord(@Path("staff_id") String staff_id,
-    @Path("user_id") String user_id,@Body FollowRecordAdd body
-    );
+      @Path("user_id") String user_id, @Body FollowRecordAdd body);
 
   /**
    * 跟进记录列表

@@ -8,6 +8,8 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <import type="cn.qingchengfit.widgets.QcFilterToggle"/>
+
     <variable
         name="viewModel"
         type="cn.qingchengfit.student.view.state.SalerStudentStateViewModel"/>
@@ -44,17 +46,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:background="@color/bg_white"
         >
       <cn.qingchengfit.widgets.QcFilterToggle
           android:id="@+id/qc_filter_toggle"
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
           android:layout_height="match_parent"
           android:layout_gravity="center"
+          android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),1)}"
           app:qc_color_off="@color/text_black"
           app:qc_color_on="@color/text_black"
-          app:qc_vc_drawable="@drawable/vd_arrow_down_fill"
+          style="@style/QcFilterStyle"
           />
     </FrameLayout>
+    <include layout="@layout/divider_grey"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

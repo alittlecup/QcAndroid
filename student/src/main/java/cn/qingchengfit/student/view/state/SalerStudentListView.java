@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.state;
 
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.student.R;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -27,6 +29,7 @@ public class SalerStudentListView extends SaasCommonFragment {
     super.onCreateView(inflater, container, savedInstanceState);
     root = (RecyclerView) inflater.inflate(R.layout.empty_recyclerview, container, false);
     initRecyclerView();
+
     return root;
   }
 
@@ -54,6 +57,8 @@ public class SalerStudentListView extends SaasCommonFragment {
     adapter = new CommonFlexAdapter(items == null ? new ArrayList() : items);
     root.setAdapter(adapter);
     root.setLayoutManager(new LinearLayoutManager(getContext()));
+    root.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
     if (listener != null) {
       adapter.addListener(listener);
     }

@@ -44,9 +44,13 @@ public class FilterListStringFragment extends FilterFragment {
       items.add(new FilterCommonLinearItem(msg));
     }
     if (!items.isEmpty()) {
-      if(commonFlexAdapter==null)commonFlexAdapter=new CommonFlexAdapter(items);
+      if (commonFlexAdapter == null) commonFlexAdapter = new CommonFlexAdapter(items);
       commonFlexAdapter.updateDataSet(items);
     }
+  }
+
+  public void setStrings(@NonNull List<String> strings) {
+    setStrings(strings.toArray(new String[] {}));
   }
 
   public int getItemCount() {

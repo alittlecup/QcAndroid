@@ -2,38 +2,28 @@ package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.IntRange;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
 import cn.qingchengfit.student.bean.FollowRecord;
-import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
-import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
-import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
-import cn.qingchengfit.student.bean.ShortMsgDetail;
-import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.StatDate;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
-import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import retrofit2.http.Body;
-import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by huangbaole on 2017/11/29.
@@ -97,12 +87,13 @@ public interface StudentRepository {
   LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudentFollow(Map<String, Object> params);
 
 
-  //全部会员-会员用户统计数据
-  LiveData<Resource<MemberStat>> qcGetMemberStat(String type);
+  //全部会员-用户不活跃情况统计数据
+  void qcGetInactiveStat(MutableLiveData<InactiveStat> liveData,
+      MutableLiveData<Resource<Object>> rst, int status);
 
-  //全部会员-新注册用户所属销售按时段统计数据
-  LiveData<Resource<List<QcStudentBeanWithFollow>>> qcGetMemberSeller(String type,
-      Map<String, Object> params);
+  //全部会员-销售名下会员列表
+  void qcGetSellerInactiveUsers(MutableLiveData<List<QcStudentBeanWithFollow>> liveData,
+      MutableLiveData<Resource<Object>> rst, int status,int time_period_id);
   LiveData<Resource<QcStudentBirthdayWrapper>> qcGetStudentBirthday(
      Map<String, Object> params);
 

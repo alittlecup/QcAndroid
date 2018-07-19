@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.student.bean.MemberStat;
+import cn.qingchengfit.student.bean.InactiveBean;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageSalerStudentStateBinding;
 import cn.qingchengfit.student.R;
@@ -19,33 +20,42 @@ import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
-@Leaf(module = "student",path = "/student/seller_state")
-public class SalerStudentStatePage
+
+@Leaf(module = "student", path = "/student/seller_state") public class SalerStudentStatePage
     extends StudentBaseFragment<PageSalerStudentStateBinding, SalerStudentStateViewModel> {
   @Need @IncreaseType String type = IncreaseType.INCREASE_MEMBER;
-  @Need QcStudentBeanWithFollow staff;
-  @Need ArrayList<MemberStat.UnAttacked> attackeds;
+  @Need Staff staff;
+  @Need ArrayList<InactiveBean> beans;
   StudentListView listView;
   SalerStateFilterView filterView;
 
   @Override protected void subscribeUI() {
-    mViewModel.filterContent.observe(this,content->mBinding.qcFilterToggle.setText(content));
+    mViewModel.filterContent.observe(this, content -> mBinding.qcFilterToggle.setText(content));
+    mViewModel.getLiveItems().observe(this, items -> listView.setItems(items));
+    mViewModel.filterVisible.observe(this, ab -> {
+      if (ab) {
+        filterView.showPage(0);
+      }
+    });
   }
 
   @Override
   public PageSalerStudentStateBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = PageSalerStudentStateBinding.inflate(inflater, container, false);
-    toggleToolbar(false,"");
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     initFragment();
     initListener();
+    toggleToolbar(false, "");
+    mViewModel.setCurAttack(beans.get(0));
     return mBinding;
   }
 
   private void initFragment() {
     listView = new StudentListView();
     filterView = new SalerStateFilterView();
-    filterView.setUnAttackeds(attackeds);
+    filterView.setInactiveBeans(beans);
 
     stuff(R.id.fragment_list_container, listView);
     stuff(R.id.fragment_filter, filterView);
@@ -53,17 +63,19 @@ public class SalerStudentStatePage
 
   private void initToolbar() {
     ToolbarModel toolbarModel = null;
-
     switch (type) {
       case IncreaseType.INCREASE_FOLLOWUP:
         toolbarModel = new ToolbarModel(staff.getUsername() + "的已接洽用户");
+        mViewModel.type = 1;
         break;
       case IncreaseType.INCREASE_STUDENT:
         toolbarModel = new ToolbarModel(staff.getUsername() + "的会员用户");
+        mViewModel.type = 2;
 
         break;
       case IncreaseType.INCREASE_MEMBER:
         toolbarModel = new ToolbarModel(staff.getUsername() + "的新注册用户");
+        mViewModel.type = 0;
         break;
     }
     if (toolbarModel != null) {
@@ -71,6 +83,7 @@ public class SalerStudentStatePage
     }
     initToolbar(mBinding.includeToolbar.toolbar);
   }
+
   private void initListener() {
     mBinding.bottomAllot.allotCoach.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.TRAINER_TYPE);
@@ -108,13 +121,11 @@ public class SalerStudentStatePage
       listView.setCurType(type);
       listView.setCurId(staff.getId());
     } else {
-
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.GONE);
       initToolbar();
       //底部分配布局
       mBinding.bottomAllot.getRoot().setVisibility(View.VISIBLE);
-
       listView.reset();
       listView.setCurId("");
     }

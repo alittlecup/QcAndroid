@@ -34,6 +34,7 @@ import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
 import cn.qingchengfit.student.view.sendmsg.MsgSendFragmentFragment;
 import cn.qingchengfit.student.view.sendmsg.SendMsgHomeFragment;
 import cn.qingchengfit.student.view.sendmsg.ShortMsgDetailFragment;
+import cn.qingchengfit.student.view.state.SalerStudentStatePage;
 import cn.qingchengfit.student.view.state.StudentStateInfoPage;
 import cn.qingchengfit.student.view.transfer.TransferStudentPage;
 import com.anbillon.flabellum.annotations.Trunk;
@@ -48,7 +49,7 @@ import javax.inject.Inject;
     FollowRecordStatusPage.class, SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
     FollowUpTopSalerView.class, FollowUpFilterView.class, MsgSendFragmentFragment.class,
     ImportExportFragment.class, SalerStudentsPage.class, AllotChooseSellerPage.class,
-    AllotChooseCoachPage.class, StudentBirthdayPage.class,TransferStudentPage.class,
+    AllotChooseCoachPage.class, StudentBirthdayPage.class, TransferStudentPage.class,
     AttendanceStudentPage.class, AttendanceRankPage.class, AttendanceNosignPage.class,
     AttendanceAbsentPage.class, NotiOthersPage.class
 }) public class StudentActivity extends SaasCommonActivity {
