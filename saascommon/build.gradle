@@ -41,6 +41,8 @@ android {
 dependencies {
   api project(':qcbase')
   api 'cn.qingchengfit.router:router:1.0.180709'
+  api 'cn.qingchengfit.weex:weex:1.0.180601'
+  api 'cn.qingchengfit.recruit:recruit:1.1.180613'
 
   api fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -60,4 +62,6 @@ dependencies {
 
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
+
 }

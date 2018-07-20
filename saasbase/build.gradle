@@ -74,8 +74,7 @@ dependencies {
   api project(':saascommon')
   api project(':login')
 
-  api 'cn.qingchengfit.weex:weex:1.0.180601'
-  api 'cn.qingchengfit.recruit:recruit:1.1.180613'
+
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
