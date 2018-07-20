@@ -70,6 +70,7 @@ import dagger.multibindings.IntoMap;
   @Binds @IntoMap @ViewModelKey(BatchCopyViewModel.class)
   abstract ViewModel bindBatchCopyViewModel(BatchCopyViewModel model);
 
+
   //@Named("commonFilter") @Singleton @Provides static StudentFilter providesStudentFilter() {
   //  return new StudentFilter();
   //}

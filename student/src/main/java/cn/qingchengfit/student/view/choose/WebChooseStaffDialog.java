@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.ViewAllotMultiStaffBinding;
 import cn.qingchengfit.student.item.AllotMultiStaffItem;
 import cn.qingchengfit.utils.DividerItemDecoration;

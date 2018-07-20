@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,17 +23,17 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.student.BuildConfig;
 import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
+import dagger.android.support.AndroidSupportInjection;
 import javax.inject.Inject;
 
 public class SplashActivity extends SaasCommonActivity {
   TextView textView;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-
-
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -48,8 +49,9 @@ public class SplashActivity extends SaasCommonActivity {
     login.setOnClickListener(view -> {
       QcRouteUtil.setRouteOptions(new RouteOptions("login").setContext(this).setActionName("open"))
           .call();
-      MyApp.isLogin=true;
+      MyApp.isLogin = true;
     });
+
   }
 
   protected void routeTo(String model, String path, Bundle bd) {
@@ -71,11 +73,12 @@ public class SplashActivity extends SaasCommonActivity {
   @Override protected void onResume() {
     super.onResume();
     textView.setText(QcRestRepository.getSession(this));
-    if(!TextUtils.isEmpty(textView.getText())){
+    if (!TextUtils.isEmpty(textView.getText())) {
       setLoginInfo();
     }
   }
-  private void setLoginInfo(){
+
+  private void setLoginInfo() {
     Staff staff = new Staff();
     staff.setId("7505");
     loginStatus.setSession(QcRestRepository.getSession(this));

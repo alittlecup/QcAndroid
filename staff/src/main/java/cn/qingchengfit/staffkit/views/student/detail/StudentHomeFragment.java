@@ -22,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -43,6 +41,8 @@ import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
+import cn.qingchengfit.student.bean.StudentWrap;
+import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -79,19 +79,19 @@ import rx.functions.Action1;
 public class StudentHomeFragment extends BaseFragment implements View.OnClickListener {
 
   public int statusToTab = -1;
-	ImageView header;
-	ImageView gender;
-	TextView name;
-	TabLayout tab;
-	ViewPager student;
-	Button buycard;
-	Button orderGroup;
-	Button orderPrivate;
-	LinearLayout orderbtnLayout;
-	TextView studentStatus;
-	TextView phone;
-	ImageView tvStudentCall;
-	ImageView tvStudentMsg;
+  ImageView header;
+  ImageView gender;
+  TextView name;
+  TabLayout tab;
+  ViewPager student;
+  Button buycard;
+  Button orderGroup;
+  Button orderPrivate;
+  LinearLayout orderbtnLayout;
+  TextView studentStatus;
+  TextView phone;
+  ImageView tvStudentCall;
+  ImageView tvStudentMsg;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject RestRepository restRepository;
@@ -99,8 +99,8 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject StudentAction studentAction;
-	Toolbar toolbar;
-	TextView toolbarTitile;
+  Toolbar toolbar;
+  TextView toolbarTitile;
   ArrayList<Fragment> fragments = new ArrayList<>();
   private FragmentAdapter mAdapter;
   private Observable<StudentBaseInfoEvent> ObInfo;
@@ -264,13 +264,13 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     super.onFinishAnimation();
     fragments.add(new ClassRecordFragment());
     fragments.add(new StudentsCardsFragment());
-    //studentWrap.setStudentBean(studentBean.getStudentBean());
-    //fragments.add(new FollowRecordPage());
-    fragments.add(new FollowRecordFragment());
+    FollowRecordPage followRecordPage = new FollowRecordPage();
+    followRecordPage.setCurStudent(studentBean.getStudentBean());
+    fragments.add(followRecordPage);
+    //fragments.add(new FollowRecordFragment());
     fragments.add(new StudentMoreInfoFragment());
     mAdapter.notifyDataSetChanged();
   }
-
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -284,7 +284,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     });
   }
 
- public void onClick() {
+  public void onClick() {
 
     if (gymWrapper.inBrand()) {
       MutiChooseGymFragment.start(this, true, null, 9);

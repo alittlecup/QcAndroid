@@ -1,12 +1,15 @@
 package cn.qingchengfit.student.view.followrecord;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageFollowRecordBinding;
+import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -15,11 +18,22 @@ import java.util.HashMap;
 
 @Leaf(module = "student", path = "/student/follow_record") public class FollowRecordPage
     extends StudentBaseFragment<StPageFollowRecordBinding, FollowRecordViewModel>
-    implements FlexibleAdapter.OnItemClickListener {
+    implements FlexibleAdapter.OnItemClickListener,TitleFragment {
   CommonFlexAdapter adapter;
-
+  private StudentBean studentBean;
   @Override protected void subscribeUI() {
-
+    if(studentBean!=null){
+      mViewModel.id=studentBean.id;
+    }
+    mViewModel.getLiveItems().observe(this,items->{
+      adapter.updateDataSet(items);
+    });
+  }
+  public void setCurStudent(StudentBean student){
+    this.studentBean=student;
+    if(mViewModel!=null){
+      mViewModel.id=student.id;
+    }
   }
 
   @Override
@@ -37,7 +51,8 @@ import java.util.HashMap;
 
   private void initListener() {
     mBinding.fab.setOnClickListener(v -> {
-      routeTo("student/follow_record_edit", null);
+      Uri uri=Uri.parse("qcstaff://student/student/follow_record_edit");
+      routeTo(uri, new FollowRecordEditPageParams().studentBean(studentBean).build(),false);
     });
   }
 
@@ -50,5 +65,9 @@ import java.util.HashMap;
 
   @Override public boolean onItemClick(int position) {
     return false;
+  }
+
+  @Override public String getTitle() {
+    return "跟进记录";
   }
 }

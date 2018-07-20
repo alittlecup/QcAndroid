@@ -48,6 +48,8 @@ import java.util.Map;
     });
     mSortViewModel.filterIndex.observe(this, index -> {
       followUpFilterView.showPage(index);
+      mBinding.layoutCollapsed.setExpanded(false);
+
     });
     mSortViewModel.filterAction.observe(this, aVoid -> {
       mBinding.drawer.openDrawer(GravityCompat.END);

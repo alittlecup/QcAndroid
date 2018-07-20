@@ -25,6 +25,7 @@ import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageWebChooseStaffBinding;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentFilterViewModel;
+import cn.qingchengfit.weex.module.QcNavigatorModule;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.google.gson.Gson;
@@ -202,7 +203,7 @@ import java.util.Map;
 
   private void setSelectedBack(String json) {
     if (TextUtils.isEmpty(web_action)) {
-      //RxBus.getBus().post(QcNavigatorModule.class, json);
+      RxBus.getBus().post(QcNavigatorModule.class, json);
     } else {
       Intent intent = new Intent();
       intent.putExtra("web_action", web_action);

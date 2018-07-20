@@ -68,7 +68,7 @@ public class FollowUpFilterView extends BaseFilterFragment {
             return salersView;
         } else if (tag.equalsIgnoreCase(getTags()[1])) {
             return studentStatusFragment;
-        } else if (tag.equalsIgnoreCase(getTags()[4])) {
+        } else if (tag.equalsIgnoreCase(getTags()[2])) {
             return genderFragment;
         }
         return new EmptyFragment();

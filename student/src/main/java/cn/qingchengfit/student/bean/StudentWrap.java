@@ -1,15 +1,16 @@
 package cn.qingchengfit.student.bean;
 
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.StudentBean;
 
 public class StudentWrap {
-  QcStudentBean studentBean;
+  StudentBean studentBean;
 
-  public QcStudentBean getStudentBean() {
+  public StudentBean getStudentBean() {
     return studentBean;
   }
 
-  public void setStudentBean(QcStudentBean studentBean) {
+  public void setStudentBean(StudentBean studentBean) {
     this.studentBean = studentBean;
   }
 }

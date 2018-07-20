@@ -47,7 +47,7 @@ public class FollowRecordEditViewModel extends BaseViewModel {
     for (String s : followRecordUrl) {
       attaches.add(new Attach(s));
     }
-    studentRepository.qcAddTrackRecord(studentWrap.getStudentBean().id(),new FollowRecordAdd.Builder()
+    studentRepository.qcAddTrackRecord(studentWrap.getStudentBean().id,new FollowRecordAdd.Builder()
       .content(content.getValue())
       .next_track_time(nextFollowTime.getValue())
       .notice_users(notiOthers.getValue())

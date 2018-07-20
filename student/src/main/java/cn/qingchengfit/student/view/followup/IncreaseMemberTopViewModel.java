@@ -33,7 +33,7 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
           if (statDate != null) {
             return String.valueOf(statDate.getCount());
           } else {
-            return "";
+            return "- -";
           }
         }));
   }

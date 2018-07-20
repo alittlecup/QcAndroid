@@ -252,7 +252,7 @@ public class StudentListView
 
   @Override public boolean onItemClick(int position) {
     Object choose = adapter.getTag("choose");
-    if (choose != null && (int) choose == -1) {
+    if (choose == null || (int) choose == -1) {
       QcStudentBean qcStudentBean = null;
       IFlexible item = adapter.getItem(position);
       if (item instanceof IItemData) {

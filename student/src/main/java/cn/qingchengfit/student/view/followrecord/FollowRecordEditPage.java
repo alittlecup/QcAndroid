@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -18,6 +20,8 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
+import cn.qingchengfit.student.bean.StudentTransferBean;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.student.databinding.StPageFollowRecordEditBinding;
 import cn.qingchengfit.student.item.ItemGridImage;
 import cn.qingchengfit.student.item.ItemGridImageAdd;
@@ -28,6 +32,7 @@ import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.lib.SimpleScrollPicker;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -36,15 +41,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/follow_record_edit") public class FollowRecordEditPage
   extends StudentBaseFragment<StPageFollowRecordEditBinding, FollowRecordEditViewModel>
   implements FlexibleAdapter.OnItemClickListener {
   private MultiChoosePicFragment picDialog;
   CommonFlexAdapter adapter = new CommonFlexAdapter(new ArrayList(), this);
-
+  @Need StudentBean studentBean;
+  @Inject StudentWrap studentWrap;
   @Override protected void subscribeUI() {
-
+    studentWrap.setStudentBean(studentBean);
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {

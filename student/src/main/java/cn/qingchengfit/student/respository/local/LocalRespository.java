@@ -12,7 +12,6 @@ import javax.inject.Singleton;
 /**
  * Created by huangbaole on 2017/12/7.
  */
-@Singleton
 public final class LocalRespository {
 
     @Inject Application application;

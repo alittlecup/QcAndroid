@@ -59,7 +59,7 @@ import javax.inject.Singleton;
  * <p>
  * Created by huangbaole on 2017/11/17.
  */
-@Singleton public class StudentRepositoryImpl implements StudentRepository {
+public class StudentRepositoryImpl implements StudentRepository {
 
   @Inject IStudentModel remoteService;
 
@@ -221,10 +221,11 @@ import javax.inject.Singleton;
 
   @Override
   public void qcGetSellerInactiveUsers(MutableLiveData<List<QcStudentBeanWithFollow>> liveData,
-      MutableLiveData<Resource<Object>> rst, int status, int time_period_id) {
+      MutableLiveData<Resource<Object>> rst, int status, int time_period_id,String seller_id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("status", status);
     params.put("time_period_id", time_period_id);
+    params.put("seller_id", seller_id);
     bindToLiveData(liveData, remoteService.qcGetSellerInactiveUsers(loginStatus.staff_id(), params)
         .map(response -> response.copyResponse(response.data.users)), rst, "");
   }

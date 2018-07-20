@@ -134,7 +134,7 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
       }
 
       @Override public void onTailClick() {
-        routeToAddStudent();
+        routeToAddStudent(true);
       }
     });
     etContent.setText(smsBegin);
@@ -227,12 +227,12 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
    * 点击添加学员
    */
   public void onClickAdd() {
-    routeToAddStudent();
+    routeToAddStudent(false);
   }
-  private void routeToAddStudent(){
+  private void routeToAddStudent(boolean isOpen){
     DirtySender.studentList.clear();
     DirtySender.studentList.addAll(chosenStudent);
-    QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("ChooseActivity").addParam("to",11)).callAsync(
+    QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("ChooseActivity").addParam("to",11).addParam("open",isOpen)).callAsync(
         new IQcRouteCallback() {
           @Override public void onResult(QCResult qcResult) {
             if(qcResult.isSuccess())

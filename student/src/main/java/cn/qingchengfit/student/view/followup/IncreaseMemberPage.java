@@ -38,6 +38,7 @@ import com.anbillon.flabellum.annotations.Need;
     });
     mSortViewModel.filterIndex.observe(this, index -> {
       filterView.showPage(index);
+      mBinding.layoutCollapsed.setExpanded(false);
     });
     mSortViewModel.filterAction.observe(this, aBoolean -> {
       listView.setItems(

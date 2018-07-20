@@ -29,7 +29,8 @@ import java.util.List;
 
 public class ChooseDetailItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemStudentFollowUpStateBinding>>
-    implements ISectionable<DataBindingViewHolder<ItemStudentFollowUpStateBinding>, IHeader> ,IItemData {
+    implements ISectionable<DataBindingViewHolder<ItemStudentFollowUpStateBinding>, IHeader>,
+    IItemData {
 
   public QcStudentBeanWithFollow data;
   public int status;
@@ -66,14 +67,19 @@ public class ChooseDetailItem
       DataBindingViewHolder<ItemStudentFollowUpStateBinding> holder, int position, List payloads) {
     holder.itemView.setTag(data);
     boolean showSelected = false;
+    boolean noInfo = false;
     if (adapter instanceof CommonFlexAdapter) {
       Integer choose = (Integer) ((CommonFlexAdapter) adapter).getTag("choose");
       if (choose != null) {
         type = choose;
       }
       Boolean selected = (Boolean) ((CommonFlexAdapter) adapter).getTag("selected");
+      Boolean noInfo1 = (Boolean) ((CommonFlexAdapter) adapter).getTag("noInfo");
       if (selected != null) {
         showSelected = selected;
+      }
+      if (noInfo1 != null) {
+        noInfo = noInfo1;
       }
     }
     ItemStudentFollowUpStateBinding binding = holder.getDataBinding();
@@ -94,31 +100,32 @@ public class ChooseDetailItem
     //电话
     binding.itemPersonPhonenum.setText(
         new StringBuilder().append("手机：").append(data.phone).toString());
-
-    if (type == Mode.UNDEFINE || type == Mode.SALLER) {
+    if (!noInfo) {
+      //if (type == Mode.UNDEFINE || type == Mode.SALLER) {
       //销售
       List<String> sellerNames = new ArrayList<>();
       if (data.sellers != null && !data.sellers.isEmpty()) {
-        for (Staff saler : data.sellers) {
-          sellerNames.add(saler.username);
+        for (Staff seller : data.sellers) {
+          sellerNames.add(seller.username);
         }
       }
-
       binding.itemPersonDesc.setText(new StringBuilder().append("销售：")
-          .append(StringUtils.List2StrWithChineseSplit(sellerNames))
-          .toString());
-    } else if (type == Mode.TRAINER) {
-      //教练 
+          .append(StringUtils.List2StrWithChineseSplit(sellerNames)).toString());
+      //} else if (type == Mode.TRAINER) {
+      //教练
       // TODO: 2018/7/13 这里字段有问题
-      List<String> sellerNames = new ArrayList<>();
-      if (data.sellers != null && !data.sellers.isEmpty()) {
-        for (Staff saler : data.sellers) {
-          sellerNames.add(saler.username);
+      List<String> sellerNames2 = new ArrayList<>();
+      if (data.coaches != null && !data.coaches.isEmpty()) {
+        for (Staff saler : data.coaches) {
+          sellerNames2.add(saler.username);
         }
       }
-      binding.itemPersonDesc.setText(new StringBuilder().append("教练：")
-          .append(StringUtils.List2StrWithChineseSplit(sellerNames))
+      binding.itemPersonCoach.setText(
+          new StringBuilder()
+          .append("教练：")
+          .append(StringUtils.List2StrWithChineseSplit(sellerNames2))
           .toString());
+      //}
     }
 
     binding.tvStudentStatus.setText(binding.tvStudentStatus.getContext()
@@ -149,7 +156,8 @@ public class ChooseDetailItem
               .append("\n跟进状态：")
               .append(TextUtils.isEmpty(data.track_status) ? "" : data.track_status)
               .append("\n跟进时间：")
-              .append(TextUtils.isEmpty(data.track_at) ? "" : data.track_at)
+              .append(TextUtils.isEmpty(data.track_at) ? ""
+                  : DateUtils.getYYYYMMDDfromServer(data.track_at))
               .toString();
           break;
         case 2:
@@ -179,17 +187,16 @@ public class ChooseDetailItem
       } else {
         binding.tvStudentDesc.setText(desc);
       }
-    }else{
+    } else {
       binding.tvStudentDesc.setVisibility(View.GONE);
     }
-    if(showSelected){
+    if (showSelected) {
       binding.cb.setVisibility(View.VISIBLE);
       binding.cbSpace.setVisibility(View.VISIBLE);
-    }else{
+    } else {
       binding.cb.setVisibility(View.GONE);
       binding.cbSpace.setVisibility(View.GONE);
     }
-
   }
 
   IHeader head;

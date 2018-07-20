@@ -21,6 +21,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Single;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -68,15 +69,20 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
       switch (dimension) {
         case DateGroupDimension.DAY:
           calendar.add(Calendar.DAY_OF_MONTH, -1);
+          curDates.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
+
           break;
         case DateGroupDimension.WEEK:
           calendar.add(Calendar.WEEK_OF_YEAR, -1);
+          curDates.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
+
           break;
         case DateGroupDimension.MONTH:
           calendar.add(Calendar.MONTH, -1);
+          curDates.put("start", DateUtils.getStartDayOfMonth(new Date()));
+
           break;
       }
-      curDates.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
       curSelectPositionDate.setValue(curDates);
     });
     remoteDatas = Transformations.switchMap(dates,

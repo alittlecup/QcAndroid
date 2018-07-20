@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 
@@ -21,12 +22,20 @@ public class StaffComponent implements IComponent {
         add.putExtra("remote", "add");
         qc.getContext().startActivity(add);
         QC.sendQCResult(qc.getCallId(), QCResult.success());
-        return true;
+        return false;
       case "/home/student":
         Intent it = new Intent(qc.getContext(), StudentsDetailActivity.class);
         it.putExtra("qcstudent", (Parcelable) qc.getParams().get("qcstudent"));
         qc.getContext().startActivity(it);
         QC.sendQCResult(qc.getCallId(), QCResult.success());
+        return false;
+      case "ChooseActivity":
+        Intent intent = new Intent(qc.getContext(), ChooseActivity.class);
+        int to = (int) qc.getParams().get("to");
+        intent.putExtra("to", to);
+        intent.putExtra("open", (boolean) qc.getParams().get("open"));
+        intent.putExtra("cardId", qc.getCallId());
+        qc.getContext().startActivity(intent);
         return true;
     }
     return false;

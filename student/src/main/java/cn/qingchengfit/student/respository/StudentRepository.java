@@ -93,7 +93,7 @@ public interface StudentRepository {
 
   //全部会员-销售名下会员列表
   void qcGetSellerInactiveUsers(MutableLiveData<List<QcStudentBeanWithFollow>> liveData,
-      MutableLiveData<Resource<Object>> rst, int status,int time_period_id);
+      MutableLiveData<Resource<Object>> rst, int status,int time_period_id,String seller_id);
   LiveData<Resource<QcStudentBirthdayWrapper>> qcGetStudentBirthday(
      Map<String, Object> params);
 

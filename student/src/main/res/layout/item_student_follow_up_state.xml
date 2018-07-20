@@ -102,7 +102,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="手机 :"
-              android:visibility="gone"
+              android:visibility="visible"
               />
 
           <TextView
@@ -127,6 +127,18 @@
             tools:text="青橙工作室"
             style="@style/Qc.TextCommonGrey"
             />
+        <TextView
+            android:id="@+id/item_person_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/min_font"
+            android:visibility="visible"
+            tools:text="青橙工作室"
+            style="@style/Qc.TextCommonGrey"
+            />
+
 
       </LinearLayout>
 

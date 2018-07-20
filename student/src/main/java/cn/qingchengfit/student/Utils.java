@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Utils {
 
-  /**
+    /**
    * 将折线图的原有数据转换为折线图需要的数据形式
    *
    * @param bean 原有数据集

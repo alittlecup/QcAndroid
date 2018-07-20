@@ -27,69 +27,71 @@ import java.util.List;
  */
 public class FragmentAdapter extends FragmentStatePagerAdapter {
 
-    List<Fragment> fragments;
-    FragmentManager fm;
+  List<Fragment> fragments;
+  FragmentManager fm;
 
-    HashMap<Long, Fragment> tags = new HashMap<>();
+  HashMap<Long, Fragment> tags = new HashMap<>();
 
-    public FragmentAdapter(FragmentManager fm, ArrayList<Fragment> fs) {
-        super(fm);
-        this.fragments = fs;
-        this.fm = fm;
-        for (int i = 0; i < fs.size(); i++) {
-            if (fs.get(i) instanceof WardrobeListFragment) {
-                tags.put(((WardrobeListFragment) fs.get(i)).getRegionId(), fs.get(i));
-            }
-        }
+  public FragmentAdapter(FragmentManager fm, ArrayList<Fragment> fs) {
+    super(fm);
+    this.fragments = fs;
+    this.fm = fm;
+    for (int i = 0; i < fs.size(); i++) {
+      if (fs.get(i) instanceof WardrobeListFragment) {
+        tags.put(((WardrobeListFragment) fs.get(i)).getRegionId(), fs.get(i));
+      }
     }
+  }
 
-    public Fragment findByTag(Long tag) {
-        return tags.get(tag);
+  public Fragment findByTag(Long tag) {
+    return tags.get(tag);
+  }
+
+  @Override public Object instantiateItem(ViewGroup container, int position) {
+    Fragment fragment = (Fragment) super.instantiateItem(container, position);
+
+    return fragment;
+  }
+
+  @Override public void destroyItem(ViewGroup container, int position, Object object) {
+    super.destroyItem(container, position, object);
+    if (position >= getCount()) {
+      FragmentManager manager = ((Fragment) object).getFragmentManager();
+      FragmentTransaction trans = manager.beginTransaction();
+      trans.remove((Fragment) object);
+      trans.commit();
     }
+  }
 
-    @Override public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment) super.instantiateItem(container, position);
-
-        return fragment;
+  public void clearItem(ViewPager viewPager) {
+    if (fragments.size() > 0) {
+      for (int i = 0; i < fragments.size(); i++) {
+        destroyItem(viewPager, i, fragments.get(i));
+      }
     }
+  }
 
-    @Override public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-        if (position >= getCount()) {
-            FragmentManager manager = ((Fragment) object).getFragmentManager();
-            FragmentTransaction trans = manager.beginTransaction();
-            trans.remove((Fragment) object);
-            trans.commit();
-        }
-    }
+  @Override public Fragment getItem(int position) {
+    return fragments.get(position);
+  }
 
-    public void clearItem(ViewPager viewPager) {
-        if (fragments.size() > 0) {
-            for (int i = 0; i < fragments.size(); i++) {
-                destroyItem(viewPager, i, fragments.get(i));
-            }
-        }
-    }
+  @Override public int getCount() {
+    return fragments.size();
+  }
 
-    @Override public Fragment getItem(int position) {
-        return fragments.get(position);
-    }
+  @Override public int getItemPosition(Object object) {
+    return POSITION_NONE;
+  }
 
-    @Override public int getCount() {
-        return fragments.size();
+  @Override public CharSequence getPageTitle(int position) {
+    Fragment f = fragments.get(position);
+    if (f instanceof TitleFragment) {
+      return ((TitleFragment) f).getTitle();
+    } else if (f instanceof cn.qingchengfit.views.fragments.TitleFragment) {
+      return ((cn.qingchengfit.views.fragments.TitleFragment) f).getTitle();
+    } else {
+      return "";
     }
-
-    @Override public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
-
-    @Override public CharSequence getPageTitle(int position) {
-        Fragment f = fragments.get(position);
-        if (f instanceof TitleFragment) {
-            return ((TitleFragment) f).getTitle();
-        } else {
-            return "";
-        }
-    }
+  }
 }
 

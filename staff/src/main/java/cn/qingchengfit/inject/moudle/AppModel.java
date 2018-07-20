@@ -1,6 +1,7 @@
 package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
+import android.arch.lifecycle.ViewModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.CardModel;
@@ -17,6 +18,7 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IExportModel;
+import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
@@ -41,10 +43,13 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.staff.StaffModel;
 import cn.qingchengfit.staffkit.student.network.StudentModel;
+import cn.qingchengfit.student.view.followrecord.FollowRecordViewModel;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.multibindings.IntoMap;
 import java.util.List;
 
 /**
@@ -189,6 +194,8 @@ import java.util.List;
   @Provides public ICardModel provideCardModel() {
     return new CardModel(qcrestRepository, gymWrapper, loginStatus);
   }
+
+
 
   @Provides IExportModel provideExportModel() {
     return exportModel;

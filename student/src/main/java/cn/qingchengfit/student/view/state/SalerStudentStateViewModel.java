@@ -31,6 +31,7 @@ public class SalerStudentStateViewModel
       new MutableLiveData<>();
   public final MediatorLiveData<List<ChooseDetailItem>> items =new MediatorLiveData<>();
   public int type = -1;
+  public String seller_id="";
 
   @Inject public SalerStudentStateViewModel() {
     items.addSource(studentBeans, qcStudentBeanWithFollows -> {
@@ -49,7 +50,7 @@ public class SalerStudentStateViewModel
 
   @NonNull @Override
   protected LiveData<List<QcStudentBeanWithFollow>> getSource(@NonNull Integer params) {
-    studentRepository.qcGetSellerInactiveUsers(studentBeans, defaultResult, type, params);
+    studentRepository.qcGetSellerInactiveUsers(studentBeans, defaultResult, type, params,seller_id);
     return studentBeans;
   }
 
@@ -76,7 +77,7 @@ public class SalerStudentStateViewModel
     }
   }
   private void loadSource(int id){
-    studentRepository.qcGetSellerInactiveUsers(studentBeans, defaultResult, type, id);
+    studentRepository.qcGetSellerInactiveUsers(studentBeans, defaultResult, type, id,seller_id);
   }
 
   public void setCurAttack(InactiveBean inactiveBean) {

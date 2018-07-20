@@ -30,6 +30,7 @@ import java.util.ArrayList;
   SalerStateFilterView filterView;
 
   @Override protected void subscribeUI() {
+    mViewModel.seller_id=staff.getId();
     mViewModel.filterContent.observe(this, content -> mBinding.qcFilterToggle.setText(content));
     mViewModel.items.observe(this, items -> listView.setItems(items));
     mViewModel.filterVisible.observe(this, ab -> {

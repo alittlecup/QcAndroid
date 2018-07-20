@@ -36,7 +36,6 @@ import rx.Observable;
  * Created by huangbaole on 2017/12/7.
  */
 
-@Singleton
 public class FilterUserCase {
     @Inject Application application;
     @Inject StudentRepository studentRespository;

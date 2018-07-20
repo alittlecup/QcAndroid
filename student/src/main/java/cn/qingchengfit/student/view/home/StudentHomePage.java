@@ -128,15 +128,15 @@ import java.util.ArrayList;
       routeTo("/attendance/page", null);
     });
     mBinding.commTransferStudent.setOnClickListener(view -> {
-      //routeTo("/transfer/student", null);
-      routeTo("/select_member/", null);
+      routeTo("/transfer/student", null);
+      //routeTo("/select_member/", null);
     });
     mBinding.commSendMsg.setOnClickListener(view -> {
       routeTo("/student/sendmsg/", null);
     });
     mBinding.commExportImport.setOnClickListener(view -> {
-      //routeTo("/student/export", null);
-      routeTo("/student/follow_record", null);
+      routeTo("/student/export", null);
+      //routeTo("/student/follow_record", null);
     });
     mBinding.tvAllStudent.setOnClickListener(view -> {
       routeTo("/student/all", null);

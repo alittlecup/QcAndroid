@@ -264,7 +264,9 @@ import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeLongHireFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeShortHireFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeListFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
+import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.di.BindStudentActivity;
+import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import cn.qingchengfit.views.fragments.WebFragment;
@@ -306,7 +308,7 @@ import dagger.multibindings.IntoMap;
     BindGymConfigAcitivty.class, BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
-    BindShopActivity.class,
+    BindShopActivity.class,StudentViewModel.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,
@@ -400,7 +402,9 @@ import dagger.multibindings.IntoMap;
       带有学员信息的页面
      */
 
-    AppComponent.StudentHomeModule.class, AppComponent.StudentMoreInfoModule.class,
+    AppComponent.StudentHomeModule.class,
+    AppComponent.FollowRecordPageModule.class,
+    AppComponent.StudentMoreInfoModule.class,
     AppComponent.FollowRecordModule.class, AppComponent.StudentsCardsModule.class,
     AppComponent.ClassRecordModule.class, AppComponent.StudentSignInImageFragmentModule.class,
 
@@ -1758,6 +1762,12 @@ public interface AppComponent {
       extends AndroidInjector<StudentHomeFragment> {
     @Subcomponent.Builder public abstract class Builder
         extends AndroidInjector.Builder<StudentHomeFragment> {
+    }
+  }
+  @Subcomponent() public interface FollowRecordPageSubcomponent
+      extends AndroidInjector<FollowRecordPage> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<FollowRecordPage> {
     }
   }
 
@@ -3395,6 +3405,12 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(StudentHomeFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         StudentHomeSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = FollowRecordPageSubcomponent.class) abstract class FollowRecordPageModule {
+    @Binds @IntoMap @FragmentKey(FollowRecordPage.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        FollowRecordPageSubcomponent.Builder builder);
   }
 
   @Module(subcomponents = ClassRecordSubcomponent.class) abstract class ClassRecordModule {
