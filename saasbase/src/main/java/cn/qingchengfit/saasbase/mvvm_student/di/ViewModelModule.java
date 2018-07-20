@@ -2,8 +2,7 @@ package cn.qingchengfit.saasbase.mvvm_student.di;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.AttendanceStudentViewModel;
-import cn.qingchengfit.saasbase.mvvm_student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
+import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import dagger.Binds;
@@ -23,11 +22,11 @@ import dagger.multibindings.IntoMap;
   //
   ////@Binds abstract IStudentModel bindStudentModel(StudentModel studentModel);
   //
-  @Binds @IntoMap @ViewModelKey(AttendanceStudentViewModel.class)
-  abstract ViewModel bindAttendanceStudentViewModel(AttendanceStudentViewModel model);
-
-  @Binds @IntoMap @ViewModelKey(AttendanceAbsentViewModel.class)
-  abstract ViewModel bindAttendanceAbsentViewModel(AttendanceAbsentViewModel model);
+  //@Binds @IntoMap @ViewModelKey(AttendanceStudentViewModel.class)
+  //abstract ViewModel bindAttendanceStudentViewModel(AttendanceStudentViewModel model);
+  //
+  //@Binds @IntoMap @ViewModelKey(AttendanceAbsentViewModel.class)
+  //abstract ViewModel bindAttendanceAbsentViewModel(AttendanceAbsentViewModel model);
   //
   //@Binds @IntoMap @ViewModelKey(AttendanceRankViewModel.class)
   //abstract ViewModel bindAttendanceRankViewModel(AttendanceRankViewModel model);
@@ -68,9 +67,9 @@ import dagger.multibindings.IntoMap;
   //@Binds @IntoMap @ViewModelKey(FollowUpFilterViewModel.class)
   //abstract ViewModel bindFollowUpFilterViewModel(FollowUpFilterViewModel model);
   //
-  //@Binds @IntoMap @ViewModelKey(BatchCopyViewModel.class)
-  //abstract ViewModel bindBatchCopyViewModel(BatchCopyViewModel model);
-  //
+  @Binds @IntoMap @ViewModelKey(BatchCopyViewModel.class)
+  abstract ViewModel bindBatchCopyViewModel(BatchCopyViewModel model);
+
   //@Named("commonFilter") @Singleton @Provides static StudentFilter providesStudentFilter() {
   //  return new StudentFilter();
   //}

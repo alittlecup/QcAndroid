@@ -16,7 +16,7 @@ import rx.functions.Action3;
  */
 
 public class AttendanceNosignFilterView extends BaseFilterFragment {
-    AttendanceNosingTimeFilterFragment timeFilterFragment;
+    //AttendanceNosingTimeFilterFragment timeFilterFragment;
     FilterListStringFragment listStringFragment;
 
     @Override
@@ -31,11 +31,11 @@ public class AttendanceNosignFilterView extends BaseFilterFragment {
     }
 
     private void initFragment() {
-        timeFilterFragment = new AttendanceNosingTimeFilterFragment();
-        timeFilterFragment.setListItemString(new String[]{
-                "未签课7天内", "未签课30天内", "自定义"
-        });
-        timeFilterFragment.setSelectDayAction(daySelect);
+        //timeFilterFragment = new AttendanceNosingTimeFilterFragment();
+        //timeFilterFragment.setListItemString(new String[]{
+        //        "未签课7天内", "未签课30天内", "自定义"
+        //});
+        //timeFilterFragment.setSelectDayAction(daySelect);
 
         listStringFragment=new FilterListStringFragment();
         String[] strings=new String[31];
@@ -55,11 +55,11 @@ public class AttendanceNosignFilterView extends BaseFilterFragment {
 
     @Override
     protected Fragment getFragmentByTag(String tag) {
-        if (tag.equalsIgnoreCase(getTags()[0])) {
-            return timeFilterFragment;
-        } else if (tag.equalsIgnoreCase(getTags()[1])) {
-            return listStringFragment;
-        }
+        //if (tag.equalsIgnoreCase(getTags()[0])) {
+        //    return timeFilterFragment;
+        //} else if (tag.equalsIgnoreCase(getTags()[1])) {
+        //    return listStringFragment;
+        //}
         return new EmptyFragment();
     }
 
