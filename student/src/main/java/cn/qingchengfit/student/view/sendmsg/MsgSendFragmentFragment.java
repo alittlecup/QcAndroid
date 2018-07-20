@@ -20,6 +20,10 @@ import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.router.qc.IQcRouteCallback;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.widget.QcTagContainerLayout;
 import cn.qingchengfit.saascommon.widget.QcTagView;
@@ -130,13 +134,7 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
       }
 
       @Override public void onTailClick() {
-        // TODO: 2018/7/8 choose staff
-        //Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
-        //toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
-        //toChooseStudent.putExtra("open", true);
-        //DirtySender.studentList.clear();
-        //DirtySender.studentList.addAll(chosenStudent);
-        //startActivityForResult(toChooseStudent, 11);
+        routeToAddStudent();
       }
     });
     etContent.setText(smsBegin);
@@ -229,13 +227,20 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
    * 点击添加学员
    */
   public void onClickAdd() {
-    // TODO: 2018/7/8  choosestaff
-    //Intent toChooseStudent = new Intent(getContext(), ChooseActivity.class);
-    //toChooseStudent.putExtra("to", CHOOSE_MULTI_STUDENTS);
-    //DirtySender.studentList.clear();
-    //DirtySender.studentList.addAll(chosenStudent);
-    //startActivityForResult(toChooseStudent, 11);
+    routeToAddStudent();
   }
+  private void routeToAddStudent(){
+    DirtySender.studentList.clear();
+    DirtySender.studentList.addAll(chosenStudent);
+    QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("ChooseActivity").addParam("to",11)).callAsync(
+        new IQcRouteCallback() {
+          @Override public void onResult(QCResult qcResult) {
+            if(qcResult.isSuccess())
+              updateData();
+          }
+        });
+  }
+
 
   /**
    * 发送短信
@@ -310,6 +315,20 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
         layoutTags.setTags(s);
       }
     }
+  }
+  private void updateData(){
+    List<String> s = new ArrayList<>();
+    if (DirtySender.studentList != null) {
+      for (int i = 0; i < DirtySender.studentList.size(); i++) {
+        s.add(DirtySender.studentList.get(i).getUsername());
+      }
+    }
+    chosenStudent.clear();
+    chosenStudent.addAll(DirtySender.studentList);
+    DirtySender.studentList.clear();
+
+    layoutTags.removeAllTags();
+    layoutTags.setTags(s);
   }
 
   @Override public void onShowError(String e) {

@@ -23,6 +23,7 @@
           android:layout_width="match_parent"
           android:layout_height="0dp"
           android:layout_weight="1"
+          android:background="@color/bg_white"
           >
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -54,9 +55,6 @@
 
       <include
           layout="@layout/divider_grey"
-          android:id="@+id/ll_divider_bottom"
-          android:layout_width="match_parent"
-          android:layout_height="1px"
           />
 
       <LinearLayout

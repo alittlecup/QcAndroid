@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageAllStudentBinding;
@@ -26,14 +28,15 @@ import java.util.Map;
 
 @Leaf(module = "student", path = "/student/all") public class StudentAllPage
     extends StudentBaseFragment<StPageAllStudentBinding, StudentAllViewModel>
-    implements DrawerListener, LoadDataListener, SearchView.OnQueryTextListener
-    {
+    implements DrawerListener, LoadDataListener, SearchView.OnQueryTextListener {
   StudentRecyclerSortView listView;
   private StudentFilterView filterView;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setDatas(items);
+      listView.getListView().setAdapterTag("noInfo", true);
+
     });
     mViewModel.showLoading.observe(this, aBoolean -> {
       if (aBoolean) {
@@ -50,13 +53,13 @@ import java.util.Map;
     mBinding = StPageAllStudentBinding.inflate(inflater, container, false);
     initFragment();
     initListener();
-    toggleToolbar(false,"");
+    toggleToolbar(false, "");
     return mBinding;
   }
 
   private void initListener() {
     mBinding.fabAddStudent.setOnClickListener(v -> {
-
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
     });
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.TRAINER_TYPE);
@@ -89,15 +92,14 @@ import java.util.Map;
   private void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel("全部会员");
     toolbarModel.setMenu(R.menu.menu_search);
-    toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        SearchView actionView = (SearchView) item.getActionView();
-        actionView.setQueryHint("输入学员姓名或者手机号");
-        actionView.setOnQueryTextListener(StudentAllPage.this);
-        actionView.setOnQueryTextFocusChangeListener(
-            (v, hasFocus) -> mBinding.includeToolbar.toolbarTitle.setVisibility(hasFocus ? View.GONE : View.VISIBLE));
-        return false;
-      }
+    toolbarModel.setListener(item -> {
+      SearchView actionView = (SearchView) item.getActionView();
+      actionView.setQueryHint("输入学员姓名或者手机号");
+      actionView.setOnQueryTextListener(StudentAllPage.this);
+      actionView.setOnQueryTextFocusChangeListener(
+          (v, hasFocus) -> mBinding.includeToolbar.toolbarTitle.setVisibility(
+              hasFocus ? View.GONE : View.VISIBLE));
+      return false;
     });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
@@ -124,8 +126,9 @@ import java.util.Map;
     listView.filter(newText);
     return false;
   }
-  private void toggleToolbar(boolean show,String type){
-    if(show){
+
+  private void toggleToolbar(boolean show, String type) {
+    if (show) {
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.VISIBLE);
       mBinding.fabAddStudent.setVisibility(View.GONE);
@@ -148,16 +151,14 @@ import java.util.Map;
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //修改列表内容
       listView.getListView().setCurType(type);
-    }else{
+    } else {
       mBinding.rbSelectAll.setVisibility(View.GONE);
       mBinding.fabAddStudent.setVisibility(View.VISIBLE);
       initToolbar();
-      if(listView.getListView()!=null){
+      if (listView.getListView() != null) {
         listView.getListView().reset();
       }
       mBinding.includeAllot.getRoot().setVisibility(View.VISIBLE);
-
     }
   }
-
 }

@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
 import cn.qingchengfit.student.R;
@@ -21,6 +25,7 @@ import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StViewStudentAllotBinding;
 import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.item.ChooseStaffItem;
+import cn.qingchengfit.student.item.FollowUpItem;
 import cn.qingchengfit.student.item.StaffDetailItem;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
@@ -32,11 +37,14 @@ import com.amap.api.services.poisearch.PoiSearch;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import io.reactivex.annotations.NonNull;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudentListView
     extends StudentBaseFragment<StViewStudentAllotBinding, StudentListViewModel>
@@ -101,7 +109,7 @@ public class StudentListView
   }
 
   public void selectAll(boolean selectedAll) {
-    if(adapter.isEmpty()||adapter.getMainItems().get(0) instanceof CommonNoDataItem){
+    if (adapter.isEmpty() || adapter.getMainItems().get(0) instanceof CommonNoDataItem) {
       return;
     }
     if (selectedAll) {
@@ -136,6 +144,16 @@ public class StudentListView
     return "";
   }
 
+  private Map<String, Object> adapterTags = new HashMap<>();
+
+  public void setAdapterTag(String key, Object value) {
+    if (adapter != null) {
+      adapter.setTag(key, value);
+    } else {
+      adapterTags.put(key, value);
+    }
+  }
+
   public void setItems(List<? extends AbstractFlexibleItem> items) {
     if (items == null || items.isEmpty()) {
       showEmptyLayout(R.drawable.vd_img_empty_universe, "暂无数据", "");
@@ -155,7 +173,8 @@ public class StudentListView
     adapter = new CommonFlexAdapter(new ArrayList());
     adapter.setMode(SelectableAdapter.Mode.MULTI);
     mBinding.recyclerView.setAdapter(adapter);
-    mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    mBinding.recyclerView.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.fastScrollerBar.setBarClickListener(letter -> {
       List<? extends AbstractFlexibleItem> itemList = mViewModel.items.get();
@@ -176,6 +195,11 @@ public class StudentListView
     });
     adapter.setFastScroller(mBinding.fastScrollerBar);
     adapter.addListener(this);
+    if (!adapterTags.isEmpty()) {
+      for (String key : adapterTags.keySet()) {
+        adapter.setTag(key, adapterTags.get(key));
+      }
+    }
     setRefreshEnable(false);
   }
 
@@ -204,12 +228,12 @@ public class StudentListView
       mBinding.btnModifySale.setText(getStringByType(curType));
       if (type.equals(TRAINER_TYPE)) {
         adapter.setTag("choose", 1);
-      } else if(type.equals(SELLER_TYPE)){
+      } else if (type.equals(SELLER_TYPE)) {
         adapter.setTag("choose", 0);
-      }else {
-        adapter.setTag("choose",-2);
+      } else {
+        adapter.setTag("choose", -2);
       }
-      adapter.setTag("selected",true);
+      adapter.setTag("selected", true);
       adapter.notifyDataSetChanged();
     }
   }
@@ -227,7 +251,21 @@ public class StudentListView
   }
 
   @Override public boolean onItemClick(int position) {
-    if(TextUtils.isEmpty(mBinding.btnModifySale.getText())){
+    Object choose = adapter.getTag("choose");
+    if (choose != null && (int) choose == -1) {
+      QcStudentBean qcStudentBean = null;
+      IFlexible item = adapter.getItem(position);
+      if (item instanceof IItemData) {
+        qcStudentBean = ((IItemData) item).getData();
+      } else if (item instanceof FollowUpItem) {
+        qcStudentBean = ((FollowUpItem) item).getData();
+      }
+      if (qcStudentBean == null) return false;
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
+          .addParam("qcstudent", qcStudentBean)).call();
+      return false;
+    }
+    if (TextUtils.isEmpty(mBinding.btnModifySale.getText())) {
       return false;
     }
     adapter.toggleSelection(position);

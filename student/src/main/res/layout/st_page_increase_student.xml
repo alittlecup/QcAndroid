@@ -132,7 +132,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/bg_click"
-                    android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),4)}"
+                    android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),2)}"
                     android:text="@{viewModel.gender}"
                     app:ft_text_off="性别"
                     app:ft_text_on="性别"

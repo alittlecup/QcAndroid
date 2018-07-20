@@ -52,16 +52,6 @@ public class Personage implements Parcelable {
     @Ignore
     public District gd_district;//地区
 
-    public static final Creator<Personage> CREATOR = new Creator<Personage>() {
-        @Override public Personage createFromParcel(Parcel in) {
-            return new Personage(in);
-        }
-
-        @Override public Personage[] newArray(int size) {
-            return new Personage[size];
-        }
-    };
-
     public boolean isPhone_active() {
         return phone_active;
     }
@@ -250,4 +240,15 @@ public class Personage implements Parcelable {
         this.gd_district_id = in.readString();
         this.gd_district = in.readParcelable(District.class.getClassLoader());
     }
+
+    @Ignore
+    public static final Creator<Personage> CREATOR = new Creator<Personage>() {
+        @Override public Personage createFromParcel(Parcel source) {
+            return new Personage(source);
+        }
+
+        @Override public Personage[] newArray(int size) {
+            return new Personage[size];
+        }
+    };
 }

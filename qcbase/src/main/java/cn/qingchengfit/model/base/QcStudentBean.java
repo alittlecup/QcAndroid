@@ -40,6 +40,7 @@ public class QcStudentBean extends Personage
     @SerializedName(value = "sellers", alternate = {"users"})
     @Ignore
     public List<Staff> sellers;//所属销售--student
+    @Ignore
     public List<Staff> coaches;//所属教练--student
 
     public String joined_at;
@@ -108,6 +109,41 @@ public class QcStudentBean extends Personage
         postion = builder.postion;
         setShops(builder.shops);
     }
+
+    protected QcStudentBean(Parcel in) {
+        status = in.readInt();
+        sellers = in.createTypedArrayList(Staff.CREATOR);
+        coaches = in.createTypedArrayList(Staff.CREATOR);
+        tag = in.readString();
+        id = in.readString();
+        username = in.readString();
+        phone = in.readString();
+        avatar = in.readString();
+        checkin_avatar = in.readString();
+        gender = in.readInt();
+        head = in.readString();
+        brand_id = in.readString();
+        join_at = in.readString();
+        support_gym = in.readString();
+        supoort_gym_ids = in.readString();
+        district_id = in.readString();
+        district = in.readParcelable(District.class.getClassLoader());
+        postion = in.readParcelable(StaffPosition.class.getClassLoader());
+        shops = in.createTypedArrayList(Shop.CREATOR);
+    }
+
+    @Ignore
+    public static final Parcelable.Creator<QcStudentBean> CREATOR = new Parcelable.Creator<QcStudentBean>() {
+        @Override
+        public QcStudentBean createFromParcel(Parcel in) {
+            return new QcStudentBean(in);
+        }
+
+        @Override
+        public QcStudentBean[] newArray(int size) {
+            return new QcStudentBean[size];
+        }
+    };
 
     public StudentBean toStudentBean(String brand_id, String gymid, String gymmodel) {
         String curHead = "";
@@ -394,6 +430,34 @@ public class QcStudentBean extends Personage
         return supoort_gym_ids;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(status);
+        parcel.writeTypedList(sellers);
+        parcel.writeTypedList(coaches);
+        parcel.writeString(tag);
+        parcel.writeString(id);
+        parcel.writeString(username);
+        parcel.writeString(phone);
+        parcel.writeString(avatar);
+        parcel.writeString(checkin_avatar);
+        parcel.writeInt(gender);
+        parcel.writeString(head);
+        parcel.writeString(brand_id);
+        parcel.writeString(join_at);
+        parcel.writeString(support_gym);
+        parcel.writeString(supoort_gym_ids);
+        parcel.writeString(district_id);
+        parcel.writeParcelable(district, i);
+        parcel.writeParcelable(postion, i);
+        parcel.writeTypedList(shops);
+    }
+
     public static class Builder {
         private String tag;
         private String id;
@@ -546,50 +610,4 @@ public class QcStudentBean extends Personage
     public void setCloud_user(User cloud_user) {
         this.cloud_user = cloud_user;
     }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(this.status);
-        dest.writeTypedList(this.sellers);
-        dest.writeTypedList(this.coaches);
-        dest.writeString(this.joined_at);
-        dest.writeString(this.join_at);
-        dest.writeString(this.support_gym);
-        dest.writeString(this.supoort_gym_ids);
-        dest.writeString(this.district_id);
-        dest.writeParcelable(this.district, flags);
-        dest.writeParcelable(this.postion, flags);
-        dest.writeTypedList(this.shops);
-        dest.writeParcelable(this.cloud_user, flags);
-    }
-
-    protected QcStudentBean(Parcel in) {
-        super(in);
-        this.status = in.readInt();
-        this.sellers = in.createTypedArrayList(Staff.CREATOR);
-        this.coaches = in.createTypedArrayList(Staff.CREATOR);
-        this.joined_at = in.readString();
-        this.join_at = in.readString();
-        this.support_gym = in.readString();
-        this.supoort_gym_ids = in.readString();
-        this.district_id = in.readString();
-        this.district = in.readParcelable(District.class.getClassLoader());
-        this.postion = in.readParcelable(StaffPosition.class.getClassLoader());
-        this.shops = in.createTypedArrayList(Shop.CREATOR);
-        this.cloud_user = in.readParcelable(User.class.getClassLoader());
-    }
-
-    public static final Creator<QcStudentBean> CREATOR = new Creator<QcStudentBean>() {
-        @Override public QcStudentBean createFromParcel(Parcel source) {
-            return new QcStudentBean(source);
-        }
-
-        @Override public QcStudentBean[] newArray(int size) {
-            return new QcStudentBean[size];
-        }
-    };
 }
