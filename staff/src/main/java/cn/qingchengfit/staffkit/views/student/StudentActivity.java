@@ -75,7 +75,6 @@ public class StudentActivity extends BaseActivity
         editStudentInfoFragment.isAdd = true;
         getSupportFragmentManager().beginTransaction()
             .replace(getFragId(), editStudentInfoFragment)
-            .addToBackStack(null)
             .commit();
       }
     } else {

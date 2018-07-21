@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -50,7 +52,6 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -71,9 +72,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/15.
  */
-@Leaf(module = "student",path = "/student/msgsend")
-public class MsgSendFragmentFragment extends SaasCommonFragment
-    implements ShortMsgPresentersPresenter.MVPView {
+@Leaf(module = "student", path = "/student/msgsend") public class MsgSendFragmentFragment
+    extends SaasCommonFragment implements ShortMsgPresentersPresenter.MVPView {
   @Need String msgid;
 
   QcTagContainerLayout layoutTags;
@@ -91,11 +91,11 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
   @Inject ShortMsgPresentersPresenter presenter;
 
   private List<QcStudentBean> chosenStudent = new ArrayList<>();
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     StudentParamsInjector.inject(this);
   }
-
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -155,6 +155,7 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
         tvSmsCount.setText((textViewTextChangeEvent.text().toString().length() - 24) + "");
       }
     });
+    updateData();
     return view;
   }
 
@@ -172,46 +173,52 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
         }
 
         //点击取消
-        DialogSheet.builder(getContext()).addButton("保存为草稿", R.color.text_black,new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            saveMsg();
-
-          }
-        }).addButton("不保存",R.color.text_black, new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            getActivity().onBackPressed();
-          }
-        }).show();
+        DialogSheet.builder(getContext())
+            .addButton("保存为草稿", R.color.text_black, new View.OnClickListener() {
+              @Override public void onClick(View v) {
+                saveMsg();
+              }
+            })
+            .addButton("不保存", R.color.text_black, new View.OnClickListener() {
+              @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+              }
+            })
+            .show();
       }
     });
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
           //点击取消
-          DialogSheet.builder(getContext()).addButton("保存为草稿",R.color.text_black, new View.OnClickListener() {
-            @Override public void onClick(View v) {
-              saveMsg();
-            }
-          }).addButton("不保存",R.color.text_black, new View.OnClickListener() {
-            @Override public void onClick(View v) {
-              getActivity().onBackPressed();
-            }
-          }).show();
+          DialogSheet.builder(getContext())
+              .addButton("保存为草稿", R.color.text_black, new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                  saveMsg();
+                }
+              })
+              .addButton("不保存", R.color.text_black, new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                  getActivity().onBackPressed();
+                }
+              })
+              .show();
         } else if (item.getItemId() == R.id.action_send) {
           sendMsg();
         }
         return false;
       }
     });
-    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && this.isfitSystemPadding()) {
-      ((ViewGroup)toolbar.getParent()).setPadding(0,
+    if (!CompatUtils.less21()
+        && toolbar.getParent() instanceof ViewGroup
+        && this.isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
           MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
       RelativeLayout.LayoutParams layoutParams =
-          (RelativeLayout.LayoutParams)tvLeft.getLayoutParams();
+          (RelativeLayout.LayoutParams) tvLeft.getLayoutParams();
       layoutParams.setMargins(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
       tvLeft.setLayoutParams(layoutParams);
     }
-
   }
 
   @Override public void onDestroyView() {
@@ -229,18 +236,24 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
   public void onClickAdd() {
     routeToAddStudent(false);
   }
-  private void routeToAddStudent(boolean isOpen){
+
+  private void routeToAddStudent(boolean isOpen) {
     DirtySender.studentList.clear();
     DirtySender.studentList.addAll(chosenStudent);
-    QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("ChooseActivity").addParam("to",11).addParam("open",isOpen)).callAsync(
-        new IQcRouteCallback() {
-          @Override public void onResult(QCResult qcResult) {
-            if(qcResult.isSuccess())
+    QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("ChooseActivity")
+        .addParam("to", 11)
+        .addParam("open", isOpen)).callAsync(new IQcRouteCallback() {
+      @Override public void onResult(QCResult qcResult) {
+        if (qcResult.isSuccess()) {
+          new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override public void run() {
               updateData();
-          }
-        });
+            }
+          });
+        }
+      }
+    });
   }
-
 
   /**
    * 发送短信
@@ -316,7 +329,8 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
       }
     }
   }
-  private void updateData(){
+
+  private void updateData() {
     List<String> s = new ArrayList<>();
     if (DirtySender.studentList != null) {
       for (int i = 0; i < DirtySender.studentList.size(); i++) {
@@ -379,6 +393,7 @@ public class MsgSendFragmentFragment extends SaasCommonFragment
   @Override public void onDelSuccess() {
 
   }
+
   @Override protected void routeTo(String uri, Bundle bd, boolean b) {
     if (BuildConfig.RUN_AS_APP) {
       if (!uri.startsWith("/")) {

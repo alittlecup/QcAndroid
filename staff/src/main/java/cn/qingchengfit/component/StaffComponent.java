@@ -34,7 +34,7 @@ public class StaffComponent implements IComponent {
         int to = (int) qc.getParams().get("to");
         intent.putExtra("to", to);
         intent.putExtra("open", (boolean) qc.getParams().get("open"));
-        intent.putExtra("cardId", qc.getCallId());
+        intent.putExtra("callId", qc.getCallId());
         qc.getContext().startActivity(intent);
         return true;
     }

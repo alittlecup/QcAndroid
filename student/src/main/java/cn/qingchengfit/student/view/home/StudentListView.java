@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -292,6 +293,10 @@ public class StudentListView
             .curId(curID)
             .textContent(getString(R.string.choose_coach))
             .build());
+        break;
+      case StudentListView.MSG_TYPE:
+        DirtySender.studentList=getSelectDataBeans();
+        routeTo("/student/msgsend", null);
         break;
     }
     selectAll(false);

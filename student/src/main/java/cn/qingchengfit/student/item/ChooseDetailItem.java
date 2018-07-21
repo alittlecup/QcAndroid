@@ -126,6 +126,9 @@ public class ChooseDetailItem
           .append(StringUtils.List2StrWithChineseSplit(sellerNames2))
           .toString());
       //}
+    }else{
+      binding.itemPersonCoach.setVisibility(View.GONE);
+      binding.itemPersonDesc.setVisibility(View.GONE);
     }
 
     binding.tvStudentStatus.setText(binding.tvStudentStatus.getContext()
