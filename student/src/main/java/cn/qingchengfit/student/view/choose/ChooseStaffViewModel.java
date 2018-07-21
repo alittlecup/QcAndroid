@@ -86,7 +86,7 @@ public class ChooseStaffViewModel
   protected LiveData<List<QcStudentBeanWithFollow>> getSource(@NonNull Map<String,  Object> map) {
     isLoading.set(true);
 
-
+    map.put("show_all",1);
     return Transformations.map(respository.qcGetAllStudents( map),
         input -> {
           StudentListWrapper studentListWrapper = dealResource(input);

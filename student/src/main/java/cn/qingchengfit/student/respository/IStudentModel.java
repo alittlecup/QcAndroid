@@ -19,6 +19,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.bean.StatDate;
+import cn.qingchengfit.student.bean.StudentBeanListWrapper;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
@@ -59,7 +60,7 @@ public interface IStudentModel {
   /**
    * 购卡 绑定会员时选择会员列表
    */
-  //Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission();
+  Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission();
 
   /**
    * 新增会员

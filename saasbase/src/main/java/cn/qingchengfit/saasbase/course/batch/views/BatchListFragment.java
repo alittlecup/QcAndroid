@@ -23,7 +23,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiParams;
 import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitParams;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;

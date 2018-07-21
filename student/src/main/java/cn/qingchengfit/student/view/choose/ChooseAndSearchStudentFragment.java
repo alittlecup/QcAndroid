@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.student.views;
+package cn.qingchengfit.student.view.choose;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,13 +19,12 @@ import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.events.EventSelectedStudent;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -62,7 +61,7 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-  extends SaasBaseFragment
+  extends SaasCommonFragment
   implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
 	Toolbar toolbar;
 	TextView toolbarTitle;

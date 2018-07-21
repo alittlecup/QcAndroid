@@ -23,6 +23,7 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageWebChooseStaffBinding;
+import cn.qingchengfit.student.item.ChooseStaffItem;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentFilterViewModel;
 import cn.qingchengfit.weex.module.QcNavigatorModule;
@@ -56,7 +57,7 @@ import java.util.Map;
       List<IItemData> data = mViewModel.getSortViewModel().sortItems(items);
       List<StudentItem> items1=new ArrayList<>();
       for(IItemData data1:data){
-        if(data instanceof StudentItem){
+        if(data1 instanceof StudentItem){
           items1.add((StudentItem) data1);
         }
       }
@@ -165,6 +166,7 @@ import java.util.Map;
     initRecyclerView();
     initFragment();
     mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
     paseUri();
     mBinding.llBottom.setVisibility(View.GONE);

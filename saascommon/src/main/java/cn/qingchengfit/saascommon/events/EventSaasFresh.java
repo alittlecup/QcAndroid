@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.saascommon.events;
 
 /**
  * power by

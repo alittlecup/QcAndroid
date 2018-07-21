@@ -282,6 +282,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import dagger.android.support.FragmentKey;
 import dagger.multibindings.IntoMap;
+import javax.inject.Singleton;
 
 /**
  * power by
@@ -297,6 +298,7 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 16/1/20 2016.
  */
 //压制了 未使用 拼写检查 和public
+
 @SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" })
 @Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class,

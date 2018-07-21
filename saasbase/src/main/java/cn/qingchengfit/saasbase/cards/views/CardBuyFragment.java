@@ -23,6 +23,8 @@ import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -35,8 +37,8 @@ import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -59,7 +61,9 @@ import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
@@ -417,8 +421,13 @@ import rx.functions.Action1;
   }
 
  public void onCivBindMenbersClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
-        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
+    //routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
+    //    new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
+
+   Map<String,Object> map=new HashMap<>();
+   map.put("studentIdList",presenter.getChoseStuIds());
+   QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
+       .addParams(map)).call();
   }
 
  public void onCivSalerClicked() {

@@ -3,6 +3,7 @@ package cn.qingchengfit.student.respository;
 import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -24,6 +25,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.bean.StatDate;
+import cn.qingchengfit.student.bean.StudentBeanListWrapper;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
@@ -68,9 +70,12 @@ public class StudentModel implements IStudentModel {
   }
 
   //
-  //@Override public Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission() {
-  //  return null;
-  //}
+  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission() {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("key", PermissionServerUtils.MANAGE_COSTS);
+    params.put("method", "post");
+    return studentApi.qcGetCardBundldStudents(loginStatus.staff_id(), params);
+  }
   //
   //@Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
   //  return null;

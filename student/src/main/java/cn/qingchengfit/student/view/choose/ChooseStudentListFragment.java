@@ -1,12 +1,12 @@
-package cn.qingchengfit.saasbase.student.views;
+package cn.qingchengfit.student.view.choose;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.saasbase.student.items.ChosenStudentItem;
 import cn.qingchengfit.saascommon.item.StudentItem;
+import cn.qingchengfit.student.item.ChosenStudentItem;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.flexibleadapter.items.IHeader;

@@ -21,6 +21,7 @@ import cn.qingchengfit.student.bean.ShortMsgDetail;
 import cn.qingchengfit.student.bean.ShortMsgList;
 import cn.qingchengfit.student.bean.SourceBeans;
 import cn.qingchengfit.student.bean.StatDate;
+import cn.qingchengfit.student.bean.StudentBeanListWrapper;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
@@ -67,6 +68,11 @@ public interface StudentApi {
   //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
   //
   //
+
+  //会员卡可绑定的会员列表
+  @GET("/api/staffs/{staff_id}/method/users/?show_all=1")
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(@Path("staff_id") String id,
+      @QueryMap HashMap<String, Object> params);
 
   /**
    * 获取教练分配或者销售分配列表
@@ -339,9 +345,8 @@ public interface StudentApi {
 
   //全部会员-销售名下会员列表
   @GET("/api/v2/staffs/{staff_id}/sellers/users/")
-  Flowable<QcDataResponse<StudentListWrapper>> qcGetSellerInactiveUsers(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
-
+  Flowable<QcDataResponse<StudentListWrapper>> qcGetSellerInactiveUsers(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
   //会员生日-会员生日统计
   @GET("/api/staffs/{staff_id}/users/birthday/stat/")
@@ -378,8 +383,7 @@ public interface StudentApi {
    * 跟进记录列表
    */
   @GET("/api/staffs/{staff_id}/users/{user_id}/records/?format=app&order_by=created_at&show_all=1")
-  Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(@Path("staff_id") String staff_id,
-    @Path("user_id") String user_id,@QueryMap HashMap<String, Object> params);
-
-
+  Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(
+      @Path("staff_id") String staff_id, @Path("user_id") String user_id,
+      @QueryMap HashMap<String, Object> params);
 }

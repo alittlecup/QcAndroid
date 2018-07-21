@@ -83,6 +83,7 @@ public class StudentFilterView
     mBinding = ViewStudentFilterBinding.inflate(inflater, container, false);
     initRecyclerView();
     mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     return mBinding;
   }
 

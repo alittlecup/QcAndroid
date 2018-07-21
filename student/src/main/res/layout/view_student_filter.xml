@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.support.v7.widget.RecyclerView"/>
-        <import type="cn.qingchengfit.widgets.CommonFlexAdapter"/>
         <variable
             name="viewModel"
             type="cn.qingchengfit.student.view.home.StudentFilterViewModel"/>

@@ -11,7 +11,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StaffPosition;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;

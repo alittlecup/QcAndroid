@@ -49,6 +49,7 @@ public class StudentFilterViewModel extends BaseViewModel
     return remoteFilters;
   }
 
+  private final ActionLiveEvent action = new ActionLiveEvent();
   protected final LiveData<List<FilterModel>> remoteFilters;
 
   public void setFilterTimeVisible(boolean filterTimeVisible) {
@@ -61,12 +62,13 @@ public class StudentFilterViewModel extends BaseViewModel
   @Inject protected LoginStatus loginStatus;
   @Inject protected GymWrapper gymWrapper;
 
-  @Inject public StudentFilterViewModel(FilterUserCase filterUserCase) {
-    remoteFilters = Transformations.map(filterUserCase.getFilterModel(), input -> input);
+  @Inject public StudentFilterViewModel() {
+    remoteFilters = Transformations.switchMap(action,
+        aVoid -> Transformations.map(filterUserCase.getFilterModel(), input -> input));
   }
 
   public void loadfilterModel() {
-
+    action.call();
     filterUserCase.excute(loginStatus.staff_id(), salerId, gymWrapper.getParams());
   }
 
