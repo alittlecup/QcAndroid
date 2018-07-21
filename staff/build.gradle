@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 def libs = rootProject.ext.libraries
 def config = rootProject.ext.configuration
 
+apply from: rootProject.file('qc_component.gradle')
+
 /**
  *  打印超过50ms的任务  END*/
 project.gradle.addListener(rootProject.ext.buildTimeListener)
@@ -189,8 +191,8 @@ task buildWithAP(dependsOn: build) {}
 //task fastDebug (dependsOn: fastdex) {}
 
 dependencies {
-  implementation project(path: ':saasbase')
-  implementation project(path: ':shop')
+  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',true)
+  addComponent('shop','cn.qingchengfit.shop:shop:1.0.180721',true)
   implementation project(path: ':student')
 //  implementation project(path: ':checkout')
   //  implementation 'cn.qingchengfit.chat:qcim:1.0.0'

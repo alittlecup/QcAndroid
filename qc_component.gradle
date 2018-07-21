@@ -1,0 +1,32 @@
+ext.appComponent = { localDependencyName, remoteDependencyName = null, boolean isRemote = false ->
+  if (runAsApp) {
+    ext.addComponent(localDependencyName, remoteDependencyName, isRemote)
+  }
+}
+
+ext.addComponent = { localDependencyName, remoteDependencyName = null, boolean isRemote = false ->
+  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'implementation' :
+      'compile'
+  if (isRemote) {
+    if (remoteDependencyName == null) {
+      throw new RuntimeException(
+          "if you set isRemotes is true ,the remoteDependencyName cant be NULL")
+    }
+    project.dependencies.add(dependencyMode, remoteDependencyName)
+  } else {
+    project.dependencies.add(dependencyMode, project(":$localDependencyName"))
+  }
+}
+
+ext.addApiComponent= {localDependencyName, remoteDependencyName = null, boolean isRemote = false ->
+  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'api' :
+      'compile'
+  if (isRemote) {
+    if (remoteDependencyName == null) {
+      throw new RuntimeException(
+          "if you set isRemotes is true ,the remoteDependencyName cant be NULL")
+    }
+    project.dependencies.add(dependencyMode, remoteDependencyName)
+  } else {
+    project.dependencies.add(dependencyMode, project(":$localDependencyName"))
+  }}

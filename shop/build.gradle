@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply from: rootProject.file('qc_upload_maven.gradle')
+apply from: rootProject.file('qc_component.gradle')
+
 
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
@@ -51,8 +54,7 @@ android {
 
 dependencies {
   testImplementation 'junit:junit:4.12'
-  implementation (project(':saasbase'))
-
+  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',true)
 
 
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"

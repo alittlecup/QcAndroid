@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven'
+apply from: rootProject.file('qc_upload_maven.gradle')
+apply from: rootProject.file('qc_component.gradle')
+
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 
@@ -71,8 +74,8 @@ android {
 }
 
 dependencies {
-  api project(':saascommon')
-  api project(':login')
+  addApiComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
+  addApiComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
 
 
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
@@ -93,20 +96,4 @@ dependencies {
   api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
-
-group 'cn.qingchengfit.saas'
-version '1.0.5'
-
-uploadArchives {
-
-  repositories {
-    mavenDeployer {
-      repository(url: uri('../repo'))
-      pom.artifactId = 'sass'
-    }
-  }
-}
-repositories {
-  mavenCentral()
-}
 
