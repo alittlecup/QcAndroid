@@ -82,6 +82,7 @@
             android:text="@{info.getContent()}"
             />
         <LinearLayout
+            android:id="@+id/ll_image"
             android:layout_width="match_parent"
             android:layout_height="76dp"
             android:orientation="horizontal"

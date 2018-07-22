@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
@@ -24,7 +25,6 @@ public class StudentRecyclerSortView
   private StudentFilterView filterView;
   private StudentListView listView;
   private SortViewModel sortViewModel;
-  private StudentFilterViewModel filterViewModel;
 
   @Override protected void subscribeUI() {
     initSortViewModel();
@@ -47,7 +47,14 @@ public class StudentRecyclerSortView
       listView.selectAll(selectedAll);
     }
   }
+  boolean sortFilterVisible=true;
 
+  public void setSortFilterVisible(boolean visible){
+    sortFilterVisible=visible;
+    if(mBinding!=null){
+      mBinding.includeFilter.getRoot().setVisibility(visible?View.VISIBLE:View.GONE);
+    }
+  }
   public static StudentRecyclerSortView newInstanceWithType(
       @StudentListView.AllotType String type) {
     StudentRecyclerSortView listView = new StudentRecyclerSortView();
@@ -102,6 +109,7 @@ public class StudentRecyclerSortView
     if (loadDataListener != null) {
       loadDataListener.loadData(new HashMap<>());
     }
+    mBinding.includeFilter.getRoot().setVisibility(sortFilterVisible?View.VISIBLE:View.GONE);
     return mBinding;
   }
 

@@ -8,31 +8,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.bean.Attach;
+import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.databinding.StPageFollowRecordBinding;
+import cn.qingchengfit.student.item.FollowRecordItem;
+import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Leaf(module = "student", path = "/student/follow_record") public class FollowRecordPage
     extends StudentBaseFragment<StPageFollowRecordBinding, FollowRecordViewModel>
-    implements FlexibleAdapter.OnItemClickListener,TitleFragment {
+    implements FlexibleAdapter.OnItemClickListener, TitleFragment {
   CommonFlexAdapter adapter;
   private StudentBean studentBean;
+
   @Override protected void subscribeUI() {
-    if(studentBean!=null){
-      mViewModel.id=studentBean.id;
+    if (studentBean != null) {
+      mViewModel.id = studentBean.id;
     }
-    mViewModel.getLiveItems().observe(this,items->{
+    mViewModel.getLiveItems().observe(this, items -> {
       adapter.updateDataSet(items);
     });
   }
-  public void setCurStudent(StudentBean student){
-    this.studentBean=student;
-    if(mViewModel!=null){
-      mViewModel.id=student.id;
+
+  public void setCurStudent(StudentBean student) {
+    this.studentBean = student;
+    if (mViewModel != null) {
+      mViewModel.id = student.id;
     }
   }
 
@@ -44,15 +52,15 @@ import java.util.HashMap;
     mBinding.setVm(mViewModel);
     initRecyclerView();
     initListener();
-    HashMap<String,Object> map  = new HashMap<String,Object>();
+    HashMap<String, Object> map = new HashMap<String, Object>();
     mViewModel.loadSource(map);
     return mBinding;
   }
 
   private void initListener() {
     mBinding.fab.setOnClickListener(v -> {
-      Uri uri=Uri.parse("qcstaff://student/student/follow_record_edit");
-      routeTo(uri, new FollowRecordEditPageParams().studentBean(studentBean).build(),false);
+      Uri uri = Uri.parse("qcstaff://student/student/follow_record_edit");
+      routeTo(uri, new FollowRecordEditPageParams().studentBean(studentBean).build(), false);
     });
   }
 
@@ -64,6 +72,19 @@ import java.util.HashMap;
   }
 
   @Override public boolean onItemClick(int position) {
+    IFlexible item = adapter.getItem(position);
+    if (item instanceof FollowRecordItem) {
+      FollowRecord data = ((FollowRecordItem) item).getData();
+      if (data.getAttachSize() > 0) {
+        List<String> links = new ArrayList<>();
+        for (int i = 0; i < data.getAttachSize(); i++) {
+          links.add(data.getImagePos(i));
+        }
+        MultiChoosePicFragment multiChoosePicFragment = MultiChoosePicFragment.newInstance(links);
+        multiChoosePicFragment.setShowFlag(true);
+        multiChoosePicFragment.show(getChildFragmentManager(), "");
+      }
+    }
     return false;
   }
 

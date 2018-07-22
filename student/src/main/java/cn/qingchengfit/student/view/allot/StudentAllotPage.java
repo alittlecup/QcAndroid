@@ -31,6 +31,7 @@ import java.util.Map;
   StudentFilterView filterView;
   @Need ArrayList<QcStudentBeanWithFollow> items;
   @Need Staff staff;
+  @Need Boolean sortVisible=true;
   @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
 
   @Override protected void subscribeUI() {
@@ -57,6 +58,7 @@ import java.util.Map;
     });
   }
 
+
   private void initFragment() {
     listView = StudentRecyclerSortView.newInstanceWithType(curType);
     filterView = new StudentFilterView();
@@ -66,7 +68,7 @@ import java.util.Map;
     listView.setFilterView(filterView);
     listView.setLoadDataListener(this);
     listView.setCurId(staff == null ? "" : staff.getId());
-
+    listView.setSortFilterVisible(sortVisible);
     filterView.setListener(params -> {
       mViewModel.loadSource(params);
       mBinding.drawer.closeDrawer(GravityCompat.END);

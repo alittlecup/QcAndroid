@@ -92,6 +92,7 @@ import java.util.Map;
       }
       routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
           .curType(StudentListView.TRAINER_TYPE)
+          .sortVisible(false)
           .build());
     });
     mBinding.bottomAllot.allotSale.setOnClickListener(v -> {
@@ -101,6 +102,7 @@ import java.util.Map;
       }
       routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
           .curType(StudentListView.SELLER_TYPE)
+          .sortVisible(false)
           .build());
     });
   }

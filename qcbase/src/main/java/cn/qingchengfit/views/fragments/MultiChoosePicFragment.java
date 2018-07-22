@@ -75,6 +75,12 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
     return fragment;
   }
 
+  private boolean showFlag = false;
+
+  public void setShowFlag(boolean flag) {
+    showFlag = flag;
+  }
+
   @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     view.setVisibility(View.GONE);
@@ -89,7 +95,11 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
         item.setPath(uri);
         items.add(item);
       }
-      chooseImages(items);
+      if (showFlag) {
+        showImages(items);
+      } else {
+        chooseImages(items);
+      }
     } else {
       chooseImage();
     }
@@ -113,7 +123,7 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
         .forResult(CHOOSE_CAMERA);
   }
 
-  public void chooseImages(ArrayList<Item> uris) {
+  private void chooseImages(ArrayList<Item> uris) {
     Matisse.from(MultiChoosePicFragment.this)
         .choose(MimeType.ofImage(), false)
         .countable(true)
@@ -129,6 +139,23 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
         .thumbnailScale(0.85f)
         .imageEngine(new GlideEngine())
         .forResult(CHOOSE_CAMERA);
+  }
+
+  private void showImages(ArrayList<Item> uris) {
+    Matisse.from(MultiChoosePicFragment.this)
+        .choose(MimeType.ofImage(), false)
+        .countable(true)
+        .capture(true)
+        .itemUris(uris)
+        .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
+        .maxSelectable(5)
+        .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+        .gridExpectedSize(getResources().getDimensionPixelSize(
+            cn.qingchengfit.widgets.R.dimen.grid_expected_size))
+        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        .thumbnailScale(0.85f)
+        .imageEngine(new GlideEngine())
+        .forResult(706);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -154,7 +181,7 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
             if (s.startsWith("http")) {
               return Flowable.just(s);
             }
-            return RxJavaInterop.toV2Flowable(UpYunClient.rxUpLoad("/android/", s,false));
+            return RxJavaInterop.toV2Flowable(UpYunClient.rxUpLoad("/android/", s, false));
           }).subscribeOn(io.reactivex.schedulers.Schedulers.io()).doAfterTerminate(() -> {
             hideDialog();
             dismiss();
@@ -171,6 +198,8 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
             ToastUtils.show("图片全部上传成功");
           });
         }
+      } else {
+        getActivity().onBackPressed();
       }
     }
   }

@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 @Component(modules = {
     AppModel.class,
     BindStudentActivity.class,
+    StudentViewModel.class,
     AndroidInjectionModule.class,
     AndroidSupportInjectionModule.class,
 

@@ -92,8 +92,8 @@ dependencies {
   api 'com.squareup.sqlbrite:sqlbrite:1.1.1'
   api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
   //图片选择库
-  api 'cn.qingchengfit.imagepicker:matisse:1.0.2'
-  api('cn.qingchengfit.material-dialogs:material-dialogs:1.0.3') {
+  api 'cn.qingchengfit.imagepicker:matisse:1.0.3'
+  api('cn.qingchengfit.material-dialogs:material-dialogs:1.0.5') {
     transitive = true
   }
   api 'eu.davidea:flexible-adapter-databinding:1.0.0-b2'

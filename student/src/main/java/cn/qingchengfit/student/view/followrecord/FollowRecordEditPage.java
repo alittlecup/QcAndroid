@@ -44,12 +44,13 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/follow_record_edit") public class FollowRecordEditPage
-  extends StudentBaseFragment<StPageFollowRecordEditBinding, FollowRecordEditViewModel>
-  implements FlexibleAdapter.OnItemClickListener {
+    extends StudentBaseFragment<StPageFollowRecordEditBinding, FollowRecordEditViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
   private MultiChoosePicFragment picDialog;
   CommonFlexAdapter adapter = new CommonFlexAdapter(new ArrayList(), this);
   @Need StudentBean studentBean;
   @Inject StudentWrap studentWrap;
+
   @Override protected void subscribeUI() {
     studentWrap.setStudentBean(studentBean);
   }
@@ -57,29 +58,29 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     RxBus.getBus()
-      .register(EventCommonUserList.class)
-      .compose(bindToLifecycle())
-      .compose(doWhen(FragmentEvent.CREATE_VIEW))
-      .compose(this.bindToLifecycle())
-      .subscribe(new BusSubscribe<EventCommonUserList>() {
-        @Override public void onNext(EventCommonUserList eventCommonUserList) {
-          if (eventCommonUserList.getCommonUsers() != null){
-            List<User> users = new ArrayList<>();
-            for (ICommonUser iCommonUser : eventCommonUserList.getCommonUsers()) {
-              User u = new User();
-              u.setId(iCommonUser.getId());
-              u.setUsername(iCommonUser.getTitle());
-              u.setAvatar(iCommonUser.getAvatar());
-              users.add(u);
+        .register(EventCommonUserList.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .compose(this.bindToLifecycle())
+        .subscribe(new BusSubscribe<EventCommonUserList>() {
+          @Override public void onNext(EventCommonUserList eventCommonUserList) {
+            if (eventCommonUserList.getCommonUsers() != null) {
+              List<User> users = new ArrayList<>();
+              for (ICommonUser iCommonUser : eventCommonUserList.getCommonUsers()) {
+                User u = new User();
+                u.setId(iCommonUser.getId());
+                u.setUsername(iCommonUser.getTitle());
+                u.setAvatar(iCommonUser.getAvatar());
+                users.add(u);
+              }
+              mViewModel.notiOthers.setValue(users);
             }
-            mViewModel.notiOthers.setValue(users);
           }
-        }
-      });
+        });
   }
 
   @Override protected void handleHttpSuccess(String s) {
-    if (s.equalsIgnoreCase("add")){
+    if (s.equalsIgnoreCase("add")) {
       ToastUtils.show("添加成功");
       popBack();
     }
@@ -87,7 +88,7 @@ import javax.inject.Inject;
 
   @Override
   public StPageFollowRecordEditBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     mBinding = StPageFollowRecordEditBinding.inflate(inflater, container, false);
     mBinding.setLifecycleOwner(this);
     mBinding.setVm(mViewModel);
@@ -99,7 +100,7 @@ import javax.inject.Inject;
   }
 
   private void initRv() {
-    mBinding.rvPics.setLayoutManager(new GridLayoutManager(getContext(),4));
+    mBinding.rvPics.setLayoutManager(new GridLayoutManager(getContext(), 4));
     mBinding.rvPics.setAdapter(adapter);
   }
 
@@ -112,9 +113,8 @@ import javax.inject.Inject;
     });
     mBinding.cmNotifyOther.setOnClickListener(view -> {
 
-      routeTo("/followrecord/notiothers/",NotiOthersPageParams.builder()
-        .staffs(mViewModel.getSalers())
-        .build());
+      routeTo("/followrecord/notiothers/",
+          NotiOthersPageParams.builder().staffs(mViewModel.getSalers()).build());
     });
     mBinding.tvEditStatus.setOnClickListener(view -> {
       routeTo("/student/follow_record_status", null);
@@ -141,9 +141,8 @@ import javax.inject.Inject;
         for (String s : uris) {
           adapter.addItem(new ItemGridImage(s));
         }
-        if (uris.size() < 5)
-          adapter.addItem(new ItemGridImageAdd());
-        mBinding.chooseImg.setVisibility(uris.size() > 0?View.GONE:View.VISIBLE);
+        if (uris.size() < 5) adapter.addItem(new ItemGridImageAdd());
+        mBinding.chooseImg.setVisibility(uris.size() > 0 ? View.GONE : View.VISIBLE);
       });
     }
     if (!picDialog.isVisible()) picDialog.show(getChildFragmentManager(), "");
@@ -161,8 +160,6 @@ import javax.inject.Inject;
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
-
-
   private void showFollowTimeDialog() {
     SimpleScrollPicker picker = new SimpleScrollPicker(getContext());
     ArrayList<String> dates = new ArrayList<>();
@@ -172,8 +169,7 @@ import javax.inject.Inject;
     }
     picker.show(dates, 0);
     picker.setListener(pos -> {
-      mViewModel.nextFollowTime.setValue(
-        DateUtils.DateToServer(DateUtils.addDay(new Date(DateUtils.getToadayMidnight()), pos)));
+        mViewModel.nextFollowTime.setValue(dates.get(pos));
     });
   }
 
@@ -184,8 +180,8 @@ import javax.inject.Inject;
       dataList.add(s);
     }
     int position = 0;
-    if (mViewModel.followMethod.getValue() != null){
-      position = mViewModel.followMethod.getValue() -1;
+    if (mViewModel.followMethod.getValue() != null) {
+      position = mViewModel.followMethod.getValue() - 1;
     }
     picker.show(dataList, position);
     picker.setListener(pos -> {
@@ -204,12 +200,14 @@ import javax.inject.Inject;
       for (int i = 0; i < mViewModel.followRecordStatus.getValue().size(); i++) {
         FollowRecordStatus followRecordStatus = mViewModel.followRecordStatus.getValue().get(i);
         if (TextUtils.equals(Objects.requireNonNull(followRecordStatus.getTrack_status()),
-          Objects.requireNonNull(mBinding.tvFollowStatus.getText().toString()))) {
+            Objects.requireNonNull(mBinding.tvFollowStatus.getText().toString()))) {
           position = i;
         }
         dataList.add(followRecordStatus.getTrack_status());
       }
-    }else return;
+    } else {
+      return;
+    }
     picker.show(dataList, position);
     picker.setListener(pos -> {
       mViewModel.followStatus.setValue(mViewModel.followRecordStatus.getValue().get(pos));
@@ -224,6 +222,4 @@ import javax.inject.Inject;
     }
     return true;
   }
-
-
 }

@@ -1,6 +1,7 @@
 package cn.qingchengfit.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
@@ -175,7 +176,7 @@ public class DialogUtils {
         .buttonsGravity(GravityEnum.CENTER)
         .dividerColorRes(R.color.divider_medium)
         .neutralColorRes(R.color.colorPrimary)
-        .onNeutral(callback==null?(dialog,action)->dialog.dismiss():callback)
+        .onNeutral(callback == null ? (dialog, action) -> dialog.dismiss() : callback)
         .neutralText(cn.qingchengfit.widgets.R.string.common_i_konw);
     if (!TextUtils.isEmpty(title)) {
       builder.title(title);
@@ -204,30 +205,25 @@ public class DialogUtils {
     showAlert(context, null, context.getString(content), null);
   }
 
+  public static MaterialDialog initInputDialog(Context context, String title, String hint,
+      String preFill, String negativeText, String positiveText,
+      MaterialDialog.SingleButtonCallback callback) {
+    MaterialDialog.Builder builder = new MaterialDialog.Builder(context).autoDismiss(false)
+        .contentGravity(GravityEnum.CENTER)
+        .titleGravity(GravityEnum.CENTER)
+        .buttonsGravity(GravityEnum.CENTER)
+        .input(hint, preFill, false, new MaterialDialog.InputCallback() {
+          @Override public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
 
-
-
-  public static MaterialDialog initInputDialog(Context context,
-    String title, String hint,String preFill, String negativeText, String positiveText,
-    MaterialDialog.SingleButtonCallback callback) {
-    MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
-      .autoDismiss(false)
-      .contentGravity(GravityEnum.CENTER)
-      .titleGravity(GravityEnum.CENTER)
-      .buttonsGravity(GravityEnum.CENTER)
-      .input(hint, preFill, false, new MaterialDialog.InputCallback() {
-        @Override public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
-
-        }
-      })
-      .dividerColorRes(R.color.divider_medium)
-      .positiveColorRes(R.color.colorPrimary)
-      .positiveText(positiveText)
-      .onPositive(callback)
-      .negativeText(negativeText)
-      .autoDismiss(true)
-      .negativeColorRes(R.color.text_dark);
-
+          }
+        })
+        .dividerColorRes(R.color.divider_medium)
+        .positiveColorRes(R.color.colorPrimary)
+        .positiveText(positiveText)
+        .onPositive(callback)
+        .negativeText(negativeText)
+        .autoDismiss(true)
+        .negativeColorRes(R.color.text_dark);
 
     if (!TextUtils.isEmpty(title)) {
       builder.title(title);
@@ -238,10 +234,9 @@ public class DialogUtils {
     return builder.build();
   }
 
-  public static void showInputDialog(Context context,
-    String title, String hint, String preFill,String negativeText, String positiveText,
-    MaterialDialog.SingleButtonCallback callback){
-    initInputDialog(context,title,hint,preFill,negativeText,positiveText,callback).show();
+  public static void showInputDialog(Context context, String title, String hint, String preFill,
+      String negativeText, String positiveText, MaterialDialog.SingleButtonCallback callback) {
+    initInputDialog(context, title, hint, preFill, negativeText, positiveText, callback).show();
   }
 
 

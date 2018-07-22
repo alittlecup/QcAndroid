@@ -17,6 +17,10 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
     this.followRecord = followRecord;
   }
 
+  public FollowRecord getData() {
+    return followRecord;
+  }
+
   @Override public boolean equals(Object o) {
     return false;
   }
@@ -26,19 +30,27 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
   }
 
   @Override public FollowRecordVH createViewHolder(View view, FlexibleAdapter adapter) {
-    return new FollowRecordVH(view,adapter);
+    return new FollowRecordVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, FollowRecordVH holder, int position,
-    List payloads) {
+      List payloads) {
     holder.binding.setInfo(followRecord);
   }
 
-  public class FollowRecordVH extends FlexibleViewHolder{
+  public class FollowRecordVH extends FlexibleViewHolder {
     StItemFollowRecordBinding binding;
+
     public FollowRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       binding = StItemFollowRecordBinding.bind(view);
+      binding.llImage.setOnClickListener(this);
+    }
+
+    @Override public void onClick(View view) {
+      if (view.getId() == R.id.ll_image) {
+        super.onClick(view);
+      }
     }
   }
 }
