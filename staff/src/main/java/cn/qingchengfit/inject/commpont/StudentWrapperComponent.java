@@ -17,9 +17,9 @@ import dagger.android.AndroidInjector;
  * <p/>
  * Created by Paper on 16/2/22 2016.
  */
-@Subcomponent() public interface StudentWrapperComponent extends AndroidInjector<StudentActivity> {
-    @Subcomponent.Builder abstract class Builder extends AndroidInjector.Builder<StudentActivity> {
-        //public abstract Builder requestModule(StudentWrapperModule module);
-        //public abstract StudentWrapperComponent build();
-    }
-}
+//@Subcomponent() public interface StudentWrapperComponent extends AndroidInjector<StudentActivity> {
+//    @Subcomponent.Builder abstract class Builder extends AndroidInjector.Builder<StudentActivity> {
+//        //public abstract Builder requestModule(StudentWrapperModule module);
+//        //public abstract StudentWrapperComponent build();
+//    }
+//}

@@ -6,7 +6,7 @@ import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
-import cn.qingchengfit.inject.moudle.StudentWrapperModule;
+
 import cn.qingchengfit.login.di.BindLoginActivity;
 import cn.qingchengfit.notisetting.view.NotiSettingChargeHistoryFragment;
 import cn.qingchengfit.notisetting.view.NotiSettingChargeResultFragment;
@@ -410,7 +410,7 @@ import javax.inject.Singleton;
     AppComponent.FollowRecordModule.class, AppComponent.StudentsCardsModule.class,
     AppComponent.ClassRecordModule.class, AppComponent.StudentSignInImageFragmentModule.class,
 
-    StudentWrapperModule.class, AppComponent.SignInManualModule.class,
+     AppComponent.SignInManualModule.class,
     AppComponent.StudentsDetailModule.class, AppComponent.ScoreDetailAModule.class,
     AppComponent.ScoreDetailModule.class, AppComponent.ScoreModifyModule.class,
     AppComponent.AddNewSiteFragmentModule.class,
@@ -421,7 +421,7 @@ import javax.inject.Singleton;
     /*
      * 以下为附加component
      */
-    AppComponent.StudentWraperInnerModule.class, AppComponent.ChooseBrandActivityModule.class,
+     AppComponent.ChooseBrandActivityModule.class,
 
     AppComponent.WebFModule.class, CardTypeWrapperModule.class, RealcardModule.class,
     /**
@@ -3040,11 +3040,7 @@ public interface AppComponent {
         MutiChooseSalersSubcomponent.Builder builder);
   }
 
-  @Module(subcomponents = StudentWrapperComponent.class) abstract class StudentWraperInnerModule {
-    @Binds @IntoMap @ActivityKey(StudentActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-        StudentWrapperComponent.Builder builder);
-  }
+
 
   @Module(subcomponents = NotificationSubcomponent.class) abstract class NotificationModule {
     @Binds @IntoMap @FragmentKey(NotificationFragment.class)

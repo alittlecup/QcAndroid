@@ -5,7 +5,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.body.AddFollowRecordBody;
 import cn.qingchengfit.model.responese.FollowRecord;
 import cn.qingchengfit.model.responese.FollowRecords;
@@ -13,6 +13,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
+import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -34,7 +35,7 @@ import rx.functions.Action1;
 public class FollowRecordPresenter extends BasePresenter {
 
     FollowRecordView view;
-    @Inject StudentWrapper studentBase;
+    @Inject StudentWrap studentBase;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentUsecase usecase;

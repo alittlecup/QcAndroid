@@ -20,10 +20,11 @@ public class FollowRecordViewModel extends FlexibleViewModel<List<FollowRecord>,
   MutableLiveData<List<FollowRecord>> datas = new MutableLiveData<>();
   @Inject FollowRecordViewModel(){}
   @Inject StudentRepository repository;
-  public String id="";
+  @Inject StudentWrap studentWrap;
+
   @NonNull @Override
   protected LiveData<List<FollowRecord>> getSource(@NonNull Map<String, Object> stringObjectMap) {
-    repository.qcGetTrackRecords(datas,defaultResult,id);
+    repository.qcGetTrackRecords(datas,defaultResult,studentWrap.id());
     return datas;
   }
 

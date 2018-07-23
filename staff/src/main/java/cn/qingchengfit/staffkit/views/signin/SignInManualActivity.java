@@ -13,13 +13,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
+
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.signin.in.SignInManualFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutManualFragment;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -44,8 +45,8 @@ public class SignInManualActivity extends BaseActivity implements FragCallBack {
 	FrameLayout studentFrag;
     @Inject SignInManualFragment signInManualFragment;
     @Inject SignOutManualFragment signOutManualFragment;
-    @Inject StudentWrapper studentWrapper;
-    private StudentWrapperComponent component;
+    @Inject StudentWrap studentWrapper;
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

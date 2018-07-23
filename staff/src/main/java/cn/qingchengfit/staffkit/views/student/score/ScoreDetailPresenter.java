@@ -6,7 +6,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.responese.Score;
 import cn.qingchengfit.model.responese.ScoreHistory;
 import cn.qingchengfit.model.responese.ScoreHistoryResponse;
@@ -15,6 +15,7 @@ import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.List;
 import javax.inject.Inject;
@@ -46,7 +47,7 @@ public class ScoreDetailPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentBean;
+    @Inject StudentWrap studentBean;
     private RestRepositoryV2 restRepository;
 
     @Inject public ScoreDetailPresenter(RestRepositoryV2 restRepository) {

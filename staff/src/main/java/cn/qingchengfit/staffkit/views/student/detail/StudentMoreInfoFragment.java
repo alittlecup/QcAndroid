@@ -18,7 +18,7 @@ import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.base.User_Student;
@@ -38,6 +38,7 @@ import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.score.ScoreDetailActivity;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -85,7 +86,7 @@ public class StudentMoreInfoFragment extends BaseFragment
 	TextView tvStudentScoreValue;
 
   @Inject StudentMoreInfoPresenter presenter;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;

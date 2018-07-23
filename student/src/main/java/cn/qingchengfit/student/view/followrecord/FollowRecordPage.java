@@ -30,24 +30,15 @@ import javax.inject.Inject;
     extends StudentBaseFragment<StPageFollowRecordBinding, FollowRecordViewModel>
     implements FlexibleAdapter.OnItemClickListener, TitleFragment {
   CommonFlexAdapter adapter;
-  private StudentBean studentBean;
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
-    if (studentBean != null) {
-      mViewModel.id = studentBean.id;
-    }
     mViewModel.getLiveItems().observe(this, items -> {
       adapter.updateDataSet(items);
     });
   }
 
-  public void setCurStudent(StudentBean student) {
-    this.studentBean = student;
-    if (mViewModel != null) {
-      mViewModel.id = student.id;
-    }
-  }
+
 
   @Override
   public StPageFollowRecordBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +57,7 @@ import javax.inject.Inject;
     mBinding.fab.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
         Uri uri = Uri.parse("qcstaff://student/student/follow_record_edit");
-        routeTo(uri, new FollowRecordEditPageParams().studentBean(studentBean).build(), false);
+        routeTo(uri, new FollowRecordEditPageParams().build(), false);
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }

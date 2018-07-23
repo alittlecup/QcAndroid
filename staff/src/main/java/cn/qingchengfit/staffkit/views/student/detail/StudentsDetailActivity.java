@@ -11,12 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
-import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -45,9 +44,9 @@ public class StudentsDetailActivity extends BaseActivity implements FragCallBack
 	TextView toolbarTitile;
 	ImageView down;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
-    @Inject Provider<StudentWrapperComponent.Builder> requestComponentProvider;
+
     @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     private int statusTOTab = -1;
 
     @Override protected void onCreate(Bundle savedInstanceState) {

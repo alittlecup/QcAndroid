@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.items.SignOutItem;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
@@ -26,6 +26,7 @@ import cn.qingchengfit.staffkit.views.adapter.SignInFlexibleAdapter;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.SnackbarUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -49,7 +50,7 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
     @Inject SignOutManualPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     @Inject SerPermisAction serPermisAction;
     @Inject StudentAction studentAction;
 

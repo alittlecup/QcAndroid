@@ -5,6 +5,7 @@ import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.student.bingdings.BindingUtils;
 import cn.qingchengfit.utils.DateUtils;
+import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,9 +17,15 @@ public class FollowRecord {
   String track_status;
   List<User> notice_users;
   String next_track_time;
+  @SerializedName(value = "attachments")
   List<Attach> image_attachments;//附件列表，图片
   User created_by;
   String created_at;
+
+  public String getCreatedTimeStr(){
+    return DateUtils.getNotifacationTimeStr(DateUtils.formatDateFromServer(created_at));
+  }
+
   public String getFollowMethodString(Context context){
 
     try {

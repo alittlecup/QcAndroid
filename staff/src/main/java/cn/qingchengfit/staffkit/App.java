@@ -11,12 +11,13 @@ import cn.qingchengfit.inject.commpont.DaggerAppComponent;
 import cn.qingchengfit.inject.model.CardTypeWrapper;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.inject.model.StaffWrapper;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
+
+//import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
-import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
@@ -33,6 +34,7 @@ import cn.qingchengfit.staffkit.staff.StaffStaffActivity;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
 import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
 import cn.qingchengfit.staffkit.views.custom.CitiesData;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.CrashHandler;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -220,7 +222,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
             new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),
             new QCDbManagerImpl(this)))
         .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
-        .studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
+        //.studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
         .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))
         .realcardModule(new RealcardModule(new RealcardWrapper(null)))
         .trainMoudle(new TrainMoudle(new TrainIds.Builder().build()))

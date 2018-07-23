@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
+
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -56,7 +56,7 @@ public class StudentActivity extends BaseActivity
     implements FragCallBack, HasSupportFragmentInjector {
 
   FrameLayout studentFrag;
-  @Inject Provider<StudentWrapperComponent.Builder> requestComponentProvider;
+
   @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
   @Inject RestRepository restRepository;
   @Inject LoginStatus loginStatus;

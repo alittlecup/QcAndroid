@@ -26,10 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="2018年12月30日"
-        android:background="@drawable/st_bg_half_trans_black_radius"
+        android:background="@drawable/bg_grey_radius_2dp"
         android:padding="2dp"
         android:layout_gravity="center_horizontal"
-
+        android:text="@{info.getCreatedTimeStr()}"
         />
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
@@ -80,6 +80,7 @@
             style="@style/QcTextStyleMediumDark"
             tools:text="@string/test_long"
             android:text="@{info.getContent()}"
+            android:paddingBottom="8dp"
             />
         <LinearLayout
             android:id="@+id/ll_image"

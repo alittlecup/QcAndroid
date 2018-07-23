@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.inject.commpont.StaffWrapperComponent;
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -72,7 +71,6 @@ public class ChooseReferrerActivity extends BaseActivity implements FragCallBack
     Observable observable;
     ReferrerFragment referrerFragment;
     @Inject ChooseReferrerPresenter presenter;
-    private StaffWrapperComponent component;
     private StudentReferrerBean referrerBean;
     private StaffWrapper staffWrapper;
 

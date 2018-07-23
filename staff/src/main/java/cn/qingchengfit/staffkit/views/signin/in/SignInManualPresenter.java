@@ -6,7 +6,7 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.body.SignInManualBody;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInSchdule;
@@ -18,6 +18,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
+import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +33,7 @@ import timber.log.Timber;
  */
 public class SignInManualPresenter extends BasePresenter {
 
-  @Inject StudentWrapper studentBase;
+  @Inject StudentWrap studentBase;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   StudentUsecase usecase;

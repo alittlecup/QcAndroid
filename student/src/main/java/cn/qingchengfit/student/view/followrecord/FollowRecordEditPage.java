@@ -50,12 +50,12 @@ import javax.inject.Inject;
     implements FlexibleAdapter.OnItemClickListener {
   private MultiChoosePicFragment picDialog;
   CommonFlexAdapter adapter = new CommonFlexAdapter(new ArrayList(), this);
-  @Need StudentBean studentBean;
+  //@Need StudentBean studentBean;
   @Inject StudentWrap studentWrap;
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
-    studentWrap.setStudentBean(studentBean);
+    //studentWrap.setStudentBean(studentBean);
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {

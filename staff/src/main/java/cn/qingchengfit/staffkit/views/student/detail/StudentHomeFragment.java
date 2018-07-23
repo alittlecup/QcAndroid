@@ -25,9 +25,10 @@ import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardParams;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
@@ -95,7 +96,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject RestRepository restRepository;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject StudentAction studentAction;
@@ -193,6 +194,15 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
                 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female)
             .into(gender);
         phone.setText(studentBaseInfoEvent.user_student.getPhone());
+        StudentBean tmpStudentBean = new StudentBean();
+        tmpStudentBean.id = studentBaseInfoEvent.user_student.getId();
+        tmpStudentBean.avatar = studentBaseInfoEvent.user_student.getAvatar();
+        tmpStudentBean.checkin_avatar = studentBaseInfoEvent.user_student.getCheckin_avatar();
+        tmpStudentBean.sellers = studentBaseInfoEvent.user_student.getSellers();
+        tmpStudentBean.gender = studentBaseInfoEvent.user_student.getGender() == 0;
+        tmpStudentBean.phone = studentBaseInfoEvent.user_student.getPhone();
+        tmpStudentBean.username =studentBaseInfoEvent.user_student.getUsername();
+        studentBean.setStudentBean(tmpStudentBean);
       }
 
       orderPrivate.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +250,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
               .into(gender);
           phone.setText(qcStudentBean.getPhone());
           mQcStudentBean = qcStudentBean;
+
         }, throwable -> {
         }));
 
@@ -265,7 +276,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     fragments.add(new ClassRecordFragment());
     fragments.add(new StudentsCardsFragment());
     FollowRecordPage followRecordPage = new FollowRecordPage();
-    followRecordPage.setCurStudent(studentBean.getStudentBean());
+    //followRecordPage.setCurStudent(studentBean.getStudentBean());
     fragments.add(followRecordPage);
     //fragments.add(new FollowRecordFragment());
     fragments.add(new StudentMoreInfoFragment());

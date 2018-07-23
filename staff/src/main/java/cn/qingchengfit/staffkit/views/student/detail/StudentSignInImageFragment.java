@@ -22,7 +22,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
@@ -30,6 +30,7 @@ import cn.qingchengfit.model.responese.SignInImg;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
@@ -81,7 +82,7 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentSignInImagePresenter presenter;
-    @Inject StudentWrapper studentBean;
+    @Inject StudentWrap studentBean;
 	Toolbar toolbar;
 	TextView toolbarTitile;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();

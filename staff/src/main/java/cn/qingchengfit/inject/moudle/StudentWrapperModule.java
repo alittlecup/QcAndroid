@@ -1,6 +1,7 @@
 package cn.qingchengfit.inject.moudle;
 
-import cn.qingchengfit.inject.model.StudentWrapper;
+
+import cn.qingchengfit.student.bean.StudentWrap;
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,26 +18,26 @@ import dagger.Provides;
  * <p/>
  * Created by Paper on 16/3/19 2016.
  */
-@Module public class StudentWrapperModule {
-    StudentWrapper studentWrapper;
-
-    public StudentWrapperModule() {
-        studentWrapper = new StudentWrapper();
-    }
-
-    public StudentWrapperModule(StudentWrapper studentBean) {
-        this.studentWrapper = studentBean;
-    }
-
-    public StudentWrapper getStudentWrapper() {
-        return studentWrapper;
-    }
-
-    public void setStudentWrapper(StudentWrapper studentWrapper) {
-        this.studentWrapper = studentWrapper;
-    }
-
-    @Provides StudentWrapper provideStudent() {
-        return this.studentWrapper;
-    }
-}
+//@Module public class StudentWrapperModule {
+//    StudentWrap studentWrapper;
+//
+//    public StudentWrapperModule() {
+//        studentWrapper = new StudentWrap();
+//    }
+//
+//    public StudentWrapperModule(StudentWrap studentBean) {
+//        this.studentWrapper = studentBean;
+//    }
+//
+//    public StudentWrap getStudentWrapper() {
+//        return studentWrapper;
+//    }
+//
+//    public void setStudentWrapper(StudentWrap studentWrapper) {
+//        this.studentWrapper = studentWrapper;
+//    }
+//
+//    @Provides StudentWrap provideStudent() {
+//        return this.studentWrapper;
+//    }
+//}

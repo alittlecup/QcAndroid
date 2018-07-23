@@ -22,7 +22,7 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.common.RealCard;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
@@ -40,6 +40,7 @@ import cn.qingchengfit.staffkit.views.custom.SignInCardSelectDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseWardrobeActivity;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
@@ -80,7 +81,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
 
     @Inject SignInManualPresenter presenter;
 
-    @Inject StudentWrapper studentBean;
+    @Inject StudentWrap studentBean;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;

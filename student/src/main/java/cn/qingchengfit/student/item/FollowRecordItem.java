@@ -1,9 +1,11 @@
 package cn.qingchengfit.student.item;
 
 import android.view.View;
+import android.widget.ImageView;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.databinding.StItemFollowRecordBinding;
+import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -36,11 +38,18 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
   @Override public void bindViewHolder(FlexibleAdapter adapter, FollowRecordVH holder, int position,
       List payloads) {
     holder.binding.setInfo(followRecord);
+    //holder.binding.img01.setVisibility(followRecord.getAttachSize() > 0 ?View.VISIBLE:View.GONE);
+    //holder.binding.img02.setVisibility(followRecord.getAttachSize() > 1 ?View.VISIBLE:View.GONE);
+    //holder.binding.img03.setVisibility(followRecord.getAttachSize() > 2 ?View.VISIBLE:View.GONE);
+    //
+    //PhotoUtils.small(holder.binding.img01,followRecord.getImagePos(0));
+    //PhotoUtils.small(holder.binding.img02,followRecord.getImagePos(1));
+    //PhotoUtils.small(holder.binding.img03,followRecord.getImagePos(2));
+
   }
 
   public class FollowRecordVH extends FlexibleViewHolder {
     StItemFollowRecordBinding binding;
-
     public FollowRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       binding = StItemFollowRecordBinding.bind(view);

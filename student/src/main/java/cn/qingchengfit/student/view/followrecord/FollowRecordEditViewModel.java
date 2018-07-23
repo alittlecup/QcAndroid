@@ -33,7 +33,7 @@ public class FollowRecordEditViewModel extends BaseViewModel {
 
   public ArrayList<Staff> getSalers(){
     ArrayList<Staff> ret = new ArrayList<>();
-    if (studentWrap.getStudentBean() != null){
+    if (studentWrap.getStudentBean() != null && studentWrap.getStudentBean().sellers != null){
       ret.addAll(studentWrap.getStudentBean().sellers);
     }
     return ret;

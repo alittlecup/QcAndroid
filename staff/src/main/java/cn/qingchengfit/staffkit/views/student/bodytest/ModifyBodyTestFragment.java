@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestExtra;
@@ -37,6 +37,7 @@ import cn.qingchengfit.staffkit.views.adapter.ImageGridAdapter;
 import cn.qingchengfit.staffkit.views.custom.GalleryPhotoViewDialog;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -85,7 +86,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
   CommonInputView rightCalf;
 
   @Inject ModifyBodyTestPresenter presenter;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;

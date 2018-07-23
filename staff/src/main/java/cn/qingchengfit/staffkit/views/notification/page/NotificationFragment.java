@@ -18,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import io.reactivex.Maybe;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
@@ -198,7 +200,7 @@ public class NotificationFragment extends BaseFragment
 
                     }
                     if (!StringUtils.isEmpty(msg.getBrand_id()) && !StringUtils.isEmpty(
-                        msg.getShop_id()) && msg.type < 16) {
+                        msg.getShop_id()) && msg.type < 18) {
                         final CoachService coachService1 = gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
                         if (coachService1 != null) {
                             HashMap<String, Object> p = new HashMap<>();
@@ -230,6 +232,11 @@ public class NotificationFragment extends BaseFragment
                                                 realCard.setId(msg.card_id + "");
                                                 routeTo("card","/detail/", CardDetailParams.builder().cardid(msg.card_id+"").build());
                                                 //toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                                            }else  if (msg.type == 17){
+                                                toActivity = new Intent(getActivity(),StudentsDetailActivity.class);
+                                                toActivity.putExtra("status_to_tab",2);
+                                                toActivity.putExtra("qcstudent",new QcStudentBean(msg.getUser()));
+                                                //toActivity.putInt("status_to_tab",2);
                                             }
 
                                             toActivity.putExtra(Configs.EXTRA_GYM_SERVICE, coachService1);

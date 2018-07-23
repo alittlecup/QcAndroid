@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
@@ -50,6 +49,7 @@ import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterEvent;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragmentBuilder;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class StudentListFragment extends FilterCommonFragment {
     @Inject StudentListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     @Inject IPermissionModel permissionModel;
     private String keyWord;//搜索关键字
     private StudentAdapter studentAdapter;

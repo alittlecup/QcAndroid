@@ -5,12 +5,13 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.responese.QcResponseSignInImg;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.model.responese.SignInImg;
+import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -41,7 +42,7 @@ import rx.schedulers.Schedulers;
 public class StudentSignInImagePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     @Inject RestRepository restRepository;
     MVPView view;
 
