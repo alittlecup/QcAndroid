@@ -14,6 +14,7 @@ import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -105,6 +106,7 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.REPORT_EXPORT;
 public class GymFunctionFactory {
 
   @Inject SerPermisAction serPermisAction;//// TODO: 2017/8/14 修改成注入
+  @Inject IPermissionModel permissionModel;
 
   @Inject public GymFunctionFactory() {
   }
@@ -155,8 +157,6 @@ public class GymFunctionFactory {
         return R.drawable.vd_module_finance_orderreport;
       case MODULE_FINANCE_VISUAL_REPORT:
         return R.drawable.vd_module_finance_visualreport;
-
-
 
       case MODULE_OPERATE_ACTIVITY:
         return R.drawable.moudule_op_activity;
@@ -230,8 +230,6 @@ public class GymFunctionFactory {
       case MODULE_SMARTGYM_SMART:
         return R.drawable.vd_module_aigym;
 
-
-
       default:
         return 0;
     }
@@ -266,7 +264,7 @@ public class GymFunctionFactory {
       case MODULE_DATA_WHITEPAPER:
       case MODULE_SMARTGYM_SMART:
 
-      return 1;
+        return 1;
 
       case MODULE_WORKSPACE_ORDER_LIST:
       case MODULE_WORKSPACE_GROUP:
@@ -347,7 +345,6 @@ public class GymFunctionFactory {
       case MODULE_FINANCE_VISUAL_REPORT:
         return R.string.module_fi_visual_statement;
 
-
       case MODULE_MANAGE_COACH:
         return R.string.module_manage_trainer;
       case MODULE_MANAGE_STAFF:
@@ -403,8 +400,6 @@ public class GymFunctionFactory {
 
       case MODULE_SMARTGYM_SMART:
         return R.string.module_smartgym;
-
-
 
       default:
         return R.string.none;
@@ -492,7 +487,12 @@ public class GymFunctionFactory {
         //Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
         //fragment.startActivity(toStu);
         //fragment.routeTo("student", "/student/home", null);
-        QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home")).call();
+        if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
+          QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
+              .call();
+        } else {
+          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+        }
         return;
       case REPORT_EXPORT:
         Intent toExo = new Intent(fragment.getActivity(), ImportExportActivity.class);
@@ -699,7 +699,8 @@ public class GymFunctionFactory {
         break;
 
       case MODULE_DATA_WHITEPAPER:
-        WebActivity.startWeb("https://cloud.qingchengfit.cn/mobile/white-paper/2018/",fragment.getContext());
+        WebActivity.startWeb("https://cloud.qingchengfit.cn/mobile/white-paper/2018/",
+            fragment.getContext());
         return;
 
       case MODULE_OPERATE_COUPON:
@@ -712,19 +713,23 @@ public class GymFunctionFactory {
       case MODULE_DATA_MEMBER:
       case MODULE_DATA_PRIVATE:
       case MODULE_SMARTGYM_SMART:
-        goQrScan(fragment,module,null,coachService);
+        goQrScan(fragment, module, null, coachService);
         return;
 
       case MODULE_OPERATE_PRIVATE_SHARE:
-        WebActivity.startWeb("https://mp.weixin.qq.com/s/DWhORKKp47nNBZMsqWGRkg",fragment.getContext());
+        WebActivity.startWeb("https://mp.weixin.qq.com/s/DWhORKKp47nNBZMsqWGRkg",
+            fragment.getContext());
 
         return;
       case MODULE_OPERATE_GROUP_SHARE:
-        WebActivity.startWeb("https://mp.weixin.qq.com/s/lZ0vA34ryUNMmm6Dlca-OA",fragment.getContext());
+        WebActivity.startWeb("https://mp.weixin.qq.com/s/lZ0vA34ryUNMmm6Dlca-OA",
+            fragment.getContext());
 
         return;
       case MODULE_OPERATE_MORE:
-        WebActivity.startWeb("https://mp.weixin.qq.com/s?__biz=MzAxODAyODE5OQ==&mid=502626906&idx=2&sn=23c0318cc8547d43d658ac2b87214e0b&chksm=03dd599234aad0840fd8766dff29ee51732734908142b505b99a526b932929e9efe9745a362b#rd",fragment.getContext());
+        WebActivity.startWeb(
+            "https://mp.weixin.qq.com/s?__biz=MzAxODAyODE5OQ==&mid=502626906&idx=2&sn=23c0318cc8547d43d658ac2b87214e0b&chksm=03dd599234aad0840fd8766dff29ee51732734908142b505b99a526b932929e9efe9745a362b#rd",
+            fragment.getContext());
         return;
 
       default:

@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageIncreaseMemberBinding;
@@ -18,6 +20,7 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/increase/member") public class IncreaseMemberPage
     extends StudentBaseFragment<StPageIncreaseMemberBinding, IncreaseMemberViewModel> {
@@ -29,6 +32,7 @@ import com.anbillon.flabellum.annotations.Need;
 
   IncreaseMemberTopViewModel topViewModel;
   IncreaseMemberSortViewModel mSortViewModel;
+  @Inject IPermissionModel permissionModel;
 
   @Need @IncreaseType String curType = IncreaseType.INCREASE_FOLLOWUP;
 
@@ -123,6 +127,10 @@ import com.anbillon.flabellum.annotations.Need;
 
   private void toggleToolbar(boolean showCheckBox, String type) {
     if (showCheckBox) {
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.VISIBLE);
       ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(type));

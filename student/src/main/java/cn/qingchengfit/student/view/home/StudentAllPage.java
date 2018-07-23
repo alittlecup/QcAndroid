@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageAllStudentBinding;
@@ -25,18 +27,19 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.Map;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/all") public class StudentAllPage
     extends StudentBaseFragment<StPageAllStudentBinding, StudentAllViewModel>
     implements DrawerListener, LoadDataListener, SearchView.OnQueryTextListener {
   StudentRecyclerSortView listView;
   private StudentFilterView filterView;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setDatas(items);
       listView.getListView().setAdapterTag("noInfo", true);
-
     });
     mViewModel.showLoading.observe(this, aBoolean -> {
       if (aBoolean) {
@@ -59,7 +62,11 @@ import java.util.Map;
 
   private void initListener() {
     mBinding.fabAddStudent.setOnClickListener(v -> {
-      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+        QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.TRAINER_TYPE);
@@ -129,6 +136,10 @@ import java.util.Map;
 
   private void toggleToolbar(boolean show, String type) {
     if (show) {
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.VISIBLE);
       mBinding.fabAddStudent.setVisibility(View.GONE);

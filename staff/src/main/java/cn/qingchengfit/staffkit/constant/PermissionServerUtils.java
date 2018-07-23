@@ -52,6 +52,7 @@ public class PermissionServerUtils {
     public static final String MANAGE_MEMBERS_CAN_WRITE = "manage_members_can_write";
     public static final String MANAGE_MEMBERS_CAN_CHANGE = "manage_members_can_change";
     public static final String MANAGE_MEMBERS_CAN_DELETE = "manage_members_can_delete";
+    public static final String MANAGE_MEMBERS_FOLLOW_STATUS_CAN_EDIT = "manage_members_follow_status_can_edit";
     public static final String MANAGE_COSTS = "manage_costs"; //会员卡
     public static final String MANAGE_MEMBERS_IS_ALL = "manage_members_is_all"; //
     public static final String MANAGE_COSTS_CAN_WRITE = "manage_costs_can_write";

@@ -52,7 +52,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="16dp"
                 android:textSize="12dp"
-                android:text="@{@string/absence_account(viewModel.filterText,viewModel.count)}"
+                android:text="@{@string/absence_account_student(viewModel.filterText,viewModel.count)}"
                 tools:text="缺勤7-30天的会员共计30人" />
 
             <include

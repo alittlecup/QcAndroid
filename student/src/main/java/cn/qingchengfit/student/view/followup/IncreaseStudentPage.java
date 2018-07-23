@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageIncreaseStudentBinding;
@@ -30,6 +32,7 @@ import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/increase") public class IncreaseStudentPage
     extends StudentBaseFragment<StPageIncreaseStudentBinding, IncreaseStudentViewModel> {
@@ -39,6 +42,7 @@ import java.util.Map;
   FollowUpFilterView followUpFilterView;
   IncreaseStudentSortViewModel mSortViewModel;
   IncreaseStudentTopViewModel studentTopViewModel;
+  @Inject IPermissionModel permissionModel;
 
   @Need @IncreaseType String curType = IncreaseType.INCREASE_MEMBER;
 
@@ -151,6 +155,10 @@ import java.util.Map;
 
   private void toggleToolbar(boolean showCheckBox, String type) {
     if (showCheckBox) {
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.VISIBLE);
       ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(type));

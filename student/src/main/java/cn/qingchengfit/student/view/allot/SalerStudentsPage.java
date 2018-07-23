@@ -5,8 +5,11 @@ import android.support.v4.view.GravityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.constant.DirtySender;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StSalerStudentsPageBinding;
@@ -20,6 +23,7 @@ import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.Map;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/seller/student") public class SalerStudentsPage
     extends StudentBaseFragment<StSalerStudentsPageBinding, SalerStudentsViewModel>
@@ -28,6 +32,7 @@ import java.util.Map;
   @Need Integer type;
   StudentRecyclerSortView listView;
   StudentFilterView filterView;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
@@ -49,16 +54,32 @@ import java.util.Map;
 
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       routeTo("/student/allot",
           new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
               .staff(staff)
               .curType(StudentListView.TRAINER_TYPE).build());
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       routeTo("/student/allot",
           new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
               .staff(staff)
               .curType(StudentListView.SELLER_TYPE).build());
+    });
+    mBinding.includeAllot.allotMsg.setOnClickListener(view->{
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
+      DirtySender.studentList=listView.getListView().getSelectDataBeans();
+      routeTo("/student/msgsend", null);
     });
   }
 

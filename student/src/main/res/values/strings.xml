@@ -70,7 +70,7 @@
   <string name="absence_thirty">缺勤30-60天</string>
   <string name="absence_sixty">缺勤>60天</string>
   <string name="absence_condition" formatted="false">缺勤%s-%s天</string>
-  <string name="absence_account" formatted="false">%s的会员共计%d人</string>
+  <string name="absence_account_student" formatted="false">%s的会员共计%d人</string>
 
   <string name="unit_class">节</string>
   <string name="lable_attendace">出勤</string>

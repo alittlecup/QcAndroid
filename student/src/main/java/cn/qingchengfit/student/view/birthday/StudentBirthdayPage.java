@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.FilterCommonLinearItem;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.calendar.Calendar;
 import cn.qingchengfit.saascommon.calendar.CalendarView;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.StPageStudentBirthdayBinding;
@@ -24,11 +28,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/birthday") public class StudentBirthdayPage
     extends StudentBaseFragment<StPageStudentBirthdayBinding, StudentBirthdayViewModel>
     implements CalendarView.OnDateSelectedListener {
   CommonFlexAdapter adapter;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
@@ -90,6 +96,10 @@ import java.util.Map;
       if (qcStudents.isEmpty()) {
         return;
       }
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
           .curType(StudentListView.TRAINER_TYPE)
           .sortVisible(false)
@@ -100,12 +110,29 @@ import java.util.Map;
       if (qcStudents.isEmpty()) {
         return;
       }
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
           .curType(StudentListView.SELLER_TYPE)
           .sortVisible(false)
           .build());
     });
+    mBinding.bottomAllot.allotMsg.setOnClickListener(v -> {
+      List<QcStudentBeanWithFollow> qcStudents = new ArrayList<>(getStudents());
+      if (qcStudents.isEmpty()) {
+        return;
+      }
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
+      DirtySender.studentList=new ArrayList<>(qcStudents);
+      routeTo("/student/msgsend", null);
+    });
   }
+
 
   private void loadMonthScheme(int year, int month) {
     Map<String, Object> dates = new HashMap<>();

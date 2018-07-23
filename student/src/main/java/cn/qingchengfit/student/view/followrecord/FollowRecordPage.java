@@ -6,7 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.StudentBean;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.Attach;
 import cn.qingchengfit.student.bean.FollowRecord;
@@ -21,12 +24,14 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/follow_record") public class FollowRecordPage
     extends StudentBaseFragment<StPageFollowRecordBinding, FollowRecordViewModel>
     implements FlexibleAdapter.OnItemClickListener, TitleFragment {
   CommonFlexAdapter adapter;
   private StudentBean studentBean;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     if (studentBean != null) {
@@ -59,8 +64,12 @@ import java.util.List;
 
   private void initListener() {
     mBinding.fab.setOnClickListener(v -> {
-      Uri uri = Uri.parse("qcstaff://student/student/follow_record_edit");
-      routeTo(uri, new FollowRecordEditPageParams().studentBean(studentBean).build(), false);
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+        Uri uri = Uri.parse("qcstaff://student/student/follow_record_edit");
+        routeTo(uri, new FollowRecordEditPageParams().studentBean(studentBean).build(), false);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
   }
 

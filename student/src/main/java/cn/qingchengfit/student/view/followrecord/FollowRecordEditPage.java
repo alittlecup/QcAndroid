@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
@@ -16,6 +17,7 @@ import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.events.EventCommonUserList;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
@@ -50,6 +52,8 @@ import javax.inject.Inject;
   CommonFlexAdapter adapter = new CommonFlexAdapter(new ArrayList(), this);
   @Need StudentBean studentBean;
   @Inject StudentWrap studentWrap;
+  @Inject IPermissionModel permissionModel;
+
 
   @Override protected void subscribeUI() {
     studentWrap.setStudentBean(studentBean);
@@ -102,6 +106,12 @@ import javax.inject.Inject;
   private void initRv() {
     mBinding.rvPics.setLayoutManager(new GridLayoutManager(getContext(), 4));
     mBinding.rvPics.setAdapter(adapter);
+
+    if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_FOLLOW_STATUS_CAN_EDIT)) {
+        mBinding.tvEditStatus.setVisibility(View.VISIBLE);
+    } else {
+      mBinding.tvEditStatus.setVisibility(View.GONE);
+    }
   }
 
   private void initListener() {
