@@ -5,6 +5,7 @@ import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,7 +83,7 @@ public class StudentsDetailActivity extends BaseActivity implements FragCallBack
     }
 
     @Override protected void onDestroy() {
-        studentWrapper.setStudentBean(null);
+        //studentWrapper.setStudentBean(null);
         super.onDestroy();
     }
 

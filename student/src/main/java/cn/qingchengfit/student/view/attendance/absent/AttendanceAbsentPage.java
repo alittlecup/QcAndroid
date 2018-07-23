@@ -5,7 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceAbsentBinding;
@@ -79,7 +82,9 @@ import java.util.List;
     if (contact != null && contact) {
       showBottomSheet(item.getData().user.phone);
     } else {
-
+      QcStudentBean user = item.getData().user;
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
+          .addParam("qcstudent", user)).call();
     }
     return false;
   }

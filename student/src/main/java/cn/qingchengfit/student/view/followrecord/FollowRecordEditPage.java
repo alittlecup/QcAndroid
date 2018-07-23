@@ -54,7 +54,6 @@ import javax.inject.Inject;
   @Inject StudentWrap studentWrap;
   @Inject IPermissionModel permissionModel;
 
-
   @Override protected void subscribeUI() {
     studentWrap.setStudentBean(studentBean);
   }
@@ -108,7 +107,7 @@ import javax.inject.Inject;
     mBinding.rvPics.setAdapter(adapter);
 
     if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_FOLLOW_STATUS_CAN_EDIT)) {
-        mBinding.tvEditStatus.setVisibility(View.VISIBLE);
+      mBinding.tvEditStatus.setVisibility(View.VISIBLE);
     } else {
       mBinding.tvEditStatus.setVisibility(View.GONE);
     }
@@ -179,7 +178,7 @@ import javax.inject.Inject;
     }
     picker.show(dates, 0);
     picker.setListener(pos -> {
-        mViewModel.nextFollowTime.setValue(dates.get(pos));
+      mViewModel.nextFollowTime.setValue(dates.get(pos));
     });
   }
 

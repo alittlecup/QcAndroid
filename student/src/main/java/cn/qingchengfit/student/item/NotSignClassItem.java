@@ -1,11 +1,13 @@
 package cn.qingchengfit.student.item;
 
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.StudentWIthCount;
 import cn.qingchengfit.utils.CircleImgWrapper;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -31,12 +33,7 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
     @Override
     public NotSignVH createViewHolder(View view, FlexibleAdapter adapter) {
         NotSignVH holder = new NotSignVH(view, adapter);
-        holder.btnContactHim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         return holder;
     }
 
@@ -92,6 +89,20 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
           textNotSignPhone = (TextView) view.findViewById(R.id.text_not_sign_phone);
           btnContactHim = (TextView) view.findViewById(R.id.btn_contact_him);
           imgNotSignHead = (ImageView) view.findViewById(R.id.img_not_sign_head);
+          btnContactHim.setOnClickListener(this);
+        }
+
+        @Override public void onClick(View view) {
+            if(view.getId()==R.id.btn_contact_him){
+               if( mAdapter instanceof CommonFlexAdapter){
+                    ((CommonFlexAdapter) mAdapter).setTag("connect",true);
+                }
+            }else {
+                if( mAdapter instanceof CommonFlexAdapter){
+                    ((CommonFlexAdapter) mAdapter).setTag("connect",false);
+                }
+            }
+            super.onClick(view);
         }
     }
 

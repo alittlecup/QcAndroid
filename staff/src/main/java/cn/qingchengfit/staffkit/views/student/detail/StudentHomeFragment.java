@@ -401,7 +401,6 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     switch (view.getId()) {
       case R.id.ll_student_call:
         new MaterialDialog.Builder(getContext()).autoDismiss(true)
-
             .content(new StringBuilder().append("确定呼叫号码\n")
                 .append(mQcStudentBean.getPhone())
                 .append("吗？")

@@ -164,7 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:civ_clickable="true"
-            app:civ_content="@{BindingUtils.getNextFollowTime(vm.nextFollowTime)}"
+            app:civ_content="@{vm.nextFollowTime}"
             app:civ_edit_able="false"
             app:civ_hint="请选择时间"
             app:civ_lable="下次跟进时间"

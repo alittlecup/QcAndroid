@@ -1,5 +1,6 @@
 package cn.qingchengfit.inject.model;
 
+import android.util.Log;
 import cn.qingchengfit.model.base.StudentBean;
 
 /**
@@ -32,6 +33,7 @@ public class StudentWrapper {
 
     public StudentWrapper(StudentBean studentBean) {
         this.studentBean = studentBean;
+
     }
 
     public StudentBean getStudentBean() {
@@ -40,6 +42,7 @@ public class StudentWrapper {
 
     public void setStudentBean(StudentBean studentBean) {
         this.studentBean = studentBean;
+
     }
 
     public String username() {

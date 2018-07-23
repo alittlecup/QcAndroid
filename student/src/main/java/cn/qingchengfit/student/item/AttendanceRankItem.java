@@ -55,6 +55,9 @@ public class AttendanceRankItem extends AbstractFlexibleItem<AttendanceRankItem.
     public AttendanceRankVH createViewHolder(View view, FlexibleAdapter adapter) {
         return new AttendanceRankVH(view, adapter);
     }
+    public Attendance getData(){
+        return attendance;
+    }
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, AttendanceRankVH holder, int position, List payloads) {

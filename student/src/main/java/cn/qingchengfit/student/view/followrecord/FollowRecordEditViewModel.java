@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.followrecord;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.text.TextUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
@@ -47,9 +48,11 @@ public class FollowRecordEditViewModel extends BaseViewModel {
     for (String s : followRecordUrl) {
       attaches.add(new Attach(s));
     }
+    String value = nextFollowTime.getValue();
+    if("不设定时间".equals(value))value=null;
     studentRepository.qcAddTrackRecord(studentWrap.getStudentBean().id,new FollowRecordAdd.Builder()
       .content(content.getValue())
-      .next_track_time(nextFollowTime.getValue())
+      .next_track_time(value)
       .notice_users(notiOthers.getValue())
       .track_type_id(followMethod.getValue()==null?null:(followMethod.getValue()+""))
       .track_status_id(followStatus.getValue()==null?null:followStatus.getValue().getId())
