@@ -20,6 +20,7 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -28,10 +29,13 @@ import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.item.ChooseStaffItem;
 import cn.qingchengfit.student.item.FollowUpItem;
 import cn.qingchengfit.student.item.StaffDetailItem;
+import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.statuslayout.StatusLayoutManager;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -67,7 +71,12 @@ public class StudentListView
         adapter.clearSelection();
       }
     });
+    mViewModel.removeResult.observe(this,aBoolean -> {
+      ToastUtils.show(aBoolean?"移除成功":"移除失败");
+    });
   }
+
+
 
   public static StudentListView newInstanceWithType(@AllotType String type) {
     StudentListView listView = new StudentListView();
@@ -87,6 +96,14 @@ public class StudentListView
     if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString("type"))) {
       curType = getArguments().getString("type");
       mBinding.btnModifySale.setText(getStringByType(curType));
+      if (curType.equals(TRAINER_TYPE)) {
+        adapter.setTag("choose", 1);
+      } else if (curType.equals(SELLER_TYPE)) {
+        adapter.setTag("choose", 0);
+      } else {
+        adapter.setTag("choose", -2);
+      }
+      setCurId(curID);
     } else {
       mBinding.llBottom.setVisibility(View.GONE);
     }
@@ -105,9 +122,12 @@ public class StudentListView
       routeTo(getStringByType(curType));
     });
     mBinding.btnExclude.setOnClickListener(view -> {
-
+      if(listener!=null){
+        listener.onBottomSecondClick();
+      }
     });
   }
+
 
   public void selectAll(boolean selectedAll) {
     if (adapter.isEmpty() || adapter.getMainItems().get(0) instanceof CommonNoDataItem) {
@@ -237,6 +257,20 @@ public class StudentListView
       adapter.setTag("selected", true);
       adapter.notifyDataSetChanged();
     }
+  }
+
+  public void setListener(onSecondBottomButtonListener listener) {
+    this.listener = listener;
+  }
+
+  private onSecondBottomButtonListener listener;
+  public void removeStaffStudents(){
+    ArrayList<String> selectIds = getSelectIds();
+    Map<String,Object> params=new HashMap<>();
+    params.put("user_ids",StringUtils.List2Str(selectIds));
+    params.put("seller_id", curID);
+
+    mViewModel.removeStaffStudents(curType,params);
   }
 
   public void reset() {

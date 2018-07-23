@@ -61,6 +61,7 @@ import javax.inject.Inject;
       routeTo("/student/allot",
           new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
               .staff(staff)
+              .type(type)
               .curType(StudentListView.TRAINER_TYPE).build());
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
@@ -71,6 +72,7 @@ import javax.inject.Inject;
       routeTo("/student/allot",
           new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
               .staff(staff)
+              .type(type)
               .curType(StudentListView.SELLER_TYPE).build());
     });
     mBinding.includeAllot.allotMsg.setOnClickListener(view->{
@@ -78,8 +80,10 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
-      DirtySender.studentList=listView.getListView().getSelectDataBeans();
-      routeTo("/student/msgsend", null);
+      routeTo("/student/allot",
+          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
+              .staff(staff)
+              .curType(StudentListView.MSG_TYPE).build());
     });
   }
 

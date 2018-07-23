@@ -164,7 +164,7 @@ public interface IStudentModel {
   /**
    * 批量移除某个销售或者教练名下会员:
    */
-  //Observable<QcResponse> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> body);
+  Flowable<QcDataResponse> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> body);
 
   /**
    * 数据统计

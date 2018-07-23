@@ -9,8 +9,10 @@ import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentParams;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class StudentComponent implements IComponent {
+
   @Override public String getName() {
     return "student";
   }

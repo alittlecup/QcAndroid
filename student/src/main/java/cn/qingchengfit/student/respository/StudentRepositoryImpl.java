@@ -132,21 +132,24 @@ public class StudentRepositoryImpl implements StudentRepository {
     return toLiveData(remoteService.qcGetAllotStaffMembers(staff_id, type, params));
   }
 
-  //
-  //public LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params) {
-  //    return toLiveData(remoteService.qcRemoveStaff(staff_id, type, params).map(qcResponse -> {
-  //        QcDataResponse<Boolean> objectQcDataResponse = new QcDataResponse<>();
-  //        objectQcDataResponse.setStatus(qcResponse.getStatus());
-  //        if (qcResponse.status == 200) {
-  //            objectQcDataResponse.setData(true);
-  //        } else {
-  //            throw new HttpException(qcResponse.getMsg(), 0);
-  //        }
-  //        return objectQcDataResponse;
-  //    }));
-  //
-  //}
-  //
+  @Override
+  public void qcRemoveStaff(MutableLiveData<Boolean> result, MutableLiveData<Resource<Object>> defaultResult,
+      String type, Map<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    bindToLiveData(result, remoteService.qcRemoveStaff(loginStatus.staff_id(), type, params1)
+        .map(qcDataResponse -> {
+          QcDataResponse<Boolean> qcDataResponse1;
+          if (qcDataResponse.status == 200) {
+            qcDataResponse1 = qcDataResponse.copyResponse(true);
+          } else {
+            qcDataResponse1 = qcDataResponse.copyResponse(false);
+          }
+          return qcDataResponse1;
+        }), defaultResult, "");
+  }
+
+
   @Override public LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
       String staff_id, HashMap<String, Object> params) {
 
@@ -221,7 +224,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
   @Override
   public void qcGetSellerInactiveUsers(MutableLiveData<List<QcStudentBeanWithFollow>> liveData,
-      MutableLiveData<Resource<Object>> rst, int status, int time_period_id,String seller_id) {
+      MutableLiveData<Resource<Object>> rst, int status, int time_period_id, String seller_id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("status", status);
     params.put("time_period_id", time_period_id);
@@ -256,12 +259,11 @@ public class StudentRepositoryImpl implements StudentRepository {
       MutableLiveData<Resource<Object>> rst) {
     bindToLiveData(null, remoteService.qcAddTrackStatus(params), rst, "add");
   }
-  @Override public void qcEditTrackStatus(String status_id,HashMap<String, Object> params,
+
+  @Override public void qcEditTrackStatus(String status_id, HashMap<String, Object> params,
       MutableLiveData<Resource<Object>> rst) {
-    bindToLiveData(null,remoteService.qcEditTrackStatus(status_id,params),rst,"edit");
+    bindToLiveData(null, remoteService.qcEditTrackStatus(status_id, params), rst, "edit");
   }
-
-
 
   @Override public void qcDelTrackStatus(String id, MutableLiveData<Resource<Object>> rst) {
     bindToLiveData(new MutableLiveData<>(), remoteService.qcDelTrackStatus(id), rst, "del");

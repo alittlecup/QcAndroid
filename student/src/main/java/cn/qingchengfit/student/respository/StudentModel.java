@@ -142,70 +142,12 @@ public class StudentModel implements IStudentModel {
 
   @Override public Flowable<QcDataResponse<StudentInfoGlance>> qcGetHomePageInfo(String staff_id,
       HashMap<String, Object> params) {
-    StudentInfoGlance glance = new StudentInfoGlance();
-    glance.setAll_users_count(1000);
-    glance.setFollowing_users_count(1000);
-    glance.setMember_users_count(1000);
-    glance.setNew_follow_member_users_count(1000);
-    glance.setNew_member_users_count(1000);
-    glance.setNew_register_users_count(1000);
-    glance.setNew_follow_users_count(1000);
-    glance.setRegistered_users_count(1000);
-    QcDataResponse dataResponse = new QcDataResponse();
-    dataResponse.setData(glance);
-    dataResponse.setStatus(200);
-    //return Flowable.just(dataResponse);
+
     return studentApi.qcGetHomePageInfo(staff_id, params);
   }
 
   @Override public Flowable<QcDataResponse<List<StatDate>>> qcGetIncreaseStat(String staff_id,
       HashMap<String, Object> params) {
-    List<StatDate> statDates = new ArrayList<>();
-    String date_group_dimension = (String) params.get("date_group_dimension");
-    String end = (String) params.get("end");
-    Date date = cn.qingchengfit.utils.DateUtils.formatDateFromYYYYMMDD(end);
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(date);
-    switch (date_group_dimension) {
-      case "day":
-        for (int i = 0; i < 20; i++) {
-          calendar.add(Calendar.DAY_OF_MONTH, -1);
-          StatDate statDate = new StatDate();
-          statDate.setCount(i + 10);
-          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
-              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(), 1)));
-          statDates.add(0, statDate);
-        }
-        break;
-      case "week":
-        for (int i = 0; i < 20; i++) {
-          calendar.add(Calendar.WEEK_OF_YEAR, -1);
-          StatDate statDate = new StatDate();
-          statDate.setCount(i + 10);
-          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
-              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(), 7)));
-          statDates.add(0, statDate);
-        }
-        break;
-      case "month":
-        for (int i = 0; i < 20; i++) {
-          calendar.add(Calendar.MONTH, -1);
-          StatDate statDate = new StatDate();
-          statDate.setCount(i + 10);
-          statDate.setStart(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(calendar.getTime()));
-          statDate.setEnd(cn.qingchengfit.utils.DateUtils.Date2YYYYMMDD(
-              cn.qingchengfit.utils.DateUtils.addDay(calendar.getTime(), 30)));
-          statDates.add(0, statDate);
-        }
-        break;
-    }
-
-    QcDataResponse<List<StatDate>> dataResponse = new QcDataResponse<>();
-    dataResponse.setData(statDates);
-    dataResponse.setStatus(200);
-    //return Flowable.just(dataResponse).delay(2, TimeUnit.SECONDS);
     return studentApi.qcGetIncreaseStat(staff_id, params);
   }
 
@@ -315,10 +257,10 @@ public class StudentModel implements IStudentModel {
   //  return studentApi.qcDeleteStudents(staff_id, body);
   //}
   //
-  //@Override public Observable<QcResponse> qcRemoveStaff(String staff_id, String type,
-  //    HashMap<String, Object> body) {
-  //  return studentApi.qcRemoveStaff(staff_id, type, body);
-  //}
+  @Override public Flowable<QcDataResponse> qcRemoveStaff(String staff_id, String type,
+      HashMap<String, Object> body) {
+    return studentApi.qcRemoveStaff(staff_id, type, body);
+  }
   //
   //@Override public Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
   //    String staff_id, HashMap<String, Object> params) {

@@ -56,7 +56,7 @@ public interface StudentRepository {
     HashMap<String, Object> params);
 
   //
-  //LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params);
+  void qcRemoveStaff(MutableLiveData<Boolean> result,MutableLiveData<Resource<Object>> defaultResult,String type, Map<String, Object> params);
   //
   //
   LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,

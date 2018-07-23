@@ -14,9 +14,12 @@ import cn.qingchengfit.student.databinding.PageSalerStudentStateBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.listener.IncreaseType;
+import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
@@ -59,6 +62,14 @@ import java.util.ArrayList;
     listView = new StudentListView();
     filterView = new SalerStateFilterView();
     filterView.setInactiveBeans(beans);
+    listView.setListener(
+        () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
+            (materialDialog, dialogAction) -> {
+              materialDialog.dismiss();
+              if(dialogAction==DialogAction.POSITIVE){
+                listView.removeStaffStudents();
+              }
+            }));
 
     stuff(R.id.fragment_list_container, listView);
     stuff(R.id.fragment_filter, filterView);

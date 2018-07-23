@@ -1,7 +1,9 @@
 package cn.qingchengfit.student.view.allot;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -14,11 +16,15 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
+import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
@@ -31,6 +37,7 @@ import java.util.Map;
   StudentFilterView filterView;
   @Need ArrayList<QcStudentBeanWithFollow> items;
   @Need Staff staff;
+  @Need Integer type;
   @Need Boolean sortVisible=true;
   @Need @StudentListView.AllotType String curType = StudentListView.SELLER_TYPE;
 
@@ -67,12 +74,20 @@ import java.util.Map;
     listView.setListener(this);
     listView.setFilterView(filterView);
     listView.setLoadDataListener(this);
-    listView.setCurId(staff == null ? "" : staff.getId());
     listView.setSortFilterVisible(sortVisible);
     filterView.setListener(params -> {
       mViewModel.loadSource(params);
       mBinding.drawer.closeDrawer(GravityCompat.END);
     });
+
+    if(staff!=null&&!TextUtils.isEmpty(staff.getId())){
+      if(type==0&&curType.equals(StudentListView.SELLER_TYPE)){
+        listView.setCurId(staff.getId());
+      }else if(type==1&&curType.equals(StudentListView.TRAINER_TYPE)){
+        listView.setCurId(staff.getId());
+      }
+    }
+
   }
 
   private void initToolbar() {
@@ -109,5 +124,13 @@ import java.util.Map;
     } else {
       listView.setDatas(mViewModel.map(items));
     }
+    listView.getListView().setListener(
+        () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
+            (materialDialog, dialogAction) -> {
+              materialDialog.dismiss();
+              if(dialogAction==DialogAction.POSITIVE){
+                listView.getListView().removeStaffStudents();
+              }
+            }));
   }
 }

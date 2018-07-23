@@ -30,6 +30,7 @@ import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -151,13 +152,13 @@ public interface StudentApi {
   //    Observable<QcResponse> qcRemoveStudent(@Path("staff_id") String staff_id,
   //        @Body HashMap<String, Object> body);
   //
-  //    /**
-  //     * 移除教练
-  //     */
-  //    @POST("/api/v2/staffs/{staff_id}/{type}/users/remove/")
-  //    Observable<QcResponse> qcRemoveStaff(@Path("staff_id") String staff_id,
-  //        @Path("type") String type, @Body HashMap<String, Object> body);
-  //
+      /**
+       * 移除教练
+       */
+      @POST("/api/v2/staffs/{staff_id}/{type}/users/remove/")
+      Flowable<QcDataResponse> qcRemoveStaff(@Path("staff_id") String staff_id,
+          @Path("type") String type, @Body HashMap<String, Object> body);
+
   //    /**
   //     * 批量移除某个销售名下会员:
   //     * POST http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/remove/?brand_id=2&shop_id=1

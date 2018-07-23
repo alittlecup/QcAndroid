@@ -144,7 +144,7 @@
               android:layout_marginLeft="5dp"
               android:background="@drawable/bg_rect_allot_green"
               android:gravity="center"
-              android:text="移至未分配"
+              android:text="从列表移除"
               android:textColor="@color/qc_allotsale_green"
               android:textSize="@dimen/min_font"
               android:visibility="gone"
