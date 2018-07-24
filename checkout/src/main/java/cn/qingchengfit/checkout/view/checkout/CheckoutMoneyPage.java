@@ -19,7 +19,18 @@ import com.anbillon.flabellum.annotations.Leaf;
     extends CheckoutCounterFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
     implements View.OnClickListener {
   @Override protected void subscribeUI() {
-
+    mViewModel.count.observe(this,prices->{
+      if(TextUtils.isEmpty(prices)){
+        mViewModel.enable.setValue(false);
+        return;
+      }
+      double v = Double.parseDouble(prices);
+      if(v>20000|v==0){
+        mViewModel.enable.setValue(false);
+      }else{
+        mViewModel.enable.setValue(true);
+      }
+    });
   }
 
   @Override
@@ -28,6 +39,8 @@ import com.anbillon.flabellum.annotations.Leaf;
     mBinding = CkPageCheckoutMoneyBinding.inflate(inflater, container, false);
     initToolbar();
     initListener();
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     return mBinding;
   }
 
@@ -55,7 +68,7 @@ import com.anbillon.flabellum.annotations.Leaf;
   }
 
   @Override public void onClick(View v) {
-    String s = mBinding.edContent.getText().toString();
+    String s = mViewModel.count.getValue();
 
     int i = v.getId();
     if (i == R.id.tv_0
@@ -74,22 +87,28 @@ import com.anbillon.flabellum.annotations.Leaf;
             return;
           }
         }
-        mBinding.edContent.append(((TextView) v).getText());
+        //mBinding.edContent.append(((TextView) v).getText());
+        mViewModel.count.setValue(s+""+((TextView) v).getText());
       }
     } else if (i == R.id.tv_c) {
-      mBinding.edContent.setText("");
+      //mBinding.edContent.setText("");
+      mViewModel.count.setValue("");
     } else if (i == R.id.img_delete) {
       if (!TextUtils.isEmpty(s)) {
         if (s.length() == 1) {
-          mBinding.edContent.setText("");
+          //mBinding.edContent.setText("");
+          mViewModel.count.setValue("");
         } else {
-          mBinding.edContent.setText(s.subSequence(0, s.length() - 1));
+          //mBinding.edContent.setText(s.subSequence(0, s.length() - 1));
+          mViewModel.count.setValue(s.subSequence(0, s.length() - 1).toString());
+
         }
       }
     } else if (i == R.id.tv_point) {
       if (!TextUtils.isEmpty(s)) {
         if (!s.contains(".")) {
-          mBinding.edContent.append(".");
+          //mBinding.edContent.append(".");
+          mViewModel.count.setValue(s+".");
         }
       }
     } else if (i == R.id.fl_alipay) {

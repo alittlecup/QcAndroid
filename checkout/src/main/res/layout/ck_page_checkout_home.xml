@@ -132,6 +132,8 @@
           android:layout_gravity="left|center_vertical"
           android:layout_marginLeft="25dp"
           android:text="新开会员卡"
+          android:drawablePadding="10dp"
+          android:drawableLeft="@drawable/ck_ic_counter_newcard"
           android:textSize="16sp"
           style="@style/QcTextStyleLargeDark"
           />
@@ -149,6 +151,8 @@
           android:layout_marginLeft="25dp"
           android:text="会员卡续卡"
           android:textSize="16sp"
+          android:drawablePadding="10dp"
+          android:drawableLeft="@drawable/ck_ic_counter_topup"
           style="@style/QcTextStyleLargeDark"
           />
     </FrameLayout>
@@ -161,6 +165,8 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:drawablePadding="10dp"
+          android:drawableLeft="@drawable/ck_ic_counter_cash"
           android:layout_gravity="left|center_vertical"
           android:layout_marginLeft="25dp"
           android:text="直接收银"
