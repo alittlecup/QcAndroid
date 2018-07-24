@@ -5,10 +5,10 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.login.ILoginModel;
-import  cn.qingchengfit.login.bean.CheckCodeBody;
+
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.user.bean.EditUserBody;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
@@ -22,7 +22,6 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
 
   @Inject IWXAPI wxapi;
   @Inject IUserModel userModel;
-  @Inject ILoginModel loginModel;
   User user;
 
   @Inject public UserEditPresenter() {
@@ -73,7 +72,7 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
   }
 
   public void bindWxtoPhone(String code) {
-    RxRegiste(loginModel.bindWx(CheckCodeBody.newBuilder()
+    RxRegiste(userModel.bindWx(CheckCodeBody.newBuilder()
       .phone(user.getPhone()).area_code(user.area_code).code(code)
       .build())
       .onBackpressureLatest()
@@ -108,7 +107,7 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
    * 解绑微信
    */
   public void unBind() {
-    RxRegiste(loginModel.unBindWx(
+    RxRegiste(userModel.unBindWx(
       new CheckCodeBody.Builder().phone(user.phone).area_code(user.area_code).build())
       .onBackpressureDrop()
       .subscribeOn(Schedulers.io())

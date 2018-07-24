@@ -124,8 +124,10 @@ public class HomeBannerFragment extends BaseFragment {
 
     public void onClickUseNow(){
         if (!loginStatus.isLogined()) {
-            Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-            toLogin.putExtra("isRegiste", true);
+          Intent toLogin = new Intent(getContext().getPackageName(),
+            Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+
+          toLogin.putExtra("isRegiste", true);
             startActivity(toLogin);
         }else {
             startActivity(new Intent(getActivity(), GuideActivity.class));
@@ -137,8 +139,9 @@ public class HomeBannerFragment extends BaseFragment {
      */
 
     public void onLogin(){
-        Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", false);
+      Intent toLogin = new Intent(getContext().getPackageName(),
+        Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+      toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }
 

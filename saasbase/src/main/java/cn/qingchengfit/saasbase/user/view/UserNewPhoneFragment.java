@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import cn.qingchengfit.login.ILoginModel;
-import cn.qingchengfit.login.bean.GetCodeBody;
+
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PasswordView;
@@ -50,7 +50,6 @@ import rx.schedulers.Schedulers;
 public class UserNewPhoneFragment extends BaseFragment {
 
   @Inject IUserModel userModel;
-  @Inject ILoginModel loginModel;
 
   PhoneEditText pet;
   PasswordView pw;
@@ -76,7 +75,7 @@ public class UserNewPhoneFragment extends BaseFragment {
    */
   void sendMsg() {
     if (pet.checkPhoneNum()) {
-      RxRegiste(loginModel.getCode(new GetCodeBody.Builder().area_code(pet.getDistrictInt())
+      RxRegiste(userModel.getCode(new GetCodeBody.Builder().area_code(pet.getDistrictInt())
         .phone(pet.getPhoneNum())
         .build()).onBackpressureDrop().flatMap(qcDataResponse -> {
         if (ResponseConstant.checkSuccess(qcDataResponse)) {

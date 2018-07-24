@@ -258,7 +258,10 @@ public class SplashActivity extends BaseActivity {
   }
 
   @UiThread public void goLogin(int registe) {
-    Intent toLogin = new Intent(this, LoginActivity.class);
+
+    Intent toLogin = new Intent(getContext().getPackageName(),
+      Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+    //startActivityForResult(to, 1);
     toLogin.putExtra("isRegiste", registe==1);
     startActivity(toLogin);
     this.finish();

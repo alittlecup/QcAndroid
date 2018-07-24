@@ -6,10 +6,11 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.login.bean.CheckCodeBody;
-import  cn.qingchengfit.login.bean.GetCodeBody;
+
 import cn.qingchengfit.saasbase.repository.PostApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

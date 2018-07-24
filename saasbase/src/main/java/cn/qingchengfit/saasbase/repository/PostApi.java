@@ -1,10 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
-import cn.qingchengfit.login.bean.CheckCodeBody;
-import cn.qingchengfit.login.bean.GetCodeBody;
-import cn.qingchengfit.login.bean.Login;
-import cn.qingchengfit.login.bean.LoginBody;
-import cn.qingchengfit.login.bean.RegisteBody;
+
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.CreatBrand;
@@ -17,7 +13,9 @@ import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -35,22 +33,10 @@ import rx.Observable;
 
 public interface PostApi {
 
-  @POST("/api/staffs/login/") Observable<QcResponseData<Login>> qcLogin(@Body LoginBody loginBody);
 
   //获取电话验证码
   @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBody account);
 
-  //注册
-  @POST("/api/staffs/register/") rx.Observable<QcResponseData<Login>> qcRegister(@Body
-      RegisteBody params);
-
-  //修改密码
-  @POST("/api/staffs/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") String id, @Body
-      ModifyPwBody modifyPwBean);
-
-  //修改电话号码
-  @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") String id,
-      @Body FixPhoneBody fixPhoneBody);
 
   //发送意见
   @POST("/api/feedback/") rx.Observable<QcResponse> qcFeedBack(@Body FeedBackBody bean);

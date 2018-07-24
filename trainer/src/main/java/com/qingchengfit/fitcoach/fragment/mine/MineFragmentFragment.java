@@ -155,7 +155,9 @@ public class MineFragmentFragment extends BaseFragment {
     }
 
  public void doLogin() {
-        Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+        Intent toLogin =  new Intent(getContext().getPackageName(),
+     Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+   startActivityForResult(to, 1);
         toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }

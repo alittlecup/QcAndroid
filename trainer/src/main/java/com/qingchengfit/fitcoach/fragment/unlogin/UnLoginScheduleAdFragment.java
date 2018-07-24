@@ -93,7 +93,8 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
      */
  public void onClickUseNow() {
         if (!loginStatus.isLogined()) {
-            Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+          Intent toLogin = new Intent(getContext().getPackageName(),
+            Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
             toLogin.putExtra("isRegiste", true);
             startActivity(toLogin);
         }else {
@@ -105,8 +106,9 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
      * 立即登录
      */
  public void onLogin() {
-        Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", false);
+   Intent toLogin = new Intent(getContext().getPackageName(),
+     Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+   toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }
 

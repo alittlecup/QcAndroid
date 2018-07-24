@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.views.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.baidu.android.pushservice.PushConstants;
@@ -193,8 +195,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @UiThread public void goLogin(int registe) {
-        Intent toLogin = new Intent(this, LoginActivity.class);
-        toLogin.putExtra("isRegiste", registe == 1);
+      Intent toLogin = new Intent(this.getPackageName(),
+        Uri.parse(AppUtils.getCurAppSchema(this)+"://login/"));
+      toLogin.putExtra("isRegiste", registe == 1);
         toLogin.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(toLogin);
         this.finish();

@@ -18,10 +18,11 @@ import android.widget.TextView;
 
 import cn.qingchengfit.saasbase.R;
 
-import  cn.qingchengfit.login.bean.GetCodeBody;
+
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.presenter.SuNewPresenter;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -198,7 +199,7 @@ public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPVie
                         pwView.blockRightClick(false);
                     } else {
                         pwView.blockRightClick(true);
-                        pwView.setRightText(String.format(getString(R.string.login_resend_msg), (int) (60 - aLong)));
+                        pwView.setRightText(String.format("%d秒后重发", (int) (60 - aLong)));
                     }
                 }
             }));
