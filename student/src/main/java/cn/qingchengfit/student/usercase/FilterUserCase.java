@@ -24,6 +24,7 @@ import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.utils.FileUtils;
 import com.google.gson.Gson;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +93,9 @@ public class FilterUserCase {
             filterModels.add(sourceBeanToFilterModel(sourceBeans));
             return filterModels;
         }).compose(RxHelper.schedulersTransformerFlow()).subscribe(
-            filterModels -> filterModel.setValue(filterModels));
+            filterModels -> filterModel.setValue(filterModels), throwable -> {
+
+            });
 
     }
 

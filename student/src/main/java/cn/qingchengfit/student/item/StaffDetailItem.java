@@ -23,15 +23,26 @@ public class StaffDetailItem extends StudentItem {
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, StudentVH holder, int position, List payloads) {
         super.bindViewHolder(adapter, holder, position, payloads);
-        int stringRes = type == 0 ? R.string.qc_student_saleids : R.string.qc_student_coachids;
-        if (getQcStudentBean().sellers == null || getQcStudentBean().sellers.size() == 0) {
-            holder.itemStudentGymname.setText(
-                    holder.itemView.getContext().getString(stringRes, " ")
-            );
-        } else {
-            holder.itemStudentGymname.setText(
-                    holder.itemView.getContext().getString(stringRes, StudentBusinessUtils.getNamesStrFromStaffs(getQcStudentBean().sellers))
-            );
+        if(type==0){
+            if (getQcStudentBean().sellers == null || getQcStudentBean().sellers.size() == 0) {
+                holder.itemStudentGymname.setText(
+                    holder.itemView.getContext().getString(R.string.qc_student_saleids , " ")
+                );
+            } else {
+                holder.itemStudentGymname.setText(
+                    holder.itemView.getContext().getString(R.string.qc_student_saleids , StudentBusinessUtils.getNamesStrFromStaffs(getQcStudentBean().sellers))
+                );
+            }
+        }else if(type==1){
+            if (getQcStudentBean().coaches == null || getQcStudentBean().coaches.size() == 0) {
+                holder.itemStudentGymname.setText(
+                    holder.itemView.getContext().getString(R.string.qc_student_coachids , " ")
+                );
+            } else {
+                holder.itemStudentGymname.setText(
+                    holder.itemView.getContext().getString(R.string.qc_student_coachids , StudentBusinessUtils.getNamesStrFromStaffs(getQcStudentBean().coaches))
+                );
+            }
         }
         holder.itemStudentGymname.setVisibility(View.VISIBLE);
     }

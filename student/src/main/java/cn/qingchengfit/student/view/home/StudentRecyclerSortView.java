@@ -47,14 +47,16 @@ public class StudentRecyclerSortView
       listView.selectAll(selectedAll);
     }
   }
-  boolean sortFilterVisible=true;
 
-  public void setSortFilterVisible(boolean visible){
-    sortFilterVisible=visible;
-    if(mBinding!=null){
-      mBinding.includeFilter.getRoot().setVisibility(visible?View.VISIBLE:View.GONE);
+  boolean sortFilterVisible = true;
+
+  public void setSortFilterVisible(boolean visible) {
+    sortFilterVisible = visible;
+    if (mBinding != null) {
+      mBinding.includeFilter.getRoot().setVisibility(visible ? View.VISIBLE : View.GONE);
     }
   }
+
   public static StudentRecyclerSortView newInstanceWithType(
       @StudentListView.AllotType String type) {
     StudentRecyclerSortView listView = new StudentRecyclerSortView();
@@ -97,8 +99,14 @@ public class StudentRecyclerSortView
     }
   }
 
+  private List<? extends AbstractFlexibleItem> items;
+
   public void setDatas(List<? extends AbstractFlexibleItem> items) {
-    mViewModel.getStudentBeans().setValue(items);
+    if (mViewModel != null) {
+      mViewModel.getStudentBeans().setValue(items);
+    } else {
+      this.items = items;
+    }
   }
 
   @Override public ViewStudentRecyclerSortBinding initDataBinding(LayoutInflater inflater,
@@ -109,7 +117,10 @@ public class StudentRecyclerSortView
     if (loadDataListener != null) {
       loadDataListener.loadData(new HashMap<>());
     }
-    mBinding.includeFilter.getRoot().setVisibility(sortFilterVisible?View.VISIBLE:View.GONE);
+    mBinding.includeFilter.getRoot().setVisibility(sortFilterVisible ? View.VISIBLE : View.GONE);
+    if(mViewModel!=null&&items!=null){
+      mViewModel.getStudentBeans().setValue(items);
+    }
     return mBinding;
   }
 

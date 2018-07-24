@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.allot;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ public class StudentAllotViewModel
   @Inject StudentRepository respository;
   public int type;
   public String salerId;
+  public final MutableLiveData<Boolean> showLoading=new MutableLiveData<>();
 
   public void setSalerId(String salerId) {
     this.salerId = salerId;
@@ -39,6 +41,7 @@ public class StudentAllotViewModel
 
   @NonNull @Override
   protected LiveData<List<QcStudentBeanWithFollow>> getSource(@NonNull Map<String, ?> map) {
+    showLoading.setValue(true);
     HashMap<String, Object> params = gymWrapper.getParams();
     if (!TextUtils.isEmpty(salerId)) {
       params.put("seller_id", salerId);
@@ -59,6 +62,7 @@ public class StudentAllotViewModel
         break;
     }
     return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), input -> {
+      showLoading.setValue(false);
       StudentListWrapper studentListWrapper = dealResource(input);
       if(studentListWrapper==null){
         return null;

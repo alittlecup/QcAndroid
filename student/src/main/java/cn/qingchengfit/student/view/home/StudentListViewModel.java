@@ -44,10 +44,10 @@ public class StudentListViewModel extends BaseViewModel {
     String path = "";
     switch (type) {
       case StudentListView.SELLER_TYPE:
-        path = "seller";
+        path = "sellers";
         break;
       case StudentListView.TRAINER_TYPE:
-        path = "trainer";
+        path = "coaches";
         break;
     }
     studentRepository.qcRemoveStaff(removeResult,defaultResult,path, params);

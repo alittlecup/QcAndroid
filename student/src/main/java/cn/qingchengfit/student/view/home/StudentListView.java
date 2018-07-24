@@ -73,6 +73,7 @@ public class StudentListView
     });
     mViewModel.removeResult.observe(this,aBoolean -> {
       ToastUtils.show(aBoolean?"移除成功":"移除失败");
+      getActivity().onBackPressed();
     });
   }
 
@@ -268,7 +269,14 @@ public class StudentListView
     ArrayList<String> selectIds = getSelectIds();
     Map<String,Object> params=new HashMap<>();
     params.put("user_ids",StringUtils.List2Str(selectIds));
-    params.put("seller_id", curID);
+    switch (curType){
+      case TRAINER_TYPE:
+        params.put("coach_id",curID);
+        break;
+      case SELLER_TYPE:
+        params.put("seller_id",curID);
+        break;
+    }
 
     mViewModel.removeStaffStudents(curType,params);
   }

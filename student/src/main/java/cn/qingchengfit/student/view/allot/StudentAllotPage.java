@@ -46,6 +46,13 @@ import java.util.Map;
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setDatas(items);
     });
+    mViewModel.showLoading.observe(this,aBoolean -> {
+      if(aBoolean){
+        showLoading();
+      }else{
+        hideLoading();
+      }
+    });
   }
 
   @Override
@@ -53,8 +60,8 @@ import java.util.Map;
       Bundle savedInstanceState) {
     mBinding = PageStudentAllotBinding.inflate(inflater, container, false);
     mViewModel.type = curType.equals(StudentListView.SELLER_TYPE) ? 0 : 1;
-    initToolbar();
     initFragment();
+    initToolbar();
     initListener();
     return mBinding;
   }
@@ -67,6 +74,7 @@ import java.util.Map;
 
 
   private void initFragment() {
+    if(listView!=null)return;
     listView = StudentRecyclerSortView.newInstanceWithType(curType);
     filterView = new StudentFilterView();
     stuff(R.id.frame_student_filter, filterView);
