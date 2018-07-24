@@ -13,13 +13,14 @@ import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import javax.inject.Singleton;
 
-@Module public abstract class PageModelModule {
+@Module public abstract class CheckViewModule {
+  static CheckoutRouterCenter routerCenter = new CheckoutRouterCenter().registe(new checkoutImpl());
 
   @Binds @IntoMap @ViewModelKey(CheckoutHomeViewModel.class)
   abstract ViewModel bindCheckoutHomeViewModel(CheckoutHomeViewModel model);
 
-  @Singleton @Provides public static CheckoutRouterCenter provideRouterCenter() {
-    return new CheckoutRouterCenter().registe(new checkoutImpl());
+  @Provides public static CheckoutRouterCenter provideRouterCenter() {
+    return routerCenter;
   }
 
   @Binds @IntoMap @ViewModelKey(CheckoutMoneyViewModel.class)

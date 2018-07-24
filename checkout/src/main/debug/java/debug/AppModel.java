@@ -1,16 +1,18 @@
 package debug;
 
+import android.app.Application;
+import android.arch.lifecycle.ViewModelProvider;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
-import cn.qingchengfit.saasbase.routers.billImpl;
-import cn.qingchengfit.saasbase.routers.commonImpl;
-import cn.qingchengfit.saasbase.routers.courseImpl;
-import cn.qingchengfit.saasbase.routers.exportImpl;
-import cn.qingchengfit.saasbase.routers.gymImpl;
-import cn.qingchengfit.saasbase.routers.staffImpl;
-import cn.qingchengfit.saasbase.routers.userImpl;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
+import java.util.List;
+import javax.inject.Singleton;
 
 /**
  * power by
@@ -25,18 +27,49 @@ import dagger.Provides;
  * <p/>
  * Created by Paper on 15/11/19 2015.
  */
-@Module public class AppModel {
+@Module public abstract class AppModel {
 
-   @Provides SaasbaseRouterCenter provideRc() {
-    return new SaasbaseRouterCenter().registe(new exportImpl())
-        .registe(new gymImpl())
-        .registe(new staffImpl())
-        .registe(new commonImpl())
-        .registe(new courseImpl())
-        .registe(new userImpl())
-        .registe(new billImpl());
+  static LoginStatus loginStatus = new LoginStatus.Builder().build();
+  static GymWrapper gymWrapper = new GymWrapper.Builder().build();
+
+  @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+
+  @Provides static LoginStatus provideLogin() {
+    return loginStatus;
   }
-   @Provides LoginStatus provideLogins() {
-    return new LoginStatus.Builder().build();
+
+  @Singleton @ContributesAndroidInjector
+  abstract SplashActivity contributeStudentActivityInjector();
+
+  @Provides static Application providesApplication() {
+    return MyApp.INSTANCE;
+  }
+
+  @Provides static GymWrapper provideGym() {
+    return gymWrapper;
+  }
+
+  @Provides static QcRestRepository provideQcRestRepository(Application application) {
+    return new QcRestRepository(application, "http://cloudtest01.qingchengfit.cn/", "staff-qingcheng");
+  }
+
+  @Provides static IPermissionModel providePermission() {
+    return new IPermissionModel() {
+      @Override public boolean check(String permission) {
+        return true;
+      }
+
+      @Override public boolean checkAllGym(String permission) {
+        return false;
+      }
+
+      @Override public boolean checkInBrand(String permission) {
+        return false;
+      }
+
+      @Override public boolean check(String permission, List<String> shopids) {
+        return false;
+      }
+    };
   }
 }

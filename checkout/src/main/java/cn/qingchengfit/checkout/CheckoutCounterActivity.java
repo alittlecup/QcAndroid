@@ -11,7 +11,7 @@ import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
 @Trunk(fragments = {
-    PageModelModule.class, CheckoutHomePage.class, CheckoutMoneyPage.class, CheckoutPayPage.class
+    CheckoutHomePage.class, CheckoutMoneyPage.class, CheckoutPayPage.class
 }) public class CheckoutCounterActivity extends SaasCommonActivity {
   @Inject CheckoutRouterCenter routerCenter;
 
