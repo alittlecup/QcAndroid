@@ -32,7 +32,7 @@ public class FollowRecord {
       int x = Integer.parseInt(track_type_id);
       return BindingUtils.getFollowRecordMethod(x,context);
     }catch (Exception e){
-      return "";
+      return "--";
     }
 
   }
@@ -46,7 +46,7 @@ public class FollowRecord {
 
   public String getFollowStatusString(){
     if (track_status == null)
-      return "";
+      return "--";
     return track_status;
   }
 
@@ -54,13 +54,13 @@ public class FollowRecord {
     if (notice_users != null){
       return BindingUtils.getFollowRecordNotiOhters(notice_users,null);
 
-    }else return "";
+    }else return "--";
 
   }
 
   public String getFollowTimeString(){
     if (next_track_time == null)
-      return "";
+      return "--";
     else
       return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(next_track_time));
   }

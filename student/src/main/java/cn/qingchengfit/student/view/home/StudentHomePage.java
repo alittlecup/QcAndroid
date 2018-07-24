@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StPageStudentHomeBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.followup.IncreaseMemberPageParams;
 import cn.qingchengfit.student.view.followup.IncreaseStudentPageParams;
 import cn.qingchengfit.student.view.state.StudentStateInfoPageParams;
+import cn.qingchengfit.utils.DialogUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -20,6 +24,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/5.
@@ -28,26 +33,28 @@ import java.util.ArrayList;
     extends StudentBaseFragment<StPageStudentHomeBinding, StudentHomeViewModel>
     implements OnChartValueSelectedListener {
   private int total;
-  @Override protected void subscribeUI() {
-    mViewModel.increaseFollowers.observe(this,msg->mBinding.tvIncreaseFollow.setCount(msg));
-    mViewModel.increaseStudents.observe(this,msg->mBinding.tvIncreaseStudent.setCount(msg));
-    mViewModel.increaseMembers.observe(this,msg->mBinding.tvIncreaseMember.setCount(msg));
-    mViewModel.followStudents.observe(this,msg->mBinding.tvIncreaseStudentFollow.setCount(msg));
+  @Inject IPermissionModel permissionModel;
 
-    mViewModel.glanceLiveData.observe(this,info->{
-      if(info==null)return;
+  @Override protected void subscribeUI() {
+    mViewModel.increaseFollowers.observe(this, msg -> mBinding.tvIncreaseFollow.setCount(msg));
+    mViewModel.increaseStudents.observe(this, msg -> mBinding.tvIncreaseStudent.setCount(msg));
+    mViewModel.increaseMembers.observe(this, msg -> mBinding.tvIncreaseMember.setCount(msg));
+    mViewModel.followStudents.observe(this, msg -> mBinding.tvIncreaseStudentFollow.setCount(msg));
+
+    mViewModel.glanceLiveData.observe(this, info -> {
+      if (info == null) return;
       int all_users_count = info.getAll_users_count();
       int member = info.getMember_users_count();
       int register = info.getRegistered_users_count();
       int follow = info.getFollowing_users_count();
-      total=all_users_count;
-      setData(register,follow,member);
+      total = all_users_count;
+      setData(register, follow, member);
     });
 
-    mViewModel.showLoading.observe(this,aBoolean -> {
-      if(aBoolean){
+    mViewModel.showLoading.observe(this, aBoolean -> {
+      if (aBoolean) {
         showLoading();
-      }else{
+      } else {
         hideLoading();
       }
     });
@@ -72,13 +79,14 @@ import java.util.ArrayList;
     colors.add(Color.rgb(88, 184, 122));
     mBinding.pieChart.setOnChartValueSelectedListener(this);
   }
+
   ArrayList<Integer> colors = new ArrayList<>();
 
-  private void setData(int register,int follow,int member) {
+  private void setData(int register, int follow, int member) {
     ArrayList<PieEntry> entries = new ArrayList<>();
-    entries.add(new PieEntry(register,0));
-    entries.add(new PieEntry(follow,1));
-    entries.add(new PieEntry(member,2));
+    entries.add(new PieEntry(register, 0));
+    entries.add(new PieEntry(follow, 1));
+    entries.add(new PieEntry(member, 2));
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
     dataSet.setSelectionShift(3f);
@@ -89,7 +97,6 @@ import java.util.ArrayList;
     mBinding.pieChart.setData(data);
     mBinding.pieChart.highlightValue(null);
     mBinding.pieChart.invalidate();
-
   }
 
   private void initListener() {
@@ -122,7 +129,12 @@ import java.util.ArrayList;
           new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
     });
     mBinding.commAllotStudent.setOnClickListener(view -> {
-      routeTo("/student/allotstaff", null);
+
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        routeTo("/student/allotstaff", null);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.commAttendStudent.setOnClickListener(view -> {
       routeTo("/attendance/page", null);
@@ -145,7 +157,6 @@ import java.util.ArrayList;
     mBinding.commDayStudent.setOnClickListener(view -> {
       routeTo("student/birthday", null);
     });
-
   }
 
   private void initToolbar() {
@@ -156,7 +167,7 @@ import java.util.ArrayList;
 
   @Override public void onValueSelected(Entry e, Highlight h) {
     int y = (int) e.getY();
-    mBinding.pieChart.setCenterText(y*100/total+"%");
+    mBinding.pieChart.setCenterText(y * 100 / total + "%");
     int data = (int) e.getData();
     mBinding.pieChart.setCenterTextColor(colors.get(data));
   }

@@ -29,6 +29,7 @@ import cn.qingchengfit.student.item.ItemGridImage;
 import cn.qingchengfit.student.item.ItemGridImageAdd;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
@@ -161,10 +162,13 @@ import javax.inject.Inject;
     ToolbarModel toolbarModel = new ToolbarModel("写跟进");
     toolbarModel.setMenu(R.menu.menu_compelete);
     toolbarModel.setListener(item -> {
-      mViewModel.addFollowRecord();
+      if (TextUtils.isEmpty(mViewModel.content.getValue())) {
+        DialogUtils.showAlert(getContext(), "您尚未填写跟进详情");
+      } else {
+        mViewModel.addFollowRecord();
+      }
       return false;
     });
-    // TODO: 2018/7/5  设置Action 颜色
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
   }

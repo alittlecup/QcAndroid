@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
@@ -43,6 +44,7 @@ import javax.inject.Inject;
   IncreaseStudentSortViewModel mSortViewModel;
   IncreaseStudentTopViewModel studentTopViewModel;
   @Inject IPermissionModel permissionModel;
+  @Inject LoginStatus loginStatus;
 
   @Need @IncreaseType String curType = IncreaseType.INCREASE_MEMBER;
 
@@ -53,12 +55,11 @@ import javax.inject.Inject;
     mSortViewModel.filterIndex.observe(this, index -> {
       followUpFilterView.showPage(index);
       mBinding.layoutCollapsed.setExpanded(false);
-
     });
     mSortViewModel.filterAction.observe(this, aVoid -> {
       mBinding.drawer.openDrawer(GravityCompat.END);
     });
-    mSortViewModel.params.observe(this,params->{
+    mSortViewModel.params.observe(this, params -> {
       mViewModel.loadSourceByStatus(params);
     });
 
@@ -98,27 +99,39 @@ import javax.inject.Inject;
   }
 
   private void loadSource() {
-    if(studentTopViewModel==null){
-      studentTopViewModel = ViewModelProviders.of(topView, factory).get(IncreaseStudentTopViewModel.class);
+    if (studentTopViewModel == null) {
+      studentTopViewModel =
+          ViewModelProviders.of(topView, factory).get(IncreaseStudentTopViewModel.class);
       studentTopViewModel.curSelectPositionDate.observe(this, params -> {
 
         mViewModel.loadSoutceByDate(params);
       });
     }
-
   }
 
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.SELLER_TYPE);
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        toggleToolbar(true, StudentListView.SELLER_TYPE);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
-    mBinding.rbSelectAll.setOnCheckedChangeListener((view,checked)->listView.selectAll(checked));
+    mBinding.rbSelectAll.setOnCheckedChangeListener((view, checked) -> listView.selectAll(checked));
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      mBinding.qftSaler.setEnabled(false);
+      mBinding.qftSaler.setText(loginStatus.getLoginUser().getUsername());
+    }
   }
 
   private void initToolbar() {
@@ -135,7 +148,7 @@ import javax.inject.Inject;
   }
 
   private void initFragment() {
-    if(topView!=null)return;
+    if (topView != null) return;
     topView = new IncreaseStudentTopView();
     listView = new StudentListView();
     filterView = new StudentFilterView();
@@ -155,7 +168,7 @@ import javax.inject.Inject;
 
   private void toggleToolbar(boolean showCheckBox, String type) {
     if (showCheckBox) {
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
@@ -181,7 +194,7 @@ import javax.inject.Inject;
       //收缩布局
       mSortViewModel.appBarLayoutExpanded.set(false);
       ViewGroup.LayoutParams layoutParams = mBinding.fragChart.getLayoutParams();
-      layoutParams.height=0;
+      layoutParams.height = 0;
       mBinding.fragChart.setLayoutParams(layoutParams);
       //修改列表内容
       listView.setCurType(type);
@@ -198,7 +211,7 @@ import javax.inject.Inject;
 
       mSortViewModel.appBarLayoutExpanded.set(true);
       ViewGroup.LayoutParams layoutParams = mBinding.fragChart.getLayoutParams();
-      layoutParams.height=ViewGroup.LayoutParams.WRAP_CONTENT;
+      layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
       mBinding.fragChart.setLayoutParams(layoutParams);
       listView.reset();
     }

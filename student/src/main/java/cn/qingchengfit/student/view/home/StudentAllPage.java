@@ -69,10 +69,18 @@ import javax.inject.Inject;
       }
     });
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+        toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      }else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.SELLER_TYPE);
+      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+        toggleToolbar(true, StudentListView.SELLER_TYPE);
+      }else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);

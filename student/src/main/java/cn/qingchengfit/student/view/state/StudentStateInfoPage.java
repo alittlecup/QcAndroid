@@ -197,6 +197,7 @@ import java.util.Map;
 
   @Override public void onValueSelected(Entry e, Highlight h) {
     int y = (int) e.getY();
+    if(total==0)return;
     mBinding.pieChart.setCenterText(y * 100 / total + "%");
     int data = (int) e.getData();
     mBinding.pieChart.setCenterTextColor(colors.get(data % 4));

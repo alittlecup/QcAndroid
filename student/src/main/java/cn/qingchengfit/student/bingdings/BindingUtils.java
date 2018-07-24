@@ -47,7 +47,7 @@ public class BindingUtils {
       }else {
         return users.get(0).username;
       }
-    }else return "";
+    }else return "--";
   }
 
   public static String getNextFollowTime(String serverTime){

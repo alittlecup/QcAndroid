@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.bean.InactiveBean;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageSalerStudentStateBinding;
@@ -23,11 +25,13 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/seller_state") public class SalerStudentStatePage
     extends StudentBaseFragment<PageSalerStudentStateBinding, SalerStudentStateViewModel> {
   @Need @IncreaseType String type = IncreaseType.INCREASE_MEMBER;
   @Need Staff staff;
+  @Inject IPermissionModel permissionModel;
   @Need ArrayList<InactiveBean> beans;
   StudentListView listView;
   SalerStateFilterView filterView;
@@ -100,10 +104,18 @@ import java.util.ArrayList;
 
   private void initListener() {
     mBinding.bottomAllot.allotCoach.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+        toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      }else{
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.bottomAllot.allotSale.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.SELLER_TYPE);
+      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+        toggleToolbar(true, StudentListView.SELLER_TYPE);
+      }else{
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.bottomAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
@@ -112,6 +124,10 @@ import java.util.ArrayList;
 
   private void toggleToolbar(boolean showCheckBox, String type) {
     if (showCheckBox) {
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.VISIBLE);
       ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(type));

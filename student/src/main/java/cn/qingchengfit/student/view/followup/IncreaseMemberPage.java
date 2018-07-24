@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
@@ -33,6 +34,7 @@ import javax.inject.Inject;
   IncreaseMemberTopViewModel topViewModel;
   IncreaseMemberSortViewModel mSortViewModel;
   @Inject IPermissionModel permissionModel;
+  @Inject LoginStatus loginStatus;
 
   @Need @IncreaseType String curType = IncreaseType.INCREASE_FOLLOWUP;
 
@@ -76,16 +78,28 @@ import javax.inject.Inject;
 
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.SELLER_TYPE);
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        toggleToolbar(true, StudentListView.SELLER_TYPE);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
     mBinding.rbSelectAll.setOnCheckedChangeListener(
         (buttonView, isChecked) -> listView.selectAll(isChecked));
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      mBinding.qftSaler.setEnabled(false);
+      mBinding.qftSaler.setText(loginStatus.getLoginUser().getUsername());
+    }
   }
 
   @Override protected void onFinishAnimation() {
@@ -127,7 +141,7 @@ import javax.inject.Inject;
 
   private void toggleToolbar(boolean showCheckBox, String type) {
     if (showCheckBox) {
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
