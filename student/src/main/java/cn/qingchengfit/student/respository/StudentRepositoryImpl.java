@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.network.BindLiveData;
 import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
@@ -28,7 +29,6 @@ import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
-import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.respository.local.LocalRespository;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * 继承自StudentRespository,为Student模块的唯一数据来源

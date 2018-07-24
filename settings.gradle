@@ -1,7 +1,7 @@
 //include ':saasbase'
 include ':saascommon'
 include ':router'
-//include ':student'
+include ':student'
 //include ':staff'
 //include ':shop'
 include ':login'

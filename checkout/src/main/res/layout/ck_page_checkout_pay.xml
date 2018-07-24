@@ -42,6 +42,7 @@
             android:background="@drawable/bg_white_corners"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:translationZ="5dp"
             >
           <TextView
               android:id="@+id/tv_qr_title"

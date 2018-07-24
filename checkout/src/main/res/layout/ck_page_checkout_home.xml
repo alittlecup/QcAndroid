@@ -7,6 +7,10 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.checkout.view.home.CheckoutHomeViewModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -39,6 +43,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="5dp"
+          android:text="@{viewModel.homeInfo.getSum()}"
           android:textColor="@color/white"
           android:textSize="32sp"
           tools:text="3,000.00"
@@ -67,6 +72,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
+              android:text="@{String.valueOf(viewModel.homeInfo.getNew_count())+'笔'}"
               android:textColor="@color/white"
               android:textSize="16sp"
               tools:text="20笔"
@@ -90,8 +96,10 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
+              android:text="@{String.valueOf(viewModel.homeInfo.getCharge())+'笔'}"
               android:textColor="@color/white"
               android:textSize="16sp"
+
               tools:text="20笔"
               />
         </LinearLayout>
@@ -113,6 +121,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
+              android:text="@{String.valueOf(viewModel.homeInfo.getCashier())+'笔'}"
               android:textColor="@color/white"
               android:textSize="16sp"
               tools:text="20笔"
@@ -131,9 +140,9 @@
           android:layout_height="wrap_content"
           android:layout_gravity="left|center_vertical"
           android:layout_marginLeft="25dp"
-          android:text="新开会员卡"
-          android:drawablePadding="10dp"
           android:drawableLeft="@drawable/ck_ic_counter_newcard"
+          android:drawablePadding="10dp"
+          android:text="新开会员卡"
           android:textSize="16sp"
           style="@style/QcTextStyleLargeDark"
           />
@@ -149,10 +158,10 @@
           android:layout_height="wrap_content"
           android:layout_gravity="left|center_vertical"
           android:layout_marginLeft="25dp"
+          android:drawableLeft="@drawable/ck_ic_counter_topup"
+          android:drawablePadding="10dp"
           android:text="会员卡续卡"
           android:textSize="16sp"
-          android:drawablePadding="10dp"
-          android:drawableLeft="@drawable/ck_ic_counter_topup"
           style="@style/QcTextStyleLargeDark"
           />
     </FrameLayout>
@@ -165,10 +174,10 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:drawablePadding="10dp"
-          android:drawableLeft="@drawable/ck_ic_counter_cash"
           android:layout_gravity="left|center_vertical"
           android:layout_marginLeft="25dp"
+          android:drawableLeft="@drawable/ck_ic_counter_cash"
+          android:drawablePadding="10dp"
           android:text="直接收银"
           android:textSize="16sp"
           style="@style/QcTextStyleLargeDark"

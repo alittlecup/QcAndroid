@@ -1,8 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.qingchengfit.saascommon">
+
   <application>
     <activity android:name=".qrcode.views.QRActivity">
-
+    </activity>
+    <activity android:name=".qrcode.views.QcScanActivity">
     </activity>
   </application>
+
 </manifest>

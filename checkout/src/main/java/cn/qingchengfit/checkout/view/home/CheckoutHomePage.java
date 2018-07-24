@@ -21,8 +21,11 @@ import com.anbillon.flabellum.annotations.Leaf;
   public CkPageCheckoutHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = CkPageCheckoutHomeBinding.inflate(inflater, container, false);
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     initToolbar();
     initListener();
+    mViewModel.loadHomePageInfo();
     return mBinding;
   }
 

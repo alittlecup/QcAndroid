@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.respository;
+package cn.qingchengfit.saascommon.network;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

@@ -1,5 +1,6 @@
 package cn.qingchengfit.checkout.view.pay;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import cn.qingchengfit.checkout.databinding.CkPageCheckoutPayBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.saascommon.qrcode.views.QcScanActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -31,28 +33,15 @@ import com.anbillon.flabellum.annotations.Need;
     initToolbar();
     initUI();
     initListener();
-    mockSuccess();
     return mBinding;
   }
 
   private void initListener() {
     mBinding.flScan.setOnClickListener(v -> {
-
+      Intent intent=new Intent(getContext(),QcScanActivity.class);
+      intent.putExtra("title","扫码收款");
+      startActivity(intent);
     });
-  }
-
-  private void mockSuccess() {
-    new Handler().postDelayed(new Runnable() {
-      @Override public void run() {
-        if (getArguments() != null) {
-          String callId = getArguments().getString("callId");
-          if (!TextUtils.isEmpty(callId)) {
-            QC.sendQCResult(callId, QCResult.success());
-            getActivity().finish();
-          }
-        }
-      }
-    }, 2000);
   }
 
   private void initUI() {

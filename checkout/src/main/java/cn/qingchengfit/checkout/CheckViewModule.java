@@ -1,6 +1,10 @@
 package cn.qingchengfit.checkout;
 
 import android.arch.lifecycle.ViewModel;
+import cn.qingchengfit.checkout.repository.CheckoutModel;
+import cn.qingchengfit.checkout.repository.CheckoutRepository;
+import cn.qingchengfit.checkout.repository.CheckoutRepositoryImpl;
+import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.checkout.routers.CheckoutRouterCenter;
 import cn.qingchengfit.checkout.routers.checkoutImpl;
 import cn.qingchengfit.checkout.view.checkout.CheckoutMoneyViewModel;
@@ -28,4 +32,9 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(CheckoutPayViewModel.class)
   abstract ViewModel bindCheckoutPayViewModel(CheckoutPayViewModel model);
+
+  @Binds
+  abstract CheckoutRepository bindCheckRepository(CheckoutRepositoryImpl checkoutRepository);
+  @Binds
+  abstract ICheckoutModel bindCheckModel(CheckoutModel checkoutModel);
 }
