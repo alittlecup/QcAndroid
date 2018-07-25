@@ -27,6 +27,7 @@
       </intent-filter>
 
     </activity>
+    <activity android:name=".view.scan.QcScanActivity"/>
     <activity android:name="debug.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

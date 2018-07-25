@@ -4,13 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import cn.qingchengfit.checkout.repository.ICheckoutModel;
+import cn.qingchengfit.recruit.item.ResumeTitleItem;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class CheckoutComponent implements IComponent {
+
+  public void setCheckoutModel(ICheckoutModel checkoutModel) {
+    this.checkoutModel = checkoutModel;
+  }
+
+  ICheckoutModel checkoutModel;
+
   @Override public String getName() {
     return "checkout";
   }
@@ -27,9 +43,24 @@ public class CheckoutComponent implements IComponent {
         bundle.putString("callId", qc.getCallId());
         Context context = qc.getContext();
         checkoutMoney(context, bundle);
-        break;
+        return true;
+      case "reOrder":
+        Map<String, Object> params = qc.getParams();
+        String prices = (String) params.get("prices");
+        String channel = (String) params.get("channel");
+        Log.d("TAG", "onCall: " + params);
+
+        Flowable.just(1).delay(200,TimeUnit.SECONDS).subscribe(new Consumer<Integer>() {
+          @Override public void accept(Integer integer) throws Exception {
+            Map<String,Object> params=new HashMap<>();
+            params.put("orderNumber","123123123");
+            params.put("pollingNumber","123123123");
+            QC.sendQCResult(qc.getCallId(),QCResult.success(params));
+          }
+        });
+        return true;
     }
-    return true;
+    return false;
   }
 
   private void checkoutMoney(Context context, Bundle bundle) {

@@ -1,7 +1,10 @@
 package cn.qingchengfit.checkout.repository;
 
 import android.util.Log;
+import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
+import cn.qingchengfit.checkout.bean.OrderStatusBean;
+import cn.qingchengfit.checkout.bean.ScanResultBean;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import com.google.gson.Gson;
@@ -18,7 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckoutModel implements ICheckoutModel {
   CheckoutApi checkoutApi;
-  @Inject public CheckoutModel(QcRestRepository qcRestRepository){
+
+  @Inject public CheckoutModel(QcRestRepository qcRestRepository) {
     OkHttpClient client = qcRestRepository.getClient();
     OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
       Log.d("HTTP", message);
@@ -32,17 +36,32 @@ public class CheckoutModel implements ICheckoutModel {
         .build();
     checkoutApi = retrofit.create(CheckoutApi.class);
   }
+
   @Override public Flowable<QcDataResponse<HomePageBean>> qcGetHomePageInfo(String staff_id,
       Map<String, Object> params) {
-    QcDataResponse<HomePageBean> qcDataResponse=new QcDataResponse<>();
-    qcDataResponse.setStatus(200);
-    HomePageBean bean=new HomePageBean();
-    bean.setCashier(30);
-    bean.setCharge(10);
-    bean.setNew_count(20);
-    bean.setSum("2000.03");
-    qcDataResponse.setData(bean);
-    return Flowable.just(qcDataResponse).delay(2,TimeUnit.SECONDS);
-    //return checkoutApi.qcGetCeckoutHomeInfo(staff_id,params);
+    //QcDataResponse<HomePageBean> qcDataResponse=new QcDataResponse<>();
+    //qcDataResponse.setStatus(200);
+    //HomePageBean bean=new HomePageBean();
+    //bean.setCashier(30);
+    //bean.setCharge(10);
+    //bean.setNew_count(20);
+    //bean.setSum("2000.03");
+    //qcDataResponse.setData(bean);
+    //return Flowable.just(qcDataResponse).delay(2,TimeUnit.SECONDS);
+    return checkoutApi.qcGetCeckoutHomeInfo(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<CashierBean>> qcPostCashierOrder(String staff_id,
+      Map<String, Object> params) {
+    return checkoutApi.qcPostCashierOrder(staff_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<ScanResultBean>> qcPostScanOrder(Map<String, Object> params) {
+    return checkoutApi.qcPostScanOrder(params);
+  }
+
+  @Override public Flowable<QcDataResponse<OrderStatusBean>> qcGetOrderStatus(String orderNum,Map<String,Object> params) {
+    return checkoutApi.qcGetOrderStatus(orderNum,params);
   }
 }

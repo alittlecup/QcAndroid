@@ -74,14 +74,14 @@ public class SplashActivity extends SaasCommonActivity {
 
   private void setLoginInfo() {
     Staff staff = new Staff();
-    staff.setId("7505");
+    staff.setId("3281");
     loginStatus.setSession(QcRestRepository.getSession(this));
     loginStatus.setLoginUser(staff);
-    loginStatus.setUserId("54405");
+    loginStatus.setUserId("26257");
 
     CoachService coachService = new CoachService();
     coachService.setModel("staff_gym");
-    coachService.setId("10548");
+    coachService.setId("10423");
     gymWrapper.setCoachService(coachService);
   }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutMoneyBinding;
 import cn.qingchengfit.checkout.view.pay.CheckoutPayPageParams;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -19,16 +20,32 @@ import com.anbillon.flabellum.annotations.Leaf;
     extends CheckoutCounterFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
     implements View.OnClickListener {
   @Override protected void subscribeUI() {
-    mViewModel.count.observe(this,prices->{
-      if(TextUtils.isEmpty(prices)){
+    mViewModel.count.observe(this, prices -> {
+      if (TextUtils.isEmpty(prices)) {
         mViewModel.enable.setValue(false);
         return;
       }
       double v = Double.parseDouble(prices);
-      if(v>20000|v==0){
+      if (v > 20000 | v == 0) {
         mViewModel.enable.setValue(false);
-      }else{
+      } else {
         mViewModel.enable.setValue(true);
+      }
+    });
+    mViewModel.cashierBean.observe(this, cashierBean -> {
+      hideLoading();
+      cashierBean.setPrices(mViewModel.count.getValue());
+      switch (mViewModel.getType()) {
+        case PayChannel.ALIPAY_QRCODE:
+          Bundle bundle = new CheckoutPayPageParams().type("支付宝").build();
+          bundle.putParcelable("orderData",cashierBean);
+          routeTo("checkout/pay", bundle);
+          break;
+        case PayChannel.WEIXIN_QRCODE:
+          Bundle wx = new CheckoutPayPageParams().type("微信").build();
+          wx.putParcelable("orderData",cashierBean);
+          routeTo("checkout/pay", wx);
+          break;
       }
     });
   }
@@ -87,39 +104,33 @@ import com.anbillon.flabellum.annotations.Leaf;
             return;
           }
         }
-        //mBinding.edContent.append(((TextView) v).getText());
-        mViewModel.count.setValue(s+""+((TextView) v).getText());
+        mViewModel.count.setValue(s + "" + ((TextView) v).getText());
       }
     } else if (i == R.id.tv_c) {
-      //mBinding.edContent.setText("");
       mViewModel.count.setValue("");
     } else if (i == R.id.img_delete) {
       if (!TextUtils.isEmpty(s)) {
         if (s.length() == 1) {
-          //mBinding.edContent.setText("");
           mViewModel.count.setValue("");
         } else {
-          //mBinding.edContent.setText(s.subSequence(0, s.length() - 1));
           mViewModel.count.setValue(s.subSequence(0, s.length() - 1).toString());
-
         }
       }
     } else if (i == R.id.tv_point) {
       if (!TextUtils.isEmpty(s)) {
         if (!s.contains(".")) {
-          //mBinding.edContent.append(".");
-          mViewModel.count.setValue(s+".");
+          mViewModel.count.setValue(s + ".");
         }
       }
     } else if (i == R.id.fl_alipay) {
       if (checkMoney(s)) {
-        routeTo("checkout/pay",
-            new CheckoutPayPageParams().type("支付宝").money(Float.valueOf(s)).build());
+        showLoading();
+        mViewModel.getOrderInfo(PayChannel.ALIPAY_QRCODE, s);
       }
     } else if (i == R.id.fl_wxpay) {
       if (checkMoney(s)) {
-        routeTo("checkout/pay",
-            new CheckoutPayPageParams().type("微信").money(Float.valueOf(s)).build());
+        showLoading();
+        mViewModel.getOrderInfo(PayChannel.WEIXIN_QRCODE, s);
       }
     }
   }
