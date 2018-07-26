@@ -1,22 +1,22 @@
-package cn.qingchengfit.staffkit.views.card.buy;
+package cn.qingchengfit.card.buy;
 
 import android.content.Intent;
+import cn.qingchengfit.card.BuyCardUsecase;
+import cn.qingchengfit.card.network.CardApi;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.body.CreateCardBody;
 import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.Sellers;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.BuyCardUsecase;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.GymUtils;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -41,7 +41,7 @@ public class CompletedBuyPresenter extends BasePresenter {
 
     BuyCardUsecase usecase;
     CompletedBuyView view;
-    @Inject RestRepository mRestRepository;
+    @Inject QcRestRepository mRestRepository;
     @Inject SerPermisAction serPermisAction;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -137,8 +137,8 @@ public class CompletedBuyPresenter extends BasePresenter {
     }
 
     public void cacluScore(String price, final String user_ids) {
-        RxRegiste(mRestRepository.getGet_api()
-            .qcGetScoreCalu(App.staffId, Configs.CACLU_SCORE_BUY, price,
+        RxRegiste(mRestRepository.createGetApi(CardApi.class)
+            .qcGetScoreCalu(loginStatus.staff_id(), Configs.CACLU_SCORE_BUY, price,
                 GymUtils.getParamsV2(gymWrapper.getCoachService(), gymWrapper.getBrand()))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

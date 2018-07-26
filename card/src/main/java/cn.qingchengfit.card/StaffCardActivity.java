@@ -1,9 +1,11 @@
-package cn.qingchengfit.staffkit.card;
+package cn.qingchengfit.card;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.card.routers.CardRouterCenter;
+import cn.qingchengfit.card.routers.cardImpl;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.CardActivity;
@@ -37,13 +39,11 @@ import cn.qingchengfit.saasbase.cards.views.offday.OffDayListFragment;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.CardBalanceListFragment;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordFragment;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordListFragment;
-import cn.qingchengfit.staff.routers.StaffRouterCenter;
-import cn.qingchengfit.staff.routers.cardImpl;
-import cn.qingchengfit.staffkit.card.view.StaffCardBuyFragment;
-import cn.qingchengfit.staffkit.card.view.StaffCardChargeFragment;
-import cn.qingchengfit.staffkit.card.view.StaffCardListHomeFragment;
-import cn.qingchengfit.staffkit.card.view.WebCardChargeFragment;
-import cn.qingchengfit.staffkit.card.view.WebChargeFragment;
+import cn.qingchengfit.card.view.StaffCardBuyFragment;
+import cn.qingchengfit.card.view.StaffCardChargeFragment;
+import cn.qingchengfit.card.view.StaffCardListHomeFragment;
+import cn.qingchengfit.card.view.WebCardChargeFragment;
+import cn.qingchengfit.card.view.WebChargeFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
@@ -68,7 +68,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    Fragment fragment = new StaffRouterCenter().registe(new cardImpl())
+    Fragment fragment = new CardRouterCenter().registe(new cardImpl())
         .getFragment(intent.getData(), intent.getExtras());
     if(fragment instanceof SaasBaseFragment){
       return fragment;

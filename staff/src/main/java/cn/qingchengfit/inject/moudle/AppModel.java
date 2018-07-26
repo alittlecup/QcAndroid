@@ -1,6 +1,7 @@
 package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
+import cn.qingchengfit.card.StaffCardRouters;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.CardModel;
@@ -33,7 +34,6 @@ import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.card.StaffCardRouters;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;

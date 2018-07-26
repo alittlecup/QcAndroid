@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.card.view;
+package cn.qingchengfit.card.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.card.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.cards.views.NewCardChargeParams;
-import cn.qingchengfit.staffkit.R;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
 

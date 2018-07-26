@@ -881,23 +881,7 @@
             />
       </intent-filter>
     </activity>
-    <activity
-        android:name=".card.StaffCardActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/QcAppTheme"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
 
-        <data
-            android:host="card"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
     <activity
         android:name="cn.qingchengfit.saasbase.export.ImportExportActivity"
         android:screenOrientation="portrait"

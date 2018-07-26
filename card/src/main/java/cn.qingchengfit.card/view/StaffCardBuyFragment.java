@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.card.view;
+package cn.qingchengfit.card.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,19 +7,18 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.card.R;
+import cn.qingchengfit.card.buy.CompletedBuyView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
-import cn.qingchengfit.saasbase.cards.views.NewCardChargeFragment;
+import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
 import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
-import cn.qingchengfit.staffkit.views.card.buy.CompletedBuyView;
+import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.afollestad.materialdialogs.DialogAction;
@@ -32,10 +31,10 @@ import java.util.Map;
 import javax.inject.Inject;
 
 /**
- * Created by fb on 2017/12/21.
+ * Created by fb on 2017/12/20.
  */
 
-public class StaffCardChargeFragment extends NewCardChargeFragment implements CompletedBuyView {
+public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBuyView {
 
   @Inject StaffCardBuyPresenter buyPresenter;
 
@@ -49,7 +48,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {
     Gson gson = new Gson();
     if (payMethod() < 6) {
-      buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(card.getUserIds()));
+      buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
       CashierBean
           cashierBean = gson.fromJson(payBusinessResponse.toString(), CashierBean.class);
@@ -57,8 +56,10 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
       wrapper.setPrices(realMoney());
       ScanRepayInfo info=new ScanRepayInfo();
       info.setModuleName("card");
-      info.setActionName("/repay/balance");
-      info.setParams(presenter.getBalanceInfo());
+      info.setActionName("/repay/newcard");
+      Map<String,String> params=new HashMap<>();
+      params.put("json",presenter.getRePayJson());
+      info.setParams(params);
       wrapper.setInfo(info);
       if (payMethod() == 7) {
         QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
@@ -83,9 +84,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
     if (resultCode == Activity.RESULT_OK) {
       switch (requestCode) {
         case 404:
-          if (data != null) {
-            buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
-          }
+          buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
           break;
       }
     } else {
@@ -94,18 +93,15 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   }
 
   @Override public void onSuccess() {
-    ToastUtils.showS("续卡成功");
+    ToastUtils.showS("购卡成功");
     getActivity().setResult(Activity.RESULT_OK);
-    //getActivity().getSupportFragmentManager().popBackStack("", 1 );
     getActivity().finish();
-    routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
-        new CardDetailParams().cardid(card.getId()).build());
+    routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
   }
 
   @Override public void onFailed(String s) {
     getActivity().finish();
-    routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
-        new CardDetailParams().cardid(card.getId()).build());
+    routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
     ToastUtils.show(s);
   }
 
@@ -119,7 +115,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   @Override public void onScoreHint(String s) {
     new MaterialDialog.Builder(getContext()).autoDismiss(true)
         .canceledOnTouchOutside(false)
-        .title("会员卡充值成功!")
+        .title("会员卡添加成功!")
         .positiveText(R.string.common_comfirm)
         .content(getString(R.string.caclu_score_hint, s))
         .cancelable(false)

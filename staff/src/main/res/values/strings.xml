@@ -548,7 +548,6 @@
   <string name="qc_title_student_score_config">积分设置</string>
   <string name="qc_title_student_score_config_base">基础积分</string>
   <string name="qc_title_student_score_award_add">积分</string>
-  <string name="caclu_score_hint">本次购卡获得积分%s。由于会员卡绑定多个会员，请手动为会员分配积分。</string>
 
 
   <!--module IDs-->

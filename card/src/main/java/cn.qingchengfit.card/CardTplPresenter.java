@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.card;
+package cn.qingchengfit.card;
 
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
 

@@ -1,12 +1,13 @@
-package cn.qingchengfit.staffkit.usecase;
+package cn.qingchengfit.card;
 
+import cn.qingchengfit.card.network.CardApi;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ChargeBody;
 import cn.qingchengfit.model.body.CreateCardBody;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.Sellers;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,15 +29,15 @@ import rx.schedulers.Schedulers;
  */
 public class BuyCardUsecase {
 
-    RestRepository restRepository;
-
-    @Inject public BuyCardUsecase(RestRepository restRepository) {
+    QcRestRepository restRepository;
+@Inject LoginStatus loginStatus;
+    @Inject public BuyCardUsecase(QcRestRepository restRepository) {
         this.restRepository = restRepository;
     }
 
     public Subscription getSalers(String brandid, String shop, String gymid, String gymmodle, Action1<QcDataResponse<Sellers>> action1) {
-        return restRepository.getGet_api()
-            .qcGetSalersAndCoach(App.staffId, brandid, shop, gymid, gymmodle)
+        return restRepository.createGetApi(CardApi.class)
+            .qcGetSalersAndCoach(loginStatus.staff_id(), brandid, shop, gymid, gymmodle)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -49,8 +50,8 @@ public class BuyCardUsecase {
 
     public Subscription chargeCard(String card_id, String brand_id, String shop_id, String modelid, String model, ChargeBody body,
         Action1<QcResponsePayWx> action1) {
-        return restRepository.getPost_api()
-            .qcCardCharge(App.staffId, card_id, brand_id, shop_id, modelid, model, body)
+        return restRepository.createGetApi(CardApi.class)
+            .qcCardCharge(loginStatus.staff_id(), card_id, brand_id, shop_id, modelid, model, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -67,8 +68,8 @@ public class BuyCardUsecase {
         //        CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID,""),shop_id);
         //        body.setId(modelid);
         //        body.setModel(model);
-        return restRepository.getPost_api()
-            .qcCardChargeWechat(App.staffId//, card_id
+        return restRepository.createGetApi(CardApi.class)
+            .qcCardChargeWechat(loginStatus.staff_id()//, card_id
                 , brand_id, shop_id, modelid, model, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -82,8 +83,8 @@ public class BuyCardUsecase {
 
     public Subscription buyCard(CreateCardBody body, String brand_id, String shop_id, String gymid, String gymmodel,
         Action1<QcResponsePayWx> action1) {
-        return restRepository.getPost_api()
-            .qcCreateRealcard(App.staffId, body, brand_id, shop_id, gymid, gymmodel)
+        return restRepository.createGetApi(CardApi.class)
+            .qcCreateRealcard(loginStatus.staff_id(), body, brand_id, shop_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

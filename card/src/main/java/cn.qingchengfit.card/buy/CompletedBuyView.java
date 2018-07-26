@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.card.buy;
+package cn.qingchengfit.card.buy;
 
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Staff;

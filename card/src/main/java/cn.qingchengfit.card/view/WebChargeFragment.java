@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.card.view;
+package cn.qingchengfit.card.view;
 
 import android.app.Activity;
 import android.content.Intent;

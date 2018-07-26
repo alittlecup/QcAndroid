@@ -1,11 +1,11 @@
-package cn.qingchengfit.staffkit.card.view;
+package cn.qingchengfit.card.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.card.R;
 import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
-import cn.qingchengfit.staffkit.R;
 
 /**
  * Created by fb on 2018/1/4.

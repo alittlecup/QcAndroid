@@ -1,0 +1,5 @@
+<resources>
+  <string name="caclu_score_hint">本次购卡获得积分%s。由于会员卡绑定多个会员，请手动为会员分配积分。</string>
+
+</resources>
+
