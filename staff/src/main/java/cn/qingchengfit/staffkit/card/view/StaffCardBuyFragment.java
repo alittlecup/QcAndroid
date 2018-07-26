@@ -8,7 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.responese.QcResponsePayWx;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
+import cn.qingchengfit.saascommon.bean.CashierBean;
+import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
+import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.staffkit.views.card.buy.CompletedBuyView;
@@ -20,7 +26,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 /**
@@ -43,23 +51,28 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
-      //QcResponsePayWx qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      onWxPay(payBusinessResponse.get("url").getAsString());
-      //if (payMethod() == 12) {
-      //  QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
-      //      .setContext(getContext())
-      //      .addParam("type","微信")
-      //      .addParam("count","100")).callAsync(qcResult -> {
-      //
-      //      });
-      //} else if (payMethod() == 13) {
-      //  QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
-      //      .setContext(getContext())
-      //      .addParam("type","支付宝")
-      //      .addParam("count","100")).callAsync(qcResult -> {
-      //
-      //  });
-      //}
+      CashierBean
+          cashierBean = gson.fromJson(payBusinessResponse.toString(), CashierBean.class);
+      CashierBeanWrapper wrapper=new CashierBeanWrapper(cashierBean);
+      wrapper.setPrices(realMoney());
+      ScanRepayInfo info=new ScanRepayInfo();
+      info.setModuleName("card");
+      info.setActionName("/repay/newcard");
+      Map<String,String> params=new HashMap<>();
+      params.put("json",presenter.getRePayJson());
+      info.setParams(params);
+      wrapper.setInfo(info);
+      if (payMethod() == 7) {
+        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+            .setContext(getContext())
+            .addParam("type","微信")
+            .addParam("orderData",wrapper)).call();
+      } else if (payMethod() == 12) {
+        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+            .setContext(getContext())
+            .addParam("type","支付宝")
+            .addParam("orderData",wrapper)).call();
+      }
     }
   }
 

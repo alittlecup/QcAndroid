@@ -194,8 +194,8 @@ dependencies {
   addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',false)
   addComponent('shop','cn.qingchengfit.shop:shop:1.0.180721',true)
   addApiComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
+  implementation project(path: ':checkout')
   implementation project(path: ':student')
-//  implementation project(path: ':checkout')
   //  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 

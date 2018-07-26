@@ -1,7 +1,7 @@
 package cn.qingchengfit.checkout.repository;
 
 import android.util.Log;
-import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
@@ -12,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import io.reactivex.Flowable;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

@@ -2,6 +2,8 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.checkout.CheckViewModule;
+import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
@@ -310,7 +312,8 @@ import javax.inject.Singleton;
     BindGymConfigAcitivty.class, BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
-    BindShopActivity.class,StudentViewModel.class,
+    BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,
+
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,

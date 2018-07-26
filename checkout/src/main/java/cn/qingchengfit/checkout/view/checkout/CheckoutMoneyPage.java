@@ -8,13 +8,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutMoneyBinding;
 import cn.qingchengfit.checkout.view.pay.CheckoutPayPageParams;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
+import java.util.HashMap;
+import java.util.Map;
 
 @Leaf(module = "checkout", path = "/checkout/money") public class CheckoutMoneyPage
     extends CheckoutCounterFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
@@ -34,16 +38,29 @@ import com.anbillon.flabellum.annotations.Leaf;
     });
     mViewModel.cashierBean.observe(this, cashierBean -> {
       hideLoading();
-      cashierBean.setPrices(mViewModel.count.getValue());
+      CashierBeanWrapper wrapper=new CashierBeanWrapper(cashierBean);
+      wrapper.setPrices(mViewModel.count.getValue());
+      ScanRepayInfo info = new ScanRepayInfo();
+      info.setModuleName("checkout");
+      info.setActionName("reOrder");
+      Map<String, String> params = new HashMap<>();
+      params.put("prices", mViewModel.count.getValue());
+
       switch (mViewModel.getType()) {
         case PayChannel.ALIPAY_QRCODE:
+          params.put("channel", "ALIPAY_QRCODE");
+          info.setParams(params);
+          wrapper.setInfo(info);
           Bundle bundle = new CheckoutPayPageParams().type("支付宝").build();
-          bundle.putParcelable("orderData",cashierBean);
+          bundle.putParcelable("orderData",wrapper);
           routeTo("checkout/pay", bundle);
           break;
         case PayChannel.WEIXIN_QRCODE:
+          params.put("channel", "WEIXIN_QRCODE");
+          info.setParams(params);
+          wrapper.setInfo(info);
           Bundle wx = new CheckoutPayPageParams().type("微信").build();
-          wx.putParcelable("orderData",cashierBean);
+          wx.putParcelable("orderData",wrapper);
           routeTo("checkout/pay", wx);
           break;
       }

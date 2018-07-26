@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
-import cn.qingchengfit.checkout.bean.ScanRepayInfo;
+import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutPayBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.qrcode.model.IOrderData;
@@ -60,14 +60,8 @@ import java.util.concurrent.TimeUnit;
     mBinding.flScan.setOnClickListener(v -> {
       Intent intent = new Intent(getContext(), QcScanActivity.class);
       intent.putExtra("title", "扫码收款");
-      ScanRepayInfo info = new ScanRepayInfo();
-      info.setModuleName("checkout");
-      info.setActionName("reOrder");
-      Map<String, String> params = new HashMap<>();
-      params.put("prices", orderData.getPrices());
-      params.put("channel", type);
-      info.setParams(params);
-      intent.putExtra("repay", info);
+      intent.putExtra("tyoe", type);
+      intent.putExtra("repay", orderData.getScanRePayInfo());
       startActivity(intent);
     });
     PhotoUtils.loadWidth(getContext(), orderData.getQrCodeUri(), mBinding.imgQr,

@@ -15,7 +15,7 @@ import static cn.qingchengfit.router.GlobalCCInterceptorManager.INTERCEPTORS;
  * @author billy.qi
  * @since 17/6/28 20:14
  */
-class ComponentManager {
+public class ComponentManager {
     private static final ConcurrentHashMap<String, IComponent> COMPONENTS = new ConcurrentHashMap<>();
     private static final ThreadFactory THREAD_FACTORY = new ThreadFactory() {
         @Override
@@ -130,7 +130,7 @@ class ComponentManager {
         }
     }
 
-    static IComponent getComponentByName(String componentName) {
+ public  static IComponent getComponentByName(String componentName) {
         return COMPONENTS.get(componentName);
     }
 

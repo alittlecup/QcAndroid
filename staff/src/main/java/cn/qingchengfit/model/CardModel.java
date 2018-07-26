@@ -44,11 +44,18 @@ public class CardModel implements ICardModel {
   LoginStatus loginStatus;
   CardApi posApi;
 
+  public static CardModel getInstance() {
+    return INSTANCE;
+  }
+
+  private static CardModel INSTANCE;
+
   public CardModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
     posApi = repository.createGetApi(CardApi.class);
+    INSTANCE=this;
   }
 
   @Override

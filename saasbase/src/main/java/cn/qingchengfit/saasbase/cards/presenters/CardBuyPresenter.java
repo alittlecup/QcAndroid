@@ -26,9 +26,12 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -275,7 +278,9 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setSeller_id(null);
       cardBuyBody.staff_id = loginStatus.staff_id();
     }
-
+    balanceInfo=new HashMap<>();
+    balanceInfo.put("cardId",mCard.getId());
+    balanceInfo.put("chargeBody",new Gson().toJson(cardBuyBody));
     RxRegiste(cardModel.qcChargeCard(mCard.getId(), cardBuyBody)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -291,6 +296,11 @@ public class CardBuyPresenter extends BasePresenter {
         }));
   }
 
+  public Map<String, String> getBalanceInfo() {
+    return balanceInfo;
+  }
+
+  private Map<String,String> balanceInfo;
   //扣费操作
   public void proactiveDeduction(String cardId, ChargeBody body) {
     RxRegiste(cardModel.qcChargeRefund(cardId, body)
@@ -341,7 +351,13 @@ public class CardBuyPresenter extends BasePresenter {
     buyCardRequest();
   }
 
+  public String getRePayJson() {
+    return rePayJson;
+  }
+
+  private String rePayJson;
   public void buyCardRequest() {
+    rePayJson=new Gson().toJson(cardBuyBody);
     RxRegiste(cardModel.buyCard(cardBuyBody)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())

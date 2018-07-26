@@ -8,6 +8,8 @@ import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutHomeBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 
@@ -31,11 +33,10 @@ import com.anbillon.flabellum.annotations.Leaf;
 
   private void initListener() {
     mBinding.flNewCard.setOnClickListener(view -> {
-      routeTo("card", "/cardtpl/nonew/", null);
+      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
     });
     mBinding.flAppendCard.setOnClickListener(view -> {
-      routeTo("card", "/balance/list/", null);
-
+      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/balance/list")).call();
     });
     mBinding.flCheckout.setOnClickListener(view -> {
       routeTo("/checkout/money", null);

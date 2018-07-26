@@ -1,19 +1,13 @@
-package cn.qingchengfit.checkout.bean;
+package cn.qingchengfit.saascommon.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import cn.qingchengfit.saascommon.qrcode.model.IOrderData;
 
-public class CashierBean implements Parcelable ,IOrderData {
+public class CashierBean implements Parcelable {
   private String pay_trade_no="";
   private String out_trade_no="";
   private String url="";
 
-  public void setPrices(String prices) {
-    this.prices = prices;
-  }
-
-  private String prices="";
 
   public String getPay_trade_no() {
     return pay_trade_no;
@@ -42,22 +36,6 @@ public class CashierBean implements Parcelable ,IOrderData {
   public CashierBean() {
   }
 
-  @Override public String getQrCodeUri() {
-    return url;
-  }
-
-  @Override public String getPrices() {
-    return prices;
-  }
-
-  @Override public String getOrderNumber() {
-    return pay_trade_no;
-  }
-
-  @Override public String getPollingNUmber() {
-    return out_trade_no;
-  }
-
   @Override public int describeContents() {
     return 0;
   }
@@ -66,14 +44,12 @@ public class CashierBean implements Parcelable ,IOrderData {
     dest.writeString(this.pay_trade_no);
     dest.writeString(this.out_trade_no);
     dest.writeString(this.url);
-    dest.writeString(this.prices);
   }
 
   protected CashierBean(Parcel in) {
     this.pay_trade_no = in.readString();
     this.out_trade_no = in.readString();
     this.url = in.readString();
-    this.prices = in.readString();
   }
 
   public static final Creator<CashierBean> CREATOR = new Creator<CashierBean>() {

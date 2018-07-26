@@ -2,7 +2,7 @@ package cn.qingchengfit.checkout.view.checkout;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.text.TextUtils;
-import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.repository.CheckoutRepository;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
