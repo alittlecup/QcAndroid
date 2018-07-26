@@ -7,8 +7,10 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.user.bean.EditUserBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import rx.Observable;
 
@@ -60,4 +62,22 @@ public class UserModel implements IUserModel {
   @Override public Observable<QcDataResponse> newPhone(FixPhoneBody phone) {
     return api.qcModifyPhoneNum(loginStatus.staff_id(), phone);
   }
+
+  @Override public Observable<QcDataResponse> bindWx(CheckCodeBody body) {
+    return api.bindWx(body);
+  }
+
+  @Override public Observable<QcDataResponse> getCode(GetCodeBody body) {
+    return api.qcGetCode(body);
+  }
+
+  @Override public Observable<QcDataResponse> checkCode(CheckCodeBody body) {
+    return api.qcCheckCode(body);
+  }
+
+
+  @Override public Observable<QcDataResponse> unBindWx(CheckCodeBody body) {
+    return api.unBindWx(body);
+  }
+
 }

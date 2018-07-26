@@ -26,6 +26,8 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -399,15 +401,17 @@ public class ManageFragment extends BaseFragment
           startActivity(toCourseStatement);
           break;
         case R.drawable.ic_sale_statement:
-          if (!CurentPermissions.newInstance()
-              .queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
-            showAlert(R.string.alert_permission_forbid);
-            return true;
-          }
-          Intent tosale = new Intent(getActivity(), FragActivity.class);
-          tosale.putExtra("type", 1);
-          tosale.putExtra("service", gymWrapper.getCoachService());
-          startActivity(tosale);
+          // TODO: 2018/7/26 暂时修改跳转路径
+          //if (!CurentPermissions.newInstance()
+          //    .queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
+          //  showAlert(R.string.alert_permission_forbid);
+          //  return true;
+          //}
+          //Intent tosale = new Intent(getActivity(), FragActivity.class);
+          //tosale.putExtra("type", 1);
+          //tosale.putExtra("service", gymWrapper.getCoachService());
+          //startActivity(tosale);
+          QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
 
           break;
         case R.drawable.ic_template_coursepaln:

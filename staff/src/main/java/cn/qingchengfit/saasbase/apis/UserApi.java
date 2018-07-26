@@ -47,6 +47,7 @@ public interface UserApi {
   //修改电话号码
   @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcDataResponse> qcModifyPhoneNum(@Path("id") String id,
     @Body FixPhoneBody fixPhoneBody);
+
   /**
    * 解绑微信
    */

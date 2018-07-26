@@ -47,7 +47,7 @@ public class CheckoutModel implements ICheckoutModel {
     //bean.setSum("2000.03");
     //qcDataResponse.setData(bean);
     //return Flowable.just(qcDataResponse).delay(2,TimeUnit.SECONDS);
-    return checkoutApi.qcGetCeckoutHomeInfo(staff_id, params);
+    return checkoutApi.qcGetCheckoutHomeInfo(staff_id, params);
   }
 
   @Override public Flowable<QcDataResponse<CashierBean>> qcPostCashierOrder(String staff_id,

@@ -28,7 +28,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import im.fir.sdk.FIR;
+import im.fir.sdk.FIR;c
 import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;

@@ -60,6 +60,9 @@ public class CheckoutComponent implements IComponent {
           }
         });
         return true;
+      case "/checkout/home":
+        RouteUtil.routeTo(qc.getContext(),getName(),qc.getActionName(),null);
+        return false;
     }
     return false;
   }

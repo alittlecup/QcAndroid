@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.squareup.sqldelight'
+apply from: rootProject.file('qc_component.gradle')
 
-//apply plugin: 'com.neenbedankt.android-apt'
-//def buildNumber = "1"
-//apply plugin: 'packer'                     //版本管理 多渠道打包
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 
@@ -165,7 +162,12 @@ afterEvaluate {
 }
 
 dependencies {
-  implementation project(path: ':saasbase')
+  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180726',false)
+  addComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
+
+  implementation project(path: ':card')
+  implementation project(path: ':student')
+  implementation project(path: ':checkout')
 
 
   implementation 'org.glassfish:javax.annotation:10.0-b28'
@@ -202,5 +204,31 @@ dependencies {
   annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
 }
+apply plugin: 'auto-register'
+autoregister {
+  registerInfo = [[//自动注册组件
+                   'scanInterface'          : 'cn.qingchengfit.router.IComponent'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.ComponentManager'
+                   , 'registerMethodName'   : 'registerComponent'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.replaceAll("\\.",
+                                                   "/") + ".*"]],
+                  [//自动注册全局拦截器
+                   'scanInterface'          : 'cn.qingchengfit.router.IGlobalCCInterceptor'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.GlobalCCInterceptorManager'
+                   , 'registerMethodName'   : 'registerGlobalInterceptor'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.
+                                                   replaceAll("\\.",
+                                                       "/") + ".*"]],
+                  [//自动注册跨进程通信时自定义类型的json转换器，可以用Gson、FastJson等工具来实现
+                   // 参考： demo_base/src/main/java/com.billy.cc.demo.base.GsonParamConverter
+                   'scanInterface'          : 'cn.qingchengfit.router.IParamJsonConverter'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.RemoteParamUtil'
+                   , 'registerMethodName'   : 'initRemoteCCParamJsonConverter'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.
+                                                   replaceAll("\\.",
+                                                       "/") + ".*"]]]
+}
 
-//apply from: 'tinkerpatch.gradle'

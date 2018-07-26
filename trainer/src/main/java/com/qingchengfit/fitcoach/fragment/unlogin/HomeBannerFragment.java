@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.unlogin;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,7 @@ import android.widget.Button;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.HttpThrowable;
-import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;

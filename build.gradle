@@ -90,14 +90,15 @@ buildscript {
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-
+    maven {
+      url 'http://43.241.209.158:15004/repository/maven-releases/'
+    }
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
     }
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
     }
-    maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
 
     google()
   }
@@ -134,7 +135,6 @@ allprojects {
     maven {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
-    maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
 
     maven { url "https://jitpack.io" }
 

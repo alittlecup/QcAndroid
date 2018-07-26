@@ -1,18 +1,20 @@
 package cn.qingchengfit.model;
 
+import android.content.Context;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.login.ILoginModel;
+import cn.qingchengfit.login.LoginApi;
+import cn.qingchengfit.login.bean.CheckCodeBody;
+import cn.qingchengfit.login.bean.GetCodeBody;
+import cn.qingchengfit.login.bean.Login;
+import cn.qingchengfit.login.bean.LoginBody;
+import cn.qingchengfit.login.bean.RegisteBody;
+import cn.qingchengfit.login.views.CheckProtocolModel;
+import cn.qingchengfit.login.views.LoginView;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.BuildConfig;
-import cn.qingchengfit.saasbase.login.ILoginModel;
-import cn.qingchengfit.saasbase.login.LoginApi;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
-import cn.qingchengfit.saasbase.login.bean.RegisteBody;
-import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.App;
 import java.util.HashMap;
@@ -59,6 +61,10 @@ public class LoginModel implements ILoginModel {
 
   @Override public boolean isDebug() {
     return BuildConfig.DEBUG;
+  }
+
+  @Override public void doOnLogin(Context context, Login login, LoginView loginView) {
+
   }
 
   @Override public Observable<QcDataResponse<Login>> doLogin(LoginBody body) {

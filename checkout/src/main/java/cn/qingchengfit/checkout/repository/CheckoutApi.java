@@ -26,7 +26,7 @@ public interface CheckoutApi {
    * }
    */
   @GET("api/staffs/{staff_id}/cashier/stat/")
-  Flowable<QcDataResponse<HomePageBean>> qcGetCeckoutHomeInfo(@Path("staff_id") String staff_id,
+  Flowable<QcDataResponse<HomePageBean>> qcGetCheckoutHomeInfo(@Path("staff_id") String staff_id,
       @QueryMap Map<String, Object> params);
 
   /**
