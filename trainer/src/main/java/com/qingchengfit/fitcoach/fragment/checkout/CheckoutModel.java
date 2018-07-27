@@ -1,12 +1,17 @@
-package cn.qingchengfit.checkout.repository;
+package com.qingchengfit.fitcoach.fragment.checkout;
 
 import android.util.Log;
-import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
+import cn.qingchengfit.checkout.repository.CheckoutApi;
+import cn.qingchengfit.checkout.repository.ICheckoutModel;
+import cn.qingchengfit.checkout.repository.PayApi;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.bean.CashierBean;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -19,10 +24,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckoutModel implements ICheckoutModel {
-  CheckoutApi checkoutApi;
+  CheckoutTrainerApi checkoutApi;
   PayApi payApi;
-
-  @Inject public CheckoutModel(QcRestRepository qcRestRepository) {
+  @Inject CheckoutModel(QcRestRepository qcRestRepository){
     OkHttpClient client = qcRestRepository.getClient();
     OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
       Log.d("HTTP", message);
@@ -34,7 +38,7 @@ public class CheckoutModel implements ICheckoutModel {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl(qcRestRepository.getHost())
         .build();
-    checkoutApi = retrofit.create(CheckoutApi.class);
+    checkoutApi = retrofit.create(CheckoutTrainerApi.class);
     payApi = retrofit.create(PayApi.class);
   }
 

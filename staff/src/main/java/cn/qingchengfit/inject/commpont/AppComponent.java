@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.card.di.BindStaffCardActivity;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
+import cn.qingchengfit.inject.moudle.AppAbstractModule;
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
@@ -303,7 +304,8 @@ import javax.inject.Singleton;
 
 @SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" })
 @Component(modules = {
-    AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class,
+    AppModel.class,AppAbstractModule.class,
+    AndroidInjectionModule.class, AndroidSupportInjectionModule.class,
     AppComponent.ContainterModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
     BindImportExportActivity.class,
 

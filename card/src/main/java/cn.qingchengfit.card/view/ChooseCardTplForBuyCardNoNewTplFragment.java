@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.cards.views;
+package cn.qingchengfit.card.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
+import cn.qingchengfit.saasbase.cards.views.CardBuyParams;
+import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -33,7 +35,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/16.
  */
-@Leaf(module = "card", path = "/cardtpl/nonew/")
+@Leaf(module = "card", path = "/cardtpl/nonew")
 public class ChooseCardTplForBuyCardNoNewTplFragment extends CardTplsHomeInGymFragment {
 
   @Need QcStudentBean qcStudentBean;

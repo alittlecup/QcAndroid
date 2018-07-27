@@ -16,7 +16,7 @@
 
         <data
             android:host="shop"
-            android:scheme="qcstaff"
+            android:scheme="${APP_SCHAME}"
             />
       </intent-filter>
     </activity>

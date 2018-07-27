@@ -43,8 +43,6 @@ import javax.inject.Singleton;
 
   @Binds abstract CheckoutRepository bindCheckRepository(CheckoutRepositoryImpl checkoutRepository);
 
-  @Binds abstract ICheckoutModel bindCheckModel(CheckoutModel checkoutModel);
-
   @Singleton @ContributesAndroidInjector abstract QcScanActivity contributeQcScanActivityInjector();
 
 

@@ -548,6 +548,7 @@ public class GymFunctionFactory {
         break;
       case MODULE_OPERATE_ACTIVITY:
         goQrScan(fragment, module, PermissionServerUtils.ACTIVITY_SETTING, coachService);
+        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
         return;
       case MODULE_OPERATE_AD:
       case MODULE_OPERATE_ANOUNCE:

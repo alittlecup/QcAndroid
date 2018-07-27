@@ -140,10 +140,13 @@ import rx.android.schedulers.AndroidSchedulers;
     });
 
     delegatePresenter(presenter, this);
+    loadBalanceCondition();
     initToolbar(toolbar);
-    presenter.queryBalanceCondition();
     initPopView();
     return view;
+  }
+  public void loadBalanceCondition(){
+    presenter.queryBalanceCondition();
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

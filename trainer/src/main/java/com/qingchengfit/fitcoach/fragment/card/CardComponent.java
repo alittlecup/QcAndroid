@@ -1,22 +1,14 @@
-package cn.qingchengfit.component;
+package com.qingchengfit.fitcoach.fragment.card;
 
-import cn.qingchengfit.model.CardModel;
-import cn.qingchengfit.network.RxHelper;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
-import cn.qingchengfit.subscribes.NetSubscribe;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import dagger.Component;
 import java.util.HashMap;
 import java.util.Map;
-import javax.inject.Inject;
-import rx.functions.Action1;
 
 public class CardComponent implements IComponent {
 

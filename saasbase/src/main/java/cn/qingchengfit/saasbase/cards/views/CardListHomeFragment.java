@@ -67,9 +67,9 @@ import javax.inject.Inject;
   implements CardListPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
   SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.EndlessScrollListener {
 
-  CardListFragment cardListFragment;
+ public CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
-  @Inject CardListPresenter presenter;
+  @Inject public CardListPresenter presenter;
   @Inject IPermissionModel serPermisAction;
 	Toolbar toolbar;
 	TextView toolbarTitle;

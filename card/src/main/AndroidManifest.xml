@@ -13,7 +13,7 @@
 
         <data
             android:host="card"
-            android:scheme="qcstaff"
+            android:scheme="${APP_SCHAME}"
             />
       </intent-filter>
     </activity>

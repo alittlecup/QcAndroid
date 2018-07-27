@@ -34,7 +34,7 @@ import javax.inject.Inject;
 public class NewCardChargeFragment extends CardBuyFragment {
 
   @Need protected Card card;
-  @Inject LoginStatus loginStatus;
+  @Inject public LoginStatus loginStatus;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {

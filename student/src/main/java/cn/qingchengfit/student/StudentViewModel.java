@@ -57,12 +57,9 @@ import javax.inject.Singleton;
       studentWrap = new StudentWrap();
     return studentWrap;
   }
-
-
   @Binds
   abstract StudentRepository bindStudentRepository(StudentRepositoryImpl studentRepository);
 
-  @Binds abstract IStudentModel bindStudentModel(StudentModel studentModel);
 
 
 

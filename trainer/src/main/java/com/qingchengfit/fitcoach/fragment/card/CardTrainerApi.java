@@ -7,6 +7,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -26,13 +27,15 @@ public interface CardTrainerApi {
       @Path("staff_id") String staff_id, @Path("cardtps_id") String cardtps_id,
       @QueryMap HashMap<String, Object> params);
 
+  //工作人员 卡类型详情
+  @GET("/api/coaches/{Staff}/cardtpls/{id}/")
+  rx.Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(@Path("Staff") String staff,
+      @Path("id") String id, @QueryMap HashMap<String, Object> parasm);
 
   //获取会员卡
   @GET("/api/coaches/{id}/cards/?order_by=-id")
   rx.Observable<QcDataResponse<CardListWrap>> getAllCards(@Path("id") String staffid,
       @QueryMap HashMap<String, Object> params);
-
-
 
   //购卡
   @POST("/api/coaches/{id}/cards/create/")
@@ -41,7 +44,7 @@ public interface CardTrainerApi {
 
 
   //充值扣费
-  @POST("/api/coaches/{coach_id}/cards/{card_id}/charge/v2/")
+  @POST("/api/coaches/{coach_id}/cards/{card_id}/charge/")
   rx.Observable<QcDataResponse<JsonObject>> qcCardCharge(@Path("coach_id") String coach_id,
       @Path("card_id") String cardid, @QueryMap HashMap<String, Object> params,
       @Body CardBuyBody body);
@@ -51,4 +54,9 @@ public interface CardTrainerApi {
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(@Path("id") String id,
       @QueryMap HashMap<String, Object> params, @Query("type") String type,
       @Query("is_enable") String isEnable);
+
+  //获取筛选列表
+  @GET("/api/coaches/{id}/filter/cardtpls/?show_all=1")
+  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterCondition(@Path("id") String staff,
+      @QueryMap HashMap<String, Object> params);
 }

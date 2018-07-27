@@ -24,11 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 public class CheckoutComponent implements IComponent {
 
-  public void setCheckoutModel(ICheckoutModel checkoutModel) {
-    this.checkoutModel = checkoutModel;
-  }
-
-  ICheckoutModel checkoutModel;
 
   @Override public String getName() {
     return "checkout";
@@ -62,6 +57,7 @@ public class CheckoutComponent implements IComponent {
         return true;
       case "/checkout/home":
         RouteUtil.routeTo(qc.getContext(),getName(),qc.getActionName(),null);
+        QC.sendQCResult(qc.getCallId(),QCResult.success());
         return false;
     }
     return false;

@@ -62,7 +62,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {
-    return null;
+    return posApi.qcGetCardTplsDetail(loginStatus.staff_id(), cardid, gymWrapper.getParams());
   }
 
   @Override
@@ -72,7 +72,7 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterTpls(boolean is_active) {
-    return null;
+    return posApi.qcGetCardFilterCondition(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {

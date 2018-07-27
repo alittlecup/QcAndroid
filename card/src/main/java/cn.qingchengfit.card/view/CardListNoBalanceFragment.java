@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.cards.views.spendrecord;
+package cn.qingchengfit.card.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,19 +15,29 @@ import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
 
-@Leaf(module = "card", path = "/balance/list") public class CardBalanceListFragment
-    extends CardBalanceFragment {
+@Leaf(module = "card", path = "/list/nobalance") public class CardListNoBalanceFragment
+    extends StaffCardListHomeFragment {
   @Inject IPermissionModel permissionModel;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    cardListFragment.setFabVisible(false);
+  }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("会员卡");
     toolbar.getMenu().clear();
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    llBalanceCondition.setVisibility(View.GONE);
+    layoutCardOperate.setVisibility(View.GONE);
+  }
+
+  @Override public void onRefresh() {
+    cardListFragment.initLoadMore(100, this);
+    presenter.initpage();
+    presenter.queryAllCards();
   }
 
   @Override public boolean onItemClick(int position) {

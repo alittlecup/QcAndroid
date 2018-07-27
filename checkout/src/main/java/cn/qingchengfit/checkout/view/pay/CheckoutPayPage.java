@@ -1,10 +1,13 @@
 package cn.qingchengfit.checkout.view.pay;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
@@ -12,16 +15,20 @@ import cn.qingchengfit.checkout.databinding.CkPageCheckoutPayBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.qrcode.model.IOrderData;
 import cn.qingchengfit.checkout.view.scan.QcScanActivity;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.lib.DensityUtil;
+import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.encoder.QRCode;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import timber.log.Timber;
 
 @Leaf(module = "checkout", path = "/checkout/pay") public class CheckoutPayPage
     extends CheckoutCounterFragment<CkPageCheckoutPayBinding, CheckoutPayViewModel> {
@@ -53,7 +60,22 @@ import java.util.concurrent.TimeUnit;
     initToolbar();
     initUI();
     initListener();
+    initQrCode();
     return mBinding;
+  }
+
+  private void initQrCode() {
+
+    QRGEncoder qrgEncoder = new QRGEncoder(orderData.getQrCodeUri(), null, QRGContents.Type.TEXT, MeasureUtils.dpToPx(180f, getResources()));
+    try {
+
+     Bitmap bitmap = qrgEncoder.encodeAsBitmap();
+      mBinding.imgQr.setAdjustViewBounds(true);
+      mBinding.imgQr.setPadding(0, 0, 0, 0);
+      mBinding.imgQr.setImageBitmap(bitmap);
+    } catch (WriterException e) {
+      Timber.e(e, " qr gen");
+    }
   }
 
   private void initListener() {
@@ -64,8 +86,7 @@ import java.util.concurrent.TimeUnit;
       intent.putExtra("repay", orderData.getScanRePayInfo());
       startActivity(intent);
     });
-    PhotoUtils.loadWidth(getContext(), orderData.getQrCodeUri(), mBinding.imgQr,
-        DensityUtil.dip2px(getContext(), 180));
+
   }
 
   Disposable subscribe;

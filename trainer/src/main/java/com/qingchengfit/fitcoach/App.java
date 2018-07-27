@@ -14,6 +14,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -28,7 +29,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import im.fir.sdk.FIR;c
+import im.fir.sdk.FIR;
 import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
@@ -107,6 +108,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     initBaseUser();
     initSensor();
     initInject();
+    QC.init(this);
+    QC.enableDebug(true);
+    QC.enableVerboseLog(true);
 
     RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
       @Override public void handleError(Throwable e) {

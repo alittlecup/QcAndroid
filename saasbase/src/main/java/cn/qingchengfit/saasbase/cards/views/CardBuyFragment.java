@@ -121,7 +121,7 @@ import rx.functions.Action1;
 	TextView tvCardAppend;
 
   @Inject public CardBuyPresenter presenter;
-  @Inject LoginStatus loginStatus;
+  @Inject public LoginStatus loginStatus;
   @Inject IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
   @Need QcStudentBean qcStudentBean;

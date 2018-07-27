@@ -163,7 +163,7 @@ afterEvaluate {
 
 dependencies {
   addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180726',false)
-  addComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
+  addComponent('login','cn.qingchengfit.login:login:1.0.180724',false)
 
   implementation project(path: ':card')
   implementation project(path: ':student')
