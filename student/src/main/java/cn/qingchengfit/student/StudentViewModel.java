@@ -35,6 +35,7 @@ import cn.qingchengfit.student.view.followup.IncreaseStudentTopViewModel;
 import cn.qingchengfit.student.view.followup.IncreaseStudentViewModel;
 import cn.qingchengfit.student.view.home.StudentAllViewModel;
 import cn.qingchengfit.student.view.home.StudentFilterViewModel;
+import cn.qingchengfit.student.view.home.StudentHomePieChartViewModel;
 import cn.qingchengfit.student.view.home.StudentHomeViewModel;
 import cn.qingchengfit.student.view.home.StudentListViewModel;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortViewModel;
@@ -146,6 +147,11 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(ChooseStaffViewModel.class)
   abstract ViewModel bindChooseStaffViewModel(ChooseStaffViewModel model);
+
+
+
+  @Binds @IntoMap @ViewModelKey(StudentHomePieChartViewModel.class)
+  abstract ViewModel bindStudentHomePieChartViewModel(StudentHomePieChartViewModel model);
 
 }
 

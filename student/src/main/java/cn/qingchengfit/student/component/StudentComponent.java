@@ -6,7 +6,6 @@ import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
-import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentParams;
 import java.util.ArrayList;
 import java.util.Map;

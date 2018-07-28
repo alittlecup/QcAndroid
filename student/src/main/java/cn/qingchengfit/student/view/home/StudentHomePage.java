@@ -2,9 +2,17 @@ package cn.qingchengfit.student.view.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -27,6 +35,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -42,13 +51,12 @@ import javax.inject.Inject;
     mViewModel.increaseMembers.observe(this, msg -> mBinding.tvNewMemberCount.setText(msg));
     mViewModel.followStudents.observe(this, msg -> mBinding.tvFollowStudentCount.setText(msg));
 
-    mViewModel.totalMembers.observe(this,msg->{
+    mViewModel.totalMembers.observe(this, msg -> {
       SpannableStringBuilder text = new SpanUtils().append(StringUtils.formatePrice(msg))
           .append("人")
           .setFontSize(11, true)
           .create();
       mBinding.tvAllStudent.setText(text);
-
     });
     mViewModel.showLoading.observe(this, aBoolean -> {
       if (aBoolean) {
@@ -67,9 +75,99 @@ import javax.inject.Inject;
     mBinding.setLifecycleOwner(this);
     initToolbar();
     initListener();
+    initTabLayout();
     //initChart();
     mViewModel.loadSource();
     return mBinding;
+  }
+
+  private List<StudentHomePieChartView> chartViews = new ArrayList<>();
+
+  private void initTabLayout() {
+    if (chartViews.isEmpty()) {
+      StudentHomePieChartView memberView = new StudentHomePieChartView();
+      memberView.setBackgroundColor(R.color.st_new_member_color);
+
+      memberView.setOnClickListener(view->{
+          routeTo("saler/student",
+              new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
+      });
+
+      StudentHomePieChartView followView = new StudentHomePieChartView();
+      followView.setBackgroundColor(R.color.st_follow_ing_color);
+
+      followView.setOnClickListener(view->{
+        routeTo("saler/student",
+            new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_FOLLOWUP).build());
+      });
+
+      StudentHomePieChartView studentView = new StudentHomePieChartView();
+      studentView.setBackgroundColor(R.color.st_new_student_color);
+
+      studentView.setOnClickListener(view->{
+        routeTo("saler/student",
+            new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
+      });
+
+      chartViews.add(memberView);
+      chartViews.add(followView);
+      chartViews.add(studentView);
+    }
+    mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
+    mBinding.tabLayout.setupWithViewPager(mBinding.viewpager);
+
+    mBinding.tabLayout.setTabTextColors(getResources().getColor(R.color.text_grey),
+        getResources().getColor(R.color.st_new_member_color));
+
+    mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+      @Override public void onTabSelected(TabLayout.Tab tab) {
+        String text = tab.getText().toString();
+        int color = -1;
+        switch (text) {
+          case "新注册":
+            color = getResources().getColor(R.color.st_new_member_color);
+            break;
+          case "已接洽":
+            color = getResources().getColor(R.color.st_follow_ing_color);
+            break;
+          case "会员":
+            color = getResources().getColor(R.color.st_new_student_color);
+            break;
+        }
+        tab.setText(new SpanUtils().append(text).setForegroundColor(color).create());
+        mBinding.tabLayout.setSelectedTabIndicatorColor(color);
+      }
+
+      @Override public void onTabUnselected(TabLayout.Tab tab) {
+        tab.setText(new SpanUtils().append(tab.getText().toString())
+            .setForegroundColor(getResources().getColor(R.color.text_grey))
+            .create());
+      }
+
+      @Override public void onTabReselected(TabLayout.Tab tab) {
+
+      }
+    });
+
+    mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d("TAG", "onPageScrolled: "
+            + "position: "
+            + position
+            + "  positionOffset:  "
+            + positionOffset
+            + "   positionOffsetPixels: "
+            + positionOffsetPixels);
+      }
+
+      @Override public void onPageSelected(int position) {
+      }
+
+      @Override public void onPageScrollStateChanged(int state) {
+
+      }
+    });
   }
 
   //private void initChart() {
@@ -162,5 +260,40 @@ import javax.inject.Inject;
     ToolbarModel toolbarModel = new ToolbarModel("会员");
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
+  }
+
+  class StateViewPager extends FragmentStatePagerAdapter {
+
+    public StateViewPager(FragmentManager fm) {
+      super(fm);
+    }
+
+    @Override public Fragment getItem(int position) {
+      if (position < chartViews.size()) {
+        return chartViews.get(position);
+      } else {
+        return new Fragment();
+      }
+    }
+
+    @Nullable @Override public CharSequence getPageTitle(int position) {
+      switch (position) {
+        case 0:
+          return "新注册";
+        case 1:
+          return "已接洽";
+        case 2:
+          return "会员";
+      }
+      return "";
+    }
+
+    @Override public int getItemPosition(Object object) {
+      return POSITION_NONE;
+    }
+
+    @Override public int getCount() {
+      return chartViews.size();
+    }
   }
 }

@@ -424,6 +424,46 @@
           </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/bg_white"
+            android:orientation="vertical"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="15dp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginTop="15dp"
+              android:text="会员跟进/维护进度"
+              style="@style/QcTextStyleMediumGrey"
+              />
+          <include layout="@layout/divider_medium"/>
+          <android.support.design.widget.TabLayout
+              android:id="@+id/tab_layout"
+              android:layout_width="match_parent"
+              android:layout_marginTop="25dp"
+              android:layout_height="40dp"
+              app:tabGravity="fill"
+              app:tabTextColor="@color/text_grey"
+              app:tabIndicatorColor="@color/colorPrimary"
+              app:tabSelectedTextColor="@color/colorPrimary"
+              app:tabTextAppearance="@style/Qc.TextCommonGrey"
+              app:tabMode="fixed"
+              app:tabIndicatorHeight="3dp"
+              android:layout_marginLeft="60dp"
+              android:layout_marginRight="60dp"
+              />
+          <android.support.v4.view.ViewPager
+              android:id="@+id/viewpager"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              />
+
+        </LinearLayout>
+
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/comm_allot_student"
             android:layout_width="match_parent"

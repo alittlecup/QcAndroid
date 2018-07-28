@@ -31,6 +31,7 @@ import cn.qingchengfit.student.view.followup.IncreaseStudentTopView;
 import cn.qingchengfit.student.view.home.StudentAllPage;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentHomePage;
+import cn.qingchengfit.student.view.home.StudentHomePieChartView;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
 import cn.qingchengfit.student.view.sendmsg.MsgSendFragmentFragment;
@@ -47,14 +48,14 @@ import javax.inject.Inject;
     StudentRecyclerSortView.class, StudentListView.class, StudentAllotPage.class,
     IncreaseStudentSortView.class, IncreaseStudentTopView.class, IncreaseStudentPage.class,
     IncreaseMemberTopView.class, IncreaseMemberPage.class, StudentStateInfoPage.class,
-    StudentAllotStaffPage.class, FollowRecordEditPage.class, FollowRecordStatusPage.class,
-    SendMsgHomeFragment.class, ShortMsgDetailFragment.class, FollowUpTopSalerView.class,
-    FollowUpFilterView.class, MsgSendFragmentFragment.class, ImportExportFragment.class,
-    SalerStudentsPage.class, AllotChooseSellerPage.class, AllotChooseCoachPage.class,
-    StudentBirthdayPage.class, TransferStudentPage.class, AttendanceStudentPage.class,
-    AttendanceRankPage.class, AttendanceNosignPage.class, AttendanceAbsentPage.class,
-    NotiOthersPage.class, SalerStudentStatePage.class, ChooseStaffPage.class,
-    ChooseAndSearchStudentFragment.class, TrainerChooseAndSearchFragment.class
+    StudentAllotStaffPage.class, FollowRecordEditPage.class,
+    FollowRecordStatusPage.class, SendMsgHomeFragment.class, ShortMsgDetailFragment.class,
+    FollowUpTopSalerView.class, FollowUpFilterView.class, MsgSendFragmentFragment.class,
+    ImportExportFragment.class, SalerStudentsPage.class, AllotChooseSellerPage.class,
+    AllotChooseCoachPage.class, StudentBirthdayPage.class, TransferStudentPage.class,
+    AttendanceStudentPage.class, AttendanceRankPage.class, AttendanceNosignPage.class,
+    AttendanceAbsentPage.class, NotiOthersPage.class,SalerStudentStatePage.class,ChooseStaffPage.class,
+    ChooseAndSearchStudentFragment.class, StudentHomePieChartView.class,TrainerChooseAndSearchFragment.class
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 
