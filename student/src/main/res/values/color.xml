@@ -3,4 +3,8 @@
   <color name="st_student_status_member">#6eb8f1</color>
   <color name="st_student_birthday_select">#1A00D8CE</color>
 
+  <color name="st_new_member_color">#4987FF</color>
+  <color name="st_follow_ing_color">#F9944E</color>
+  <color name="st_new_student_color">#0DB14B</color>
+
 </resources>

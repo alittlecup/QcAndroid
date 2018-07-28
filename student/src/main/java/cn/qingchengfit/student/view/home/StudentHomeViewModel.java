@@ -9,6 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.respository.StudentRepository;
@@ -51,13 +52,14 @@ public class StudentHomeViewModel extends BaseViewModel {
         String.valueOf(info == null ? "" : info.getNew_follow_member_users_count())));
 
     register.addSource(glanceLiveData, info -> register.setValue(
-        String.valueOf(info == null ? "" : info.getRegistered_users_count())));
+        String.valueOf(info == null ? "" : info.getRegistered_users_count())+"人"));
     follow.addSource(glanceLiveData, info -> follow.setValue(
-        String.valueOf(info == null ? "" : info.getFollowing_users_count())));
+        String.valueOf(info == null ? "" : info.getFollowing_users_count())+"人"));
     member.addSource(glanceLiveData,
-        info -> member.setValue(String.valueOf(info == null ? "" : info.getMember_users_count())));
-    totalMembers.addSource(glanceLiveData, info -> totalMembers.setValue(
-        StringUtils.formatePrice(String.valueOf(info == null ? "" : info.getAll_users_count()))));
+        info -> member.setValue(String.valueOf(info == null ? "" : info.getMember_users_count())+"人"));
+    totalMembers.addSource(glanceLiveData, info -> {
+      totalMembers.setValue(String.valueOf(info==null?"":info.getAll_users_count()));
+    });
   }
 
   void loadSource() {
