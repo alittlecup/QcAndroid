@@ -11,7 +11,8 @@
         />
     <variable
         name="viewModel"
-        type="cn.qingchengfit.student.view.state.StudentStateInfoViewModel"/>
+        type="cn.qingchengfit.student.view.state.StudentStateInfoViewModel"
+        />
   </data>
   <LinearLayout
       android:layout_width="match_parent"
@@ -27,103 +28,35 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg_white"
         >
       <android.support.design.widget.AppBarLayout
           android:id="@+id/layout_collapsed"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/bg_grey"
+          android:background="@color/bg_white"
           android:orientation="vertical"
           app:elevation="1px"
           >
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bg_white"
+        <TextView
+            android:id="@+id/tv_not_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:text="未跟进时长分布"
+            android:textSize="14sp"
             app:layout_scrollFlags="scroll|snap"
-            >
-          <TextView
-              android:id="@+id/tv_all_content"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginTop="10dp"
-              android:paddingLeft="15dp"
-              android:text="全部会员 (人)"
-              style="@style/QcTextStyleMediumGrey"
-              />
-
-          <TextView
-              android:id="@+id/tv_all_student"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal"
-              android:layout_marginBottom="24dp"
-              android:layout_marginTop="46dp"
-              android:text="@{viewModel.totalCount}"
-              android:textColor="@color/text_black"
-              android:textSize="36dp"
-              tools:text="138,174"
-              />
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@color/bg_white"
-            app:layout_scrollFlags="scroll|snap"
-            >
-          <TextView
-              android:id="@+id/tv_not_follow"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginTop="6dp"
-              android:paddingLeft="15dp"
-              android:text="未跟进时长分布  (人)"
-              style="@style/QcTextStyleMediumGrey"
-              />
-
-          <cn.qingchengfit.student.widget.QcPieChart
-              android:id="@+id/pie_chart"
-              android:layout_width="146dp"
-              android:layout_height="146dp"
-              android:layout_gravity="center_horizontal"
-              android:layout_marginBottom="25dp"
-              android:layout_marginTop="55dp"
-              />
-        </FrameLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/divider_medium"
+            style="@style/QcTextStyleMediumGrey"
             />
+
         <FrameLayout
+            android:id="@+id/top_chart_view"
+            app:layout_scrollFlags="scroll|snap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_white"
-            >
-
-          <LinearLayout
-              android:id="@+id/ll_stat_info"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:divider="@color/divider_medium"
-              android:showDividers="middle"
-              android:dividerPadding="20dp"
-              android:layout_marginTop="5dp"
-              >
-
-          </LinearLayout>
-          <View
-              android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:layout_gravity="bottom"
-              android:layout_marginBottom="2dp"
-              android:background="@color/divider_medium"
-              />
-        </FrameLayout>
-
+            />
+        <include layout="@layout/divider_medium"/>
         <TextView
             android:id="@+id/tv_detail"
             android:layout_width="match_parent"
@@ -141,9 +74,9 @@
       </android.support.design.widget.AppBarLayout>
       <cn.qingchengfit.saascommon.widget.NoScrollViewPager
           android:id="@+id/viewpager"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
           />
 
     </android.support.design.widget.CoordinatorLayout>

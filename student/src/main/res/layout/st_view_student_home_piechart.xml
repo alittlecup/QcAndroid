@@ -13,15 +13,18 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="20dp"
       android:gravity="center_horizontal"
+
       android:orientation="vertical"
       >
     <cn.qingchengfit.student.widget.QcPieChart
         android:id="@+id/pie_chart"
+        app:layout_scrollFlags="scroll|snap"
         android:layout_width="170dp"
         android:layout_height="170dp"
         />
     <TextView
         android:id="@+id/tv_desc"
+        app:layout_scrollFlags="scroll|snap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -37,6 +40,7 @@
         android:backgroundTint="@{viewModel.backgroundColor}"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        app:layout_scrollFlags="scroll|snap"
         >
       <View
           android:layout_width="0dp"

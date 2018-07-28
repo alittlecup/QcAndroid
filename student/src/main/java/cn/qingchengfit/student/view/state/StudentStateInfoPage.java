@@ -20,6 +20,7 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.item.SalerStudentInfoItem;
 import cn.qingchengfit.student.listener.IncreaseType;
+import cn.qingchengfit.student.view.home.StudentHomePieChartView;
 import cn.qingchengfit.student.widget.CountDateView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -54,20 +55,27 @@ import java.util.Map;
   public PageStudentStateInfoBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = PageStudentStateInfoBinding.inflate(inflater, container, false);
+    initFragment();
     initToolbar();
-    initPieChart();
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
     return mBinding;
   }
-
-  private void initPieChart() {
-    for (int color : Colors) {
-      colors.add(getResources().getColor(color));
+  private StudentHomePieChartView chartView;
+  private void initFragment() {
+    if(chartView==null){
+      chartView=new StudentHomePieChartView();
+      stuff(R.id.top_chart_view,chartView);
     }
-    mBinding.pieChart.setOnChartValueSelectedListener(this);
-    mBinding.pieChart.setHoleRadius(66f);
   }
+  //
+  //private void initPieChart() {
+  //  for (int color : Colors) {
+  //    colors.add(getResources().getColor(color));
+  //  }
+  //  mBinding.pieChart.setOnChartValueSelectedListener(this);
+  //  mBinding.pieChart.setHoleRadius(66f);
+  //}
 
   private void initViewPager() {
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
@@ -88,37 +96,37 @@ import java.util.Map;
     LinearLayout.LayoutParams layoutParams =
         new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
     layoutParams.weight = 1;
-    ArrayList<PieEntry> entries = new ArrayList<>();
+    //ArrayList<PieEntry> entries = new ArrayList<>();
 
     for (int i = 0; i < inactiveBeans.size(); i++) {
       InactiveBean inactiveBean = inactiveBeans.get(i);
-      CountDateView textView = new CountDateView(getContext());
-      textView.setContent(inactiveBean.getPeriod());
-      textView.setCount(inactiveBean.getCount());
-      textView.setContentColor(colors.get(i % 4));
-      textView.setOnCheckedChangeListener(this);
-      textView.setTag(inactiveBean.getId());
-      textView.setLayoutParams(layoutParams);
-      textView.setGravity(Gravity.CENTER_HORIZONTAL);
-      mBinding.llStatInfo.addView(textView);
+      //CountDateView textView = new CountDateView(getContext());
+      //textView.setContent(inactiveBean.getPeriod());
+      //textView.setCount(inactiveBean.getCount());
+      //textView.setContentColor(colors.get(i % 4));
+      //textView.setOnCheckedChangeListener(this);
+      //textView.setTag(inactiveBean.getId());
+      //textView.setLayoutParams(layoutParams);
+      //textView.setGravity(Gravity.CENTER_HORIZONTAL);
+      //mBinding.llStatInfo.addView(textView);
       fragmentList.add(generateListView(inactiveBean.getSeller_stat()));
-      total += inactiveBean.getCount();
-      entries.add(new PieEntry(inactiveBean.getCount(), i));
+      //total += inactiveBean.getCount();
+      //entries.add(new PieEntry(inactiveBean.getCount(), i));
     }
-    PieDataSet dataSet = new PieDataSet(entries, "");
-    dataSet.setDrawValues(false);
-    dataSet.setSelectionShift(3f);
-    dataSet.setSliceSpace(0f);
-    dataSet.setColors(colors);
-    PieData data = new PieData(dataSet);
-    mBinding.pieChart.setData(data);
-    mBinding.pieChart.highlightValue(null);
-    mBinding.pieChart.invalidate();
+    //PieDataSet dataSet = new PieDataSet(entries, "");
+    //dataSet.setDrawValues(false);
+    //dataSet.setSelectionShift(3f);
+    //dataSet.setSliceSpace(0f);
+    //dataSet.setColors(colors);
+    //PieData data = new PieData(dataSet);
+    //mBinding.pieChart.setData(data);
+    //mBinding.pieChart.highlightValue(null);
+    //mBinding.pieChart.invalidate();
     initViewPager();
-    View childAt = mBinding.llStatInfo.getChildAt(0);
-    if (childAt instanceof CountDateView) {
-      ((CountDateView) childAt).setChecked(true);
-    }
+    //View childAt = mBinding.llStatInfo.getChildAt(0);
+    //if (childAt instanceof CountDateView) {
+    //  ((CountDateView) childAt).setChecked(true);
+    //}
   }
 
   private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
@@ -138,22 +146,24 @@ import java.util.Map;
     switch (curType) {
       case IncreaseType.INCREASE_FOLLOWUP:
         toolbarModel = new ToolbarModel("已接洽");
-        mBinding.tvNotFollow.setText("未跟进时长分布 (人)");
-        mBinding.tvAllContent.setText("全部已接洽 (人)");
+        mBinding.tvNotFollow.setText("未跟进时长分布");
         mViewModel.loadSource(1);
+        chartView.setBackgroundColor(R.color.st_follow_ing_color);
 
         break;
       case IncreaseType.INCREASE_STUDENT:
         toolbarModel = new ToolbarModel("会员");
-        mBinding.tvNotFollow.setText("未出勤时长分布 (人)");
-        mBinding.tvAllContent.setText("全部会员 (人)");
+        mBinding.tvNotFollow.setText("未出勤时长分布");
         mViewModel.loadSource(2);
+        chartView.setBackgroundColor(R.color.st_new_student_color);
+
         break;
       case IncreaseType.INCREASE_MEMBER:
-        toolbarModel = new ToolbarModel("新注册用户");
-        mBinding.tvNotFollow.setText("未跟进时长分布 (人)");
-        mBinding.tvAllContent.setText("全部新注册 (人)");
+        toolbarModel = new ToolbarModel("新注册");
+        mBinding.tvNotFollow.setText("未跟进时长分布");
         mViewModel.loadSource(0);
+        chartView.setBackgroundColor(R.color.st_new_member_color);
+
         break;
     }
     if (toolbarModel != null) {
@@ -182,29 +192,29 @@ import java.util.Map;
   }
 
   @Override public void onCheckedChanged(CountDateView buttonView, boolean isChecked) {
-    if (isChecked) {
-      if (preChecked == buttonView) return;
-      int i = mBinding.llStatInfo.indexOfChild(buttonView);
-      mBinding.viewpager.setCurrentItem(i);
-      if (preChecked != null) {
-        preChecked.setChecked(false);
-      }
-      preChecked = buttonView;
-      mBinding.tvDetail.setText(buttonView.getContent() + "未跟进用户销售任务统计");
-      mBinding.pieChart.highlightValue(i, buttonView.getCount(), 0, true);
-    }
+    //if (isChecked) {
+    //  if (preChecked == buttonView) return;
+    //  int i = mBinding.llStatInfo.indexOfChild(buttonView);
+    //  mBinding.viewpager.setCurrentItem(i);
+    //  if (preChecked != null) {
+    //    preChecked.setChecked(false);
+    //  }
+    //  preChecked = buttonView;
+    //  mBinding.tvDetail.setText(buttonView.getContent() + "未跟进用户所属销售");
+    //  mBinding.pieChart.highlightValue(i, buttonView.getCount(), 0, true);
+    //}
   }
 
   @Override public void onValueSelected(Entry e, Highlight h) {
-    int y = (int) e.getY();
-    if(total==0)return;
-    mBinding.pieChart.setCenterText(y * 100 / total + "%");
-    int data = (int) e.getData();
-    mBinding.pieChart.setCenterTextColor(colors.get(data % 4));
-    View childAt = mBinding.llStatInfo.getChildAt(data);
-    if (childAt instanceof CountDateView) {
-      ((CountDateView) childAt).setChecked(true);
-    }
+    //int y = (int) e.getY();
+    //if(total==0)return;
+    //mBinding.pieChart.setCenterText(y * 100 / total + "%");
+    //int data = (int) e.getData();
+    //mBinding.pieChart.setCenterTextColor(colors.get(data % 4));
+    //View childAt = mBinding.llStatInfo.getChildAt(data);
+    //if (childAt instanceof CountDateView) {
+    //  ((CountDateView) childAt).setChecked(true);
+    //}
   }
 
   @Override public void onNothingSelected() {
