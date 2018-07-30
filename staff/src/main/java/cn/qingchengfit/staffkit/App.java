@@ -36,6 +36,7 @@ import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
 import cn.qingchengfit.staffkit.views.custom.CitiesData;
 import cn.qingchengfit.utils.CrashHandler;
 import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.weex.utils.WeexDelegate;
@@ -123,12 +124,12 @@ public class App extends Application implements HasActivityInjector, HasSupportF
 
     }
     if (MsfSdkUtils.isMainProcess(this)) {
-      Log.d("MyApplication", "main process");
+      LogUtil.d("MyApplication", "main process");
 
       // 设置离线推送监听器
       TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
         @Override public void handleNotification(TIMOfflinePushNotification notification) {
-          Log.d("MyApplication", "recv offline push");
+          LogUtil.d("MyApplication", "recv offline push");
 
           // 这里的doNotify是ImSDK内置的通知栏提醒，应用也可以选择自己利用回调参数notification来构造自己的通知栏提醒
           notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
@@ -188,11 +189,11 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       //记录激活事件、渠道追踪，这里激活事件取名为 AppInstall。
       SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties2);
     } catch (JSONException e) {
-      Log.e("hs_bug", e.getMessage());
+      LogUtil.e("hs_bug", e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
-      Log.e("hs_bug", e.getMessage());
+      LogUtil.e("hs_bug", e.getMessage());
     }
     //}
     initX5();

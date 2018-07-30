@@ -34,35 +34,37 @@ public class LogUtil {
 
     //下面是传入类名打印log
     public static void i(Class<?> _class, String msg) {
-        if (isDebug) Timber.i( msg);
+        if (isDebug) Timber.tag(_class.getSimpleName()).i( msg);
     }
 
     public static void d(Class<?> _class, String msg) {
-        if (isDebug) Timber.i( msg);
+        if (isDebug) Timber.tag(_class.getSimpleName()).d(msg);
     }
 
     public static void e(Class<?> _class, String msg) {
-        if (isDebug) Timber.i( msg);
+        if (isDebug) Timber.tag(_class.getSimpleName()).e( msg);
     }
 
     public static void v(Class<?> _class, String msg) {
-        if (isDebug) Timber.i( msg);
+        if (isDebug) Timber.tag(_class.getSimpleName()).v( msg);
     }
 
     // 下面是传入自定义tag的函数
     public static void i(String tag, String msg) {
-        if (isDebug) Timber.i(tag, msg);
+        if (isDebug) {
+            Timber.tag(tag).i(msg);
+        }
     }
 
     public static void d(String tag, String msg) {
-        if (isDebug) Timber.i(tag, msg);
+        Timber.tag(tag).d(msg);
     }
 
     public static void e(String tag, String msg) {
-        if (isDebug) Timber.e(tag, msg);
+        Timber.tag(tag).e(msg);
     }
 
     public static void v(String tag, String msg) {
-        if (isDebug) Timber.i(tag, msg);
+        Timber.tag(tag).v(msg);
     }
 }

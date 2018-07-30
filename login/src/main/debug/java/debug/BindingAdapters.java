@@ -171,12 +171,12 @@ public class BindingAdapters {
                 if (currentTime - latestTime > 600) {
                     v.setTag(v.getId(), currentTime);
                     if (BuildConfig.DEBUG) {
-                        Log.d("TAG", "currentTime:" + (currentTime - latestTime));
+                        LogUtil.d("TAG", "currentTime:" + (currentTime - latestTime));
                     }
                     clickListener.onClick(v);
                 } else {
                     if (BuildConfig.DEBUG) {
-                        Log.d("TAG", "currentTime:" + (currentTime - latestTime));
+                        LogUtil.d("TAG", "currentTime:" + (currentTime - latestTime));
                     }
                 }
             }
