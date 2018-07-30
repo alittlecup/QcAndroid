@@ -57,7 +57,7 @@ public class ChooseDetailItem
     DataBindingViewHolder<ItemChooseDetailBinding> bindingViewHolder =
         new DataBindingViewHolder<>(view, adapter);
     View.OnClickListener listener = v -> {
-      if (view.getId() == R.id.btn_contact_him) {
+      if (v.getId() == R.id.btn_contact_him) {
         if (adapter instanceof CommonFlexAdapter) {
           ((CommonFlexAdapter) adapter).setTag("contact", true);
         }
@@ -118,6 +118,7 @@ public class ChooseDetailItem
     if (type == Mode.UNDEFINE) {
       binding.tvStudentDesc.setVisibility(View.GONE);
       binding.itemPersonDesc.setVisibility(View.GONE);
+      binding.btnContactHim.setVisibility(View.GONE);
     } else if (type == Mode.SALLER) {
       List<String> sellerNames = new ArrayList<>();
       if (data.sellers != null && !data.sellers.isEmpty()) {
