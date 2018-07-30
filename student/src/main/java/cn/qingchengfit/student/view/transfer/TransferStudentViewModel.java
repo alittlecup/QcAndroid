@@ -11,7 +11,7 @@ import android.util.Pair;
 
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentTransferBean;
-import cn.qingchengfit.student.item.FollowUpItem;
+import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,9 +34,9 @@ import cn.qingchengfit.utils.DateUtils;
  */
 
 public class TransferStudentViewModel extends
-        FlexibleViewModel<List<QcStudentBeanWithFollow>, FollowUpItem, TransferStudentViewModel.DataHolder> {
+        FlexibleViewModel<List<QcStudentBeanWithFollow>, ChooseDetailItem, TransferStudentViewModel.DataHolder> {
 
-    public ObservableField<List<FollowUpItem>> items = new ObservableField<>();
+    public ObservableField<List<ChooseDetailItem>> items = new ObservableField<>();
     public ObservableBoolean filterVisible = new ObservableBoolean(false);
     public ObservableBoolean appBarLayoutExpend = new ObservableBoolean(true);
     public ObservableField<String> staffName = new ObservableField<>("全部");
@@ -130,7 +130,7 @@ public class TransferStudentViewModel extends
     }
 
     @Override
-    protected List<FollowUpItem> map(@NonNull List<QcStudentBeanWithFollow> studentTransferBeans) {
+    protected List<ChooseDetailItem> map(@NonNull List<QcStudentBeanWithFollow> studentTransferBeans) {
         return FlexibleItemProvider.with(new FollowUpItemFactory()).from(studentTransferBeans);
     }
 
@@ -144,11 +144,11 @@ public class TransferStudentViewModel extends
         }
     }
 
-    static class FollowUpItemFactory implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, FollowUpItem> {
+    static class FollowUpItemFactory implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, ChooseDetailItem> {
         @NonNull
         @Override
-        public FollowUpItem create(QcStudentBeanWithFollow bean) {
-            return FlexibleFactory.create(FollowUpItem.class, bean, 4);
+        public ChooseDetailItem create(QcStudentBeanWithFollow bean) {
+            return FlexibleFactory.create(ChooseDetailItem.class, bean, 4);
         }
     }
 

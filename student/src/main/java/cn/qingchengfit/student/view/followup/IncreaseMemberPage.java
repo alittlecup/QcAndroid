@@ -178,7 +178,7 @@ import javax.inject.Inject;
 
       topView.setType(curType);
       if (curType.equals(IncreaseType.INCREASE_FOLLOWUP)) {
-        ToolbarModel toolbarModel = new ToolbarModel("新用户跟进");
+        ToolbarModel toolbarModel = new ToolbarModel("跟进新用户");
         mViewModel.dataType = 1;
         mBinding.setToolbarModel(toolbarModel);
       } else if (curType.equals(IncreaseType.INCREASE_STUDENT)) {

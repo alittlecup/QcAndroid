@@ -45,7 +45,7 @@ public class CountDateView extends LinearLayout implements Checkable {
   }
 
   public void setCount(int count) {
-    mCountTv.setText(String.valueOf(count));
+    mCountTv.setText(String.valueOf(count)+"人");
   }
   public int getCount(){
     try {

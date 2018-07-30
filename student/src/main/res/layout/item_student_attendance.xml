@@ -127,6 +127,8 @@
           android:id="@+id/tv_student_desc"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_marginTop="0dp"
           android:background="@color/bg_grey"
           android:lineSpacingExtra="6dp"
           android:padding="6dp"

@@ -202,7 +202,13 @@ import javax.inject.Inject;
 
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.GONE);
-      ToolbarModel toolbarModel = new ToolbarModel(curType);
+      String title="";
+      if(curType.equals(IncreaseType.INCREASE_MEMBER)){
+        title="新注册用户";
+      }else if(curType.equals(IncreaseType.INCREASE_STUDENT)){
+        title="新购卡会员";
+      }
+      ToolbarModel toolbarModel = new ToolbarModel(title);
       mBinding.setToolbarModel(toolbarModel);
       initToolbar(mBinding.includeToolbar.toolbar);
 

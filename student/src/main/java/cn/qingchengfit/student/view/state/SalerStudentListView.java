@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -54,7 +55,9 @@ public class SalerStudentListView extends SaasCommonFragment {
   }
 
   private void initRecyclerView() {
-    adapter = new CommonFlexAdapter(items == null ? new ArrayList() : items);
+    List<CommonNoDataItem> itemList = new ArrayList<>();
+    itemList.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无数据", ""));
+    adapter = new CommonFlexAdapter(items == null ? itemList : items);
     root.setAdapter(adapter);
     root.setLayoutManager(new LinearLayoutManager(getContext()));
     root.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

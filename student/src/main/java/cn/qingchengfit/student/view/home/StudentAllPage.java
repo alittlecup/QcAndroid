@@ -39,7 +39,7 @@ import javax.inject.Inject;
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setDatas(items);
-      listView.getListView().setAdapterTag("noInfo", true);
+      listView.getListView().setAdapterTag("choose", -1);
     });
     mViewModel.showLoading.observe(this, aBoolean -> {
       if (aBoolean) {

@@ -12,20 +12,17 @@ import cn.qingchengfit.saascommon.flexble.CommonItemFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleFactory;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
-import cn.qingchengfit.saascommon.item.StudentItem;
-import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
-import cn.qingchengfit.student.item.StaffDetailItem;
+import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.respository.StudentRepository;
-import cn.qingchengfit.student.view.home.StudentAllViewModel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 
 public class SalerStudentsViewModel
-    extends FlexibleViewModel<List<QcStudentBeanWithFollow>, StaffDetailItem, Map<String, ?>> {
+    extends FlexibleViewModel<List<QcStudentBeanWithFollow>, ChooseDetailItem, Map<String, ?>> {
 
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
@@ -91,21 +88,21 @@ public class SalerStudentsViewModel
     return qcStudentBeans != null;
   }
 
-  @Override protected List<StaffDetailItem> map(@NonNull List<QcStudentBeanWithFollow> qcStudentBeans) {
+  @Override protected List<ChooseDetailItem> map(@NonNull List<QcStudentBeanWithFollow> qcStudentBeans) {
     this.studentBeans = qcStudentBeans;
     return FlexibleItemProvider.with(new StaffDetailItemFactory(type)).from(qcStudentBeans);
   }
 
   static class StaffDetailItemFactory
-      implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, StaffDetailItem> {
+      implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, ChooseDetailItem> {
     private Integer type;
 
     public StaffDetailItemFactory(Integer type) {
       this.type = type;
     }
 
-    @NonNull @Override public StaffDetailItem create(QcStudentBeanWithFollow qcStudentBean) {
-      return FlexibleFactory.create(StaffDetailItem.class, qcStudentBean, type);
+    @NonNull @Override public ChooseDetailItem create(QcStudentBeanWithFollow qcStudentBean) {
+      return FlexibleFactory.create(ChooseDetailItem.class, qcStudentBean, type);
     }
   }
 }

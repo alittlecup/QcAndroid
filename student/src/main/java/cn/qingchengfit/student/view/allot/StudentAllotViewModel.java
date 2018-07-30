@@ -14,6 +14,7 @@ import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
+import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.item.ChooseStaffItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 public class StudentAllotViewModel
-    extends FlexibleViewModel<List<QcStudentBeanWithFollow>, ChooseStaffItem, Map<String, ?>> {
+    extends FlexibleViewModel<List<QcStudentBeanWithFollow>, ChooseDetailItem, Map<String, ?>> {
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -76,20 +77,20 @@ public class StudentAllotViewModel
     return qcStudentBeans != null;
   }
 
-  @Override protected List<ChooseStaffItem> map(@NonNull List< QcStudentBeanWithFollow> qcStudentBeans) {
+  @Override protected List<ChooseDetailItem> map(@NonNull List< QcStudentBeanWithFollow> qcStudentBeans) {
     return FlexibleItemProvider.with(new ChooseStaffItemFactory(type)).from(qcStudentBeans);
   }
 
   static class ChooseStaffItemFactory
-      implements FlexibleItemProvider.Factory< QcStudentBeanWithFollow, ChooseStaffItem> {
+      implements FlexibleItemProvider.Factory< QcStudentBeanWithFollow, ChooseDetailItem> {
     private Integer type;
 
     public ChooseStaffItemFactory(Integer type) {
       this.type = type;
     }
 
-    @NonNull @Override public ChooseStaffItem create( QcStudentBeanWithFollow qcStudentBean) {
-      return FlexibleFactory.create(ChooseStaffItem.class, qcStudentBean, type);
+    @NonNull @Override public ChooseDetailItem create( QcStudentBeanWithFollow qcStudentBean) {
+      return FlexibleFactory.create(ChooseDetailItem.class, qcStudentBean, type);
     }
   }
 }

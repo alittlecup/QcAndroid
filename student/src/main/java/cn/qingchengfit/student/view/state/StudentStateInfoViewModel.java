@@ -25,10 +25,12 @@ import javax.inject.Inject;
 public class StudentStateInfoViewModel extends BaseViewModel {
   public final MutableLiveData<InactiveStat> inactiveStat = new MutableLiveData<>();
   public final MediatorLiveData<String> totalCount = new MediatorLiveData<>();
-
+  public final MutableLiveData<Boolean> showDivider = new MutableLiveData<>();
+  public final MutableLiveData<Integer> backgroundColor = new MutableLiveData<>();
   @Inject StudentRepository studentRepository;
 
   @Inject public StudentStateInfoViewModel() {
+    showDivider.setValue(true);
     totalCount.addSource(inactiveStat, inactiveStat1 -> {
       totalCount.setValue(StringUtils.formatePrice(String.valueOf(inactiveStat1.getUsers_count())));
     });

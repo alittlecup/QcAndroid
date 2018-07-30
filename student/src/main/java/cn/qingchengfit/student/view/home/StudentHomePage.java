@@ -88,15 +88,15 @@ import javax.inject.Inject;
       StudentHomePieChartView memberView = new StudentHomePieChartView();
       memberView.setBackgroundColor(R.color.st_new_member_color);
 
-      memberView.setOnClickListener(view->{
-          routeTo("saler/student",
-              new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
+      memberView.setOnClickListener(view -> {
+        routeTo("saler/student",
+            new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
       });
 
       StudentHomePieChartView followView = new StudentHomePieChartView();
       followView.setBackgroundColor(R.color.st_follow_ing_color);
 
-      followView.setOnClickListener(view->{
+      followView.setOnClickListener(view -> {
         routeTo("saler/student",
             new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_FOLLOWUP).build());
       });
@@ -104,7 +104,7 @@ import javax.inject.Inject;
       StudentHomePieChartView studentView = new StudentHomePieChartView();
       studentView.setBackgroundColor(R.color.st_new_student_color);
 
-      studentView.setOnClickListener(view->{
+      studentView.setOnClickListener(view -> {
         routeTo("saler/student",
             new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
       });
@@ -116,9 +116,12 @@ import javax.inject.Inject;
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
     mBinding.tabLayout.setupWithViewPager(mBinding.viewpager);
 
-    mBinding.tabLayout.setTabTextColors(getResources().getColor(R.color.text_grey),
+    mBinding.tabLayout.setSelectedTabIndicatorColor(
         getResources().getColor(R.color.st_new_member_color));
-
+    mBinding.tabLayout.getTabAt(0)
+        .setText(new SpanUtils().append("新注册")
+            .setForegroundColor(getResources().getColor(R.color.st_new_member_color))
+            .create());
     mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
       @Override public void onTabSelected(TabLayout.Tab tab) {
         String text = tab.getText().toString();

@@ -1,13 +1,10 @@
 package cn.qingchengfit.student.view.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +12,23 @@ import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.utils.StringUtils;
-import cn.qingchengfit.saascommon.widget.ModifiedFastScroller;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.StViewStudentAllotBinding;
 import cn.qingchengfit.student.item.ChooseDetailItem;
-import cn.qingchengfit.student.item.ChooseStaffItem;
-import cn.qingchengfit.student.item.FollowUpItem;
-import cn.qingchengfit.student.item.StaffDetailItem;
 import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.ActionSheetDialog;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
@@ -99,7 +93,7 @@ public class StudentListView
       } else if (curType.equals(SELLER_TYPE)) {
         adapter.setTag("choose", 0);
       } else {
-        adapter.setTag("choose", -2);
+        adapter.setTag("choose", -1);
       }
       setCurId(curID);
     } else {
@@ -250,7 +244,7 @@ public class StudentListView
       } else if (type.equals(SELLER_TYPE)) {
         adapter.setTag("choose", 0);
       } else {
-        adapter.setTag("choose", -2);
+        adapter.setTag("choose", -1);
       }
       adapter.setTag("selected", true);
       adapter.notifyDataSetChanged();
@@ -283,22 +277,47 @@ public class StudentListView
     if (mBinding != null) {
       mBinding.btnModifySale.setText(getStringByType(curType));
       mBinding.llBottom.setVisibility(View.GONE);
-      adapter.setTag("choose", -1);
+      adapter.setTag("choose", 2);
       adapter.setTag("selected", false);
       adapter.clearSelection();
       adapter.notifyDataSetChanged();
+    }else{
+      setAdapterTag("choose",2);
+      setAdapterTag("selected",false);
     }
   }
 
+  private void showBottomSheet(String phone) {
+    List<CharSequence> contents = new ArrayList<>();
+    contents.add("呼叫" + phone);
+    contents.add("发短信");
+    ActionSheetDialog dialog = new ActionSheetDialog(getContext(), "联系会员", contents);
+    dialog.show();
+    dialog.setOnItemClickListener(position -> {
+      if (position == 0) {
+        AppUtils.doCallPhoneTo(getContext(), phone);
+      } else {
+        AppUtils.doSendSMSTo(getContext(), phone);
+      }
+      return false;
+    });
+  }
+
   @Override public boolean onItemClick(int position) {
-    Object choose = adapter.getTag("choose");
-    if (choose == null || (int) choose == -1) {
+    if((boolean)adapter.getTag("contact")){
+      IFlexible item = adapter.getItem(position);
+      if(item instanceof IItemData){
+        String phone = ((IItemData) item).getData().getPhone();
+        showBottomSheet(phone);
+      }
+      return false;
+    }
+    Object selected = adapter.getTag("selected");
+    if (selected == null ||!(Boolean) selected ) {
       QcStudentBean qcStudentBean = null;
       IFlexible item = adapter.getItem(position);
       if (item instanceof IItemData) {
         qcStudentBean = ((IItemData) item).getData();
-      } else if (item instanceof FollowUpItem) {
-        qcStudentBean = ((FollowUpItem) item).getData();
       }
       if (qcStudentBean == null) return false;
       QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")

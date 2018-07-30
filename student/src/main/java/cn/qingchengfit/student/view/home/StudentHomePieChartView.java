@@ -27,6 +27,7 @@ public class StudentHomePieChartView
     mBinding = StViewStudentHomePiechartBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
+    initPieChart();
     mViewModel.showDivider.setValue(showItemDividers);
     mViewModel.backgroundColor.setValue(getResources().getColor(color));
     mViewModel.pieData.setValue(pieData);
@@ -34,6 +35,10 @@ public class StudentHomePieChartView
       mBinding.getRoot().setOnClickListener(listener);
     }
     return mBinding;
+  }
+
+  private void initPieChart() {
+    mBinding.pieChart.setHoleRadius(64f);
   }
 
   private boolean showItemDividers = false;

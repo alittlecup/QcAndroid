@@ -44,6 +44,12 @@ import java.util.Map;
   @Override protected void subscribeUI() {
     mViewModel.setSalerId(staff == null ? "" : staff.getId());
     mViewModel.getLiveItems().observe(this, items -> {
+      if(TextUtils.isEmpty(staff.getId())){
+        listView.getListView().setAdapterTag("choose",-1);
+      }else {
+        listView.getListView().setAdapterTag("choose",type);
+      }
+      listView.getListView().setAdapterTag("selected",true);
       listView.setDatas(items);
     });
     mViewModel.showLoading.observe(this,aBoolean -> {

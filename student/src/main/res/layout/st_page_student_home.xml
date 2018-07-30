@@ -448,7 +448,6 @@
               android:layout_height="40dp"
               app:tabGravity="fill"
               app:tabTextColor="@color/text_grey"
-              app:tabIndicatorColor="@color/colorPrimary"
               app:tabSelectedTextColor="@color/colorPrimary"
               app:tabTextAppearance="@style/Qc.TextCommonGrey"
               app:tabMode="fixed"
