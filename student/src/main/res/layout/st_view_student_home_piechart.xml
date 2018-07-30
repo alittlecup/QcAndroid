@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
   <data>
     <variable
         name="viewModel"
-        type="cn.qingchengfit.student.view.home.StudentHomePieChartViewModel"/>
+        type="cn.qingchengfit.student.view.home.StudentHomePieChartViewModel"
+        />
   </data>
   <LinearLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,19 +17,26 @@
 
       android:orientation="vertical"
       >
-    <cn.qingchengfit.student.widget.QcPieChart
-        android:id="@+id/pie_chart"
-        app:layout_scrollFlags="scroll|snap"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        />
+    <FrameLayout
+        android:id="@+id/fl_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        >
+      <cn.qingchengfit.student.widget.QcPieChart
+          android:id="@+id/pie_chart"
+          android:layout_width="170dp"
+          android:layout_height="170dp"
+          />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/tv_desc"
-        app:layout_scrollFlags="scroll|snap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="25dp"
+        app:layout_scrollFlags="scroll|snap"
         tools:text="未跟进天数"
         style="@style/QcTextStyleXsGrey"
         />
@@ -36,42 +44,43 @@
         android:id="@+id/ll_background"
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:background="@drawable/count_date_indicator"
-        android:backgroundTint="@{viewModel.backgroundColor}"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:background="@drawable/count_date_indicator"
+        android:backgroundTint="@{viewModel.backgroundColor}"
         app:layout_scrollFlags="scroll|snap"
         >
       <View
           android:layout_width="0dp"
+          android:layout_height="match_parent"
           android:layout_weight="1"
           android:alpha="0.8"
           android:background="@color/white"
-          android:layout_height="match_parent"
           />
       <View
           android:layout_width="0dp"
+          android:layout_height="match_parent"
           android:layout_weight="1"
           android:alpha="0.6"
           android:background="@color/white"
-          android:layout_height="match_parent"
           />
       <View
           android:layout_width="0dp"
+          android:layout_height="match_parent"
           android:layout_weight="1"
           android:alpha="0.4"
           android:background="@color/white"
-          android:layout_height="match_parent"
           />
       <View
           android:layout_width="0dp"
-          android:layout_weight="1"
           android:layout_height="match_parent"
+          android:layout_weight="1"
           />
 
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_count_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="35dp"
@@ -88,9 +97,9 @@
           />
       <View
           android:layout_width="1px"
-          app:visibleGone="@{viewModel.showDivider}"
           android:layout_height="15dp"
           android:background="@color/divider_medium"
+          app:visibleGone="@{viewModel.showDivider}"
           />
       <cn.qingchengfit.student.widget.CountDateView
           android:layout_width="0dp"
@@ -101,8 +110,8 @@
       <View
           android:layout_width="1px"
           android:layout_height="15dp"
-          app:visibleGone="@{viewModel.showDivider}"
           android:background="@color/divider_medium"
+          app:visibleGone="@{viewModel.showDivider}"
           />
       <cn.qingchengfit.student.widget.CountDateView
           android:layout_width="0dp"
@@ -113,8 +122,8 @@
       <View
           android:layout_width="1px"
           android:layout_height="15dp"
-          app:visibleGone="@{viewModel.showDivider}"
           android:background="@color/divider_medium"
+          app:visibleGone="@{viewModel.showDivider}"
           />
       <cn.qingchengfit.student.widget.CountDateView
           android:layout_width="0dp"

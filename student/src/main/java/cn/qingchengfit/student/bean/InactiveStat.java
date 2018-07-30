@@ -7,7 +7,7 @@ import java.util.List;
 
 public class InactiveStat implements Parcelable {
   private int users_count;
-  private List<InactiveBean> inactive;
+  private StatData inactive;
 
   public int getUsers_count() {
     return users_count;
@@ -17,11 +17,11 @@ public class InactiveStat implements Parcelable {
     this.users_count = users_count;
   }
 
-  public List<InactiveBean> getInactive() {
+  public StatData getInactive() {
     return inactive;
   }
 
-  public void setInactive(List<InactiveBean> inactive) {
+  public void setInactive(StatData inactive) {
     this.inactive = inactive;
   }
 
@@ -31,7 +31,7 @@ public class InactiveStat implements Parcelable {
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeInt(this.users_count);
-    dest.writeTypedList(this.inactive);
+    dest.writeParcelable(this.inactive, flags);
   }
 
   public InactiveStat() {
@@ -39,17 +39,16 @@ public class InactiveStat implements Parcelable {
 
   protected InactiveStat(Parcel in) {
     this.users_count = in.readInt();
-    this.inactive = in.createTypedArrayList(InactiveBean.CREATOR);
+    this.inactive = in.readParcelable(StatData.class.getClassLoader());
   }
 
-  public static final Parcelable.Creator<InactiveStat> CREATOR =
-      new Parcelable.Creator<InactiveStat>() {
-        @Override public InactiveStat createFromParcel(Parcel source) {
-          return new InactiveStat(source);
-        }
+  public static final Creator<InactiveStat> CREATOR = new Creator<InactiveStat>() {
+    @Override public InactiveStat createFromParcel(Parcel source) {
+      return new InactiveStat(source);
+    }
 
-        @Override public InactiveStat[] newArray(int size) {
-          return new InactiveStat[size];
-        }
-      };
+    @Override public InactiveStat[] newArray(int size) {
+      return new InactiveStat[size];
+    }
+  };
 }

@@ -2,23 +2,61 @@ package cn.qingchengfit.student.view.home;
 
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.Utils;
+import cn.qingchengfit.student.bean.InactiveBean;
+import cn.qingchengfit.student.bean.StatData;
 import cn.qingchengfit.student.databinding.StViewStudentHomePiechartBinding;
+import cn.qingchengfit.student.widget.CountDateView;
 import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentHomePieChartView
     extends StudentBaseFragment<StViewStudentHomePiechartBinding, StudentHomePieChartViewModel> {
 
   @Override protected void subscribeUI() {
-    mViewModel.pieData.observe(this, pieData -> {
-      mBinding.pieChart.setData(pieData);
+    mViewModel.pieData.observe(this, statData -> {
+      if (statData == null) return;
+      List<InactiveBean> stat_data = statData.getStat_data();
+      ArrayList<PieEntry> entries = new ArrayList<>();
+      for (int i = 0; i < stat_data.size(); i++) {
+        InactiveBean inactiveBean = stat_data.get(i);
+        View childAt = mBinding.llCountDate.getChildAt(i * 2);
+        if (childAt instanceof CountDateView) {
+          ((CountDateView) childAt).setContent(inactiveBean.getPeriod());
+          ((CountDateView) childAt).setCount(inactiveBean.getCount());
+        }
+        entries.add(new PieEntry(inactiveBean.getCount(), i));
+      }
+      PieDataSet dataSet = new PieDataSet(entries, "");
+      dataSet.setDrawValues(false);
+      dataSet.setSelectionShift(3f);
+      dataSet.setSliceSpace(0f);
+      dataSet.setColors(colors);
+      PieData data = new PieData(dataSet);
+      SpannableStringBuilder text = new SpanUtils().append(statData.getTotal_count() + "")
+          .setFontSize(72, true)
+          .append("人")
+          .setFontSize(36, true)
+          .create();
+      mBinding.pieChart.setCenterTextColor(getResources().getColor(R.color.text_black));
+      mBinding.pieChart.setCenterText(text);
+      mBinding.pieChart.setData(data);
       mBinding.pieChart.highlightValue(null);
       mBinding.pieChart.invalidate();
+    });
+    mViewModel.backgroundColor.observe(this, color -> {
+      initColors(color);
     });
   }
 
@@ -30,10 +68,19 @@ public class StudentHomePieChartView
     initPieChart();
     mViewModel.showDivider.setValue(showItemDividers);
     mViewModel.backgroundColor.setValue(getResources().getColor(color));
-    mViewModel.pieData.setValue(pieData);
-    if (listener != null) {
-      mBinding.getRoot().setOnClickListener(listener);
-    }
+    mViewModel.pieData.setValue(statData);
+    mBinding.pieChart.setHighlightPerTapEnabled(false);
+    mBinding.pieChart.setClickable(false);
+    mBinding.llCountDate.setClickable(true);
+    mBinding.llCountDate.setOnTouchListener((v, event) -> true);
+
+    mBinding.flClick.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if(listener!=null){
+          listener.onClick(v);
+        }
+      }
+    });
     return mBinding;
   }
 
@@ -60,13 +107,22 @@ public class StudentHomePieChartView
     }
   }
 
-  private PieData pieData;
+  List<Integer> colors = new ArrayList<>();
 
-  public void setPieChart(PieData pieChartData) {
+  private void initColors(int baseColor) {
+    colors.add(Utils.getColorWithAlpha(0.2f, baseColor));
+    colors.add(Utils.getColorWithAlpha(0.4f, baseColor));
+    colors.add(Utils.getColorWithAlpha(0.6f, baseColor));
+    colors.add(Utils.getColorWithAlpha(1f, baseColor));
+  }
+
+  private StatData statData;
+
+  public void setStatData(StatData statData) {
     if (mViewModel != null) {
-      mViewModel.pieData.setValue(pieChartData);
+      mViewModel.pieData.setValue(statData);
     }
-    this.pieData = pieChartData;
+    this.statData = statData;
   }
 
   private int color = R.color.st_new_student_color;

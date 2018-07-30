@@ -14,6 +14,7 @@ import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.bean.StudentInfoGlance;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.utils.Utils;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -30,6 +31,7 @@ public class StudentHomeViewModel extends BaseViewModel {
   public final MediatorLiveData<String> follow = new MediatorLiveData<>();
   public final MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
   public final MediatorLiveData<String> member = new MediatorLiveData<>();
+  public final MediatorLiveData<String> birthDayMsg = new MediatorLiveData<>();
   public LiveData<StudentInfoGlance> glanceLiveData;
   @Inject LoginStatus loginStatus;
   @Inject StudentRepository repository;
@@ -52,13 +54,23 @@ public class StudentHomeViewModel extends BaseViewModel {
         String.valueOf(info == null ? "" : info.getNew_follow_member_users_count())));
 
     register.addSource(glanceLiveData, info -> register.setValue(
-        String.valueOf(info == null ? "" : info.getRegistered_users_count())+"人"));
+        String.valueOf(info == null ? "" : info.getRegistered_users_count()) + "人"));
     follow.addSource(glanceLiveData, info -> follow.setValue(
-        String.valueOf(info == null ? "" : info.getFollowing_users_count())+"人"));
-    member.addSource(glanceLiveData,
-        info -> member.setValue(String.valueOf(info == null ? "" : info.getMember_users_count())+"人"));
+        String.valueOf(info == null ? "" : info.getFollowing_users_count()) + "人"));
+    member.addSource(glanceLiveData, info -> member.setValue(
+        String.valueOf(info == null ? "" : info.getMember_users_count()) + "人"));
     totalMembers.addSource(glanceLiveData, info -> {
-      totalMembers.setValue(String.valueOf(info==null?"":info.getAll_users_count()));
+      totalMembers.setValue(String.valueOf(info == null ? "" : info.getAll_users_count()));
+    });
+    birthDayMsg.addSource(glanceLiveData, info -> {
+      List<String> today_birthday_users = glanceLiveData.getValue().getToday_birthday_users();
+      if (today_birthday_users != null && !today_birthday_users.isEmpty()) {
+        if (today_birthday_users.size() > 1) {
+          birthDayMsg.setValue(today_birthday_users.get(0) + "等今日生日");
+        } else {
+          birthDayMsg.setValue(today_birthday_users.get(0) + "今日生日");
+        }
+      }
     });
   }
 

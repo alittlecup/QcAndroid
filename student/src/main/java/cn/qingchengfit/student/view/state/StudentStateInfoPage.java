@@ -18,6 +18,7 @@ import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.student.Utils;
 import cn.qingchengfit.student.bean.InactiveBean;
 import cn.qingchengfit.student.bean.SellerStat;
+import cn.qingchengfit.student.bean.StatData;
 import cn.qingchengfit.student.databinding.PageStudentStateInfoBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -50,7 +51,7 @@ import java.util.Map;
 
   @Override protected void subscribeUI() {
     mViewModel.inactiveStat.observe(this, inactiveStat -> {
-      initTab(inactiveStat.getInactive());
+      initTab(inactiveStat.getInactive().getStat_data());
     });
   }
 
@@ -170,6 +171,7 @@ import java.util.Map;
     int currentItem = mBinding.viewpager.getCurrentItem();
     Staff seller = mViewModel.inactiveStat.getValue()
         .getInactive()
+        .getStat_data()
         .get(currentItem)
         .getSeller_stat()
         .get(position)
@@ -180,7 +182,7 @@ import java.util.Map;
     }
     routeTo("/student/seller_state", new SalerStudentStatePageParams().type(curType)
         .staff(seller)
-        .beans(new ArrayList<>(mViewModel.inactiveStat.getValue().getInactive()))
+        .beans(new ArrayList<>(mViewModel.inactiveStat.getValue().getInactive().getStat_data()))
         .build());
     return false;
   }
@@ -201,12 +203,12 @@ import java.util.Map;
 
   @Override public void onValueSelected(Entry e, Highlight h) {
     int data = (int) e.getData();
-    InactiveBean inactiveBean = mViewModel.inactiveStat.getValue().getInactive().get(data);
+    InactiveBean inactiveBean = mViewModel.inactiveStat.getValue().getInactive().getStat_data().get(data);
     SpannableStringBuilder text = new SpanUtils().append(inactiveBean.getPeriod())
-        .setFontSize(52,true)
+        .setFontSize(36,true)
         .setForegroundColor(getResources().getColor(R.color.text_grey))
         .append("\n" + inactiveBean.getCount())
-        .setFontSize(96,true)
+        .setFontSize(72,true)
         .append("人")
         .setFontSize(33,true)
         .create();

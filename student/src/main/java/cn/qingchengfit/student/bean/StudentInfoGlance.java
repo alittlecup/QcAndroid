@@ -1,5 +1,7 @@
 package cn.qingchengfit.student.bean;
 
+import java.util.List;
+
 public class StudentInfoGlance {
 
   private int new_register_users_count = 0;
@@ -10,6 +12,45 @@ public class StudentInfoGlance {
   private int registered_users_count = 0;
   private int following_users_count = 0;
   private int member_users_count = 0;
+
+  public List<String> getToday_birthday_users() {
+    return today_birthday_users;
+  }
+
+  private List<String> today_birthday_users;
+
+  public StatData getInactive_registered() {
+    return inactive_registered;
+  }
+
+  public void setInactive_registered(StatData inactive_registered) {
+    this.inactive_registered = inactive_registered;
+  }
+
+  public StatData getInactive_following() {
+    return inactive_following;
+  }
+
+  public void setInactive_following(StatData inactive_following) {
+    this.inactive_following = inactive_following;
+  }
+
+  public StatData getInactive_member() {
+    return inactive_member;
+  }
+
+  public void setInactive_member(StatData inactive_member) {
+    this.inactive_member = inactive_member;
+  }
+
+  private  StatData inactive_registered;
+  private  StatData inactive_following;
+  private  StatData inactive_member;
+
+  public void setToday_birthday_users(List<String> today_birthday_users) {
+    this.today_birthday_users = today_birthday_users;
+  }
+
 
   public int getNew_register_users_count() {
     return new_register_users_count;

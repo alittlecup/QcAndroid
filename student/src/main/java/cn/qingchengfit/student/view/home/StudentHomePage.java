@@ -21,6 +21,7 @@ import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.bean.StatData;
 import cn.qingchengfit.student.databinding.StPageStudentHomeBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.followup.IncreaseMemberPageParams;
@@ -65,7 +66,22 @@ import javax.inject.Inject;
         hideLoading();
       }
     });
+    mViewModel.glanceLiveData.observe(this,info->{
+      StatData inactive_registered = info.getInactive_registered();
+      if(inactive_registered!=null){
+        chartViews.get(0).setStatData(inactive_registered);
+      }
+      StatData inactive_following = info.getInactive_following();
+      if(inactive_following!=null){
+        chartViews.get(1).setStatData(inactive_following);
+      }
+      StatData inactive_member = info.getInactive_member();
+      if(inactive_member!=null){
+        chartViews.get(2).setStatData(inactive_member);
+      }
+    });
   }
+
 
   @Override
   public StPageStudentHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +92,6 @@ import javax.inject.Inject;
     initToolbar();
     initListener();
     initTabLayout();
-    //initChart();
     mViewModel.loadSource();
     return mBinding;
   }
@@ -114,6 +129,7 @@ import javax.inject.Inject;
       chartViews.add(studentView);
     }
     mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
+    mBinding.viewpager.setOffscreenPageLimit(3);
     mBinding.tabLayout.setupWithViewPager(mBinding.viewpager);
 
     mBinding.tabLayout.setSelectedTabIndicatorColor(
