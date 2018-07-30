@@ -51,7 +51,11 @@ import java.util.Map;
 
   @Override protected void subscribeUI() {
     mViewModel.inactiveStat.observe(this, inactiveStat -> {
-      initTab(inactiveStat.getInactive().getStat_data());
+      if (inactiveStat.getInactive().getTotal_count() == 0) {
+
+      } else {
+        initTab(inactiveStat.getInactive().getStat_data());
+      }
     });
   }
 
@@ -79,10 +83,7 @@ import java.util.Map;
   }
 
   private CountDateView preChecked;
-  private int[] Colors = new int[] {
-      R.color.success_green, R.color.st_student_status_member, R.color.orange,
-      R.color.danger_red_normal
-  };
+
   List<Integer> colors = new ArrayList<>();
 
   private void initTab(List<InactiveBean> inactiveBeans) {
@@ -104,12 +105,12 @@ import java.util.Map;
     preChecked.setChecked(true);
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
-    dataSet.setSelectionShift(3f);
+    dataSet.setSelectionShift(8f);
     dataSet.setSliceSpace(0f);
     dataSet.setColors(colors);
     PieData data = new PieData(dataSet);
     mBinding.pieChart.setData(data);
-    mBinding.pieChart.highlightValue(null);
+    mBinding.pieChart.highlightValue(0, inactiveBeans.get(0).getCount(), 0, true);
     mBinding.pieChart.invalidate();
     initViewPager();
   }
@@ -191,7 +192,7 @@ import java.util.Map;
     if (isChecked) {
       if (preChecked == buttonView) return;
       int i = mBinding.llCountDate.indexOfChild(buttonView);
-      mBinding.viewpager.setCurrentItem(i);
+      mBinding.viewpager.setCurrentItem(i/2);
       if (preChecked != null) {
         preChecked.setChecked(false);
       }
@@ -203,17 +204,18 @@ import java.util.Map;
 
   @Override public void onValueSelected(Entry e, Highlight h) {
     int data = (int) e.getData();
-    InactiveBean inactiveBean = mViewModel.inactiveStat.getValue().getInactive().getStat_data().get(data);
+    InactiveBean inactiveBean =
+        mViewModel.inactiveStat.getValue().getInactive().getStat_data().get(data);
     SpannableStringBuilder text = new SpanUtils().append(inactiveBean.getPeriod())
-        .setFontSize(36,true)
+        .setFontSize(36, true)
         .setForegroundColor(getResources().getColor(R.color.text_grey))
         .append("\n" + inactiveBean.getCount())
-        .setFontSize(72,true)
+        .setFontSize(72, true)
         .append("人")
-        .setFontSize(33,true)
+        .setFontSize(36, true)
         .create();
     mBinding.pieChart.setCenterText(text);
-    View childAt = mBinding.llCountDate.getChildAt(data*2);
+    View childAt = mBinding.llCountDate.getChildAt(data * 2);
     if (childAt instanceof CountDateView) {
       ((CountDateView) childAt).setChecked(true);
     }

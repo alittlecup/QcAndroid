@@ -49,7 +49,6 @@ public class StudentHomePieChartView
           .append("人")
           .setFontSize(36, true)
           .create();
-      mBinding.pieChart.setCenterTextColor(getResources().getColor(R.color.text_black));
       mBinding.pieChart.setCenterText(text);
       mBinding.pieChart.setData(data);
       mBinding.pieChart.highlightValue(null);
@@ -68,20 +67,26 @@ public class StudentHomePieChartView
     initPieChart();
     mViewModel.showDivider.setValue(showItemDividers);
     mViewModel.backgroundColor.setValue(getResources().getColor(color));
+    mBinding.pieChart.setCenterTextColor(getResources().getColor(R.color.text_black));
     mViewModel.pieData.setValue(statData);
     mBinding.pieChart.setHighlightPerTapEnabled(false);
     mBinding.pieChart.setClickable(false);
-    mBinding.llCountDate.setClickable(true);
-    mBinding.llCountDate.setOnTouchListener((v, event) -> true);
+    initListener();
+    return mBinding;
+  }
 
-    mBinding.flClick.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if(listener!=null){
-          listener.onClick(v);
-        }
+  private void initListener() {
+    for (int i = 0; i < mBinding.llCountDate.getChildCount(); i++) {
+      View childAt = mBinding.llCountDate.getChildAt(i);
+      if (childAt instanceof CountDateView) {
+        childAt.setClickable(false);
+      }
+    }
+    mBinding.shadowClick.setOnClickListener(v -> {
+      if(listener!=null){
+        listener.onClick(v);
       }
     });
-    return mBinding;
   }
 
   private void initPieChart() {

@@ -18,16 +18,21 @@
       android:orientation="vertical"
       >
     <FrameLayout
-        android:id="@+id/fl_click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         >
+
       <cn.qingchengfit.student.widget.QcPieChart
           android:id="@+id/pie_chart"
           android:layout_width="170dp"
           android:layout_height="170dp"
           />
+      <TextView
+          android:id="@+id/shadow_click"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
+
     </FrameLayout>
 
     <TextView
@@ -79,6 +84,7 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_count_date"
         android:layout_width="match_parent"
@@ -132,7 +138,6 @@
           android:gravity="center_horizontal"
           />
     </LinearLayout>
-
 
   </LinearLayout>
 </layout>
