@@ -150,15 +150,15 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
         break;
     }
 
-    int color = Color.parseColor("#6eb8f1");
+    int color = Color.parseColor("#4987FF");
     switch (type) {
       case IncreaseType.INCREASE_MEMBER:
         mid = "新增注册";
-        color = Color.parseColor("#6eb8f1");
+        color = Color.parseColor("#4987FF");
         break;
       case IncreaseType.INCREASE_STUDENT:
         mid = "新增会员";
-        color = Color.parseColor("#0db14b");
+        color = Color.parseColor("#0DB14B");
         break;
     }
     tvContent.setValue(new SpanUtils().append(start)

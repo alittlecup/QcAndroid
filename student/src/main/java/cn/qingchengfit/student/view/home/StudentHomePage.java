@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.utils.StringUtils;
@@ -66,7 +68,9 @@ import javax.inject.Inject;
         hideLoading();
       }
     });
+
     mViewModel.glanceLiveData.observe(this,info->{
+      if(info==null)return;
       StatData inactive_registered = info.getInactive_registered();
       if(inactive_registered!=null){
         chartViews.get(0).setStatData(inactive_registered);
@@ -272,6 +276,13 @@ import javax.inject.Inject;
 
     mBinding.commDayStudent.setOnClickListener(view -> {
       routeTo("student/birthday", null);
+    });
+    mBinding.fabAddStudent.setOnClickListener(v -> {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+        QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
   }
 

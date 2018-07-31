@@ -3,7 +3,7 @@
   <stroke
       android:color="@color/divider_light"
       android:width="1dp"/>
-  <solid android:color="@color/st_student_status_member"/>
+  <solid android:color="@color/st_new_member_color"/>
   <!--<padding android:bottom="2dp" android:top="2dp" android:left="2dp" android:right="2dp"/>-->
   <corners android:radius="5dp"/>
 

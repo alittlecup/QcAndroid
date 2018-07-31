@@ -7,8 +7,8 @@ import android.view.View;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.student.databinding.ItemStudentFollowUpStateBinding;
 import cn.qingchengfit.staffkit.views.custom.MyBindingFelxibleViewHolder;
+import cn.qingchengfit.student.databinding.ItemChooseDetailBinding;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import com.bumptech.glide.Glide;
@@ -61,12 +61,12 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
     }
 
     @Override public int getLayoutRes() {
-        return R.layout.item_student_follow_up_state;
+        return R.layout.item_choose_detail;
     }
 
     @Override
     public MyBindingFelxibleViewHolder createViewHolder(View view,final FlexibleAdapter adapter) {
-        ItemStudentFollowUpStateBinding binding =
+        ItemChooseDetailBinding binding =
             DataBindingUtil.bind(view);
         MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
         holder.setBinding(binding);
@@ -80,8 +80,8 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, MyBindingFelxibleViewHolder holder, int position, List payloads) {
         holder.itemView.setTag(data);
-        ItemStudentFollowUpStateBinding binding =
-            (ItemStudentFollowUpStateBinding) holder.getBinding();
+        ItemChooseDetailBinding binding =
+            (ItemChooseDetailBinding) holder.getBinding();
 
         Glide.with(holder.itemView.getContext())
             .load(data.avatar)

@@ -37,13 +37,13 @@ import javax.inject.Inject;
   SalerStateFilterView filterView;
 
   @Override protected void subscribeUI() {
-    mViewModel.seller_id=staff.getId();
+    mViewModel.seller_id = staff.getId();
     mViewModel.filterContent.observe(this, content -> mBinding.qcFilterToggle.setText(content));
     mViewModel.items.observe(this, items -> listView.setItems(items));
     mViewModel.filterVisible.observe(this, ab -> {
       if (ab) {
         filterView.showPage(0);
-      }else{
+      } else {
         mBinding.qcFilterToggle.setChecked(false);
       }
     });
@@ -70,7 +70,7 @@ import javax.inject.Inject;
         () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
             (materialDialog, dialogAction) -> {
               materialDialog.dismiss();
-              if(dialogAction==DialogAction.POSITIVE){
+              if (dialogAction == DialogAction.POSITIVE) {
                 listView.removeStaffStudents();
               }
             }));
@@ -104,16 +104,16 @@ import javax.inject.Inject;
 
   private void initListener() {
     mBinding.bottomAllot.allotCoach.setOnClickListener(v -> {
-      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
-      }else{
+      } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.bottomAllot.allotSale.setOnClickListener(v -> {
-      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
-      }else{
+      } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
@@ -149,7 +149,9 @@ import javax.inject.Inject;
       mBinding.bottomAllot.getRoot().setVisibility(View.GONE);
       //修改列表内容
       listView.setCurType(type);
-      listView.setCurId(staff.getId());
+      if (type.equals(StudentListView.SELLER_TYPE)) {
+        listView.setCurId(staff.getId());
+      }
     } else {
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.GONE);

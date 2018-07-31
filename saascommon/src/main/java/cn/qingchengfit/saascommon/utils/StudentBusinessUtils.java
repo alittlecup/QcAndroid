@@ -273,11 +273,11 @@ public class StudentBusinessUtils {
       boolean first) {
     switch (type) {
       case "新注册":
-        return transformBean2Data(bean, offSetDay, Color.parseColor("#6eb8f1"),
-            Color.parseColor("#aa6eb8f1"), first);
+        return transformBean2Data(bean, offSetDay, Color.parseColor("#4987FF"),
+            Color.parseColor("#AA4987FF"), first);
       case "会员":
-        return transformBean2Data(bean, offSetDay, Color.parseColor("#0db14b"),
-            Color.parseColor("#aa0db14b"), first);
+        return transformBean2Data(bean, offSetDay, Color.parseColor("#0DB14B"),
+            Color.parseColor("#AA0DB14B"), first);
     }
     return null;
   }

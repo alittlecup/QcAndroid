@@ -61,13 +61,7 @@ import javax.inject.Inject;
   }
 
   private void initListener() {
-    mBinding.fabAddStudent.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-        QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
-      } else {
-        showAlert(R.string.sorry_for_no_permission);
-      }
-    });
+
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
@@ -150,7 +144,6 @@ import javax.inject.Inject;
       }
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.VISIBLE);
-      mBinding.fabAddStudent.setVisibility(View.GONE);
       ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(type));
       toolbarModel.setMenu(R.menu.menu_cancel);
       toolbarModel.setListener(item -> {
@@ -172,7 +165,6 @@ import javax.inject.Inject;
       listView.getListView().setCurType(type);
     } else {
       mBinding.rbSelectAll.setVisibility(View.GONE);
-      mBinding.fabAddStudent.setVisibility(View.VISIBLE);
       initToolbar();
       if (listView.getListView() != null) {
         listView.getListView().reset();

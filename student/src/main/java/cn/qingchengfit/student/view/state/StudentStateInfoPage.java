@@ -101,8 +101,7 @@ import java.util.Map;
       fragmentList.add(generateListView(inactiveBean.getSeller_stat()));
       entries.add(new PieEntry(inactiveBean.getCount(), i));
     }
-    preChecked = (CountDateView) mBinding.llCountDate.getChildAt(0);
-    preChecked.setChecked(true);
+    ((CountDateView) mBinding.llCountDate.getChildAt(0)).setChecked(true);
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
     dataSet.setSelectionShift(8f);
@@ -192,7 +191,7 @@ import java.util.Map;
     if (isChecked) {
       if (preChecked == buttonView) return;
       int i = mBinding.llCountDate.indexOfChild(buttonView);
-      mBinding.viewpager.setCurrentItem(i/2);
+      mBinding.viewpager.setCurrentItem(i / 2);
       if (preChecked != null) {
         preChecked.setChecked(false);
       }

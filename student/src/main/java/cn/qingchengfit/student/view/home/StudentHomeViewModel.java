@@ -63,7 +63,8 @@ public class StudentHomeViewModel extends BaseViewModel {
       totalMembers.setValue(String.valueOf(info == null ? "" : info.getAll_users_count()));
     });
     birthDayMsg.addSource(glanceLiveData, info -> {
-      List<String> today_birthday_users = glanceLiveData.getValue().getToday_birthday_users();
+      if (info == null) return;
+      List<String> today_birthday_users = info.getToday_birthday_users();
       if (today_birthday_users != null && !today_birthday_users.isEmpty()) {
         if (today_birthday_users.size() > 1) {
           birthDayMsg.setValue(today_birthday_users.get(0) + "等今日生日");

@@ -1,5 +1,6 @@
 package cn.qingchengfit.student.item;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import cn.qingchengfit.student.R;
@@ -38,6 +39,19 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
   @Override public void bindViewHolder(FlexibleAdapter adapter, FollowRecordVH holder, int position,
       List payloads) {
     holder.binding.setInfo(followRecord);
+    if (TextUtils.isEmpty(followRecord.getFollowStatusString())) {
+      holder.binding.tvFollowStatus.setVisibility(View.GONE);
+    } else {
+      holder.binding.tvFollowStatus.setVisibility(View.VISIBLE);
+    }
+    if (TextUtils.isEmpty(followRecord.getFollowTimeString())) {
+      holder.binding.tvNextTime.setVisibility(View.GONE);
+    } else {
+      holder.binding.tvNextTime.setVisibility(View.VISIBLE);
+    }
+    holder.binding.tvGymName.setText(followRecord.getShop());
+
+
     //holder.binding.img01.setVisibility(followRecord.getAttachSize() > 0 ?View.VISIBLE:View.GONE);
     //holder.binding.img02.setVisibility(followRecord.getAttachSize() > 1 ?View.VISIBLE:View.GONE);
     //holder.binding.img03.setVisibility(followRecord.getAttachSize() > 2 ?View.VISIBLE:View.GONE);
@@ -50,6 +64,7 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
 
   public class FollowRecordVH extends FlexibleViewHolder {
     StItemFollowRecordBinding binding;
+
     public FollowRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       binding = StItemFollowRecordBinding.bind(view);
