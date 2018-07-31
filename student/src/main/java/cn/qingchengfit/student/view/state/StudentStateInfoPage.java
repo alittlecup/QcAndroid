@@ -101,7 +101,6 @@ import java.util.Map;
       fragmentList.add(generateListView(inactiveBean.getSeller_stat()));
       entries.add(new PieEntry(inactiveBean.getCount(), i));
     }
-    ((CountDateView) mBinding.llCountDate.getChildAt(0)).setChecked(true);
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
     dataSet.setSelectionShift(8f);
@@ -112,6 +111,9 @@ import java.util.Map;
     mBinding.pieChart.highlightValue(0, inactiveBeans.get(0).getCount(), 0, true);
     mBinding.pieChart.invalidate();
     initViewPager();
+
+    ((CountDateView) mBinding.llCountDate.getChildAt(0)).setChecked(true);
+
   }
 
   private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
@@ -200,7 +202,6 @@ import java.util.Map;
       mBinding.pieChart.highlightValue(i / 2, buttonView.getCount(), 0, true);
     }
   }
-
   @Override public void onValueSelected(Entry e, Highlight h) {
     int data = (int) e.getData();
     InactiveBean inactiveBean =

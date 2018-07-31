@@ -304,7 +304,7 @@ public class StudentListView
   }
 
   @Override public boolean onItemClick(int position) {
-    if((boolean)adapter.getTag("contact")){
+    if(adapter.getTag("contact")!=null&&(boolean)adapter.getTag("contact")){
       IFlexible item = adapter.getItem(position);
       if(item instanceof IItemData){
         String phone = ((IItemData) item).getData().getPhone();
