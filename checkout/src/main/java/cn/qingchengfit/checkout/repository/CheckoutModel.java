@@ -1,6 +1,7 @@
 package cn.qingchengfit.checkout.repository;
 
 import android.util.Log;
+import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
@@ -53,7 +54,7 @@ public class CheckoutModel implements ICheckoutModel {
     return payApi.qcPostScanOrder(params);
   }
 
-  @Override public Flowable<QcDataResponse<OrderStatusBean>> qcGetOrderStatus(String orderNum,Map<String,Object> params) {
+  @Override public Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(String orderNum,Map<String,Object> params) {
     return payApi.qcGetOrderStatus(orderNum,params);
   }
 }

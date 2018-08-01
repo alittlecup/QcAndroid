@@ -1,6 +1,7 @@
 package cn.qingchengfit.checkout.repository;
 
 import android.arch.lifecycle.MutableLiveData;
+import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
@@ -50,7 +51,7 @@ public class CheckoutRepositoryImpl implements CheckoutRepository {
     bindToLiveData(result,remoteService.qcPostScanOrder(params1),defaultRes,"");
   }
 
-  @Override public void qcGetOrderStatus(MutableLiveData<OrderStatusBean> result,
+  @Override public void qcGetOrderStatus(MutableLiveData<OrderStatusBeanWrapper> result,
       MutableLiveData<Resource<Object>> defaultRes, String orderNum) {
     bindToLiveData(result,remoteService.qcGetOrderStatus(orderNum,gymWrapper.getParams()),defaultRes,"");
   }

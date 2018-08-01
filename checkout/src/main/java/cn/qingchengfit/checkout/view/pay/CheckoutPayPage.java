@@ -45,8 +45,8 @@ import timber.log.Timber;
 
   @Override protected void subscribeUI() {
     mViewModel.orderStatusBean.observe(this, orderStatusBean -> {
-      if (subscribe != null) {
-        switch (orderStatusBean.getStatus()) {
+      if (subscribe != null&&orderStatusBean!=null) {
+        switch (orderStatusBean.order.getStatus()) {
           case 0:
             stopPollintOrderStatus();
             DialogUtils.showAlert(getContext(), "收款失败", "收款失败，请点击下方按钮重试",
@@ -59,7 +59,7 @@ import timber.log.Timber;
             break;
           case 2:
             stopPollintOrderStatus();
-            WebActivity.startWeb(orderStatusBean.getSuccess_url(), getContext());
+            WebActivity.startWeb(orderStatusBean.order.getSuccess_url(), getContext());
             break;
         }
       }

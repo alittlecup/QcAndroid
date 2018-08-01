@@ -48,6 +48,7 @@ public class QcScanActivity extends SaasCommonActivity
       // TODO: 2018/7/25 deal result
       if(scanResultBean.successful){
         ToastUtils.show("success");
+
       }else{
         payError();
       }

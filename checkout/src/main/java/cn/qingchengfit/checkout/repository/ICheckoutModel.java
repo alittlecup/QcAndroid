@@ -1,5 +1,6 @@
 package cn.qingchengfit.checkout.repository;
 
+import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
@@ -17,5 +18,5 @@ public interface ICheckoutModel {
 
   Flowable<QcDataResponse<ScanResultBean>> qcPostScanOrder(Map<String, Object> params);
 
-  Flowable<QcDataResponse<OrderStatusBean>> qcGetOrderStatus(String orderNum,Map<String,Object> params);
+  Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(String orderNum,Map<String,Object> params);
 }

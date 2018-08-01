@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.checkout;
 import android.util.Log;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
+import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
 import cn.qingchengfit.checkout.repository.CheckoutApi;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
@@ -57,7 +58,7 @@ public class CheckoutModel implements ICheckoutModel {
     return payApi.qcPostScanOrder(params);
   }
 
-  @Override public Flowable<QcDataResponse<OrderStatusBean>> qcGetOrderStatus(String orderNum,Map<String,Object> params) {
+  @Override public Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(String orderNum,Map<String,Object> params) {
     return payApi.qcGetOrderStatus(orderNum,params);
   }
 }

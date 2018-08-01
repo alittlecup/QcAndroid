@@ -1,6 +1,7 @@
 package cn.qingchengfit.checkout.repository;
 
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
+import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
 import cn.qingchengfit.network.response.QcDataResponse;
 import io.reactivex.Flowable;
@@ -37,7 +38,7 @@ public interface PayApi {
    * fail_url: "",    //失败页面
    * }
    */
-  @GET("api/payments/{out_trade_no}/status/") Flowable<QcDataResponse<OrderStatusBean>> qcGetOrderStatus(@Path("out_trade_no")String orderNum,@QueryMap
+  @GET("api/payments/{out_trade_no}/status/") Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(@Path("out_trade_no")String orderNum,@QueryMap
       Map<String,Object> params);
 
 }
