@@ -1,7 +1,6 @@
 package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
-import cn.qingchengfit.card.StaffCardRouters;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.CardModel;
@@ -13,7 +12,6 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.apis.CourseModel;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
-import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
@@ -188,6 +186,9 @@ import java.util.List;
     return courseModel;
   }
 
+  //@Provides public ICardModel provideCardModel() {
+  //  return new CardModel(qcrestRepository, gymWrapper, loginStatus);
+  //}
   @Provides public ICardModel provideCardModel() {
     return new CardModel(qcrestRepository, gymWrapper, loginStatus);
   }
@@ -195,10 +196,6 @@ import java.util.List;
     return new StudentRouterCenter().registe(new studentImpl());
   }
 
-
-  @Provides IExportModel provideExportModel() {
-    return exportModel;
-  }
 
   @Provides public IPermissionModel providePermissModel() {
     return new IPermissionModel() {
@@ -222,5 +219,12 @@ import java.util.List;
 
   @Provides IStudentModel provideStudent() {
     return new StudentModel(qcrestRepository, gymWrapper, loginStatus);
+  }
+  @Provides IExportModel provideExportModel(){
+    return exportModel;
+  }
+
+  @Provides ICardModel provideCardmodel(){
+    return cardModel;
   }
 }

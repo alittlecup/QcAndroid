@@ -608,7 +608,9 @@
         android:exported="false"
         />
 
-    <activity android:name=".views.notification.NotificationActivity"/>
+    <activity android:name=".views.notification.NotificationActivity"
+        android:screenOrientation="portrait"
+        />
     <activity
         android:name=".views.wardrobe.WardrobeActivity"
         android:screenOrientation="portrait"

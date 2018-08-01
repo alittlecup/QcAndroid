@@ -255,20 +255,11 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         }, throwable -> {
         }));
 
-    switch (statusToTab) {
-      case 0:
-        student.setCurrentItem(3);
-        break;
-      case 1:
-        student.setCurrentItem(2);
-        break;
-      case 2:
-        student.setCurrentItem(1);
-        break;
-    }
+
     isLoading = true;
     view.findViewById(R.id.ll_student_call).setOnClickListener(this);
     view.findViewById(R.id.ll_student_msg).setOnClickListener(this);
+
     return view;
   }
 
@@ -281,6 +272,17 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     fragments.add(new FollowRecordFragment());
     fragments.add(new StudentMoreInfoFragment());
     mAdapter.notifyDataSetChanged();
+    switch (statusToTab) {
+      case 0:
+        student.setCurrentItem(3);
+        break;
+      case 1:
+        student.setCurrentItem(2);
+        break;
+      case 2:
+        student.setCurrentItem(1);
+        break;
+    }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
