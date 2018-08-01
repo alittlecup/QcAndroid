@@ -215,7 +215,6 @@ import cn.qingchengfit.staffkit.views.student.choose.ChooseStudentListFragment;
 import cn.qingchengfit.staffkit.views.student.choose.MultiChooseStudentWithFilterFragment;
 import cn.qingchengfit.staffkit.views.student.choose.StudentFilterWithBirthFragment;
 import cn.qingchengfit.staffkit.views.student.detail.ClassRecordFragment;
-import cn.qingchengfit.staffkit.views.student.detail.FollowRecordFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentHomeFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentMoreInfoFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentSignInImageFragment;
@@ -282,6 +281,7 @@ import dagger.Subcomponent;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
+import dagger.android.ContributesAndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import dagger.android.support.FragmentKey;
 import dagger.multibindings.IntoMap;
@@ -408,16 +408,14 @@ import javax.inject.Singleton;
     /*
       带有学员信息的页面
      */
-    AppComponent.StudentHomeModule.class,
-    AppComponent.FollowRecordPageModule.class,
-    AppComponent.StudentMoreInfoModule.class,
-    AppComponent.FollowRecordModule.class, AppComponent.StudentsCardsModule.class,
+
+    AppComponent.StudentHomeModule.class, AppComponent.FollowRecordPageModule.class,
+    AppComponent.StudentMoreInfoModule.class, AppComponent.StudentsCardsModule.class,
     AppComponent.ClassRecordModule.class, AppComponent.StudentSignInImageFragmentModule.class,
 
-     AppComponent.SignInManualModule.class,
-    AppComponent.StudentsDetailModule.class, AppComponent.ScoreDetailAModule.class,
-    AppComponent.ScoreDetailModule.class, AppComponent.ScoreModifyModule.class,
-    AppComponent.AddNewSiteFragmentModule.class,
+    AppComponent.SignInManualModule.class, AppComponent.StudentsDetailModule.class,
+    AppComponent.ScoreDetailAModule.class, AppComponent.ScoreDetailModule.class,
+    AppComponent.ScoreModifyModule.class, AppComponent.AddNewSiteFragmentModule.class,
 
     //体测
     AppComponent.ModifyBodyTestFragmentModule.class, AppComponent.BodyTestListFragmentModule.class,
@@ -425,7 +423,7 @@ import javax.inject.Singleton;
     /*
      * 以下为附加component
      */
-    AppComponent.StudentWraperInnerModule.class, AppComponent.ChooseBrandActivityModule.class,
+    AppComponent.ChooseBrandActivityModule.class,
 
     AppComponent.WebFModule.class, CardTypeWrapperModule.class, RealcardModule.class,
     /**
@@ -513,8 +511,7 @@ import javax.inject.Singleton;
     AppComponent.NotiSettingChargeResultFragmentModule.class,
     AppComponent.NotiSettingChargeHistoryFragmentModule.class,
     //导入导出
-    AppComponent.ExportRecordFragmentModule.class,
-    AppComponent.ExportSendEmailFragmentModule.class,
+    AppComponent.ExportRecordFragmentModule.class, AppComponent.ExportSendEmailFragmentModule.class,
 
     //筛选，签课
     AppComponent.NotSignFilterFragmentModule.class,
@@ -522,10 +519,9 @@ import javax.inject.Singleton;
 
     AppComponent.StaffDetailFragmentModule.class, AppComponent.CardProtocolModule.class,
     AppComponent.COurseChooseDialogFragmentModule.class,
-    AppComponent.SignInCodeFragmentModule.class, AppComponent.FollowRecordModule.class,
-    AppComponent.QRModule.class, AppComponent.ZqAccessFragmentModule.class,
-    AppComponent.EditZqFragmentModule.class, AppComponent.AddZqFragmentModule.class,
-    AppComponent.UpgradeDoneFragmentModule.class,
+    AppComponent.SignInCodeFragmentModule.class, AppComponent.QRModule.class,
+    AppComponent.ZqAccessFragmentModule.class, AppComponent.EditZqFragmentModule.class,
+    AppComponent.AddZqFragmentModule.class, AppComponent.UpgradeDoneFragmentModule.class,
 })
 
 public interface AppComponent {
@@ -545,6 +541,11 @@ public interface AppComponent {
     @Subcomponent.Builder public abstract class Builder
         extends AndroidInjector.Builder<ChooseGymActivity> {
     }
+  }
+
+  @Module public abstract class StaffStudentActivityModule {
+    @Singleton @ContributesAndroidInjector()
+    abstract StudentActivity contributeStudentActivityInjector();
   }
 
   @Subcomponent() public interface GuideSubcomponent extends AndroidInjector<GuideActivity> {
@@ -1772,6 +1773,7 @@ public interface AppComponent {
         extends AndroidInjector.Builder<StudentHomeFragment> {
     }
   }
+
   @Subcomponent() public interface FollowRecordPageSubcomponent
       extends AndroidInjector<FollowRecordPage> {
     @Subcomponent.Builder public abstract class Builder
@@ -1782,7 +1784,7 @@ public interface AppComponent {
   /**
    * {@link ClassRecordFragment}
    * {@link StudentsCardsFragment}
-   * {@link FollowRecordFragment}
+   *
    * {@link StudentMoreInfoFragment}
    */
   @Subcomponent() public interface ClassRecordSubcomponent
@@ -1796,13 +1798,6 @@ public interface AppComponent {
       extends AndroidInjector<StudentsCardsFragment> {
     @Subcomponent.Builder public abstract class Builder
         extends AndroidInjector.Builder<StudentsCardsFragment> {
-    }
-  }
-
-  @Subcomponent() public interface FollowRecordSubcomponent
-      extends AndroidInjector<FollowRecordFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<FollowRecordFragment> {
     }
   }
 
@@ -1821,8 +1816,8 @@ public interface AppComponent {
   }
 
   /*
-     * 更衣柜
-     */
+   * 更衣柜
+   */
   @Subcomponent() public interface WardrobeListFragmentSubcomponent
       extends AndroidInjector<WardrobeListFragment> {
     @Subcomponent.Builder public abstract class Builder
@@ -2850,11 +2845,6 @@ public interface AppComponent {
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         WardrobePayBottomSubcomponent.Builder builder);
   }
-  @Module(subcomponents = StudentWrapperComponent.class) abstract class StudentWraperInnerModule {
-    @Binds @IntoMap @ActivityKey(StudentActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-        StudentWrapperComponent.Builder builder);
-  }
 
   @Module(subcomponents = WardrobeDetailFragmentSubcomponent.class)
   abstract class WardrobeDetailFragmentModule {
@@ -3050,8 +3040,6 @@ public interface AppComponent {
     abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
         MutiChooseSalersSubcomponent.Builder builder);
   }
-
-
 
   @Module(subcomponents = NotificationSubcomponent.class) abstract class NotificationModule {
     @Binds @IntoMap @FragmentKey(NotificationFragment.class)
@@ -3416,7 +3404,8 @@ public interface AppComponent {
         StudentHomeSubcomponent.Builder builder);
   }
 
-  @Module(subcomponents = FollowRecordPageSubcomponent.class) abstract class FollowRecordPageModule {
+  @Module(subcomponents = FollowRecordPageSubcomponent.class)
+  abstract class FollowRecordPageModule {
     @Binds @IntoMap @FragmentKey(FollowRecordPage.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         FollowRecordPageSubcomponent.Builder builder);
@@ -3432,12 +3421,6 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(StudentsCardsFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         StudentsCardsSubcomponent.Builder builder);
-  }
-
-  @Module(subcomponents = FollowRecordSubcomponent.class) abstract class FollowRecordModule {
-    @Binds @IntoMap @FragmentKey(FollowRecordFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        FollowRecordSubcomponent.Builder builder);
   }
 
   @Module(subcomponents = StudentMoreInfoSubcomponent.class) abstract class StudentMoreInfoModule {
