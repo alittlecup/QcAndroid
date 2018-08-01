@@ -16,11 +16,11 @@ public class QcScanActivityModel extends BaseViewModel {
   @Inject QcScanActivityModel(){
 
   }
-  public void scanPay(String barCode,String orderNumber,String pollingNumber){
+  public void scanPay(String barCode,String pollingNumber,String orderNumber){
     Map<String,Object> params=new HashMap<>();
     params.put("barcode",barCode);
-    params.put("out_trade_no",orderNumber);
-    params.put("pay_trade_no",pollingNumber);
+    params.put("out_trade_no",pollingNumber);
+    params.put("pay_trade_no",orderNumber);
 
     repository.qcPostScanOrder(scanResult,defaultResult,params);
   }

@@ -55,6 +55,7 @@ public class QcStudentBean extends Personage
     @Ignore
     private List<Shop> shops;
     @Ignore
+    @SerializedName(value = "cloud_user",alternate = "user")
     private User cloud_user;
 
     public QcStudentBean() {

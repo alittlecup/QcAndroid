@@ -342,8 +342,7 @@ public class CardBuyPresenter extends BasePresenter {
           mChosenOption);
     }
 
-    if (cardBuyBody.checkData() > 0) {
-      view.showAlert(cardBuyBody.checkData());
+    if(view.checkCardBuyBody(cardBuyBody)){
       return;
     }
     cardBuyBody.setCharge_type(view.payMethod());
@@ -419,6 +418,8 @@ public class CardBuyPresenter extends BasePresenter {
     String chargeMoney();
 
     int payMethod();
+
+    boolean checkCardBuyBody(CardBuyBody cardBuyBody);
 
     /**
      * 是否设置有效期

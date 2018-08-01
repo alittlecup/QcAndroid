@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutMoneyBinding;
@@ -38,33 +39,42 @@ import java.util.Map;
     });
     mViewModel.cashierBean.observe(this, cashierBean -> {
       hideLoading();
-      CashierBeanWrapper wrapper=new CashierBeanWrapper(cashierBean);
-      wrapper.setPrices(mViewModel.count.getValue());
-      ScanRepayInfo info = new ScanRepayInfo();
-      info.setModuleName("checkout");
-      info.setActionName("reOrder");
-      Map<String, String> params = new HashMap<>();
-      params.put("prices", mViewModel.count.getValue());
-
-      switch (mViewModel.getType()) {
-        case PayChannel.ALIPAY_QRCODE:
-          params.put("channel", "ALIPAY_QRCODE");
-          info.setParams(params);
-          wrapper.setInfo(info);
-          Bundle bundle = new CheckoutPayPageParams().type("支付宝").build();
-          bundle.putParcelable("orderData",wrapper);
-          routeTo("checkout/pay", bundle);
-          break;
-        case PayChannel.WEIXIN_QRCODE:
-          params.put("channel", "WEIXIN_QRCODE");
-          info.setParams(params);
-          wrapper.setInfo(info);
-          Bundle wx = new CheckoutPayPageParams().type("微信").build();
-          wx.putParcelable("orderData",wrapper);
-          routeTo("checkout/pay", wx);
-          break;
+      if (cashierBean != null &&!cashierBean.equals(preCashierBean)) {
+        preCashierBean=cashierBean;
+        dealCashierBean(cashierBean);
       }
     });
+  }
+
+  private CashierBean preCashierBean;
+
+  private void dealCashierBean(CashierBean cashierBean) {
+    CashierBeanWrapper wrapper = new CashierBeanWrapper(cashierBean);
+    wrapper.setPrices(mViewModel.count.getValue());
+    ScanRepayInfo info = new ScanRepayInfo();
+    info.setModuleName("checkout");
+    info.setActionName("reOrder");
+    Map<String, String> params = new HashMap<>();
+    params.put("prices", mViewModel.count.getValue());
+
+    switch (mViewModel.getType()) {
+      case PayChannel.ALIPAY_QRCODE:
+        params.put("channel", "ALIPAY_QRCODE");
+        info.setParams(params);
+        wrapper.setInfo(info);
+        Bundle bundle = new CheckoutPayPageParams().type("支付宝").build();
+        bundle.putParcelable("orderData", wrapper);
+        routeTo("checkout/pay", bundle);
+        break;
+      case PayChannel.WEIXIN_QRCODE:
+        params.put("channel", "WEIXIN_QRCODE");
+        info.setParams(params);
+        wrapper.setInfo(info);
+        Bundle wx = new CheckoutPayPageParams().type("微信").build();
+        wx.putParcelable("orderData", wrapper);
+        routeTo("checkout/pay", wx);
+        break;
+    }
   }
 
   @Override

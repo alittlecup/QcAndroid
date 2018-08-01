@@ -35,6 +35,7 @@ import cn.qingchengfit.bean.SpinnerBean;
 import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -54,7 +55,6 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
-import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -358,7 +358,7 @@ public class MyStudentFragment extends BaseFragment {
                         bean.headerPic = student.avatar;
                         bean.username = student.username;
                         bean.systemUrl = ship.service.host;
-                        bean.id = student.user.id;
+                        bean.id = student.getCloud_user().id;
                         bean.ship_id = student.id;
                         bean.color = ship.service.color;
                         bean.modelid = ship.service.id + "";
@@ -373,11 +373,7 @@ public class MyStudentFragment extends BaseFragment {
                         StringBuffer sb = new StringBuffer();
                         sb.append("手机:").append(student.phone);
                         bean.phone = sb.toString();
-                        if (student.gender.equalsIgnoreCase("0")) {
-                          bean.gender = 0;
-                        } else {
-                          bean.gender = 1;
-                        }
+                        bean.gender=student.getGender();
                         if (TextUtils.isEmpty(keyWord)
                             || bean.username.contains(keyWord)
                             || bean.gymStr.contains(keyWord)

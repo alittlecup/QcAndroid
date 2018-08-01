@@ -56,8 +56,7 @@ public class CardComponent implements IComponent {
               CashierBean cashierBean =
                   new Gson().fromJson(jsonObjectQcDataResponse.data.toString(), CashierBean.class);
               Map<String, Object> map = new HashMap<>();
-              map.put("orderNumber", cashierBean.getOut_trade_no());
-              map.put("pollingNumber", cashierBean.getPay_trade_no());
+              map.put("cashierBean",cashierBean);
               QC.sendQCResult(qc.getCallId(), QCResult.success(map));
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));
@@ -84,8 +83,7 @@ public class CardComponent implements IComponent {
               CashierBean cashierBean =
                   new Gson().fromJson(jsonObjectQcDataResponse.data.toString(), CashierBean.class);
               Map<String, Object> map = new HashMap<>();
-              map.put("orderNumber", cashierBean.getOut_trade_no());
-              map.put("pollingNumber", cashierBean.getPay_trade_no());
+              map.put("cashierBean",cashierBean);
               QC.sendQCResult(qc.getCallId(), QCResult.success(map));
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));

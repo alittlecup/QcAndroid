@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.card;
 import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -61,12 +62,13 @@ public class StudentModel implements IStudentModel {
               qcDataResponse.setMsg(qcAllStudentResponse.msg);
               qcDataResponse.setLevel(qcAllStudentResponse.level);
               QcAllStudentResponse.Ship data = qcAllStudentResponse.data;
-              if (data != null) {
-                Gson gson = new Gson();
-                JsonObject jsonObject=new JsonObject();
-                jsonObject.add("users",gson.toJsonTree(data.users));
-                StudentBeanListWrapper studentBeanListWrapper =
-                    gson.fromJson(jsonObject, StudentBeanListWrapper.class);
+              if (data != null&&!data.users.isEmpty()) {
+                List<QcStudentBean> users = data.users;
+                StudentBeanListWrapper studentBeanListWrapper = new StudentBeanListWrapper();
+                for(QcStudentBean qcStudentBean:users){
+                  qcStudentBean.setId(qcStudentBean.getCloud_user().getId());
+                }
+                studentBeanListWrapper.users=users;
                 qcDataResponse.setData(studentBeanListWrapper);
               } else {
                 qcDataResponse.setData(new StudentBeanListWrapper());

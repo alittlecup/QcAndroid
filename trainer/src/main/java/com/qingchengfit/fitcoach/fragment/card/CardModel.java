@@ -118,9 +118,9 @@ public class CardModel implements ICardModel {
       CardBuyBody ochargeBody) {
     CardBuyBody chargeBody = (CardBuyBody) ochargeBody.clone();
     chargeBody.setType(null);
-    if (chargeBody.getSeller_id() != null && chargeBody.getSeller_id().equalsIgnoreCase("0")) {
-      chargeBody.setSeller_id(null);
-    }
+    chargeBody.staff_id=null;
+    chargeBody.setCard_tpl_id(null);
+    chargeBody.seller_id=null;
     return posApi.qcCardCharge(loginStatus.staff_id(), cardId, gymWrapper.getParams(), chargeBody);
   }
 

@@ -12,6 +12,7 @@ public class TrainerCardChargeFragment extends StaffCardChargeFragment {
     civSaler.setShowRight(false);
     civSaler.setContent(loginStatus.getLoginUser().getUsername());
     civSaler.setCanClick(false);
+
     return view;
   }
 }

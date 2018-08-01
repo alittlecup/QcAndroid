@@ -131,7 +131,7 @@
               android:layout_height="@dimen/qc_item_height"
               android:layout_marginTop="@dimen/activity_vertical_margin"
               app:civ_clickable="true"
-              app:civ_content="微信扫码支付"
+              app:civ_content="微信付款"
               app:civ_lable="支付方式"
               app:civ_nonnull="true"
               app:civ_showdivier="false"

@@ -9,6 +9,7 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.TextUtils;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 import cn.qingchengfit.checkout.databinding.QcScanActivityBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -45,6 +46,11 @@ public class QcScanActivity extends SaasCommonActivity
     mViewModel.scanResult.observe(this, scanResultBean -> {
       hideLoading();
       // TODO: 2018/7/25 deal result
+      if(scanResultBean.successful){
+        ToastUtils.show("success");
+      }else{
+        payError();
+      }
     });
   }
 
@@ -54,20 +60,32 @@ public class QcScanActivity extends SaasCommonActivity
     if (mBinding.qrCodeView != null) mBinding.qrCodeView.getCameraManager().stopPreview();
     if (hasBarCodeFlag) return;
     hasBarCodeFlag = true;
+    rePay(text);
+  }
+  private void rePay(String barCode) {
     showLoading();
     QcRouteUtil.setRouteOptions(
         new RouteOptions(scanRepayInfo.getModuleName()).setActionName(scanRepayInfo.getActionName())
             .addParam("type", type)
             .addParams(new HashMap<>(scanRepayInfo.getParams()))).callAsync(qcResult -> {
-      hasBarCodeFlag = false;
       if (qcResult.isSuccess()) {
         Map<String, Object> dataMap = qcResult.getDataMap();
-        String pay_trade_no = (String) dataMap.get("orderNumber");
-        String out_trade_no = (String) dataMap.get("pollingNumber");
-        mViewModel.scanPay(text, out_trade_no, pay_trade_no);
+        Object cashierBean = dataMap.get("cashierBean");
+        if (cashierBean instanceof CashierBean) {
+          mViewModel.scanPay(barCode, ((CashierBean) cashierBean).getOut_trade_no(),
+              ((CashierBean) cashierBean).getPay_trade_no());
+        }
       } else {
-        ToastUtils.show(qcResult.getErrorMessage());
+        payError();
       }
+    });
+  }
+
+  private void payError() {
+    hideLoading();
+    DialogUtils.showAlert(this, "收款失败", "收款失败，请点击下方按钮重新扫码", (materialDialog, dialogAction) -> {
+      materialDialog.dismiss();
+      hasBarCodeFlag=false;
     });
   }
 

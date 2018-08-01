@@ -33,6 +33,7 @@ import cn.qingchengfit.saasbase.cards.event.PayEvent;
 import cn.qingchengfit.saasbase.cards.item.CardTplCustomOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
+import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saascommon.constant.Configs;
@@ -548,6 +549,14 @@ import rx.functions.Action1;
 
   @Override public int payMethod() {
     return patType == 0 ? 7 : patType;
+  }
+
+  @Override public boolean checkCardBuyBody(CardBuyBody cardBuyBody) {
+    if(cardBuyBody.checkData()>0){
+      showAlert(cardBuyBody.checkData());
+      return true;
+    }
+    return false;
   }
 
   @Override public boolean openValidDay() {

@@ -193,7 +193,7 @@ task buildWithAP(dependsOn: build) {}
 dependencies {
   addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180726',false)
   addComponent('shop','cn.qingchengfit.shop:shop:1.0.180721',true)
-  addApiComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
+  addApiComponent('login','cn.qingchengfit.login:login:1.0.180724',true)
   implementation project(path: ':checkout')
   implementation project(path: ':student')
   implementation project(path: ':card')

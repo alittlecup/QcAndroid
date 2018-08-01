@@ -38,7 +38,16 @@ public class CashierBeanWrapper  implements IOrderData, Parcelable {
   @Override public ScanRepayInfo getScanRePayInfo() {
     return info;
   }
+  public void setQrCodeUri(String uri){
+    if(bean!=null)bean.setUrl(uri);
+  }
 
+  public void setPollingNumber(String pollingNumber){
+    if(bean!=null)bean.setOut_trade_no(pollingNumber);
+  }
+  public void setOrderNumber(String orderNumber){
+    if(bean!=null)bean.setPay_trade_no(orderNumber);
+  }
   @Override public int describeContents() {
     return 0;
   }

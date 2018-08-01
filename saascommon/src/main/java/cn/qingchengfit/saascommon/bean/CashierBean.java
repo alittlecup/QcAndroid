@@ -61,4 +61,28 @@ public class CashierBean implements Parcelable {
       return new CashierBean[size];
     }
   };
+
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    CashierBean that = (CashierBean) o;
+
+    if (pay_trade_no != null ? !pay_trade_no.equals(that.pay_trade_no)
+        : that.pay_trade_no != null) {
+      return false;
+    }
+    if (out_trade_no != null ? !out_trade_no.equals(that.out_trade_no)
+        : that.out_trade_no != null) {
+      return false;
+    }
+    return url != null ? url.equals(that.url) : that.url == null;
+  }
+
+  @Override public int hashCode() {
+    int result = pay_trade_no != null ? pay_trade_no.hashCode() : 0;
+    result = 31 * result + (out_trade_no != null ? out_trade_no.hashCode() : 0);
+    result = 31 * result + (url != null ? url.hashCode() : 0);
+    return result;
+  }
 }

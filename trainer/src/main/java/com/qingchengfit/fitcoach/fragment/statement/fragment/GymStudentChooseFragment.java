@@ -85,7 +85,7 @@ import rx.schedulers.Schedulers;
 
         if (mDatas.get(position) instanceof ChooseStudentItem) {
             RxBus.getBus()
-                .post(new EventChooseStudent.Builder().chooseStudentid(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.user.id)
+                .post(new EventChooseStudent.Builder().chooseStudentid(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.getCloud_user().id)
                     .StudentName(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.username)
                     .build());
         } else if (mDatas.get(position) instanceof SimpleTextItemItem) {
