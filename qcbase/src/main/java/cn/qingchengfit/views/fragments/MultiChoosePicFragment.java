@@ -199,7 +199,7 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
           });
         }
       } else {
-        getActivity().onBackPressed();
+        dismiss();
       }
     }
   }

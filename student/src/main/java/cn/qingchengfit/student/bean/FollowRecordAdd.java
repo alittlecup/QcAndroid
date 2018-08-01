@@ -9,9 +9,9 @@ public class FollowRecordAdd {
   String content;
   String track_type_id;
   String track_status_id;
-  List<User> notice_users;
+  List<String> notice_users;
   String next_track_time;
-  List<Attach> attachments;//附件列表，图片
+  List<String> attachments;//附件列表，图片
 
   public void setId(String id) {
     this.id = id;
@@ -38,9 +38,9 @@ public class FollowRecordAdd {
     private String content;
     private String track_type_id;
     private String track_status_id;
-    private List<User> notice_users;
+    private List<String> notice_users;
     private String next_track_time;
-    private List<Attach> attachments;
+    private List<String> attachments;
 
     public Builder() {
     }
@@ -70,7 +70,7 @@ public class FollowRecordAdd {
       return this;
     }
 
-    public Builder notice_users(List<User> val) {
+    public Builder notice_users(List<String> val) {
       notice_users = val;
       return this;
     }
@@ -80,7 +80,7 @@ public class FollowRecordAdd {
       return this;
     }
 
-    public Builder attachments(List<Attach> val) {
+    public Builder attachments(List<String> val) {
       attachments = val;
       return this;
     }

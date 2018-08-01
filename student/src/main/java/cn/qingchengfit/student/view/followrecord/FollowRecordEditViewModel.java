@@ -22,6 +22,7 @@ public class FollowRecordEditViewModel extends BaseViewModel {
   public MutableLiveData<Integer> followMethod = new MutableLiveData<>();
   public MutableLiveData<FollowRecordStatus> followStatus = new MutableLiveData<>();
   public MutableLiveData<List<User>> notiOthers = new MutableLiveData<>();
+  public MutableLiveData<List<String>> userIds = new MutableLiveData<>();
   public MutableLiveData<String> nextFollowTime = new MutableLiveData<>();
   List<String> followRecordUrl = new ArrayList<>();
 
@@ -35,6 +36,9 @@ public class FollowRecordEditViewModel extends BaseViewModel {
     ArrayList<Staff> ret = new ArrayList<>();
     if (studentWrap.getStudentBean() != null && studentWrap.getStudentBean().sellers != null){
       ret.addAll(studentWrap.getStudentBean().sellers);
+    }
+    if (studentWrap.getStudentBean() != null && studentWrap.getStudentBean().coaches != null){
+      ret.addAll(studentWrap.getStudentBean().coaches);
     }
     return ret;
   }
@@ -53,10 +57,10 @@ public class FollowRecordEditViewModel extends BaseViewModel {
     studentRepository.qcAddTrackRecord(studentWrap.getStudentBean().id,new FollowRecordAdd.Builder()
       .content(content.getValue())
       .next_track_time(value)
-      .notice_users(notiOthers.getValue())
+      .notice_users(userIds.getValue())
       .track_type_id(followMethod.getValue()==null?null:(followMethod.getValue()+""))
       .track_status_id(followStatus.getValue()==null?null:followStatus.getValue().getId())
-      .attachments(attaches.size() > 0?attaches:null)
+      .attachments(followRecordUrl)
       .build(),defaultResult);
   }
 

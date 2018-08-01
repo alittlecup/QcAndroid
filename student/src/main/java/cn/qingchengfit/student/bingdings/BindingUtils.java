@@ -49,6 +49,21 @@ public class BindingUtils {
       }
     }else return "--";
   }
+  public static String getFollowRecordNotiOhtersNames(List<String> users,Context context){
+    if (users != null &&users.size() >0){
+
+      if (users.size() > 2){
+        return
+            users.get(0)+","+users.get(1)+"等"+users.size()+"人";
+      }else if (users.size() == 2){
+        return users.get(0)+","+
+            users.get(1);
+
+      }else {
+        return users.get(0);
+      }
+    }else return "--";
+  }
 
   public static String getNextFollowTime(String serverTime){
     return DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(serverTime));

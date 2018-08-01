@@ -53,7 +53,7 @@
               android:maxLength="140"
               android:paddingLeft="15dp"
               android:paddingTop="15dp"
-              android:text="@{vm.content}"
+              android:text="@={vm.content}"
               />
           <Space
               android:layout_width="0dp"

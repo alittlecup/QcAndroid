@@ -70,14 +70,18 @@ import javax.inject.Inject;
           @Override public void onNext(EventCommonUserList eventCommonUserList) {
             if (eventCommonUserList.getCommonUsers() != null) {
               List<User> users = new ArrayList<>();
+              List<String> ids = new ArrayList<>();
+
               for (ICommonUser iCommonUser : eventCommonUserList.getCommonUsers()) {
                 User u = new User();
                 u.setId(iCommonUser.getId());
                 u.setUsername(iCommonUser.getTitle());
                 u.setAvatar(iCommonUser.getAvatar());
                 users.add(u);
+                ids.add(iCommonUser.getId());
               }
               mViewModel.notiOthers.setValue(users);
+              mViewModel.userIds.setValue(ids);
             }
           }
         });

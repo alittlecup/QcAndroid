@@ -141,7 +141,7 @@
                 android:layout_gravity="center"
                 android:background="@color/halftrans_background"
                 android:gravity="center"
-                android:text="+2"
+                android:text='@{"+"+(info.getAttachSize()-3)}'
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:visibility="@{info.getAttachSize() > 3 ? View.VISIBLE:View.GONE}"

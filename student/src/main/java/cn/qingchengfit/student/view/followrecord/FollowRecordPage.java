@@ -15,6 +15,7 @@ import cn.qingchengfit.student.bean.Attach;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.databinding.StPageFollowRecordBinding;
 import cn.qingchengfit.student.item.FollowRecordItem;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -38,8 +39,6 @@ import javax.inject.Inject;
     });
   }
 
-
-
   @Override
   public StPageFollowRecordBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ import javax.inject.Inject;
   private void initListener() {
     mBinding.fab.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-        Uri uri = Uri.parse("qcstaff://student/student/follow_record_edit");
+        Uri uri = AppUtils.getRouterUri(getContext(), "student/student/follow_record_edit");
         routeTo(uri, new FollowRecordEditPageParams().build(), false);
       } else {
         showAlert(R.string.sorry_for_no_permission);

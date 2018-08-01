@@ -45,6 +45,7 @@ public class StudentBean implements Parcelable {
     public String support_shop_ids;
     public int status;//会员状态,
     public List<Staff> sellers;
+    public List<Staff> coaches;
     public User cloud_user;
 
     public StudentBean() {
@@ -233,6 +234,7 @@ public class StudentBean implements Parcelable {
         dest.writeString(this.support_shop_ids);
         dest.writeInt(this.status);
         dest.writeTypedList(this.sellers);
+        dest.writeTypedList(this.coaches);
         dest.writeParcelable(this.cloud_user, flags);
     }
 
@@ -258,6 +260,7 @@ public class StudentBean implements Parcelable {
         this.support_shop_ids = in.readString();
         this.status = in.readInt();
         this.sellers = in.createTypedArrayList(Staff.CREATOR);
+        this.coaches = in.createTypedArrayList(Staff.CREATOR);
         this.cloud_user = in.readParcelable(User.class.getClassLoader());
     }
 

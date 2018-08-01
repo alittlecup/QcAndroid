@@ -16,7 +16,7 @@ public class FollowRecord {
   String content;
   String track_type_id;
   String track_status;
-  List<User> notice_users;
+  List<String> notice_users;
   String next_track_time;
   @SerializedName(value = "attachments") List<Attach> image_attachments;//附件列表，图片
   User created_by;
@@ -60,7 +60,7 @@ public class FollowRecord {
 
   public String getNotiOthers() {
     if (notice_users != null) {
-      return BindingUtils.getFollowRecordNotiOhters(notice_users, null);
+      return BindingUtils.getFollowRecordNotiOhtersNames(notice_users, null);
     } else {
       return "--";
     }

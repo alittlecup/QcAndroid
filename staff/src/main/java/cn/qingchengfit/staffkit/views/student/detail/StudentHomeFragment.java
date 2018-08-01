@@ -199,6 +199,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         tmpStudentBean.avatar = studentBaseInfoEvent.user_student.getAvatar();
         tmpStudentBean.checkin_avatar = studentBaseInfoEvent.user_student.getCheckin_avatar();
         tmpStudentBean.sellers = studentBaseInfoEvent.user_student.getSellers();
+        tmpStudentBean.coaches = studentBaseInfoEvent.user_student.getCoaches();
         tmpStudentBean.gender = studentBaseInfoEvent.user_student.getGender() == 0;
         tmpStudentBean.phone = studentBaseInfoEvent.user_student.getPhone();
         tmpStudentBean.username =studentBaseInfoEvent.user_student.getUsername();
