@@ -11,7 +11,7 @@ import cn.qingchengfit.saascommon.utils.RouteUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-public  class CheckoutComponent implements IComponent {
+public class CheckoutComponent implements IComponent {
 
   @Override public String getName() {
     return "checkout";
@@ -25,9 +25,9 @@ public  class CheckoutComponent implements IComponent {
         Bundle bundle = new Bundle();
         bundle.putParcelable("orderData", (Parcelable) params1.get("orderData"));
         bundle.putString("type", (String) params1.get("type"));
+        bundle.putString("qcCallId", qc.getCallId());
         RouteUtil.routeTo(qc.getContext(), getName(), qc.getActionName(), bundle);
-        QC.sendQCResult(qc.getCallId(), QCResult.success());
-        return false;
+        return true;
       case "reOrder":
         Map<String, Object> params = qc.getParams();
         String channel = (String) params.get("channel");
@@ -37,8 +37,7 @@ public  class CheckoutComponent implements IComponent {
           params.put("channel", "WEIXIN_BARCODE");
         }
         ICheckoutModel checkoutModel = CheckoutModel.getInstance();
-        checkoutModel
-            .qcPostCashierOrder(params)
+        checkoutModel.qcPostCashierOrder(params)
             .compose(RxHelper.schedulersTransformerFlow())
             .subscribe(cashierBeanQcDataResponse -> {
               Map<String, Object> map = new HashMap<>();
@@ -47,13 +46,11 @@ public  class CheckoutComponent implements IComponent {
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));
         return true;
-      case "/checkout/home":
+      default:
         RouteUtil.routeTo(qc.getContext(), getName(), qc.getActionName(), null);
         QC.sendQCResult(qc.getCallId(), QCResult.success());
         return false;
     }
-    return false;
   }
-
 }
 

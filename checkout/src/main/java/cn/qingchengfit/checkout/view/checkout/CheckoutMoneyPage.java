@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.router.IComponentCallback;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.router.qc.IQcRouteCallback;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
 import cn.qingchengfit.checkout.bean.PayChannel;
@@ -39,8 +45,8 @@ import java.util.Map;
     });
     mViewModel.cashierBean.observe(this, cashierBean -> {
       hideLoading();
-      if (cashierBean != null &&!cashierBean.equals(preCashierBean)) {
-        preCashierBean=cashierBean;
+      if (cashierBean != null && !cashierBean.equals(preCashierBean)) {
+        preCashierBean = cashierBean;
         dealCashierBean(cashierBean);
       }
     });
@@ -62,20 +68,27 @@ import java.util.Map;
         params.put("channel", "ALIPAY_QRCODE");
         info.setParams(params);
         wrapper.setInfo(info);
-        Bundle bundle = new CheckoutPayPageParams().type("支付宝").build();
-        bundle.putParcelable("orderData", wrapper);
-        routeTo("checkout/pay", bundle);
+        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+            .setContext(getContext())
+            .addParam("type", "支付宝")
+            .addParam("orderData", wrapper)).callAsync(callback);
         break;
       case PayChannel.WEIXIN_QRCODE:
         params.put("channel", "WEIXIN_QRCODE");
         info.setParams(params);
         wrapper.setInfo(info);
-        Bundle wx = new CheckoutPayPageParams().type("微信").build();
-        wx.putParcelable("orderData", wrapper);
-        routeTo("checkout/pay", wx);
+        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+            .setContext(getContext())
+            .addParam("type", "微信")
+            .addParam("orderData", wrapper)).callAsync(callback);
         break;
     }
   }
+  private IQcRouteCallback callback=new IQcRouteCallback() {
+    @Override public void onResult(QCResult qcResult) {
+        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
+    }
+  };
 
   @Override
   public CkPageCheckoutMoneyBinding initDataBinding(LayoutInflater inflater, ViewGroup container,

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import cn.qingchengfit.views.fragments.WebFragment;
@@ -37,6 +38,7 @@ public class WebActivity extends BaseActivity {
     intent.putExtra("url", url);
     context.startActivity(intent);
   }
+
   public static void startWeb(String url, boolean banRefresh, Context context) {
     Intent intent = new Intent(context, WebActivity.class);
     intent.putExtra("url", url);
@@ -58,6 +60,13 @@ public class WebActivity extends BaseActivity {
     if (context instanceof Activity) {
       ((Activity) context).startActivityForResult(intent, requestcode);
     }
+  }
+
+  public static void startWebForResult(String url, Fragment fragment, int requestcode) {
+    Intent intent = new Intent(fragment.getContext(), WebActivity.class);
+    intent.putExtra("url", url);
+    intent.putExtra("request", requestcode);
+    fragment.startActivityForResult(intent, requestcode);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {

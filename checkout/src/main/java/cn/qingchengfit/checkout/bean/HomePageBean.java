@@ -15,6 +15,15 @@ public class HomePageBean {
   @SerializedName("new") private int new_count;
   private int charge;
   private int cashier;
+
+  public String getSum() {
+    return sum;
+  }
+
+  public void setSum(String sum) {
+    this.sum = sum;
+  }
+
   private String sum;
 
   public int getNew_count() {
@@ -41,12 +50,6 @@ public class HomePageBean {
     this.cashier = cashier;
   }
 
-  public String getSum() {
-    return sum;
-  }
 
-  public void setSum(String sum) {
-    this.sum = sum;
-  }
 
 }

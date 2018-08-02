@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.card.R;
 import cn.qingchengfit.card.buy.CompletedBuyView;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
@@ -50,30 +54,37 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
-      CashierBean
-          cashierBean = gson.fromJson(payBusinessResponse.toString(), CashierBean.class);
-      CashierBeanWrapper wrapper=new CashierBeanWrapper(cashierBean);
+      CashierBean cashierBean = gson.fromJson(payBusinessResponse.toString(), CashierBean.class);
+      CashierBeanWrapper wrapper = new CashierBeanWrapper(cashierBean);
       wrapper.setPrices(realMoney());
-      ScanRepayInfo info=new ScanRepayInfo();
+      ScanRepayInfo info = new ScanRepayInfo();
       info.setModuleName("card");
       info.setActionName("/repay/newcard");
-      Map<String,String> params=new HashMap<>();
-      params.put("json",presenter.getRePayJson());
+      Map<String, String> params = new HashMap<>();
+      params.put("json", presenter.getRePayJson());
       info.setParams(params);
       wrapper.setInfo(info);
       if (payMethod() == 7) {
         QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
             .setContext(getContext())
-            .addParam("type","微信")
-            .addParam("orderData",wrapper)).call();
+            .addParam("type", "微信")
+            .addParam("orderData", wrapper)).callAsync(callback);
       } else if (payMethod() == 12) {
         QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
             .setContext(getContext())
-            .addParam("type","支付宝")
-            .addParam("orderData",wrapper)).call();
+            .addParam("type", "支付宝")
+            .addParam("orderData", wrapper)).callAsync(callback);
       }
     }
   }
+
+  private IQcRouteCallback callback = qcResult -> {
+    if (qcResult.isSuccess()) {
+      paySuccess();
+    } else {
+      onFailed("充值失败");
+    }
+  };
 
   @Override public void onSalers(List<Staff> salers) {
 
@@ -84,7 +95,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     if (resultCode == Activity.RESULT_OK) {
       switch (requestCode) {
         case 404:
-          buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
+          paySuccess();
           break;
       }
     } else {
@@ -92,16 +103,30 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     }
   }
 
+  private void paySuccess() {
+    buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
+  }
+
   @Override public void onSuccess() {
     ToastUtils.showS("购卡成功");
     getActivity().setResult(Activity.RESULT_OK);
     getActivity().finish();
-    routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
+    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+    if(TextUtils.isEmpty(qcCallId)){
+      routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
+    }else{
+      QC.sendQCResult(qcCallId,QCResult.success());
+    }
   }
 
   @Override public void onFailed(String s) {
     getActivity().finish();
-    routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
+    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+    if(TextUtils.isEmpty(qcCallId)){
+      routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
+    }else{
+      QC.sendQCResult(qcCallId,QCResult.error(s));
+    }
     ToastUtils.show(s);
   }
 

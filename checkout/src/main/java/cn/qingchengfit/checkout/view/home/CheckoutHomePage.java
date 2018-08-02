@@ -2,12 +2,14 @@ package cn.qingchengfit.checkout.view.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutHomeBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.utils.AppUtils;
@@ -34,15 +36,22 @@ import com.anbillon.flabellum.annotations.Leaf;
 
   private void initListener() {
     mBinding.flNewCard.setOnClickListener(view -> {
-      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
+      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew"))
+          .callAsync(callback);
     });
     mBinding.flAppendCard.setOnClickListener(view -> {
-      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/list/nobalance")).call();
+      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/list/nobalance"))
+          .callAsync(callback);
     });
     mBinding.flCheckout.setOnClickListener(view -> {
-      routeTo("/checkout/money", null);
+      QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/money"))
+          .call();
     });
   }
+
+  private IQcRouteCallback callback = qcResult -> {
+    mViewModel.loadHomePageInfo();
+  };
 
   private void initToolbar() {
     mBinding.includeToolbar.toolbarLayout.setBackgroundColor(Color.TRANSPARENT);

@@ -1,16 +1,20 @@
 package cn.qingchengfit.checkout.view.pay;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.bean.CashierBean;
@@ -43,6 +47,8 @@ import timber.log.Timber;
     extends CheckoutCounterFragment<CkPageCheckoutPayBinding, CheckoutPayViewModel> {
   @Need String type = "";
   @Need IOrderData orderData;
+  private static final int PAY_SUCCESS = 111;
+  private boolean SUCCESS=false;
 
   @Override protected void subscribeUI() {
     mViewModel.orderStatusBean.observe(this, orderStatusBean -> {
@@ -60,8 +66,14 @@ import timber.log.Timber;
             break;
           case 2:
             stopPollintOrderStatus();
+            SUCCESS=true;
             String success_url = orderStatusBean.order.getSuccess_url();
-            WebActivity.startWeb(success_url, getContext());
+            WebActivity.startWebForResult(success_url, this, PAY_SUCCESS);
+            //new Handler().postDelayed(new Runnable() {
+            //  @Override public void run() {
+            //    paySuccessBack();
+            //  }
+            //}, 300);
             break;
         }
       }
@@ -75,6 +87,20 @@ import timber.log.Timber;
         startPollingOrderStatus();
       }
     });
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == PAY_SUCCESS) {
+        paySuccessBack();
+      }
+    }
+  }
+
+  private void paySuccessBack() {
+    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+    QC.sendQCResult(qcCallId, QCResult.success());
+    getActivity().finish();
   }
 
   @Override
@@ -133,6 +159,7 @@ import timber.log.Timber;
         Intent intent = new Intent(getContext(), QcScanActivity.class);
         intent.putExtra("title", "扫码收款");
         intent.putExtra("type", type);
+        intent.putExtra("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
         intent.putExtra("repay", mViewModel.IOrderData.getValue().getScanRePayInfo());
         startActivity(intent);
       }
@@ -143,7 +170,9 @@ import timber.log.Timber;
 
   @Override public void onResume() {
     super.onResume();
-    startPollingOrderStatus();
+    if(!SUCCESS){
+      startPollingOrderStatus();
+    }
   }
 
   private void startPollingOrderStatus() {

@@ -1,14 +1,19 @@
 package cn.qingchengfit.checkout.view.scan;
 
 import android.Manifest;
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 import cn.qingchengfit.checkout.databinding.QcScanActivityBinding;
@@ -30,6 +35,7 @@ public class QcScanActivity extends SaasCommonActivity
   QcScanActivityBinding mBinding;
   ScanRepayInfo scanRepayInfo;
   @Inject ViewModelProvider.Factory factory;
+  private static final int PAY_SUCCESS = 111;
   QcScanActivityModel mViewModel;
   String type = "";
 
@@ -46,11 +52,11 @@ public class QcScanActivity extends SaasCommonActivity
     mViewModel = ViewModelProviders.of(this, factory).get(QcScanActivityModel.class);
     mViewModel.scanResult.observe(this, scanResultBean -> {
       hideLoading();
-      if(scanResultBean.successful){
+      if (scanResultBean.successful) {
         ToastUtils.show("success");
         //这里跳转的逻辑是，如果是从收银台进来的就去收银台首页，如果是从原有的其他位置进来的就执行之前的成功之后的逻辑
-        WebActivity.startWeb(scanResultBean.url, this);
-      }else{
+        WebActivity.startWebForResult(scanResultBean.url, this,PAY_SUCCESS);
+      } else {
         payError();
       }
     });
@@ -58,12 +64,28 @@ public class QcScanActivity extends SaasCommonActivity
 
   private boolean hasBarCodeFlag = false;
 
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == PAY_SUCCESS) {
+        paySuccessBack();
+      }
+    }
+  }
+
+  private void paySuccessBack() {
+    String qcCallId = getIntent().getStringExtra("qcCallId");
+    QC.sendQCResult(qcCallId, QCResult.success());
+    finish();
+  }
+
   @Override public void onQRCodeRead(String text, PointF[] points) {
     if (mBinding.qrCodeView != null) mBinding.qrCodeView.getCameraManager().stopPreview();
     if (hasBarCodeFlag) return;
     hasBarCodeFlag = true;
     rePay(text);
   }
+
   private void rePay(String barCode) {
     showLoading();
     QcRouteUtil.setRouteOptions(
@@ -87,7 +109,7 @@ public class QcScanActivity extends SaasCommonActivity
     hideLoading();
     DialogUtils.showAlert(this, "收款失败", "收款失败，请点击下方按钮重新扫码", (materialDialog, dialogAction) -> {
       materialDialog.dismiss();
-      hasBarCodeFlag=false;
+      hasBarCodeFlag = false;
       if (mBinding.qrCodeView != null) mBinding.qrCodeView.getCameraManager().startPreview();
     });
   }

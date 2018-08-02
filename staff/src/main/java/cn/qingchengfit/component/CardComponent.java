@@ -1,5 +1,6 @@
 package cn.qingchengfit.component;
 
+import android.os.Bundle;
 import cn.qingchengfit.model.CardModel;
 import cn.qingchengfit.network.RxHelper;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -28,13 +29,23 @@ public class CardComponent implements IComponent {
     String actionName = qc.getActionName();
     switch (actionName) {
       case "/cardtpl/nonew":
-        RouteUtil.routeTo(qc.getContext(), getName(), actionName, null);
-        QC.sendQCResult(qc.getCallId(),QCResult.success());
-        return false;
+        Object qcCallId = qc.getParams().get("qcCallId");
+        Bundle bundle=null;
+        if(qcCallId!=null){
+          bundle=new Bundle();
+          bundle.putString("qcCallId", (String) qcCallId);
+        }
+        RouteUtil.routeTo(qc.getContext(), getName(), actionName, bundle);
+        return true;
       case "/list/nobalance":
-        RouteUtil.routeTo(qc.getContext(), getName(), actionName, null);
-        QC.sendQCResult(qc.getCallId(),QCResult.success());
-        return false;
+        Object qcCallId1 = qc.getParams().get("qcCallId");
+        Bundle bundle1=null;
+        if(qcCallId1!=null){
+          bundle1=new Bundle();
+          bundle1.putString("qcCallId", (String) qcCallId1);
+        }
+        RouteUtil.routeTo(qc.getContext(), getName(), actionName, bundle1);
+        return true;
       case "/repay/newcard":
         CardModel cardModel = CardModel.getInstance();
         Map<String, Object> params = qc.getParams();
