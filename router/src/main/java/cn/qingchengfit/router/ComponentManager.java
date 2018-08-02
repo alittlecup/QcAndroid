@@ -100,7 +100,7 @@ public class ComponentManager {
         }
         chain.addInterceptors(qc.getInterceptors());
         if (hasComponent(qc.getComponentName())) {
-            chain.addInterceptor(LocalCCInterceptor.getInstance());
+            chain.addInterceptor(LocalQCInterceptor.getInstance());
         } else {
             chain.addInterceptor(new RemoteQCInterceptor(qc));
         }

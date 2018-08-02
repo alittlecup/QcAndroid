@@ -3,6 +3,7 @@ package cn.qingchengfit.checkout.view.pay;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ import timber.log.Timber;
 
   @Override protected void subscribeUI() {
     mViewModel.orderStatusBean.observe(this, orderStatusBean -> {
-      if (subscribe != null&&orderStatusBean!=null) {
+      if (subscribe != null && orderStatusBean != null) {
         switch (orderStatusBean.order.getStatus()) {
           case 0:
             stopPollintOrderStatus();
@@ -59,7 +60,8 @@ import timber.log.Timber;
             break;
           case 2:
             stopPollintOrderStatus();
-            WebActivity.startWeb(orderStatusBean.order.getSuccess_url(), getContext());
+            String success_url = orderStatusBean.order.getSuccess_url();
+            WebActivity.startWeb(success_url, getContext());
             break;
         }
       }

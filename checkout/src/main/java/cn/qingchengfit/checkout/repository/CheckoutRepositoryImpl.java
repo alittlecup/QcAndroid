@@ -19,8 +19,7 @@ import javax.inject.Inject;
 
 public class CheckoutRepositoryImpl implements CheckoutRepository {
   @Inject ICheckoutModel remoteService;
-  @Inject LoginStatus loginStatus;
-  @Inject GymWrapper gymWrapper;
+
   @Inject public CheckoutRepositoryImpl(){}
 
   static <T> void bindToLiveData(MutableLiveData<T> liveData,
@@ -33,26 +32,22 @@ public class CheckoutRepositoryImpl implements CheckoutRepository {
   @Override public void qcGetHomePageInfo(MutableLiveData<HomePageBean> result,
       MutableLiveData<Resource<Object>> defaultRes) {
     bindToLiveData(result,
-        remoteService.qcGetHomePageInfo(loginStatus.staff_id(), gymWrapper.getParams()), defaultRes,
+        remoteService.qcGetHomePageInfo( ), defaultRes,
         "");
   }
 
   @Override public void qcPostCashierOrder(MutableLiveData<CashierBean> result,
       MutableLiveData<Resource<Object>> defaultRes, Map<String, Object> params) {
-    HashMap<String, Object> params1 = gymWrapper.getParams();
-    params1.putAll(params);
-    bindToLiveData(result,remoteService.qcPostCashierOrder(loginStatus.staff_id(),params1),defaultRes,"");
+    bindToLiveData(result,remoteService.qcPostCashierOrder(params),defaultRes,"");
   }
 
   @Override public void qcPostScanOrder(MutableLiveData<ScanResultBean> result,
       MutableLiveData<Resource<Object>> defaultRes, Map<String, Object> params) {
-    HashMap<String, Object> params1 = gymWrapper.getParams();
-    params1.putAll(params);
-    bindToLiveData(result,remoteService.qcPostScanOrder(params1),defaultRes,"");
+    bindToLiveData(result,remoteService.qcPostScanOrder(params),defaultRes,"");
   }
 
   @Override public void qcGetOrderStatus(MutableLiveData<OrderStatusBeanWrapper> result,
       MutableLiveData<Resource<Object>> defaultRes, String orderNum) {
-    bindToLiveData(result,remoteService.qcGetOrderStatus(orderNum,gymWrapper.getParams()),defaultRes,"");
+    bindToLiveData(result,remoteService.qcGetOrderStatus(orderNum),defaultRes,"");
   }
 }

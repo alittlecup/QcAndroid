@@ -18,6 +18,7 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.HashMap;
@@ -45,10 +46,10 @@ public class QcScanActivity extends SaasCommonActivity
     mViewModel = ViewModelProviders.of(this, factory).get(QcScanActivityModel.class);
     mViewModel.scanResult.observe(this, scanResultBean -> {
       hideLoading();
-      // TODO: 2018/7/25 deal result
       if(scanResultBean.successful){
         ToastUtils.show("success");
-
+        //这里跳转的逻辑是，如果是从收银台进来的就去收银台首页，如果是从原有的其他位置进来的就执行之前的成功之后的逻辑
+        WebActivity.startWeb(scanResultBean.url, this);
       }else{
         payError();
       }
@@ -87,6 +88,7 @@ public class QcScanActivity extends SaasCommonActivity
     DialogUtils.showAlert(this, "收款失败", "收款失败，请点击下方按钮重新扫码", (materialDialog, dialogAction) -> {
       materialDialog.dismiss();
       hasBarCodeFlag=false;
+      if (mBinding.qrCodeView != null) mBinding.qrCodeView.getCameraManager().startPreview();
     });
   }
 

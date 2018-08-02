@@ -2,6 +2,8 @@ package cn.qingchengfit.checkout.repository;
 
 import android.util.Log;
 import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBean;
@@ -12,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import io.reactivex.Flowable;
+import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import okhttp3.OkHttpClient;
@@ -22,6 +25,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CheckoutModel implements ICheckoutModel {
   CheckoutApi checkoutApi;
   PayApi payApi;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+
+  public static CheckoutModel getInstance() {
+    return INSTANCE;
+  }
+
+  private static CheckoutModel INSTANCE;
 
   @Inject public CheckoutModel(QcRestRepository qcRestRepository) {
     OkHttpClient client = qcRestRepository.getClient();
@@ -37,24 +48,29 @@ public class CheckoutModel implements ICheckoutModel {
         .build();
     checkoutApi = retrofit.create(CheckoutApi.class);
     payApi = retrofit.create(PayApi.class);
+    INSTANCE = this;
   }
 
-  @Override public Flowable<QcDataResponse<HomePageBean>> qcGetHomePageInfo(String staff_id,
-      Map<String, Object> params) {
-    return checkoutApi.qcGetCheckoutHomeInfo(staff_id, params);
+  @Override public Flowable<QcDataResponse<HomePageBean>> qcGetHomePageInfo() {
+    return checkoutApi.qcGetCheckoutHomeInfo(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
-  @Override public Flowable<QcDataResponse<CashierBean>> qcPostCashierOrder(String staff_id,
-      Map<String, Object> params) {
-    return checkoutApi.qcPostCashierOrder(staff_id, params);
+  @Override
+  public Flowable<QcDataResponse<CashierBean>> qcPostCashierOrder(Map<String, Object> params) {
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return checkoutApi.qcPostCashierOrder(loginStatus.staff_id(), params1);
   }
 
   @Override
   public Flowable<QcDataResponse<ScanResultBean>> qcPostScanOrder(Map<String, Object> params) {
-    return payApi.qcPostScanOrder(params);
+    HashMap<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return payApi.qcPostScanOrder(params1);
   }
 
-  @Override public Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(String orderNum,Map<String,Object> params) {
-    return payApi.qcGetOrderStatus(orderNum,params);
+  @Override
+  public Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(String orderNum) {
+    return payApi.qcGetOrderStatus(orderNum, gymWrapper.getParams());
   }
 }

@@ -8,16 +8,16 @@ package cn.qingchengfit.router;
  *  返回值为true: 添加{@link Wait4ResultInterceptor}来等待组件调用{@link QC#sendQCResult(String, QCResult)}方法
  * @author billy.qi
  */
-class LocalCCInterceptor implements IQCInterceptor {
+class LocalQCInterceptor implements IQCInterceptor {
 
     //-------------------------单例模式 start --------------
     /** 单例模式Holder */
     private static class LocalCCInterceptorHolder {
-        private static final LocalCCInterceptor INSTANCE = new LocalCCInterceptor();
+        private static final LocalQCInterceptor INSTANCE = new LocalQCInterceptor();
     }
-    private LocalCCInterceptor (){}
+    private LocalQCInterceptor(){}
     /** 获取LocalCCInterceptor的单例对象 */
-    static LocalCCInterceptor getInstance() {
+    static LocalQCInterceptor getInstance() {
         return LocalCCInterceptorHolder.INSTANCE;
     }
     //-------------------------单例模式 end --------------
