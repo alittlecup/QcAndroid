@@ -891,7 +891,7 @@ public boolean hasAddPermission(boolean toast) {
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
       routeTo("/cardtpl/option/",
-        new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
+        new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).cardCate(presenter.getCardCate()).build());
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
       routeTo("/cardtpl/option/add/",
