@@ -49,6 +49,7 @@ import javax.inject.Inject;
       }
       Bundle b = new Bundle();
       b.putParcelable("card", ((CardItem) iFlexible).getRealCard());
+      b.putString("qcCallId",getActivity().getIntent().getStringExtra("qcCallId"));
       routeTo("/charge/", b);
     }
     return true;

@@ -1,8 +1,10 @@
 package com.qingchengfit.fitcoach.fragment.card;
 
+import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.card.network.CardApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -225,6 +227,11 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body) {
     return null;
+  }
+
+  @Override public Observable<QcDataResponse<CacluScore>> cacluScore(String staff_id, String type,
+      String money, ArrayMap<String, String> params) {
+    return posApi.qcGetScoreCalu(staff_id, type, money, params);
   }
 
   @Override public Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount() {

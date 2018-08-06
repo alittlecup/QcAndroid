@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.card;
 
+import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.Cards;
 import cn.qingchengfit.model.responese.QcResponseOption;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -59,4 +61,14 @@ public interface CardTrainerApi {
   @GET("/api/coaches/{id}/filter/cardtpls/?show_all=1")
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterCondition(@Path("id") String staff,
       @QueryMap HashMap<String, Object> params);
+
+
+  @GET("/api/coaches/{staff_id}/scores/calu/")
+  rx.Observable<QcDataResponse<CacluScore>> qcGetScoreCalu(@Path("staff_id") String staff_id,
+      @Query("type") String type, @Query("number") String money, @QueryMap
+      ArrayMap<String, String> params);
+
+
+
+
 }

@@ -16,6 +16,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.GymUtils;
 import javax.inject.Inject;
@@ -45,6 +46,7 @@ public class CompletedBuyPresenter extends BasePresenter {
     @Inject SerPermisAction serPermisAction;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject ICardModel cardModel;
     private Subscription spSalers;
     private Subscription spBuy;
 
@@ -137,8 +139,8 @@ public class CompletedBuyPresenter extends BasePresenter {
     }
 
     public void cacluScore(String price, final String user_ids) {
-        RxRegiste(mRestRepository.createGetApi(CardApi.class)
-            .qcGetScoreCalu(loginStatus.staff_id(), Configs.CACLU_SCORE_BUY, price,
+        RxRegiste(cardModel
+            .cacluScore(loginStatus.staff_id(), Configs.CACLU_SCORE_BUY, price,
                 GymUtils.getParamsV2(gymWrapper.getCoachService(), gymWrapper.getBrand()))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

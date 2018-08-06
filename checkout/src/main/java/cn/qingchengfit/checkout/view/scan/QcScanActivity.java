@@ -74,8 +74,7 @@ public class QcScanActivity extends SaasCommonActivity
   }
 
   private void paySuccessBack() {
-    String qcCallId = getIntent().getStringExtra("qcCallId");
-    QC.sendQCResult(qcCallId, QCResult.success());
+    setResult(Activity.RESULT_OK);
     finish();
   }
 

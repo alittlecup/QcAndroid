@@ -159,9 +159,8 @@ import timber.log.Timber;
         Intent intent = new Intent(getContext(), QcScanActivity.class);
         intent.putExtra("title", "扫码收款");
         intent.putExtra("type", type);
-        intent.putExtra("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
         intent.putExtra("repay", mViewModel.IOrderData.getValue().getScanRePayInfo());
-        startActivity(intent);
+        startActivityForResult(intent,PAY_SUCCESS);
       }
     });
   }

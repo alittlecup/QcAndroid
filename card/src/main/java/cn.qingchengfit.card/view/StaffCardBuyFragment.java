@@ -121,7 +121,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
 
   @Override public void onFailed(String s) {
     getActivity().finish();
-    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+    String qcCallId = getActivity().getIntent().getExtras().getString("qcCallId");
     if(TextUtils.isEmpty(qcCallId)){
       routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
     }else{
@@ -129,7 +129,6 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     }
     ToastUtils.show(s);
   }
-
   @Override public void onWxPay(String url) {
     Intent toWeb = new Intent(getContext(), WebActivity.class);
     toWeb.putExtra("url", url);

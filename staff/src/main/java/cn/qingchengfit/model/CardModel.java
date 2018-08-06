@@ -1,9 +1,11 @@
 package cn.qingchengfit.model;
 
+import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
+import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -43,6 +45,7 @@ public class CardModel implements ICardModel {
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
   CardApi posApi;
+  cn.qingchengfit.card.network.CardApi cardApi;
 
   public static CardModel getInstance() {
     return INSTANCE;
@@ -55,7 +58,8 @@ public class CardModel implements ICardModel {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
     posApi = repository.createGetApi(CardApi.class);
-    INSTANCE=this;
+    cardApi = repository.createGetApi(cn.qingchengfit.card.network.CardApi.class);
+    INSTANCE = this;
   }
 
   @Override
@@ -87,8 +91,7 @@ public class CardModel implements ICardModel {
     return posApi.qcGetCardDetail(loginStatus.staff_id(), card_id, gymWrapper.getParams());
   }
 
-  @Override
-  public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {
+  @Override public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {
     return posApi.qcGetDefineSeller(loginStatus.staff_id(), card_id, gymWrapper.getParams());
   }
 
@@ -271,6 +274,11 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body) {
     return posApi.qcFixGyms(loginStatus.staff_id(), cardId, body, gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<CacluScore>> cacluScore(String staff_id, String type,
+      String money, ArrayMap<String, String> params) {
+    return cardApi.qcGetScoreCalu(staff_id, type, money, params);
   }
 
   @Override public Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount() {

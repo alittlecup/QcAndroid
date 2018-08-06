@@ -21,21 +21,13 @@ public class CardComponent implements IComponent {
     String actionName = qc.getActionName();
     switch (actionName) {
       case "/cardtpl/nonew":
-        Object qcCallId = qc.getParams().get("qcCallId");
-        Bundle bundle=null;
-        if(qcCallId!=null){
-          bundle=new Bundle();
-          bundle.putString("qcCallId", (String) qcCallId);
-        }
+        Bundle bundle = new Bundle();
+        bundle.putString("qcCallId", qc.getCallId());
         RouteUtil.routeTo(qc.getContext(), getName(), actionName, bundle);
         return true;
       case "/list/nobalance":
-        Object qcCallId1 = qc.getParams().get("qcCallId");
-        Bundle bundle1=null;
-        if(qcCallId1!=null){
-          bundle1=new Bundle();
-          bundle1.putString("qcCallId", (String) qcCallId1);
-        }
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("qcCallId", qc.getCallId());
         RouteUtil.routeTo(qc.getContext(), getName(), actionName, bundle1);
         return true;
       case "/repay/newcard":
@@ -59,7 +51,7 @@ public class CardComponent implements IComponent {
               CashierBean cashierBean =
                   new Gson().fromJson(jsonObjectQcDataResponse.data.toString(), CashierBean.class);
               Map<String, Object> map = new HashMap<>();
-              map.put("cashierBean",cashierBean);
+              map.put("cashierBean", cashierBean);
               QC.sendQCResult(qc.getCallId(), QCResult.success(map));
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));
@@ -86,7 +78,7 @@ public class CardComponent implements IComponent {
               CashierBean cashierBean =
                   new Gson().fromJson(jsonObjectQcDataResponse.data.toString(), CashierBean.class);
               Map<String, Object> map = new HashMap<>();
-              map.put("cashierBean",cashierBean);
+              map.put("cashierBean", cashierBean);
               QC.sendQCResult(qc.getCallId(), QCResult.success(map));
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));

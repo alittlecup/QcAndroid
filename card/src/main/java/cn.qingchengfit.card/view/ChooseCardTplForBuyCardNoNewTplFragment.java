@@ -1,5 +1,6 @@
 package cn.qingchengfit.card.view;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -63,9 +64,11 @@ public class ChooseCardTplForBuyCardNoNewTplFragment extends CardTplsHomeInGymFr
     IFlexible item = fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem) {
       if (((CardTplItem) item).getCardTpl().is_enable) {
-        routeTo("/pay/", new CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl())
+        Bundle build = new CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl())
             .qcStudentBean(qcStudentBean)
-            .build());
+            .build();
+        build.putString("qcCallId",getActivity().getIntent().getStringExtra("qcCallId"));
+        routeTo("/pay/",build);
       } else {
         showAlert("已停用的会员卡种类不能用于购买会员卡");
       }

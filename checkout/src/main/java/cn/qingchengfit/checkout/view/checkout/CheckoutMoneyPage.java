@@ -61,7 +61,7 @@ import java.util.Map;
     info.setModuleName("checkout");
     info.setActionName("reOrder");
     Map<String, String> params = new HashMap<>();
-    params.put("prices", mViewModel.count.getValue());
+    params.put("price", mViewModel.count.getValue());
 
     switch (mViewModel.getType()) {
       case PayChannel.ALIPAY_QRCODE:

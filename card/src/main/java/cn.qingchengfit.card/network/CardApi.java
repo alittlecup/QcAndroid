@@ -41,7 +41,7 @@ public interface CardApi {
    */
 
   @GET("/api/v2/staffs/{staff_id}/scores/calu/")
-  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CacluScore>> qcGetScoreCalu(@Path("staff_id") String staff_id,
+  rx.Observable<QcDataResponse<CacluScore>> qcGetScoreCalu(@Path("staff_id") String staff_id,
       @Query("type") String type, @Query("number") String money, @QueryMap
       ArrayMap<String, String> params);
 

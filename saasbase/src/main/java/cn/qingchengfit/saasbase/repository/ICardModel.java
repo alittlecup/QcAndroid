@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.repository;
 
+import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
@@ -29,6 +31,8 @@ import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -55,6 +59,7 @@ import rx.Observable;
 public interface ICardModel {
   /**
    * 获取所有卡种类
+   *
    * @param type 卡类型（储值 次卡 期限）
    * @param isEnable 是否开启
    */
@@ -63,7 +68,8 @@ public interface ICardModel {
   /**
    * 购卡时 使用不被权限控制的卡
    */
-  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(HashMap<String,Object> params);
+  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(
+      HashMap<String, Object> params);
 
   /**
    * 获取卡种类详情
@@ -72,6 +78,7 @@ public interface ICardModel {
 
   /**
    * 获取会员卡种类的支付规格
+   *
    * @param cardtps_id 卡种类ID
    */
   rx.Observable<QcDataResponse<CardTplOptionListWrap>> qcGetOptions(String cardtps_id);
@@ -90,7 +97,6 @@ public interface ICardModel {
    * 获取会员卡扣费时默认的销售信息
    */
   rx.Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id);
-
 
   /**
    * 卡类型
@@ -147,10 +153,10 @@ public interface ICardModel {
    * 会员卡
    */
   //获取真实卡列表
-  rx.Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String,Object> params);
-  //获取余额不足的会员卡
-  rx.Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(HashMap<String,Object> params);
+  rx.Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params);
 
+  //获取余额不足的会员卡
+  rx.Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(HashMap<String, Object> params);
 
   //获取余额不足会员卡
   rx.Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard();
@@ -163,33 +169,32 @@ public interface ICardModel {
   /**
    * 修改卡信息
    */
-  rx.Observable<QcDataResponse> editCardInfo(String cardid,HashMap<String,Object> p);
+  rx.Observable<QcDataResponse> editCardInfo(String cardid, HashMap<String, Object> p);
 
   rx.Observable<QcDataResponse> qcChangeAutoNotify(CardBalanceNotifyBody body);
-  rx.Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(HashMap<String,Object> params);
-  rx.Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(HashMap<String,Object> params,String keys);
+
+  rx.Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(
+      HashMap<String, Object> params);
+
+  rx.Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(
+      HashMap<String, Object> params, String keys);
+
   rx.Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body);
 
   Observable<QcDataResponse<Shops>> qcGetBrandShops(String brand_id);
 
   /**
    * 会员卡服务协议暂存接口
-   * @param body
-   * @return
    */
   rx.Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(@Body CardtplBody body);
 
   /**
    * 扣费
-   * @param body
-   * @return
    */
   rx.Observable<QcDataResponse<JsonObject>> qcChargeRefund(String cardId, @Body ChargeBody body);
 
   /**
    * 请假
-   * @param body
-   * @return
    */
   rx.Observable<QcDataResponse> qcAddDayOff(@Body AddDayOffBody body);
 
@@ -205,10 +210,13 @@ public interface ICardModel {
 
   rx.Observable<QcDataResponse> qcResumeCard(String cardId);
 
-  rx.Observable<QcDataResponse<QcResponseRealcardHistory>> qcConsumeRecord(String cardId, int page, String start, String end);
+  rx.Observable<QcDataResponse<QcResponseRealcardHistory>> qcConsumeRecord(String cardId, int page,
+      String start, String end);
 
   rx.Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body);
 
-  rx.Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount();
+  rx.Observable<QcDataResponse<CacluScore>> cacluScore(String staff_id, String type, String money,
+      ArrayMap<String, String> params);
 
+  rx.Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount();
 }

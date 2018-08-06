@@ -65,9 +65,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen
     WebCardChargeFragment.class, WebChargeFragment.class,ChooseCardTplForBuyCardNoNewTplFragment.class,
     CardListNoBalanceFragment.class,TrainerCardBuyFragment.class,TrainerCardChargeFragment.class
 }) public class StaffCardActivity extends CardActivity {
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
+
 
   @Override protected Fragment getRouterFragment(Intent intent) {
     Fragment fragment = new CardRouterCenter().registe(new cardImpl())
