@@ -96,8 +96,13 @@ import javax.inject.Inject;
     initToolbar();
     initListener();
     initTabLayout();
-    mViewModel.loadSource();
     return mBinding;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    mViewModel.loadSource();
+
   }
 
   private List<StudentHomePieChartView> chartViews = new ArrayList<>();

@@ -1,14 +1,20 @@
 package cn.qingchengfit.student.view.followrecord;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.text.TextUtils;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.Attach;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.ArrayList;
@@ -28,41 +34,43 @@ public class FollowRecordEditViewModel extends BaseViewModel {
 
   MutableLiveData<List<FollowRecordStatus>> followRecordStatus = new MutableLiveData<>();
 
-  @Inject FollowRecordEditViewModel(){}
+  public final MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
+
+  public LiveData<List<Staff>> getSalerStaffs() {
+    return salerStaffs;
+  }
+
+  private MutableLiveData<List<Staff>> salerStaffs = new MutableLiveData<>();
+
+  @Inject FollowRecordEditViewModel() {
+  }
+
   @Inject StudentRepository studentRepository;
   @Inject StudentWrap studentWrap;
 
-  public ArrayList<Staff> getSalers(){
-    ArrayList<Staff> ret = new ArrayList<>();
-    if (studentWrap.getStudentBean() != null && studentWrap.getStudentBean().sellers != null){
-      ret.addAll(studentWrap.getStudentBean().sellers);
-    }
-    if (studentWrap.getStudentBean() != null && studentWrap.getStudentBean().coaches != null){
-      ret.addAll(studentWrap.getStudentBean().coaches);
-    }
-    return ret;
+  public void loadFollowRecordStatus() {
+    studentRepository.qcGetTrackStatus(followRecordStatus, defaultResult);
   }
 
-  public void loadFollowRecordStatus(){
-    studentRepository.qcGetTrackStatus(followRecordStatus,defaultResult);
+  public void loadSellers() {
+    studentRepository.qcGetSalers(salerStaffs, defaultResult);
   }
 
-  public void addFollowRecord(){
+  public void addFollowRecord() {
     List<Attach> attaches = new ArrayList<>();
     for (String s : followRecordUrl) {
       attaches.add(new Attach(s));
     }
     String value = nextFollowTime.getValue();
-    if("不设定时间".equals(value))value=null;
-    studentRepository.qcAddTrackRecord(studentWrap.getStudentBean().id,new FollowRecordAdd.Builder()
-      .content(content.getValue())
-      .next_track_time(value)
-      .notice_users(userIds.getValue())
-      .track_type_id(followMethod.getValue()==null?null:(followMethod.getValue()+""))
-      .track_status_id(followStatus.getValue()==null?null:followStatus.getValue().getId())
-      .attachments(followRecordUrl)
-      .build(),defaultResult);
+    if ("不设定时间".equals(value)) value = null;
+    studentRepository.qcAddTrackRecord(studentWrap.getStudentBean().id,
+        new FollowRecordAdd.Builder().content(content.getValue())
+            .next_track_time(value)
+            .notice_users(userIds.getValue())
+            .track_type_id(followMethod.getValue() == null ? null : (followMethod.getValue() + ""))
+            .track_status_id(
+                followStatus.getValue() == null ? null : followStatus.getValue().getId())
+            .attachments(followRecordUrl)
+            .build(), defaultResult);
   }
-
-
 }

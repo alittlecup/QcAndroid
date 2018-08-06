@@ -22,7 +22,7 @@ public class SalerStudentListView extends SaasCommonFragment {
   RecyclerView root;
   CommonFlexAdapter adapter;
   FlexibleAdapter.OnItemClickListener listener;
-  List<? extends AbstractFlexibleItem> items;
+  List<AbstractFlexibleItem> items;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,7 +42,10 @@ public class SalerStudentListView extends SaasCommonFragment {
     if (adapter != null) {
       adapter.updateDataSet(items);
     } else {
-      this.items = items;
+      this.items = new ArrayList<>(items);
+      if (this.items.isEmpty()) {
+        this.items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无数据", ""));
+      }
     }
   }
 
@@ -56,7 +59,6 @@ public class SalerStudentListView extends SaasCommonFragment {
 
   private void initRecyclerView() {
     List<CommonNoDataItem> itemList = new ArrayList<>();
-    itemList.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无数据", ""));
     adapter = new CommonFlexAdapter(items == null ? itemList : items);
     root.setAdapter(adapter);
     root.setLayoutManager(new LinearLayoutManager(getContext()));

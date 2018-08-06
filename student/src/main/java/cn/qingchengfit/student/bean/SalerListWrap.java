@@ -30,6 +30,6 @@ public class SalerListWrap extends QcListData {
   @SerializedName(value = "users" ,alternate = {"sellers"})
   public List<Staff> sellers;
 
-  @SerializedName(value = "teacher" ,alternate = {"teachers"})
+  @SerializedName(value = "teacher" ,alternate = {"teachers","coaches"})
   public List<Staff> coaches;
 }

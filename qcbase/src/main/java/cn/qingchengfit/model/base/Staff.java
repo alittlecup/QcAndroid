@@ -189,6 +189,6 @@ public class Staff extends User implements Parcelable,ICommonUser {
     }
 
     @Override public boolean filter(String str) {
-        return username.contains(str) || phone.contains(str);
+        return (username!=null&&username.contains(str)) || (phone!=null&& phone.contains(str));
     }
 }

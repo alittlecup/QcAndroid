@@ -218,6 +218,13 @@ public interface StudentApi {
   @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
   Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+  /**
+   * 具有名下会员的教练列表
+   * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+   */
+  @GET("/api/staffs/{staff_id}/filter/coaches/?show_all=1")
+  Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterCoaches(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 转换率

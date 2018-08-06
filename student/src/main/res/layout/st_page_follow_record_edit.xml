@@ -154,7 +154,7 @@
             app:civ_content="@{BindingUtils.getFollowRecordNotiOhters(vm.notiOthers,context)}"
             app:civ_edit_able="false"
             app:civ_hint="请选择"
-            app:civ_lable="通知他人"
+            app:civ_lable="通知其他销售"
             app:civ_showright="true"
             app:civ_text_color="@color/text_black"
             />

@@ -208,6 +208,13 @@ public interface IStudentModel {
       HashMap<String, Object> params);
 
   /**
+   * 具有名下会员的销售列表
+   * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+   */
+  Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterCoaches(String staff_id,
+      HashMap<String, Object> params);
+
+  /**
    * 转换率
    * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
    * GET参数:[start] [end] [seller_id(无销售seller_id=0)]

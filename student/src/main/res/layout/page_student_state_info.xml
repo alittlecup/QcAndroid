@@ -68,7 +68,7 @@
               android:layout_height="wrap_content"
               android:layout_gravity="center_horizontal"
               android:layout_marginBottom="10dp"
-              android:layout_marginTop="25dp"
+              android:layout_marginTop="20dp"
               tools:text="未跟进天数"
               style="@style/QcTextStyleXsGrey"
               />

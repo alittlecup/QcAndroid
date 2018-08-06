@@ -114,9 +114,9 @@ import java.util.List;
     @Nullable @Override public CharSequence getPageTitle(int position) {
       switch (position) {
         case 0:
-          return "销售";
+          return "分配销售";
         case 1:
-          return "教练";
+          return "分配教练";
       }
       return "";
     }

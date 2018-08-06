@@ -56,6 +56,11 @@ public class StudentFilterViewModel extends BaseViewModel
     this.filterTimeVisible = filterTimeVisible;
   }
 
+  public void setFilterStatusVisible(boolean filterStatusVisible) {
+    this.filterStatusVisible = filterStatusVisible;
+  }
+
+  private boolean filterStatusVisible = true;
   private boolean filterTimeVisible = true;
 
   @Inject protected FilterUserCase filterUserCase;
@@ -65,6 +70,9 @@ public class StudentFilterViewModel extends BaseViewModel
   @Inject public StudentFilterViewModel() {
     remoteFilters = Transformations.switchMap(action,
         aVoid -> Transformations.map(filterUserCase.getFilterModel(), input -> input));
+  }
+  public void showAll(boolean showAll){
+    filterUserCase.showAll(showAll);
   }
 
   public void loadfilterModel() {
@@ -144,7 +152,14 @@ public class StudentFilterViewModel extends BaseViewModel
       } else if (filter.type == 6) {
         itemList.add(new ItemFilterSalerGrid(filter));
       } else {
-        itemList.add(new ItemFilterCommon(filter, true));
+        if(filterStatusVisible){
+          itemList.add(new ItemFilterCommon(filter, true));
+        }else{
+          if (!("status_ids".equals(filter.key))) {
+            itemList.add(new ItemFilterCommon(filter, true));
+
+          }
+        }
       }
     }
     return itemList;

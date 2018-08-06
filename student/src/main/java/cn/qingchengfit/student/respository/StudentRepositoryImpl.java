@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.BindLiveData;
 import cn.qingchengfit.saascommon.network.HttpException;
@@ -172,6 +173,11 @@ public class StudentRepositoryImpl implements StudentRepository {
   public LiveData<Resource<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
       String shopid, String gymid, String model) {
     return toLiveData(remoteService.qcGetSalers(staff_id, brandid, shopid, gymid, model));
+  }
+
+  @Override public void qcGetSalers(MutableLiveData<List<Staff>> result,
+      MutableLiveData<Resource<Object>> defaultRes) {
+    bindToLiveData(result,remoteService.qcGetSalers(null, null,null,null,null).map(response->response.copyResponse(response.data.users)),defaultRes,"");
   }
 
   @Override public LiveData<Resource<Boolean>> qcModifySellers(String staff_id,

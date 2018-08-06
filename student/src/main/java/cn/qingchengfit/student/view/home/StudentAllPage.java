@@ -63,16 +63,16 @@ import javax.inject.Inject;
   private void initListener() {
 
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
-      }else {
+      } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      if(permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
-      }else {
+      } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
@@ -92,6 +92,7 @@ import javax.inject.Inject;
     listView.setListener(this);
     listView.setLoadDataListener(this);
 
+    filterView.setFilterShowAll(true);
     filterView.setListener(params -> {
       mViewModel.loadSource(params);
       mBinding.drawer.closeDrawer(GravityCompat.END);
@@ -138,7 +139,7 @@ import javax.inject.Inject;
 
   private void toggleToolbar(boolean show, String type) {
     if (show) {
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }

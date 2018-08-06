@@ -23,19 +23,18 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonUserSelectView extends BaseFragment implements
-  FlexibleAdapter.OnItemClickListener{
+public class CommonUserSelectView extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener {
   protected CmViewUserSelectBinding binding;
   protected List<IFlexible> datas = new ArrayList<>();
-  protected CommonFlexAdapter<CommonUserItem> adapter = new CommonFlexAdapter(datas,this);
+  protected CommonFlexAdapter<CommonUserItem> adapter = new CommonFlexAdapter(datas, this);
   protected BottomViewSelectUser bottomViewSelectUser = new BottomViewSelectUser();
 
   public MutableLiveData<List<CommonUserItem>> selectItems = new MutableLiveData<>();
 
-
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-    @Nullable Bundle savedInstanceState) {
+      @Nullable Bundle savedInstanceState) {
     binding = CmViewUserSelectBinding.inflate(inflater);
     binding.setLifecycleOwner(this);
     binding.setPage(this);
@@ -55,47 +54,45 @@ public class CommonUserSelectView extends BaseFragment implements
     return binding.getRoot();
   }
 
-
-
   private void initListener() {
     binding.llShowSelect.setOnClickListener(view -> {
-      bottomViewSelectUser.show(getChildFragmentManager(),"");
+      bottomViewSelectUser.show(getChildFragmentManager(), "");
     });
   }
 
-  public void selectAll(){
+  public void selectAll() {
     adapter.selectAll();
     adapter.notifyDataSetChanged();
   }
-  public void clearSelect(){
+
+  public void clearSelect() {
     adapter.clearSelection();
     adapter.notifyDataSetChanged();
   }
 
-
   private void initRv() {
     binding.rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    binding.rv.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withBottomEdge(true).withOffset(1)
-    );
+    binding.rv.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withBottomEdge(true).withOffset(1));
     adapter.setMode(FlexibleAdapter.Mode.MULTI);
     binding.rv.setAdapter(adapter);
   }
 
-  public void filter(String filter){
+  public void filter(String filter) {
+    if (adapter == null) return;
     adapter.setSearchText(filter);
     adapter.filterItems();
   }
 
-  public List<ICommonUser> getSelectUser(){
+  public List<ICommonUser> getSelectUser() {
     List<ICommonUser> ret = new ArrayList<>();
     for (Integer integer : adapter.getSelectedPositions()) {
-      ret.add(((CommonUserItem)adapter.getItem(integer)).getUser());
+      ret.add(((CommonUserItem) adapter.getItem(integer)).getUser());
     }
     return ret;
   }
 
-  public void setDatas(List<? extends IFlexible> d){
+  public void setDatas(List<? extends IFlexible> d) {
     this.datas.clear();
     this.datas.addAll(d);
     this.adapter.updateDataSet(this.datas);
@@ -103,25 +100,27 @@ public class CommonUserSelectView extends BaseFragment implements
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);
-    if (item == null ) return true;
-    if (item instanceof CommonUserItem){
-    List<CommonUserItem> si = selectItems.getValue();
-    if (si.contains((CommonUserItem)item))
-      si.remove(item);
-    else si.add((CommonUserItem) item);
-    selectItems.setValue(si);
+    if (item == null) return true;
+    if (item instanceof CommonUserItem) {
+      List<CommonUserItem> si = selectItems.getValue();
+      if (si.contains((CommonUserItem) item)) {
+        si.remove(item);
+      } else {
+        si.add((CommonUserItem) item);
+      }
+      selectItems.setValue(si);
     }
     return true;
   }
 
-  public void setBtnLeftListener(View.OnClickListener listener){
-    if (binding.btnLeft != null){
+  public void setBtnLeftListener(View.OnClickListener listener) {
+    if (binding.btnLeft != null) {
       binding.btnLeft.setOnClickListener(listener);
     }
   }
 
-  public void setBtnRightListener(View.OnClickListener listener){
-    if (binding.btnRight != null){
+  public void setBtnRightListener(View.OnClickListener listener) {
+    if (binding.btnRight != null) {
       binding.btnRight.setOnClickListener(listener);
     }
   }

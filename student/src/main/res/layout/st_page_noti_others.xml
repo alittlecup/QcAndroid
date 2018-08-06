@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
   <data>
     <variable
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.student.view.followrecord.NotiOthersVM"/>
   </data>
   <LinearLayout
       android:layout_width="match_parent"
@@ -37,7 +42,43 @@
           android:visibility="visible"
           />
     </RelativeLayout>
-    <include layout="@layout/search_layout"/>
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+
+      <EditText
+          android:id="@+id/et_search"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_allotsale_search_hight"
+          android:background="@drawable/bg_rect_allotsale_search"
+          android:drawableLeft="@drawable/ic_allotsale_search"
+          android:drawablePadding="10dp"
+          android:hint="@string/qc_allotsale_search_hint"
+          android:paddingLeft="10dp"
+          android:paddingStart="10dp"
+          android:textSize="@dimen/min_font"
+          app:afterTextChanged="@{(str)->viewModel.onEditTextChange(str)}"
+          />
+
+      <ImageView
+          android:id="@+id/img_search_clear"
+          android:layout_width="@dimen/qc_allotsale_search_hight"
+          android:layout_height="@dimen/qc_allotsale_search_hight"
+          android:layout_alignEnd="@+id/et_search"
+          android:layout_alignRight="@+id/et_search"
+          android:layout_centerVertical="true"
+          android:layout_gravity="center_vertical|right"
+          android:padding="9dp"
+          android:visibility="gone"
+          app:srcCompat="@drawable/ic_cancel_grey_16dp"
+          />
+
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/frag_noti_ohter"
         android:layout_width="match_parent"

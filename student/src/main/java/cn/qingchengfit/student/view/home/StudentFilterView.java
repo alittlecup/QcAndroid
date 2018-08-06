@@ -27,6 +27,8 @@ public class StudentFilterView
 
   @Override protected void subscribeUI() {
     mViewModel.setFilterTimeVisible(filterTimeVisible);
+    mViewModel.setFilterStatusVisible(filterStatusIds);
+    mViewModel.showAll(showAll);
     mViewModel.getRemoteFilters().observe(this, filterModels -> {
       mViewModel.items.set(mViewModel.getItems(filterModels));
     });
@@ -56,11 +58,29 @@ public class StudentFilterView
         })
         .show();
   }
-  private boolean filterTimeVisible=true;
+
+  private boolean filterTimeVisible = true;
   public void setFilterTimeVisible(boolean visible) {
-    filterTimeVisible=visible;
+    filterTimeVisible = visible;
     if (mViewModel != null) {
       mViewModel.setFilterTimeVisible(visible);
+    }
+  }
+
+  private boolean showAll=false;
+  public void setFilterShowAll(boolean showAll){
+    this.showAll=showAll;
+    if(mViewModel!=null){
+      mViewModel.showAll(showAll);
+    }
+  }
+
+  private boolean filterStatusIds = true;
+
+  public void setFilterStatusIds(boolean visible) {
+    filterStatusIds = visible;
+    if (mViewModel != null) {
+      mViewModel.setFilterStatusVisible(filterStatusIds);
     }
   }
 

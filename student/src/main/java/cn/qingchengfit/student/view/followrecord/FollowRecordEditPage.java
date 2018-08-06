@@ -3,7 +3,9 @@ package cn.qingchengfit.student.view.followrecord;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,12 +53,18 @@ import javax.inject.Inject;
     implements FlexibleAdapter.OnItemClickListener {
   private MultiChoosePicFragment picDialog;
   CommonFlexAdapter adapter = new CommonFlexAdapter(new ArrayList(), this);
-  //@Need StudentBean studentBean;
   @Inject StudentWrap studentWrap;
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     //studentWrap.setStudentBean(studentBean);
+    mViewModel.showLoading.observe(this,aBoolean -> {
+      if(aBoolean){
+        showLoading();
+      }else{
+        hideLoading();
+      }
+    });
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +109,7 @@ import javax.inject.Inject;
     mBinding.setLifecycleOwner(this);
     mBinding.setVm(mViewModel);
     mViewModel.loadFollowRecordStatus();
+    mViewModel.loadSellers();
     initToolbar();
     initListener();
     initRv();
@@ -126,9 +135,15 @@ import javax.inject.Inject;
       showFollowTimeDialog();
     });
     mBinding.cmNotifyOther.setOnClickListener(view -> {
-
-      routeTo("/followrecord/notiothers/",
-          NotiOthersPageParams.builder().staffs(mViewModel.getSalers()).build());
+      List<Staff> value = mViewModel.getSalerStaffs().getValue();
+      if(value==null){
+        mViewModel.loadSellers();
+        showLoading();
+        return;
+      }
+      routeTo("/followrecord/notiothers/", NotiOthersPageParams.builder()
+          .staffs(new ArrayList<>(value))
+          .build());
     });
     mBinding.tvEditStatus.setOnClickListener(view -> {
       routeTo("/student/follow_record_status", null);
@@ -138,6 +153,21 @@ import javax.inject.Inject;
     });
     mBinding.chooseImg.setOnClickListener(v -> {
       addImage();
+    });
+    mBinding.editContent.addTextChangedListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+        if(s!=null&&s.toString().length()>=140){
+          ToastUtils.show("最多输入140个字符");
+        }
+      }
     });
   }
 

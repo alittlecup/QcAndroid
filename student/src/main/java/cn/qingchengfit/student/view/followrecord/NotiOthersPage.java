@@ -26,28 +26,32 @@ import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.List;
 
-@Leaf(module = "student",path = "/followrecord/notiothers/")
-public class NotiOthersPage extends StudentBaseFragment<StPageNotiOthersBinding,NotiOthersVM>{
+@Leaf(module = "student", path = "/followrecord/notiothers/") public class NotiOthersPage
+    extends StudentBaseFragment<StPageNotiOthersBinding, NotiOthersVM> {
   CommonUserSelectView studentListView = new CommonUserSelectView();
   @Need public ArrayList<Staff> staffs;
-  @Override protected void subscribeUI() {
-  }
 
+  @Override protected void subscribeUI() {
+    mViewModel.getEditAfterTextChange().observe(this, filter -> {
+      studentListView.filter(filter);
+    });
+  }
 
   @Override
   public StPageNotiOthersBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     getChildFragmentManager().registerFragmentLifecycleCallbacks(childrenCB, false);
     mBinding = StPageNotiOthersBinding.inflate(inflater);
+    mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
     initToolbar();
     return mBinding;
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-    Bundle savedInstanceState) {
-    if (f instanceof CommonUserSelectView){
-      if (staffs !=null) {
+      Bundle savedInstanceState) {
+    if (f instanceof CommonUserSelectView) {
+      if (staffs != null) {
         List<CommonUserItem> list = new ArrayList<>();
         for (Staff staff : staffs) {
           list.add(new CommonUserItem(staff));
@@ -65,9 +69,8 @@ public class NotiOthersPage extends StudentBaseFragment<StPageNotiOthersBinding,
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    stuff(R.id.frag_noti_ohter,studentListView);
+    stuff(R.id.frag_noti_ohter, studentListView);
   }
-
 
   private void initToolbar() {
 
@@ -81,23 +84,22 @@ public class NotiOthersPage extends StudentBaseFragment<StPageNotiOthersBinding,
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
     if (!CompatUtils.less21()
-      && mBinding.includeToolbar.toolbar.getParent() instanceof ViewGroup
-      && this.isfitSystemPadding()) {
+        && mBinding.includeToolbar.toolbar.getParent() instanceof ViewGroup
+        && this.isfitSystemPadding()) {
       RelativeLayout.LayoutParams layoutParams =
-        (RelativeLayout.LayoutParams) mBinding.rbSelectAll.getLayoutParams();
+          (RelativeLayout.LayoutParams) mBinding.rbSelectAll.getLayoutParams();
       layoutParams.setMargins(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
       mBinding.rbSelectAll.setLayoutParams(layoutParams);
     }
     mBinding.rbSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
-      if (studentListView == null || !studentListView.isAdded()){
+      if (studentListView == null || !studentListView.isAdded()) {
         return;
       }
-      if (isChecked){
+      if (isChecked) {
         studentListView.selectAll();
-      }else studentListView.clearSelect();
+      } else {
+        studentListView.clearSelect();
+      }
     });
   }
-
-
-
 }

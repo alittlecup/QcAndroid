@@ -37,4 +37,6 @@ public interface GetApi {
 
   @GET("/api/common/user/gyms/{gym_id}/") rx.Observable<QcDataResponse<GymWrap>> queryGymInfo(
       @Path("gym_id") String gymid);
+
+
 }

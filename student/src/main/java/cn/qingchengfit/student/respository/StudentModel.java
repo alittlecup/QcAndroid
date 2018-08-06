@@ -227,7 +227,7 @@ public class StudentModel implements IStudentModel {
   //
   @Override public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id,
       String brandid, String shopid, String gymid, String model) {
-    return studentApi.qcGetSalers(staff_id, brandid, shopid, gymid, model);
+    return studentApi.qcGetSalers(loginStatus.staff_id(), null, null, gymWrapper.id(), gymWrapper.model());
   }
 
   //
@@ -293,6 +293,10 @@ public class StudentModel implements IStudentModel {
   @Override public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
+  }
+  @Override public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterCoaches(
+      String staff_id, HashMap<String, Object> params) {
+    return studentApi.qcGetTrackStudentsFilterCoaches(staff_id, params);
   }
   //
   @Override

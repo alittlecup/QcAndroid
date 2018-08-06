@@ -44,10 +44,13 @@ public class StudentHomePieChartView
       dataSet.setSliceSpace(0f);
       dataSet.setColors(colors);
       PieData data = new PieData(dataSet);
-      SpannableStringBuilder text = new SpanUtils().append(statData.getTotal_count() + "")
+      SpannableStringBuilder text = new SpanUtils().append(statData.getTotal_count() + " ")
           .setFontSize(72, true)
           .append("人")
+          .setFontSize(30, true)
+          .append("\n" + commonText)
           .setFontSize(36, true)
+          .setForegroundColor(getResources().getColor(R.color.text_grey))
           .create();
       mBinding.pieChart.setCenterText(text);
       mBinding.pieChart.setData(data);
@@ -72,6 +75,14 @@ public class StudentHomePieChartView
     mBinding.pieChart.setHighlightPerTapEnabled(false);
     mBinding.pieChart.setClickable(false);
     initListener();
+
+    if (color == R.color.st_new_student_color) {
+      commonText = "未出勤";
+      mBinding.tvDesc.setText("未出勤天数");
+    } else {
+      commonText = "未跟进";
+      mBinding.tvDesc.setText("未跟进天数");
+    }
     return mBinding;
   }
 
@@ -83,7 +94,7 @@ public class StudentHomePieChartView
       }
     }
     mBinding.shadowClick.setOnClickListener(v -> {
-      if(listener!=null){
+      if (listener != null) {
         listener.onClick(v);
       }
     });
@@ -94,12 +105,14 @@ public class StudentHomePieChartView
   }
 
   private boolean showItemDividers = false;
+  private String commonText = "未跟进";
 
   public void setBackgroundColor(@ColorRes int color) {
     if (mViewModel != null) {
       mViewModel.backgroundColor.setValue(getResources().getColor(color));
     }
     this.color = color;
+
   }
 
   private View.OnClickListener listener;

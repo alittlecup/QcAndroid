@@ -207,6 +207,7 @@ import javax.inject.Inject;
         title="新注册用户";
       }else if(curType.equals(IncreaseType.INCREASE_STUDENT)){
         title="新购卡会员";
+        filterView.setFilterStatusIds(false);
       }
       ToolbarModel toolbarModel = new ToolbarModel(title);
       mBinding.setToolbarModel(toolbarModel);

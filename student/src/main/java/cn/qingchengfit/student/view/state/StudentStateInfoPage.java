@@ -113,7 +113,6 @@ import java.util.Map;
     initViewPager();
 
     ((CountDateView) mBinding.llCountDate.getChildAt(0)).setChecked(true);
-
   }
 
   private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
@@ -128,6 +127,8 @@ import java.util.Map;
     return salerStudentListView;
   }
 
+  private String endSub = "未跟进";
+
   private void initToolbar() {
     ToolbarModel toolbarModel = null;
     switch (curType) {
@@ -137,6 +138,8 @@ import java.util.Map;
         mViewModel.loadSource(1);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_follow_ing_color));
         initColors(getResources().getColor(R.color.st_follow_ing_color));
+        endSub = "未跟进";
+        mBinding.tvDesc.setText("未跟进天数");
 
         break;
       case IncreaseType.INCREASE_STUDENT:
@@ -145,6 +148,8 @@ import java.util.Map;
         mViewModel.loadSource(2);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_new_student_color));
         initColors(getResources().getColor(R.color.st_new_student_color));
+        endSub = "未出勤";
+        mBinding.tvDesc.setText("未出勤天数");
 
         break;
       case IncreaseType.INCREASE_MEMBER:
@@ -153,7 +158,8 @@ import java.util.Map;
         mViewModel.loadSource(0);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_new_member_color));
         initColors(getResources().getColor(R.color.st_new_member_color));
-
+        endSub = "未跟进";
+        mBinding.tvDesc.setText("未跟进天数");
         break;
     }
     if (toolbarModel != null) {
@@ -202,17 +208,18 @@ import java.util.Map;
       mBinding.pieChart.highlightValue(i / 2, buttonView.getCount(), 0, true);
     }
   }
+
   @Override public void onValueSelected(Entry e, Highlight h) {
     int data = (int) e.getData();
     InactiveBean inactiveBean =
         mViewModel.inactiveStat.getValue().getInactive().getStat_data().get(data);
-    SpannableStringBuilder text = new SpanUtils().append(inactiveBean.getPeriod())
-        .setFontSize(36, true)
-        .setForegroundColor(getResources().getColor(R.color.text_grey))
-        .append("\n" + inactiveBean.getCount())
+    SpannableStringBuilder text = new SpanUtils().append("" + inactiveBean.getCount())
         .setFontSize(72, true)
         .append("人")
+        .setFontSize(30, true)
+        .append("\n" + inactiveBean.getPeriod() + endSub)
         .setFontSize(36, true)
+        .setForegroundColor(getResources().getColor(R.color.text_grey))
         .create();
     mBinding.pieChart.setCenterText(text);
     View childAt = mBinding.llCountDate.getChildAt(data * 2);
