@@ -40,13 +40,13 @@ public interface CardTrainerApi {
       @QueryMap HashMap<String, Object> params);
 
   //购卡
-  @POST("/api/coaches/{id}/cards/create/")
+  @POST("/api/coaches/{id}/cashier/cards/create/")
   rx.Observable<QcDataResponse<JsonObject>> qcCreateRealcard(@Path("id") String staffid,
       @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
 
 
   //充值扣费
-  @POST("/api/coaches/{coach_id}/cards/{card_id}/charge/")
+  @POST("/api/coaches/{coach_id}/cashier/cards/{card_id}/charge/")
   rx.Observable<QcDataResponse<JsonObject>> qcCardCharge(@Path("coach_id") String coach_id,
       @Path("card_id") String cardid, @QueryMap HashMap<String, Object> params,
       @Body CardBuyBody body);

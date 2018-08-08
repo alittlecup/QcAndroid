@@ -1,5 +1,6 @@
 package cn.qingchengfit.checkout.view.pay;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -36,6 +37,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.lib.DensityUtil;
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.encoder.QRCode;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ import timber.log.Timber;
   @Need String type = "";
   @Need IOrderData orderData;
   private static final int PAY_SUCCESS = 111;
-  private boolean SUCCESS=false;
+  private boolean SUCCESS = false;
 
   @Override protected void subscribeUI() {
     mViewModel.orderStatusBean.observe(this, orderStatusBean -> {
@@ -66,7 +68,7 @@ import timber.log.Timber;
             break;
           case 2:
             stopPollintOrderStatus();
-            SUCCESS=true;
+            SUCCESS = true;
             String success_url = orderStatusBean.order.getSuccess_url();
             WebActivity.startWebForResult(success_url, this, PAY_SUCCESS);
             //new Handler().postDelayed(new Runnable() {
@@ -148,20 +150,26 @@ import timber.log.Timber;
       mBinding.imgQr.setPadding(0, 0, 0, 0);
       mBinding.imgQr.setImageBitmap(bitmap);
     } catch (WriterException e) {
-      Timber.e(e, " qr gen");
+      Timber.e(e, " qrgen");
     }
   }
 
   private void initListener() {
 
     mBinding.flScan.setOnClickListener(v -> {
-      if (mViewModel.IOrderData.getValue() != null) {
-        Intent intent = new Intent(getContext(), QcScanActivity.class);
-        intent.putExtra("title", "扫码收款");
-        intent.putExtra("type", type);
-        intent.putExtra("repay", mViewModel.IOrderData.getValue().getScanRePayInfo());
-        startActivityForResult(intent,PAY_SUCCESS);
-      }
+      new RxPermissions(getActivity()).request(Manifest.permission.CAMERA).subscribe(aBoolean -> {
+        if (aBoolean) {
+          if (mViewModel.IOrderData.getValue() != null) {
+            Intent intent = new Intent(getContext(), QcScanActivity.class);
+            intent.putExtra("title", "扫码收款");
+            intent.putExtra("type", type);
+            intent.putExtra("repay", mViewModel.IOrderData.getValue().getScanRePayInfo());
+            startActivityForResult(intent, PAY_SUCCESS);
+          }
+        } else {
+          DialogUtils.showAlert(getContext(), "请打开摄像头权限");
+        }
+      });
     });
   }
 
@@ -169,7 +177,7 @@ import timber.log.Timber;
 
   @Override public void onResume() {
     super.onResume();
-    if(!SUCCESS){
+    if (!SUCCESS) {
       startPollingOrderStatus();
     }
   }

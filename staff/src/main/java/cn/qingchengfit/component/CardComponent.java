@@ -52,7 +52,7 @@ public class CardComponent implements IComponent {
             cardBuyBody.setCharge_type(13);
             break;
         }
-        cardModel.buyCard(cardBuyBody)
+        cardModel.buyCardFromCheckout(cardBuyBody)
             .onBackpressureBuffer()
             .compose(cn.qingchengfit.saascommon.network.RxHelper.schedulersTransformer())
             .subscribe(jsonObjectQcDataResponse -> {
@@ -79,7 +79,7 @@ public class CardComponent implements IComponent {
             body.setCharge_type(13);
             break;
         }
-        cardRepository.qcChargeCard(cardId, body)
+        cardRepository.qcChargeCardFromCheckout(cardId, body)
             .onBackpressureBuffer()
             .compose(cn.qingchengfit.saascommon.network.RxHelper.schedulersTransformer())
             .subscribe(jsonObjectQcDataResponse -> {

@@ -165,7 +165,7 @@ public class ManageFragment extends BaseFragment
     mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_sale_statement)
         .text(getString(R.string.sale_statement))
         .build()));
-    mData.add(new DailyWorkItem(null));
+    mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ck_ic_modules_workbench_counter).text("收银台").build()));
     //mData.add(new DailyWorkItem(
     //    new FunctionBean.Builder().resImg(R.drawable.ic_template_coursepaln).text(getString(R.string.course_plan)).build()));
     mAdapter = new CommonFlexAdapter(mData, this);
@@ -401,17 +401,15 @@ public class ManageFragment extends BaseFragment
           startActivity(toCourseStatement);
           break;
         case R.drawable.ic_sale_statement:
-          // TODO: 2018/7/26 暂时修改跳转路径
-          //if (!CurentPermissions.newInstance()
-          //    .queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
-          //  showAlert(R.string.alert_permission_forbid);
-          //  return true;
-          //}
-          //Intent tosale = new Intent(getActivity(), FragActivity.class);
-          //tosale.putExtra("type", 1);
-          //tosale.putExtra("service", gymWrapper.getCoachService());
-          //startActivity(tosale);
-          QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
+          if (!CurentPermissions.newInstance()
+              .queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
+            showAlert(R.string.alert_permission_forbid);
+            return true;
+          }
+          Intent tosale = new Intent(getActivity(), FragActivity.class);
+          tosale.putExtra("type", 1);
+          tosale.putExtra("service", gymWrapper.getCoachService());
+          startActivity(tosale);
 
           break;
         case R.drawable.ic_template_coursepaln:
@@ -424,6 +422,10 @@ public class ManageFragment extends BaseFragment
           toPlan.putExtra("type", 8);
           toPlan.putExtra("service", gymWrapper.getCoachService());
           startActivity(toPlan);
+          break;
+        case R.drawable.ck_ic_modules_workbench_counter:
+          QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
+
           break;
         default:
       }

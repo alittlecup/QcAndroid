@@ -154,6 +154,13 @@ public interface CardApi {
       @Path("card_id") String cardid, @QueryMap HashMap<String, Object> params,
       @Body CardBuyBody body);
 
+
+  //充值扣费
+  @POST("/api/staffs/{staff_id}/cashier/cards/{card_id}/charge/")
+  rx.Observable<QcDataResponse<JsonObject>> qcCardChargeFromCheckout(@Path("staff_id") String staff_id,
+      @Path("card_id") String cardid, @QueryMap HashMap<String, Object> params,
+      @Body CardBuyBody body);
+
   //扣费
   @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/")
   rx.Observable<QcDataResponse<JsonObject>> qcMinusMoney(@Path("staff_id") String staff_id,
@@ -163,6 +170,11 @@ public interface CardApi {
   //购卡
   @POST("/api/staffs/{id}/cards/create/")
   rx.Observable<QcDataResponse<JsonObject>> qcCreateRealcard(@Path("id") String staffid,
+      @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
+
+  //购卡
+  @POST("/api/staffs/{id}/cashier/cards/create/")
+  rx.Observable<QcDataResponse<JsonObject>> qcCreateRealcardFromCheckout(@Path("id") String staffid,
       @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
 
   //工作人员 卡类型

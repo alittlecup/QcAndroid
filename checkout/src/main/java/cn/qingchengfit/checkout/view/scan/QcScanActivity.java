@@ -55,7 +55,7 @@ public class QcScanActivity extends SaasCommonActivity
       if (scanResultBean.successful) {
         ToastUtils.show("success");
         //这里跳转的逻辑是，如果是从收银台进来的就去收银台首页，如果是从原有的其他位置进来的就执行之前的成功之后的逻辑
-        WebActivity.startWebForResult(scanResultBean.url, this,PAY_SUCCESS);
+        WebActivity.startWebForResult(scanResultBean.url, this, PAY_SUCCESS);
       } else {
         payError();
       }
@@ -97,6 +97,12 @@ public class QcScanActivity extends SaasCommonActivity
         if (cashierBean instanceof CashierBean) {
           mViewModel.scanPay(barCode, ((CashierBean) cashierBean).getOut_trade_no(),
               ((CashierBean) cashierBean).getPay_trade_no());
+        } else {
+          Object out_trade_no = dataMap.get("out_trade_no");
+          Object pay_trade_no = dataMap.get("pay_trade_no");
+          if (out_trade_no != null && pay_trade_no != null) {
+            mViewModel.scanPay(barCode, (String) out_trade_no, (String) pay_trade_no);
+          }
         }
       } else {
         payError();

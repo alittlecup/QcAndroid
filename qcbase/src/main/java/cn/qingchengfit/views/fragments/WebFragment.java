@@ -2,6 +2,7 @@ package cn.qingchengfit.views.fragments;
 
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +19,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,6 +34,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
+import cn.qingchengfit.events.EventNativePay;
+import cn.qingchengfit.events.EventRePay;
 import cn.qingchengfit.events.EventShareFun;
 import cn.qingchengfit.model.common.Contact;
 import cn.qingchengfit.model.common.PayEvent;
@@ -37,6 +43,10 @@ import cn.qingchengfit.model.common.PlatformInfo;
 import cn.qingchengfit.model.common.ShareBean;
 import cn.qingchengfit.model.common.ToolbarAction;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.router.qc.IQcRouteCallback;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -55,6 +65,7 @@ import cn.qingchengfit.widgets.CustomSwipeRefreshLayout;
 import cn.qingchengfit.widgets.R;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -68,11 +79,16 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebStorage;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 import java.io.File;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -100,20 +116,21 @@ import rx.schedulers.Schedulers;
  */
 
 public class WebFragment extends BaseFragment
-  implements CustomSwipeRefreshLayout.CanChildScrollUpCallback, GestureDetector.OnGestureListener {
+    implements CustomSwipeRefreshLayout.CanChildScrollUpCallback,
+    GestureDetector.OnGestureListener {
 
   private static final int RESULT_LOGIN = 201;
-	public TextView mToobarActionTextView;
-	public Toolbar mToolbar;
-	public TextView mTitle;
-	public TextView mWebClose;
-	public WebView mWebviewWebView;
+  public TextView mToobarActionTextView;
+  public Toolbar mToolbar;
+  public TextView mTitle;
+  public TextView mWebClose;
+  public WebView mWebviewWebView;
   public String mCurUrl;
-	protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
-	protected RelativeLayout commonToolbar;
-	Button mRefresh;
-	LinearLayout mNoNetwork;
-	RelativeLayout webviewRoot;
+  protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
+  protected RelativeLayout commonToolbar;
+  Button mRefresh;
+  LinearLayout mNoNetwork;
+  RelativeLayout webviewRoot;
   GestureDetectorCompat gestureDetectorCompat;
   private CookieManager cookieManager;
   private IWXAPI msgApi;
@@ -130,6 +147,7 @@ public class WebFragment extends BaseFragment
   private String webAction;   //用以返回给
   private String wxApiStr;
   private String oemTag;
+  private MutableLiveData<String> loadUrl = new MutableLiveData<>();
 
   public static WebFragment newInstance(String url) {
     Bundle args = new Bundle();
@@ -175,7 +193,7 @@ public class WebFragment extends BaseFragment
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-    @Nullable Bundle savedInstanceState) {
+      @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_web, container, false);
     mToobarActionTextView = (TextView) view.findViewById(R.id.toobar_action);
     mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -213,61 +231,61 @@ public class WebFragment extends BaseFragment
     initToolbar(mToolbar);
     if (hideToolbar) commonToolbar.setVisibility(View.GONE);
     webviewRoot.getViewTreeObserver()
-      .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
-        @Override public void onGlobalLayout() {
-          if (webviewRoot == null) return;
-          CompatUtils.removeGlobalLayout(webviewRoot.getViewTreeObserver(), this);
-          //mRefreshSwipeRefreshLayout.setRefreshing(true);
-          initWeb();
-        }
-      });
+          @Override public void onGlobalLayout() {
+            if (webviewRoot == null) return;
+            CompatUtils.removeGlobalLayout(webviewRoot.getViewTreeObserver(), this);
+            //mRefreshSwipeRefreshLayout.setRefreshing(true);
+            initWeb();
+          }
+        });
 
     RxRegiste(RxBus.getBus()
-      .register(PayEvent.class)
-      .observeOn(AndroidSchedulers.mainThread())
-      .onBackpressureBuffer()
-      .subscribeOn(Schedulers.io())
-      .subscribe(new Subscriber<PayEvent>() {
-        @Override public void onCompleted() {
+        .register(PayEvent.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Subscriber<PayEvent>() {
+          @Override public void onCompleted() {
 
-        }
-
-        @Override public void onError(Throwable e) {
-
-        }
-
-        @Override public void onNext(PayEvent payEvent) {
-          isTouchWebView = false;
-          if (payEvent.result == 0) {
-            if (getActivity() != null) {
-              getActivity().setResult(Activity.RESULT_OK, new Intent());
-              getActivity().finish();
-            }
-            //if (mWebviewWebView != null) {
-
-            //mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
-            //}
-          } else {
-            if (getActivity() != null) {
-              //getActivity().setResult(Activity.RESULT_CANCELED);
-              getActivity().finish();
-            }
-            //if (mWebviewWebView != null) {
-            //  mWebviewWebView.loadUrl(
-            //      "javascript:window.payErrorCallback(" + payEvent.result + ");");
-            //}
           }
-        }
-      }));
+
+          @Override public void onError(Throwable e) {
+
+          }
+
+          @Override public void onNext(PayEvent payEvent) {
+            isTouchWebView = false;
+            if (payEvent.result == 0) {
+              if (getActivity() != null) {
+                getActivity().setResult(Activity.RESULT_OK, new Intent());
+                getActivity().finish();
+              }
+              //if (mWebviewWebView != null) {
+
+              //mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
+              //}
+            } else {
+              if (getActivity() != null) {
+                //getActivity().setResult(Activity.RESULT_CANCELED);
+                getActivity().finish();
+              }
+              //if (mWebviewWebView != null) {
+              //  mWebviewWebView.loadUrl(
+              //      "javascript:window.payErrorCallback(" + payEvent.result + ");");
+              //}
+            }
+          }
+        }));
 
     return view;
   }
 
   protected void initWeb() {
     /*
-             * init web
-             */
+     * init web
+     */
 
     initWebClient();
     initChromClient();
@@ -327,26 +345,33 @@ public class WebFragment extends BaseFragment
 
   private void initBus() {
     RxRegiste(RxBus.getBus()
-      .register(EventShareFun.class)
-      .observeOn(AndroidSchedulers.mainThread())
-      .onBackpressureBuffer()
-      .subscribeOn(Schedulers.io())
-      .subscribe(new Action1<EventShareFun>() {
-        @Override public void call(EventShareFun eventShareFun) {
-          if (eventShareFun.shareExtends != null) {
-            Gson gson = new Gson();
-            String json = gson.toJson(eventShareFun.shareExtends);
-            mWebviewWebView.loadUrl(
-              "javascript:window.nativeLinkWeb.callbackLst.shareInfo(" + json + ");");
+        .register(EventShareFun.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Action1<EventShareFun>() {
+          @Override public void call(EventShareFun eventShareFun) {
+            if (eventShareFun.shareExtends != null) {
+              Gson gson = new Gson();
+              String json = gson.toJson(eventShareFun.shareExtends);
+              mWebviewWebView.loadUrl(
+                  "javascript:window.nativeLinkWeb.callbackLst.shareInfo(" + json + ");");
+            }
           }
-        }
-      }));
+        }));
+
+    loadUrl.observe(this, url -> {
+      Log.d("TAG", "initBus: " + url);
+      if (mWebviewWebView != null && !TextUtils.isEmpty(url)) {
+        mWebviewWebView.loadUrl(url);
+      }
+    });
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     mWebClose.setVisibility(
-      (getActivity() != null && getActivity() instanceof WebActivity) ? View.VISIBLE : View.GONE);
+        (getActivity() != null && getActivity() instanceof WebActivity) ? View.VISIBLE : View.GONE);
     if (hideNav) {
       commonToolbar.removeAllViews();
       if (!CompatUtils.less21()) {
@@ -357,7 +382,7 @@ public class WebFragment extends BaseFragment
     }
   }
 
- public void addCloseBtn() {
+  public void addCloseBtn() {
     if (getActivity() != null && getActivity() instanceof WebActivity) {
       getActivity().finish();
     }
@@ -390,7 +415,6 @@ public class WebFragment extends BaseFragment
         }
       });
     }
-
   }
 
   public void initWebSetting() {
@@ -414,13 +438,13 @@ public class WebFragment extends BaseFragment
 
     String s = webSetting.getUserAgentString();
     webSetting.setUserAgentString(s
-      + " FitnessTrainerAssistant/"
-      + AppUtils.getAppVer(getActivity())
-      + " Android  "
-      + "QingchengApp/"
-      + (AppUtils.getCurApp(getContext()) == 0 ? "Trainer   " : "Staff   ")
-      + "OEM:"
-      + oemTag);
+        + " FitnessTrainerAssistant/"
+        + AppUtils.getAppVer(getActivity())
+        + " Android  "
+        + "QingchengApp/"
+        + (AppUtils.getCurApp(getContext()) == 0 ? "Trainer   " : "Staff   ")
+        + "OEM:"
+        + oemTag);
     // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
     LogUtil.e("uA:" + webSetting.getUserAgentString());
     webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
@@ -458,7 +482,7 @@ public class WebFragment extends BaseFragment
   private void initChromClient() {
     mWebviewWebView.setDownloadListener(new DownloadListener() {
       @Override public void onDownloadStart(String url, String userAgent, String contentDisposition,
-        String mimetype, long contentLength) {
+          String mimetype, long contentLength) {
         downloadFile(url, mimetype);
       }
     });
@@ -466,15 +490,17 @@ public class WebFragment extends BaseFragment
       final WebView.HitTestResult hr = mWebviewWebView.getHitTestResult();
       if (hr.getType() == WebView.HitTestResult.IMAGE_TYPE) {
         sheet = DialogSheet.builder(getContext()).addButton("保存图片", v1 -> {
-          if (hr.getExtra().startsWith("data:image")){
+          if (hr.getExtra().startsWith("data:image")) {
             String exr = hr.getExtra();
             if (exr.contains(",")) {
               MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
-                  FileUtils.base64ToBitmap(exr.split(",")[1]), "课表" + DateUtils.getStringToday() + ".jpg", "课表" + DateUtils.getStringToday() + ".jpg");
+                  FileUtils.base64ToBitmap(exr.split(",")[1]),
+                  "课表" + DateUtils.getStringToday() + ".jpg",
+                  "课表" + DateUtils.getStringToday() + ".jpg");
             }
             ToastUtils.show("保存成功");
             sheet.dismiss();
-          }else {
+          } else {
             downloadFile(hr.getExtra(), "img/png");
             sheet.dismiss();
           }
@@ -502,14 +528,14 @@ public class WebFragment extends BaseFragment
       }
 
       public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback,
-        android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
+          android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
         mValueCallbackNew = valueCallback;
         choosePictureFragmentDialog.show(getFragmentManager(), "");
         return true;
       }
 
       public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
-        FileChooserParams fileChooserParams) {
+          FileChooserParams fileChooserParams) {
         mValueCallbackNew = filePathCallback;
         choosePictureFragmentDialog.show(getFragmentManager(), "");
         return true;
@@ -518,31 +544,31 @@ public class WebFragment extends BaseFragment
       @Override
       public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
         new MaterialDialog.Builder(getActivity()).content(message)
-          .cancelable(false)
-          .positiveText(R.string.common_i_konw)
-                .onPositive((materialDialog, dialogAction) -> {
-                    result.confirm();
-                    materialDialog.dismiss();
-                })
-          .show();
+            .cancelable(false)
+            .positiveText(R.string.common_i_konw)
+            .onPositive((materialDialog, dialogAction) -> {
+              result.confirm();
+              materialDialog.dismiss();
+            })
+            .show();
         return true;
       }
 
       @Override
       public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
         new MaterialDialog.Builder(getActivity()).content(message)
-          .positiveText("确定")
-          .negativeText("取消")
-          .cancelable(false)
-                .onPositive((materialDialog, dialogAction) -> {
-                    result.confirm();
-                    materialDialog.dismiss();
-                })
-                .onNegative((materialDialog, dialogAction) -> {
-                    result.cancel();
-                    materialDialog.dismiss();
-                })
-          .show();
+            .positiveText("确定")
+            .negativeText("取消")
+            .cancelable(false)
+            .onPositive((materialDialog, dialogAction) -> {
+              result.confirm();
+              materialDialog.dismiss();
+            })
+            .onNegative((materialDialog, dialogAction) -> {
+              result.cancel();
+              materialDialog.dismiss();
+            })
+            .show();
         return true;
       }
 
@@ -594,12 +620,12 @@ public class WebFragment extends BaseFragment
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
         LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
-        if (url.startsWith("javascript") ||
-                url.startsWith("tel") ||
-                url.startsWith("content") ||
-                url.startsWith("file") ||
-                url.startsWith("market") ||
-                url.startsWith("smsto") ) {
+        if (url.startsWith("javascript")
+            || url.startsWith("tel")
+            || url.startsWith("content")
+            || url.startsWith("file")
+            || url.startsWith("market")
+            || url.startsWith("smsto")) {
           return super.shouldOverrideUrlLoading(view, url);
         }
         if (!url.startsWith("http")) {
@@ -627,7 +653,7 @@ public class WebFragment extends BaseFragment
       }
 
       @Override public void onReceivedError(WebView view, int errorCode, String description,
-        String failingUrl) {
+          String failingUrl) {
         LogUtil.e("errorCode:" + errorCode);
         setToolbarTitle("");
         showNoNet();
@@ -715,10 +741,10 @@ public class WebFragment extends BaseFragment
         if (mWebviewWebView != null) {
           String retAction = data.getStringExtra("web_action");
           mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('"
-            + retAction
-            + "','"
-            + data.getStringExtra("json")
-            + "');");
+              + retAction
+              + "','"
+              + data.getStringExtra("json")
+              + "');");
         }
       }
     }
@@ -730,11 +756,11 @@ public class WebFragment extends BaseFragment
   public void downloadFile(String url, String mime) {
     try {
       DownloadManager downloadManager =
-        (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+          (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
       DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-//      request.setMimeType(MimeTypeMap.getFileExtensionFromUrl(url));
+      //      request.setMimeType(MimeTypeMap.getFileExtensionFromUrl(url));
       request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
-        MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+          MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
       //request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_PICTURES,
       //    MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
       request.allowScanningByMediaScanner();
@@ -787,7 +813,7 @@ public class WebFragment extends BaseFragment
         ShareBean bean = new Gson().fromJson(json, ShareBean.class);
         if (bean.extra == null) {
           ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link)
-            .show(getFragmentManager(), "");
+              .show(getFragmentManager(), "");
         } else {
           ShareDialogWithExtendFragment.newInstance(bean).show(getFragmentManager(), "");
         }
@@ -867,113 +893,175 @@ public class WebFragment extends BaseFragment
     @JavascriptInterface public void setAction(String s) {
       final ToolbarAction toolStr = new Gson().fromJson(s, ToolbarAction.class);
       WebFragment.this.setAction(toolStr);
-  }
+    }
 
-  @JavascriptInterface public void completeAction() {
-    Intent intent = new Intent();
-    getActivity().setResult(Activity.RESULT_OK, intent);
-    getActivity().finish();
-  }
+    @JavascriptInterface public void completeAction() {
+      Intent intent = new Intent();
+      getActivity().setResult(Activity.RESULT_OK, intent);
+      getActivity().finish();
+    }
 
-  @JavascriptInterface public void setTitle(final String s) {
-    getActivity().runOnUiThread(new Runnable() {
-      @Override public void run() {
-        mToolbar.setTitle(s);
+    @JavascriptInterface public void setTitle(final String s) {
+      getActivity().runOnUiThread(new Runnable() {
+        @Override public void run() {
+          mToolbar.setTitle(s);
+        }
+      });
+    }
+
+    @JavascriptInterface public String getContacts() {
+      List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
+      Gson gson = new Gson();
+      return gson.toJson(contacts);
+    }
+
+    @JavascriptInterface public String getPlatform() {
+      PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
+      Gson gson = new Gson();
+      return gson.toJson(info);
+    }
+
+    @JavascriptInterface public void goBack() {
+      getActivity().runOnUiThread(new Runnable() {
+        @Override public void run() {
+          getActivity().onBackPressed();
+        }
+      });
+    }
+
+    @JavascriptInterface public void sensorsTrack(String key, String json) {
+      SensorsUtils.track(key, json, getContext());
+    }
+
+    @JavascriptInterface public String getSessionId() {
+      return QcRestRepository.getSession(getContext());
+    }
+
+    @JavascriptInterface
+    public void shareTimeline(String title, String link, String imgurl, String successCallback,
+        String failedCallback) {
+
+    }
+
+    @JavascriptInterface public void setArea() {// 跳转去设置
+      getActivity().runOnUiThread(new Runnable() {
+        @Override public void run() {
+          Intent intent = new Intent();
+          intent.setPackage(getContext().getPackageName());
+          intent.putExtra("to", 1);
+          startActivity(intent);
+        }
+      });
+    }
+
+    private void dealPayAction(String s) {
+      Uri uri = Uri.parse(Uri.decode(s));
+      Map<String, Object> params = new HashMap<>();
+      params.put("price", uri.getQueryParameter("price"));
+      params.put("out_trade_no", uri.getQueryParameter("out_trade_no"));
+      params.put("qrCodeUrl", uri.getQueryParameter("qrCodeUrl"));
+      params.put("brand_id", uri.getQueryParameter("brand_id"));
+      params.put("shop_id", uri.getQueryParameter("shop_id"));
+      params.put("channel", uri.getQueryParameter("channel"));
+      params.put("moduleName", "qcBase");
+      params.put("actionName", "/web/repay");
+      String channel = uri.getQueryParameter("channel");
+      String type = "";
+      if (channel.contains("WEIXIN")) {
+        type = "微信";
+      } else {
+        type = "支付宝";
       }
-    });
-  }
 
-  @JavascriptInterface public String getContacts() {
-    List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
-    Gson gson = new Gson();
-    return gson.toJson(contacts);
-  }
-
-  @JavascriptInterface public String getPlatform() {
-    PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
-    Gson gson = new Gson();
-    return gson.toJson(info);
-  }
-
-  @JavascriptInterface public void goBack() {
-    getActivity().runOnUiThread(new Runnable() {
-      @Override public void run() {
-        getActivity().onBackPressed();
-      }
-    });
-  }
-
-  @JavascriptInterface public void sensorsTrack(String key, String json) {
-    SensorsUtils.track(key, json, getContext());
-  }
-
-  @JavascriptInterface public String getSessionId() {
-    return QcRestRepository.getSession(getContext());
-  }
-
-  @JavascriptInterface
-  public void shareTimeline(String title, String link, String imgurl, String successCallback,
-    String failedCallback) {
-
-  }
-
-  @JavascriptInterface public void setArea() {// 跳转去设置
-    getActivity().runOnUiThread(new Runnable() {
-      @Override public void run() {
-        Intent intent = new Intent();
-        intent.setPackage(getContext().getPackageName());
-        intent.putExtra("to", 1);
-        startActivity(intent);
-      }
-    });
-  }
-
-  @JavascriptInterface public void goNativePath(String s) {
-    goNativePath(s, "");
-  }
-
-  @JavascriptInterface public void goNativePath(final String s, String params) {
-    if (TextUtils.isEmpty(s)) return;
-    getActivity().runOnUiThread(new Runnable() {
-      @Override public void run() {
-        if ("activities".equals(s)) {//跳到青橙专享活动列表页
-          getActivity().finish();
-        } else if ("area".equals(s)) {// 跳转去设置
-          setArea();
-        } else if (s.contains("login")) {
-          goLogin();
-        } else if (s.contains("qr_code")) {
-          try {
-            Uri qrCodeUri = Uri.parse(s);
-            String url = Uri.decode(qrCodeUri.getQueryParameter("url"));
-            String title = Uri.decode(qrCodeUri.getQueryParameter("title"));
-            String content = Uri.decode(qrCodeUri.getQueryParameter("content"));
-            WebShowQcCodeDialog.newInstance(url, title, content)
-              .show(getChildFragmentManager(), "");
-          } catch (Exception e) {
-
-          }
-        } else {
-          try {
-            Uri uri = Uri.parse(s);
-            Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
-            if (uri.getQueryParameterNames() != null) {
-              for (String s1 : uri.getQueryParameterNames()) {
-                tosb.putExtra(s1, uri.getQueryParameter(s1));
+      QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay/params")
+          .setContext(getContext())
+          .addParam("type", type)
+          .addParam("params", params)).callAsync(qcResult -> {
+        Flowable.just(qcResult)
+            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<QCResult>() {
+              @Override public void accept(QCResult qcResult) throws Exception {
+                if (qcResult.isSuccess()) {
+                  loadUrl.setValue("javascript:window.paySuccessCallback();");
+                }
+              }
+            });
+      });
+      RxRegiste(RxBus.getBus()
+          .register(EventNativePay.class)
+          .observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .subscribe(new Action1<EventNativePay>() {
+            @Override public void call(EventNativePay eventNativePay) {
+              Log.d("TAG",
+                  "call: " + eventNativePay.getParams().toString() + "-->" + WebFragment.this);
+              if (mWebviewWebView != null) {
+                Object channel = eventNativePay.getParams().get("channel");
+                if (channel != null) {
+                  Log.d("TAG", "call: javascript:window.payActionCallback({channel:\"" + channel + "\");");
+                  mWebviewWebView.loadUrl("javascript:window.payActionCallback({channel:\"" + channel + "\"});");
+                }
               }
             }
-            String ret = uri.getHost();
-            if (uri.getPath() != null) ret = TextUtils.concat(ret, uri.getPath()).toString();
-            tosb.putExtra("web_action", ret);
-            //tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(tosb, 99);
-          } catch (Exception e) {
-            mWebviewWebView.loadUrl(
-              "javascript:window.nativeLinkWeb.runCallback(goNativePathFailed(" + s + "));");
+          }));
+    }
+
+    @JavascriptInterface public void goNativePath(String s) {
+      goNativePath(s, "");
+    }
+
+    @JavascriptInterface public void goNativePath(final String s, String params) {
+      if (TextUtils.isEmpty(s)) return;
+      getActivity().runOnUiThread(new Runnable() {
+        @Override public void run() {
+          if ("activities".equals(s)) {//跳到青橙专享活动列表页
+            getActivity().finish();
+          } else if ("area".equals(s)) {// 跳转去设置
+            setArea();
+          } else if (s.contains("login")) {
+            goLogin();
+          } else if (s.contains("qr_code")) {
+            try {
+              Uri qrCodeUri = Uri.parse(s);
+              String url = Uri.decode(qrCodeUri.getQueryParameter("url"));
+              String title = Uri.decode(qrCodeUri.getQueryParameter("title"));
+              String content = Uri.decode(qrCodeUri.getQueryParameter("content"));
+              WebShowQcCodeDialog.newInstance(url, title, content)
+                  .show(getChildFragmentManager(), "");
+            } catch (Exception e) {
+
+            }
+          } else if (s.contains("payAction")) {
+            dealPayAction(s);
+          } else if (s.contains("createOrderAction")) {
+            Uri uri = Uri.parse(Uri.decode(s));
+            Map<String, Object> params = new HashMap<>();
+            params.put("out_trade_no", uri.getQueryParameter("out_trade_no"));
+            params.put("pay_trade_no", uri.getQueryParameter("pay_trade_no"));
+            RxBus.getBus().post(new EventRePay(params));
+          } else {
+            try {
+              Uri uri = Uri.parse(s);
+              Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
+              if (uri.getQueryParameterNames() != null) {
+                for (String s1 : uri.getQueryParameterNames()) {
+                  tosb.putExtra(s1, uri.getQueryParameter(s1));
+                }
+              }
+              String ret = uri.getHost();
+              if (uri.getPath() != null) ret = TextUtils.concat(ret, uri.getPath()).toString();
+              tosb.putExtra("web_action", ret);
+              //tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              startActivityForResult(tosb, 99);
+            } catch (Exception e) {
+              mWebviewWebView.loadUrl(
+                  "javascript:window.nativeLinkWeb.runCallback(goNativePathFailed(" + s + "));");
+            }
           }
         }
-      }
-    });
+      });
+    }
   }
-}
 }

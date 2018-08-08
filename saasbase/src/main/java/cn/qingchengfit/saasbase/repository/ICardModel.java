@@ -142,12 +142,13 @@ public interface ICardModel {
    * 充卡
    */
   rx.Observable<QcDataResponse<JsonObject>> qcChargeCard(String cardId, CardBuyBody chargeBody);
+  rx.Observable<QcDataResponse<JsonObject>> qcChargeCardFromCheckout(String cardId, CardBuyBody chargeBody);
 
   /**
    * 购卡操作
    */
-  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<JsonObject>> buyCard(
-      @Body CardBuyBody body);
+  rx.Observable<QcDataResponse<JsonObject>> buyCard(CardBuyBody body);
+  rx.Observable<QcDataResponse<JsonObject>> buyCardFromCheckout(CardBuyBody body);
 
   /**
    * 会员卡

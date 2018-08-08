@@ -306,7 +306,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         .flatMap((Func1<Boolean, Observable<?>>) aBoolean -> {
           if (aBoolean) {
             WeexUtil.loadAndSaveData(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
-                Configs.WEEX_PAGE_INDEX);
+                Configs.WEEX_PAGE_INDEX,BuildConfig.DEBUG);
           }
           return new RxPermissions(MainActivity.this).request(
               Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_SETTINGS,

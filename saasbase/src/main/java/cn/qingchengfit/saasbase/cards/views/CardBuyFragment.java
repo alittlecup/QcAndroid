@@ -252,6 +252,10 @@ import rx.functions.Action1;
         .withBottomEdge(true));
     rv.setLayoutManager(layoutManager);
     rv.setAdapter(commonFlexAdapter);
+    String qcCallId = getActivity().getIntent().getExtras().getString("qcCallId");
+    if(!TextUtils.isEmpty(qcCallId)){
+    presenter.setFromCheckout(true);
+    }
     presenter.getCardTplDetail();
     //civRealMoney.addTextWatcher(new TextWatcher() {
     //  @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -202,7 +202,8 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     workFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_COMMODITY_LIST),
                     workFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), workFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_WORKBENCH_COUNTER),
+                    workFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), workFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), workFuntion));
 

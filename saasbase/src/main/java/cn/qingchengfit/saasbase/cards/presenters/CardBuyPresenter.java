@@ -278,11 +278,11 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setSeller_id(null);
       cardBuyBody.staff_id = loginStatus.staff_id();
     }
-    balanceInfo=new HashMap<>();
-    balanceInfo.put("cardId",mCard.getId());
-    balanceInfo.put("chargeBody",new Gson().toJson(cardBuyBody));
-    RxRegiste(cardModel.qcChargeCard(mCard.getId(), cardBuyBody)
-        .onBackpressureLatest()
+    balanceInfo = new HashMap<>();
+    balanceInfo.put("cardId", mCard.getId());
+    balanceInfo.put("chargeBody", new Gson().toJson(cardBuyBody));
+    RxRegiste((isFromCheckout ? cardModel.qcChargeCardFromCheckout(mCard.getId(), cardBuyBody)
+        : cardModel.qcChargeCard(mCard.getId(), cardBuyBody)).onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new NetSubscribe<QcDataResponse<JsonObject>>() {
@@ -296,11 +296,18 @@ public class CardBuyPresenter extends BasePresenter {
         }));
   }
 
+  private boolean isFromCheckout = false;
+
+  public void setFromCheckout(boolean isFromCheckout) {
+    this.isFromCheckout = isFromCheckout;
+  }
+
   public Map<String, String> getBalanceInfo() {
     return balanceInfo;
   }
 
-  private Map<String,String> balanceInfo;
+  private Map<String, String> balanceInfo;
+
   //扣费操作
   public void proactiveDeduction(String cardId, ChargeBody body) {
     RxRegiste(cardModel.qcChargeRefund(cardId, body)
@@ -342,7 +349,7 @@ public class CardBuyPresenter extends BasePresenter {
           mChosenOption);
     }
 
-    if(view.checkCardBuyBody(cardBuyBody)){
+    if (view.checkCardBuyBody(cardBuyBody)) {
       return;
     }
     cardBuyBody.setCharge_type(view.payMethod());
@@ -355,10 +362,11 @@ public class CardBuyPresenter extends BasePresenter {
   }
 
   private String rePayJson;
+
   public void buyCardRequest() {
-    rePayJson=new Gson().toJson(cardBuyBody);
-    RxRegiste(cardModel.buyCard(cardBuyBody)
-        .onBackpressureLatest()
+    rePayJson = new Gson().toJson(cardBuyBody);
+    RxRegiste((isFromCheckout ? cardModel.buyCardFromCheckout(cardBuyBody)
+        : cardModel.buyCard(cardBuyBody)).onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new NetSubscribe<QcDataResponse<JsonObject>>() {

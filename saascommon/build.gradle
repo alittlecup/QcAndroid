@@ -40,18 +40,13 @@ android {
 }
 
 dependencies {
-  addApiComponent("qcbase","cn.qingchengfit.widgets:qcbase:1.0.180726",false)
-  api 'cn.qingchengfit.router:router:1.0.180709'
-  api ('cn.qingchengfit.weex:weex:1.0.180601'){
-    exclude group: "cn.qingchengfit.qcbase"
-  }
+  addApiComponent("qcbase","cn.qingchengfit.widgets:qcbase:1.0.180808",false)
+  api 'cn.qingchengfit.weex:weex:1.0.180808.8'
   api 'cn.qingchengfit.recruit:recruit:1.1.180613'
 
   api fileTree(dir: 'libs', include: ['*.jar'])
 
-  api('android.arch.lifecycle:extensions:1.1.0') {
-    exclude group: 'android.arch.lifecycle', module: 'runtime'
-  }
+
   api 'io.reactivex:rxjava-reactive-streams:1.2.1'
 
   api('com.hkm.taglib:tag:1.6.0') {
