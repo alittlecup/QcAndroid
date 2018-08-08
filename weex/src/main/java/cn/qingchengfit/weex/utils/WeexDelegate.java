@@ -6,6 +6,7 @@ import cn.qingchengfit.weex.component.QcQrCode;
 import cn.qingchengfit.weex.component.QcRichText;
 import cn.qingchengfit.weex.module.QcAnimationModule;
 import cn.qingchengfit.weex.module.QcNavigatorModule;
+import cn.qingchengfit.weex.module.QcPayModule;
 import cn.qingchengfit.weex.module.QcShareModule;
 import cn.qingchengfit.weex.module.QcTelModule;
 import cn.qingchengfit.weex.module.QcTrackModule;
@@ -81,6 +82,7 @@ public class WeexDelegate {
       WXSDKEngine.registerModule("qcShare", QcShareModule.class);
       WXSDKEngine.registerModule("qcTrack", QcTrackModule.class);
       WXSDKEngine.registerModule("qcTel", QcTelModule.class);
+      WXSDKEngine.registerModule("qcPay", QcPayModule.class);
     } catch (WXException e) {
       e.printStackTrace();
     }

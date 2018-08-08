@@ -40,7 +40,7 @@ android {
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   api 'com.taobao.android:weex_sdk:0.17.0'
-  implementation "cn.qingchengfit.widgets:qcbase:1.0.35"
+  implementation "cn.qingchengfit.widgets:qcbase:1.0.180808"
 
   annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
   annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
@@ -56,7 +56,7 @@ dependencies {
 }
 
 group 'cn.qingchengfit.weex'
-version "1.0.$today.4"
+version "1.0.$today.1"
 def ci = "$isCI".endsWith("true")
 uploadArchives {
   if (ci) {
