@@ -120,8 +120,8 @@ public final class WeexUtil {
   /**
    * 加载远程的js配置文件并保存至{@link WeexUtil {@link #jsMap}}
    */
-  public static void loadJsMap(@NonNull String releasePath, @NonNull String testPath,
-      @NonNull String index) {
+  public static void loadJsMap(@NonNull final String releasePath, @NonNull final String testPath,
+      @NonNull String index, final boolean isDebug) {
     setStaticString(releasePath, testPath, index);
     if (WeexUtil.isExistsCache("weex-version.json")) {
       Observable.just("weex-version.json")
@@ -136,17 +136,17 @@ public final class WeexUtil {
             @Override public void call(String s) {
               boolean isOpened = openString(s);
               if (!isOpened) {
-                loadNetWork();
+                loadNetWork(isDebug ? testPath : releasePath);
               }
             }
           });
     } else {
-      loadNetWork();
+      loadNetWork(isDebug ? testPath : releasePath);
     }
   }
 
   // TODO: 2018/4/11 修改路径和需要加载的js文件的key 外部传入
-  private static void loadNetWork() {
+  private static void loadNetWork(String path) {
     WXHttpTask task = new WXHttpTask();
     if (BuildConfig.DEBUG) {
       task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
@@ -206,9 +206,9 @@ public final class WeexUtil {
   }
 
   public static void loadAndSaveData(@NonNull String releasePath, @NonNull String testPath,
-      @NonNull final String index) {
+      @NonNull final String index, boolean isDebug) {
     WXHttpTask task = new WXHttpTask();
-    if (BuildConfig.DEBUG) {
+    if (isDebug) {
       task.url = testPath;
     } else {
       task.url = releasePath;

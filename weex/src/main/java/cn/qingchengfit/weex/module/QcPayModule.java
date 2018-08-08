@@ -9,6 +9,7 @@ import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.fragments.WebFragment;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -30,14 +31,15 @@ import rx.schedulers.Schedulers;
 import static java.security.AccessController.getContext;
 
 public class QcPayModule extends WXSDKEngine.DestroyableModule {
-  JSCallback jsCallback;
   Subscription subscribe;
+  JSCallback successCallback;
+  JSCallback createOrderCallback;
 
   @JSMethod
   public void pay(String json, final JSCallback successCallback, JSCallback createOrderCallback) {
     JSONObject jsonObject = JSON.parseObject(json);
 
-    Map<String, Object> params = new HashMap<>();
+    final Map<String, Object> params = new HashMap<>();
     params.put("price", jsonObject.getString("price"));
     params.put("out_trade_no", jsonObject.getString("out_trade_no"));
     params.put("qrCodeUrl", jsonObject.getString("qrCodeUrl"));
@@ -57,13 +59,15 @@ public class QcPayModule extends WXSDKEngine.DestroyableModule {
         .addParam("type", type)
         .addParam("params", params)).callAsync(new IQcRouteCallback() {
       @Override public void onResult(QCResult qcResult) {
+        LogUtil.d(qcResult.toString());
         if (qcResult.isSuccess()) {
-          successCallback.invoke(new Object());
+          QcPayModule.this.successCallback.invoke(new Object());
         }
       }
     });
 
-    if (jsCallback == null) {
+    if (this.createOrderCallback == null) {
+      this.createOrderCallback = createOrderCallback;
       subscribe = RxBus.getBus()
           .register(EventNativePay.class)
           .observeOn(AndroidSchedulers.mainThread())
@@ -73,15 +77,14 @@ public class QcPayModule extends WXSDKEngine.DestroyableModule {
             @Override public void call(EventNativePay eventNativePay) {
               Object channel = eventNativePay.getParams().get("channel");
               if (channel != null) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("channel", (String) channel);
-                String params = new Gson().toJson(jsonObject);
-                jsCallback.invoke(params);
+                JSONObject jsonObject1 = new JSONObject(eventNativePay.getParams());
+                QcPayModule.this.createOrderCallback.invoke(jsonObject1);
               }
             }
           });
     }
-    jsCallback = createOrderCallback;
+    this.createOrderCallback = createOrderCallback;
+    this.successCallback = successCallback;
   }
 
   @Override public void destroy() {
@@ -95,5 +98,8 @@ public class QcPayModule extends WXSDKEngine.DestroyableModule {
     params.put("out_trade_no", jsonObject.getString("out_trade_no"));
     params.put("pay_trade_no", jsonObject.getString("pay_trade_no"));
     RxBus.getBus().post(new EventRePay(params));
+
+    this.createOrderCallback = createOrderCallback;
+    this.successCallback = successCallback;
   }
 }
