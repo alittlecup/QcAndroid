@@ -960,27 +960,29 @@ public class WebFragment extends BaseFragment
 
     private void dealPayAction(String s) {
       Uri uri = Uri.parse(Uri.decode(s));
-      Map<String, Object> params = new HashMap<>();
-      params.put("price", uri.getQueryParameter("price"));
-      params.put("out_trade_no", uri.getQueryParameter("out_trade_no"));
-      params.put("qrCodeUrl", uri.getQueryParameter("qrCodeUrl"));
-      params.put("brand_id", uri.getQueryParameter("brand_id"));
-      params.put("shop_id", uri.getQueryParameter("shop_id"));
-      params.put("channel", uri.getQueryParameter("channel"));
-      params.put("moduleName", "qcBase");
-      params.put("actionName", "/web/repay");
       String channel = uri.getQueryParameter("channel");
-      String type = "";
-      if (channel.contains("WEIXIN")) {
-        type = "微信";
-      } else {
-        type = "支付宝";
-      }
 
-      QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay/params")
+      JsonObject wrapper=new JsonObject();
+      wrapper.addProperty("price", uri.getQueryParameter("price"));
+
+      JsonObject bean=new JsonObject();
+      bean.addProperty("out_trade_no", uri.getQueryParameter("out_trade_no"));
+      bean.addProperty("url", uri.getQueryParameter("qrCodeUrl"));
+      wrapper.add("bean",bean);
+
+
+      JsonObject info=new JsonObject();
+      info.addProperty("moduleName", "qcBase");
+      info.addProperty("actionName", "/web/repay");
+      info.addProperty("params","{\"channel\":\""+channel+"\"}");
+      wrapper.add("info",info);
+      wrapper.addProperty("type",channel);
+
+
+
+      QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
           .setContext(getContext())
-          .addParam("type", type)
-          .addParam("params", params)).callAsync(qcResult -> {
+          .addParam("data",new Gson().toJson(wrapper))).callAsync(qcResult -> {
         Flowable.just(qcResult)
             .subscribeOn(io.reactivex.schedulers.Schedulers.io())
             .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())

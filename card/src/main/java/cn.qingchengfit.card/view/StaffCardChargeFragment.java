@@ -18,9 +18,6 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.cards.views.NewCardChargeFragment;
-import cn.qingchengfit.saascommon.bean.CashierBean;
-import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
-import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.AppUtils;
@@ -53,25 +50,23 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(card.getUserIds()));
     } else {
-      CashierBean cashierBean = gson.fromJson(payBusinessResponse.toString(), CashierBean.class);
-      CashierBeanWrapper wrapper = new CashierBeanWrapper(cashierBean);
-      wrapper.setPrices(realMoney());
-      ScanRepayInfo info = new ScanRepayInfo();
-      info.setModuleName("card");
-      info.setActionName("/repay/balance");
-      info.setParams(presenter.getBalanceInfo());
-      wrapper.setInfo(info);
+      JsonObject wrapper = new JsonObject();
+      wrapper.addProperty("price", realMoney());
+      wrapper.add("bean", payBusinessResponse);
+      JsonObject info = new JsonObject();
+      info.addProperty("moduleName", "card");
+      info.addProperty("actionName", "/repay/balance");
+      info.addProperty("params", gson.toJson(presenter.getBalanceInfo()));
+      wrapper.add("info", info);
+
       if (payMethod() == 7) {
-        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
-            .setContext(getContext())
-            .addParam("type", "微信")
-            .addParam("orderData", wrapper)).callAsync(callback);
+        wrapper.addProperty("type", "WEIXIN_QRCODE");
       } else if (payMethod() == 12) {
-        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
-            .setContext(getContext())
-            .addParam("type", "支付宝")
-            .addParam("orderData", wrapper)).callAsync(callback);
+        wrapper.addProperty("type", "ALIPAY_QRCODE");
       }
+      QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+          .setContext(getContext())
+          .addParam("data", new Gson().toJson(wrapper))).callAsync(callback);
     }
   }
 

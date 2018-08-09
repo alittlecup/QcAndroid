@@ -1,12 +1,11 @@
-package cn.qingchengfit.saascommon.bean;
+package cn.qingchengfit.checkout.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import cn.qingchengfit.saascommon.qrcode.model.IOrderData;
 
 public class CashierBeanWrapper  implements IOrderData, Parcelable {
-  public void setPrices(String prices) {
-    this.prices = prices;
+  public void setPrice(String price) {
+    this.price = price;
   }
   private CashierBean bean;
   public CashierBeanWrapper(CashierBean bean){
@@ -18,13 +17,23 @@ public class CashierBeanWrapper  implements IOrderData, Parcelable {
   }
 
   private ScanRepayInfo info;
-  private String prices;
+  private String price;
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  private String type;
   @Override public String getQrCodeUri() {
     return bean.getUrl();
   }
 
-  @Override public String getPrices() {
-    return prices;
+  @Override public String getPrice() {
+    return price;
   }
 
   @Override public String getOrderNumber() {
@@ -48,6 +57,7 @@ public class CashierBeanWrapper  implements IOrderData, Parcelable {
   public void setOrderNumber(String orderNumber){
     if(bean!=null)bean.setPay_trade_no(orderNumber);
   }
+
   @Override public int describeContents() {
     return 0;
   }
@@ -55,23 +65,24 @@ public class CashierBeanWrapper  implements IOrderData, Parcelable {
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeParcelable(this.bean, flags);
     dest.writeParcelable(this.info, flags);
-    dest.writeString(this.prices);
+    dest.writeString(this.price);
+    dest.writeString(this.type);
   }
 
   protected CashierBeanWrapper(Parcel in) {
     this.bean = in.readParcelable(CashierBean.class.getClassLoader());
     this.info = in.readParcelable(ScanRepayInfo.class.getClassLoader());
-    this.prices = in.readString();
+    this.price = in.readString();
+    this.type = in.readString();
   }
 
-  public static final Parcelable.Creator<CashierBeanWrapper> CREATOR =
-      new Parcelable.Creator<CashierBeanWrapper>() {
-        @Override public CashierBeanWrapper createFromParcel(Parcel source) {
-          return new CashierBeanWrapper(source);
-        }
+  public static final Creator<CashierBeanWrapper> CREATOR = new Creator<CashierBeanWrapper>() {
+    @Override public CashierBeanWrapper createFromParcel(Parcel source) {
+      return new CashierBeanWrapper(source);
+    }
 
-        @Override public CashierBeanWrapper[] newArray(int size) {
-          return new CashierBeanWrapper[size];
-        }
-      };
+    @Override public CashierBeanWrapper[] newArray(int size) {
+      return new CashierBeanWrapper[size];
+    }
+  };
 }

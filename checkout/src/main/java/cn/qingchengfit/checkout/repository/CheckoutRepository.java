@@ -2,9 +2,8 @@ package cn.qingchengfit.checkout.repository;
 
 import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
-import cn.qingchengfit.saascommon.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
-import cn.qingchengfit.checkout.bean.OrderStatusBean;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
 import cn.qingchengfit.saascommon.network.Resource;
 import java.util.Map;

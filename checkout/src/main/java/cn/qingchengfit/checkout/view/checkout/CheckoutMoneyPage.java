@@ -8,24 +8,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
 import cn.qingchengfit.checkout.R;
-import cn.qingchengfit.router.IComponentCallback;
-import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saascommon.bean.CashierBean;
-import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
+import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBeanWrapper;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutMoneyBinding;
-import cn.qingchengfit.checkout.view.pay.CheckoutPayPageParams;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
+import cn.qingchengfit.checkout.bean.ScanRepayInfo;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @Leaf(module = "checkout", path = "/checkout/money") public class CheckoutMoneyPage
     extends CheckoutCounterFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
@@ -56,33 +53,30 @@ import java.util.Map;
 
   private void dealCashierBean(CashierBean cashierBean) {
     CashierBeanWrapper wrapper = new CashierBeanWrapper(cashierBean);
-    wrapper.setPrices( String.valueOf(Double.parseDouble(mViewModel.count.getValue())));
+    wrapper.setPrice(mViewModel.count.getValue());
     ScanRepayInfo info = new ScanRepayInfo();
     info.setModuleName("checkout");
     info.setActionName("reOrder");
-    Map<String, String> params = new HashMap<>();
-    params.put("price",mViewModel.count.getValue());
-
+    JsonObject params=new JsonObject();
+    params.addProperty("price", mViewModel.count.getValue());
     switch (mViewModel.getType()) {
       case PayChannel.ALIPAY_QRCODE:
-        params.put("channel", "ALIPAY_QRCODE");
-        info.setParams(params);
+        params.addProperty("channel", "ALIPAY_QRCODE");
+        info.setParams(params.toString());
+        wrapper.setType("ALIPAY_QRCODE");
         wrapper.setInfo(info);
-        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
-            .setContext(getContext())
-            .addParam("type", "支付宝")
-            .addParam("orderData", wrapper)).callAsync(callback);
-        break;
+
       case PayChannel.WEIXIN_QRCODE:
-        params.put("channel", "WEIXIN_QRCODE");
-        info.setParams(params);
+        params.addProperty("channel", "WEIXIN_QRCODE");
+        wrapper.setType("WEIXIN_QRCODE");
+        info.setParams(params.toString());
         wrapper.setInfo(info);
-        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
-            .setContext(getContext())
-            .addParam("type", "微信")
-            .addParam("orderData", wrapper)).callAsync(callback);
         break;
     }
+    String json = new Gson().toJson(wrapper);
+    QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
+        .setContext(getContext())
+        .addParam("data", json)).callAsync(callback);
   }
 
   private IQcRouteCallback callback = qcResult -> QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home"))

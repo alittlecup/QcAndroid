@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment.checkout;
 
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saascommon.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBean;
 import io.reactivex.Flowable;
 import java.util.Map;
 import retrofit2.http.Body;

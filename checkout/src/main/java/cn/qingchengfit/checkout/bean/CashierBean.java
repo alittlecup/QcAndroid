@@ -1,4 +1,4 @@
-package cn.qingchengfit.saascommon.bean;
+package cn.qingchengfit.checkout.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,9 +1,7 @@
 package cn.qingchengfit.checkout.repository;
 
-import cn.qingchengfit.saascommon.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
-import cn.qingchengfit.checkout.bean.OrderStatusBean;
-import cn.qingchengfit.checkout.bean.ScanResultBean;
 import cn.qingchengfit.network.response.QcDataResponse;
 import io.reactivex.Flowable;
 import java.util.Map;

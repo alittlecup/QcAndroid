@@ -1,4 +1,4 @@
-package cn.qingchengfit.saascommon.bean;
+package cn.qingchengfit.checkout.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -25,15 +25,15 @@ public class ScanRepayInfo implements Parcelable {
     this.actionName = actionName;
   }
 
-  public Map<String, String> getParams() {
+  public String getParams() {
     return params;
   }
 
-  public void setParams(Map<String, String> params) {
+  public void setParams(String params) {
     this.params = params;
   }
 
-  private Map<String,String> params;
+  private String params;
 
   @Override public int describeContents() {
     return 0;
@@ -42,11 +42,7 @@ public class ScanRepayInfo implements Parcelable {
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.moduleName);
     dest.writeString(this.actionName);
-    dest.writeInt(this.params.size());
-    for (Map.Entry<String, String> entry : this.params.entrySet()) {
-      dest.writeString(entry.getKey());
-      dest.writeString(entry.getValue());
-    }
+    dest.writeString(this.params);
   }
 
   public ScanRepayInfo() {
@@ -55,13 +51,7 @@ public class ScanRepayInfo implements Parcelable {
   protected ScanRepayInfo(Parcel in) {
     this.moduleName = in.readString();
     this.actionName = in.readString();
-    int paramsSize = in.readInt();
-    this.params = new HashMap<String, String>(paramsSize);
-    for (int i = 0; i < paramsSize; i++) {
-      String key = in.readString();
-      String value = in.readString();
-      this.params.put(key, value);
-    }
+    this.params = in.readString();
   }
 
   public static final Parcelable.Creator<ScanRepayInfo> CREATOR =

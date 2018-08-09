@@ -9,13 +9,10 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import cn.qingchengfit.checkout.R;
-import cn.qingchengfit.router.QC;
-import cn.qingchengfit.router.QCResult;
-import cn.qingchengfit.saascommon.bean.CashierBean;
-import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
+import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.ScanRepayInfo;
 import cn.qingchengfit.checkout.databinding.QcScanActivityBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
@@ -88,7 +85,7 @@ public class QcScanActivity extends SaasCommonActivity
     QcRouteUtil.setRouteOptions(
         new RouteOptions(scanRepayInfo.getModuleName()).setActionName(scanRepayInfo.getActionName())
             .addParam("type", type)
-            .addParams(new HashMap<>(scanRepayInfo.getParams()))).callAsync(qcResult -> {
+            .addParam("params",scanRepayInfo.getParams())).callAsync(qcResult -> {
       if (qcResult.isSuccess()) {
         Map<String, Object> dataMap = qcResult.getDataMap();
         Object cashierBean = dataMap.get("cashierBean");

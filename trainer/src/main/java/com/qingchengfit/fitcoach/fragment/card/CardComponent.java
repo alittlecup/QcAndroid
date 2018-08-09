@@ -5,7 +5,7 @@ import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
-import cn.qingchengfit.saascommon.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import com.google.gson.Gson;
 import java.util.HashMap;

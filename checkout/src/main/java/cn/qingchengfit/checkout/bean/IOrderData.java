@@ -1,10 +1,9 @@
-package cn.qingchengfit.saascommon.qrcode.model;
+package cn.qingchengfit.checkout.bean;
 
-import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
 
 public interface IOrderData {
   String getQrCodeUri();
-  String getPrices();
+  String getPrice();
   String getOrderNumber();
   String getPollingNUmber();
   ScanRepayInfo getScanRePayInfo();

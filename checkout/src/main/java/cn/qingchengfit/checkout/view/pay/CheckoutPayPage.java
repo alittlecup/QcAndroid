@@ -5,9 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidmads.library.qrgenearator.QRGContents;
@@ -18,29 +16,23 @@ import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saascommon.bean.CashierBean;
-import cn.qingchengfit.saascommon.bean.CashierBeanWrapper;
-import cn.qingchengfit.saascommon.bean.ScanRepayInfo;
+import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBeanWrapper;
+import cn.qingchengfit.checkout.bean.ScanRepayInfo;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutPayBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saascommon.qrcode.model.IOrderData;
+import cn.qingchengfit.checkout.bean.IOrderData;
 import cn.qingchengfit.checkout.view.scan.QcScanActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
-import com.bigkoo.pickerview.lib.DensityUtil;
 import com.google.zxing.WriterException;
-import com.google.zxing.qrcode.encoder.QRCode;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import timber.log.Timber;
@@ -71,11 +63,6 @@ import timber.log.Timber;
             SUCCESS = true;
             String success_url = orderStatusBean.order.getSuccess_url();
             WebActivity.startWebForResult(success_url, this, PAY_SUCCESS);
-            //new Handler().postDelayed(new Runnable() {
-            //  @Override public void run() {
-            //    paySuccessBack();
-            //  }
-            //}, 300);
             break;
         }
       }
@@ -85,7 +72,7 @@ import timber.log.Timber;
       hideLoading();
       if (iOrderData != null) {
         initQrCode(iOrderData);
-        mBinding.tvCheckoutMoney.setText("¥" + String.valueOf(iOrderData.getPrices()));
+        mBinding.tvCheckoutMoney.setText("￥" + String.valueOf(iOrderData.getPrice()));
         startPollingOrderStatus();
       }
     });
@@ -123,14 +110,14 @@ import timber.log.Timber;
     QcRouteUtil.setRouteOptions(
         new RouteOptions(scanRePayInfo.getModuleName()).setActionName(scanRePayInfo.getActionName())
             .addParam("type", type)
-            .addParams(new HashMap<>(scanRePayInfo.getParams()))).callAsync(qcResult -> {
+            .addParam("params",scanRePayInfo.getParams())).callAsync(qcResult -> {
       if (qcResult.isSuccess()) {
         Map<String, Object> dataMap = qcResult.getDataMap();
         Object cashierBean = dataMap.get("cashierBean");
         if (cashierBean instanceof CashierBean) {
           IOrderData value = mViewModel.IOrderData.getValue();
           CashierBeanWrapper cashierBeanWrapper = new CashierBeanWrapper((CashierBean) cashierBean);
-          cashierBeanWrapper.setPrices(value.getPrices());
+          cashierBeanWrapper.setPrice(value.getPrice());
           cashierBeanWrapper.setInfo(value.getScanRePayInfo());
           mViewModel.IOrderData.setValue(value);
         }
@@ -207,17 +194,24 @@ import timber.log.Timber;
   }
 
   private void initUI() {
-    mBinding.tvDec.setText(type + "扫描上方二维码完成支付");
-    mBinding.tvQrTitle.setText(type + "收款码");
-    if (type.equals("支付宝")) {
+
+    if (type.equals("ALIPAY_QRCODE")) {
       mBinding.root.setBackgroundResource(R.drawable.ck_bg_ali);
-    } else if (type.equals("微信")) {
+      mBinding.tvDec.setText("支付宝扫描上方二维码完成支付");
+      mBinding.tvQrTitle.setText("支付宝收款码");
+    } else if (type.equals("WEIXIN_QRCODE")) {
       mBinding.root.setBackgroundResource(R.drawable.ck_bg_wechat);
+      mBinding.tvDec.setText("微信扫描上方二维码完成支付");
+      mBinding.tvQrTitle.setText("微信收款码");
     }
   }
 
   private void initToolbar() {
-    mBinding.setToolbarModel(new ToolbarModel(type + "收款"));
+    if (type.equals("ALIPAY_QRCODE")) {
+      mBinding.setToolbarModel(new ToolbarModel("支付宝收款"));
+    } else if (type.equals("WEIXIN_QRCODE")) {
+      mBinding.setToolbarModel(new ToolbarModel("微信收款"));
+    }
     initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.includeToolbar.toolbarLayout.setBackgroundColor(Color.TRANSPARENT);
   }

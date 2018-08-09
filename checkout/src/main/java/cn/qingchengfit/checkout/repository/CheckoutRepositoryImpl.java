@@ -2,18 +2,14 @@ package cn.qingchengfit.checkout.repository;
 
 import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
-import cn.qingchengfit.saascommon.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.HomePageBean;
-import cn.qingchengfit.checkout.bean.OrderStatusBean;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.BindLiveData;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import io.reactivex.Flowable;
-import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 
