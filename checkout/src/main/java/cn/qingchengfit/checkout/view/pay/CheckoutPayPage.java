@@ -85,7 +85,7 @@ import timber.log.Timber;
       hideLoading();
       if (iOrderData != null) {
         initQrCode(iOrderData);
-        mBinding.tvCheckoutMoney.setText("￥" + String.valueOf(iOrderData.getPrices()));
+        mBinding.tvCheckoutMoney.setText("¥" + String.valueOf(iOrderData.getPrices()));
         startPollingOrderStatus();
       }
     });

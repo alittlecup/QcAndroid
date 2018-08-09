@@ -36,7 +36,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="right"
           android:layout_marginTop="55dp"
-          android:text="请输入收款金额,最高￥20000"
+          android:text="请输入收款金额,最高¥20000"
           style="@style/QcTextStyleStandardGrey"
           />
       <LinearLayout

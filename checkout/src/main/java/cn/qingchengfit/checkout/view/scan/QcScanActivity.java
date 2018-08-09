@@ -53,8 +53,6 @@ public class QcScanActivity extends SaasCommonActivity
     mViewModel.scanResult.observe(this, scanResultBean -> {
       hideLoading();
       if (scanResultBean.successful) {
-        ToastUtils.show("success");
-        //这里跳转的逻辑是，如果是从收银台进来的就去收银台首页，如果是从原有的其他位置进来的就执行之前的成功之后的逻辑
         WebActivity.startWebForResult(scanResultBean.url, this, PAY_SUCCESS);
       } else {
         payError();

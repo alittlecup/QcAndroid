@@ -45,6 +45,7 @@ import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
+import cn.qingchengfit.utils.PermissionUtils;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -477,7 +478,7 @@ import rx.functions.Action1;
   }
 
  public void onSelectPayMethod() {
-    BottomPayDialog f = BottomPayDialog.newInstance(presenter.hasEditPermission(), selectPos);
+    BottomPayDialog f = BottomPayDialog.newInstance(permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos);
     f.show(getFragmentManager(), "");
   }
 
