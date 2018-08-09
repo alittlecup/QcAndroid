@@ -39,25 +39,28 @@ public class QcPayModule extends WXSDKEngine.DestroyableModule {
   public void pay(String json, final JSCallback successCallback, JSCallback createOrderCallback) {
     JSONObject jsonObject = JSON.parseObject(json);
 
-    final Map<String, Object> params = new HashMap<>();
-    params.put("price", jsonObject.getString("price"));
-    params.put("out_trade_no", jsonObject.getString("out_trade_no"));
-    params.put("qrCodeUrl", jsonObject.getString("qrCodeUrl"));
-    params.put("brand_id", jsonObject.getString("brand_id"));
-    params.put("shop_id", jsonObject.getString("shop_id"));
-    params.put("channel", jsonObject.getString("channel"));
-    params.put("moduleName", "qcBase");
-    params.put("actionName", "/web/repay");
+
     String channel = jsonObject.getString("channel");
-    String type = "";
-    if (channel.contains("WEIXIN")) {
-      type = "微信";
-    } else {
-      type = "支付宝";
-    }
+
+    JsonObject wrapper=new JsonObject();
+    wrapper.addProperty("price", jsonObject.getString("price"));
+
+    JsonObject bean=new JsonObject();
+    bean.addProperty("out_trade_no", jsonObject.getString("out_trade_no"));
+    bean.addProperty("url", jsonObject.getString("qrCodeUrl"));
+    wrapper.add("bean",bean);
+
+
+    JsonObject info=new JsonObject();
+    info.addProperty("moduleName", "qcBase");
+    info.addProperty("actionName", "/web/repay");
+    info.addProperty("params","{\"channel\":\""+channel+"\"}");
+    wrapper.add("info",info);
+    wrapper.addProperty("type",channel);
+
     QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay/params")
-        .addParam("type", type)
-        .addParam("params", params)).callAsync(new IQcRouteCallback() {
+        .addParam("type", channel)
+        .addParam("data", new Gson().toJson(wrapper))).callAsync(new IQcRouteCallback() {
       @Override public void onResult(QCResult qcResult) {
         LogUtil.d(qcResult.toString());
         if (qcResult.isSuccess()) {
