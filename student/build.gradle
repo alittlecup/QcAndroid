@@ -2,6 +2,8 @@ apply from: rootProject.file('qc_settings.gradle')
 
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
+def dependens = rootProject.ext.dependencies
+
 android{
   configurations.all {
     resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
@@ -24,11 +26,14 @@ dependencies {
   addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
   appComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
 
-  implementation "com.android.support.constraint:constraint-layout:${libs.constraint_layout}"
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  implementation dependens["constraint-layout"]
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
 
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
+
+
 }
 

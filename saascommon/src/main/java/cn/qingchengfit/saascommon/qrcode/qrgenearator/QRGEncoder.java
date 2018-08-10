@@ -1,4 +1,4 @@
-package androidmads.library.qrgenearator;
+package cn.qingchengfit.saascommon.qrcode.qrgenearator;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

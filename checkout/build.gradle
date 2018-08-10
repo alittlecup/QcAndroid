@@ -6,8 +6,7 @@ def cfg = rootProject.ext.configuration
 
 dependencies {
   addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
-  appComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
-  implementation project(':saasbase')
+  appComponent('login','cn.qingchengfit.login:login:1.0.180710',false)
 
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"

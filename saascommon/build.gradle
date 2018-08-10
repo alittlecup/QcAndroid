@@ -4,6 +4,9 @@ apply from: rootProject.file('qc_component.gradle')
 
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
+
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
 android {
   compileSdkVersion 27
 
@@ -44,22 +47,18 @@ dependencies {
   api 'cn.qingchengfit.weex:weex:1.0.180827.1'
   api 'cn.qingchengfit.recruit:recruit:1.1.180613'
 
-  api fileTree(dir: 'libs', include: ['*.jar'])
-
-
-  api 'io.reactivex:rxjava-reactive-streams:1.2.1'
-
-  api('com.hkm.taglib:tag:1.6.0') {
+  api(dependens["taglib"]){
     exclude group: 'com.android.support'
   }
 
-  api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
-    exclude group: 'com.google.googlejavaformat'
-  }
-  api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+  api dependens["MPAndroidChart"]
 
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+
+  annotationProcessor annotations["fragmentargs"]
+
+
+
 
 }

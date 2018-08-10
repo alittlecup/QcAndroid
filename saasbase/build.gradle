@@ -4,6 +4,9 @@ apply plugin: 'maven'
 apply from: rootProject.file('qc_upload_maven.gradle')
 apply from: rootProject.file('qc_component.gradle')
 
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
+
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 
@@ -76,22 +79,18 @@ android {
 dependencies {
   addApiComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
 
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
 
 
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
 
-  api 'android.arch.lifecycle:reactivestreams:1.0.0'
-  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
-  api 'me.gujun.android.taggroup:library:1.4@aar'
-  api 'android.arch.lifecycle:common-java8:1.0.0'
-  //    // Room
-  api 'android.arch.persistence.room:runtime:1.0.0'
-  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-  api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-  api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  annotationProcessor annotations["fragmentargs"]
+
+  annotationProcessor annotations["room"]
+
+
 }
 
 

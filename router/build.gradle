@@ -3,6 +3,9 @@ apply from: rootProject.file('qc_upload_maven.gradle')
 
 def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
+def dependens = rootProject.ext.dependencies
+
+
 android {
   compileSdkVersion cfg.compileVersion
   buildToolsVersion cfg.buildToolsVersion
@@ -24,7 +27,7 @@ android {
 }
 
 dependencies {
-  compileOnly "com.android.support:appcompat-v7:${libs.supportVersion}"
+ compileOnly dependens["appcompat-v7"]
 
 }
 

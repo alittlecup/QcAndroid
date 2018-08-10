@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 def libs = rootProject.ext.libraries
 def config = rootProject.ext.configuration
 
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
+
 apply from: rootProject.file('qc_component.gradle')
 
 /**
@@ -126,14 +129,6 @@ android {
   dexOptions {
     javaMaxHeapSize "4g"
   }
-  //  sourceSets {
-  //    main{
-  //      java.srcDirs = ['main/java','../build/generated/source/apt/dev/debug']
-  //    }
-  //    dev{
-  //      java.srcDirs = ['main/java','dev/java','../build/generated/source/apt/dev/debug']
-  //    }
-  //  }
   configurations.all {
     resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
     resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
@@ -188,64 +183,43 @@ ext.isTask = { name ->
 }
 
 task buildWithAP(dependsOn: build) {}
-//task fastDebug (dependsOn: fastdex) {}
 
 dependencies {
   addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180726',false)
-  addComponent('shop','cn.qingchengfit.shop:shop:1.0.180721',true)
-  addApiComponent('login','cn.qingchengfit.login:login:1.0.180724',true)
+  addComponent('shop','cn.qingchengfit.shop:shop:1.0.180721',false)
+  addApiComponent('login','cn.qingchengfit.login:login:1.0.180724',false)
   implementation project(path: ':checkout')
   implementation project(path: ':student')
   implementation project(path: ':card')
-  //  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-  //  compile files('libs/java-sdk-3.1.jar')//包含 到了chat sdk  这个得改
-  implementation files('libs/pinyin4j-2.5.0.jar')
-  implementation 'com.android.support:multidex:1.0.1'
-  implementation "org.glassfish:javax.annotation:${libs.javax_annotation}"
-  implementation 'com.flyco.banner:FlycoBanner_Lib:2.0.2@aar'
-  implementation 'jp.wasabeef:recyclerview-animators:2.2.1'
-  implementation 'su.j2e:rv-joiner:1.0.9'
+  implementation files(dependens["pinyin"])
 
-  implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
-  implementation('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.2@aar') {
-    transitive = true
-  }
-  //支持左滑菜单的recyclerview
-  implementation 'com.tubb.smrv:swipemenu-recyclerview:5.3.0'
+  implementation dependens["flycoBanner-lib"]
 
-  // recyclerview 分组 header view
-  implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
-  implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-  //  productCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-  //  internaltestCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-  //  selfCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-  //  debugapi 'io.github.skyhacker2:sqliteonweb:1.0.1'
-  //  releaseapi 'io.github.skyhacker2:sqliteonweb-no-op:1.0.2'
-  implementation 'com.wanjian:cockroach:0.0.5'
+  implementation dependens["recyclerview-animators"]
 
-  implementation('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.2@aar') {
-    transitive = true
-  }
-  implementation 'com.jakewharton.threetenabp:threetenabp:1.0.2'
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+  implementation dependens["swipemenu-recyclerview"]
+
+  testImplementation dependens["junit"]
+
+  androidTestImplementation (dependens["espresso-core"]){
     exclude group: 'com.android.support', module: 'support-annotations'
-  })
+  }
+
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
 
 
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
 
-  //  if (isTask("buildWithAP") ) {
-  println "Going to run annotation processors ..."
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+  annotationProcessor annotations["fragmentargs"]
+
+  annotationProcessor annotations["room"]
+
 }
 
 apply plugin: 'auto-register'

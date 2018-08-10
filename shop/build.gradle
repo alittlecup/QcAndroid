@@ -54,20 +54,14 @@ android {
 
 dependencies {
   testImplementation 'junit:junit:4.12'
-  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',true)
+  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',false)
 
 
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
 
 
-  implementation "com.github.akarnokd:rxjava2-interop:0.11.5"
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
 
-  api "io.reactivex.rxjava2:rxjava:2.1.8"
-  api "io.reactivex.rxjava2:rxandroid:2.0.1"
-  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-  api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 }

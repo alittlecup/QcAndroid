@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import cn.qingchengfit.db.QCDbManagerImpl;
@@ -201,10 +199,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
   }
 
-  @Override protected void attachBaseContext(Context base) {
-    super.attachBaseContext(base);
-    MultiDex.install(this);
-  }
 
   public static void finishActivity() {
     //杀死该应用进程

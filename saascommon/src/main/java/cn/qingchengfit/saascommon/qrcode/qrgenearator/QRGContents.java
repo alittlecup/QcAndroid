@@ -1,4 +1,4 @@
-package androidmads.library.qrgenearator;
+package cn.qingchengfit.saascommon.qrcode.qrgenearator;
 
 import android.provider.ContactsContract;
 
