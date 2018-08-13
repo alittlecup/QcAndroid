@@ -12,35 +12,6 @@ def getDate() {
   return formattedDate
 }
 
-def overrideMapsKey(buildVariant) {
-  def appName = getAppName(buildVariant)
-
-  // override line ... this is not necessary to this question
-
-  renameAPK(buildVariant, appName)
-}
-
-// *** RENAME APK ***
-def renameAPK(buildVariant, appName) {
-  def apk = buildVariant.packageApplication.outputFile
-  def newName = ""
-
-  // get data for apk renaming
-  def versionName = android.defaultConfig.versionName
-  def versionNameSuffix = buildVariant.buildType.versionNameSuffix
-  if (versionNameSuffix.toString().equals("null")) versionNameSuffix = ""
-  def buildTypeOfApp = buildVariant.buildType.name
-
-  if (buildVariant.zipAlign) {
-    //        newName = "etscanner-" + appName + "-" + buildTypeOfApp.toUpperCase() + "-v" + versionName + versionNameSuffix + ".apk"
-    newName = "debug_unalign.apk"
-  } else {
-    //        newName = "etscanner-" + appName + "-" + buildTypeOfApp.toUpperCase() + "-v" + versionName + versionNameSuffix + "-ALIGNED" + ".apk"
-    newName = "debug.apk"
-  }
-  buildVariant.packageApplication.outputFile = new File(apk.parentFile, newName)
-}
-
 android {
   compileSdkVersion cfg.compileVersion
   buildToolsVersion cfg.buildToolsVersion

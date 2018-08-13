@@ -1,24 +1,7 @@
 apply from: rootProject.file('qc_settings.gradle')
 
-def libs = rootProject.ext.libraries
-def cfg = rootProject.ext.configuration
 def dependens = rootProject.ext.dependencies
-
-android{
-  configurations.all {
-    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
-
-    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:support-fragment:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
-    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
-    resolutionStrategy.force "android.arch.core:runtime:1.1.0"
-  }
-}
-
+def annotations = rootProject.ext.annotations
 
 
 dependencies {

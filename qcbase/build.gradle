@@ -182,8 +182,6 @@ dependencies {
 group 'cn.qingchengfit.widgets'
 version "1.0.$today"
 def ci = true
-//def ci = "$isCI".endsWith("true")
-//printf("ci" + ci)
 uploadArchives {
   if (ci) {
     repositories {
@@ -199,21 +197,6 @@ uploadArchives {
       mavenDeployer {
         repository(url: uri('../../../repo'))
         pom.artifactId = 'qcbase'
-        //=======
-
-        //version '1.0.36'
-        //uploadArchives {
-        //  repositories {
-        //    mavenDeployer {
-        //      if (!isDependenceLocal.toBoolean()) {
-        //        repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
-        //          authentication(userName: "admin", password: "admin123")
-        //        }
-        //      }else {
-        //        repository(url: uri('../../../repo'))
-        //      }
-        //      pom.artifactId = 'qcbase'
-        //    }
       }
     }
   }

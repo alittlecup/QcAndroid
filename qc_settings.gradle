@@ -17,7 +17,6 @@ if (runAsApp) {
   apply plugin: 'com.android.library'
 }
 
-def libs = rootProject.ext.libraries
 def cfg = rootProject.ext.configuration
 android {
   dataBinding {

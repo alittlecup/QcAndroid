@@ -1,17 +1,21 @@
 apply from: rootProject.file('qc_settings.gradle')
 
+def annotations = rootProject.ext.annotations
 
-def libs = rootProject.ext.libraries
-def cfg = rootProject.ext.configuration
 
 dependencies {
   addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
   appComponent('login','cn.qingchengfit.login:login:1.0.180710',false)
 
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
 
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+
+
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
+
+
 }
 

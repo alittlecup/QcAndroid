@@ -1,10 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'maven'
 apply from: rootProject.file('qc_upload_maven.gradle')
 apply from: rootProject.file('qc_component.gradle')
 
-def dependens = rootProject.ext.dependencies
 def annotations = rootProject.ext.annotations
 
 def libs = rootProject.ext.libraries
@@ -31,7 +29,6 @@ android {
       }
     }
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    //        manifestPlaceholders = [APP_SCHAME        : "qcstaff"]
   }
   buildTypes {
     release {
