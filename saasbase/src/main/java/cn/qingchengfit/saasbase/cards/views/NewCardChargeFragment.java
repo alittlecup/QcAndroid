@@ -43,6 +43,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
     toolbarTitle.setText("续卡");
     if (card.is_open_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
+      resetSignaturePath("");
     }else{
       cardProtocol.setVisibility(View.GONE);
     }
@@ -136,7 +137,8 @@ public class NewCardChargeFragment extends CardBuyFragment {
 
   @Override public void onCardProrocol() {
     if (card.card_tpl_service_term != null){
-      CardProtocolActivity.startWeb(card.card_tpl_service_term.content_link, getContext(), false);
+      presenter.setQcStudentBeans(card.getUsers());
+      routeToProrocolWeb();
     }
   }
 

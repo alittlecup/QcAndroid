@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
@@ -32,7 +33,12 @@ public class CardProtocolActivity extends WebActivity{
     intent.putExtra("isHave", isHaveModify);
     context.startActivity(intent);
   }
-
+  public static void startWebForResult(String url, Fragment context, boolean isHaveModify,int requestCode) {
+    Intent intent = new Intent(context.getContext(), CardProtocolActivity.class);
+    intent.putExtra("url", url);
+    intent.putExtra("isHave", isHaveModify);
+    context.startActivityForResult(intent,requestCode);
+  }
   public static void startWeb(String url, Context context, boolean isHaveModify, String content) {
     Intent intent = new Intent(context, CardProtocolActivity.class);
     intent.putExtra("url", url);

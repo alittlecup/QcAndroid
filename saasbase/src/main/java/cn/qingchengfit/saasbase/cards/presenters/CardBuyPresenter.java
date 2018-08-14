@@ -9,6 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -50,6 +51,11 @@ public class CardBuyPresenter extends BasePresenter {
   private int cardCate;
   private List<CardTplOption> mOptions = new ArrayList<>();
   private ArrayList<String> choseStuIds = new ArrayList<>();
+
+  public CardTplOption getmChosenOption() {
+    return mChosenOption;
+  }
+
   /**
    * 选中的支付价格
    */
@@ -84,6 +90,12 @@ public class CardBuyPresenter extends BasePresenter {
   public void setCardCate(int cate) {
     cardBuyBody.setType(cate);
     cardCate = cate;
+  }
+  public void setSignaturePath(String path){
+    cardBuyBody.signature=path;
+  }
+  public String getSignaturePath(){
+    return  cardBuyBody.signature;
   }
 
   public void setOtherOption(boolean isOther) {
@@ -172,12 +184,24 @@ public class CardBuyPresenter extends BasePresenter {
     RxBusAdd(EventSelectedStudent.class).onBackpressureLatest()
         .subscribe(new BusSubscribe<EventSelectedStudent>() {
           @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+            qcStudentBeans=eventSelectedStudent.getStudents();
             view.bindStudent(eventSelectedStudent.getNameStr());
             cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
             choseStuIds = eventSelectedStudent.getIDlist();
           }
         });
   }
+
+  public List<QcStudentBean> getQcStudentBeans() {
+    return qcStudentBeans;
+  }
+
+  public void setQcStudentBeans(List<QcStudentBean> qcStudentBeans) {
+    this.qcStudentBeans = qcStudentBeans;
+  }
+
+  private List<QcStudentBean> qcStudentBeans;
+
 
   /**
    * 获取卡种类详情

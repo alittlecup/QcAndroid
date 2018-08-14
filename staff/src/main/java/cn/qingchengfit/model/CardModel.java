@@ -148,6 +148,7 @@ public class CardModel implements ICardModel {
     if (chargeBody.getSeller_id() != null && chargeBody.getSeller_id().equalsIgnoreCase("0")) {
       chargeBody.setSeller_id(null);
     }
+    chargeBody.version="new";//这里就是为了给后端标识，完全没有任何意义
     return posApi.qcCardCharge(loginStatus.staff_id(), cardId, gymWrapper.getParams(), chargeBody);
   }
 
@@ -168,6 +169,7 @@ public class CardModel implements ICardModel {
     if (body.getSeller_id() != null && body.seller_id.equalsIgnoreCase("0")) {
       body.setSeller_id(null);
     }
+    body.version="new";//这里就是为了给后端标识，完全没有任何意义
     return posApi.qcCreateRealcard(loginStatus.staff_id(), body, gymWrapper.getParams());
   }
 

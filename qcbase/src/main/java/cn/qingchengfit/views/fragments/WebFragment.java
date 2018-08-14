@@ -343,6 +343,10 @@ public class WebFragment extends BaseFragment
     onLoadedView();
   }
 
+  public void setSignaturePath(String path) {
+
+  }
+
   private void initBus() {
     RxRegiste(RxBus.getBus()
         .register(EventShareFun.class)
@@ -801,7 +805,7 @@ public class WebFragment extends BaseFragment
 
   public class JsInterface {
 
-    JsInterface() {
+    public JsInterface() {
     }
 
     @JavascriptInterface public String getToken() {
@@ -1000,8 +1004,10 @@ public class WebFragment extends BaseFragment
               if (mWebviewWebView != null) {
                 Object channel = eventNativePay.getParams().get("channel");
                 if (channel != null) {
-                  Log.d("TAG", "call: javascript:window.payActionCallback({channel:\"" + channel + "\");");
-                  mWebviewWebView.loadUrl("javascript:window.payActionCallback({channel:\"" + channel + "\"});");
+                  Log.d("TAG",
+                      "call: javascript:window.payActionCallback({channel:\"" + channel + "\");");
+                  mWebviewWebView.loadUrl(
+                      "javascript:window.payActionCallback({channel:\"" + channel + "\"});");
                 }
               }
             }
@@ -1041,6 +1047,10 @@ public class WebFragment extends BaseFragment
             params.put("out_trade_no", uri.getQueryParameter("out_trade_no"));
             params.put("pay_trade_no", uri.getQueryParameter("pay_trade_no"));
             RxBus.getBus().post(new EventRePay(params));
+          } else if (s.contains("signatureImageUrl")) {
+            Uri path = Uri.parse(Uri.decode(s));
+            String signature = path.getQueryParameter("signature");
+            setSignaturePath(signature);
           } else {
             try {
               Uri uri = Uri.parse(s);
