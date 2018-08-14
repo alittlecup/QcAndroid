@@ -58,7 +58,7 @@ import javax.inject.Inject;
     });
     mViewModel.addToCategory.observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       ShopBottomCategoryFragment shopBottomCategoryFragment =

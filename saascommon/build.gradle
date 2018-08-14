@@ -43,7 +43,7 @@ android {
 }
 
 dependencies {
-  addApiComponent("qcbase",true)
+  addApiComponent("qcbase",false)
   api 'cn.qingchengfit.weex:weex:1.0.180809.10'
   api 'cn.qingchengfit.recruit:recruit:1.1.180613'
 

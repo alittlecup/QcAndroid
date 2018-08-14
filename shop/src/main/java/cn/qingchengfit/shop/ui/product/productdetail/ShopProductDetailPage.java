@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopProductDetailBinding;
 import cn.qingchengfit.shop.util.ViewUtil;
@@ -27,7 +27,7 @@ import com.anbillon.flabellum.annotations.Need;
  * Created by huangbaole on 2018/3/15.
  */
 @Leaf(module = "shop", path = "/product/detail") public class ShopProductDetailPage
-    extends SaasBaseFragment {
+    extends SaasCommonFragment {
   RichTxtFragment richTxtFragment;
   PageShopProductDetailBinding mBinding;
   public ChoosePictureFragmentNewDialog choosePictureFragmentDialog;

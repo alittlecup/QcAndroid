@@ -22,7 +22,7 @@ public class ShopTimeFilterFragment extends FilterCustomFragment {
     TextView textBack = view.findViewById(R.id.tv_absence_filter_reset);
     EditText editStart = view.findViewById(R.id.edit_absence_start);
     EditText editEnd = view.findViewById(R.id.edit_absence_end);
-    textBack.setText(getString(R.string.reset));
+    textBack.setText("重置");
     textBack.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         editStart.setText("开始日期");

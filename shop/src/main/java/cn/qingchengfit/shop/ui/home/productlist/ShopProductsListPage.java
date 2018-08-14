@@ -74,7 +74,7 @@ public class ShopProductsListPage
       if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_WRITE)) {
         routeTo("/product/add", null);
       } else {
-        showAlert(getString(R.string.sorry_for_no_permission_shop));
+        showAlert(getString(R.string.sorry_for_no_permission));
       }
     });
   }

@@ -4,10 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
-import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.product.CardSwitchItem;
@@ -19,27 +18,12 @@ import javax.inject.Inject;
  */
 
 public class ProductPayViewModel
-    extends FlexibleViewModel<List<ICardShopChooseItemData>, CardSwitchItem, String> {
+     extends BaseViewModel {
   public final ObservableField<List<CardSwitchItem>> items = new ObservableField<>();
   @Inject ShopRepository repository;
 
   @Inject public ProductPayViewModel() {
   }
 
-  @NonNull @Override
-  protected LiveData<List<ICardShopChooseItemData>> getSource(@NonNull String s) {
-    return repository.qcLoadCardTpls(Configs.CATEGORY_VALUE+"", s);
-  }
 
-  @Override
-  protected boolean isSourceValid(@Nullable List<ICardShopChooseItemData> iCardShopChooseItemData) {
-    return iCardShopChooseItemData != null && !iCardShopChooseItemData.isEmpty();
-  }
-
-  @Override protected List<CardSwitchItem> map(
-      @NonNull List<ICardShopChooseItemData> iCardShopChooseItemData) {
-    return FlexibleItemProvider.with(
-        new CommonItemFactory<ICardShopChooseItemData, CardSwitchItem>(CardSwitchItem.class))
-        .from(iCardShopChooseItemData);
-  }
 }

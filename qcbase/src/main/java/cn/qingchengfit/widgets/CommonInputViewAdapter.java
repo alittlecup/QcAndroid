@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.db.utils;
+package cn.qingchengfit.widgets;
 
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;

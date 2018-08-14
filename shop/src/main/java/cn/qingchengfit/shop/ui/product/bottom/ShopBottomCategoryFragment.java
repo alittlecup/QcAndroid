@@ -147,7 +147,7 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
     });
     mViewModel.addCategoryEvent.observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_WRITE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       ShopCategoryPage.getInstance(new Category(), ShopCategoryPage.ADD)

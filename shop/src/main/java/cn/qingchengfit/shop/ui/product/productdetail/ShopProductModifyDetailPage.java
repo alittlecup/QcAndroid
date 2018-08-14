@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageModifyDetailBinding;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -19,7 +19,7 @@ import com.tencent.smtt.sdk.WebSettings;
  * Created by huangbaole on 2018/3/16.
  */
 @Leaf(module = "shop",path = "/modify/detail")
-public class ShopProductModifyDetailPage extends SaasBaseFragment {
+public class ShopProductModifyDetailPage extends SaasCommonFragment {
   PageModifyDetailBinding mBinding;
   @Need String content;
 

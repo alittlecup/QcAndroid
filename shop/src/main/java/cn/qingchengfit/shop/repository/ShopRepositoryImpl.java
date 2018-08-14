@@ -3,10 +3,8 @@ package cn.qingchengfit.shop.repository;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
-import cn.qingchengfit.saasbase.common.mvvm.LiveDataReactiveStreams;
-import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.shop.common.LiveDataReactiveStreams;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
@@ -27,7 +25,6 @@ import javax.inject.Singleton;
 @Singleton public class ShopRepositoryImpl implements ShopRepository {
 
   @Inject ShopRemoteRepository remoteService;
-  @Inject ICardModel cardModel;
 
   @Inject public ShopRepositoryImpl() {
   }
@@ -145,10 +142,5 @@ import javax.inject.Singleton;
     return toLiveData(remoteService.qcLoadProductInfo(staff_id, map, product_id));
   }
 
-  @Override
-  public LiveData<List<ICardShopChooseItemData>> qcLoadCardTpls(String type, String isEnable) {
-    return Transformations.map(LiveDataReactiveStreams.fromPublisher(
-        cardModel.qcGetCardTpls(type, isEnable).compose(RxHelper.schedulersTransformer())),
-        input -> new ArrayList<>(input.card_tpls));
-  }
+
 }

@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
-import cn.qingchengfit.saascommon.flexble.FlexibleItemProvider;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductPayBinding;
@@ -32,25 +30,25 @@ import java.util.List;
   @Need ArrayList<Integer> ids;
 
   @Override protected void subscribeUI() {
-    mViewModel.getLiveItems().observe(this, items -> {
-      mViewModel.items.set(items);
-      hideLoadingTrans();
-      mBinding.recyclerview.post(new Runnable() {
-        @Override public void run() {
-          upDateSelectPosition(items);
-        }
-      });
-    });
+    //mViewModel.getLiveItems().observe(this, items -> {
+    //  mViewModel.items.set(items);
+    //  hideLoadingTrans();
+    //  mBinding.recyclerview.post(new Runnable() {
+    //    @Override public void run() {
+    //      upDateSelectPosition(items);
+    //    }
+    //  });
+    //});
   }
 
   private void upDateSelectPosition(List<CardSwitchItem> items) {
     if (ids != null && !ids.isEmpty()) {
       for (int pos = 0; pos < items.size(); pos++) {
         for (Integer id : ids) {
-          if (String.valueOf(id).equals(items.get(pos).getData().getShopCardTplId())) {
-            adapter.addSelection(pos);
-            adapter.notifyItemChanged(pos);
-          }
+          //if (String.valueOf(id).equals(items.get(pos).getData().getShopCardTplId())) {
+          //  adapter.addSelection(pos);
+          //  adapter.notifyItemChanged(pos);
+          //}
         }
       }
     }
@@ -62,7 +60,7 @@ import java.util.List;
     mBinding = PageProductPayBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
-    mViewModel.loadSource("1");
+    //mViewModel.loadSource("1");
     showLoadingTrans();
     mBinding.setViewModel(mViewModel);
     return mBinding;
@@ -87,8 +85,8 @@ import java.util.List;
           ArrayList<Integer> ids = new ArrayList<>();
           for (Integer pos : selectedPositions) {
             CardSwitchItem item = (CardSwitchItem) adapter.getItem(pos);
-            ICardShopChooseItemData data = item.getData();
-            ids.add(Integer.valueOf(data.getShopCardTplId()));
+            //ICardShopChooseItemData data = item.getData();
+            //ids.add(Integer.valueOf(data.getShopCardTplId()));
           }
           intent.putIntegerArrayListExtra("card_tpls", ids);
         }

@@ -1,60 +1,10 @@
-apply plugin: 'com.android.library'
+apply from: rootProject.file('qc_settings.gradle')
 apply from: rootProject.file('qc_upload_maven.gradle')
-apply from: rootProject.file('qc_component.gradle')
-
-
-def libs = rootProject.ext.libraries
-def cfg = rootProject.ext.configuration
-android {
-  compileSdkVersion cfg.compileVersion
-  buildToolsVersion cfg.buildToolsVersion
-  dataBinding {
-    enabled true
-  }
-
-  defaultConfig {
-    minSdkVersion 16
-    targetSdkVersion 26
-    versionCode 1
-    versionName "1.0"
-
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    vectorDrawables.useSupportLibrary true
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments = [fragmentArgsLib               : 'true',
-                     fragmentArgsSupportAnnotations: 'true',
-                     packageName                   : 'cn.qingchengfit.shop']
-      }
-    }
-  }
-
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
-      debug {
-          minifyEnabled false
-          shrinkResources false
-          debuggable true
-          debug {
-              ext.enableCrashlytics = false
-          }
-      }
-
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-  buildToolsVersion '27.0.3'
-}
 
 dependencies {
   testImplementation 'junit:junit:4.12'
-  addComponent('saasbase',true)
+  addComponent('saascommon',false)
+  appComponent('login',true)
 
 
   annotationProcessor annotations["dagger-compiler"]
