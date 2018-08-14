@@ -185,7 +185,7 @@ import javax.inject.Inject;
         .build());
     if (card.is_open_service_term && card.card_tpl_service_term != null) {
 
-      protocolUrl = card.card_tpl_service_term.content_link;
+      protocolUrl = card.content_link;
       if (card.card_tpl_service_term.is_read) {
         alreadyInfo = getResources().getString(R.string.card_protocol_user_read_info,
             card.card_tpl_service_term.service_term_version,

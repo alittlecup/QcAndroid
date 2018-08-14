@@ -22,6 +22,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:text="@string/online_pay_client"
+        android:gravity="center_vertical"
         android:textColor="@color/qc_text_black"
         android:textSize="12sp"
 
@@ -46,9 +47,9 @@
         />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_pay_alipay_grey"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_order_alipay"
         />
 
     <TextView
@@ -56,8 +57,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:text="@string/alipay_grey"
-        android:textColor="@color/qc_text_grey"
+        android:text="@string/ali_pay"
+        android:textColor="@color/qc_text_black"
         android:textSize="12sp"
         />
 
