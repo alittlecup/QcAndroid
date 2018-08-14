@@ -185,12 +185,13 @@ ext.isTask = { name ->
 task buildWithAP(dependsOn: build) {}
 
 dependencies {
-  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180726',false)
-  addComponent('shop','cn.qingchengfit.shop:shop:1.0.180721',false)
-  addApiComponent('login','cn.qingchengfit.login:login:1.0.180724',false)
-  implementation project(path: ':checkout')
-  implementation project(path: ':student')
-  implementation project(path: ':card')
+  addComponent('saasbase',true)
+  addComponent('shop',true)
+  addComponent('login',true)
+  addComponent("checkout",true)
+  addComponent("student",true)
+  addComponent("card",true)
+
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')

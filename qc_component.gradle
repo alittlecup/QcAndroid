@@ -1,32 +1,36 @@
-ext.appComponent = { localDependencyName, remoteDependencyName = null, boolean isRemote = false ->
+def modules = rootProject.ext.modules
+ext.appComponent = { moduleName, boolean isRemote = false ->
   if (runAsApp) {
-    ext.addComponent(localDependencyName, remoteDependencyName, isRemote)
+    ext.addComponent(moduleName, isRemote)
   }
 }
 
-ext.addComponent = { localDependencyName, remoteDependencyName = null, boolean isRemote = false ->
+ext.addComponent = { moduleName, boolean isRemote = false ->
   def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'implementation' :
       'compile'
   if (isRemote) {
-    if (remoteDependencyName == null) {
+    def remoteName = modules[moduleName]
+    if (remoteName == null) {
       throw new RuntimeException(
-          "if you set isRemotes is true ,the remoteDependencyName cant be NULL")
+          "if you set isRemotes is true ,the rootProject.ext.modules[$moduleName] cant be NULL")
     }
-    project.dependencies.add(dependencyMode, remoteDependencyName)
+    project.dependencies.add(dependencyMode, remoteName)
   } else {
-    project.dependencies.add(dependencyMode, project(":$localDependencyName"))
+    project.dependencies.add(dependencyMode, project(":$moduleName"))
   }
 }
 
-ext.addApiComponent= {localDependencyName, remoteDependencyName = null, boolean isRemote = false ->
-  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'api' :
-      'compile'
+ext.addApiComponent = { moduleName, boolean isRemote = false ->
+  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'api' : 'compile'
   if (isRemote) {
-    if (remoteDependencyName == null) {
+    def remoteName = modules[moduleName]
+    if (remoteName == null) {
       throw new RuntimeException(
-          "if you set isRemotes is true ,the remoteDependencyName cant be NULL")
+          "if you set isRemotes is true ,the rootProject.ext.modules[$moduleName] cant be NULL")
+
     }
-    project.dependencies.add(dependencyMode, remoteDependencyName)
+    project.dependencies.add(dependencyMode, remoteName)
   } else {
-    project.dependencies.add(dependencyMode, project(":$localDependencyName"))
-  }}
+    project.dependencies.add(dependencyMode, project(":$moduleName"))
+  }
+}

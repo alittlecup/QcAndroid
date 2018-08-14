@@ -54,7 +54,7 @@ android {
 
 dependencies {
   testImplementation 'junit:junit:4.12'
-  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',false)
+  addComponent('saasbase',true)
 
 
   annotationProcessor annotations["dagger-compiler"]

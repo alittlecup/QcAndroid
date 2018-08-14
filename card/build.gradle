@@ -1,10 +1,11 @@
 apply from: rootProject.file('qc_settings.gradle')
+apply from: rootProject.file('qc_upload_maven.gradle')
 
 
 def annotations = rootProject.ext.annotations
 
 dependencies {
-  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180721',false)
+  addComponent('saasbase',true)
 
   annotationProcessor annotations["dagger-compiler"]
   annotationProcessor annotations["dagger-android-processor"]

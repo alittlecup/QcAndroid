@@ -146,12 +146,12 @@ afterEvaluate {
 }
 
 dependencies {
-  addComponent('saasbase','cn.qingchengfit.saasbase:saasbase:1.0.180726',false)
-  addComponent('login','cn.qingchengfit.login:login:1.0.180724',false)
+  addComponent('saasbase',true)
+  addComponent('login',true)
+  addComponent('card',true)
+  addComponent('student',true)
+  addComponent('checkout',true)
 
-  implementation project(path: ':card')
-  implementation project(path: ':student')
-  implementation project(path: ':checkout')
 
 
   implementation 'cn.qingchegfit.widgets:weekview:1.1@aar'

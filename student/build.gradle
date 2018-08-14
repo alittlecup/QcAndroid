@@ -1,4 +1,6 @@
 apply from: rootProject.file('qc_settings.gradle')
+apply from: rootProject.file('qc_upload_maven.gradle')
+
 
 def dependens = rootProject.ext.dependencies
 def annotations = rootProject.ext.annotations
@@ -6,8 +8,8 @@ def annotations = rootProject.ext.annotations
 
 dependencies {
 
-  addComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
-  appComponent('login','cn.qingchengfit.login:login:1.0.180710',true)
+  addComponent('saascommon',true)
+  appComponent('login',true)
 
   implementation dependens["constraint-layout"]
   annotationProcessor annotations["dagger-compiler"]

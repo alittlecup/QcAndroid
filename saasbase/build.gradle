@@ -74,7 +74,7 @@ android {
 }
 
 dependencies {
-  addApiComponent('saascommon','cn.qingchengfit.saascommon:saascommon:1.0.180709.2',false)
+  addApiComponent('saascommon',true)
 
   annotationProcessor annotations["dagger-compiler"]
   annotationProcessor annotations["dagger-android-processor"]
