@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGContents;
@@ -29,6 +30,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import io.reactivex.Flowable;
@@ -110,11 +112,12 @@ import timber.log.Timber;
     QcRouteUtil.setRouteOptions(
         new RouteOptions(scanRePayInfo.getModuleName()).setActionName(scanRePayInfo.getActionName())
             .addParam("type", type)
-            .addParam("params",scanRePayInfo.getParams())).callAsync(qcResult -> {
+            .addParam("params", scanRePayInfo.getParams())).callAsync(qcResult -> {
       if (qcResult.isSuccess()) {
         Map<String, Object> dataMap = qcResult.getDataMap();
-        Object cashierBean = dataMap.get("cashierBean");
-        if (cashierBean instanceof CashierBean) {
+        Object datas = dataMap.get("cashierBean");
+        if (datas != null) {
+          CashierBean cashierBean = new Gson().fromJson((String) datas, CashierBean.class);
           IOrderData value = mViewModel.IOrderData.getValue();
           CashierBeanWrapper cashierBeanWrapper = new CashierBeanWrapper((CashierBean) cashierBean);
           cashierBeanWrapper.setPrice(value.getPrice());

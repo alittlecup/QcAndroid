@@ -22,6 +22,7 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,11 +86,12 @@ public class QcScanActivity extends SaasCommonActivity
     QcRouteUtil.setRouteOptions(
         new RouteOptions(scanRepayInfo.getModuleName()).setActionName(scanRepayInfo.getActionName())
             .addParam("type", type)
-            .addParam("params",scanRepayInfo.getParams())).callAsync(qcResult -> {
+            .addParam("params", scanRepayInfo.getParams())).callAsync(qcResult -> {
       if (qcResult.isSuccess()) {
         Map<String, Object> dataMap = qcResult.getDataMap();
-        Object cashierBean = dataMap.get("cashierBean");
-        if (cashierBean instanceof CashierBean) {
+        Object data = dataMap.get("cashierBean");
+        if (data != null) {
+          CashierBean cashierBean = new Gson().fromJson((String) data, CashierBean.class);
           mViewModel.scanPay(barCode, ((CashierBean) cashierBean).getOut_trade_no(),
               ((CashierBean) cashierBean).getPay_trade_no());
         } else {

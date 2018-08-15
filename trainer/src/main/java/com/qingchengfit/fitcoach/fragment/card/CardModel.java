@@ -31,6 +31,7 @@ import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import cn.qingchengfit.saascommon.network.ComponentModuleManager;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -51,6 +52,7 @@ public class CardModel implements ICardModel {
   @Inject public CardModel(QcRestRepository repository) {
     posApi = repository.createGetApi(CardTrainerApi.class);
     INSTANCE = this;
+    ComponentModuleManager.register(ICardModel.class,this);
   }
 
   @Override

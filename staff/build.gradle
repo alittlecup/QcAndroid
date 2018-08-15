@@ -185,12 +185,12 @@ ext.isTask = { name ->
 task buildWithAP(dependsOn: build) {}
 
 dependencies {
-  addComponent('saasbase',true)
-  addComponent('shop',true)
-  addComponent('login',true)
-  addComponent("checkout",true)
+  addComponent('saasbase',false)
+  addComponent('shop',false)
+  addComponent('login',false)
+  addComponent("checkout",false)
   addComponent("student",true)
-  addComponent("card",true)
+  addComponent("card",false)
 
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 

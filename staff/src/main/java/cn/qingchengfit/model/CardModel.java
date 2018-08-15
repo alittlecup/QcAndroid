@@ -33,6 +33,7 @@ import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import cn.qingchengfit.saascommon.network.ComponentModuleManager;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -60,7 +61,9 @@ public class CardModel implements ICardModel {
     posApi = repository.createGetApi(CardApi.class);
     cardApi = repository.createGetApi(cn.qingchengfit.card.network.CardApi.class);
     INSTANCE = this;
+    ComponentModuleManager.register(ICardModel.class,this);
   }
+
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
