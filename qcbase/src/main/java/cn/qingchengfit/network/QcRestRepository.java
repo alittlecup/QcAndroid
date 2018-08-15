@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventUnitNetError;
 import cn.qingchengfit.events.NetWorkDialogEvent;
+import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.utils.AppUtils;
@@ -58,8 +59,7 @@ public class QcRestRepository {
 
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
     this.host = host;
-    HttpLoggingInterceptor interceptor =
-        new HttpLoggingInterceptor(message -> LogUtil.d(message));
+    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
     final OkHttpClient tokenClient = new OkHttpClient();
@@ -80,8 +80,8 @@ public class QcRestRepository {
 
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
-            .addHeader("Cookie", "csrftoken=" + token + ";"+getSessionCookie(context))
-            .addHeader("User-Agent", " FitnessTrainerAssistant/"
+              .addHeader("Cookie", "csrftoken=" + token + ";" + getSessionCookie(context))
+              .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
                   + " Android  OEM:"
                   + appOemTag
@@ -89,13 +89,13 @@ public class QcRestRepository {
                   + AppUtils.getCurAppName(context))
               .build();
           Response response = chain.proceed(request);
-          if (response != null){
+          if (response != null) {
             RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
           }
           return response;
         } else {
           request = request.newBuilder()
-            .addHeader("Cookie",  QcRestRepository.getSessionCookie(context))
+              .addHeader("Cookie", QcRestRepository.getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
                   + " Android  OEM:"
@@ -107,8 +107,8 @@ public class QcRestRepository {
         return chain.proceed(request);
       }
     })
-      //.addNetworkInterceptor(errorInterceptor)
-      .addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
+        //.addNetworkInterceptor(errorInterceptor)
+        .addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
 
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
@@ -123,6 +123,7 @@ public class QcRestRepository {
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .client(client)
         .build();
+    ComponentModuleManager.register(Retrofit.class, getApiAdapter);
   }
 
   private Interceptor errorInterceptor = new Interceptor() {
@@ -135,13 +136,16 @@ public class QcRestRepository {
         LogUtil.e("<-- HTTP FAILED: " + e);
       }
       try {
-        if (response != null && request.headers().get("Content-Encoding") != null && response.headers().get("Content-Encoding").equalsIgnoreCase("Gzip")){
+        if (response != null
+            && request.headers().get("Content-Encoding") != null
+            && response.headers().get("Content-Encoding").equalsIgnoreCase("Gzip")) {
           String responebody = GZipper.doUnZipToString(response.body().bytes());
-          QcDataResponse qcr = gson.fromJson(responebody,QcDataResponse.class);
-          if (qcr.status != 200)
-            RxBus.getBus().post(new EventUnitNetError(qcr.error_code,qcr.getMsg(),qcr.status));
+          QcDataResponse qcr = gson.fromJson(responebody, QcDataResponse.class);
+          if (qcr.status != 200) {
+            RxBus.getBus().post(new EventUnitNetError(qcr.error_code, qcr.getMsg(), qcr.status));
+          }
         }
-      }catch (Exception e){
+      } catch (Exception e) {
 
       }
 
@@ -149,11 +153,11 @@ public class QcRestRepository {
     }
   };
 
-  public OkHttpClient getClient(){
+  public OkHttpClient getClient() {
     return client;
   }
 
-  public void changeHost(String host){
+  public void changeHost(String host) {
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
     this.host = host;
 
@@ -170,15 +174,15 @@ public class QcRestRepository {
         .build();
   }
 
-
-  public static String getSessionName(Context context){
+  public static String getSessionName(Context context) {
     return PreferenceUtils.getPrefString(context, "session_key", "");
   }
 
-  public static String getSessionDomain(Context context){
+  public static String getSessionDomain(Context context) {
     return PreferenceUtils.getPrefString(context, "session_domain", "");
   }
-  public static void setSessionDomain(Context context,String domain){
+
+  public static void setSessionDomain(Context context, String domain) {
     PreferenceUtils.setPrefString(context, "session_domain", domain);
   }
 
@@ -198,23 +202,21 @@ public class QcRestRepository {
     }
   }
 
-  public static String getSessionCookie(Context context){
+  public static String getSessionCookie(Context context) {
     return Phrase.from("sessionid={v};{k}={v};Domain={domain}")
-      .put("v",getSession(context))
-      .put("k",getSessionName(context))
-      .put("domain",getSessionName(context))
-      .format()
-      .toString()
-      ;
+        .put("v", getSession(context))
+        .put("k", getSessionName(context))
+        .put("domain", getSessionName(context))
+        .format()
+        .toString();
   }
 
-
-  public static void setSession(Context context,String key,String value){
-    PreferenceUtils.setPrefString(context,"session_key",key);
-    PreferenceUtils.setPrefString(context,"session_id",value);
+  public static void setSession(Context context, String key, String value) {
+    PreferenceUtils.setPrefString(context, "session_key", key);
+    PreferenceUtils.setPrefString(context, "session_id", value);
   }
 
-  public static void clearSession(Context context){
+  public static void clearSession(Context context) {
     PreferenceUtils.setPrefString(context, "session_key", "");
     PreferenceUtils.setPrefString(context, "session_id", "");
     PreferenceUtils.setPrefString(context, "qingcheng.session", "");
@@ -231,7 +233,7 @@ public class QcRestRepository {
   public <T> T createPostApi(final Class<T> service) {
     return postApiAdapter.create(service);
   }
-  
+
   public interface GetCsrfToken {
     @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
   }

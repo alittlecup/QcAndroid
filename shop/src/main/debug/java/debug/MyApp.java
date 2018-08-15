@@ -2,6 +2,8 @@ package debug;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.shop.BuildConfig;
@@ -10,9 +12,11 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.HasFragmentInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
 
-public class MyApp extends Application implements HasActivityInjector {
+public class MyApp extends Application implements HasActivityInjector{
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   public static Application INSTANCE;
   public static boolean isLogin;
@@ -29,6 +33,8 @@ public class MyApp extends Application implements HasActivityInjector {
     INSTANCE = this;
     DaggerAppComponent.create().inject(this);
     QcRouteUtil.init(this);
+    QC.enableDebug(true);
+    QC.enableVerboseLog(true);
     ToastUtils.init(this);
     //初始化神策
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
@@ -41,4 +47,6 @@ public class MyApp extends Application implements HasActivityInjector {
   @Override public AndroidInjector<Activity> activityInjector() {
     return dispatchingActivityInjector;
   }
+
+
 }

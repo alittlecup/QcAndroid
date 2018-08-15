@@ -1,4 +1,4 @@
-package cn.qingchengfit.saascommon.network;
+package cn.qingchengfit.model;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -21,15 +21,8 @@ public class ComponentModuleManager {
 
   public static <T> T get(Class<T> IModuleClass) {
     Object object = COMPONENTS_MODULE.get(IModuleClass.getName());
-    if(IModuleClass.isAssignableFrom(object.getClass())){
+    if(object!=null&&IModuleClass.isAssignableFrom(object.getClass())){
       return (T) object;
-    }
-    try {
-     return IModuleClass.newInstance();
-    } catch (InstantiationException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
     }
     return null;
   }

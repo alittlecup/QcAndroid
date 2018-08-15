@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.shop.di.ShopViewModel;
 import cn.qingchengfit.shop.routers.ShopRouterCenter;
-import cn.qingchengfit.shop.routers.shopImpl;
 import cn.qingchengfit.shop.ui.category.ShopCategoryPage;
 import cn.qingchengfit.shop.ui.home.ShopHomePage;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListPage;

@@ -47,7 +47,6 @@ public class BatchCopyViewModel extends BaseViewModel {
   private BatchCopyCoach mCoach;
   private CourseType mCourseType;
 
-
   @Inject public BatchCopyViewModel() {
 
     Observable.OnPropertyChangedCallback timeAutoCallback =
@@ -67,14 +66,13 @@ public class BatchCopyViewModel extends BaseViewModel {
     Observable.OnPropertyChangedCallback callback = new Observable.OnPropertyChangedCallback() {
       @Override public void onPropertyChanged(Observable sender, int propertyId) {
 
-        if (!TextUtils.isEmpty(startTime.get())
-            && !TextUtils.isEmpty(endTime.get())) {
+        if (!TextUtils.isEmpty(startTime.get()) && !TextUtils.isEmpty(endTime.get())) {
           if (DateUtils.interval(startTime.get(), endTime.get()) > 30) {
             endTime.set("");
             ToastUtils.show("所选日期不能超过31天");
             return;
           }
-          if(!TextUtils.isEmpty(startCopyTime.get())) {
+          if (!TextUtils.isEmpty(startCopyTime.get())) {
             endCopyTime.set(DateUtils.addDay(startCopyTime.get(),
                 DateUtils.interval(startTime.get(), endTime.get())));
           }
@@ -85,7 +83,6 @@ public class BatchCopyViewModel extends BaseViewModel {
         }
       }
     };
-
 
     startTime.addOnPropertyChangedCallback(callback);
     endTime.addOnPropertyChangedCallback(callback);
@@ -140,7 +137,7 @@ public class BatchCopyViewModel extends BaseViewModel {
     isFirstCourseHave = firstCourseHave;
   }
 
-  private void resetData(){
+  private void resetData() {
     coachCourseMap.clear();
     coachListValue.clear();
     courseListValue.clear();
@@ -169,7 +166,7 @@ public class BatchCopyViewModel extends BaseViewModel {
       ToastUtils.show("结束日期不能早于开始日期");
       return;
     }
-    if(courseValue.get() == null || coach.get() == null){
+    if (courseValue.get() == null || coach.get() == null) {
       ToastUtils.show("请完善信息");
       return;
     }
@@ -177,7 +174,8 @@ public class BatchCopyViewModel extends BaseViewModel {
       if (!is_course_all) {
         if (!coachCourseMap.get(coach.get().id).contains(courseValue.get().id)) {
           DialogUtils.showAlert(view.getContext(), "没有可复制的有效排期", view.getContext()
-              .getString(R.string.text_copy_batch_error, startTime.get(), endTime.get(), coach.get().username, courseValue.get().name),null);
+              .getString(R.string.text_copy_batch_error, startTime.get(), endTime.get(),
+                  coach.get().username, courseValue.get().name), null);
           return;
         }
       }
@@ -213,11 +211,11 @@ public class BatchCopyViewModel extends BaseViewModel {
     params.put("start", startTime.get());
     params.put("end", endTime.get());
     params.put("is_private", isPrivate ? 1 : 0);
-    if (mCourseType != null){
+    if (mCourseType != null) {
       params.put("course_id", mCourseType.id);
     }
 
-    if (mCoach != null){
+    if (mCoach != null) {
       params.put("teacher_id", mCoach.id);
     }
 
@@ -234,9 +232,9 @@ public class BatchCopyViewModel extends BaseViewModel {
             for (CopySchedule schedule : response.data.getSchedules()) {
               tempCoachList.add(schedule.teacher);
               tempCourseList.add(schedule.course);
-              if (coachCourseMap.containsKey(schedule.teacher.id)){
+              if (coachCourseMap.containsKey(schedule.teacher.id)) {
                 coachCourseMap.get(schedule.teacher.id).add(schedule.course.id);
-              }else{
+              } else {
                 List<String> list = new ArrayList<>();
                 list.add(schedule.course.id);
                 coachCourseMap.put(schedule.teacher.id, list);
@@ -250,11 +248,11 @@ public class BatchCopyViewModel extends BaseViewModel {
               courseListValue.clear();
             }
 
-            if (tempCoachList.size() == 0 && mCoach == null){
+            if (tempCoachList.size() == 0 && mCoach == null) {
               coach.set(null);
             }
 
-            if (tempCourseList.size() == 0 && mCourseType == null){
+            if (tempCourseList.size() == 0 && mCourseType == null) {
               courseValue.set(null);
             }
 
@@ -269,7 +267,6 @@ public class BatchCopyViewModel extends BaseViewModel {
             courseListValue.addAll(tempCourseList);
             coachListValue.addAll(tempCoachList);
           }
-
         }, new NetWorkThrowable());
   }
 
@@ -286,11 +283,11 @@ public class BatchCopyViewModel extends BaseViewModel {
   }
 
   public void onCoach(View view) {
-    if (TextUtils.isEmpty(startTime.get())){
+    if (TextUtils.isEmpty(startTime.get())) {
       ToastUtils.show("请先选择开始日期");
       return;
     }
-    if (TextUtils.isEmpty(endTime.get())){
+    if (TextUtils.isEmpty(endTime.get())) {
       ToastUtils.show("请先选择结束日期");
       return;
     }
@@ -300,11 +297,11 @@ public class BatchCopyViewModel extends BaseViewModel {
   }
 
   public void onCourse(View view) {
-    if (TextUtils.isEmpty(startTime.get())){
+    if (TextUtils.isEmpty(startTime.get())) {
       ToastUtils.show("请先选择开始日期");
       return;
     }
-    if (TextUtils.isEmpty(endTime.get())){
+    if (TextUtils.isEmpty(endTime.get())) {
       ToastUtils.show("请先选择结束日期");
       return;
     }
@@ -319,11 +316,13 @@ public class BatchCopyViewModel extends BaseViewModel {
 
   public void onTimeStart(View view, String date) {
 
-    if (TextUtils.isEmpty(startTime.get()) && view.getId() != R.id.input_start){
+    if (TextUtils.isEmpty(startTime.get()) && view.getId() != R.id.input_start) {
       ToastUtils.show("请先选择开始日期");
       return;
     }
-    if (TextUtils.isEmpty(endTime.get()) && view.getId() != R.id.input_start && view.getId() != R.id.input_end){
+    if (TextUtils.isEmpty(endTime.get())
+        && view.getId() != R.id.input_start
+        && view.getId() != R.id.input_end) {
       ToastUtils.show("请先选择结束日期");
       return;
     }
@@ -332,7 +331,7 @@ public class BatchCopyViewModel extends BaseViewModel {
     }
     pwTime.setOnTimeSelectListener(date1 -> {
       if (view instanceof CommonInputView) {
-        CommonInputViewAdapter.setContent(((CommonInputView) view), DateUtils.Date2YYYYMMDD(date1));
+        ((CommonInputView) view).setContent(DateUtils.Date2YYYYMMDD(date1));
       }
     });
     pwTime.showAtLocation(view, Gravity.BOTTOM, 0, 0,

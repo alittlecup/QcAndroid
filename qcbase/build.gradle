@@ -138,8 +138,6 @@ dependencies {
 
   api dependens["upyun"]
 
-  api dependens["upyun"]
-
   api files('libs/Bughd_android_sdk_v1.3.7.jar')
 
   api dependens["map2d"]

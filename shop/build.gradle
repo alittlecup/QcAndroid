@@ -5,6 +5,7 @@ dependencies {
   testImplementation 'junit:junit:4.12'
   addComponent('saascommon',false)
   appComponent('login',true)
+  appComponent('card',false)
 
 
   annotationProcessor annotations["dagger-compiler"]

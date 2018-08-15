@@ -3,10 +3,14 @@ package cn.qingchengfit.shop.repository;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.shop.common.LiveDataReactiveStreams;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
+import cn.qingchengfit.shop.vo.CardSwitchData;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
@@ -49,7 +53,7 @@ import javax.inject.Singleton;
   @Override public LiveData<QcDataResponse> qcPostCategory(String staff_id, Category category,
       HashMap<String, Object> map) {
     return toLiveData(remoteService.qcPostCategory(staff_id, category, map).map(response -> {
-      QcDataResponse<QcDataResponse> data=new QcDataResponse<>();
+      QcDataResponse<QcDataResponse> data = new QcDataResponse<>();
       data.setStatus(200);
       data.setData(response);
       return data;
@@ -141,6 +145,5 @@ import javax.inject.Singleton;
       HashMap<String, Object> map) {
     return toLiveData(remoteService.qcLoadProductInfo(staff_id, map, product_id));
   }
-
 
 }

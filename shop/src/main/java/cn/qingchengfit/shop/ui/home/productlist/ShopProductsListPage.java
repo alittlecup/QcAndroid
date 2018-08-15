@@ -24,6 +24,8 @@ import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.CommonInputViewAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -187,7 +189,6 @@ public class ShopProductsListPage
     Log.d("TAG", "noMoreLoad: " + newItemsSize);
   }
 
-  //todo 加载更多的问题，是全量还是分页
   @Override public void onLoadMore(int lastPosition, int currentPage) {
     Log.d("TAG", "onLoadMore: +" + lastPosition + "--> " + currentPage);
     Integer page = (Integer) mViewModel.getParams().get("page");

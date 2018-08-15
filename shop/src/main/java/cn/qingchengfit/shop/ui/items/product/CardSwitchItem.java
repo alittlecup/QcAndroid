@@ -4,6 +4,7 @@ import android.view.View;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCardSwitchBinding;
+import cn.qingchengfit.shop.vo.CardSwitchData;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -14,11 +15,15 @@ import java.util.List;
 
 public class CardSwitchItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemCardSwitchBinding>> {
-  //private ICardShopChooseItemData data;
+  public CardSwitchData getData() {
+    return data;
+  }
 
-  //public CardSwitchItem(ICardShopChooseItemData data) {
-  //  this.data = data;
-  //}
+  private CardSwitchData data;
+
+  public CardSwitchItem(CardSwitchData data) {
+    this.data = data;
+  }
 
 
   @Override public boolean equals(Object o) {
@@ -41,7 +46,7 @@ public class CardSwitchItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemCardSwitchBinding> holder, int position, List payloads) {
     ItemCardSwitchBinding dataBinding = holder.getDataBinding();
-    //dataBinding.cardTpl.setLabel(data.getShopCardTplName());
+    dataBinding.cardTpl.setLabel(data.getName());
     dataBinding.cardTpl.setClickable(false);
     if (adapter.isSelected(position)) {
       dataBinding.cardTpl.setOpen(true);

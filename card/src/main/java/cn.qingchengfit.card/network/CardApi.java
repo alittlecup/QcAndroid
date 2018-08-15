@@ -7,6 +7,8 @@ import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.Sellers;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -45,4 +47,9 @@ public interface CardApi {
       @Query("type") String type, @Query("number") String money, @QueryMap
       ArrayMap<String, String> params);
 
+  //工作人员 卡类型
+  @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id")
+  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(@Path("id") String id,
+      @QueryMap HashMap<String, Object> params, @Query("type") String type,
+      @Query("is_enable") String isEnable);
 }

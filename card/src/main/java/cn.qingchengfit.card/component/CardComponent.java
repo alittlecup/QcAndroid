@@ -1,17 +1,28 @@
 package cn.qingchengfit.card.component;
 
 import android.os.Bundle;
+import cn.qingchengfit.card.network.CardApi;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
-import cn.qingchengfit.saascommon.network.ComponentModuleManager;
+import cn.qingchengfit.model.ComponentModuleManager;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import retrofit2.Retrofit;
+import rx.Observable;
 
 public class CardComponent implements IComponent {
 
@@ -80,6 +91,42 @@ public class CardComponent implements IComponent {
               Map<String, Object> map = new HashMap<>();
               map.put("cashierBean", jsonObjectQcDataResponse.data.toString());
               QC.sendQCResult(qc.getCallId(), QCResult.success(map));
+            }, throwable -> QC.sendQCResult(qc.getCallId(),
+                QCResult.error(throwable.getMessage())));
+        return true;
+      case "/load/cardtpl":
+        ICardModel iCardModel = ComponentModuleManager.get(ICardModel.class);
+        Map<String, Object> params2 = qc.getParams();
+        String cardType = (String) params2.get("type");
+        String isEnable = (String) params2.get("isEnable");
+        String staff_id = (String) params2.get("staff_id");
+        Object params3 = params2.get("params");
+        Observable<QcDataResponse<CardTplListWrap>> qcDataResponseObservable = null;
+        if (iCardModel == null) {
+          Retrofit retrofit = ComponentModuleManager.get(Retrofit.class);
+          CardApi cardApi = retrofit.create(CardApi.class);
+          qcDataResponseObservable =
+              cardApi.qcGetCardTpls(staff_id, (HashMap<String, Object>) params3, cardType,
+                  isEnable);
+        } else {
+          qcDataResponseObservable = iCardModel.qcGetCardTpls(cardType, isEnable);
+        }
+        qcDataResponseObservable.onBackpressureBuffer()
+            .compose(RxHelper.schedulersTransformer())
+            .subscribe(response -> {
+              if (response.status == 200) {
+                List<CardTpl> card_tpls1 = response.data.card_tpls;
+                Gson gson = new Gson();
+                JsonElement element = gson.toJsonTree(card_tpls1, new TypeToken<List<CardTpl>>() {
+                }.getType());
+                if (!element.isJsonArray()) {
+                  QC.sendQCResult(qc.getCallId(), QCResult.error("not json"));
+                }
+                QC.sendQCResult(qc.getCallId(),
+                    QCResult.success("cardtpls", element.toString()));
+              } else {
+                QC.sendQCResult(qc.getCallId(), QCResult.error(response.msg));
+              }
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));
         return true;

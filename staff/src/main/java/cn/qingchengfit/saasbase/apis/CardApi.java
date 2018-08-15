@@ -177,11 +177,7 @@ public interface CardApi {
   rx.Observable<QcDataResponse<JsonObject>> qcCreateRealcardFromCheckout(@Path("id") String staffid,
       @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
 
-  //工作人员 卡类型
-  @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id")
-  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(@Path("id") String id,
-      @QueryMap HashMap<String, Object> params, @Query("type") String type,
-      @Query("is_enable") String isEnable);
+
 
   //获取卡种类列表（排课）
   @GET("/api/staffs/{id}/method/cardtpls/")

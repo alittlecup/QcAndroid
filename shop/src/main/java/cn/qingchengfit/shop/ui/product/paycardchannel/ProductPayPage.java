@@ -13,6 +13,7 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductPayBinding;
 import cn.qingchengfit.shop.ui.items.product.CardSwitchItem;
+import cn.qingchengfit.shop.vo.CardSwitchData;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -25,30 +26,36 @@ import java.util.List;
  * Created by huangbaole on 2017/12/20.
  */
 @Leaf(module = "shop", path = "/product/paycard") public class ProductPayPage
-    extends ShopBaseFragment<PageProductPayBinding, ProductPayViewModel> implements FlexibleAdapter.OnItemClickListener {
+    extends ShopBaseFragment<PageProductPayBinding, ProductPayViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
   @Need ArrayList<Integer> ids;
 
   @Override protected void subscribeUI() {
-    //mViewModel.getLiveItems().observe(this, items -> {
-    //  mViewModel.items.set(items);
-    //  hideLoadingTrans();
-    //  mBinding.recyclerview.post(new Runnable() {
-    //    @Override public void run() {
-    //      upDateSelectPosition(items);
-    //    }
-    //  });
-    //});
+    mViewModel.datas.observe(this, datas -> {
+      if (datas == null || datas.isEmpty()) return;
+      List<CardSwitchItem> items = new ArrayList<>();
+      for (CardSwitchData data : datas) {
+        items.add(new CardSwitchItem(data));
+      }
+      mViewModel.items.set(items);
+      hideLoadingTrans();
+      mBinding.recyclerview.post(new Runnable() {
+        @Override public void run() {
+          upDateSelectPosition(items);
+        }
+      });
+    });
   }
 
   private void upDateSelectPosition(List<CardSwitchItem> items) {
     if (ids != null && !ids.isEmpty()) {
       for (int pos = 0; pos < items.size(); pos++) {
         for (Integer id : ids) {
-          //if (String.valueOf(id).equals(items.get(pos).getData().getShopCardTplId())) {
-          //  adapter.addSelection(pos);
-          //  adapter.notifyItemChanged(pos);
-          //}
+          if (String.valueOf(id).equals(items.get(pos).getData().getId())) {
+            adapter.addSelection(pos);
+            adapter.notifyItemChanged(pos);
+          }
         }
       }
     }
@@ -60,8 +67,8 @@ import java.util.List;
     mBinding = PageProductPayBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
-    //mViewModel.loadSource("1");
     showLoadingTrans();
+    mViewModel.loadData("1");
     mBinding.setViewModel(mViewModel);
     return mBinding;
   }
@@ -85,8 +92,8 @@ import java.util.List;
           ArrayList<Integer> ids = new ArrayList<>();
           for (Integer pos : selectedPositions) {
             CardSwitchItem item = (CardSwitchItem) adapter.getItem(pos);
-            //ICardShopChooseItemData data = item.getData();
-            //ids.add(Integer.valueOf(data.getShopCardTplId()));
+            CardSwitchData data = item.getData();
+            ids.add(Integer.valueOf(data.getId()));
           }
           intent.putIntegerArrayListExtra("card_tpls", ids);
         }

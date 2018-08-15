@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.shop.BuildConfig;
+import cn.qingchengfit.shop.routers.ShopParamsInjector;
 import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 
@@ -17,13 +18,10 @@ import javax.inject.Inject;
 
 public abstract class ShopBaseFragment<DB extends ViewDataBinding, VM extends BaseViewModel>
     extends SaasBindingFragment<DB,VM> {
-  public DB mBinding;
-  public VM mViewModel;
 
-  @Inject public ViewModelProvider.Factory factory;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    //ShopParamsInjector.inject(this);
+    ShopParamsInjector.inject(this);
     super.onCreate(savedInstanceState);
   }
 

@@ -3,6 +3,7 @@ package cn.qingchengfit.shop.repository;
 import android.arch.lifecycle.LiveData;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
+import cn.qingchengfit.shop.vo.CardSwitchData;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
@@ -51,5 +52,4 @@ public interface ShopRepository {
   LiveData<ProductWrapper> qcLoadProductInfo(String staff_id, String product_id,
       HashMap<String, Object> map);
 
-  //LiveData<List<ICardShopChooseItemData>> qcLoadCardTpls(String type, String isEnable);
 }
