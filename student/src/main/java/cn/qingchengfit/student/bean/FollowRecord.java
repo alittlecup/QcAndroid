@@ -70,7 +70,7 @@ public class FollowRecord {
     if (TextUtils.isEmpty(next_track_time)) {
       return "";
     } else {
-      return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(next_track_time));
+      return DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(next_track_time));
     }
   }
 
