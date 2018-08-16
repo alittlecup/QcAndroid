@@ -215,7 +215,7 @@ import cn.qingchengfit.staffkit.views.student.choose.ChooseStudentListFragment;
 import cn.qingchengfit.staffkit.views.student.choose.MultiChooseStudentWithFilterFragment;
 import cn.qingchengfit.staffkit.views.student.choose.StudentFilterWithBirthFragment;
 import cn.qingchengfit.staffkit.views.student.detail.ClassRecordFragment;
-
+import cn.qingchengfit.staffkit.views.student.detail.FollowRecordFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentHomeFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentMoreInfoFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentSignInImageFragment;
@@ -412,7 +412,7 @@ import javax.inject.Singleton;
     AppComponent.StudentHomeModule.class,
     AppComponent.FollowRecordPageModule.class,
     AppComponent.StudentMoreInfoModule.class,
-     AppComponent.StudentsCardsModule.class,
+    AppComponent.FollowRecordModule.class, AppComponent.StudentsCardsModule.class,
     AppComponent.ClassRecordModule.class, AppComponent.StudentSignInImageFragmentModule.class,
 
      AppComponent.SignInManualModule.class,
@@ -523,7 +523,7 @@ import javax.inject.Singleton;
 
     AppComponent.StaffDetailFragmentModule.class, AppComponent.CardProtocolModule.class,
     AppComponent.COurseChooseDialogFragmentModule.class,
-    AppComponent.SignInCodeFragmentModule.class,
+    AppComponent.SignInCodeFragmentModule.class, AppComponent.FollowRecordModule.class,
     AppComponent.QRModule.class, AppComponent.ZqAccessFragmentModule.class,
     AppComponent.EditZqFragmentModule.class, AppComponent.AddZqFragmentModule.class,
     AppComponent.UpgradeDoneFragmentModule.class,
@@ -1781,7 +1781,7 @@ public interface AppComponent {
   /**
    * {@link ClassRecordFragment}
    * {@link StudentsCardsFragment}
-
+   * {@link FollowRecordFragment}
    * {@link StudentMoreInfoFragment}
    */
   @Subcomponent() public interface ClassRecordSubcomponent
@@ -1798,6 +1798,12 @@ public interface AppComponent {
     }
   }
 
+  @Subcomponent() public interface FollowRecordSubcomponent
+      extends AndroidInjector<FollowRecordFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<FollowRecordFragment> {
+    }
+  }
 
   @Subcomponent() public interface StudentMoreInfoSubcomponent
       extends AndroidInjector<StudentMoreInfoFragment> {
@@ -3422,7 +3428,11 @@ public interface AppComponent {
         StudentsCardsSubcomponent.Builder builder);
   }
 
-
+  @Module(subcomponents = FollowRecordSubcomponent.class) abstract class FollowRecordModule {
+    @Binds @IntoMap @FragmentKey(FollowRecordFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        FollowRecordSubcomponent.Builder builder);
+  }
 
   @Module(subcomponents = StudentMoreInfoSubcomponent.class) abstract class StudentMoreInfoModule {
     @Binds @IntoMap @FragmentKey(StudentMoreInfoFragment.class)

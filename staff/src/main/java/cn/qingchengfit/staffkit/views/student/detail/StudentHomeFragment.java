@@ -275,10 +275,9 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     super.onFinishAnimation();
     fragments.add(new ClassRecordFragment());
     fragments.add(new StudentsCardsFragment());
-    FollowRecordPage followRecordPage = new FollowRecordPage();
-    //followRecordPage.setCurStudent(studentBean.getStudentBean());
-    fragments.add(followRecordPage);
-    //fragments.add(new FollowRecordFragment());
+    //FollowRecordPage followRecordPage = new FollowRecordPage();
+    //fragments.add(followRecordPage);
+    fragments.add(new FollowRecordFragment());
     fragments.add(new StudentMoreInfoFragment());
     mAdapter.notifyDataSetChanged();
   }
