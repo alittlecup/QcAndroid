@@ -52,7 +52,7 @@ public interface StudentApi {
    */
   @GET("/api/staffs/{id}/users/")
   Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(@Path("id") String id,
-      @QueryMap HashMap<String, Object> params);
+      @QueryMap Map<String, Object> params);
   //
   //    /**
   //     * 会员卡可绑定的会员列表

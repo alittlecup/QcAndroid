@@ -12,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Course;
@@ -72,20 +70,20 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class BatchDetailCommonView extends BaseFragment {
 
-	ImageView img;
-	FrameLayout imgLayout;
-	ImageView imgFoot;
-	TextView text1;
-	TextView text3;
-	ImageView righticon;
-	RelativeLayout courseLayout;
-	CommonInputView coach;
-	CommonInputView space;
-	CommonInputView orderSutdentCount;
-	CommonInputView payOnline;
-	CommonInputView payCard;
-	ExpandedLayout elPay;
-	ExpandedLayout elMultiSupport;
+  ImageView img;
+  FrameLayout imgLayout;
+  ImageView imgFoot;
+  TextView text1;
+  TextView text3;
+  ImageView righticon;
+  RelativeLayout courseLayout;
+  CommonInputView coach;
+  CommonInputView space;
+  CommonInputView orderSutdentCount;
+  CommonInputView payOnline;
+  CommonInputView payCard;
+  ExpandedLayout elPay;
+  ExpandedLayout elMultiSupport;
 
   @Inject GymWrapper gymWrapper;
 
@@ -236,17 +234,11 @@ public class BatchDetailCommonView extends BaseFragment {
     elPay.setOnHeaderTouchListener((view1, motionEvent) -> {
       if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
         if (AppUtils.getCurApp(getContext()) != 0) {//非教练APP
-          if (gymWrapper.isPro()) {
-            if (hasOrder) {
-              showAlert(R.string.alert_batch_has_ordered);
-              return true;
-            } else {
-              return false;
-            }
-          } else {
-            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey("course_batch_pay"))
-                .show(getFragmentManager(), "");
+          if (hasOrder) {
+            showAlert(R.string.alert_batch_has_ordered);
             return true;
+          } else {
+            return false;
           }
         } else {// 教练App
           UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
@@ -417,7 +409,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改课程
    */
- public void onCourseLayoutClicked() {
+  public void onCourseLayoutClicked() {
     routeTo("course", "/choose/",
         CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
   }
@@ -425,7 +417,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改教练
    */
- public void onCoachClicked() {
+  public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0) return;
     routeTo("staff", "/trainer/choose/",
         new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
@@ -434,7 +426,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改场地
    */
- public void onSpaceClicked() {
+  public void onSpaceClicked() {
     routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(isPrivate)
         .selectIds(ListUtils.getIdList(spaces))
         .build());
@@ -443,7 +435,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改上课人数
    */
- public void onOrderSutdentCountClicked() {
+  public void onOrderSutdentCountClicked() {
     new DialogList(getContext()).list(
         isPrivate ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
         (parent, view, position, id) -> {
@@ -466,7 +458,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 在线支付 动态价格，私教需要1对多私教，团课需要开启动态价格
    */
- public void onPayOnlineClicked() {
+  public void onPayOnlineClicked() {
     routeTo("/batch/pay/online/",
         new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
             .maxPeople(getOrderStudentCount())
@@ -477,8 +469,8 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 卡支付设置
    */
- public void onPayCardClicked() {
-    boolean isAdd ;
+  public void onPayCardClicked() {
+    boolean isAdd;
     if (mSource != null && mSource.contains("add")) {
       isAdd = true;
     } else {

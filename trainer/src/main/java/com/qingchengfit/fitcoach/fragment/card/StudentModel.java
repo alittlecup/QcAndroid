@@ -41,6 +41,7 @@ import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 public class StudentModel implements IStudentModel {
@@ -78,7 +79,7 @@ public class StudentModel implements IStudentModel {
   }
 
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-      HashMap<String, Object> params) {
+      Map<String, Object> params) {
     return null;
   }
 

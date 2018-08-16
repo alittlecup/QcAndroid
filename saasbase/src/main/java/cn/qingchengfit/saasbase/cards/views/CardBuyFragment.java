@@ -262,8 +262,8 @@ import rx.functions.Action1;
         .withBottomEdge(true));
     rv.setLayoutManager(layoutManager);
     rv.setAdapter(commonFlexAdapter);
-    String qcCallId = getActivity().getIntent().getExtras().getString("qcCallId");
-    if (!TextUtils.isEmpty(qcCallId)) {
+    Bundle extras = getActivity().getIntent().getExtras();
+    if (extras != null && !TextUtils.isEmpty(extras.getString("qcCallId"))) {
       presenter.setFromCheckout(true);
     }
     presenter.getCardTplDetail();

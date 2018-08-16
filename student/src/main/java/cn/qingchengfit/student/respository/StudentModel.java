@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -88,7 +89,7 @@ public class StudentModel implements IStudentModel {
   //}
   //
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-      HashMap<String, Object> params) {
+      Map<String, Object> params) {
     return studentApi.qcGetAllStudents(id, params);
   }
 

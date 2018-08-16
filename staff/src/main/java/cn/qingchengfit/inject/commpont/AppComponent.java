@@ -408,7 +408,6 @@ import javax.inject.Singleton;
     /*
       带有学员信息的页面
      */
-
     AppComponent.StudentHomeModule.class,
     AppComponent.FollowRecordPageModule.class,
     AppComponent.StudentMoreInfoModule.class,
@@ -426,7 +425,7 @@ import javax.inject.Singleton;
     /*
      * 以下为附加component
      */
-     AppComponent.ChooseBrandActivityModule.class,
+    AppComponent.StudentWraperInnerModule.class, AppComponent.ChooseBrandActivityModule.class,
 
     AppComponent.WebFModule.class, CardTypeWrapperModule.class, RealcardModule.class,
     /**
@@ -687,6 +686,7 @@ public interface AppComponent {
     }
   }
 
+
   @Subcomponent() public interface GymsSubcomponent extends AndroidInjector<GymsFragment> {
     @Subcomponent.Builder public abstract class Builder
         extends AndroidInjector.Builder<GymsFragment> {
@@ -839,6 +839,7 @@ public interface AppComponent {
         extends AndroidInjector.Builder<StatementGlanceFragment> {
     }
   }
+
 
   @Subcomponent() public interface StatementDetailSubcomponent
       extends AndroidInjector<StatementDetailFragment> {
@@ -2848,6 +2849,11 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(WardrobePayBottomFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         WardrobePayBottomSubcomponent.Builder builder);
+  }
+  @Module(subcomponents = StudentWrapperComponent.class) abstract class StudentWraperInnerModule {
+    @Binds @IntoMap @ActivityKey(StudentActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        StudentWrapperComponent.Builder builder);
   }
 
   @Module(subcomponents = WardrobeDetailFragmentSubcomponent.class)

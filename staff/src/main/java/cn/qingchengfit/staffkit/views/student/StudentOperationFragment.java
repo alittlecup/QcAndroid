@@ -223,6 +223,8 @@ public class StudentOperationFragment extends BaseFragment
             showAlert(R.string.alert_permission_forbid);
             return false;
           }
+          routeTo("student","/student/sendmsg/", null);
+
           //Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
           //toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
           //startActivity(toChoose);
@@ -237,9 +239,10 @@ public class StudentOperationFragment extends BaseFragment
           startActivity(i);
           break;
         case R.string.fun_name_export:
-          Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
-          exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
-          startActivity(exportIntent);
+          //Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
+          //exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
+          //startActivity(exportIntent);
+          routeTo("student","/student/export",null);
           break;
         case R.string.qc_student_birthday_notice:
           DialogUtils.showAlert(getContext(),"即将上线，敬请期待");

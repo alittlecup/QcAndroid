@@ -242,7 +242,6 @@ public class GymFunctionFactory {
   public static int getModuleStatus(String module) {
     if (module == null) return 0;
     switch (module.toLowerCase()) {
-      case MODULE_STUDENT_CARDS:
       case MODULE_MANAGE_STAFF:
       case MODULE_FINANCE_CARD:
       case MODULE_FINANCE_MARK:
@@ -255,7 +254,6 @@ public class GymFunctionFactory {
       case MODULE_OPERTAT_KOUBEI:
       case MODULE_OPERATE_SCORE:
       case MODULE_WECHAT:
-      case MODULE_GYM_SITE:
       case MODULE_OPERATE_COUPON:
       case MODULE_OPERATE_RED_EVELOP_TPL:
       case MODULE_FINANCE_ORDER:
@@ -269,7 +267,8 @@ public class GymFunctionFactory {
       case MODULE_SMARTGYM_SMART:
 
         return 1;
-
+      case MODULE_GYM_SITE:
+      case MODULE_STUDENT_CARDS:
       case MODULE_WORKSPACE_ORDER_LIST:
       case MODULE_WORKSPACE_GROUP:
       case MODULE_WORKSPACE_PRIVATE:
@@ -493,15 +492,15 @@ public class GymFunctionFactory {
        *
        */
       case MODULE_STUDENT:
-        //Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
-        //fragment.startActivity(toStu);
+        Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
+        fragment.startActivity(toStu);
         //fragment.routeTo("student", "/student/home", null);
-        if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
-          QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
-              .call();
-        } else {
-          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
-        }
+        //if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
+        //  QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
+        //      .call();
+        //} else {
+        //  DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+        //}
         return;
       case REPORT_EXPORT:
         Intent toExo = new Intent(fragment.getActivity(), ImportExportActivity.class);

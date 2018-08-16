@@ -31,6 +31,7 @@ import java.util.List;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import java.util.Map;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
@@ -81,7 +82,7 @@ public interface IStudentModel {
    * @return
    */
   Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
-      HashMap<String, Object> params);
+      Map<String, Object> params);
 
   /**
    * 教练分配

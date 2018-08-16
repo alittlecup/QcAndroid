@@ -131,13 +131,12 @@ public class StudentRepositoryImpl implements StudentRepository {
     return toLiveData(remoteService.qcGetAllotStaffMembers(staff_id, type, params));
   }
 
-  @Override
-  public void qcRemoveStaff(MutableLiveData<Boolean> result, MutableLiveData<Resource<Object>> defaultResult,
-      String type, Map<String, Object> params) {
+  @Override public void qcRemoveStaff(MutableLiveData<Boolean> result,
+      MutableLiveData<Resource<Object>> defaultResult, String type, Map<String, Object> params) {
     HashMap<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
-    bindToLiveData(result, remoteService.qcRemoveStaff(loginStatus.staff_id(), type, params1)
-        .map(qcDataResponse -> {
+    bindToLiveData(result,
+        remoteService.qcRemoveStaff(loginStatus.staff_id(), type, params1).map(qcDataResponse -> {
           QcDataResponse<Boolean> qcDataResponse1;
           if (qcDataResponse.status == 200) {
             qcDataResponse1 = qcDataResponse.copyResponse(true);
@@ -148,9 +147,9 @@ public class StudentRepositoryImpl implements StudentRepository {
         }), defaultResult, "");
   }
 
-
-  @Override public LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
-      String staff_id, HashMap<String, Object> params) {
+  @Override
+  public LiveData<Resource<SalerTeachersListWrap>> qcGetAllAllocateCoaches(String staff_id,
+      HashMap<String, Object> params) {
 
     return toLiveData(remoteService.qcGetAllAllocateCoaches(staff_id, params));
   }
@@ -241,9 +240,10 @@ public class StudentRepositoryImpl implements StudentRepository {
 
   @Override
   public LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params) {
-    HashMap<String, Object> params1 = gymWrapper.getParams();
-    params1.putAll(params);
-    return toLiveData(remoteService.qcGetAllStudents(loginStatus.staff_id(), params1));
+    if (!params.containsKey("shop_id")) {
+      params.putAll(gymWrapper.getParams());
+    }
+    return toLiveData(remoteService.qcGetAllStudents(loginStatus.staff_id(), params));
   }
 
   @Override public void qcGetTrackStatus(MutableLiveData<List<FollowRecordStatus>> liveData,

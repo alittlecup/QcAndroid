@@ -84,6 +84,9 @@ buildscript {
 
   repositories {
     maven {
+      url 'http://43.241.209.158:15004/repository/maven-public/'
+    }
+    maven {
       url "../repo/"
     }
     maven { url "https://maven.google.com" }
@@ -123,6 +126,10 @@ buildscript {
 allprojects {
   repositories {
     maven {
+      url 'http://43.241.209.158:15004/repository/maven-public/'
+    }
+
+    maven {
       url "../../repo/"
     }
     flatDir {
@@ -132,9 +139,6 @@ allprojects {
     jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
-    maven {
-      url 'http://43.241.209.158:15004/repository/maven-releases/'
-    }
 
     maven { url "https://jitpack.io" }
 
