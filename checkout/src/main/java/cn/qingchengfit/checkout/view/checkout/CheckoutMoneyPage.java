@@ -56,12 +56,12 @@ import java.util.Map;
 
   private void dealCashierBean(CashierBean cashierBean) {
     CashierBeanWrapper wrapper = new CashierBeanWrapper(cashierBean);
-    wrapper.setPrices(mViewModel.count.getValue());
+    wrapper.setPrices( String.valueOf(Double.parseDouble(mViewModel.count.getValue())));
     ScanRepayInfo info = new ScanRepayInfo();
     info.setModuleName("checkout");
     info.setActionName("reOrder");
     Map<String, String> params = new HashMap<>();
-    params.put("price", mViewModel.count.getValue());
+    params.put("price",mViewModel.count.getValue());
 
     switch (mViewModel.getType()) {
       case PayChannel.ALIPAY_QRCODE:
@@ -84,11 +84,9 @@ import java.util.Map;
         break;
     }
   }
-  private IQcRouteCallback callback=new IQcRouteCallback() {
-    @Override public void onResult(QCResult qcResult) {
-        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
-    }
-  };
+
+  private IQcRouteCallback callback = qcResult -> QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home"))
+      .call();
 
   @Override
   public CkPageCheckoutMoneyBinding initDataBinding(LayoutInflater inflater, ViewGroup container,

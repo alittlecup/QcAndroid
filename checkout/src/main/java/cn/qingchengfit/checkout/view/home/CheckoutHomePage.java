@@ -14,6 +14,7 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 
 @Leaf(module = "checkout", path = "/checkout/home") public class CheckoutHomePage
@@ -58,7 +59,7 @@ import com.anbillon.flabellum.annotations.Leaf;
     ToolbarModel toolbarModel = new ToolbarModel("收银台");
     toolbarModel.setMenu(R.menu.ck_menu_checkout_help);
     toolbarModel.setListener(item -> {
-      ToastUtils.show("menu click");
+      WebActivity.startWeb("http://qcfit.cn/r/n_GAx6H", getContext());
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
