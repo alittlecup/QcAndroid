@@ -60,7 +60,7 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
     List payloads) {
     if (adapter.getMode() != FlexibleAdapter.Mode.IDLE) {
       holder.cb.setVisibility(View.VISIBLE);
-      holder.cb.setChecked(adapter.isSelected(position));
+      holder.cb.setChecked(isSelected);
       holder.iconRight.setVisibility(View.GONE);
     } else {
       holder.cb.setVisibility(View.GONE);
@@ -96,7 +96,10 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
       FlexibleUtils.highlightWords(holder.tvSubContent, user.getContent(), adapter.getSearchText());
     }
   }
-
+  private boolean isSelected;
+  public void setSelected(boolean isSelected){
+    this.isSelected=isSelected;
+  }
   @Override public boolean equals(Object o) {
     if (((CommonUserItem) o).getUser() == null){
       return false;

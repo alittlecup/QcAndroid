@@ -45,7 +45,7 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     commonFlexAdapter.setMode(getArguments().getInt("c", SelectableAdapter.Mode.MULTI));
     return v;
@@ -55,10 +55,14 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     if (commonFlexAdapter.getItem(i) instanceof StudentItem) {
       int lastChoose = -1;
 
-      if (commonFlexAdapter.getMode() == 1){//单选模式
-        lastChoose = commonFlexAdapter.getSelectedPositions().size() > 0?commonFlexAdapter.getSelectedPositions().get(0):-1;
+      if (commonFlexAdapter.getMode() == 1) {//单选模式
+        lastChoose = commonFlexAdapter.getSelectedPositions().size() > 0
+            ? commonFlexAdapter.getSelectedPositions().get(0) : -1;
       }
-      StudentItem item = (StudentItem)commonFlexAdapter.getItem(i);
+      StudentItem item = (StudentItem) commonFlexAdapter.getItem(i);
+      if (item instanceof ChosenStudentItem) {
+        ((ChosenStudentItem) item).setSelected(!((ChosenStudentItem) item).isSelected());
+      }
       if (studentIdList != null) {
         if (studentIdList.contains(item.getId())) {
           studentIdList.remove(item.getId());
@@ -79,9 +83,10 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
 
   public List<QcStudentBean> getSelectedStudent() {
     List<QcStudentBean> ret = new ArrayList<>();
-    for (Integer i : commonFlexAdapter.getSelectedPositions()) {
-      if (commonFlexAdapter.getItem(i) instanceof StudentItem) {
-        ret.add(((StudentItem) commonFlexAdapter.getItem(i)).getQcStudentBean());
+    for (int i = 0; i < mDatas.size(); i++) {
+      IFlexible item = mDatas.get(i);
+      if (item instanceof ChosenStudentItem && ((ChosenStudentItem) item).isSelected()) {
+        ret.add(((ChosenStudentItem) item).getQcStudentBean());
       }
     }
     return ret;
@@ -102,7 +107,8 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
         IFlexible item = commonFlexAdapter.getItem(i);
         if (item instanceof ChosenStudentItem) {
           if (studentIdList.contains(((ChosenStudentItem) item).getId())) {
-            if (!commonFlexAdapter.isSelected(i)){
+            ((ChosenStudentItem) item).setSelected(true);
+            if (!commonFlexAdapter.isSelected(i)) {
               commonFlexAdapter.addSelection(i);
             }
             commonFlexAdapter.notifyItemChanged(i);
@@ -113,7 +119,7 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
   }
 
   @Override public void onUpdateEmptyView(int size) {
-    if (studentIdList != null && studentIdList.size() > 0 ){
+    if (studentIdList != null && studentIdList.size() > 0) {
       selectStudent(studentIdList);
     }
     //super.onUpdateEmptyView(size);

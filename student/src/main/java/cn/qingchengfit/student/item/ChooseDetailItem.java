@@ -17,6 +17,7 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFilterable;
 import eu.davidea.flexibleadapter.items.IHeader;
 import eu.davidea.flexibleadapter.items.ISectionable;
 import java.lang.annotation.Retention;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class ChooseDetailItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemChooseDetailBinding>>
-    implements ISectionable<DataBindingViewHolder<ItemChooseDetailBinding>, IHeader>, IItemData {
+    implements ISectionable<DataBindingViewHolder<ItemChooseDetailBinding>, IHeader>, IItemData ,IFilterable {
 
   public QcStudentBeanWithFollow data;
   public int status;
@@ -35,6 +36,7 @@ public class ChooseDetailItem
     this.data = data;
     this.status = status;
   }
+
 
   public QcStudentBeanWithFollow getData() {
     return data;
@@ -227,6 +229,10 @@ public class ChooseDetailItem
 
   @Override public void setHeader(IHeader header) {
     this.head = header;
+  }
+
+  @Override public boolean filter(String constraint) {
+    return data.filter(constraint);
   }
 
   @IntDef({

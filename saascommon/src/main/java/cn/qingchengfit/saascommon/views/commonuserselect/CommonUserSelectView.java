@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saascommon.R;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.databinding.CmViewUserSelectBinding;
 import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -23,7 +24,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonUserSelectView extends BaseFragment
+public class CommonUserSelectView extends SaasCommonFragment
     implements FlexibleAdapter.OnItemClickListener {
   protected CmViewUserSelectBinding binding;
   protected List<IFlexible> datas = new ArrayList<>();
@@ -43,14 +44,6 @@ public class CommonUserSelectView extends BaseFragment
     initListener();
 
     selectItems.setValue(new ArrayList<>());
-    selectItems.observe(this, items -> {
-      adapter.clearSelection();
-      for (CommonUserItem item : items) {
-        adapter.addSelection(adapter.index(item));
-      }
-      adapter.notifyDataSetChanged();
-    });
-
     return binding.getRoot();
   }
 
@@ -104,12 +97,15 @@ public class CommonUserSelectView extends BaseFragment
     if (item instanceof CommonUserItem) {
       List<CommonUserItem> si = selectItems.getValue();
       if (si.contains((CommonUserItem) item)) {
+        ((CommonUserItem) item).setSelected(false);
         si.remove(item);
       } else {
         si.add((CommonUserItem) item);
+        ((CommonUserItem) item).setSelected(true);
       }
       selectItems.setValue(si);
     }
+    adapter.notifyDataSetChanged();
     return true;
   }
 

@@ -80,7 +80,10 @@ public class BottomViewSelectUser extends BottomSheetDialogFragment
     binding.recycleview.setAdapter(adapter);
     adapter.setTag("del", true);
     if (getParentFragment() instanceof CommonUserSelectView) {
-      adapter.updateDataSet(((CommonUserSelectView) getParentFragment()).selectItems.getValue());
+      List<CommonUserItem> value =
+          ((CommonUserSelectView) getParentFragment()).selectItems.getValue();
+      adapter.updateDataSet(value);
+      binding.tvStudCount.setText("已选"+value.size()+"人");
     }
   }
 

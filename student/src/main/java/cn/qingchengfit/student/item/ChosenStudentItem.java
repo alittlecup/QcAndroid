@@ -49,6 +49,17 @@ public class ChosenStudentItem extends StudentItem {
   @Override public void bindViewHolder(FlexibleAdapter adapter, StudentVH holder, int position,
       List payloads) {
     super.bindViewHolder(adapter, holder, position, payloads);
-    holder.cb.setChecked(adapter.isSelected(position));
+    holder.cb.setChecked(isSelected);
+  }
+
+  public boolean isSelected() {
+    return isSelected;
+  }
+
+  private boolean isSelected;
+
+  public void setSelected(boolean selected) {
+    isSelected = selected;
   }
 }
+

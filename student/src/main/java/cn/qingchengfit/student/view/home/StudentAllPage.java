@@ -3,7 +3,6 @@ package cn.qingchengfit.student.view.home;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import cn.qingchengfit.student.databinding.StPageAllStudentBinding;
 import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
 import cn.qingchengfit.student.view.allot.StudentAllotPageParams;
+import cn.qingchengfit.student.widget.SearchView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -99,20 +99,47 @@ import javax.inject.Inject;
     });
   }
 
+  @Override public void onResume() {
+    super.onResume();
+    setBackPress();
+  }
+
+  @Override public void onPause() {
+    super.onPause();
+    setBackPressNull();
+  }
+
+  @Override public boolean onFragmentBackPress() {
+    if (actionView!=null&&actionView.isExpanded()) {
+      mBinding.includeToolbar.toolbar.collapseActionView();
+      return true;
+    } else {
+      return super.onFragmentBackPress();
+    }
+  }
+
+  Toolbar toolbar;
+  SearchView actionView;
   private void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel("全部会员");
-    toolbarModel.setMenu(R.menu.menu_search);
+    toolbarModel.setMenu(R.menu.menu_search_shop);
     toolbarModel.setListener(item -> {
-      SearchView actionView = (SearchView) item.getActionView();
+      actionView = (SearchView) item.getActionView();
       actionView.setQueryHint("输入学员姓名或者手机号");
       actionView.setOnQueryTextListener(StudentAllPage.this);
-      actionView.setOnQueryTextFocusChangeListener(
-          (v, hasFocus) -> mBinding.includeToolbar.toolbarTitle.setVisibility(
-              hasFocus ? View.GONE : View.VISIBLE));
+      actionView.setOnActionViewCollapsed(new SearchView.onActionViewListener() {
+        @Override public void onActionViewCollapsed() {
+          mBinding.includeToolbar.toolbarTitle.setVisibility(View.VISIBLE);
+        }
+        @Override public void onActionViewExpanded() {
+          mBinding.includeToolbar.toolbarTitle.setVisibility(View.GONE);
+        }
+      });
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
-    initToolbar(mBinding.includeToolbar.toolbar);
+    toolbar=mBinding.includeToolbar.toolbar;
+    initToolbar(toolbar);
   }
 
   @Override public void openDrawer() {

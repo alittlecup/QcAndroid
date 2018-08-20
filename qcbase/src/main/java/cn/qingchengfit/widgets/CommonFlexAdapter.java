@@ -60,6 +60,7 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
 
   @Override public void updateDataSet(@Nullable List items) {
     super.updateDataSet(items);
+
   }
 
   @Override public void updateDataSet(@Nullable List items, boolean animate) {
