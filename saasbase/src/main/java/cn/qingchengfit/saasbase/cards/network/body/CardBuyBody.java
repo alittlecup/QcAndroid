@@ -58,9 +58,7 @@ public class CardBuyBody implements Parcelable, Cloneable {
 
   public int checkData() {
     if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
-    if (CmStringUtils.isEmpty(seller_id) && CmStringUtils.isEmpty(staff_id)) {
-      return R.string.e_card_saler_cannot_empty;
-    }
+
     if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
     if (CmStringUtils.isEmpty(user_ids)) return R.string.e_member_empty;
     if (check_valid) {
@@ -71,6 +69,9 @@ public class CardBuyBody implements Parcelable, Cloneable {
           valid_to).getTime()) {
         return R.string.e_start_great_end;
       }
+    }
+    if (CmStringUtils.isEmpty(seller_id) && CmStringUtils.isEmpty(staff_id)) {
+      return R.string.e_card_saler_cannot_empty;
     }
     switch (type) {
       case 1:

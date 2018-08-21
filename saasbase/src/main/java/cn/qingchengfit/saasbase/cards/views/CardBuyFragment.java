@@ -402,16 +402,19 @@ import rx.functions.Action1;
   }
 
   protected void routeToProrocolWeb() {
+
     CardTplOption cardTplOption = presenter.getmChosenOption();
-    List<QcStudentBean> qcStudentBeans = presenter.getQcStudentBeans();
-    if (qcStudentBeans == null) {
-      DialogUtils.showAlert(getContext(), R.string.e_member_empty);
-      return;
-    }
     if (cardTplOption == null) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
+
+    List<QcStudentBean> qcStudentBeans = presenter.getQcStudentBeans();
+    if (qcStudentBeans == null||qcStudentBeans.isEmpty()) {
+      DialogUtils.showAlert(getContext(), R.string.e_member_empty);
+      return;
+    }
+
     String host = gymWrapper.getCoachService().getHost();
     String balance = cardTplOption.getCharge();
     JsonArray jsonArray = new JsonArray();

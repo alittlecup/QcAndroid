@@ -67,10 +67,9 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/29.
  */
 @Leaf(module = "card", path = "/detail/") public class CardDetailFragment extends BaseListFragment
-    implements CardDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener,
-    CardDetailFunItem.OnClickCardFunListener {
-  @Need
-  public String cardid;
+    implements CardDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
+    SwipeRefreshLayout.OnRefreshListener, CardDetailFunItem.OnClickCardFunListener {
+  @Need public String cardid;
 
   @Inject IPermissionModel permissionModel;
 
@@ -78,23 +77,24 @@ import javax.inject.Inject;
   private String alreadyInfo;
 
   private Card mCard;
-  
+
   Toolbar toolbar;
   TextView toolbarTitle;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SaasbaseParamsInjector.inject(this);
-    RxBus.getBus().register(EventSelectedStudent.class)
-      .onBackpressureBuffer()
-      .throttleLast(500, TimeUnit.MILLISECONDS)
-      .compose(bindToLifecycle())
-      .compose(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<EventSelectedStudent>() {
-        @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
-          presenter.editCardStudents(eventSelectedStudent.getIdStr());
-        }
-      });
+    RxBus.getBus()
+        .register(EventSelectedStudent.class)
+        .onBackpressureBuffer()
+        .throttleLast(500, TimeUnit.MILLISECONDS)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .subscribe(new BusSubscribe<EventSelectedStudent>() {
+          @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+            presenter.editCardStudents(eventSelectedStudent.getIdStr());
+          }
+        });
   }
 
   @Inject CardDetailPresenter presenter;
@@ -102,28 +102,28 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
-    LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,container,false);
-    parent.addView(v,1);
+    LinearLayout parent =
+        (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container, container, false);
+    parent.addView(v, 1);
     toolbar = (Toolbar) parent.findViewById(R.id.toolbar);
-    toolbarTitle =(TextView) parent.findViewById(R.id.toolbar_title);
+    toolbarTitle = (TextView) parent.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
-    delegatePresenter(presenter,this);
+    delegatePresenter(presenter, this);
     presenter.setCardId(cardid);
     initListener(this);
-    RxBusAdd(EventRecycleClick.class)
-        .subscribe(new BusSubscribe<EventRecycleClick>() {
-          @Override public void onNext(EventRecycleClick eventRecycleClick) {
-            if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-              showAlert(R.string.alert_permission_forbid);
-              return;
-            }
-            if (eventRecycleClick.viewId == R.id.btn_charge){
-              Bundle b = new Bundle();
-              b.putParcelable("card",presenter.getmCard());
-              routeTo("/charge/",b);
-            }
-          }
-        });
+    RxBusAdd(EventRecycleClick.class).subscribe(new BusSubscribe<EventRecycleClick>() {
+      @Override public void onNext(EventRecycleClick eventRecycleClick) {
+        if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+          showAlert(R.string.alert_permission_forbid);
+          return;
+        }
+        if (eventRecycleClick.viewId == R.id.btn_charge) {
+          Bundle b = new Bundle();
+          b.putParcelable("card", presenter.getmCard());
+          routeTo("/charge/", b);
+        }
+      }
+    });
     onRefresh();
     return parent;
   }
@@ -138,7 +138,7 @@ import javax.inject.Inject;
         new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey)
             .addItemViewType(R.layout.item_card_action, 20)
             .addItemViewType(R.layout.item_card_detail_fun, 20)
-            .addItemViewType(R.layout.item_action_desc,1)
+            .addItemViewType(R.layout.item_action_desc, 1)
             .withBottomEdge(true));
   }
 
@@ -184,9 +184,14 @@ import javax.inject.Inject;
         .desc(card.getCard_no())
         .build());
     if (card.is_open_service_term && card.card_tpl_service_term != null) {
-
       protocolUrl = card.content_link;
-      if (card.card_tpl_service_term.is_read) {
+      if (card.card_tpl_service_term.is_sign) {
+        alreadyInfo = getResources().getString(R.string.card_protocol_user_sign_info,
+            card.card_tpl_service_term.service_term_version,
+            card.card_tpl_service_term.created_at.replace("T", " ")
+                + " "
+                + card.card_tpl_service_term.created_by.username);
+      } else if (card.card_tpl_service_term.is_read) {
         alreadyInfo = getResources().getString(R.string.card_protocol_user_read_info,
             card.card_tpl_service_term.service_term_version,
             card.card_tpl_service_term.created_at.replace("T", " ")
@@ -202,17 +207,20 @@ import javax.inject.Inject;
           .build());
     }
     clearItems();
-    setDatas(items,1);
+    setDatas(items, 1);
   }
 
   private String getBillsString(Card card) {
-    String detail="";
+    String detail = "";
     switch (card.getType()) {
       case Configs.CATEGORY_VALUE:
-        detail=getResources().getString(R.string.card_detail_cost_account,card.getTotal_account(),card.getTotal_cost());
+        detail =
+            getResources().getString(R.string.card_detail_cost_account, card.getTotal_account(),
+                card.getTotal_cost());
         break;
       case Configs.CATEGORY_TIMES:
-        detail=getResources().getString(R.string.card_detail_cost_time,card.getTotal_times(),card.getTotal_cost());
+        detail = getResources().getString(R.string.card_detail_cost_time, card.getTotal_times(),
+            card.getTotal_cost());
         break;
       case Configs.CATEGORY_DATE:
         break;
@@ -229,15 +237,14 @@ import javax.inject.Inject;
             showAlert(R.string.alert_permission_forbid);
             return false;
           }
-          routeTo("/bind/students/",CardBindStudentsParams.builder().card(mCard).build());
+          routeTo("/bind/students/", CardBindStudentsParams.builder().card(mCard).build());
           break;
         case 2://适用场馆
           break;
 
         case 3://消费记录
-          routeTo(AppUtils.getRouterUri(getContext(),"/card/consumption/record/"),new SpendRecordParams()
-              .card(mCard)
-              .build());
+          routeTo(AppUtils.getRouterUri(getContext(), "/card/consumption/record/"),
+              new SpendRecordParams().card(mCard).build());
           break;
 
         case 4://实体卡号
@@ -245,14 +252,13 @@ import javax.inject.Inject;
             showAlert(R.string.alert_permission_forbid);
             return false;
           }
-          routeTo("common","/input/",new CommonInputParams()
-            .title("修改实体卡号")
-            .hint(presenter.getmCard().getCard_no())
-            .content(presenter.getmCard().getCard_no())
-            .build());
+          routeTo("common", "/input/", new CommonInputParams().title("修改实体卡号")
+              .hint(presenter.getmCard().getCard_no())
+              .content(presenter.getmCard().getCard_no())
+              .build());
           break;
         case 5:
-          if (!TextUtils.isEmpty(protocolUrl)){
+          if (!TextUtils.isEmpty(protocolUrl)) {
             CardProtocolActivity.startWeb(protocolUrl, getContext(), false, alreadyInfo);
           }
           break;
@@ -283,9 +289,9 @@ import javax.inject.Inject;
   @Override public void onClickMore() {
     final DialogSheet dialogSheet = new DialogSheet(getContext());
     String buttonStr = "";
-    if (mCard.is_active()){
+    if (mCard.is_active()) {
       buttonStr = getString(R.string.unregiste_card);
-    }else{
+    } else {
       buttonStr = getString(R.string.resume_card);
     }
     dialogSheet.addButton(buttonStr, new View.OnClickListener() {
@@ -297,7 +303,8 @@ import javax.inject.Inject;
               .negativeText(R.string.pickerview_cancel)
               .positiveText(R.string.unregiste_Comfirm)
               .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                   if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_DELETE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
@@ -313,13 +320,14 @@ import javax.inject.Inject;
               .autoDismiss(true)
               .build()
               .show();
-        }else{
+        } else {
           new MaterialDialog.Builder(getContext()).title(getString(R.string.resume_card_title))
               .content(getString(R.string.resume_card))
               .negativeText(R.string.pickerview_cancel)
               .positiveText(R.string.resume_confirm)
               .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                   if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
@@ -344,7 +352,7 @@ import javax.inject.Inject;
           if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
             showAlert(R.string.alert_permission_forbid);
             return;
-          }else {
+          } else {
             routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"),
                 new CardFixValidDayParams().card(mCard).build());
           }

@@ -20,6 +20,8 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saascommon.events.EventSelectedStudent;
@@ -168,7 +170,7 @@ import javax.inject.Inject;
    */
  public void onBtnAddStudentClicked() {
     if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-      routeTo(AppUtils.getRouterUri(getContext(), "staff/add/"), null);
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
     }else{
       DialogUtils.showAlert(getContext(), getResources().getString(R.string.alert_permission_forbid));
     }

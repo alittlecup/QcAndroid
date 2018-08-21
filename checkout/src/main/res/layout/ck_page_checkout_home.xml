@@ -35,7 +35,9 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:layout_marginTop="30dp"
+          android:alpha="0.6"
           android:text="今日收银"
+          android:textColor="@color/bg_white"
           style="@style/QcTextStyleMediumGrey"
           />
       <TextView
@@ -64,7 +66,9 @@
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:alpha="0.6"
               android:text="开卡"
+              android:textColor="@color/bg_white"
               style="@style/QcTextStyleMediumGrey"
               />
           <TextView
@@ -88,7 +92,9 @@
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:alpha="0.6"
               android:text="续卡"
+              android:textColor="@color/bg_white"
               style="@style/QcTextStyleMediumGrey"
               />
           <TextView
@@ -113,7 +119,9 @@
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:alpha="0.6"
               android:text="收银"
+              android:textColor="@color/bg_white"
               style="@style/QcTextStyleMediumGrey"
               />
           <TextView
