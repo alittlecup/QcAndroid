@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
@@ -62,30 +63,29 @@ import javax.inject.Inject;
       mBinding.tvAllStudent.setText(text);
     });
     mViewModel.showLoading.observe(this, aBoolean -> {
-      if (aBoolean) {
-        showLoading();
+      if (aBoolean != null && aBoolean) {
+        mBinding.swipe.setRefreshing(true);
       } else {
-        hideLoading();
+        mBinding.swipe.setRefreshing(false);
       }
     });
 
-    mViewModel.glanceLiveData.observe(this,info->{
-      if(info==null)return;
+    mViewModel.glanceLiveData.observe(this, info -> {
+      if (info == null) return;
       StatData inactive_registered = info.getInactive_registered();
-      if(inactive_registered!=null){
+      if (inactive_registered != null) {
         chartViews.get(0).setStatData(inactive_registered);
       }
       StatData inactive_following = info.getInactive_following();
-      if(inactive_following!=null){
+      if (inactive_following != null) {
         chartViews.get(1).setStatData(inactive_following);
       }
       StatData inactive_member = info.getInactive_member();
-      if(inactive_member!=null){
+      if (inactive_member != null) {
         chartViews.get(2).setStatData(inactive_member);
       }
     });
   }
-
 
   @Override
   public StPageStudentHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +102,6 @@ import javax.inject.Inject;
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     mViewModel.loadSource();
-
   }
 
   private List<StudentHomePieChartView> chartViews = new ArrayList<>();
@@ -198,32 +197,6 @@ import javax.inject.Inject;
     });
   }
 
-  //private void initChart() {
-  //  colors.add(Color.rgb(110, 184, 241));
-  //  colors.add(Color.rgb(249, 148, 78));
-  //  colors.add(Color.rgb(88, 184, 122));
-  //  mBinding.pieChart.setOnChartValueSelectedListener(this);
-  //}
-  //
-  //ArrayList<Integer> colors = new ArrayList<>();
-  //
-  //private void setData(int register, int follow, int member) {
-  //  ArrayList<PieEntry> entries = new ArrayList<>();
-  //  entries.add(new PieEntry(register, 0));
-  //  entries.add(new PieEntry(follow, 1));
-  //  entries.add(new PieEntry(member, 2));
-  //  PieDataSet dataSet = new PieDataSet(entries, "");
-  //  dataSet.setDrawValues(false);
-  //  dataSet.setSelectionShift(3f);
-  //  dataSet.setSliceSpace(0f);
-  //
-  //  dataSet.setColors(colors);
-  //  PieData data = new PieData(dataSet);
-  //  mBinding.pieChart.setData(data);
-  //  mBinding.pieChart.highlightValue(null);
-  //  mBinding.pieChart.invalidate();
-  //}
-
   private void initListener() {
     mBinding.tvIncreaseMember.setOnClickListener(view -> {
       routeTo("student/increase",
@@ -241,18 +214,6 @@ import javax.inject.Inject;
       routeTo("increase/member",
           new IncreaseMemberPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
     });
-    //mBinding.llMember.setOnClickListener(view -> {
-    //  routeTo("saler/student",
-    //      new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
-    //});
-    //mBinding.llFollowup.setOnClickListener(view -> {
-    //  routeTo("saler/student",
-    //      new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_FOLLOWUP).build());
-    //});
-    //mBinding.llStudent.setOnClickListener(view -> {
-    //  routeTo("saler/student",
-    //      new StudentStateInfoPageParams().curType(IncreaseType.INCREASE_STUDENT).build());
-    //});
     mBinding.commAllotStudent.setOnClickListener(view -> {
 
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
@@ -289,6 +250,8 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
       }
     });
+    mBinding.swipe.setOnRefreshListener(() -> mViewModel.loadSource());
+    mBinding.swipe.setColorSchemeResources(R.color.colorPrimary);
   }
 
   private void initToolbar() {

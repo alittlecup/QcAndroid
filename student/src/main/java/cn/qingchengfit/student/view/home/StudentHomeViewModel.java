@@ -80,6 +80,10 @@ public class StudentHomeViewModel extends BaseViewModel {
     showLoading.setValue(true);
   }
 
+  public void onRefresh() {
+    loadSource();
+  }
+
   private LiveData<Resource<StudentInfoGlance>> loadSourceFromRes() {
     return repository.qcGetHomePageInfo(loginStatus.staff_id(), gymWrapper.getParams());
   }

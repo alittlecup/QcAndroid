@@ -1,8 +1,10 @@
 package cn.qingchengfit.student.view.home;
 
+import android.databinding.generated.callback.OnRefreshListener;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -62,13 +64,11 @@ public class StudentListView
         adapter.clearSelection();
       }
     });
-    mViewModel.removeResult.observe(this,aBoolean -> {
-      ToastUtils.show(aBoolean?"移除成功":"移除失败");
+    mViewModel.removeResult.observe(this, aBoolean -> {
+      ToastUtils.show(aBoolean ? "移除成功" : "移除失败");
       getActivity().onBackPressed();
     });
   }
-
-
 
   public static StudentListView newInstanceWithType(@AllotType String type) {
     StudentListView listView = new StudentListView();
@@ -114,12 +114,21 @@ public class StudentListView
       routeTo(getStringByType(curType));
     });
     mBinding.btnExclude.setOnClickListener(view -> {
-      if(listener!=null){
+      if (listener != null) {
         listener.onBottomSecondClick();
       }
     });
   }
 
+  private SwipeRefreshLayout.OnRefreshListener onRefreshListener;
+
+  public void setOnRefreshListenr(SwipeRefreshLayout.OnRefreshListener listenr) {
+    if (mBinding == null) {
+      this.onRefreshListener = listenr;
+    } else {
+      mBinding.refresh.setOnRefreshListener(listenr);
+    }
+  }
 
   public void selectAll(boolean selectedAll) {
     if (adapter.isEmpty() || adapter.getMainItems().get(0) instanceof CommonNoDataItem) {
@@ -214,6 +223,10 @@ public class StudentListView
       }
     }
     setRefreshEnable(false);
+    mBinding.refresh.setColorSchemeResources(R.color.colorPrimary);
+    if (listener != null) {
+      mBinding.refresh.setOnRefreshListener(onRefreshListener);
+    }
   }
 
   public void filter(String filter) {
@@ -256,20 +269,21 @@ public class StudentListView
   }
 
   private onSecondBottomButtonListener listener;
-  public void removeStaffStudents(){
+
+  public void removeStaffStudents() {
     ArrayList<String> selectIds = getSelectIds();
-    Map<String,Object> params=new HashMap<>();
-    params.put("user_ids",StringUtils.List2Str(selectIds));
-    switch (curType){
+    Map<String, Object> params = new HashMap<>();
+    params.put("user_ids", StringUtils.List2Str(selectIds));
+    switch (curType) {
       case TRAINER_TYPE:
-        params.put("coach_id",curID);
+        params.put("coach_id", curID);
         break;
       case SELLER_TYPE:
-        params.put("seller_id",curID);
+        params.put("seller_id", curID);
         break;
     }
 
-    mViewModel.removeStaffStudents(curType,params);
+    mViewModel.removeStaffStudents(curType, params);
   }
 
   public void reset() {
@@ -281,9 +295,9 @@ public class StudentListView
       adapter.setTag("selected", false);
       adapter.clearSelection();
       adapter.notifyDataSetChanged();
-    }else{
-      setAdapterTag("choose",2);
-      setAdapterTag("selected",false);
+    } else {
+      setAdapterTag("choose", 2);
+      setAdapterTag("selected", false);
     }
   }
 
@@ -304,16 +318,16 @@ public class StudentListView
   }
 
   @Override public boolean onItemClick(int position) {
-    if(adapter.getTag("contact")!=null&&(boolean)adapter.getTag("contact")){
+    if (adapter.getTag("contact") != null && (boolean) adapter.getTag("contact")) {
       IFlexible item = adapter.getItem(position);
-      if(item instanceof IItemData){
+      if (item instanceof IItemData) {
         String phone = ((IItemData) item).getData().getPhone();
         showBottomSheet(phone);
       }
       return false;
     }
     Object selected = adapter.getTag("selected");
-    if (selected == null ||!(Boolean) selected ) {
+    if (selected == null || !(Boolean) selected) {
       QcStudentBean qcStudentBean = null;
       IFlexible item = adapter.getItem(position);
       if (item instanceof IItemData) {
@@ -353,7 +367,7 @@ public class StudentListView
             .build());
         break;
       case StudentListView.MSG_TYPE:
-        DirtySender.studentList=getSelectDataBeans();
+        DirtySender.studentList = getSelectDataBeans();
         routeTo("/student/msgsend", null);
         break;
     }

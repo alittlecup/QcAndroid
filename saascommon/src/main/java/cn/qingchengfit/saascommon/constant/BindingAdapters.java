@@ -2,6 +2,7 @@ package cn.qingchengfit.saascommon.constant;
 
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -39,6 +40,10 @@ public class BindingAdapters {
     @BindingAdapter(value = "visibleGone")
     public static void showHide(View view, boolean show) {
         view.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+    @BindingAdapter(value = "onRefresh")
+    public static void onRefresh(SwipeRefreshLayout view,SwipeRefreshLayout.OnRefreshListener listener) {
+        view.setOnRefreshListener(listener);
     }
 
     @BindingAdapter(value = "markViewUnit")

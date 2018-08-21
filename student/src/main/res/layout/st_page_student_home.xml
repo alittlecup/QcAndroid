@@ -28,6 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+      <android.support.v4.widget.SwipeRefreshLayout
+          android:id="@+id/swipe"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
       <ScrollView
           android:layout_width="match_parent"
           android:layout_height="match_parent"
@@ -493,6 +499,8 @@
 
         </LinearLayout>
       </ScrollView>
+      </android.support.v4.widget.SwipeRefreshLayout>
+
       <android.support.design.widget.FloatingActionButton
           android:id="@+id/fab_add_student"
           android:layout_width="wrap_content"

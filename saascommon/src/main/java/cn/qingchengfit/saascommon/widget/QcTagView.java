@@ -159,9 +159,7 @@ public class QcTagView extends View {
 
   public QcTagView(Context context, String text) {
     super(context);
-    DrawableCompat.setTint(
-        drawable = ContextCompat.getDrawable(context, R.drawable.vd_linear_delete_black),
-        Color.parseColor("#6a7fa4"));
+        drawable = ContextCompat.getDrawable(context, R.drawable.ic_clear_blue_gree_8dp);
     init(text);
   }
 

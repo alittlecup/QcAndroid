@@ -84,6 +84,7 @@ import javax.inject.Inject;
   }
 
   private void initFragment() {
+    if(listView!=null)return;
     listView = new StudentRecyclerSortView();
     stuff(R.id.list_container, listView);
     filterView = new StudentFilterView();

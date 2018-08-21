@@ -2,6 +2,7 @@ package cn.qingchengfit.student.view.home;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,14 +115,19 @@ public class StudentRecyclerSortView
     mBinding = ViewStudentRecyclerSortBinding.inflate(inflater, container, false);
     initFragment();
     mBinding.includeFilter.setFilter(sortViewModel);
-    if (loadDataListener != null) {
-      loadDataListener.loadData(new HashMap<>());
-    }
     mBinding.includeFilter.getRoot().setVisibility(sortFilterVisible ? View.VISIBLE : View.GONE);
-    if(mViewModel!=null&&items!=null){
+    if (mViewModel != null && items != null) {
       mViewModel.getStudentBeans().setValue(items);
     }
     return mBinding;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    if (loadDataListener != null) {
+      loadDataListener.loadData(new HashMap<>());
+      listView.setOnRefreshListenr(() -> loadDataListener.loadData(new HashMap<>()));
+    }
   }
 
   private void initSortViewModel() {
