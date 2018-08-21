@@ -39,6 +39,10 @@ public class StudentComponent implements IComponent {
         RouteUtil.routeTo(qc.getContext(), getName(), actionName, studentIdList);
         QC.sendQCResult(qc.getCallId(), QCResult.success());
         return true;
+      case "/student/birthday":
+        RouteUtil.routeTo(qc.getContext(), getName(), actionName, null);
+        QC.sendQCResult(qc.getCallId(), QCResult.success());
+        return false;
     }
     return false;
   }

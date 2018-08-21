@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.view.home;
 
-import android.databinding.generated.callback.OnRefreshListener;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;

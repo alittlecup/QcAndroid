@@ -209,7 +209,7 @@ public class NotificationFragment extends BaseFragment
           }
           if (!StringUtils.isEmpty(msg.getBrand_id())
               && !StringUtils.isEmpty(msg.getShop_id())
-              && msg.type < 18) {
+              && msg.type < 20) {
             final CoachService coachService1 =
                 gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
             if (coachService1 != null) {
@@ -249,6 +249,11 @@ public class NotificationFragment extends BaseFragment
                         } else if (msg.type == 17) {
                           showLoading();
                           presenter.checkoutSellerStudentPermission(msg.getUser().getId());
+                          return;
+                        } else if (msg.type == 19) {
+                          QcRouteUtil.setRouteOptions(
+                              new RouteOptions("student").setActionName("/student/birthday"))
+                              .call();
                           return;
                         }
 
