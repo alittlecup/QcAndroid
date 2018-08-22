@@ -242,6 +242,9 @@ import rx.functions.Action1;
     if (qcStudentBean != null) {
       civBindMenbers.setContent(qcStudentBean.username());
       presenter.setUserIds(qcStudentBean.id());
+      List<QcStudentBean> studentBeans = new ArrayList<>();
+      studentBeans.add(qcStudentBean);
+      presenter.setQcStudentBeans(studentBeans);
     }
 
     civStartTime.setNoSaved();
@@ -400,13 +403,17 @@ import rx.functions.Action1;
   protected void routeToProrocolWeb() {
 
     CardTplOption cardTplOption = presenter.getmChosenOption();
-    if (cardTplOption == null) {
+    int selectedItemCount = commonFlexAdapter.getSelectedItemCount();
+    if (selectedItemCount < 1) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
+    if (cardTplOption == null) {
+      cardTplOption = cardOptionCustom;
+    }
 
     List<QcStudentBean> qcStudentBeans = presenter.getQcStudentBeans();
-    if (qcStudentBeans == null||qcStudentBeans.isEmpty()) {
+    if (qcStudentBeans == null || qcStudentBeans.isEmpty()) {
       DialogUtils.showAlert(getContext(), R.string.e_member_empty);
       return;
     }
