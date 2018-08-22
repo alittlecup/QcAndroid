@@ -44,6 +44,10 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    Bundle extras = getActivity().getIntent().getExtras();
+    if (extras != null && !TextUtils.isEmpty(extras.getString("qcCallId"))) {
+      presenter.setFromCheckout(true);
+    }
     View view = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(buyPresenter, this);
     return view;

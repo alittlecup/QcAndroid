@@ -7,7 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
+import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.cards.views.CardBalanceFragment;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.DialogUtils;
@@ -16,12 +18,14 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
 
 @Leaf(module = "card", path = "/list/nobalance") public class CardListNoBalanceFragment
-    extends StaffCardListHomeFragment {
+    extends StaffCardListHomeFragment implements CardDetailPresenter.MVPView {
   @Inject IPermissionModel permissionModel;
+  @Inject CardDetailPresenter detailPresenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     cardListFragment.setFabVisible(false);
+    delegatePresenter(detailPresenter,this);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -47,11 +51,19 @@ import javax.inject.Inject;
         DialogUtils.showAlert(getContext(), R.string.alert_permission_forbid);
         return true;
       }
-      Bundle b = new Bundle();
-      b.putParcelable("card", ((CardItem) iFlexible).getRealCard());
-      b.putString("qcCallId",getActivity().getIntent().getStringExtra("qcCallId"));
-      routeTo("/charge/", b);
+      String id = ((CardItem) iFlexible).getRealCard().getId();
+      detailPresenter.setCardId(id);
+      detailPresenter.queryCardDetail();
+      showLoadingTrans();
     }
     return true;
+  }
+
+  @Override public void onCardDetail(Card card) {
+    hideLoadingTrans();
+    Bundle b = new Bundle();
+    b.putParcelable("card", card);
+    b.putString("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
+    routeTo("/charge/", b);
   }
 }

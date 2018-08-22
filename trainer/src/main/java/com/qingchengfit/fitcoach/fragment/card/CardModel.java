@@ -78,7 +78,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
-    return null;
+    return posApi.qcGetCardDetail(loginStatus.staff_id(),card_id,gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {
@@ -147,7 +147,7 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return posApi.getAllCards(loginStatus.staff_id(), params);
+    return posApi.qcGetAllCards(loginStatus.staff_id(), params);
   }
 
   @Override

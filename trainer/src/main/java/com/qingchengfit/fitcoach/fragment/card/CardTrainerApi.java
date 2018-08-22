@@ -10,6 +10,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
+import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -34,9 +35,15 @@ public interface CardTrainerApi {
   rx.Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(@Path("Staff") String staff,
       @Path("id") String id, @QueryMap HashMap<String, Object> parasm);
 
-  //获取会员卡
+  //获取会员卡列表
   @GET("/api/coaches/{id}/cards/?order_by=-id")
-  rx.Observable<QcDataResponse<CardListWrap>> getAllCards(@Path("id") String staffid,
+  rx.Observable<QcDataResponse<CardListWrap>> qcGetAllCards(@Path("id") String staffid,
+      @QueryMap HashMap<String, Object> params);
+
+
+  //获取会员卡详情
+  @GET("/api/coaches/{id}/cards/{card_id}/")
+  rx.Observable<QcDataResponse<CardWrap>> qcGetCardDetail(@Path("id") String staffid,@Path("card_id") String card_id,
       @QueryMap HashMap<String, Object> params);
 
   //购卡
