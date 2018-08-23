@@ -34,12 +34,10 @@ public class WebCardChargeFragment extends SaasBaseFragment implements CardDetai
     String card_id = getActivity().getIntent().getData().getQueryParameter("card_id");
     presenter.setCardId(card_id);
     presenter.queryCardDetail();
-    showLoadingTrans();
     return inflater.inflate(R.layout.fragment_web_charge_card,container,false);
   }
 
   @Override public void onCardDetail(Card card) {
-    hideLoadingTrans();
     String web_action = getActivity().getIntent().getStringExtra("web_action");
     WebChargeFragment webChargeFragment=new WebChargeFragment();
     if(!TextUtils.isEmpty(web_action)){
