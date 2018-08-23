@@ -265,12 +265,12 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         courseTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
                 user.setGender(checkedId == R.id.gender_male ? 0 : 1);
-                if (TextUtils.isEmpty(user.getAvatar())) {
-                    Glide.with(getActivity())
-                        .load(checkedId == R.id.gender_male ? Configs.HEADER_STUDENT_MALE : Configs.HEADER_STUDENT_FEMALE)
-                        .asBitmap()
-                        .into(new CircleImgWrapper(headerImg, getActivity()));
-                }
+                //if (TextUtils.isEmpty(user.getAvatar())) {
+                //    Glide.with(getActivity())
+                //        .load(checkedId == R.id.gender_male ? Configs.HEADER_STUDENT_MALE : Configs.HEADER_STUDENT_FEMALE)
+                //        .asBitmap()
+                //        .into(new CircleImgWrapper(headerImg, getActivity()));
+                //}
             }
         });
 

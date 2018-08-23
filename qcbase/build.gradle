@@ -121,7 +121,7 @@ dependencies {
 
   //  api files('libs/Bughd_android_sdk_v1.3.7.jar')
   implementation 'com.amap.api:map2d:5.2.0'
-  compile 'com.amap.api:search:5.0.0'
+  implementation 'com.amap.api:search:5.0.0'
   implementation 'com.amap.api:location:3.7.0'
 
 
