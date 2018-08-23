@@ -29,7 +29,7 @@ pipeline:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - ./gradlew -g gradle_cache assembleDevDebug --no-daemon
+      - ./gradlew  :staff :assembleDevDebug --no-daemon
       - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
