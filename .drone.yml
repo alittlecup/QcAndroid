@@ -21,7 +21,7 @@ pipeline:
       - LICENB
     volumes:
       - /cache:/cache/
-      - /data/gradle/gradle-4.6:/gradle/
+      - /data/gradle/gradle-4.7:/gradle/
     when:
       branch: dev_checkout
       event: push
@@ -29,7 +29,7 @@ pipeline:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - /gradle/bin/gradle -g gradle_cache assembleDevDebug --no-daemon
+      - ./gradlew -g gradle_cache assembleDevDebug --no-daemon
       - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
@@ -42,12 +42,12 @@ pipeline:
       branch: develop
     volumes:
       - /cache:/cache/
-      - /data/gradle/gradle-4.6:/gradle/
+      - /data/gradle/gradle-4.7:/gradle/
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - /gradle/bin/gradle -g gradle_cache assembleProductRelease --no-daemon
+      - ./gradlew -g gradle_cache assembleProductRelease --no-daemon
       - fir publish staff/build/outputs/apk/product/release/staff-product-release.apk -T $PRO
 #      - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
 
