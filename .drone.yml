@@ -22,8 +22,9 @@ pipeline:
     volumes:
       - /cache:/cache/
       - /data/gradle/gradle-4.6:/gradle/
-#    when:
-#      event: pull_request
+    when:
+      branch: dev_checkout
+      event: push
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
