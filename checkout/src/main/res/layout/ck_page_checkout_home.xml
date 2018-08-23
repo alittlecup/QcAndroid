@@ -7,6 +7,7 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <import type="String"/>
     <variable
         name="viewModel"
         type="cn.qingchengfit.checkout.view.home.CheckoutHomeViewModel"
@@ -76,7 +77,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
-              android:text="@{String.valueOf(viewModel.homeInfo.getNew_count())+'笔'}"
+              android:text="@{String.valueOf(viewModel.homeInfo.getNew_count())+@string/ck_home_count}"
               android:textColor="@color/white"
               android:textSize="16sp"
               tools:text="20笔"
@@ -102,7 +103,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
-              android:text="@{String.valueOf(viewModel.homeInfo.getCharge())+'笔'}"
+              android:text="@{String.valueOf(viewModel.homeInfo.getCharge())+@string/ck_home_count}"
               android:textColor="@color/white"
               android:textSize="16sp"
 
@@ -129,7 +130,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
-              android:text="@{String.valueOf(viewModel.homeInfo.getCashier())+'笔'}"
+              android:text="@{String.valueOf(viewModel.homeInfo.getCashier())+@string/ck_home_count}"
               android:textColor="@color/white"
               android:textSize="16sp"
               tools:text="20笔"
