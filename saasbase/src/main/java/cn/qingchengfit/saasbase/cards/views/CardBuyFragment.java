@@ -404,7 +404,7 @@ import rx.functions.Action1;
 
     CardTplOption cardTplOption = presenter.getmChosenOption();
     int selectedItemCount = commonFlexAdapter.getSelectedItemCount();
-    if (selectedItemCount < 1) {
+    if (selectedItemCount < 1||cardOptionCustom==null) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
