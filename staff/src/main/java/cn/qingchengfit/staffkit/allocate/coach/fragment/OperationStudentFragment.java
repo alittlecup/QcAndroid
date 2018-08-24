@@ -334,9 +334,6 @@ import static android.view.View.GONE;
             ArrayList<String> coachIdList = new ArrayList<>();
             for (QcStudentBean studentBean : selectList) {
                 students.add(studentBean.id());
-                for (Staff coachBean : studentBean.sellers) {
-                    coachIdList.add(coachBean.id);
-                }
             }
             intent.putStringArrayListExtra(MutiChooseCoachActivity.INPUT_STUDENT, students);
             intent.putExtra(MutiChooseCoachActivity.INPUT_CURRENT, coachId);

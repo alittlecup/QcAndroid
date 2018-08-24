@@ -92,6 +92,7 @@ public class CardFilterTplFragment extends BaseFragment {
             .withBottomEdge(true));
     rvLeft.setAdapter(adapterLeft);
     rvRight.setAdapter(adapterRight);
+    onFinishAnimation();
     return view;
   }
 

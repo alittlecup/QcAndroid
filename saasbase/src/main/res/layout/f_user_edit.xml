@@ -156,7 +156,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text='@{"手机("+methods.phone+")"}'
+            android:text='@{@string/me_phone_number(methods.phone)}'
             />
         <TextView
             style="@style/QcTextStyleStandardWarm"
@@ -193,11 +193,11 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:alpha="@{methods.wx_active?1f:0.5f}"
-            android:text='@{"微信("+methods.wx+")"}'
+            android:text='@{@string/me_wx_number(methods.wx)}'
             />
         <TextView
             style="@style/QcTextStyleStandardWarm"
-            android:text='@{methods.wx_active?"解绑":"立即绑定"}'
+            android:text='@{methods.wx_active?@string/me_wx_unbind:@string/me_wx_bind}'
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

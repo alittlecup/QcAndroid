@@ -49,9 +49,10 @@ public class ItemPayMethod extends AbstractFlexibleItem<ItemPayMethod.PayMethodV
     } else {
       holder.imgHook.setVisibility(View.GONE);
     }
-    //holder.imgPayMethod.setAlpha(isEnabled() ? 1 : 0.4f);
-    //holder.textPayName.setAlpha(isEnabled() ? 1 : 0.4f);
-    //holder.imgPro.setVisibility(payMethod.isPro ? View.GONE : View.VISIBLE);
+    holder.imgPayMethod.setAlpha(payMethod.isPro ? 1 : 0.4f);
+    holder.textPayName.setAlpha(payMethod.isPro ? 1 : 0.4f);
+    holder.imgPro.setVisibility(payMethod.isPro ? View.GONE : View.VISIBLE);
+    holder.itemView.setClickable(payMethod.isPro);
   }
 
   class PayMethodVH extends FlexibleViewHolder {

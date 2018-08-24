@@ -440,10 +440,10 @@ import rx.functions.Action1;
       stringBuilder.append("&card_no=").append(presenter.getRealCardNo());
     }
     if (!TextUtils.isEmpty(startDay())) {
-      stringBuilder.append("&start=").append(startDay());
+      stringBuilder.append("&start=").append(cardTplOption.limit_days?startDay():"");
     }
     if (!TextUtils.isEmpty(endDay())) {
-      stringBuilder.append("&end=").append(endDay());
+      stringBuilder.append("&end=").append(cardTplOption.limit_days?endDay():"");
     }
     if (!TextUtils.isEmpty(presenter.getSignaturePath())) {
       stringBuilder.append("&signature=").append(presenter.getSignaturePath());
@@ -562,7 +562,7 @@ import rx.functions.Action1;
 
   public void onSelectPayMethod() {
     BottomPayDialog f = BottomPayDialog.newInstance(
-        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos);
+        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,gymWrapper.isPro());
     f.show(getFragmentManager(), "");
   }
 

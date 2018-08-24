@@ -18,6 +18,7 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseSchedule;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
+import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
@@ -115,7 +116,7 @@ import rx.schedulers.Schedulers;
     fabMutiBatch.setLabelTextColor(R.color.white);
     if (course != null) {
 
-      routeTo("/batch/add/", null);
+      routeTo("/batch/add/", new AddBatchParams().mCourse(course).build());
     }
   }
 

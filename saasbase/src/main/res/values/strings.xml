@@ -211,5 +211,10 @@
   <string name="warning_copy_batch_time_long">所选日期不能超过31天</string>
   <string name="description_copy_batch" formatted="false">即：将%s至%s期间%s的%s，复制到%s至%s</string>
   <string name="successed_copy_batch">复制排期成功</string>
+
+  <string name="me_phone_number">手机(%s)</string>
+  <string name="me_wx_number">微信(%s)</string>
+  <string name="me_wx_unbind">解绑</string>
+  <string name="me_wx_bind">立即绑定</string>
 </resources>
 

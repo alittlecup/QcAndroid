@@ -9,7 +9,6 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
-import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saascommon.qrcode.model.QrEvent;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
