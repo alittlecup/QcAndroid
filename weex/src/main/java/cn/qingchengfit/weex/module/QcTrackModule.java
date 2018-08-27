@@ -16,4 +16,11 @@ public class QcTrackModule extends WXModule {
     Log.d("TAG", "track: "+key+"-->"+json);
     SensorsUtils.track(key, json, mWXSDKInstance.getContext());
   }
+
+  @JSMethod
+  public  void trackAppView(String url,String title,String name){
+    Log.d("TAG", "track: "+url +"-->"+name);
+    SensorsUtils.trackScreen(url,title,name);
+  }
+
 }

@@ -40,7 +40,7 @@ android {
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   api 'com.taobao.android:weex_sdk:0.17.0'
-  implementation "cn.qingchengfit.widgets:qcbase:1.0.180808"
+  implementation "cn.qingchengfit.widgets:qcbase:1.0.180827"
 
   annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
   annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
