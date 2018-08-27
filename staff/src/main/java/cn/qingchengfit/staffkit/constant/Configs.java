@@ -156,6 +156,6 @@ public class Configs {
   public static final String WEEX_TEST_PATH =
       "https://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
   public static final String WEEX_RELEASE_PATH =
-      "https://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+      "https://qcfile.b0.upaiyun.com/qc-commodity-weex/0.0.39/version.json";
   public static final String WEEX_PAGE_INDEX = "proxy_commodity.js";
 }
