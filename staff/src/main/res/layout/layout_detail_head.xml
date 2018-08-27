@@ -44,7 +44,7 @@
       android:layout_toRightOf="@+id/header"
       android:ellipsize="end"
       android:lines="1"
-      android:maxLength="5"
+      android:maxWidth="200dp"
       android:textColor="@color/white"
       android:textSize="@dimen/common_font"
       tools:text="嗔痴怨"
