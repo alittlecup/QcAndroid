@@ -39,6 +39,7 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -49,6 +50,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -75,6 +77,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
+@SensorsDataIgnoreTrackAppViewScreen
 @Leaf(module = "course", path = "/batch/add/") public class AddBatchFragment
   extends SaasBaseFragment implements IBatchPresenter.MVPView,
   FlexibleAdapter.OnItemClickListener,BatchDetailCommonView.BatchTempleListener {
@@ -204,6 +207,7 @@ import rx.android.schedulers.AndroidSchedulers;
     if (savedInstanceState != null  && savedInstanceState.containsKey("p")){
       scrollRoot.scrollTo(0,savedInstanceState.getInt("p",0));
     }
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(presenter.isPrivate()?"private":"group"));
     return view;
   }
 
