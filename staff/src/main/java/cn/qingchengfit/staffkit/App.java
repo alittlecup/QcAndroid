@@ -182,11 +182,11 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       properties.put("qc_app_name", "Staff");
       SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
 
-      JSONObject properties = new JSONObject();
+      JSONObject properties2 = new JSONObject();
       //这里示例 DownloadChannel 记录下载商店的渠道(下载渠道)。如果需要多个字段来标记渠道包，请按业务实际需要添加。
-      properties.put("DownloadChannel", "qc_official");
+      properties2.put("DownloadChannel", "qc_official");
       //记录激活事件、渠道追踪，这里激活事件取名为 AppInstall。
-      SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties);
+      SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties2);
     } catch (JSONException e) {
       Log.e("hs_bug", e.getMessage());
       e.printStackTrace();

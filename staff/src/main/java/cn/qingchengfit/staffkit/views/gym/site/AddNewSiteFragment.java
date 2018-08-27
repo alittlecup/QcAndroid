@@ -32,6 +32,7 @@ import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
@@ -115,6 +116,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     toolbarTitile.setText(getString(R.string.title_add_new_site));
     name.addTextWatcher(textChange);
     count.addTextWatcher(textChange);
+    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

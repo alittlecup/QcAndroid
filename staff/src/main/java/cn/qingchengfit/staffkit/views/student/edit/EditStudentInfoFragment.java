@@ -49,6 +49,7 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
@@ -279,6 +280,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
                 return true;
             }
         });
+      SensorsUtils.trackScreen(      this.getClass().getCanonicalName()+(isAdd?"add":"edit"));
         return view;
     }
 

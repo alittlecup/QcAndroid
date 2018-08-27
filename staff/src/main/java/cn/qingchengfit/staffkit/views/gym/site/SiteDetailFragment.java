@@ -20,6 +20,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -148,6 +149,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
         return true;
       }
     });
+    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

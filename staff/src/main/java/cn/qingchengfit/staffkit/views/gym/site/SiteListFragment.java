@@ -24,6 +24,7 @@ import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,7 @@ public class SiteListFragment extends BaseFragment implements ChooseSiteView {
             recyclerview.stopLoading();
         }
         isLoading = true;
+      SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

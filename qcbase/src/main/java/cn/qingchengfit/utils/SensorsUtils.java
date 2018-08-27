@@ -99,4 +99,24 @@ public class SensorsUtils {
 
     }
   }
+
+  public static void trackScreen(String url, String title, String name) {
+    try {
+      JSONObject properties = new JSONObject();
+      //记录打开 首页Fragment 的 $AppViewSceen 事件。
+      properties.put("$title", title)
+        .put("$screen_name", name);
+      SensorsDataAPI.sharedInstance().trackViewScreen(url, properties);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+
+  public static void trackScreen( String title, String name) {
+    trackScreen(null,title,name);
+  }
+  public static void trackScreen( String name) {
+    trackScreen(null,name,name);
+  }
 }
