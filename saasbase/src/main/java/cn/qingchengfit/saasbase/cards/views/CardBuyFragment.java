@@ -440,10 +440,18 @@ import rx.functions.Action1;
       stringBuilder.append("&card_no=").append(presenter.getRealCardNo());
     }
     if (!TextUtils.isEmpty(startDay())) {
-      stringBuilder.append("&start=").append(cardTplOption.limit_days?startDay():"");
+      if(cardTpl.getType()==3||cardTplOption.limit_days){
+        stringBuilder.append("&start=").append(startDay());
+      }else{
+        stringBuilder.append("&start=");
+      }
     }
     if (!TextUtils.isEmpty(endDay())) {
-      stringBuilder.append("&end=").append(cardTplOption.limit_days?endDay():"");
+      if(cardTpl.getType()==3||cardTplOption.limit_days){
+        stringBuilder.append("&end=").append(endDay());
+      }else{
+        stringBuilder.append("&end=");
+      }
     }
     if (!TextUtils.isEmpty(presenter.getSignaturePath())) {
       stringBuilder.append("&signature=").append(presenter.getSignaturePath());
