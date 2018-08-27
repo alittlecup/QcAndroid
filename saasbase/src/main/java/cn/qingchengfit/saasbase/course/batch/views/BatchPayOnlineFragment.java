@@ -192,7 +192,7 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
           rule.card_tpl_id = "0";
           if (switcher.isChecked()) {
             try {
-              rule.limits = new OnlineLimit(Integer.parseInt(limitWho.getContent()), mLimit);
+              rule.limits = new OnlineLimit(Integer.parseInt(limitNum.getContent()), mLimit);
             } catch (Exception e) {
               rule.limits = new OnlineLimit(maxPeople, mLimit);
             }
