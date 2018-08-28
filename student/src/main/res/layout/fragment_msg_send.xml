@@ -166,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="/59"
+        android:text="/56"
         />
 
     <TextView

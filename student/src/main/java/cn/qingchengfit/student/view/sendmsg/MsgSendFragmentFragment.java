@@ -147,7 +147,7 @@ import rx.functions.Action1;
           etContent.setText(smsBegin);
           etContent.setSelection(etContent.getText().length());
         }
-        if ((textViewTextChangeEvent.text().toString().length() - 24) > 59) {
+        if ((textViewTextChangeEvent.text().toString().length() - 24) > 56) {
           layoutSendHint.setVisibility(View.VISIBLE);
         } else {
           layoutSendHint.setVisibility(View.GONE);
@@ -275,7 +275,6 @@ import rx.functions.Action1;
         ids = TextUtils.concat(ids, chosenStudent.get(i).getId()).toString();
       }
     }
-
     presenter.sendMsg(
         new ShortMsgBody.Builder().content(etContent.getText().toString().substring(24))
             .send(1)
