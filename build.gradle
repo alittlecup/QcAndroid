@@ -10,7 +10,7 @@ ext {
                    version_code        : 109, //缝10必更
                    version_name        : "1.199000.0",
                    trainer_version_code: 167,
-                   trainer_version_name: "1.6.7"
+                   trainer_version_name: "1.189090.7"
 
   ]
 
