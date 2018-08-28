@@ -223,7 +223,7 @@ ext {
 
              "saascommon": "cn.qingchengfit.saascommon:saascommon:1.0.180814",
 
-             "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180814",]
+             "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180827",]
 
 
   annotations = [//Room 数据库
