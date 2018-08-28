@@ -146,11 +146,11 @@ afterEvaluate {
 }
 
 dependencies {
-  addComponent('saasbase',true)
-  addComponent('login',true)
-  addComponent('card',true)
-  addComponent('student',true)
-  addComponent('checkout',true)
+  addComponent('saasbase',false)
+  addComponent('login',false)
+  addComponent('card',false)
+  addComponent('student',false)
+  addComponent('checkout',false)
 
 
 

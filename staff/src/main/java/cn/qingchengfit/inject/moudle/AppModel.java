@@ -1,8 +1,10 @@
 package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
+import cn.qingchengfit.card.StaffCardRouters;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.model.CardModel;
 import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.LoginModel;

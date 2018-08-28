@@ -11,7 +11,7 @@ ext {
 
   ]
 
-  libraries = [supportVersion   : "27.0.0",
+  libraries = [supportVersion   : "27.1.1",
                dagger           : "2.11",
                rxjava           : "1.1.6",
                rxandroid        : "1.2.1",
@@ -24,6 +24,24 @@ ext {
                tinker           : "1.7.7",
                flabellum        : "0.2.23",
                constraint_layout: "1.0.2",]
+
+
+  modules = ["card"      : "cn.qingchengfit.card:card:1.0.180814",
+
+             "student"   : "cn.qingchengfit.student:student:1.0.180814",
+
+             "shop"      : "cn.qingchengfit.shop:shop:1.0.180814",
+
+             "checkout"  : "cn.qingchengfit.checkout:checkout:1.0.180814",
+
+             "login"     : "cn.qingchengfit.login:login:1.0.180814",
+
+             "saasbase"  : "cn.qingchengfit.saasbase:saasbase:1.0.180814",
+
+             "saascommon": "cn.qingchengfit.saascommon:saascommon:1.0.180814",
+
+             "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180827",]
+
 
   dependencies = [//Android Support
                   "support-v4"                  : "com.android.support:support-v4:${libraries.supportVersion}",
@@ -208,22 +226,6 @@ ext {
                   "junit"                       : "junit:junit:4.12",
                   "espresso-core"               : "com.android.support.test.espresso:espresso-core:2.2.2"]
 
-
-  modules = ["card"      : "cn.qingchengfit.card:card:1.0.180814",
-
-             "student"   : "cn.qingchengfit.student:student:1.0.180814",
-
-             "shop"      : "cn.qingchengfit.shop:shop:1.0.180814",
-
-             "checkout"  : "cn.qingchengfit.checkout:checkout:1.0.180814",
-
-             "login"     : "cn.qingchengfit.login:login:1.0.180814",
-
-             "saasbase"  : "cn.qingchengfit.saasbase:saasbase:1.0.180814",
-
-             "saascommon": "cn.qingchengfit.saascommon:saascommon:1.0.180814",
-
-             "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180827",]
 
 
   annotations = [//Room 数据库

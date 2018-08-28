@@ -6,7 +6,7 @@ def annotations = rootProject.ext.annotations
 
 
 dependencies {
-  addComponent('saascommon',true)
+  addComponent('saascommon',false)
 
   annotationProcessor annotations["dagger-compiler"]
   annotationProcessor annotations["dagger-android-processor"]

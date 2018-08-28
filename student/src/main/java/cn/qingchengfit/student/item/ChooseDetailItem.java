@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.item;
 
-import android.databinding.ViewDataBinding;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.view.View;

@@ -4,7 +4,7 @@ apply from: rootProject.file('qc_upload_maven.gradle')
 dependencies {
   testImplementation 'junit:junit:4.12'
   addComponent('saascommon',false)
-  appComponent('login',true)
+  appComponent('login',false)
   appComponent('card',false)
 
 

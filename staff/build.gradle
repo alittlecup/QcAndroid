@@ -185,12 +185,12 @@ ext.isTask = { name ->
 task buildWithAP(dependsOn: build) {}
 
 dependencies {
-  addComponent('saasbase',false)
-  addComponent('shop',false)
-  addComponent('login',false)
-  addComponent("checkout",false)
-  addComponent("student",true)
-  addComponent("card",false)
+  addComponent('saasbase', false)
+  addComponent('shop', false)
+  addComponent('login', false)
+  addComponent("checkout", false)
+  addComponent("student", true)
+  addComponent("card", false)
 
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
@@ -206,7 +206,7 @@ dependencies {
 
   testImplementation dependens["junit"]
 
-  androidTestImplementation (dependens["espresso-core"]){
+  androidTestImplementation(dependens["espresso-core"]) {
     exclude group: 'com.android.support', module: 'support-annotations'
   }
 
@@ -220,33 +220,32 @@ dependencies {
   annotationProcessor annotations["fragmentargs"]
 
   annotationProcessor annotations["room"]
-
 }
 
 apply plugin: 'auto-register'
 autoregister {
   registerInfo = [[//自动注册组件
-                       'scanInterface'          : 'cn.qingchengfit.router.IComponent'
-                       , 'codeInsertToClassName': 'cn.qingchengfit.router.ComponentManager'
-                       , 'registerMethodName'   : 'registerComponent'
-                       , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
-                                                   'cn.qingchengfit.router.'.replaceAll("\\.",
+                   'scanInterface'          : 'cn.qingchengfit.router.IComponent'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.ComponentManager'
+                   , 'registerMethodName'   : 'registerComponent'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.replaceAll("\\.",
+                                                   "/") + ".*"]],
+                  [//自动注册全局拦截器
+                   'scanInterface'          : 'cn.qingchengfit.router.IGlobalCCInterceptor'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.GlobalCCInterceptorManager'
+                   , 'registerMethodName'   : 'registerGlobalInterceptor'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.
+                                                   replaceAll("\\.",
                                                        "/") + ".*"]],
-                      [//自动注册全局拦截器
-                       'scanInterface'          : 'cn.qingchengfit.router.IGlobalCCInterceptor'
-                       , 'codeInsertToClassName': 'cn.qingchengfit.router.GlobalCCInterceptorManager'
-                       , 'registerMethodName'   : 'registerGlobalInterceptor'
-                       , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
-                                                   'cn.qingchengfit.router.'.
-                                                       replaceAll("\\.",
-                                                           "/") + ".*"]],
-                      [//自动注册跨进程通信时自定义类型的json转换器，可以用Gson、FastJson等工具来实现
-                       // 参考： demo_base/src/main/java/com.billy.cc.demo.base.GsonParamConverter
-                       'scanInterface'          : 'cn.qingchengfit.router.IParamJsonConverter'
-                       , 'codeInsertToClassName': 'cn.qingchengfit.router.RemoteParamUtil'
-                       , 'registerMethodName'   : 'initRemoteCCParamJsonConverter'
-                       , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
-                                                   'cn.qingchengfit.router.'.
-                                                       replaceAll("\\.",
-                                                           "/") + ".*"]]]
+                  [//自动注册跨进程通信时自定义类型的json转换器，可以用Gson、FastJson等工具来实现
+                   // 参考： demo_base/src/main/java/com.billy.cc.demo.base.GsonParamConverter
+                   'scanInterface'          : 'cn.qingchengfit.router.IParamJsonConverter'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.RemoteParamUtil'
+                   , 'registerMethodName'   : 'initRemoteCCParamJsonConverter'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.
+                                                   replaceAll("\\.",
+                                                       "/") + ".*"]]]
 }
