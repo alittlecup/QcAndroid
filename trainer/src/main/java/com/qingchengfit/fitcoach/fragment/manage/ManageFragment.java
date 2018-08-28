@@ -292,7 +292,7 @@ public class ManageFragment extends BaseFragment
                 PreferenceUtils.setPrefString(getContext(), App.coachid + "permission", ps);
                 updatePermission(qcResponsePermission.data);
               } else {
-                ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                ToastUtils.show("权限更新失败");
               }
             }
           }, new NetWorkThrowable()));

@@ -1,6 +1,7 @@
 package cn.qingchengfit.model;
 
 import android.content.Context;
+import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.login.ILoginModel;
@@ -21,6 +22,7 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import java.util.HashMap;
 import rx.Observable;
 
@@ -81,7 +83,10 @@ public class LoginModel implements ILoginModel {
     loginStatus.setUserId(login.user.getId());
     loginStatus.setSession(login.session_id);
     loginStatus.setLoginUser(new Staff(App.gUser, App.coachid + ""));
-    loginView.onSuccess(1);
+    loginView.onSuccess(-1);
+    Intent toMain = new Intent(context, FragActivity.class);
+    toMain.putExtra("type", 10);
+    context.startActivity(toMain);
   }
 
   @Override public Observable<QcDataResponse<Login>> doLogin(LoginBody body) {
