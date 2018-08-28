@@ -303,6 +303,7 @@ public class LoginFragment extends BaseFragment
   }
 
   @Override public void onSuccess(int status) {
+    hideLoading();
     getActivity().setResult(Activity.RESULT_OK);
     getActivity().finish();
   }

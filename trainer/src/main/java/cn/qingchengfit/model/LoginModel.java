@@ -12,9 +12,13 @@ import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.bean.RegisteBody;
 import cn.qingchengfit.login.views.CheckProtocolModel;
 import cn.qingchengfit.login.views.LoginView;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.BuildConfig;
+import cn.qingchengfit.utils.PreferenceUtils;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.App;
 import java.util.HashMap;
@@ -64,7 +68,20 @@ public class LoginModel implements ILoginModel {
   }
 
   @Override public void doOnLogin(Context context, Login login, LoginView loginView) {
+    User user=new User(login.user.username,login.user.phone,login.user.avatar,login.user.area_code,login.user.gender);
+    user.setId(login.user.id);
+    App.gUser = user;
+    PreferenceUtils.setPrefString(context, "coach",
+        new Gson().toJson(login.coach));
+    App.coachid = Integer.parseInt(login.coach.id);
+    PreferenceUtils.setPrefBoolean(context, "first", false);
+    PreferenceUtils.setPrefString(context,
+        login.coach.id + "hostarray", "");
 
+    loginStatus.setUserId(login.user.getId());
+    loginStatus.setSession(login.session_id);
+    loginStatus.setLoginUser(new Staff(App.gUser, App.coachid + ""));
+    loginView.onSuccess(1);
   }
 
   @Override public Observable<QcDataResponse<Login>> doLogin(LoginBody body) {

@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,7 +65,7 @@ import javax.inject.Inject;
     implements CardTypeListPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener,
     FlexibleAdapter.OnItemClickListener {
 
-  TabLayout tab;
+ public TabLayout tab;
   public ViewPager viewpager;
   Toolbar toolbar;
   public TextView toolbarTitle;

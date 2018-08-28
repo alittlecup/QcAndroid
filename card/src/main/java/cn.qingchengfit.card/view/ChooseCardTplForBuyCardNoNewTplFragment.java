@@ -1,5 +1,7 @@
 package cn.qingchengfit.card.view;
 
+import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.views.CardBuyParams;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -42,6 +45,9 @@ public class ChooseCardTplForBuyCardNoNewTplFragment extends CardTplsHomeInGymFr
   @Need QcStudentBean qcStudentBean;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    if(AppUtils.getCurApp(getContext())==0){
+      tab.setBackgroundColor(getResources().getColor(R.color.bg_white));
+    }
     toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {

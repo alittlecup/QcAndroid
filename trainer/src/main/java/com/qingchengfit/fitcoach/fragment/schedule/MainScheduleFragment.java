@@ -132,11 +132,6 @@ public class MainScheduleFragment extends BaseFragment {
           MainScheduleFragment.this.onClick(v);
         }
       });
-      view.findViewById(R.id.student_order).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          MainScheduleFragment.this.onClick(v);
-        }
-      });
       view.findViewById(R.id.schedule_notification_layout)
           .setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
