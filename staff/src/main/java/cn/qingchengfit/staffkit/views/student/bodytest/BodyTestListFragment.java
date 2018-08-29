@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.model.responese.BodyTestBean;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.adapter.SimpleAdapter;
@@ -48,7 +49,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     List<BodyTestBean> datas = new ArrayList<>();
     @Inject BodyTestListPresenter presenter;
     @Inject StudentWrap studentBean;
-    @Inject SerPermisAction serPermisAction;
+    @Inject IPermissionModel permissionModel;
 	Toolbar toolbar;
 	TextView toolbarTitile;
 
@@ -117,16 +118,8 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     }
 
  public void onClick() {
-        boolean hasP = false;
-        for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
-            if (serPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
-                PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-                hasP = true;
-                break;
-            }
-        }
-        if (hasP) {
 
+        if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             getFragmentManager().beginTransaction()
                 .replace(mCallbackActivity.getFragId(), ModifyBodyTestFragment.newInstance(""))
                 .addToBackStack(null)
