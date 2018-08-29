@@ -221,7 +221,10 @@ import rx.functions.Action1;
         onSelectPayMethod();
       }
     });
-
+    Bundle extras = getActivity().getIntent().getExtras();
+    if (extras != null && !TextUtils.isEmpty(extras.getString("qcCallId"))) {
+      presenter.setFromCheckout(true);
+    }
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     setCardInfo();
@@ -251,7 +254,7 @@ import rx.functions.Action1;
     civEndTime.setNoSaved();
 
     civEndTime.setClickable(false);
-    if (cardTpl.has_service_term) {
+    if (cardTpl.has_service_term&&cardTpl.is_open_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
       cardProtocol.setContent("未签名");
     } else {

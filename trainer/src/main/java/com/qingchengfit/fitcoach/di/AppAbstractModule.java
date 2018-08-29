@@ -20,8 +20,4 @@ public abstract class AppAbstractModule {
   @Binds abstract ICheckoutModel bindCheckoutModel(CheckoutModel cardModel);
   @Binds abstract IStaffModel bindStaffModel(StaffModel cardModel);
   @Binds abstract IStudentModel bindStudentModel(StudentModel cardModel);
-  @Singleton
-  @ContributesAndroidInjector()
-  abstract FragActivity contributeFragActivityInjector();
-
 }

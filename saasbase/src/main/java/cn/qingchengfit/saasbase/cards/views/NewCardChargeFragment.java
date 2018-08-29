@@ -25,6 +25,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.inject.Inject;
+import org.w3c.dom.Text;
 
 /**
  * Created by fb on 2017/12/18.
@@ -41,7 +42,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
     cardTpl = card.getCard_tpl();
     View view = super.onCreateView(inflater, container, savedInstanceState);
     toolbarTitle.setText("续卡");
-    if (card.is_open_service_term) {
+    if (card.is_open_service_term&&card.card_tpl_service_term!=null&&!TextUtils.isEmpty(card.card_tpl_service_term.id)) {
       cardProtocol.setVisibility(View.VISIBLE);
       resetSignaturePath("");
     }else{

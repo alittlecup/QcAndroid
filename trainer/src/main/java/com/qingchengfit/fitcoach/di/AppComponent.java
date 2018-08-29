@@ -80,7 +80,7 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 2017/4/17.
  */
 @Component(modules = {
-    AppModule.class, AppAbstractModule.class,AndroidInjectionModule.class,AndroidSupportInjectionModule.class,
+    AppModule.class,ActivityModule.class, AppAbstractModule.class,AndroidInjectionModule.class,AndroidSupportInjectionModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class,
     BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
     BindStudentActivity.class, StudentViewModel.class, BindCheckoutCounterActivity.class,
