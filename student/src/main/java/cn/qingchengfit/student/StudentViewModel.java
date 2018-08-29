@@ -49,9 +49,7 @@ import javax.inject.Singleton;
 
 @Module public abstract class StudentViewModel {
   private static StudentWrap studentWrap;
-  @Provides static StudentRouterCenter provideStudentRouterCenter() {
-    return new StudentRouterCenter().registe(new studentImpl());
-  }
+
   @Provides static StudentWrap provideStudent(){
     if (studentWrap == null)
       studentWrap = new StudentWrap();

@@ -12,6 +12,8 @@ import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.bill.BillActivity;
+import cn.qingchengfit.saasbase.di.BindBillActivity;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
@@ -24,16 +26,21 @@ import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.student.routers.StudentRouterCenter;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.fragment.card.TrainerStudentImpl;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.routers.CourseRouter;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
 import java.util.List;
+import javax.inject.Singleton;
 
 /**
  * power by
@@ -80,7 +87,7 @@ import java.util.List;
 
   private IPermissionModel permissionModel = new IPermissionModel() {
     @Override public boolean check(String permission) {
-      if(permission.contains("manage_costs"))return true;
+      if (permission.contains("manage_costs")) return true;
       return CurentPermissions.newInstance().queryPermission(permission);
     }
 
@@ -170,6 +177,12 @@ import java.util.List;
 
   @Provides SaasbaseRouterCenter provideRc() {
     return saasbaseRouterCenter;
+  }
+
+
+
+    @Provides StudentRouterCenter provideStudentRouterCenter() {
+    return new StudentRouterCenter().registe(new TrainerStudentImpl());
   }
 
   public static final class Builder {
