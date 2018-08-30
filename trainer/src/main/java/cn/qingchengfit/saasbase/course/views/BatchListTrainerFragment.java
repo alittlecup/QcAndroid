@@ -28,6 +28,7 @@ import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
@@ -73,6 +74,8 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(presenter, this);
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mType==1?"private":"group"));
+
     return v;
   }
 
@@ -99,7 +102,9 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
         });
       }
       dialogList.show();
+
       return true;
+
     });
   }
 

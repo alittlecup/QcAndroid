@@ -39,6 +39,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -232,6 +233,7 @@ public class MyStudentFragment extends BaseFragment {
                 curSystemId = coachService.getId();
             }
         }
+      SensorsUtils.trackScreen(this.getClass().getCanonicalName());
         return view;
     }
 

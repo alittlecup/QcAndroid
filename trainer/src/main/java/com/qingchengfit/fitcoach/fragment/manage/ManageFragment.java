@@ -31,6 +31,7 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -264,7 +265,7 @@ public class ManageFragment extends BaseFragment
       toGym.putExtra("service", gymWrapper.getCoachService());
       startActivity(toGym);
     });
-
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

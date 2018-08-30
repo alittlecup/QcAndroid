@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -67,7 +68,8 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   //   SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
   //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
   // 注意！请不要在正式发布的 App 中使用 Debug 模式！
-  final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_OFF;
+  final SensorsDataAPI.DebugMode SA_DEBUG_MODE =BuildConfig.DEBUG?SensorsDataAPI.DebugMode.DEBUG_ONLY:
+  SensorsDataAPI.DebugMode.DEBUG_OFF;
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
   private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";

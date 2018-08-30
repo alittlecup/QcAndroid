@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -129,6 +130,8 @@ import rx.schedulers.Schedulers;
     rv.setAdapter(commonFlexAdapter);
     srl.setOnRefreshListener(this);
     onRefresh();
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mIsPrivate?"private":"group"));
+
     return view;
   }
 

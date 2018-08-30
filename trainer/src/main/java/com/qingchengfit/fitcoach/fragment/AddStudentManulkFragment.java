@@ -19,6 +19,8 @@ import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.App;
@@ -40,7 +42,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddStudentManulkFragment extends Fragment {
+public class AddStudentManulkFragment extends BaseFragment {
 
   Toolbar toolbar;
   CommonInputView chooseGym;
@@ -138,7 +140,7 @@ public class AddStudentManulkFragment extends Fragment {
     //}, throwable -> {
     //}, () -> {
     //});
-
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

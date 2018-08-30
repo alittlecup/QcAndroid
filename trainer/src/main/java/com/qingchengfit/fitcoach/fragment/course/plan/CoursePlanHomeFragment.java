@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
@@ -103,7 +104,7 @@ public class CoursePlanHomeFragment extends BaseFragment {
             }
             return true;
         });
-
+      SensorsUtils.trackScreen(this.getClass().getCanonicalName());
         return view;
     }
 
