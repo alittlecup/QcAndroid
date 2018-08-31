@@ -206,9 +206,10 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     MultiDex.install(this);
   }
 
-  public void finishActivity() {
+  public static void finishActivity() {
     //杀死该应用进程
     android.os.Process.killProcess(android.os.Process.myPid());
+    System.exit(0);
   }
 
   @Override public DispatchingAndroidInjector<Activity> activityInjector() {
