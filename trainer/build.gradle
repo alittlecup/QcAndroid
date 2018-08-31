@@ -163,7 +163,7 @@ afterEvaluate {
             exec {
               ignoreExitValue true
               def rootFile = new File("output")
-              commandLine "sh", rootFile.absolutePath+"/../reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+              commandLine "sh", rootFile.absolutePath+"/../../.reinforce.sh", apkpath, rootFile.absolutePath+"/.."
             }
         }
 

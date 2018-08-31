@@ -32,6 +32,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
+import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddCoourseResponse;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
@@ -76,7 +77,7 @@ public class AddCourseFrament extends Fragment {
     private int upTime;
     private Boolean upIsPrivate = true;
     private MaterialDialog delDialog;
-    private MaterialDialog loadingDialog;
+    private LoadingDialog loadingDialog;
 
 
     public AddCourseFrament() {
@@ -323,7 +324,7 @@ public class AddCourseFrament extends Fragment {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                 dialog.dismiss();
                 if (isSuccess) {
-                    ShowLoading(null);
+                    ShowLoading("正在上传,请稍后...");
                     upPic = UpYunClient.rxUpLoad("course/", filePath)
 
                         //upPic = Observable.create(new Observable.OnSubscribe<String>() {
@@ -441,9 +442,8 @@ public class AddCourseFrament extends Fragment {
 
     public void ShowLoading(String content) {
         if (loadingDialog == null) {
-            loadingDialog = new MaterialDialog.Builder(getActivity()).content("正在上传,请稍后...").progress(true, 0).cancelable(false).build();
+            loadingDialog = new LoadingDialog(getContext(),content);
         }
-        if (content != null) loadingDialog.setContent(content);
         loadingDialog.show();
     }
 
