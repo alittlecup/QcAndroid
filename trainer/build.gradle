@@ -110,6 +110,16 @@ android {
 
       dimension 'qc'
     }
+    //动态修改配置
+    applicationVariants.all { variant ->
+      if (variant.buildType.name == "release") {
+        println(rootProject.ext.today)
+        variant.outputs.all { output ->
+          output.setVersionNameOverride("1." + rootProject.ext.today)
+          output.setVersionCodeOverride(rootProject.ext.today)
+        }
+      }
+    }
   }
 
   buildTypes {
@@ -139,6 +149,7 @@ android {
     resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
     resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
   }
+
 }
 
 //自动加固

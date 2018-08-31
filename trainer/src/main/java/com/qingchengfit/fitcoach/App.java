@@ -32,6 +32,7 @@ import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import im.fir.sdk.FIR;
 import javax.inject.Inject;
+import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 import timber.log.Timber;
@@ -157,6 +158,16 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       SA_DEBUG_MODE);
     try {
       SensorsDataAPI.sharedInstance(this).enableAutoTrack();
+      SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
+
+      JSONObject properties = new JSONObject();
+      properties.put("qc_app_name", "Trainer");
+      SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
+      JSONObject properties2 = new JSONObject();
+      //这里示例 DownloadChannel 记录下载商店的渠道(下载渠道)。如果需要多个字段来标记渠道包，请按业务实际需要添加。
+      properties2.put("DownloadChannel", "qc_official");
+      //记录激活事件、渠道追踪，这里激活事件取名为 AppInstall。
+      SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties2);
     } catch (Exception e) {
 
     }
