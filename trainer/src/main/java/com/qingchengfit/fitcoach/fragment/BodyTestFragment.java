@@ -21,6 +21,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.UpYunClient;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
@@ -51,7 +52,7 @@ import rx.schedulers.Schedulers;
  * Use the {@link BodyTestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BodyTestFragment extends Fragment {
+public class BodyTestFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -189,7 +190,6 @@ public class BodyTestFragment extends Fragment {
                             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                                 choosePictureFragmentDialog.dismiss();
                                 if (isSuccess) {
-
                                     spUpImg = UpYunClient.rxUpLoad("course/", filePath)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .onBackpressureBuffer()
@@ -211,8 +211,6 @@ public class BodyTestFragment extends Fragment {
                                                     photo.photo = upImg;
                                                     datas.add(photo);
                                                     imageGridAdapter.refresh(datas);
-                                                    //                                                        imageGridAdapter.notifyDataSetChanged();
-
                                                 }
                                             }
                                         });

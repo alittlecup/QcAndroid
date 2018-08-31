@@ -21,6 +21,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.UpYunClient;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
@@ -54,7 +55,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModifyBodyTestFragment extends Fragment {
+public class ModifyBodyTestFragment extends BaseFragment {
 
   Toolbar toolbar;
 
@@ -198,53 +199,54 @@ public class ModifyBodyTestFragment extends Fragment {
           } else {
             ChoosePictureFragmentDialog choosePictureFragmentDialog =
                 new ChoosePictureFragmentDialog();
-            choosePictureFragmentDialog.show(getFragmentManager(), "choose");
             choosePictureFragmentDialog.setResult(
                 new ChoosePictureFragmentDialog.ChoosePicResult() {
                   @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
-                    choosePictureFragmentDialog.dismiss();
                     if (isSuccess) {
-                      ShowLoading("正在上传图片...");
-                      spUpImg = UpYunClient.rxUpLoad("/course/", filePath)
-
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .onBackpressureBuffer()
-                          .subscribeOn(Schedulers.io())
-                          .subscribe(new Subscriber<String>() {
-                            @Override public void onCompleted() {
-
-                            }
-
-                            @Override public void onError(Throwable e) {
-                              hideLoading();
-                            }
-
-                            @Override public void onNext(String upImg) {
-                              hideLoading();
-                              if (TextUtils.isEmpty(upImg)) {
-                                ToastUtils.showDefaultStyle("图片上传失败");
-                              } else {
-                                AddBodyTestBean.Photo photo = new AddBodyTestBean.Photo();
-                                photo.photo = upImg;
-                                datas.add(photo);
-                                imageGridAdapter.refresh(datas);
-                                //                                                        imageGridAdapter.notifyDataSetChanged();
-
-                              }
-                            }
-                          });
+                      uploadPic(filePath);
                     } else {
                       hideLoading();
                       ToastUtils.showDefaultStyle("上传图片失败");
                     }
                   }
                 });
+            choosePictureFragmentDialog.show(getFragmentManager(), "choose");
           }
         }
       }
     });
 
     return view;
+  }
+
+  private void uploadPic(String filePath) {
+    showLoading();
+    spUpImg = UpYunClient.rxUpLoad("/course/", filePath)
+
+        .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Subscriber<String>() {
+          @Override public void onCompleted() {
+
+          }
+
+          @Override public void onError(Throwable e) {
+            hideLoading();
+          }
+
+          @Override public void onNext(String upImg) {
+            hideLoading();
+            if (TextUtils.isEmpty(upImg)) {
+              ToastUtils.showDefaultStyle("图片上传失败");
+            } else {
+              AddBodyTestBean.Photo photo = new AddBodyTestBean.Photo();
+              photo.photo = upImg;
+              datas.add(photo);
+              imageGridAdapter.refresh(datas);
+            }
+          }
+        });
   }
 
   public void getInfo() {
@@ -618,23 +620,6 @@ public class ModifyBodyTestFragment extends Fragment {
     params.put("model", mModel);
     params.put("id", mModelId);
     return params;
-  }
-
-  public void ShowLoading(String content) {
-    if (loadingDialog == null) {
-      loadingDialog = new MaterialDialog.Builder(getContext()).content("请稍后")
-          .progress(true, 0)
-          .cancelable(false)
-          .build();
-    }
-    if (content != null) loadingDialog.setContent(content);
-    loadingDialog.show();
-  }
-
-  public void hideLoading() {
-    if (loadingDialog != null) {
-      loadingDialog.dismiss();
-    }
   }
 
   public List<String> getImages() {
