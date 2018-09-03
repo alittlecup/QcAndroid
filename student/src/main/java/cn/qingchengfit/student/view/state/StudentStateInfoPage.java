@@ -144,12 +144,12 @@ import java.util.Map;
         break;
       case IncreaseType.INCREASE_STUDENT:
         toolbarModel = new ToolbarModel("会员");
-        mBinding.tvNotFollow.setText("未出勤时长分布");
+        mBinding.tvNotFollow.setText("未跟进时长分布");
         mViewModel.loadSource(2);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_new_student_color));
         initColors(getResources().getColor(R.color.st_new_student_color));
-        endSub = "未出勤";
-        mBinding.tvDesc.setText("未出勤天数");
+        endSub = "未跟进";
+        mBinding.tvDesc.setText("未跟进天数");
 
         break;
       case IncreaseType.INCREASE_MEMBER:

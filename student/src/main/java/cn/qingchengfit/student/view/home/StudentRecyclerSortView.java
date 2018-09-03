@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.R;
@@ -34,7 +35,10 @@ public class StudentRecyclerSortView
       openDrawer();
     });
     mViewModel.getStudentBeans().observe(this, items -> {
-      if (items == null || items.isEmpty()) return;
+      if (items == null || items.isEmpty()) {
+        listView.setItems(new ArrayList<>());
+        return;
+      }
       AbstractFlexibleItem abstractFlexibleItem = items.get(0);
       if (abstractFlexibleItem instanceof IItemData) {
         List data = new ArrayList<>(items);
@@ -43,9 +47,9 @@ public class StudentRecyclerSortView
     });
   }
 
-  public void selectAll(boolean selectedAll) {
+  public void selectAll(boolean selectedAll,Checkable checkable) {
     if (listView != null) {
-      listView.selectAll(selectedAll);
+      listView.selectAll(selectedAll,checkable);
     }
   }
 

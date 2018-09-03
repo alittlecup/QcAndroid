@@ -6,6 +6,7 @@ import android.view.View;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.saascommon.item.IItemData;
+import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.student.R;
@@ -46,7 +47,7 @@ public class ChooseDetailItem
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    return  o instanceof ChooseDetailItem && ((ChooseDetailItem) o).getData().getId().equalsIgnoreCase(getData().getId());
   }
 
   @Override public int getLayoutRes() {

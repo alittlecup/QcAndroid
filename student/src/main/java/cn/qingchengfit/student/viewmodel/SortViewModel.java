@@ -57,7 +57,6 @@ public class SortViewModel {
     return items;
   }
 
-
   public void onLetterClick(List items, boolean isChecked) {
     latestChecked.set(false);
     letterChecked.set(true);
@@ -69,18 +68,21 @@ public class SortViewModel {
     }
   }
 
-  @NonNull private  <T extends IItemData>List<IItemData> sortLetter(List<T> items) {
+  @NonNull private <T extends IItemData> List<IItemData> sortLetter(List<T> items) {
     String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#";
 
-    Collections.sort(items,
-        (staffDetailItem, t1) -> staffDetailItem.getData().head.compareTo(
-            t1.getData().head));
     for (IItemData item : items) {
-      if (StringUtils.isEmpty(item.getData().head) || !letters.contains(
-          item.getData().head())) {
-        item.getData().setHead("~");
+      if (StringUtils.isEmpty(item.getData().head) || !letters.contains(item.getData().head())) {
+        item.getData().setHead("#");
       }
     }
+
+    Collections.sort(items, (staffDetailItem, t1) -> {
+      if(staffDetailItem.getData().getHead().equals("#")&&!t1.getData().getHead().equals("#"))return +1;
+      if(t1.getData().getHead().equals("#")&&!staffDetailItem.getData().getHead().equals("#"))return -1;
+      return staffDetailItem.getData().head.compareTo(t1.getData().head);
+    });
+
     List<IItemData> values = new ArrayList<>();
     IItemData first = items.get(0);
     String head = first.getData().head.toUpperCase();
@@ -95,7 +97,6 @@ public class SortViewModel {
     return values;
   }
 
-
   public <T extends IItemData> List<IItemData> sortItems(List<T> items) {
 
     if (latestChecked.get()) {
@@ -105,7 +106,6 @@ public class SortViewModel {
     }
     return new ArrayList<>();
   }
-
 
   public void onFilterClick(boolean isChecked) {
     if (isChecked) return;

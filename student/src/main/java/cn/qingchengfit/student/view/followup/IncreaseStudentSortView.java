@@ -3,6 +3,7 @@ package cn.qingchengfit.student.view.followup;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -47,9 +48,9 @@ public class IncreaseStudentSortView
     stuff(R.id.fragment_list_container,listView);
 
   }
-  public void selectAll(boolean selectedAll) {
+  public void selectAll(boolean selectedAll,Checkable checkable) {
     if (listView != null) {
-      listView.selectAll(selectedAll);
+      listView.selectAll(selectedAll,checkable);
     }
   }
 

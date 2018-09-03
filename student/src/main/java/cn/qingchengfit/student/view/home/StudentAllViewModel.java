@@ -17,6 +17,7 @@ import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class StudentAllViewModel
       if (studentListWrapper != null) {
         return studentListWrapper.users;
       } else {
-        return null;
+        return new ArrayList<>();
       }
     });
   }
@@ -51,7 +52,7 @@ public class StudentAllViewModel
   }
 
   @Override protected boolean isSourceValid(@Nullable List<QcStudentBeanWithFollow> qcStudentBeans) {
-    return qcStudentBeans != null && !qcStudentBeans.isEmpty();
+    return qcStudentBeans != null ;
   }
 
   @Override protected List<ChooseDetailItem> map(@NonNull List<QcStudentBeanWithFollow> qcStudentBeans) {

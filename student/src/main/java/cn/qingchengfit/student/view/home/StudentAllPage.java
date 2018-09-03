@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
@@ -28,6 +29,7 @@ import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.Map;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 @Leaf(module = "student", path = "/student/all") public class StudentAllPage
     extends StudentBaseFragment<StPageAllStudentBinding, StudentAllViewModel>
@@ -80,7 +82,7 @@ import javax.inject.Inject;
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
     mBinding.rbSelectAll.setOnCheckedChangeListener(
-        (buttonView, isChecked) -> listView.selectAll(isChecked));
+        (buttonView, isChecked) -> listView.selectAll(isChecked,buttonView));
 
     mBinding.fabAddStudent.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
@@ -92,7 +94,7 @@ import javax.inject.Inject;
   }
 
   private void initFragment() {
-    if(listView!=null)return;
+    if (listView != null) return;
     listView = new StudentRecyclerSortView();
     stuff(R.id.list_container, listView);
     filterView = new StudentFilterView();
@@ -119,7 +121,7 @@ import javax.inject.Inject;
   }
 
   @Override public boolean onFragmentBackPress() {
-    if (actionView!=null&&actionView.isExpanded()) {
+    if (actionView != null && actionView.isExpanded()) {
       mBinding.includeToolbar.toolbar.collapseActionView();
       return true;
     } else {
@@ -129,6 +131,7 @@ import javax.inject.Inject;
 
   Toolbar toolbar;
   SearchView actionView;
+
   private void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel("全部会员");
     toolbarModel.setMenu(R.menu.menu_search_shop);
@@ -140,6 +143,7 @@ import javax.inject.Inject;
         @Override public void onActionViewCollapsed() {
           mBinding.includeToolbar.toolbarTitle.setVisibility(View.VISIBLE);
         }
+
         @Override public void onActionViewExpanded() {
           mBinding.includeToolbar.toolbarTitle.setVisibility(View.GONE);
         }
@@ -147,7 +151,7 @@ import javax.inject.Inject;
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
-    toolbar=mBinding.includeToolbar.toolbar;
+    toolbar = mBinding.includeToolbar.toolbar;
     initToolbar(toolbar);
   }
 
@@ -199,7 +203,7 @@ import javax.inject.Inject;
       //底部分配布局
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //修改列表内容
-      listView.getListView().setCurType(type);
+      listView.getListView().setCurType(StudentListView.MSG_TYPE);
     } else {
       mBinding.rbSelectAll.setVisibility(View.GONE);
       initToolbar();

@@ -74,7 +74,7 @@ import java.util.Map;
 
   private void initListener() {
     mBinding.rbSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
-      listView.selectAll(isChecked);
+      listView.selectAll(isChecked,buttonView);
     });
   }
 

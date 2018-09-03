@@ -127,7 +127,7 @@ import javax.inject.Inject;
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
-    mBinding.rbSelectAll.setOnCheckedChangeListener((view, checked) -> listView.selectAll(checked));
+    mBinding.rbSelectAll.setOnCheckedChangeListener((view, checked) -> listView.selectAll(checked,view));
     if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
       mBinding.qftSaler.setEnabled(false);
       mBinding.qftSaler.setText(loginStatus.getLoginUser().getUsername());

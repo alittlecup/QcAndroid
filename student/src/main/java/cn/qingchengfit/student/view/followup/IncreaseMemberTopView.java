@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.student.databinding.ViewIncreaseMemberTopBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -18,7 +19,10 @@ public class IncreaseMemberTopView
   String type = "";
 
   @Override protected void subscribeUI() {
-
+    mViewModel.count.observe(this, msg -> {
+      mBinding.tvCount.setText(
+          new SpanUtils().append(msg).append("人").setFontSize(16, true).create());
+    });
   }
 
   @Override
@@ -59,8 +63,9 @@ public class IncreaseMemberTopView
 
   @Override public void onResume() {
     super.onResume();
-    if (mViewModel.selectPos.getValue()!=null) {
-      ((RadioButton) mBinding.radioGroup.getChildAt(mViewModel.selectPos.getValue())).setChecked(true);
+    if (mViewModel.selectPos.getValue() != null) {
+      ((RadioButton) mBinding.radioGroup.getChildAt(mViewModel.selectPos.getValue())).setChecked(
+          true);
     } else {
       mBinding.radioRight.setChecked(true);
     }
@@ -78,6 +83,7 @@ public class IncreaseMemberTopView
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_green_bg);
       mBinding.tvTypeContent.setText("新用户跟进");
       mBinding.tvCount.setTextColor(getResources().getColor(R.color.success_green));
+
       mViewModel.status = 0;
     } else if (type.equals(IncreaseType.INCREASE_FOLLOWUP)) {
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_orange_bg);

@@ -54,6 +54,7 @@ import javax.inject.Inject;
     mViewModel.increaseStudents.observe(this, msg -> mBinding.tvNewStudentCount.setText(msg));
     mViewModel.increaseMembers.observe(this, msg -> mBinding.tvNewMemberCount.setText(msg));
     mViewModel.followStudents.observe(this, msg -> mBinding.tvFollowStudentCount.setText(msg));
+    mViewModel.birthDayMsg.observe(this,msg->mBinding.commDayStudent.setContent(msg));
 
     mViewModel.totalMembers.observe(this, msg -> {
       SpannableStringBuilder text = new SpanUtils().append(StringUtils.formatePrice(msg))
@@ -90,6 +91,7 @@ import javax.inject.Inject;
   @Override
   public StPageStudentHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    if(mBinding!=null)return mBinding;
     mBinding = StPageStudentHomeBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);

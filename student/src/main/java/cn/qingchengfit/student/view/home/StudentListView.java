@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Checkable;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
@@ -35,6 +37,8 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import eu.davidea.flexibleadapter.items.IHeader;
+import eu.davidea.flexibleadapter.items.ISectionable;
 import io.reactivex.annotations.NonNull;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -61,6 +65,7 @@ public class StudentListView
     mViewModel.getSelectedDatas().observe(this, items -> {
       if (items == null || items.isEmpty()) {
         adapter.clearSelection();
+        checkable.setChecked(false);
       }
     });
     mViewModel.removeResult.observe(this, aBoolean -> {
@@ -129,7 +134,14 @@ public class StudentListView
     }
   }
 
-  public void selectAll(boolean selectedAll) {
+  private Checkable checkable;
+
+  public void selectAll(boolean selectedAll, Checkable checkable) {
+    this.checkable = checkable;
+    selectedAll(selectedAll);
+  }
+
+  private void selectedAll(boolean selectedAll) {
     if (adapter.isEmpty() || adapter.getMainItems().get(0) instanceof CommonNoDataItem) {
       return;
     }
@@ -201,12 +213,12 @@ public class StudentListView
       List<? extends AbstractFlexibleItem> itemList = mViewModel.items.get();
       int position = 0;
       for (int i = 0; i < itemList.size(); i++) {
-        if (itemList.get(i) instanceof StudentItem) {
-          StudentItem item = (StudentItem) itemList.get(i);
-          if (item.getHeader() != null) {
-            if (item.getHeader() instanceof StickerDateItem) {
-              if (((StickerDateItem) item.getHeader()).getDate().equalsIgnoreCase(letter)) {
-                position = i;
+        if (itemList.get(i) instanceof ISectionable) {
+          IHeader header = ((ISectionable) itemList.get(i)).getHeader();
+          if (header != null) {
+            if (header instanceof StickerDateItem) {
+              if (((StickerDateItem) header).getDate().equalsIgnoreCase(letter)) {
+                position = adapter.index(itemList.get(i));
               }
             }
           }
@@ -370,7 +382,7 @@ public class StudentListView
         routeTo("/student/msgsend", null);
         break;
     }
-    selectAll(false);
+    selectedAll(false);
   }
 
   public ArrayList<String> getSelectIds() {
