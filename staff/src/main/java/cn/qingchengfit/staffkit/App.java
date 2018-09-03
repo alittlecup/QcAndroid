@@ -17,7 +17,6 @@ import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 
-//import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;

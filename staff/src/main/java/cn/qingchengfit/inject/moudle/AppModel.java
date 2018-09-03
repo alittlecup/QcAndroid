@@ -188,12 +188,7 @@ import java.util.List;
     return courseModel;
   }
 
-  //@Provides public ICardModel provideCardModel() {
-  //  return new CardModel(qcrestRepository, gymWrapper, loginStatus);
-  //}
-  @Provides public ICardModel provideCardModel() {
-    return new CardModel(qcrestRepository, gymWrapper, loginStatus);
-  }
+
   @Provides static StudentRouterCenter provideStudentRouterCenter() {
     return new StudentRouterCenter().registe(new studentImpl());
   }

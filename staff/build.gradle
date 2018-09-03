@@ -189,7 +189,7 @@ dependencies {
   addComponent('shop', false)
   addComponent('login', false)
   addComponent("checkout", false)
-  addComponent("student", true)
+  addComponent("student", false)
   addComponent("card", false)
 
   implementation 'cn.qingchengfit.chat:sdk:1.0.0'

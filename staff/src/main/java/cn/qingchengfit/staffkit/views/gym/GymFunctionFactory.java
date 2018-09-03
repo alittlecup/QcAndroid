@@ -492,15 +492,15 @@ public class GymFunctionFactory {
        *
        */
       case MODULE_STUDENT:
-        Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
-        fragment.startActivity(toStu);
+        //Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
+        //fragment.startActivity(toStu);
         //fragment.routeTo("student", "/student/home", null);
-        //if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
-        //  QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
-        //      .call();
-        //} else {
-        //  DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
-        //}
+        if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
+          QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
+              .call();
+        } else {
+          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+        }
         return;
       case REPORT_EXPORT:
         Intent toExo = new Intent(fragment.getActivity(), ImportExportActivity.class);

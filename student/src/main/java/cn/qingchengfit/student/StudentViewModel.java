@@ -9,8 +9,6 @@ import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.respository.StudentModel;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.student.respository.StudentRepositoryImpl;
-import cn.qingchengfit.student.routers.StudentRouterCenter;
-import cn.qingchengfit.student.routers.studentImpl;
 import cn.qingchengfit.student.view.allot.AllotChooseViewModel;
 import cn.qingchengfit.student.view.allot.AllotListViewModel;
 import cn.qingchengfit.student.view.allot.SalerStudentsPage;
