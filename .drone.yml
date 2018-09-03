@@ -15,8 +15,8 @@ pipeline:
       image: plugins/git
       commands:
         - echo 'start'
-        - echo ${DRONE_COMMIT_LINK:60}
-        - git log ${DRONE_COMMIT_LINK:60} --pretty=format:"%h - %an %ad - %s " --date=format:'%Y-%m-%d' >changelog.txt
+        - echo ${DRONE_COMMIT_LINK:57}
+        - git log ${DRONE_COMMIT_LINK:57} --pretty=format:"%h - %an %ad - %s " --date=format:'%Y-%m-%d' >changelog.txt
         - cat changelog.txt
 
   build:
