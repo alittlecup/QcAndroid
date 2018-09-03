@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
 
 public class QcPieChart extends PieChart {
   public QcPieChart(Context context) {
@@ -29,5 +30,7 @@ public class QcPieChart extends PieChart {
     setTransparentCircleAlpha(0);
     setRotationEnabled(false);
     getLegend().setEnabled(false);
+    setNoDataText("");
   }
+
 }
