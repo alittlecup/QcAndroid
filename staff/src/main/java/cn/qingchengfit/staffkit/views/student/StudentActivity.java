@@ -53,11 +53,10 @@ import timber.log.Timber;
  * Created by Paper on 16/3/4 2016.
  */
 public class StudentActivity extends BaseActivity
-    implements FragCallBack, HasSupportFragmentInjector {
+    implements FragCallBack {
 
   FrameLayout studentFrag;
 
-  @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
   @Inject RestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -160,9 +159,5 @@ public class StudentActivity extends BaseActivity
 
   @Override public void setBar(ToolbarBean bar) {
 
-  }
-
-  @Override public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
-    return fragmentInjector;
   }
 }

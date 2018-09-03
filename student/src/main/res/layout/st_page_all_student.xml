@@ -61,7 +61,18 @@
             android:id="@+id/include_allot"
             />
       </LinearLayout>
-
+      <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab_add_student"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_marginBottom="70dp"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:scaleType="fitXY"
+          app:fabSize="normal"
+          app:srcCompat="@drawable/ic_add_staff"
+          />
 
 
     </FrameLayout>

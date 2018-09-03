@@ -81,6 +81,14 @@ import javax.inject.Inject;
     });
     mBinding.rbSelectAll.setOnCheckedChangeListener(
         (buttonView, isChecked) -> listView.selectAll(isChecked));
+
+    mBinding.fabAddStudent.setOnClickListener(v -> {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+        QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
+    });
   }
 
   private void initFragment() {

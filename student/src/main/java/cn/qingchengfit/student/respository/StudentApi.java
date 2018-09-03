@@ -50,7 +50,7 @@ public interface StudentApi {
    *
    * @GET("/api/staffs/{id}/users/all/?show_all=1")
    */
-  @GET("/api/staffs/{id}/users/")
+  @GET("/api/staffs/{id}/users/list/")
   Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(@Path("id") String id,
       @QueryMap Map<String, Object> params);
   //
