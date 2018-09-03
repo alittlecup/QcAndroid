@@ -11,7 +11,13 @@ pipeline:
     volumes:
       - /cache:/cache/
 
-
+  commits:
+      image: plugins/git
+      commands:
+        - echo 'start'
+        - echo ${DRONE_COMMIT_LINK:60}
+        - git log ${DRONE_COMMIT_LINK:60} --pretty=format:"%h - %an %ad - %s " --date=format:'%Y-%m-%d' >changelog.txt
+        - cat changelog.txt
 
   build:
     image: androidci
@@ -23,14 +29,14 @@ pipeline:
       - /cache:/cache/
       - /data/gradle/gradle-4.7:/gradle/
     when:
-      branch: dev_checkout
+      branch: dev_student
       event: push
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - ./gradlew :staff:assembleDevDebug --no-daemon
-      - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG
+      - /gradle/bin/gradle -g gradle_cache :staff:assembleDevDebug --no-daemon
+      - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG -c changelog.txt
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
     image: androidci
