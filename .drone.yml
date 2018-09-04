@@ -45,7 +45,7 @@ pipeline:
       - PRO
       - LICENA
       - LICENB
-    when:export
+    when:
       branch: develop
     volumes:
       - /cache:/cache/
