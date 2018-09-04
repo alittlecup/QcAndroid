@@ -224,7 +224,7 @@ public class StudentListView
           }
         }
       }
-      return position;
+      return position > 1 ? position - 1 : position;
     });
     adapter.setFastScroller(mBinding.fastScrollerBar);
     adapter.addListener(this);
