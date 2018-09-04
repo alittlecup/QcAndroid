@@ -41,7 +41,6 @@ import javax.inject.Inject;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
-
       adapter.updateDataSet(items);
     });
     mViewModel.dates.observe(this, items -> {
@@ -161,7 +160,8 @@ import javax.inject.Inject;
   private void initRecyclerView() {
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(),this));
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter.setTag("choose", -1);
+    adapter.setTag("choose",ChooseDetailItem.Mode.BOTH);
+
   }
 
   private void initSelect() {

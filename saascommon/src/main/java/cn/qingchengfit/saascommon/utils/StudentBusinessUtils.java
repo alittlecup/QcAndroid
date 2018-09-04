@@ -229,11 +229,12 @@ public class StudentBusinessUtils {
     set1.setColor(lineColor);
     set1.setCircleColor(lineColor);
     set1.setHighLightColor(lineColor);
-    set1.setHighlightLineWidth(2);
+    set1.setHighlightLineWidth(2f);
     set1.setDrawHorizontalHighlightIndicator(false);
     set1.setDrawCircleHole(true);//
     set1.setLineWidth(2f);
     set1.setCircleRadius(4f);
+    set1.setCircleHoleRadius(2f);
     set1.setValueTextSize(9f);
     set1.setDrawValues(false);
     set1.setDrawFilled(true);

@@ -149,7 +149,29 @@ public class ChooseDetailItem
       binding.tvStudentDesc.setVisibility(View.GONE);
       binding.btnContactHim.setVisibility(View.GONE);
 
-    } else if (type == Mode.MORE_INFO) {
+    } else if(type==Mode.BOTH){
+      List<String> sellerNames = new ArrayList<>();
+      if (data.sellers != null && !data.sellers.isEmpty()) {
+        for (Staff seller : data.sellers) {
+          sellerNames.add(seller.username);
+        }
+      }
+      List<String> sellerNames2 = new ArrayList<>();
+      if (data.coaches != null && !data.coaches.isEmpty()) {
+        for (Staff saler : data.coaches) {
+          sellerNames2.add(saler.username);
+        }
+      }
+      binding.itemPersonDesc.setText(new StringBuilder().append("销售：")
+          .append(StringUtils.List2StrWithChineseSplit(sellerNames)).toString());
+      binding.itemPersonCoach.setText(new StringBuilder().append("教练：")
+          .append(StringUtils.List2StrWithChineseSplit(sellerNames2))
+          .toString());
+      binding.itemPersonDesc.setVisibility(View.VISIBLE);
+      binding.itemPersonCoach.setVisibility(View.VISIBLE);
+      binding.tvStudentDesc.setVisibility(View.GONE);
+      binding.btnContactHim.setVisibility(View.GONE);
+    }else if (type == Mode.MORE_INFO) {
       List<String> sellerNames = new ArrayList<>();
       if (data.sellers != null && !data.sellers.isEmpty()) {
         for (Staff seller : data.sellers) {
@@ -236,12 +258,13 @@ public class ChooseDetailItem
   }
 
   @IntDef({
-      Mode.UNDEFINE, Mode.SALLER, Mode.TRAINER, Mode.MORE_INFO
+      Mode.UNDEFINE, Mode.SALLER, Mode.TRAINER, Mode.MORE_INFO,Mode.BOTH
   }) @Retention(RetentionPolicy.RUNTIME) public @interface Mode {
     int UNDEFINE = -1;
     int SALLER = 0;
     int TRAINER = 1;
     int MORE_INFO = 2;
+    int BOTH = 3;
   }
 
   private @Mode int type = Mode.UNDEFINE;

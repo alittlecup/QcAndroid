@@ -40,7 +40,17 @@ import javax.inject.Inject;
 
   @Override protected void subscribeUI() {
     mSortViewModel.filterVisible.observe(this, aBoolean -> {
-      mBinding.fragmentFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+      if(aBoolean){
+        mBinding.fragmentFilter.setVisibility(View.VISIBLE);
+        mBinding.fragmentFilter.setAlpha(0f);
+        mBinding.fragmentFilter.animate().alpha(1).setDuration(20).start();
+      }else{
+        mBinding.fragmentFilter.animate().alpha(0).setDuration(20).withEndAction(new Runnable() {
+          @Override public void run() {
+            mBinding.fragmentFilter.setVisibility(View.GONE);
+          }
+        }).start();
+      }
     });
     mSortViewModel.filterIndex.observe(this, index -> {
       filterView.showPage(index);

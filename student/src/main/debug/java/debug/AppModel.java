@@ -17,6 +17,8 @@ import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.respository.StudentModel;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.student.respository.StudentRepositoryImpl;
+import cn.qingchengfit.student.routers.StudentRouterCenter;
+import cn.qingchengfit.student.routers.studentImpl;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -44,9 +46,15 @@ import javax.inject.Singleton;
 
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
+  @Binds abstract IStudentModel bindStudentModel(StudentModel studentModel);
+
   @Provides static LoginStatus provideLogin() {
 
     return loginStatus;
+  }
+
+  @Provides public static StudentRouterCenter providesStudentRouterCenter() {
+    return new StudentRouterCenter().registe(new studentImpl());
   }
 
   @Singleton @ContributesAndroidInjector
@@ -61,7 +69,8 @@ import javax.inject.Singleton;
   }
 
   @Provides static QcRestRepository provideQcRestRepository(Application application) {
-    return new QcRestRepository(application, "http://cloudtest01.qingchengfit.cn/", "staff-qingcheng");
+    return new QcRestRepository(application, "http://cloudtest01.qingchengfit.cn/",
+        "staff-qingcheng");
   }
 
   @Provides static IPermissionModel providePermission() {

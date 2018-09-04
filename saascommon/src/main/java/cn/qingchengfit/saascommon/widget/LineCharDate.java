@@ -110,7 +110,8 @@ public class LineCharDate extends LinearLayout {
     // if disabled, scaling can be done on x- and y-axis separately
     chart.setPinchZoom(false);
     chart.setDragDecelerationEnabled(false);
-
+    chart.setRenderer(
+        new LinerChartHightRender(chart, chart.getAnimator(), chart.getViewPortHandler()));
     initMarkerView();
 
     initXAxis(chart.getXAxis());
@@ -150,9 +151,9 @@ public class LineCharDate extends LinearLayout {
 
   public void setVisibleXRange(int xRange) {
     // 设置X轴最大的显示范围
-    lineChart.setVisibleXRangeMaximum(6);
+    lineChart.setVisibleXRangeMaximum(xRange);
     // 设置X轴最小的显示范围
-    lineChart.setVisibleXRangeMinimum(6);
+    lineChart.setVisibleXRangeMinimum(xRange);
   }
 
   private void initYAxis(YAxis mAxisLeft) {

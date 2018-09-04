@@ -75,13 +75,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="1px"
-                app:layout_scrollFlags="scroll|snap"
+                app:layout_scrollFlags="scroll|enterAlways"
                 />
 
             <cn.qingchengfit.widgets.QcRadioGroup
                 android:id="@+id/qc_radio_group"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
+                android:layout_height="45dp"
                 android:background="@drawable/bg_top_bottom_line_white"
                 android:divider="@drawable/divier_linear"
                 android:orientation="horizontal"

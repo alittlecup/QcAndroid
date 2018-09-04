@@ -36,6 +36,7 @@ pipeline:
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
       - /gradle/bin/gradle -g gradle_cache :staff:assembleDevDebug --no-daemon
+      - export LANG="en_US.UTF-8"
       - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG -c changelog.txt
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
@@ -44,7 +45,7 @@ pipeline:
       - PRO
       - LICENA
       - LICENB
-    when:
+    when:export
       branch: develop
     volumes:
       - /cache:/cache/
