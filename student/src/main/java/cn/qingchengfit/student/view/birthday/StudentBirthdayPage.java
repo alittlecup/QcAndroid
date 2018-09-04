@@ -8,6 +8,8 @@ import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.calendar.Calendar;
 import cn.qingchengfit.saascommon.calendar.CalendarView;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
@@ -22,6 +24,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +35,7 @@ import javax.inject.Inject;
 
 @Leaf(module = "student", path = "/student/birthday") public class StudentBirthdayPage
     extends StudentBaseFragment<StPageStudentBirthdayBinding, StudentBirthdayViewModel>
-    implements CalendarView.OnDateSelectedListener {
+    implements CalendarView.OnDateSelectedListener ,FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
   @Inject IPermissionModel permissionModel;
 
@@ -156,7 +159,7 @@ import javax.inject.Inject;
   }
 
   private void initRecyclerView() {
-    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
+    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(),this));
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     adapter.setTag("choose", -1);
   }
@@ -223,5 +226,15 @@ import javax.inject.Inject;
     params.put("end", DateUtils.Date2YYYYMMDD(calendar.getTime()));
 
     mViewModel.loadSource(params);
+  }
+
+  @Override public boolean onItemClick(int position) {
+    IFlexible item = adapter.getItem(position);
+    if(item instanceof ChooseDetailItem){
+      QcStudentBeanWithFollow data = ((ChooseDetailItem) item).getData();
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
+          .addParam("qcstudent", data)).call();
+    }
+    return false;
   }
 }

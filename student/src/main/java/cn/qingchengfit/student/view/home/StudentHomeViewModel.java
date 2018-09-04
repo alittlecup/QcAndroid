@@ -71,6 +71,8 @@ public class StudentHomeViewModel extends BaseViewModel {
         } else {
           birthDayMsg.setValue(today_birthday_users.get(0) + "今日生日");
         }
+      }else{
+        birthDayMsg.setValue("");
       }
     });
   }
