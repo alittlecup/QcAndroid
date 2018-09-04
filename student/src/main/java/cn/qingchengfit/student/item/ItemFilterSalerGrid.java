@@ -43,18 +43,6 @@ public class ItemFilterSalerGrid extends AbstractFlexibleItem<ItemFilterSalerGri
     setShowAll(false);
   }
 
-  //    private void setInitList() {
-  //        for (int i = 0; i < flexAdapter.getItemCount(); i++) {
-  //            if (flexAdapter.getItem(i) instanceof FilterCommonLinearItem) {
-  //                FilterCommonLinearItem item = (FilterCommonLinearItem) flexAdapter.getItem(i);
-  //                if (item.getData().equals(selectedId)) {
-  //                    flexAdapter.addSelection(i);
-  //                    flexAdapter.notifyItemChanged(i);
-  //                    break;
-  //                }
-  //            }
-  //        }   }
-  //    }
 
   public FilterModel getFilterModel() {
     return filterModel;
@@ -120,10 +108,10 @@ public class ItemFilterSalerGrid extends AbstractFlexibleItem<ItemFilterSalerGri
         isShowAll ? R.drawable.vd_filter_arrow_up : R.drawable.vd_filter_arrow_down, null);
     drawableR.setBounds(0, 0, drawableR.getMinimumWidth(), drawableR.getMinimumHeight());
     holder.tvFilterShowAll.setCompoundDrawables(null, null, drawableR, null);
-
-    if (flexAdapter.getSelectedItemCount() == 0) {
-      flexAdapter.addSelection(0);
-    }
+    //
+    //if (flexAdapter.getSelectedItemCount() == 0) {
+    //  flexAdapter.addSelection(0);
+    //}
 
     holder.tvFilterShowAll.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
