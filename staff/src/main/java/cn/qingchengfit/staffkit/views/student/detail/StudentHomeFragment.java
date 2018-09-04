@@ -54,6 +54,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
@@ -202,8 +203,9 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         tmpStudentBean.coaches = studentBaseInfoEvent.user_student.getCoaches();
         tmpStudentBean.gender = studentBaseInfoEvent.user_student.getGender() == 0;
         tmpStudentBean.phone = studentBaseInfoEvent.user_student.getPhone();
-        tmpStudentBean.username =studentBaseInfoEvent.user_student.getUsername();
+        tmpStudentBean.username = studentBaseInfoEvent.user_student.getUsername();
         studentBean.setStudentBean(tmpStudentBean);
+        updateQcStudentBean(tmpStudentBean);
       }
 
       orderPrivate.setOnClickListener(new View.OnClickListener() {
@@ -251,16 +253,22 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
               .into(gender);
           phone.setText(qcStudentBean.getPhone());
           mQcStudentBean = qcStudentBean;
-
         }, throwable -> {
         }));
-
 
     isLoading = true;
     view.findViewById(R.id.ll_student_call).setOnClickListener(this);
     view.findViewById(R.id.ll_student_msg).setOnClickListener(this);
 
     return view;
+  }
+
+  private void updateQcStudentBean(StudentBean studentBean) {
+    mQcStudentBean =
+        new QcStudentBean(studentBean.getId(), studentBean.getUsername(), studentBean.status,
+            studentBean.getPhone(), studentBean.getAvatar(), studentBean.checkin_avatar,
+            studentBean.gender ? "0" : "1", studentBean.getHead(), studentBean.getBrandid(),
+            studentBean.getjoined_at(), "", "", "", null);
   }
 
   @Override protected void onFinishAnimation() {

@@ -34,7 +34,7 @@
           android:lines="1"
           android:maxWidth="250dp"
           android:minWidth="75dp"
-          tools:text="跳到下**"
+          tools:text="《会员卡服务条款协议》"
           style="@style/QcTextStyleStandardDark"
           />
 

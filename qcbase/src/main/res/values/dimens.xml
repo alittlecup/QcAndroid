@@ -66,7 +66,7 @@
   <dimen name="qc_allotsale_search_hight">32dp</dimen>
 
   <dimen name="qc_civ_label_max_width_phone">209dp</dimen>
-  <dimen name="qc_civ_label_max_width_txt">109dp</dimen>
+  <dimen name="qc_civ_label_max_width_txt">209dp</dimen>
   <dimen name="img_120dp">110dp</dimen>
 
   <dimen name="font_20">18sp</dimen>
