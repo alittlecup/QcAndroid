@@ -56,10 +56,10 @@ public class MyMarkerView extends MarkerView {
 
             CandleEntry ce = (CandleEntry) e;
             tvDate.setText((String) ce.getData());
-            tvContent.setText("" + StudentBusinessUtils.getNumString(ce.getHigh()) + strUnit);
+            tvContent.setText(new StringBuilder().append(StudentBusinessUtils.getNumString(ce.getHigh())).append(strUnit).toString());
         } else {
             tvDate.setText((String) e.getData());
-            tvContent.setText("" + StudentBusinessUtils.getNumString(e.getY()) + strUnit);
+            tvContent.setText(new StringBuilder().append(StudentBusinessUtils.getNumString(e.getY())).append(strUnit).toString());
         }
 
         super.refreshContent(e, highlight);

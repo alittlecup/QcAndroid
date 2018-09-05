@@ -68,7 +68,6 @@ public class IncreaseStudentTopViewModel extends BaseViewModel {
       Calendar calendar = Calendar.getInstance();
       switch (dimension) {
         case DateGroupDimension.DAY:
-          calendar.add(Calendar.DAY_OF_MONTH, -1);
           curDates.put("start", DateUtils.Date2YYYYMMDD(calendar.getTime()));
 
           break;

@@ -79,7 +79,7 @@ public void loadFollorStatus(){
   }
 
   @Inject public IncreaseMemberSortViewModel() {
-    salerName.setValue("销售");
+    salerName.setValue("全部销售");
     followUpStatus.setValue("跟进状态");
     filterVisible.setValue(false);
     params.setValue(new HashMap<>());

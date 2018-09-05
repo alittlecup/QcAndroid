@@ -49,7 +49,7 @@ public class MemberIncreaseFilterView extends BaseFilterFragment {
 
         salersView = new FollowUpTopSalerView();
         salersView.setOnItemClick(staff -> {
-            mViewModel.salerName.setValue(staff == null ? "销售" : staff.username);
+            mViewModel.salerName.setValue(staff == null ? "全部销售" : staff.username);
             mViewModel.setSaller(staff);
             dismiss();
         });

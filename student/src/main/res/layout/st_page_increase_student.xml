@@ -108,8 +108,8 @@
                       android:background="@drawable/bg_click"
                       android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),0)}"
                       android:text="@{viewModel.salerName}"
-                      app:ft_text_off="销售"
-                      app:ft_text_on="销售"
+                      app:ft_text_off="全部销售"
+                      app:ft_text_on="全部销售"
                       style="@style/QcFilterStyle"
                       />
                   <cn.qingchengfit.widgets.QcFilterToggle

@@ -67,7 +67,7 @@ public class IncreaseStudentSortViewModel extends BaseViewModel {
   }
 
   @Inject public IncreaseStudentSortViewModel() {
-    salerName.setValue("销售");
+    salerName.setValue("全部销售");
     studentStatus.setValue("会员状态");
     gender.setValue("性别");
     params.setValue(new HashMap<>());
