@@ -331,14 +331,14 @@ public class ModifyBodyTestFragment extends BaseFragment {
                   commonInputView.setTag(R.id.tag_1, extra.id);
                   commonInputView.setTag(R.id.tag_2, extra.unit);
                   otherData.addView(commonInputView);
-                  commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                  commonInputView.setContentColor(ContextCompat.getColor(getContext(), R.color.text_dark));
+                  if (!TextUtils.isEmpty(extra.unit)) {
+                    commonInputView.setUnit(extra.unit);
+                  }
+                  commonInputView.setLabel(extra.name);
                   commonInputView.setContent(extra.value);
                 }
               }
-              //                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
-              //                            datas.add(new ImageGridBean(photo.photo));
-              //                        }
-
               if (qcGetBodyTestResponse.data.measure.photos != null) {
                 datas.addAll(qcGetBodyTestResponse.data.measure.photos);
               }
