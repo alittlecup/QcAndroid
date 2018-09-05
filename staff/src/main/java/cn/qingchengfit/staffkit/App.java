@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 import cn.qingchengfit.card.StaffCardActivity;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -200,7 +201,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
 
   @Override protected void attachBaseContext(Context base) {
     super.attachBaseContext(base);
-    //MultiDex.install(this);
+    MultiDex.install(this);
   }
 
   private void initX5() {
