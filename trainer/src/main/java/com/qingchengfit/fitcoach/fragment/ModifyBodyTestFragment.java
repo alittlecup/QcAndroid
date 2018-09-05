@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saascommon.widget.NumberInputFilter;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.UpYunClient;
@@ -215,8 +217,24 @@ public class ModifyBodyTestFragment extends BaseFragment {
         }
       }
     });
-
+    setCommonInputViewFilter();
     return view;
+  }
+
+  private void setCommonInputViewFilter() {
+    bmi.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    weight.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    height.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    bodyFatRate.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    leftCalf.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    leftThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    leftUpper.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    rightCalf.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    rightThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    rightUpper.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    chest.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    hipline.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    waistline.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
   }
 
   private void uploadPic(String filePath) {
@@ -287,38 +305,48 @@ public class ModifyBodyTestFragment extends BaseFragment {
             if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
               leftCalf.setVisibility(View.VISIBLE);
               leftCalf.setContent(String.format("%s", mMeasure.circumference_of_left_calf));
+
             }
             if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
               rightCalf.setVisibility(View.VISIBLE);
               rightCalf.setContent(String.format("%s", mMeasure.circumference_of_right_calf));
+
             }
             if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
               chest.setVisibility(View.VISIBLE);
               chest.setContent(String.format("%s", mMeasure.circumference_of_chest));
+
             }
             if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
               leftThigh.setVisibility(View.VISIBLE);
               leftThigh.setContent(String.format("%s", mMeasure.circumference_of_left_thigh));
+
             }
             if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
               rightThigh.setVisibility(View.VISIBLE);
               rightThigh.setContent(String.format("%s", mMeasure.circumference_of_right_thigh));
+              rightThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+
             }
             if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
               leftUpper.setVisibility(View.VISIBLE);
               leftUpper.setContent(String.format("%s", mMeasure.circumference_of_left_upper));
+
             }
             if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
               rightUpper.setVisibility(View.VISIBLE);
               rightUpper.setContent(String.format("%s", mMeasure.circumference_of_right_upper));
+
             }
             if (!TextUtils.isEmpty(mMeasure.hipline)) {
               hipline.setVisibility(View.VISIBLE);
               hipline.setContent(String.format("%s", mMeasure.hipline));
+
             }
             if (!TextUtils.isEmpty(mMeasure.waistline)) {
               waistline.setVisibility(View.VISIBLE);
               waistline.setContent(String.format("%s", mMeasure.waistline));
+
             }
             if (!mModel.equalsIgnoreCase("service")) {
               imageGridAdapter.setIsEditable(true);
@@ -331,7 +359,8 @@ public class ModifyBodyTestFragment extends BaseFragment {
                   commonInputView.setTag(R.id.tag_1, extra.id);
                   commonInputView.setTag(R.id.tag_2, extra.unit);
                   otherData.addView(commonInputView);
-                  commonInputView.setContentColor(ContextCompat.getColor(getContext(), R.color.text_dark));
+                  commonInputView.setContentColor(
+                      ContextCompat.getColor(getContext(), R.color.text_dark));
                   if (!TextUtils.isEmpty(extra.unit)) {
                     commonInputView.setUnit(extra.unit);
                   }
