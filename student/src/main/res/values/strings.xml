@@ -115,6 +115,7 @@
 
   <string name="text_student_import">会员导入</string>
   <string name="text_student_export">会员导出</string>
+  <string name="person">人</string>
 
   <string name="st_follow_record_noti_others">{name1},{name2}等{count}人</string>
 </resources>

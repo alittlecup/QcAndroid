@@ -60,7 +60,7 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
     List payloads) {
     if (adapter.getMode() != FlexibleAdapter.Mode.IDLE) {
       holder.cb.setVisibility(View.VISIBLE);
-      holder.cb.setChecked(isSelected);
+      holder.cb.setChecked(adapter.isSelected(position));
       holder.iconRight.setVisibility(View.GONE);
     } else {
       holder.cb.setVisibility(View.GONE);

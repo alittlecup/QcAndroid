@@ -47,9 +47,12 @@ import javax.inject.Inject;
     mBinding.setVm(mViewModel);
     initRecyclerView();
     initListener();
-    HashMap<String, Object> map = new HashMap<String, Object>();
-    mViewModel.loadSource(map);
     return mBinding;
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    mViewModel.loadSource(new HashMap<>());
   }
 
   private void initListener() {

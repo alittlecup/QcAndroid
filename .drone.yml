@@ -36,7 +36,9 @@ pipeline:
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
       - /gradle/bin/gradle -g gradle_cache :staff:assembleDevDebug --no-daemon
-      - export LANG="en_US.UTF-8"
+      - echo $LANG
+      - echo $DOCKER_ANDROID_LANG
+      - cat changelog.txt
       - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG -c changelog.txt
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:

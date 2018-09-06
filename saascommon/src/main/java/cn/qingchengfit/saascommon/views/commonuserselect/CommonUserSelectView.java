@@ -55,11 +55,13 @@ public class CommonUserSelectView extends SaasCommonFragment
 
   public void selectAll() {
     adapter.selectAll();
+    selectItems.setValue(adapter.getMainItems());
     adapter.notifyDataSetChanged();
   }
 
   public void clearSelect() {
     adapter.clearSelection();
+    selectItems.setValue(new ArrayList<>());
     adapter.notifyDataSetChanged();
   }
 
@@ -79,8 +81,8 @@ public class CommonUserSelectView extends SaasCommonFragment
 
   public List<ICommonUser> getSelectUser() {
     List<ICommonUser> ret = new ArrayList<>();
-    for (Integer integer : adapter.getSelectedPositions()) {
-      ret.add(((CommonUserItem) adapter.getItem(integer)).getUser());
+    for (CommonUserItem item : selectItems.getValue()) {
+      ret.add(item.getUser());
     }
     return ret;
   }
@@ -105,6 +107,7 @@ public class CommonUserSelectView extends SaasCommonFragment
       }
       selectItems.setValue(si);
     }
+    adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
     return true;
   }
