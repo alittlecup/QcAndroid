@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.events.EventCommonUserList;
 import cn.qingchengfit.saascommon.item.CommonUserItem;
@@ -29,7 +30,7 @@ import java.util.List;
 @Leaf(module = "student", path = "/followrecord/notiothers/") public class NotiOthersPage
     extends StudentBaseFragment<StPageNotiOthersBinding, NotiOthersVM> {
   CommonUserSelectView studentListView = new CommonUserSelectView();
-  @Need public ArrayList<Staff> staffs;
+  @Need public ArrayList<User> staffs;
 
   @Override protected void subscribeUI() {
     mViewModel.getEditAfterTextChange().observe(this, filter -> {

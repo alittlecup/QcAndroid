@@ -12,6 +12,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class FollowRecord {
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
   String id;
   String content;
   String track_type_id;

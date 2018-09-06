@@ -25,7 +25,7 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    return o instanceof FollowRecord&&((FollowRecord) o).getId().equals(followRecord.getId());
   }
 
   @Override public int getLayoutRes() {

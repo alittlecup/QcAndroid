@@ -47,7 +47,7 @@ public class BindingUtils {
       }else {
         return users.get(0).username;
       }
-    }else return "请选择";
+    }else return "";
   }
   public static String getFollowRecordNotiOhtersNames(List<String> users,Context context){
     if (users != null &&users.size() >0){

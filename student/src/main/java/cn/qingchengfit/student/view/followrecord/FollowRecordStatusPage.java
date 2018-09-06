@@ -90,7 +90,7 @@ public class FollowRecordStatusPage
   }
 
   private void addFollowStatus() {
-    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称", "","取消", "确定", new MaterialDialog.SingleButtonCallback() {
+    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", "","取消", "确定", new MaterialDialog.SingleButtonCallback() {
       @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
         if (materialDialog.getInputEditText() != null && materialDialog.getInputEditText().getText()!=null)
           mViewModel.addFollowStatus(
@@ -101,7 +101,7 @@ public class FollowRecordStatusPage
   }
 
   private void editFollowStatus(String statusId,String conent) {
-    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称",conent, "取消", "确定", new MaterialDialog.SingleButtonCallback() {
+    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)",conent, "取消", "确定", new MaterialDialog.SingleButtonCallback() {
       @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
         if (materialDialog.getInputEditText() != null && materialDialog.getInputEditText().getText()!=null)
           mViewModel.editFollowStatus(statusId,

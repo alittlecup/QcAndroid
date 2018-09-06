@@ -222,7 +222,7 @@ public class DialogUtils {
         .positiveText(positiveText)
         .onPositive(callback)
         .negativeText(negativeText)
-        .autoDismiss(true)
+        .autoDismiss(false)
         .negativeColorRes(R.color.text_dark);
 
     if (!TextUtils.isEmpty(title)) {

@@ -58,10 +58,10 @@ import javax.inject.Inject;
 
   @Override protected void subscribeUI() {
     //studentWrap.setStudentBean(studentBean);
-    mViewModel.showLoading.observe(this,aBoolean -> {
-      if(aBoolean){
+    mViewModel.showLoading.observe(this, aBoolean -> {
+      if (aBoolean) {
         showLoading();
-      }else{
+      } else {
         hideLoading();
       }
     });
@@ -136,14 +136,13 @@ import javax.inject.Inject;
     });
     mBinding.cmNotifyOther.setOnClickListener(view -> {
       List<Staff> value = mViewModel.getSalerStaffs().getValue();
-      if(value==null){
+      if (value == null) {
         mViewModel.loadSellers();
         showLoading();
         return;
       }
-      routeTo("/followrecord/notiothers/", NotiOthersPageParams.builder()
-          .staffs(new ArrayList<>(value))
-          .build());
+      routeTo("/followrecord/notiothers/",
+          NotiOthersPageParams.builder().staffs(new ArrayList<>(value)).build());
     });
     mBinding.tvEditStatus.setOnClickListener(view -> {
       routeTo("/student/follow_record_status", null);
@@ -164,7 +163,7 @@ import javax.inject.Inject;
       }
 
       @Override public void afterTextChanged(Editable s) {
-        if(s!=null&&s.toString().length()>=140){
+        if (s != null && s.toString().length() >= 140) {
           ToastUtils.show("最多输入140个字符");
         }
       }
@@ -264,9 +263,7 @@ import javax.inject.Inject;
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);
     if (item == null) return false;
-    if (item instanceof ItemGridImageAdd) {
-      addImage();
-    }
+    addImage();
     return true;
   }
 }
