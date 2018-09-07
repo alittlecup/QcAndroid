@@ -32,8 +32,8 @@ import java.util.Objects;
 
 @Leaf(module = "student", path = "/student/follow_record_status")
 public class FollowRecordStatusPage
-  extends StudentBaseFragment<StPageFollowRecordStatusBinding, FollowRecordStatusViewModel>
-  implements FlexibleAdapter.OnItemClickListener{
+    extends StudentBaseFragment<StPageFollowRecordStatusBinding, FollowRecordStatusViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
@@ -41,41 +41,39 @@ public class FollowRecordStatusPage
   }
 
   @Override public StPageFollowRecordStatusBinding initDataBinding(LayoutInflater inflater,
-    ViewGroup container, Bundle savedInstanceState) {
+      ViewGroup container, Bundle savedInstanceState) {
     mBinding = StPageFollowRecordStatusBinding.inflate(inflater, container, false);
     mBinding.setLifecycleOwner(this);
     mBinding.setVm(mViewModel);
     initToolbar();
     initRecyclerView();
-    HashMap<String,Object> map = new HashMap<>();
+    HashMap<String, Object> map = new HashMap<>();
     mViewModel.loadSource(map);
-    RxBusAdd(EventClickViewPosition.class)
-      .subscribe(new BusSubscribe<EventClickViewPosition>() {
-        @Override public void onNext(EventClickViewPosition eventClickViewPosition) {
-          FollowRecordStatusItem item =  mViewModel.getLiveItems().getValue().get(eventClickViewPosition.getPosition());
-          String statusId = item.getStatus().getId();
-          if (eventClickViewPosition.getId() == R.id.btn_del){
-            //删除
-            deleteFollorStatus(statusId);
-          }else if (eventClickViewPosition.getId() == R.id.btn_edit){
-            //编辑
-            editFollowStatus(statusId,item.getStatus().getTrack_status());
-          }
+    RxBusAdd(EventClickViewPosition.class).subscribe(new BusSubscribe<EventClickViewPosition>() {
+      @Override public void onNext(EventClickViewPosition eventClickViewPosition) {
+        FollowRecordStatusItem item =
+            mViewModel.getLiveItems().getValue().get(eventClickViewPosition.getPosition());
+        String statusId = item.getStatus().getId();
+        if (eventClickViewPosition.getId() == R.id.btn_del) {
+          //删除
+          deleteFollorStatus(statusId);
+        } else if (eventClickViewPosition.getId() == R.id.btn_edit) {
+          //编辑
+          editFollowStatus(statusId, item.getStatus().getTrack_status());
         }
-      });
+      }
+    });
     return mBinding;
   }
 
   private void initRecyclerView() {
     mBinding.refreshLayout.setEnabled(false);
-    mBinding.recyclerView.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withOffset(1)
-      .withBottomEdge(true));
+    mBinding.recyclerView.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withOffset(1).withBottomEdge(true));
     adapter = new CommonFlexAdapter(new ArrayList(), this);
     mBinding.recyclerView.setAdapter(adapter);
 
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
   }
 
   private void initToolbar() {
@@ -90,36 +88,41 @@ public class FollowRecordStatusPage
   }
 
   private void addFollowStatus() {
-    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", "","取消", "确定", new MaterialDialog.SingleButtonCallback() {
-      @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-        if (materialDialog.getInputEditText() != null && materialDialog.getInputEditText().getText()!=null)
-          mViewModel.addFollowStatus(
-            materialDialog.getInputEditText() != null ? Objects.requireNonNull(
-              materialDialog.getInputEditText()).getText().toString().trim() : null);
-      }
-    });
+    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", "", 10, "取消", "确定",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+            if (materialDialog.getInputEditText() != null
+                && materialDialog.getInputEditText().getText() != null) {
+              mViewModel.addFollowStatus(
+                  materialDialog.getInputEditText() != null ? Objects.requireNonNull(
+                      materialDialog.getInputEditText()).getText().toString().trim() : null);
+            }
+          }
+        });
   }
 
-  private void editFollowStatus(String statusId,String conent) {
-    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)",conent, "取消", "确定", new MaterialDialog.SingleButtonCallback() {
-      @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-        if (materialDialog.getInputEditText() != null && materialDialog.getInputEditText().getText()!=null)
-          mViewModel.editFollowStatus(statusId,
-            materialDialog.getInputEditText() != null ? Objects.requireNonNull(
-              materialDialog.getInputEditText()).getText().toString().trim() : null);
-      }
-    });
+  private void editFollowStatus(String statusId, String conent) {
+    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", conent, 10, "取消", "确定",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+            if (materialDialog.getInputEditText() != null
+                && materialDialog.getInputEditText().getText() != null) {
+              mViewModel.editFollowStatus(statusId,
+                  materialDialog.getInputEditText() != null ? Objects.requireNonNull(
+                      materialDialog.getInputEditText()).getText().toString().trim() : null);
+            }
+          }
+        });
   }
-
 
   private void deleteFollorStatus(String id) {
     DialogUtils.showConfirm(getContext(), "确定要删除该跟进状态吗？", "删除后，该状态下会员的跟进状态将变为空",
-      (materialDialog, dialogAction) -> {
-        materialDialog.dismiss();
-        if (dialogAction == DialogAction.POSITIVE) {
-          mViewModel.deleteFollowStatus(id);
-        }
-      });
+        (materialDialog, dialogAction) -> {
+          materialDialog.dismiss();
+          if (dialogAction == DialogAction.POSITIVE) {
+            mViewModel.deleteFollowStatus(id);
+          }
+        });
   }
 
   @Override protected void handleHttpSuccess(String s) {

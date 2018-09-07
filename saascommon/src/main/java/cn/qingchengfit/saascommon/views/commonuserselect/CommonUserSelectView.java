@@ -92,6 +92,7 @@ public class CommonUserSelectView extends SaasCommonFragment
     this.datas.addAll(d);
     this.adapter.updateDataSet(this.datas);
   }
+  
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);

@@ -30,7 +30,7 @@ import java.util.List;
 @Leaf(module = "student", path = "/followrecord/notiothers/") public class NotiOthersPage
     extends StudentBaseFragment<StPageNotiOthersBinding, NotiOthersVM> {
   CommonUserSelectView studentListView = new CommonUserSelectView();
-  @Need public ArrayList<User> staffs;
+  @Need public ArrayList<Staff> staffs;
 
   @Override protected void subscribeUI() {
     mViewModel.getEditAfterTextChange().observe(this, filter -> {

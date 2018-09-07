@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import cn.qingchengfit.widgets.R;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -206,7 +208,7 @@ public class DialogUtils {
   }
 
   public static MaterialDialog initInputDialog(Context context, String title, String hint,
-      String preFill, String negativeText, String positiveText,
+      String preFill, int maxlength, String negativeText, String positiveText,
       MaterialDialog.SingleButtonCallback callback) {
     MaterialDialog.Builder builder = new MaterialDialog.Builder(context).autoDismiss(false)
         .contentGravity(GravityEnum.CENTER)
@@ -214,16 +216,16 @@ public class DialogUtils {
         .buttonsGravity(GravityEnum.CENTER)
         .input(hint, preFill, false, new MaterialDialog.InputCallback() {
           @Override public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
-
           }
         })
+        .alwaysCallInputCallback()
         .dividerColorRes(R.color.divider_medium)
         .positiveColorRes(R.color.colorPrimary)
         .positiveText(positiveText)
         .onPositive(callback)
         .negativeText(negativeText)
-        .autoDismiss(false)
-        .negativeColorRes(R.color.text_dark);
+        .negativeColorRes(R.color.text_dark)
+        .onNegative((materialDialog, dialogAction) -> materialDialog.dismiss());
 
     if (!TextUtils.isEmpty(title)) {
       builder.title(title);
@@ -231,13 +233,23 @@ public class DialogUtils {
       builder.contentColorRes(R.color.text_dark);
       builder.contentTextSize(15);
     }
-    return builder.build();
+    MaterialDialog build = builder.build();
+    if (maxlength != -1 && build.getInputEditText() != null) {
+      build.getInputEditText()
+          .setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxlength) });
+    }
+    return build;
   }
 
   public static void showInputDialog(Context context, String title, String hint, String preFill,
       String negativeText, String positiveText, MaterialDialog.SingleButtonCallback callback) {
-    initInputDialog(context, title, hint, preFill, negativeText, positiveText, callback).show();
+    initInputDialog(context, title, hint, preFill, -1, negativeText, positiveText, callback).show();
   }
 
-
+  public static void showInputDialog(Context context, String title, String hint, String preFill,
+      int maxlength, String negativeText, String positiveText,
+      MaterialDialog.SingleButtonCallback callback) {
+    initInputDialog(context, title, hint, preFill, maxlength, negativeText, positiveText,
+        callback).show();
+  }
 }
