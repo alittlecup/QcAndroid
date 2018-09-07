@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.saascommon.widget.FlexableListFragment;
 import cn.qingchengfit.student.BuildConfig;
 import cn.qingchengfit.student.R;
@@ -36,6 +37,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -133,6 +135,7 @@ import rx.functions.Action1;
     etSearch.setHint(getString(R.string.search_sms_hint));
     RxTextView.afterTextChangeEvents(etSearch)
         .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
         .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
           @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
             sendedFragment.setFilterString(etSearch.getText().toString().trim());
@@ -143,7 +146,9 @@ import rx.functions.Action1;
                 etSearch.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
           }
         });
-    RxView.clicks(searchviewClear).subscribe(aVoid -> etSearch.setText(""));
+    RxView.clicks(searchviewClear)
+        .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+        .subscribe(aVoid -> etSearch.setText(""));
     allFragment.setItemClickListener(position -> {
       if (mDatasAll.isEmpty()) return false;
       if (mDatasAll.get(position) instanceof ShortMsgItem) {
