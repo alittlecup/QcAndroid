@@ -41,7 +41,7 @@ import rx.functions.Action1;
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       listView.setDatas(items);
-      listView.getListView().setAdapterTag("choose", -1);
+      listView.getListView().setAdapterTag("showBase", true);
     });
     mViewModel.showLoading.observe(this, aBoolean -> {
       if (aBoolean) {
@@ -203,7 +203,7 @@ import rx.functions.Action1;
       //底部分配布局
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //修改列表内容
-      listView.getListView().setCurType(StudentListView.MSG_TYPE);
+      listView.getListView().setCurType(type);
     } else {
       mBinding.rbSelectAll.setVisibility(View.GONE);
       initToolbar();

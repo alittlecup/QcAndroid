@@ -36,6 +36,11 @@ import javax.inject.Inject;
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
       adapter.updateDataSet(items);
+      mBinding.recyclerView.post(new Runnable() {
+        @Override public void run() {
+          mBinding.recyclerView.scrollToPosition(adapter.getItemCount());
+        }
+      });
     });
   }
 

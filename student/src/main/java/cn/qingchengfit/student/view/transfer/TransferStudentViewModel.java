@@ -37,7 +37,7 @@ public class TransferStudentViewModel extends
         FlexibleViewModel<List<QcStudentBeanWithFollow>, ChooseDetailItem, TransferStudentViewModel.DataHolder> {
 
     public ObservableField<List<ChooseDetailItem>> items = new ObservableField<>();
-    public ObservableBoolean filterVisible = new ObservableBoolean(false);
+    public MutableLiveData<Boolean> filterVisible = new MutableLiveData();
     public ObservableBoolean appBarLayoutExpend = new ObservableBoolean(true);
     public ObservableField<String> staffName = new ObservableField<>("全部");
     public ObservableField<String> days = new ObservableField<>("最近7天");
@@ -90,9 +90,9 @@ public class TransferStudentViewModel extends
     public void onTopFilterClick(boolean isChecked, int index) {
         if (isChecked) {
             filterIndex.setValue(index);
-            filterVisible.set(true);
+            filterVisible.setValue(true);
         } else {
-            filterVisible.set(false);
+            filterVisible.setValue(false);
         }
     }
 

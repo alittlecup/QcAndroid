@@ -130,8 +130,10 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
-      DirtySender.studentList=new ArrayList<>(qcStudents);
-      routeTo("/student/msgsend", null);
+      routeTo("/student/allot", new StudentAllotPageParams().items(new ArrayList<>(getStudents()))
+          .curType(StudentListView.MSG_TYPE)
+          .sortVisible(false)
+          .build());
     });
   }
 

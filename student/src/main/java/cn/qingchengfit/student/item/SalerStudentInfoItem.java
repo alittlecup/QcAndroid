@@ -8,6 +8,7 @@ import cn.qingchengfit.student.bean.SellerStat;
 import cn.qingchengfit.student.databinding.ItemSalerStudentInfoBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -17,9 +18,11 @@ import java.util.List;
 public class SalerStudentInfoItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemSalerStudentInfoBinding>> {
   private SellerStat data;
+  private String type="";
 
-  public SalerStudentInfoItem(SellerStat data) {
+  public SalerStudentInfoItem(SellerStat data,String type) {
     this.data = data;
+    this.type=type;
   }
 
   public SellerStat getData() {
@@ -73,6 +76,17 @@ public class SalerStudentInfoItem
         binding.progressBar.setMax(data.getTotal_count());
         binding.progressBar.setProgress(data.getInactive_count());
       }
+    }
+    switch (type){
+      case IncreaseType.INCREASE_FOLLOWUP:
+        binding.totalContent.setText("已接洽");
+        break;
+      case IncreaseType.INCREASE_MEMBER:
+        binding.totalContent.setText("新注册");
+        break;
+      case IncreaseType.INCREASE_STUDENT:
+        binding.totalContent.setText("会员");
+        break;
     }
   }
 }

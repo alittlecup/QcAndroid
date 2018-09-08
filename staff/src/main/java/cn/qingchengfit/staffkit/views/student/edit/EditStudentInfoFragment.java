@@ -515,7 +515,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
 
   public void onRemarkClick() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("填写备注信息").hint(remarks).content(user.getRemarks()).build());
+        new CommonInputParams().title("填写备注信息").hint("").content(TextUtils.isEmpty(remarks)?user.getRemarks():remarks).build());
   }
 
   /**

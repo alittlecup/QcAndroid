@@ -27,7 +27,8 @@ import java.util.List;
 
 public class ChooseDetailItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemChooseDetailBinding>>
-    implements ISectionable<DataBindingViewHolder<ItemChooseDetailBinding>, IHeader>, IItemData ,IFilterable {
+    implements ISectionable<DataBindingViewHolder<ItemChooseDetailBinding>, IHeader>, IItemData,
+    IFilterable {
 
   public QcStudentBeanWithFollow data;
   public int status;
@@ -36,7 +37,6 @@ public class ChooseDetailItem
     this.data = data;
     this.status = status;
   }
-
 
   public QcStudentBeanWithFollow getData() {
     return data;
@@ -47,7 +47,9 @@ public class ChooseDetailItem
   }
 
   @Override public boolean equals(Object o) {
-    return  o instanceof ChooseDetailItem && ((ChooseDetailItem) o).getData().getId().equalsIgnoreCase(getData().getId());
+    return o instanceof ChooseDetailItem && ((ChooseDetailItem) o).getData()
+        .getId()
+        .equalsIgnoreCase(getData().getId());
   }
 
   @Override public int getLayoutRes() {
@@ -80,6 +82,7 @@ public class ChooseDetailItem
       DataBindingViewHolder<ItemChooseDetailBinding> holder, int position, List payloads) {
     holder.itemView.setTag(data);
     boolean showSelected = false;
+    boolean showBase = false;
     if (adapter instanceof CommonFlexAdapter) {
       Integer choose = (Integer) ((CommonFlexAdapter) adapter).getTag("choose");
       if (choose != null) {
@@ -88,6 +91,10 @@ public class ChooseDetailItem
       Boolean selected = (Boolean) ((CommonFlexAdapter) adapter).getTag("selected");
       if (selected != null) {
         showSelected = selected;
+      }
+      Boolean based = (Boolean) ((CommonFlexAdapter) adapter).getTag("showBase");
+      if (based != null) {
+        showBase = based;
       }
     }
     ItemChooseDetailBinding binding = holder.getDataBinding();
@@ -116,8 +123,11 @@ public class ChooseDetailItem
     binding.tvStudentStatus.setCompoundDrawables(
         StudentBusinessUtils.getStudentStatusDrawable(holder.itemView.getContext(),
             data.getStatus() % 3), null, null, null);
-
-    if (type == Mode.UNDEFINE) {
+    if (showBase) {//这里与UNDEFINE 相同处理是因为UNDEFINE 在外部代表了群发短信的样式， 但是有时要求分配销售和教练也不显示多余信息，用处在StudentAllPage
+      binding.tvStudentDesc.setVisibility(View.GONE);
+      binding.itemPersonDesc.setVisibility(View.GONE);
+      binding.btnContactHim.setVisibility(View.GONE);
+    } else if (type == Mode.UNDEFINE) {
       binding.tvStudentDesc.setVisibility(View.GONE);
       binding.itemPersonDesc.setVisibility(View.GONE);
       binding.btnContactHim.setVisibility(View.GONE);
@@ -134,7 +144,6 @@ public class ChooseDetailItem
       binding.itemPersonDesc.setVisibility(View.VISIBLE);
       binding.tvStudentDesc.setVisibility(View.GONE);
       binding.btnContactHim.setVisibility(View.GONE);
-
     } else if (type == Mode.TRAINER) {
       List<String> sellerNames2 = new ArrayList<>();
       if (data.coaches != null && !data.coaches.isEmpty()) {
@@ -148,8 +157,7 @@ public class ChooseDetailItem
       binding.itemPersonDesc.setVisibility(View.VISIBLE);
       binding.tvStudentDesc.setVisibility(View.GONE);
       binding.btnContactHim.setVisibility(View.GONE);
-
-    } else if(type==Mode.BOTH){
+    } else if (type == Mode.BOTH) {
       List<String> sellerNames = new ArrayList<>();
       if (data.sellers != null && !data.sellers.isEmpty()) {
         for (Staff seller : data.sellers) {
@@ -163,7 +171,8 @@ public class ChooseDetailItem
         }
       }
       binding.itemPersonDesc.setText(new StringBuilder().append("销售：")
-          .append(StringUtils.List2StrWithChineseSplit(sellerNames)).toString());
+          .append(StringUtils.List2StrWithChineseSplit(sellerNames))
+          .toString());
       binding.itemPersonCoach.setText(new StringBuilder().append("教练：")
           .append(StringUtils.List2StrWithChineseSplit(sellerNames2))
           .toString());
@@ -171,7 +180,7 @@ public class ChooseDetailItem
       binding.itemPersonCoach.setVisibility(View.VISIBLE);
       binding.tvStudentDesc.setVisibility(View.GONE);
       binding.btnContactHim.setVisibility(View.GONE);
-    }else if (type == Mode.MORE_INFO) {
+    } else if (type == Mode.MORE_INFO) {
       List<String> sellerNames = new ArrayList<>();
       if (data.sellers != null && !data.sellers.isEmpty()) {
         for (Staff seller : data.sellers) {
@@ -194,7 +203,7 @@ public class ChooseDetailItem
                       : data.recommend_by.username)
               .append("\n注册时间：")
               .append(TextUtils.isEmpty(data.joined_at) ? ""
-                  : DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(data.joined_at)))
+                  : DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(data.joined_at)))
               .toString();
           break;
         case 1:
@@ -258,7 +267,7 @@ public class ChooseDetailItem
   }
 
   @IntDef({
-      Mode.UNDEFINE, Mode.SALLER, Mode.TRAINER, Mode.MORE_INFO,Mode.BOTH
+      Mode.UNDEFINE, Mode.SALLER, Mode.TRAINER, Mode.MORE_INFO, Mode.BOTH
   }) @Retention(RetentionPolicy.RUNTIME) public @interface Mode {
     int UNDEFINE = -1;
     int SALLER = 0;

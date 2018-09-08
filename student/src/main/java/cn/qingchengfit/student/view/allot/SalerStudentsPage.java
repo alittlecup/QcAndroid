@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
@@ -18,10 +20,13 @@ import cn.qingchengfit.student.listener.LoadDataListener;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 
@@ -47,6 +52,10 @@ import javax.inject.Inject;
 
   @Override public StSalerStudentsPageBinding initDataBinding(LayoutInflater layoutInflater,
       ViewGroup viewGroup, Bundle bundle) {
+    if(mBinding!=null){
+      loadData(new HashMap<>());
+      return mBinding;
+    }
     mBinding = StSalerStudentsPageBinding.inflate(layoutInflater, viewGroup, false);
     initToolbar();
     initFragment();
@@ -59,36 +68,21 @@ import javax.inject.Inject;
 
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        toggleToolbar(true, StudentListView.TRAINER_TYPE);
+      } else {
         showAlert(R.string.sorry_for_no_permission);
-        return;
       }
-      routeTo("/student/allot",
-          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
-              .staff(staff)
-              .type(type)
-              .curType(StudentListView.TRAINER_TYPE).build());
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+        toggleToolbar(true, StudentListView.SELLER_TYPE);
+      } else {
         showAlert(R.string.sorry_for_no_permission);
-        return;
       }
-      routeTo("/student/allot",
-          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
-              .staff(staff)
-              .type(type)
-              .curType(StudentListView.SELLER_TYPE).build());
     });
     mBinding.includeAllot.allotMsg.setOnClickListener(view->{
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
-        showAlert(R.string.sorry_for_no_permission);
-        return;
-      }
-      routeTo("/student/allot",
-          new StudentAllotPageParams().items(new ArrayList<>(mViewModel.getStudentBeans()))
-              .staff(staff)
-              .curType(StudentListView.MSG_TYPE).build());
+      toggleToolbar(true, StudentListView.MSG_TYPE);
     });
   }
 
@@ -116,6 +110,38 @@ import javax.inject.Inject;
     }
     mBinding.setToolbarModel(new ToolbarModel(title));
     initToolbar(mBinding.includeToolbar.toolbar);
+  }
+  private void toggleToolbar(boolean showCheckbox,String type){
+    if(showCheckbox){
+      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return;
+      }
+      mBinding.rbSelectAll.setVisibility(View.VISIBLE);
+      ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(type));
+      toolbarModel.setMenu(R.menu.menu_cancel);
+      toolbarModel.setListener(item -> {
+        toggleToolbar(false, "");
+        return false;
+      });
+      mBinding.setToolbarModel(toolbarModel);
+      if (!CompatUtils.less21()
+          && mBinding.includeToolbar.toolbar.getParent() instanceof ViewGroup
+          && this.isfitSystemPadding()) {
+        RelativeLayout.LayoutParams layoutParams =
+            (RelativeLayout.LayoutParams) mBinding.rbSelectAll.getLayoutParams();
+        layoutParams.setMargins(0, MeasureUtils.getStatusBarHeight(this.getContext()), 0, 0);
+        mBinding.rbSelectAll.setLayoutParams(layoutParams);
+      }
+      //底部分配布局
+      mBinding.includeAllot.getRoot().setVisibility(View.GONE);
+      //收缩布局
+      listView.getListView().setCurType(type);
+    }else{
+      initToolbar();
+      mBinding.rbSelectAll.setVisibility(View.GONE);
+
+    }
   }
 
   @Override public void openDrawer() {

@@ -28,6 +28,7 @@ import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
+import cn.qingchengfit.student.view.state.SalerStudentStatePage;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ToastUtils;
@@ -64,13 +65,19 @@ public class StudentListView
     });
     mViewModel.getSelectedDatas().observe(this, items -> {
       if (items == null || items.isEmpty()) {
-        adapter.clearSelection();
-        checkable.setChecked(false);
+        selectedAll(false);
+        if (checkable != null) {
+          checkable.setChecked(false);
+        }
       }
     });
     mViewModel.removeResult.observe(this, aBoolean -> {
       ToastUtils.show(aBoolean ? "移除成功" : "移除失败");
-      getActivity().onBackPressed();
+      if (getParentFragment() instanceof SalerStudentStatePage) {
+        ((SalerStudentStatePage) getParentFragment()).onRemoveResult(aBoolean);
+      } else {
+        getActivity().onBackPressed();
+      }
     });
   }
 

@@ -109,21 +109,5 @@ public class FollowRecord {
       return 0;
     }
   }
-
-  public static FollowRecord mock() {
-    FollowRecord fr = new FollowRecord();
-    fr.created_by = new User();
-    fr.created_by.username = "纸团";
-    fr.created_by.avatar = "https://zoneke-img.b0.upaiyun.com/473c0770d3490415066df9db998f31ce.png";
-    fr.content = "假装在跟进";
-    fr.image_attachments = new ArrayList<>();
-    Attach attach =
-        new Attach("https://zoneke-img.b0.upaiyun.com/473c0770d3490415066df9db998f31ce.png");
-    fr.image_attachments.add(attach);
-    fr.image_attachments.add(attach);
-    fr.image_attachments.add(attach);
-    fr.track_status = UUID.randomUUID().toString();
-    return fr;
-  }
 }
 

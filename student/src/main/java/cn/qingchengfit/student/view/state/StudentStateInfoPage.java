@@ -88,7 +88,7 @@ import java.util.Map;
 
   private void initTab(List<InactiveBean> inactiveBeans) {
     if (inactiveBeans == null || inactiveBeans.isEmpty()) return;
-
+    fragmentList.clear();
     ArrayList<PieEntry> entries = new ArrayList<>();
     for (int i = 0; i < inactiveBeans.size(); i++) {
       InactiveBean inactiveBean = inactiveBeans.get(i);
@@ -112,7 +112,7 @@ import java.util.Map;
     mBinding.pieChart.invalidate();
     initViewPager();
 
-    ((CountDateView) mBinding.llCountDate.getChildAt(0)).setChecked(true);
+    ((CountDateView) mBinding.llCountDate.getChildAt(mBinding.viewpager.getCurrentItem()*2)).setChecked(true);
   }
 
   private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
@@ -121,7 +121,7 @@ import java.util.Map;
     Collections.sort(seller_stat, (o1, o2) -> o2.getTotal_count() - o1.getTotal_count());
     List<SalerStudentInfoItem> items = new ArrayList<>();
     for (int i = 0; i < seller_stat.size(); i++) {
-      items.add(new SalerStudentInfoItem(seller_stat.get(i)));
+      items.add(new SalerStudentInfoItem(seller_stat.get(i),curType));
     }
     salerStudentListView.setItems(items);
     return salerStudentListView;
@@ -134,34 +134,29 @@ import java.util.Map;
     switch (curType) {
       case IncreaseType.INCREASE_FOLLOWUP:
         toolbarModel = new ToolbarModel("已接洽");
-        mBinding.tvNotFollow.setText("未跟进时长分布");
         mViewModel.loadSource(1);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_follow_ing_color));
         initColors(getResources().getColor(R.color.st_follow_ing_color));
-        endSub = "未跟进";
-        mBinding.tvDesc.setText("未跟进天数");
 
         break;
       case IncreaseType.INCREASE_STUDENT:
         toolbarModel = new ToolbarModel("会员");
-        mBinding.tvNotFollow.setText("未跟进时长分布");
         mViewModel.loadSource(2);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_new_student_color));
         initColors(getResources().getColor(R.color.st_new_student_color));
-        endSub = "未跟进";
-        mBinding.tvDesc.setText("未跟进天数");
 
         break;
       case IncreaseType.INCREASE_MEMBER:
         toolbarModel = new ToolbarModel("新注册");
-        mBinding.tvNotFollow.setText("未跟进时长分布");
         mViewModel.loadSource(0);
         mViewModel.backgroundColor.setValue(getResources().getColor(R.color.st_new_member_color));
         initColors(getResources().getColor(R.color.st_new_member_color));
-        endSub = "未跟进";
-        mBinding.tvDesc.setText("未跟进天数");
+
         break;
     }
+    mBinding.tvNotFollow.setText("未跟进时长分布");
+    endSub = "未跟进";
+    mBinding.tvDesc.setText("未跟进天数");
     if (toolbarModel != null) {
       mBinding.setToolbarModel(toolbarModel);
     }
@@ -191,6 +186,7 @@ import java.util.Map;
     routeTo("/student/seller_state", new SalerStudentStatePageParams().type(curType)
         .staff(seller)
         .beans(new ArrayList<>(mViewModel.inactiveStat.getValue().getInactive().getStat_data()))
+        .position(currentItem)
         .build());
     return false;
   }

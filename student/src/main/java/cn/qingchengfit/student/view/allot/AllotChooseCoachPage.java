@@ -46,8 +46,7 @@ import java.util.List;
 
     mViewModel.getResponseSuccess().observe(this, aBoolean -> {
       if (aBoolean) {
-        int id = getFragmentManager().getBackStackEntryAt(1).getId();
-        getFragmentManager().popBackStack(id, 1);
+        getActivity().onBackPressed();
       }
     });
   }
@@ -87,14 +86,12 @@ import java.util.List;
       String msg = "";
       if (getString(R.string.coach_choose_student).equals(title)) {//0
         if (selectIds.size() == 0) {
-          DialogUtils.showAlert(getContext(),
-              R.string.alert_choose_one_coach);
+          DialogUtils.showAlert(getContext(), R.string.alert_choose_one_coach);
           return true;
         }
         salernames.deleteCharAt(salernames.length() - 1);
         msg = getString(R.string.alert_comfirm_allot, salernames);
-      } else if (getString(R.string.coach_change_student).equals(
-          title)) {//1
+      } else if (getString(R.string.coach_change_student).equals(title)) {//1
         if (selectIds.size() == 0) {
           onShowError(R.string.alert_choose_one_coach);
           return true;
@@ -114,7 +111,6 @@ import java.util.List;
     });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
-
   }
 
   private void initFragment() {

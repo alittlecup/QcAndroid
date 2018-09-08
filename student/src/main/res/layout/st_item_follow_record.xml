@@ -177,7 +177,6 @@
               android:id="@+id/tv_next_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@{@string/follow_next_time(info.getFollowTimeString())}"
               style="@style/QcTextStyleStandardWarm"
 
               />
@@ -194,16 +193,16 @@
             />
 
         <TextView
+            android:id="@+id/follow_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/follow_up_type(info.getFollowMethodString(context))}"
             style="@style/QcTextStyleStandardGrey"
             />
 
         <TextView
+            android:id="@+id/follow_members"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/follow_notify_other(info.getNotiOthers())}"
             style="@style/QcTextStyleStandardGrey"
             />
 

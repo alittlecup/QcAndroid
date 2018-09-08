@@ -56,7 +56,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text='@{viewModel.topCount+"节以上"}'
+                android:text='@{@string/attendance_nosign(viewModel.topCount)}'
                 android:onClick="@{(view)->viewModel.onTopFilterClick(((QcFilterToggle)view).isChecked(),1)}"
                 android:textColor="@color/qc_text_black"
                 android:textSize="13sp"

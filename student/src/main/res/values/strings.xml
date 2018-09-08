@@ -116,10 +116,13 @@
   <string name="text_student_import">会员导入</string>
   <string name="text_student_export">会员导出</string>
   <string name="person">人</string>
+  <string name="person_count">人</string>
 
   <string name="st_follow_record_noti_others">{name1},{name2}等{count}人</string>
 
   <string name="follow_next_time">下次跟进时间：</string>
   <string name="follow_up_type">跟进方式：</string>
   <string name="follow_notify_other">通知他人：</string>
+  <string name="transfer_student">%s注册的会员</string>
+  <string name="attendance_nosign">%d节以上</string>
 </resources>

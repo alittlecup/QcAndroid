@@ -33,6 +33,7 @@ import javax.inject.Inject;
   @Need Staff staff;
   @Inject IPermissionModel permissionModel;
   @Need ArrayList<InactiveBean> beans;
+  @Need Integer position;
   StudentListView listView;
   SalerStateFilterView filterView;
 
@@ -58,7 +59,7 @@ import javax.inject.Inject;
     initFragment();
     initListener();
     toggleToolbar(false, "");
-    mViewModel.setCurAttack(beans.get(0));
+    mViewModel.setCurAttack(beans.get(position));
     return mBinding;
   }
 
@@ -120,6 +121,12 @@ import javax.inject.Inject;
     mBinding.bottomAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
+  }
+  public void onRemoveResult(boolean isSuccess){
+    if(isSuccess){
+      mViewModel.reLoad();
+    }
+    toggleToolbar(false,"");
   }
 
   private void toggleToolbar(boolean showCheckBox, String type) {

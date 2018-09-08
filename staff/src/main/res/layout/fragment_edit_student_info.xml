@@ -171,6 +171,7 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_lable="@string/address"
+          app:civ_hint="选填"
           />
 
       <cn.qingchengfit.widgets.CommonInputView
@@ -190,6 +191,7 @@
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="备注"
+          app:civ_hint="请填写"
           app:civ_showdivier="false"
           app:civ_showright="true"
           />
@@ -210,6 +212,7 @@
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="@string/allot_saler"
+          app:civ_hint="请选择"
           app:civ_showdivier="false"
           app:civ_showright="true"
           />
@@ -222,6 +225,7 @@
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="@string/allocate_coach"
+          app:civ_hint="请选择"
           app:civ_showdivier="false"
           app:civ_showright="true"
           />

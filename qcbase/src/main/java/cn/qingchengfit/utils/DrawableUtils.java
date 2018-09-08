@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import cn.qingchengfit.widgets.R;
@@ -41,5 +42,10 @@ public class DrawableUtils {
     DrawableCompat.setTint(d,ContextCompat.getColor(context, color));
     //d.setColorFilter(color);
     return d;
+  }
+  public static Drawable tintDrawable(Context context,@DrawableRes int drawable,@ColorRes int color){
+    Drawable mutate = ContextCompat.getDrawable(context, drawable).mutate();
+    DrawableCompat.setTint(mutate,ContextCompat.getColor(context,color));
+    return mutate;
   }
 }

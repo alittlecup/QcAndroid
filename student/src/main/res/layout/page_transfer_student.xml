@@ -144,7 +144,7 @@
                         style="@style/TextTitleHint"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text='@{viewModel.days+"注册的会员"}' />
+                        android:text='@{@string/transfer_student(viewModel.days)}' />
 
                 </android.support.design.widget.AppBarLayout>
 

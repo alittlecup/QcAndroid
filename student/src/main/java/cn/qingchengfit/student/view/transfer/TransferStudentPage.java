@@ -3,6 +3,7 @@ package cn.qingchengfit.student.view.transfer;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
@@ -28,6 +29,20 @@ public class TransferStudentPage extends
         });
         mViewModel.getFilterIndex().observe(this,index -> {
             filterView.showPage(index);
+
+        });
+        mViewModel.filterVisible.observe(this,aBoolean -> {
+            if(aBoolean){
+                mBinding.fragFilter.setVisibility(View.VISIBLE);
+                mBinding.fragFilter.setAlpha(0f);
+                mBinding.fragFilter.animate().alpha(1).setDuration(20).start();
+            }else{
+                mBinding.fragFilter.animate().alpha(0).setDuration(20).withEndAction(new Runnable() {
+                    @Override public void run() {
+                        mBinding.fragFilter.setVisibility(View.GONE);
+                    }
+                }).start();
+            }
         });
 
     }

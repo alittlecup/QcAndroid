@@ -50,15 +50,10 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
       holder.binding.tvNextTime.setVisibility(View.VISIBLE);
     }
     holder.binding.tvGymName.setText(followRecord.getShop());
+    holder.binding.tvNextTime.setText("下次跟进时间："+followRecord.getFollowTimeString());
+    holder.binding.followType.setText("跟进方式："+followRecord.getFollowMethodString(holder.itemView.getContext()));
+    holder.binding.followMembers.setText("通知他人："+followRecord.getNotiOthers());
 
-
-    //holder.binding.img01.setVisibility(followRecord.getAttachSize() > 0 ?View.VISIBLE:View.GONE);
-    //holder.binding.img02.setVisibility(followRecord.getAttachSize() > 1 ?View.VISIBLE:View.GONE);
-    //holder.binding.img03.setVisibility(followRecord.getAttachSize() > 2 ?View.VISIBLE:View.GONE);
-    //
-    //PhotoUtils.small(holder.binding.img01,followRecord.getImagePos(0));
-    //PhotoUtils.small(holder.binding.img02,followRecord.getImagePos(1));
-    //PhotoUtils.small(holder.binding.img03,followRecord.getImagePos(2));
 
   }
 

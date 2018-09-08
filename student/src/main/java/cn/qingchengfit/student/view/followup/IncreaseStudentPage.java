@@ -26,6 +26,7 @@ import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentFilterViewModel;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.statuslayout.StatusLayoutManager;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -60,17 +61,54 @@ import javax.inject.Inject;
             mBinding.fragmentFilter.setVisibility(View.GONE);
           }
         }).start();
+        mBinding.layoutCollapsed.setEnabled(true);
       }
     });
     mSortViewModel.filterIndex.observe(this, index -> {
       followUpFilterView.showPage(index);
       mBinding.layoutCollapsed.setExpanded(false);
+      mBinding.layoutCollapsed.setEnabled(false);
     });
     mSortViewModel.filterAction.observe(this, aVoid -> {
       mBinding.drawer.openDrawer(GravityCompat.END);
     });
     mSortViewModel.params.observe(this, params -> {
       mViewModel.loadSourceByStatus(params);
+    });
+    mSortViewModel.salerName.observe(this,name->{
+      if("全部销售".equals(name)){
+        mBinding.qftSaler.setTextColorRes(R.color.text_black);
+        mBinding.qftSaler.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftSaler.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      }else{
+        mBinding.qftSaler.setTextColorRes(R.color.colorPrimary);
+        mBinding.qftSaler.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
+        mBinding.qftSaler.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+      }
+    });
+    mSortViewModel.gender.observe(this,gender->{
+      if("性别".equals(gender)){
+        mBinding.qftGender.setTextColorRes(R.color.text_black);
+        mBinding.qftGender.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftGender.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      }else{
+        mBinding.qftGender.setTextColorRes(R.color.colorPrimary);
+
+        mBinding.qftGender.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
+        mBinding.qftGender.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+      }
+    });
+    mSortViewModel.studentStatus.observe(this,status->{
+      if("会员状态".equals(status)){
+        mBinding.qftStatus.setTextColorRes(R.color.text_black);
+        mBinding.qftStatus.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftStatus.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      }else{
+        mBinding.qftStatus.setTextColorRes(R.color.colorPrimary);
+
+        mBinding.qftStatus.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
+        mBinding.qftStatus.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+      }
     });
 
     mViewModel.getLiveItems().observe(this, items -> {

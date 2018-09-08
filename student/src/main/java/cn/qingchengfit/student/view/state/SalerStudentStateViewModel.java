@@ -14,6 +14,7 @@ import cn.qingchengfit.student.bean.InactiveBean;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.item.ChooseDetailItem;
+import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.student.view.followup.IncreaseStudentViewModel;
 import java.util.HashMap;
@@ -82,6 +83,13 @@ public class SalerStudentStateViewModel
 
   public void setCurAttack(InactiveBean inactiveBean) {
     filterContent.setValue(inactiveBean.getPeriod() + "未跟进");
+    preId=inactiveBean.getId();
     loadSource(inactiveBean.getId());
+  }
+  private int preId=-1;
+  public void reLoad(){
+    if(preId!=-1){
+      loadSource(preId);
+    }
   }
 }

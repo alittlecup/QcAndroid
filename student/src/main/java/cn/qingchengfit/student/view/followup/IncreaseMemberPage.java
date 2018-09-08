@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import cn.qingchengfit.student.databinding.StPageIncreaseMemberBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -62,6 +64,30 @@ import javax.inject.Inject;
     });
     mSortViewModel.params.observe(this, params -> {
       mViewModel.loadSource(params);
+    });
+
+    mSortViewModel.salerName.observe(this,name->{
+      if("全部销售".equals(name)){
+        mBinding.qftSaler.setTextColorRes(R.color.text_black);
+        mBinding.qftStatus.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftStatus.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      }else{
+        mBinding.qftSaler.setTextColorRes(R.color.colorPrimary);
+        mBinding.qftSaler.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
+        mBinding.qftSaler.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+
+      }
+    });
+    mSortViewModel.followUpStatus.observe(this,status->{
+      if("跟进状态".equals(status)){
+        mBinding.qftStatus.setTextColorRes(R.color.text_black);
+        mBinding.qftStatus.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftStatus.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      }else{
+        mBinding.qftStatus.setTextColorRes(R.color.colorPrimary);
+        mBinding.qftStatus.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
+        mBinding.qftStatus.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+      }
     });
 
     mViewModel.getLiveItems().observe(this, items -> {

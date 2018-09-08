@@ -15,8 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
 
@@ -38,23 +36,23 @@ import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import rx.functions.Action1;
 
-@Leaf(module = "course", path = "/batch/pay/online/")
-public class BatchPayOnlineFragment extends SaasBaseFragment {
+@Leaf(module = "course", path = "/batch/pay/online/") public class BatchPayOnlineFragment
+    extends SaasBaseFragment {
 
-    @Need public Rule rule;
-    @Need public Integer maxPeople;
-    @Need public Boolean multiPrice;
+  @Need public Rule rule;
+  @Need public Integer maxPeople;
+  @Need public Boolean multiPrice;
 
-	TextView toolbarTitile;
-	Toolbar toolbar;
-	TextView lable;
-	SwitchCompat switcher;
-	RelativeLayout layoutLimitPeop;
-	ExpandedLayout payOnline;
-	CommonInputView limitWho;
-	CommonInputView limitNum;
-	CommonInputView payOnlineMoney;
-	View divider;
+  TextView toolbarTitile;
+  Toolbar toolbar;
+  TextView lable;
+  SwitchCompat switcher;
+  RelativeLayout layoutLimitPeop;
+  ExpandedLayout payOnline;
+  CommonInputView limitWho;
+  CommonInputView limitNum;
+  CommonInputView payOnlineMoney;
+  View divider;
 
   /**
    * 用来记录在线支付的约课限制
@@ -63,7 +61,7 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
   private DialogList stucount;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_batch_pay_onlien, container, false);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -90,19 +88,19 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
     initToolbar(toolbar);
     if (rule != null && rule.channel.equalsIgnoreCase(Configs.CHANNEL_ONLINE)) {
       payOnline.getViewTreeObserver()
-        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-          @Override public void onGlobalLayout() {
-            CompatUtils.removeGlobalLayout(payOnline.getViewTreeObserver(), this);
-            payOnline.setExpanded(true);
-          }
-        });
+          .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+              CompatUtils.removeGlobalLayout(payOnline.getViewTreeObserver(), this);
+              payOnline.setExpanded(true);
+            }
+          });
       payOnlineMoney.setContent(rule.cost);
       if (rule.limits != null && rule.limits.user_status != null) {
         switcher.setChecked(true);
         limitNum.setVisibility(View.VISIBLE);
         limitWho.setVisibility(View.VISIBLE);
         limitNum.setContent(
-          rule.limits.user_count == 0 ? maxPeople + "" : rule.limits.user_count + "");
+            rule.limits.user_count == 0 ? maxPeople + "" : rule.limits.user_count + "");
         if (rule.limits.user_status != null) {
           mLimit = new ArrayList<Integer>();
           mLimit.addAll(rule.limits.user_status);
@@ -134,6 +132,15 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
       rule = new Rule();
       rule.channel = Configs.CHANNEL_ONLINE;
     }
+    payOnline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isChecked) {
+          switcher.setChecked(false);
+          limitNum.setVisibility(View.GONE);
+          limitWho.setVisibility(View.GONE);
+        }
+      }
+    });
     RxBusAdd(EventMutiChoose.class).subscribe(new Action1<EventMutiChoose>() {
       @Override public void call(EventMutiChoose eventMutiChoose) {
         mLimit = (ArrayList) eventMutiChoose.data;
@@ -188,7 +195,7 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
           }
           rule.cost = payOnlineMoney.getContent();
           rule.from_number = 1;
-          rule.to_number = maxPeople+1;
+          rule.to_number = maxPeople + 1;
           rule.card_tpl_id = "0";
           if (switcher.isChecked()) {
             try {
@@ -199,8 +206,7 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
           } else {
             rule.limits = null;
           }
-
-        }else {
+        } else {
           rule = null;
         }
         RxBus.getBus().post(new EventPayOnline(rule));
@@ -214,18 +220,19 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
     return BatchPayOnlineFragment.class.getName();
   }
 
- public void clickLimitWho() {
+  public void clickLimitWho() {
     OnlineLimitFragment.newInstance(Utils.toIntArray(mLimit)).show(getFragmentManager(), "");
   }
 
- public void clickLimitNum() {
+  public void clickLimitNum() {
     stucount = new DialogList(getContext()).list(StringUtils.getNums(1, maxPeople),
-      new AdapterView.OnItemClickListener() {
-        @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-          limitNum.setContent(Integer.toString(position + 1));
-          stucount.dismiss();
-        }
-      }).title("选择人数");
+        new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            limitNum.setContent(Integer.toString(position + 1));
+            stucount.dismiss();
+          }
+        }).title("选择人数");
     stucount.show();
   }
 }

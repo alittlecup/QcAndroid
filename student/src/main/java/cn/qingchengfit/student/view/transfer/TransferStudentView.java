@@ -29,7 +29,7 @@ public class TransferStudentView extends BaseFilterFragment {
 
     @Override
     public void dismiss() {
-        viewModel.filterVisible.set(false);
+        viewModel.filterVisible.setValue(false);
     }
 
     private void initFragment() {
@@ -37,13 +37,13 @@ public class TransferStudentView extends BaseFilterFragment {
         dayFragment.setSelectDayAction((start,end,title)->{
             viewModel.getMutabkleDays().setValue(new Pair<>(start,end));
             viewModel.days.set(title);
-            viewModel.filterVisible.set(false);
+            viewModel.filterVisible.setValue(false);
         });
         salerView = new FollowUpTopSalerView();
         salerView.setOnItemClick(staff -> {
             viewModel.getStaff().setValue(staff);
             viewModel.staffName.set(staff==null?"销售":staff.username);
-            viewModel.filterVisible.set(false);
+            viewModel.filterVisible.setValue(false);
         });
     }
 

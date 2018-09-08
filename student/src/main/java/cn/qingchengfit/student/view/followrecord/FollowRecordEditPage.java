@@ -171,10 +171,6 @@ import javax.inject.Inject;
   }
 
   void addImage() {
-    if (mViewModel.followRecordUrl.size() >= 5) {
-      ToastUtils.show("最多只能添加5张");
-      return;
-    }
     if (picDialog == null) {
       picDialog = MultiChoosePicFragment.newInstance(mViewModel.followRecordUrl);
       picDialog.setUpLoadImageCallback(uris -> {

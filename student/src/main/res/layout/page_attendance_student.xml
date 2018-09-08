@@ -1,202 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
 
-    <data>
+  <data>
 
 
+    <import type="android.graphics.Color"/>
 
-        <import type="android.graphics.Color" />
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
 
-        <variable
-            name="toolbarModel"
-            type="cn.qingchengfit.model.others.ToolbarModel" />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.student.view.attendance.AttendanceStudentViewModel"
+        />
+  </data>
 
-        <variable
-            name="viewModel"
-            type="cn.qingchengfit.student.view.attendance.AttendanceStudentViewModel" />
-    </data>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
 
-    <LinearLayout
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_absence_top_filter"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        >
+
+      <ImageView
+          android:id="@+id/image_absence"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="10dp"
+          app:srcCompat="@drawable/vector_data_statistics"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@id/image_absence"
+          android:text="会员出勤趋势图"
+          android:textColor="@color/qc_text_black"
+          android:textSize="13sp"
+          />
+
+
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/text_recent_condition"
+          android:layout_width="100dp"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:checked="@{viewModel.qcFBChecked}"
+          android:onClick="@{()->viewModel.onFilterButtonClick(0)}"
+          android:text="@{@string/last_format_days(viewModel.offDay+1)}"
+          android:textColor="@color/qc_text_black"
+          android:textSize="13sp"
+          app:ft_text_off="最近7天"
+          app:ft_text_on="最近7天"
+          style="@style/QcFilterStyle"
+          />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        >
 
-        <include
-            android:id="@+id/include_toolbar"
-            layout="@layout/common_simple_toolbar"
-            bind:toolbarModel="@{toolbarModel}" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
 
-        <RelativeLayout
-            android:id="@+id/rl_absence_top_filter"
+        <cn.qingchengfit.saascommon.widget.LineCharDate
+            android:id="@+id/lineChartDate"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:markViewUnit="@{@string/person_count}"
+            />
+
+        <include layout="@layout/divider_grey_margin"/>
+        <!--
+         app:data='@{StudentBusinessUtils.transformBean2Data(viewModel.datas, viewModel.offSetDay
+        , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")}'
+        -->
+
+        <LinearLayout
+            android:id="@+id/btn_absentee"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@drawable/bg_click"
             android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.toStudentAbsentce()}"
             android:orientation="horizontal"
-            android:paddingLeft="16dp">
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
 
-            <ImageView
-                android:id="@+id/image_absence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                app:srcCompat="@drawable/vector_data_statistics" />
+          <ImageView
+              android:layout_width="5dp"
+              android:layout_height="5dp"
+              android:layout_margin="8dp"
+              app:srcCompat="@drawable/circle_red"
+              />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/image_absence"
-                android:text="会员出勤趋势图"
-                android:textColor="@color/qc_text_black"
-                android:textSize="13sp" />
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:text="@string/label_absentee"
+              style="@style/Qc.TextCommonBlack"
+              />
 
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ic_arrow_right"
+              />
+        </LinearLayout>
 
-            <cn.qingchengfit.widgets.QcFilterToggle
-                android:id="@+id/text_recent_condition"
-                style="@style/QcFilterStyle"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:checked="@{viewModel.qcFBChecked}"
-                android:onClick="@{()->viewModel.onFilterButtonClick(0)}"
-                android:text="@{@string/last_format_days(viewModel.offDay+1)}"
-                android:textColor="@color/qc_text_black"
-                android:textSize="13sp"
-                app:ft_text_off="最近7天"
-                app:ft_text_on="最近7天" />
+        <include layout="@layout/divider_grey_left_right"/>
 
-        </RelativeLayout>
-
-        <include layout="@layout/divider_grey" />
-
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/btn_attendence"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@drawable/bg_click"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.toStudentRank()}"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+          <ImageView
+              android:layout_width="5dp"
+              android:layout_height="5dp"
+              android:layout_margin="8dp"
+              app:srcCompat="@drawable/circle_prime"
+              />
 
-                <cn.qingchengfit.saascommon.widget.LineCharDate
-                    android:id="@+id/lineChartDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:markViewUnit='@{"人次"}' />
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:text="出勤排行"
+              style="@style/Qc.TextCommonBlack"
+              />
 
-                <include layout="@layout/divider_grey_margin" />
-                <!--
-                 app:data='@{StudentBusinessUtils.transformBean2Data(viewModel.datas, viewModel.offSetDay
-                , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")}'
-                -->
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ic_arrow_right"
+              />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/btn_absentee"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:background="@drawable/bg_click"
-                    android:gravity="center_vertical"
-                    android:onClick="@{()->viewModel.toStudentAbsentce()}"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
+        <include layout="@layout/divider_grey_left_right"/>
 
-                    <ImageView
-                        android:layout_width="5dp"
-                        android:layout_height="5dp"
-                        android:layout_margin="8dp"
-                        app:srcCompat="@drawable/circle_red" />
+        <LinearLayout
+            android:id="@+id/btn_not_sign_class"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@drawable/bg_click"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.toStudentNosign()}"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
 
-                    <TextView
-                        style="@style/Qc.TextCommonBlack"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/label_absentee" />
+          <ImageView
+              android:layout_width="5dp"
+              android:layout_height="5dp"
+              android:layout_margin="8dp"
+              app:srcCompat="@drawable/circle_orange"
+              />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_arrow_right" />
-                </LinearLayout>
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:text="@string/not_sign_class_count"
+              style="@style/Qc.TextCommonBlack"
+              />
 
-                <include layout="@layout/divider_grey_left_right" />
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ic_arrow_right"
+              />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/btn_attendence"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:background="@drawable/bg_click"
-                    android:gravity="center_vertical"
-                    android:onClick="@{()->viewModel.toStudentRank()}"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
+        <include layout="@layout/divider_grey"/>
 
-                    <ImageView
-                        android:layout_width="5dp"
-                        android:layout_height="5dp"
-                        android:layout_margin="8dp"
-                        app:srcCompat="@drawable/circle_prime" />
+      </LinearLayout>
 
-                    <TextView
-                        style="@style/Qc.TextCommonBlack"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="出勤排行" />
+      <FrameLayout
+          android:id="@+id/frag_filter"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:visibleGone="@{viewModel.qcFBChecked}"
+          />
+    </FrameLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_arrow_right" />
-                </LinearLayout>
-
-                <include layout="@layout/divider_grey_left_right" />
-
-                <LinearLayout
-                    android:id="@+id/btn_not_sign_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:background="@drawable/bg_click"
-                    android:gravity="center_vertical"
-                    android:onClick="@{()->viewModel.toStudentNosign()}"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-                    <ImageView
-                        android:layout_width="5dp"
-                        android:layout_height="5dp"
-                        android:layout_margin="8dp"
-                        app:srcCompat="@drawable/circle_orange" />
-
-                    <TextView
-                        style="@style/Qc.TextCommonBlack"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/not_sign_class_count" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_arrow_right" />
-                </LinearLayout>
-
-                <include layout="@layout/divider_grey" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/frag_filter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:visibleGone="@{viewModel.qcFBChecked}" />
-        </FrameLayout>
-
-    </LinearLayout>
+  </LinearLayout>
 
 </layout>
