@@ -46,8 +46,7 @@ import java.util.List;
     });
     mViewModel.getSalerResponse().observe(this, aBoolean -> {
       if (aBoolean) {
-        int id = getFragmentManager().getBackStackEntryAt(1).getId();
-        getFragmentManager().popBackStack(id, 1);
+        getActivity().onBackPressed();
       }
     });
   }

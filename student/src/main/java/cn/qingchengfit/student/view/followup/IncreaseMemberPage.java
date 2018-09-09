@@ -3,7 +3,10 @@ package cn.qingchengfit.student.view.followup;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +102,20 @@ import javax.inject.Inject;
     mSortViewModel = ViewModelProviders.of(this, factory).get(IncreaseMemberSortViewModel.class);
     super.onCreate(savedInstanceState);
   }
-
+  private void initAppbarLayout() {
+    ViewGroup.LayoutParams layoutParams = mBinding.layoutCollapsed.getLayoutParams();
+    if (layoutParams instanceof CoordinatorLayout.LayoutParams) {
+      AppBarLayout.Behavior behavior =
+          (AppBarLayout.Behavior) ((CoordinatorLayout.LayoutParams) layoutParams).getBehavior();
+      if (behavior != null) {
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+          @Override public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+            return mBinding.fragmentFilter.getVisibility() != View.VISIBLE;
+          }
+        });
+      }
+    }
+  }
   @Override
   public StPageIncreaseMemberBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -141,6 +157,7 @@ import javax.inject.Inject;
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     initTopViewModel();
+    initAppbarLayout();
   }
 
   private void initTopViewModel() {

@@ -87,12 +87,19 @@ public class CommonUserSelectView extends SaasCommonFragment
     return ret;
   }
 
-  public void setDatas(List<? extends IFlexible> d) {
+  public void setDatas(List<? extends CommonUserItem> d) {
     this.datas.clear();
     this.datas.addAll(d);
     this.adapter.updateDataSet(this.datas);
   }
-  
+
+  public void setSelectedItem(List<CommonUserItem> items) {
+    for (CommonUserItem item : items) {
+      adapter.addSelection(adapter.index(item));
+    }
+    selectItems.setValue(items);
+    adapter.notifyDataSetChanged();
+  }
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);

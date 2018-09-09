@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.events.EventCommonUserList;
 import cn.qingchengfit.saascommon.item.CommonUserItem;
@@ -31,6 +32,7 @@ import java.util.List;
     extends StudentBaseFragment<StPageNotiOthersBinding, NotiOthersVM> {
   CommonUserSelectView studentListView = new CommonUserSelectView();
   @Need public ArrayList<Staff> staffs;
+  @Need public ArrayList<Staff> selecteds;
 
   @Override protected void subscribeUI() {
     mViewModel.getEditAfterTextChange().observe(this, filter -> {
@@ -58,6 +60,13 @@ import java.util.List;
           list.add(new CommonUserItem(staff));
         }
         studentListView.setDatas(list);
+        if (selecteds != null && !selecteds.isEmpty()) {
+          List<CommonUserItem> selected = new ArrayList<>();
+          for (ICommonUser staff : selecteds) {
+            selected.add(new CommonUserItem(staff));
+          }
+          studentListView.setSelectedItem(selected);
+        }
       }
       studentListView.setBtnRightListener(new View.OnClickListener() {
         @Override public void onClick(View v) {

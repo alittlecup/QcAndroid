@@ -88,33 +88,41 @@ public class FollowRecordStatusPage
   }
 
   private void addFollowStatus() {
-    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", "", 10, "取消", "确定",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-            materialDialog.dismiss();
-            if (materialDialog.getInputEditText() != null
-                && materialDialog.getInputEditText().getText() != null) {
-              mViewModel.addFollowStatus(
-                  materialDialog.getInputEditText() != null ? Objects.requireNonNull(
-                      materialDialog.getInputEditText()).getText().toString().trim() : null);
-            }
-          }
-        });
+    MaterialDialog materialDialog =
+        DialogUtils.initInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", "", 10, "取消", "确定",
+            new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                materialDialog.dismiss();
+                if (materialDialog.getInputEditText() != null
+                    && materialDialog.getInputEditText().getText() != null) {
+                  mViewModel.addFollowStatus(
+                      materialDialog.getInputEditText() != null ? Objects.requireNonNull(
+                          materialDialog.getInputEditText()).getText().toString().trim() : null);
+                }
+              }
+            });
+    materialDialog.setCanceledOnTouchOutside(false);
+    materialDialog.show();
   }
 
   private void editFollowStatus(String statusId, String conent) {
-    DialogUtils.showInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", conent, 10, "取消", "确定",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-            materialDialog.dismiss();
-            if (materialDialog.getInputEditText() != null
-                && materialDialog.getInputEditText().getText() != null) {
-              mViewModel.editFollowStatus(statusId,
-                  materialDialog.getInputEditText() != null ? Objects.requireNonNull(
-                      materialDialog.getInputEditText()).getText().toString().trim() : null);
-            }
-          }
-        });
+    MaterialDialog materialDialog =
+        DialogUtils.initInputDialog(getContext(), "", "请输入会员分类名称(仅限输入10字)", conent, 10, "取消", "确定",
+            new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                materialDialog.dismiss();
+                if (materialDialog.getInputEditText() != null
+                    && materialDialog.getInputEditText().getText() != null) {
+                  mViewModel.editFollowStatus(statusId,
+                      materialDialog.getInputEditText() != null ? Objects.requireNonNull(
+                          materialDialog.getInputEditText()).getText().toString().trim() : null);
+                }
+              }
+            });
+    materialDialog.setCanceledOnTouchOutside(false);
+    materialDialog.show();
   }
 
   private void deleteFollorStatus(String id) {

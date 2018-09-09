@@ -3,6 +3,7 @@ package cn.qingchengfit.student.view.followrecord;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ import javax.inject.Inject;
       adapter.updateDataSet(items);
       mBinding.recyclerView.post(new Runnable() {
         @Override public void run() {
-          mBinding.recyclerView.scrollToPosition(adapter.getItemCount());
+         mBinding.recyclerView.scrollToPosition(adapter.getItemCount()-1);
         }
       });
     });
@@ -98,4 +99,5 @@ import javax.inject.Inject;
   @Override public String getTitle() {
     return "跟进记录";
   }
+
 }

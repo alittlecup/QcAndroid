@@ -3,6 +3,7 @@ package cn.qingchengfit.student.view.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.student.R;
@@ -12,6 +13,7 @@ import cn.qingchengfit.student.listener.onRightFilterCloseListener;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,8 @@ import java.util.HashMap;
  */
 
 public class StudentFilterView
-    extends StudentBaseFragment<ViewStudentFilterBinding, StudentFilterViewModel> {
+    extends StudentBaseFragment<ViewStudentFilterBinding, StudentFilterViewModel>
+{
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
@@ -34,6 +37,7 @@ public class StudentFilterView
       mBinding.recyclerBillFilter.post(new Runnable() {
         @Override public void run() {
           mBinding.recyclerBillFilter.scrollToPosition(0);
+          mBinding.recyclerBillFilter.smoothScrollToPosition(0);
         }
       });
     });
@@ -115,10 +119,12 @@ public class StudentFilterView
   }
 
   private void initRecyclerView() {
-    mBinding.recyclerBillFilter.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
+    mBinding.recyclerBillFilter.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(),this));
     mBinding.recyclerBillFilter.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerBillFilter.addItemDecoration(
         new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
             .withBottomEdge(true));
+    mBinding.recyclerBillFilter.setFocusable(false);
   }
+
 }

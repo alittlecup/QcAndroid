@@ -79,7 +79,7 @@ import javax.inject.Inject;
             if (eventCommonUserList.getCommonUsers() != null) {
               List<User> users = new ArrayList<>();
               List<String> ids = new ArrayList<>();
-
+              selected.clear();
               for (ICommonUser iCommonUser : eventCommonUserList.getCommonUsers()) {
                 User u = new User();
                 u.setId(iCommonUser.getId());
@@ -87,6 +87,9 @@ import javax.inject.Inject;
                 u.setAvatar(iCommonUser.getAvatar());
                 users.add(u);
                 ids.add(iCommonUser.getId());
+                if(iCommonUser instanceof Staff){
+                  selected.add((Staff) iCommonUser);
+                }
               }
               mViewModel.notiOthers.setValue(users);
               mViewModel.userIds.setValue(ids);
@@ -94,6 +97,8 @@ import javax.inject.Inject;
           }
         });
   }
+
+  private List<Staff> selected=new ArrayList<>();
 
   @Override protected void handleHttpSuccess(String s) {
     if (s.equalsIgnoreCase("add")) {
@@ -141,8 +146,10 @@ import javax.inject.Inject;
         showLoading();
         return;
       }
-      routeTo("/followrecord/notiothers/",
-          NotiOthersPageParams.builder().staffs(new ArrayList<>(value)).build());
+      routeTo("/followrecord/notiothers/", NotiOthersPageParams.builder()
+          .staffs(new ArrayList<>(value))
+          .selecteds(new ArrayList<>(selected))
+          .build());
     });
     mBinding.tvEditStatus.setOnClickListener(view -> {
       routeTo("/student/follow_record_status", null);
@@ -171,19 +178,17 @@ import javax.inject.Inject;
   }
 
   void addImage() {
-    if (picDialog == null) {
-      picDialog = MultiChoosePicFragment.newInstance(mViewModel.followRecordUrl);
-      picDialog.setUpLoadImageCallback(uris -> {
-        mViewModel.followRecordUrl.clear();
-        mViewModel.followRecordUrl.addAll(uris);
-        adapter.clear();
-        for (String s : uris) {
-          adapter.addItem(new ItemGridImage(s));
-        }
-        if (uris.size() < 5) adapter.addItem(new ItemGridImageAdd());
-        mBinding.chooseImg.setVisibility(uris.size() > 0 ? View.GONE : View.VISIBLE);
-      });
-    }
+    picDialog = MultiChoosePicFragment.newInstance(mViewModel.followRecordUrl);
+    picDialog.setUpLoadImageCallback(uris -> {
+      mViewModel.followRecordUrl.clear();
+      mViewModel.followRecordUrl.addAll(uris);
+      adapter.clear();
+      for (String s : uris) {
+        adapter.addItem(new ItemGridImage(s));
+      }
+      if (uris.size() < 5) adapter.addItem(new ItemGridImageAdd());
+      mBinding.chooseImg.setVisibility(uris.size() > 0 ? View.GONE : View.VISIBLE);
+    });
     if (!picDialog.isVisible()) picDialog.show(getChildFragmentManager(), "");
   }
 

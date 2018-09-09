@@ -1,9 +1,14 @@
 package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -49,25 +54,23 @@ import javax.inject.Inject;
 
   @Need @IncreaseType String curType = IncreaseType.INCREASE_MEMBER;
 
-  @Override protected void subscribeUI() {
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) @Override protected void subscribeUI() {
     mSortViewModel.filterVisible.observe(this, aBoolean -> {
-      if(aBoolean){
+      if (aBoolean) {
         mBinding.fragmentFilter.setVisibility(View.VISIBLE);
         mBinding.fragmentFilter.setAlpha(0f);
         mBinding.fragmentFilter.animate().alpha(1).setDuration(20).start();
-      }else{
+      } else {
         mBinding.fragmentFilter.animate().alpha(0).setDuration(20).withEndAction(new Runnable() {
           @Override public void run() {
             mBinding.fragmentFilter.setVisibility(View.GONE);
           }
         }).start();
-        mBinding.layoutCollapsed.setEnabled(true);
       }
     });
     mSortViewModel.filterIndex.observe(this, index -> {
       followUpFilterView.showPage(index);
       mBinding.layoutCollapsed.setExpanded(false);
-      mBinding.layoutCollapsed.setEnabled(false);
     });
     mSortViewModel.filterAction.observe(this, aVoid -> {
       mBinding.drawer.openDrawer(GravityCompat.END);
@@ -75,39 +78,57 @@ import javax.inject.Inject;
     mSortViewModel.params.observe(this, params -> {
       mViewModel.loadSourceByStatus(params);
     });
-    mSortViewModel.salerName.observe(this,name->{
-      if("全部销售".equals(name)){
+    mSortViewModel.salerName.observe(this, name -> {
+      if ("全部销售".equals(name)) {
         mBinding.qftSaler.setTextColorRes(R.color.text_black);
-        mBinding.qftSaler.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
-        mBinding.qftSaler.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
-      }else{
+        mBinding.qftSaler.setButtonDrawableOff(
+            getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftSaler.setButtonDrawableOn(
+            getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      } else {
         mBinding.qftSaler.setTextColorRes(R.color.colorPrimary);
-        mBinding.qftSaler.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
-        mBinding.qftSaler.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+        mBinding.qftSaler.setButtonDrawableOn(
+            DrawableUtils.tintDrawable(getContext(), R.drawable.vd_filter_arrow_up,
+                R.color.colorPrimary));
+        mBinding.qftSaler.setButtonDrawableOff(
+            DrawableUtils.tintDrawable(getContext(), R.drawable.vd_filter_arrow_down,
+                R.color.colorPrimary));
       }
     });
-    mSortViewModel.gender.observe(this,gender->{
-      if("性别".equals(gender)){
+    mSortViewModel.gender.observe(this, gender -> {
+      if ("性别".equals(gender)) {
         mBinding.qftGender.setTextColorRes(R.color.text_black);
-        mBinding.qftGender.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
-        mBinding.qftGender.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
-      }else{
+        mBinding.qftGender.setButtonDrawableOff(
+            getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftGender.setButtonDrawableOn(
+            getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      } else {
         mBinding.qftGender.setTextColorRes(R.color.colorPrimary);
 
-        mBinding.qftGender.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
-        mBinding.qftGender.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+        mBinding.qftGender.setButtonDrawableOn(
+            DrawableUtils.tintDrawable(getContext(), R.drawable.vd_filter_arrow_up,
+                R.color.colorPrimary));
+        mBinding.qftGender.setButtonDrawableOff(
+            DrawableUtils.tintDrawable(getContext(), R.drawable.vd_filter_arrow_down,
+                R.color.colorPrimary));
       }
     });
-    mSortViewModel.studentStatus.observe(this,status->{
-      if("会员状态".equals(status)){
+    mSortViewModel.studentStatus.observe(this, status -> {
+      if ("会员状态".equals(status)) {
         mBinding.qftStatus.setTextColorRes(R.color.text_black);
-        mBinding.qftStatus.setButtonDrawableOff(getResources().getDrawable(R.drawable.vd_filter_arrow_down));
-        mBinding.qftStatus.setButtonDrawableOn(getResources().getDrawable(R.drawable.vd_filter_arrow_up));
-      }else{
+        mBinding.qftStatus.setButtonDrawableOff(
+            getResources().getDrawable(R.drawable.vd_filter_arrow_down));
+        mBinding.qftStatus.setButtonDrawableOn(
+            getResources().getDrawable(R.drawable.vd_filter_arrow_up));
+      } else {
         mBinding.qftStatus.setTextColorRes(R.color.colorPrimary);
 
-        mBinding.qftStatus.setButtonDrawableOn(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_up,R.color.colorPrimary));
-        mBinding.qftStatus.setButtonDrawableOff(DrawableUtils.tintDrawable(getContext(),R.drawable.vd_filter_arrow_down,R.color.colorPrimary));
+        mBinding.qftStatus.setButtonDrawableOn(
+            DrawableUtils.tintDrawable(getContext(), R.drawable.vd_filter_arrow_up,
+                R.color.colorPrimary));
+        mBinding.qftStatus.setButtonDrawableOff(
+            DrawableUtils.tintDrawable(getContext(), R.drawable.vd_filter_arrow_down,
+                R.color.colorPrimary));
       }
     });
 
@@ -132,8 +153,22 @@ import javax.inject.Inject;
     initFragment();
     initToolbar();
     initListener();
-
     return mBinding;
+  }
+
+  private void initAppbarLayout() {
+    ViewGroup.LayoutParams layoutParams = mBinding.layoutCollapsed.getLayoutParams();
+    if (layoutParams instanceof CoordinatorLayout.LayoutParams) {
+      AppBarLayout.Behavior behavior =
+          (AppBarLayout.Behavior) ((CoordinatorLayout.LayoutParams) layoutParams).getBehavior();
+      if (behavior != null) {
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+          @Override public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+            return mBinding.fragmentFilter.getVisibility() != View.VISIBLE;
+          }
+        });
+      }
+    }
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
@@ -144,6 +179,8 @@ import javax.inject.Inject;
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     loadSource();
+    initAppbarLayout();
+
   }
 
   private void loadSource() {
@@ -175,7 +212,8 @@ import javax.inject.Inject;
     mBinding.includeAllot.allotMsg.setOnClickListener(v -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
     });
-    mBinding.rbSelectAll.setOnCheckedChangeListener((view, checked) -> listView.selectAll(checked,view));
+    mBinding.rbSelectAll.setOnCheckedChangeListener(
+        (view, checked) -> listView.selectAll(checked, view));
     if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
       mBinding.qftSaler.setEnabled(false);
       mBinding.qftSaler.setText(loginStatus.getLoginUser().getUsername());
@@ -250,11 +288,11 @@ import javax.inject.Inject;
 
       //修改toolBar
       mBinding.rbSelectAll.setVisibility(View.GONE);
-      String title="";
-      if(curType.equals(IncreaseType.INCREASE_MEMBER)){
-        title="新注册用户";
-      }else if(curType.equals(IncreaseType.INCREASE_STUDENT)){
-        title="新购卡会员";
+      String title = "";
+      if (curType.equals(IncreaseType.INCREASE_MEMBER)) {
+        title = "新注册用户";
+      } else if (curType.equals(IncreaseType.INCREASE_STUDENT)) {
+        title = "新购卡会员";
         filterView.setFilterStatusIds(false);
       }
       ToolbarModel toolbarModel = new ToolbarModel(title);

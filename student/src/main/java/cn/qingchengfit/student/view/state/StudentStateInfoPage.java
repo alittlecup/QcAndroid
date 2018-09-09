@@ -88,7 +88,6 @@ import java.util.Map;
 
   private void initTab(List<InactiveBean> inactiveBeans) {
     if (inactiveBeans == null || inactiveBeans.isEmpty()) return;
-    fragmentList.clear();
     ArrayList<PieEntry> entries = new ArrayList<>();
     for (int i = 0; i < inactiveBeans.size(); i++) {
       InactiveBean inactiveBean = inactiveBeans.get(i);
@@ -98,7 +97,7 @@ import java.util.Map;
         ((CountDateView) childAt).setCount(inactiveBean.getCount());
         ((CountDateView) childAt).setOnCheckedChangeListener(this);
       }
-      fragmentList.add(generateListView(inactiveBean.getSeller_stat()));
+      dealFragmentList(inactiveBean,i);
       entries.add(new PieEntry(inactiveBean.getCount(), i));
     }
     PieDataSet dataSet = new PieDataSet(entries, "");
@@ -112,7 +111,23 @@ import java.util.Map;
     mBinding.pieChart.invalidate();
     initViewPager();
 
-    ((CountDateView) mBinding.llCountDate.getChildAt(mBinding.viewpager.getCurrentItem()*2)).setChecked(true);
+    ((CountDateView) mBinding.llCountDate.getChildAt(
+        mBinding.viewpager.getCurrentItem() * 2)).setChecked(true);
+  }
+
+  private void dealFragmentList(InactiveBean inactiveBean, int position) {
+    List<SellerStat> seller_stat = inactiveBean.getSeller_stat();
+    if(fragmentList.isEmpty()||fragmentList.size()<4){
+      fragmentList.add(generateListView(seller_stat));
+    }else{
+      SalerStudentListView salerStudentListView = fragmentList.get(position);
+      Collections.sort(seller_stat, (o1, o2) -> o2.getTotal_count() - o1.getTotal_count());
+      List<SalerStudentInfoItem> items = new ArrayList<>();
+      for (int i = 0; i < seller_stat.size(); i++) {
+        items.add(new SalerStudentInfoItem(seller_stat.get(i), curType));
+      }
+      salerStudentListView.setItems(items);
+    }
   }
 
   private SalerStudentListView generateListView(List<SellerStat> seller_stat) {
@@ -121,7 +136,7 @@ import java.util.Map;
     Collections.sort(seller_stat, (o1, o2) -> o2.getTotal_count() - o1.getTotal_count());
     List<SalerStudentInfoItem> items = new ArrayList<>();
     for (int i = 0; i < seller_stat.size(); i++) {
-      items.add(new SalerStudentInfoItem(seller_stat.get(i),curType));
+      items.add(new SalerStudentInfoItem(seller_stat.get(i), curType));
     }
     salerStudentListView.setItems(items);
     return salerStudentListView;
@@ -229,17 +244,12 @@ import java.util.Map;
   }
 
   class StateViewPager extends FragmentStatePagerAdapter {
-
     public StateViewPager(FragmentManager fm) {
       super(fm);
     }
 
     @Override public Fragment getItem(int position) {
-      if (position < fragmentList.size()) {
-        return fragmentList.get(position);
-      } else {
-        return new Fragment();
-      }
+      return fragmentList.get(position);
     }
 
     @Override public int getItemPosition(Object object) {

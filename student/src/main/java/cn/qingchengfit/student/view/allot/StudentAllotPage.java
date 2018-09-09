@@ -78,7 +78,10 @@ import java.util.Map;
 
 
   private void initFragment() {
-    if(listView!=null)return;
+    if(listView!=null){
+      getFragmentManager().popBackStack();
+      return;
+    }
     listView = StudentRecyclerSortView.newInstanceWithType(curType);
     filterView = new StudentFilterView();
     stuff(R.id.frame_student_filter, filterView);
@@ -101,6 +104,7 @@ import java.util.Map;
     }
 
   }
+
 
   private void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel(StudentListView.getStringByType(curType));

@@ -57,7 +57,7 @@ import javax.inject.Inject;
       return mBinding;
     }
     mBinding = StSalerStudentsPageBinding.inflate(layoutInflater, viewGroup, false);
-    initToolbar();
+    toggleToolbar(false,"");
     initFragment();
     initListener();
 
