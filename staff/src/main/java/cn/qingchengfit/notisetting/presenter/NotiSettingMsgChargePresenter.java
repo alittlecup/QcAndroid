@@ -73,7 +73,6 @@ public class NotiSettingMsgChargePresenter extends BasePresenter {
 
   @Override public void attachView(final PView v) {
     view = (MVPView) v;
-    queryCurSMSleft();
     RxBusAdd(PayEvent.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<PayEvent>() {
           @Override public void call(PayEvent payEvent) {

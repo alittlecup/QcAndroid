@@ -120,6 +120,11 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
     presenter.chargeSMS(adapter.getSelectedPositions().get(0), getString(R.string.wechat_code));
   }
 
+  @Override public void onResume() {
+    super.onResume();
+    presenter.queryCurSMSleft();
+  }
+
   @Override public boolean onItemClick(int i) {
     int lastPos = -1;
     if (adapter.getSelectedPositions().size() > 0) {

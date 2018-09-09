@@ -24,6 +24,7 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.RectF;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -97,6 +98,11 @@ public class CalendarLayout extends LinearLayout {
      * ContentView
      */
     ViewGroup mContentView;
+
+    /**
+     * RecyclerView
+     */
+    RecyclerView recyclerView;
 
 
     private int mCalendarShowMode;
@@ -270,6 +276,13 @@ public class CalendarLayout extends LinearLayout {
         }
         return super.onTouchEvent(event);
     }
+    public static RectF calcViewScreenLocation(View view) {
+        int[] location = new int[2];
+        // 获取控件在屏幕中的位置，返回的数组分别为控件左顶点的 x、y 的值
+        view.getLocationOnScreen(location);
+        return new RectF(location[0], location[1], location[0] + view.getWidth(),
+            location[1] + view.getHeight());
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -293,7 +306,8 @@ public class CalendarLayout extends LinearLayout {
         mContentView = (ViewGroup) findViewById(mContentViewId);
         mYearView = (YearSelectLayout) findViewById(R.id.selectLayout);
         if (mContentView != null) {
-            mContentView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+            mContentView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+            recyclerView = mContentView.findViewById(R.id.recyclerView);
         }
     }
 
@@ -518,6 +532,9 @@ public class CalendarLayout extends LinearLayout {
         }
         if (mContentView instanceof RecyclerView)
             return ((RecyclerView) mContentView).computeVerticalScrollOffset() == 0;
+        if(recyclerView != null){
+            return recyclerView.computeVerticalScrollOffset()==0;
+        }
         if (mContentView instanceof AbsListView) {
             boolean result = false;
             AbsListView listView = (AbsListView) mContentView;

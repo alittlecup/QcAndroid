@@ -34,12 +34,6 @@ public class StudentFilterView
     mViewModel.showAll(showAll);
     mViewModel.getRemoteFilters().observe(this, filterModels -> {
       mViewModel.items.set(mViewModel.getItems(filterModels));
-      mBinding.recyclerBillFilter.post(new Runnable() {
-        @Override public void run() {
-          mBinding.recyclerBillFilter.scrollToPosition(0);
-          mBinding.recyclerBillFilter.smoothScrollToPosition(0);
-        }
-      });
     });
     mViewModel.getmResetEvent().observe(this, aVoid -> {
       showDialog();

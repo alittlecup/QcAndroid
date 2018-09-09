@@ -10,7 +10,8 @@
         />
     <variable
         name="viewModel"
-        type="cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel"/>
+        type="cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -104,34 +105,32 @@
           app:week_text_color="@color/text_black"
           app:week_view="cn.qingchengfit.student.widget.SimpleWeekView"
           />
-      <include layout="@layout/divider_grey"/>
-      <LinearLayout
-          android:id="@+id/content"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/bg_white"
-          android:orientation="vertical"
-          >
-        <TextView
-            android:id="@+id/tv_select_content"
+        <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center"
-            app:birDay="@{viewModel.date}"
-            app:birCount="@{viewModel.count}"
-            tools:text="4月生日124人"
-            />
-        <include layout="@layout/divider_grey"/>
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:orientation="vertical"
+            >
+          <include layout="@layout/divider_grey"/>
+          <TextView
+              android:id="@+id/tv_select_content"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:gravity="center"
+              app:birCount="@{viewModel.count}"
+              app:birDay="@{viewModel.date}"
+              tools:text="4月生日124人"
+              />
+          <include layout="@layout/divider_grey"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-
-
-      </LinearLayout>
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/recyclerView"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"
+              />
+        </LinearLayout>
     </cn.qingchengfit.saascommon.calendar.CalendarLayout>
     <include
         layout="@layout/layout_bottom_allot_action"
