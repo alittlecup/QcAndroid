@@ -52,7 +52,7 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
     holder.binding.tvGymName.setText(followRecord.getShop());
     holder.binding.tvNextTime.setText("下次跟进时间："+followRecord.getFollowTimeString());
     holder.binding.followType.setText("跟进方式："+followRecord.getFollowMethodString(holder.itemView.getContext()));
-    holder.binding.followMembers.setText("通知他人："+followRecord.getNotiOthers());
+    holder.binding.followMembers.setText("通知其他销售："+followRecord.getNotiOthers());
 
 
   }

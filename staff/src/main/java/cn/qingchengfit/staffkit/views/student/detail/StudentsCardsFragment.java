@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -43,114 +42,127 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/3/19 2016.
  */
-public class StudentsCardsFragment extends BaseFragment implements StudentsCardsView, TitleFragment, FlexibleAdapter.OnItemClickListener {
+public class StudentsCardsFragment extends BaseFragment
+    implements StudentsCardsView, TitleFragment, FlexibleAdapter.OnItemClickListener {
 
-	TextView cardnum;
-	RecycleViewWithNoImg recycleview;
+  TextView cardnum;
+  RecycleViewWithNoImg recycleview;
 
-    @Inject StudentsCardsPresenter presenter;
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
-    @Inject SerPermisAction serPermisAction;
-    @Inject GymBaseInfoAction gymBaseInfoAction;
+  @Inject StudentsCardsPresenter presenter;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  @Inject SerPermisAction serPermisAction;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
 
-    List<AbstractFlexibleItem> datas = new ArrayList<>();
-    private CommonFlexAdapter adatper;
-    private CardTpl mChooseCardtpl;
+  List<AbstractFlexibleItem> datas = new ArrayList<>();
+  private CommonFlexAdapter adatper;
+  private CardTpl mChooseCardtpl;
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_students_cars, container, false);
-      cardnum = (TextView) view.findViewById(R.id.cardnum);
-      recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_students_cars, container, false);
+    cardnum = (TextView) view.findViewById(R.id.cardnum);
+    recycleview = (RecycleViewWithNoImg) view.findViewById(R.id.recycleview);
 
-      delegatePresenter(presenter, this);
-        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
-        adatper = new CommonFlexAdapter(datas, this);
-        recycleview.setAdapter(adatper);
-        recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
-                presenter.querData();
-            }
-        });
+    delegatePresenter(presenter, this);
+    recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+    adatper = new CommonFlexAdapter(datas, this);
+    recycleview.setAdapter(adatper);
+    recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
         if (serPermisAction.checkAtLeastOne(PermissionServerUtils.CARDSETTING)) {
-            presenter.querData();
+          presenter.querData();
         } else {
-            recycleview.setNoDataImgRes(R.drawable.ic_no_permission);
-            recycleview.setNodataHint(getString(R.string.alert_permission_forbid));
-            recycleview.setNoData(true);
+          recycleview.setNoDataImgRes(R.drawable.ic_no_permission);
+          recycleview.setNodataHint(getString(R.string.alert_permission_forbid));
+          recycleview.setNoData(true);
         }
+      }
+    });
 
-        return view;
+
+    return view;
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    if (serPermisAction.checkAtLeastOne(PermissionServerUtils.CARDSETTING)) {
+      presenter.querData();
+    } else {
+      recycleview.setNoDataImgRes(R.drawable.ic_no_permission);
+      recycleview.setNodataHint(getString(R.string.alert_permission_forbid));
+      recycleview.setNoData(true);
+    }
+  }
+
+  @Override public void onDestroyView() {
+    presenter.unattachView();
+    super.onDestroyView();
+  }
+
+  @Override public void onData(int count, List<Card> cards) {
+    cardnum.setText(cards.size() + "张会员卡");
+    datas.clear();
+    if (cards == null) return;
+    for (int i = 0; i < cards.size(); i++) {
+      datas.add(new CardItem(cards.get(i)));
+    }
+    adatper.clear();
+    adatper.updateDataSet(datas);
+    recycleview.setNoData(datas.size() == 0);
+  }
+
+  @Override public String getTitle() {
+    return "会员卡";
+  }
+
+  @Override public String getFragmentName() {
+    return StudentsCardsFragment.class.getName();
+  }
+
+  //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+  //    super.onActivityResult(requestCode, resultCode, data);
+  //    if (resultCode == android.app.Activity.RESULT_OK) {
+  //        if (requestCode == 10) {
+  //            mChooseCardtpl = (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE);
+  //            //                presenter.buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), StudentsCardsFragment.this);
+  //            if (gymWrapper.inBrand()) {
+  //                if (mChooseCardtpl.getShopIds().size() > 1) {
+  //                    MutiChooseGymFragment.start(StudentsCardsFragment.this, true, null, 9);
+  //                } else if (mChooseCardtpl.getShopIds().size() == 1) {
+  //                    CoachService gym = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), mChooseCardtpl.getShopIds().get(0));
+  //                    Intent it = new Intent(context, BuyCardActivity.class);
+  //                    it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
+  //                    context.startActivity(it);
+  //                }
+  //            } else {
+  //                Intent it = new Intent(context, BuyCardActivity.class);
+  //                it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
+  //                context.startActivity(it);
+  //            }
+  //        }
+  //    } else if (requestCode == 9) {
+  //        Shop shop = data.getParcelableExtra(IntentUtils.RESULT);
+  //        CoachService gym =
+  //            gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shop.id);
+  //        Intent it = new Intent(context, BuyCardActivity.class);
+  //        it.putExtra(Configs.EXTRA_GYM_SERVICE, gym);
+  //
+  //        it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
+  //        context.startActivity(it);
+  //    }
+  //}
+
+  @Override public boolean onItemClick(int i) {
+    if (adatper.getItem(i) instanceof CardItem) {
+      Card realCard = ((CardItem) adatper.getItem(i)).getRealCard();
+      if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS)) {
+        showAlert(R.string.alert_permission_forbid);
+        return true;
+      }
+      routeTo("card", "/detail/", CardDetailParams.builder().cardid(realCard.getId()).build());
     }
 
-    @Override public void onDestroyView() {
-        presenter.unattachView();
-        super.onDestroyView();
-    }
-
-    @Override public void onData(int count, List<Card> cards) {
-        cardnum.setText(cards.size() + "张会员卡");
-        datas.clear();
-        if (cards == null) return;
-        for (int i = 0; i < cards.size(); i++) {
-            datas.add(new CardItem(cards.get(i)));
-        }
-        adatper.clear();
-        adatper.updateDataSet(datas);
-        recycleview.setNoData(datas.size() == 0);
-    }
-
-    @Override public String getTitle() {
-        return "会员卡";
-    }
-
-    @Override public String getFragmentName() {
-        return StudentsCardsFragment.class.getName();
-    }
-
-    //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //    super.onActivityResult(requestCode, resultCode, data);
-    //    if (resultCode == android.app.Activity.RESULT_OK) {
-    //        if (requestCode == 10) {
-    //            mChooseCardtpl = (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE);
-    //            //                presenter.buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), StudentsCardsFragment.this);
-    //            if (gymWrapper.inBrand()) {
-    //                if (mChooseCardtpl.getShopIds().size() > 1) {
-    //                    MutiChooseGymFragment.start(StudentsCardsFragment.this, true, null, 9);
-    //                } else if (mChooseCardtpl.getShopIds().size() == 1) {
-    //                    CoachService gym = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), mChooseCardtpl.getShopIds().get(0));
-    //                    Intent it = new Intent(context, BuyCardActivity.class);
-    //                    it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
-    //                    context.startActivity(it);
-    //                }
-    //            } else {
-    //                Intent it = new Intent(context, BuyCardActivity.class);
-    //                it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
-    //                context.startActivity(it);
-    //            }
-    //        }
-    //    } else if (requestCode == 9) {
-    //        Shop shop = data.getParcelableExtra(IntentUtils.RESULT);
-    //        CoachService gym =
-    //            gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shop.id);
-    //        Intent it = new Intent(context, BuyCardActivity.class);
-    //        it.putExtra(Configs.EXTRA_GYM_SERVICE, gym);
-    //
-    //        it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
-    //        context.startActivity(it);
-    //    }
-    //}
-
-    @Override public boolean onItemClick(int i) {
-        if (adatper.getItem(i) instanceof CardItem) {
-            Card realCard = ((CardItem) adatper.getItem(i)).getRealCard();
-            if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS)) {
-                showAlert(R.string.alert_permission_forbid);
-                return true;
-            }
-            routeTo("card","/detail/", CardDetailParams.builder().cardid(realCard.getId()).build());
-        }
-
-        return false;
-    }
+    return false;
+  }
 }

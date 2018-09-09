@@ -461,7 +461,7 @@ public class BatchDetailCommonView extends BaseFragment {
   public void onPayOnlineClicked() {
     routeTo("/batch/pay/online/",
         new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
-            .maxPeople(getOrderStudentCount())
+            .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
             .multiPrice(elMultiSupport.isExpanded())
             .build());
   }

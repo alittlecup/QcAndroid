@@ -89,6 +89,7 @@
             app:civ_hint="请选择"
             app:civ_lable="跟进方式"
             app:civ_showright="true"
+            app:civ_content_color="@color/text_grey"
             app:civ_text_color="@color/text_black"
             />
         <LinearLayout
@@ -156,6 +157,7 @@
             app:civ_hint="请选择"
             app:civ_lable="通知其他销售"
             app:civ_showright="true"
+            app:civ_content_color="@color/text_grey"
             app:civ_text_color="@color/text_black"
             />
 
@@ -170,6 +172,7 @@
             app:civ_lable="下次跟进时间"
             app:civ_showdivier="false"
             app:civ_showright="true"
+            app:civ_content_color="@color/text_grey"
             app:civ_text_color="@color/text_black"
             />
         <View
