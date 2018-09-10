@@ -229,6 +229,12 @@ public class SigninConfigListFragment extends BaseFragment
         break;
     }
   }
+
+  @Override public void onResume() {
+    super.onResume();
+    zqPresenter.getAccess();
+  }
+
   @Override public void onShowError(String e) {
 
   }

@@ -215,6 +215,7 @@ public class ZqAccessFragment extends BaseFragment
   }
 
   @Override public void onDeleteOk() {
+    presenter.getAccess();
     itemList.remove(position);
     adapter.updateItem(adapter.getItem(position));
   }

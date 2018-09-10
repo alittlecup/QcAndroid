@@ -459,11 +459,19 @@ public class BatchDetailCommonView extends BaseFragment {
    * 在线支付 动态价格，私教需要1对多私教，团课需要开启动态价格
    */
   public void onPayOnlineClicked() {
-    routeTo("/batch/pay/online/",
-        new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
-            .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
-            .multiPrice(elMultiSupport.isExpanded())
-            .build());
+    if (isPrivate) {
+      routeTo("/batch/pay/online/",
+          new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
+              .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
+              .multiPrice(elMultiSupport.isExpanded())
+              .build());
+    } else {
+      routeTo("/batch/pay/online/",
+          new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
+              .maxPeople(getOrderStudentCount())
+              .multiPrice(elMultiSupport.isExpanded())
+              .build());
+    }
   }
 
   /**
