@@ -1,8 +1,10 @@
 package cn.qingchengfit.student.view.home;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,6 +91,11 @@ import rx.functions.Action1;
         QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
       } else {
         showAlert(R.string.sorry_for_no_permission);
+      }
+    });
+    mBinding.drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+      @Override public void onDrawerOpened(View drawerView) {
+        filterView.scrollTop();
       }
     });
   }

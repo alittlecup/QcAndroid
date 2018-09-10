@@ -31,7 +31,7 @@ import javax.inject.Inject;
 public class StudentFilterViewModel extends BaseViewModel
     implements ItemFilterTime.OnTimeChooseListener {
 
-  public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
+  public final MutableLiveData<List<AbstractFlexibleItem>> items = new MutableLiveData<>();
   private final ActionLiveEvent mResetEvent = new ActionLiveEvent();
   private String salerId;
 
@@ -85,7 +85,7 @@ public class StudentFilterViewModel extends BaseViewModel
   }
 
   public void onConfirm() {
-    for (AbstractFlexibleItem item : items.get()) {
+    for (AbstractFlexibleItem item : items.getValue()) {
       getDataFromItem(item);
     }
     mFilterMap.setValue(filterMap);

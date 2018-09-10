@@ -24,8 +24,7 @@ import java.util.HashMap;
  */
 
 public class StudentFilterView
-    extends StudentBaseFragment<ViewStudentFilterBinding, StudentFilterViewModel>
-{
+    extends StudentBaseFragment<ViewStudentFilterBinding, StudentFilterViewModel> {
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
@@ -33,7 +32,14 @@ public class StudentFilterView
     mViewModel.setFilterStatusVisible(filterStatusIds);
     mViewModel.showAll(showAll);
     mViewModel.getRemoteFilters().observe(this, filterModels -> {
-      mViewModel.items.set(mViewModel.getItems(filterModels));
+      mViewModel.items.setValue(mViewModel.getItems(filterModels));
+      mBinding.recyclerBillFilter.post(new Runnable() {
+        @Override public void run() {
+          if (mBinding.recyclerBillFilter.computeVerticalScrollOffset() != 0) {
+            mBinding.recyclerBillFilter.scrollTo(0, 0);
+          }
+        }
+      });
     });
     mViewModel.getmResetEvent().observe(this, aVoid -> {
       showDialog();
@@ -44,6 +50,13 @@ public class StudentFilterView
       }
     });
     mViewModel.loadfilterModel();
+  }
+  private boolean hasScroll;
+  public void scrollTop(){
+    if(mBinding!=null&&mBinding.recyclerBillFilter!=null&&!hasScroll){
+      mBinding.recyclerBillFilter.scrollToPosition(0);
+      hasScroll=true;
+    }
   }
 
   private void showDialog() {
@@ -113,12 +126,11 @@ public class StudentFilterView
   }
 
   private void initRecyclerView() {
-    mBinding.recyclerBillFilter.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(),this));
+    mBinding.recyclerBillFilter.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
     mBinding.recyclerBillFilter.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerBillFilter.addItemDecoration(
         new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
             .withBottomEdge(true));
     mBinding.recyclerBillFilter.setFocusable(false);
   }
-
 }

@@ -238,7 +238,7 @@ import javax.inject.Inject;
       routeTo("/student/export", null);
       //routeTo("/student/follow_record", null);
     });
-    mBinding.tvAllStudent.setOnClickListener(view -> {
+    mBinding.llAllStudent.setOnClickListener(view -> {
       routeTo("/student/all", null);
     });
 

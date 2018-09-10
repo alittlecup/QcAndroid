@@ -21,7 +21,7 @@ public class IncreaseMemberViewModel
 
   @Inject StudentRepository repository;
 
-  public Integer dataType = 1;//1- 已接洽，2- 会员
+  public Integer dataType = 1;//1- 跟进新用户，2- 会员维护
 
   private Map<String, Object> dates = new HashMap<>();
 
@@ -32,6 +32,7 @@ public class IncreaseMemberViewModel
   @NonNull @Override
   protected LiveData<StudentListWrappeForFollow> getSource(@NonNull Map<String, Object> map) {
     map.put("show_all", 1);
+    map.put("status",dataType);
 
     return Transformations.map(repository.qcGetTrackStudentFollow(map), input -> {
       StudentListWrappeForFollow studentListWrappeForFollow = dealResource(input);
