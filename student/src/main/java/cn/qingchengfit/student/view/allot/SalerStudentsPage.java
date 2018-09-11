@@ -1,6 +1,9 @@
 package cn.qingchengfit.student.view.allot;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,9 +22,12 @@ import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentListView;
+import cn.qingchengfit.student.view.home.StudentListViewModel;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -58,15 +64,32 @@ import javax.inject.Inject;
       return mBinding;
     }
     mBinding = StSalerStudentsPageBinding.inflate(layoutInflater, viewGroup, false);
-    toggleToolbar(false,"");
     initFragment();
     initListener();
+    toggleToolbar(false,"");
 
     mViewModel.type = type;
     mViewModel.setSalerId(staff.getId());
     return mBinding;
   }
 
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    listView.getListView().setListener(
+        () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
+            (materialDialog, dialogAction) -> {
+              materialDialog.dismiss();
+              if (dialogAction == DialogAction.POSITIVE) {
+                listView.getListView().removeStaffStudents();
+              }
+            }));
+  }
+  public void onRemoveResult(boolean isSuccess){
+    if(isSuccess){
+      loadData(new HashMap<>());
+    }
+    toggleToolbar(false,"");
+  }
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
@@ -95,6 +118,7 @@ import javax.inject.Inject;
     listView.setListener(this);
     listView.setFilterView(filterView);
     listView.setLoadDataListener(this);
+
 
     filterView.setListener(params -> {
       mViewModel.loadSource(params);
@@ -144,7 +168,11 @@ import javax.inject.Inject;
     }else{
       initToolbar();
       mBinding.rbSelectAll.setVisibility(View.GONE);
-
+      mBinding.includeAllot.getRoot().setVisibility(View.VISIBLE);
+      if(listView.getListView()!=null){
+        listView.getListView().removeSelected();
+        listView.getListView().setCurId("");
+      }
     }
   }
 

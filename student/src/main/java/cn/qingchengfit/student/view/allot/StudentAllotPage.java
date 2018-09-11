@@ -141,13 +141,5 @@ import java.util.Map;
       listView.setDatas(mViewModel.map(items));
       listView.getListView().setAdapterTag("selected",true);
     }
-    listView.getListView().setListener(
-        () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
-            (materialDialog, dialogAction) -> {
-              materialDialog.dismiss();
-              if(dialogAction==DialogAction.POSITIVE){
-                listView.getListView().removeStaffStudents();
-              }
-            }));
   }
 }

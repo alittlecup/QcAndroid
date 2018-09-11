@@ -28,6 +28,7 @@ import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams;
 import cn.qingchengfit.student.view.allot.AllotChooseSellerPageParams;
 import cn.qingchengfit.student.view.allot.AllotSaleShowSelectDialogView;
+import cn.qingchengfit.student.view.allot.SalerStudentsPage;
 import cn.qingchengfit.student.view.state.SalerStudentStatePage;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -75,8 +76,9 @@ public class StudentListView
       ToastUtils.show(aBoolean ? "移除成功" : "移除失败");
       if (getParentFragment() instanceof SalerStudentStatePage) {
         ((SalerStudentStatePage) getParentFragment()).onRemoveResult(aBoolean);
-      } else {
-        getActivity().onBackPressed();
+      } else if ((getParentFragment() instanceof StudentRecyclerSortView)
+          && getParentFragment().getParentFragment() instanceof SalerStudentsPage) {
+        ((SalerStudentsPage) getParentFragment().getParentFragment()).onRemoveResult(aBoolean);
       }
     });
   }
@@ -315,6 +317,18 @@ public class StudentListView
       adapter.notifyDataSetChanged();
     } else {
       setAdapterTag("choose", 2);
+      setAdapterTag("selected", false);
+    }
+  }
+
+  public void removeSelected() {
+    this.curType = "";
+    if (mBinding != null) {
+      mBinding.llBottom.setVisibility(View.GONE);
+      adapter.setTag("selected", false);
+      adapter.clearSelection();
+      adapter.notifyDataSetChanged();
+    } else {
       setAdapterTag("selected", false);
     }
   }
