@@ -67,10 +67,12 @@ public class StudentListView
     });
     mViewModel.getSelectedDatas().observe(this, items -> {
       if (items == null || items.isEmpty()) {
-        selectedAll(false);
         if (checkable != null) {
           checkable.setChecked(false);
         }
+        adapter.clearSelection();
+        adapter.notifyDataSetChanged();
+        mViewModel.mBottomSelectedCount.set(adapter.getSelectedItemCount());
       }
     });
     mViewModel.removeResult.observe(this, aBoolean -> {
@@ -157,7 +159,7 @@ public class StudentListView
     }
     if (selectedAll) {
       adapter.selectAll();
-    } else if(adapter.getSelectedItemCount()==adapter.getItemCount()){
+    } else if (adapter.getSelectedItemCount() == adapter.getItemCount()) {
       adapter.clearSelection();
     }
     adapter.notifyDataSetChanged();
@@ -380,7 +382,8 @@ public class StudentListView
     adapter.notifyDataSetChanged();
     int selectedItemCount = adapter.getSelectedItemCount();
     mViewModel.mBottomSelectedCount.set(selectedItemCount);
-    RxBus.getBus().post(new StudentListSelectEvent(adapter.getSelectedItemCount()==adapter.getItemCount()));
+    RxBus.getBus()
+        .post(new StudentListSelectEvent(adapter.getSelectedItemCount() == adapter.getItemCount()));
     ids = getSelectIds();
     return false;
   }
