@@ -39,10 +39,10 @@ public class IncreaseMemberTopViewModel extends BaseViewModel {
   }
 
   private LiveData<Resource<StatDate>> loadFollowCount(HashMap<String, Object> params) {
-    Map<String, Object> datas = new HashMap<>();
+    HashMap<String, Object> datas = new HashMap<>();
     datas.put("status", status);
     datas.putAll(params);
-    return repository.qcGetFollowStat(params);
+    return repository.qcGetFollowStat(datas);
   }
 
   public void loadSource(HashMap<String, Object> params) {

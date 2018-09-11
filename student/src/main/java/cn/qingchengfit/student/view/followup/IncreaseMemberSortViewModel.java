@@ -58,9 +58,9 @@ public void loadFollorStatus(){
   public void setStudentStatus(String status) {
     HashMap<String, Object> value = params.getValue();
     if (TextUtils.isEmpty(status)) {
-      value.remove("status");
+      value.remove("track_status_id");
     } else {
-      value.put("status", status);
+      value.put("track_status_id", status);
     }
     params.setValue(value);
   }

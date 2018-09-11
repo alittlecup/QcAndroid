@@ -1,6 +1,9 @@
 package cn.qingchengfit.student.view.followrecord;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.events.EventCommonUserList;
 import cn.qingchengfit.saascommon.item.CommonUserItem;
+import cn.qingchengfit.saascommon.views.commonuserselect.CommonUserSelectVM;
 import cn.qingchengfit.saascommon.views.commonuserselect.CommonUserSelectView;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -34,6 +38,7 @@ import java.util.List;
   @Need public ArrayList<Staff> staffs;
   @Need public ArrayList<Staff> selecteds;
 
+
   @Override protected void subscribeUI() {
     mViewModel.getEditAfterTextChange().observe(this, filter -> {
       studentListView.filter(filter);
@@ -47,9 +52,11 @@ import java.util.List;
     mBinding = StPageNotiOthersBinding.inflate(inflater);
     mBinding.setViewModel(mViewModel);
     mBinding.setLifecycleOwner(this);
+    stuff(R.id.frag_noti_ohter, studentListView);
     initToolbar();
     return mBinding;
   }
+
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
       Bundle savedInstanceState) {
@@ -79,7 +86,19 @@ import java.util.List;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    stuff(R.id.frag_noti_ohter, studentListView);
+    studentListView.selectedAll.observe(this, this::setSelectedAll);
+  }
+
+  public void setSelectedAll(boolean selectedAll){
+    mBinding.rbSelectAll.setChecked(selectedAll);
+    if (studentListView == null || !studentListView.isAdded()) {
+      return;
+    }
+    if (selectedAll) {
+      studentListView.selectAll();
+    } else {
+      studentListView.clearSelect();
+    }
   }
 
   private void initToolbar() {

@@ -76,13 +76,8 @@ public class StudentHomePieChartView
     mBinding.pieChart.setClickable(false);
     initListener();
 
-    if (color == R.color.st_new_student_color) {
-      commonText = "未出勤";
-      mBinding.tvDesc.setText("未出勤天数");
-    } else {
-      commonText = "未跟进";
-      mBinding.tvDesc.setText("未跟进天数");
-    }
+    commonText = "未跟进";
+    mBinding.tvDesc.setText("未跟进天数");
     return mBinding;
   }
 
@@ -112,7 +107,6 @@ public class StudentHomePieChartView
       mViewModel.backgroundColor.setValue(getResources().getColor(color));
     }
     this.color = color;
-
   }
 
   private View.OnClickListener listener;

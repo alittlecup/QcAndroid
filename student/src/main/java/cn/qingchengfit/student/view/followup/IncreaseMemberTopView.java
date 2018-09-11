@@ -83,8 +83,7 @@ public class IncreaseMemberTopView
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_green_bg);
       mBinding.tvTypeContent.setText("会员维护");
       mBinding.tvCount.setTextColor(getResources().getColor(R.color.success_green));
-
-      mViewModel.status = 0;
+      mViewModel.status = 2;
     } else if (type.equals(IncreaseType.INCREASE_FOLLOWUP)) {
       mBinding.radioGroup.setBackgroundResource(R.drawable.radiogroup_orange_bg);
       mBinding.tvTypeContent.setText("跟进新用户");

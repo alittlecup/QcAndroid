@@ -42,8 +42,8 @@ public class MemberIncreaseFilterView extends BaseFilterFragment {
     private void initFragment() {
         studentStatusFragment = new FilterListStringFragment();
         studentStatusFragment.setOnSelectListener(position -> {
-            mViewModel.followUpStatus.setValue(position == 0 ? "跟进状态" : mViewModel.recordStatus.getValue().get(position).getTrack_status());
-            mViewModel.setStudentStatus(position == 0 ? null : mViewModel.recordStatus.getValue().get(position).getId());
+            mViewModel.followUpStatus.setValue(position == 0 ? "跟进状态" : mViewModel.recordStatus.getValue().get(position-1).getTrack_status());
+            mViewModel.setStudentStatus(position == 0 ? null : mViewModel.recordStatus.getValue().get(position-1).getId());
             dismiss();
         });
 

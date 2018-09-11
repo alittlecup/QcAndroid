@@ -41,7 +41,7 @@ public class BottomViewSelectUser extends BottomSheetDialogFragment
 
   void clearSelect() {
     if (getParentFragment() instanceof CommonUserSelectView) {
-      ((CommonUserSelectView) getParentFragment()).selectItems.setValue(new ArrayList<>());
+      ((CommonUserSelectView) getParentFragment()).selectedAll.setValue(false);
     }
     dismiss();
   }
@@ -49,6 +49,7 @@ public class BottomViewSelectUser extends BottomSheetDialogFragment
   void delSelect(List<CommonUserItem> items) {
     if (getParentFragment() instanceof CommonUserSelectView) {
       ((CommonUserSelectView) getParentFragment()).selectItems.setValue(items);
+      ((CommonUserSelectView) getParentFragment()).setSelectedItem(items);
     }
   }
 
@@ -67,6 +68,8 @@ public class BottomViewSelectUser extends BottomSheetDialogFragment
           List<CommonUserItem> items = new ArrayList<>();
           items.addAll(adapter.getCurrentItems());
           delSelect(items);
+          binding.tvStudCount.setText(String.format(getResources().getString(R.string.bottom_view_select_count),adapter.getItemCount()));
+
         }
       }
     });
@@ -83,7 +86,7 @@ public class BottomViewSelectUser extends BottomSheetDialogFragment
       List<CommonUserItem> value =
           ((CommonUserSelectView) getParentFragment()).selectItems.getValue();
       adapter.updateDataSet(value);
-      binding.tvStudCount.setText("已选"+value.size()+"人");
+      binding.tvStudCount.setText(String.format(getResources().getString(R.string.bottom_view_select_count),value.size()));
     }
   }
 

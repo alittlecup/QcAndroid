@@ -31,7 +31,7 @@
           android:layout_weight="1"
           android:paddingBottom="16dp"
           android:paddingTop="16dp"
-          android:text="已选sss"
+          android:text=""
           />
 
 

@@ -11,5 +11,6 @@
   <string name="realy_open_next">我已经打开，下一步</string>
   <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
   <string name="markview_count_unit">%s%s</string>
+  <string name="bottom_view_select_count">已选%d人</string>
 
 </resources>

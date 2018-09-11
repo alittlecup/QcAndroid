@@ -32,6 +32,7 @@ public class CommonUserSelectView extends SaasCommonFragment
   protected BottomViewSelectUser bottomViewSelectUser = new BottomViewSelectUser();
 
   public MutableLiveData<List<CommonUserItem>> selectItems = new MutableLiveData<>();
+  public MutableLiveData<Boolean> selectedAll=new MutableLiveData<>();
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,6 +53,7 @@ public class CommonUserSelectView extends SaasCommonFragment
       bottomViewSelectUser.show(getChildFragmentManager(), "");
     });
   }
+
 
   public void selectAll() {
     adapter.selectAll();
@@ -94,6 +96,7 @@ public class CommonUserSelectView extends SaasCommonFragment
   }
 
   public void setSelectedItem(List<CommonUserItem> items) {
+    adapter.clearSelection();
     for (CommonUserItem item : items) {
       adapter.addSelection(adapter.index(item));
     }

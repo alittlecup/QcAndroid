@@ -94,6 +94,9 @@ import javax.inject.Inject;
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
+        if(!TextUtils.isEmpty(staff.getId())&&(this.type==1)){
+          listView.getListView().setCurId(staff.getId());
+        }
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
@@ -101,6 +104,9 @@ import javax.inject.Inject;
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
+        if(!TextUtils.isEmpty(staff.getId())&&(this.type==0)){
+          listView.getListView().setCurId(staff.getId());
+        }
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
@@ -162,9 +168,7 @@ import javax.inject.Inject;
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //收缩布局
       listView.getListView().setCurType(type);
-      if(!TextUtils.isEmpty(staff.getId())){
-        listView.getListView().setCurId(staff.getId());
-      }
+
     }else{
       initToolbar();
       mBinding.rbSelectAll.setVisibility(View.GONE);

@@ -11,6 +11,7 @@ import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.respository.StudentRepository;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,10 @@ public class IncreaseMemberViewModel
       if (studentListWrappeForFollow != null) {
         return studentListWrappeForFollow;
       } else {
-        return null;
+        List<QcStudentBeanWithFollow> users =new ArrayList<>();
+        StudentListWrappeForFollow studentListWrappeForFollow1 = new StudentListWrappeForFollow();
+        studentListWrappeForFollow1.users=users;
+        return studentListWrappeForFollow1;
       }
     });
   }
