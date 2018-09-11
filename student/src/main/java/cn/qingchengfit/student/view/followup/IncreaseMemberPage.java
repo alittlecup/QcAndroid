@@ -130,14 +130,14 @@ import javax.inject.Inject;
 
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
@@ -148,7 +148,7 @@ import javax.inject.Inject;
     });
     mBinding.rbSelectAll.setOnCheckedChangeListener(
         (buttonView, isChecked) -> listView.selectAll(isChecked,buttonView));
-    if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       mBinding.qftSaler.setEnabled(false);
       mBinding.qftSaler.setText(loginStatus.getLoginUser().getUsername());
     }

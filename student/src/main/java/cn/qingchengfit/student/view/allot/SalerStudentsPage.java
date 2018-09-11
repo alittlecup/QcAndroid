@@ -54,6 +54,7 @@ import javax.inject.Inject;
       ViewGroup viewGroup, Bundle bundle) {
     if(mBinding!=null){
       loadData(new HashMap<>());
+      toggleToolbar(false,"");
       return mBinding;
     }
     mBinding = StSalerStudentsPageBinding.inflate(layoutInflater, viewGroup, false);
@@ -68,14 +69,14 @@ import javax.inject.Inject;
 
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
@@ -137,6 +138,9 @@ import javax.inject.Inject;
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //收缩布局
       listView.getListView().setCurType(type);
+      if(!TextUtils.isEmpty(staff.getId())){
+        listView.getListView().setCurId(staff.getId());
+      }
     }else{
       initToolbar();
       mBinding.rbSelectAll.setVisibility(View.GONE);

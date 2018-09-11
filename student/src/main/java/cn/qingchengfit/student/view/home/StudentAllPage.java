@@ -67,14 +67,14 @@ import rx.functions.Action1;
   private void initListener() {
 
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);

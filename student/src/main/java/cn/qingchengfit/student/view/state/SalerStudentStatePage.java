@@ -105,21 +105,25 @@ import javax.inject.Inject;
 
   private void initListener() {
     mBinding.bottomAllot.allotCoach.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.bottomAllot.allotSale.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
     mBinding.bottomAllot.allotMsg.setOnClickListener(v -> {
-      toggleToolbar(true, StudentListView.MSG_TYPE);
+      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+        toggleToolbar(true, StudentListView.MSG_TYPE);
+      } else {
+        showAlert(R.string.sorry_for_no_permission);
+      }
     });
   }
   public void onRemoveResult(boolean isSuccess){
