@@ -44,7 +44,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:gravity="center"
-            android:text="@{page.selectItems.size() > 99 ?`…`:(``+page.selectItems.size())}"
+            android:text='@{page.selectItems.size() > 99?"...":(""+page.selectItems.size())}'
             android:textColor="@color/white"
             android:textSize="@dimen/min_font"
             android:background="@drawable/cm_vd_circle_qing"

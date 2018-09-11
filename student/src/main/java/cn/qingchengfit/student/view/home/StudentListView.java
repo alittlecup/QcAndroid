@@ -315,6 +315,7 @@ public class StudentListView
       adapter.setTag("selected", false);
       adapter.clearSelection();
       adapter.notifyDataSetChanged();
+      mViewModel.mBottomSelectedCount.set(0);
     } else {
       setAdapterTag("choose", 2);
       setAdapterTag("selected", false);
@@ -328,6 +329,7 @@ public class StudentListView
       adapter.setTag("selected", false);
       adapter.clearSelection();
       adapter.notifyDataSetChanged();
+      mViewModel.mBottomSelectedCount.set(0);
     } else {
       setAdapterTag("selected", false);
     }

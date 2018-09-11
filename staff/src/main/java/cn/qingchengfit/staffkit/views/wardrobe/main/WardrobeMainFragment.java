@@ -281,7 +281,7 @@ public class WardrobeMainFragment extends BaseFragment
 
         strip.setupWithViewPager(viewpager);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(strip));
-
+        fragmentAdapter.notifyDataSetChanged();
         mData.clear();
         for (int j = 0; j < regions.size(); j++) {
           mData.add(new SimpleChooseItemItem(regions.get(j)));
