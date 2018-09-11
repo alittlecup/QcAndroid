@@ -17,8 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AllLockers;
@@ -80,20 +78,20 @@ import rx.schedulers.Schedulers;
 public class WardrobeMainFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener {
 
-	TabLayout strip;
-	ViewPager viewpager;
-	RecyclerView allRegionRv;
-	LinearLayout allRegion;
-	AnimatedButton btnShowAll;
+  TabLayout strip;
+  ViewPager viewpager;
+  RecyclerView allRegionRv;
+  LinearLayout allRegion;
+  AnimatedButton btnShowAll;
   @Inject RestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
   HashMap<Long, List<Locker>> mLockers = new HashMap<>();
-	Toolbar toolbar;
-	TextView toolbarTitile;
-	FrameLayout toolbarLayout;
-	FrameLayout layoutManageDistrict;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  FrameLayout toolbarLayout;
+  FrameLayout layoutManageDistrict;
   private FragmentAdapter fragmentAdapter;
   private ArrayList<Fragment> chooseWardrobeListFragments = new ArrayList<>();
   private List<LockerRegion> regions = new ArrayList<>();
@@ -237,7 +235,7 @@ public class WardrobeMainFragment extends BaseFragment
             }));
       }
     });
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 
@@ -260,7 +258,7 @@ public class WardrobeMainFragment extends BaseFragment
 
   public void handleLockers(List<Locker> lockers) {
     mLockers.clear();
-    //if (fragmentAdapter == null) {
+    if (fragmentAdapter == null) {
       if (lockers != null) {
         chooseWardrobeListFragments.clear();
         for (int i = 0; i < regions.size(); i++) {
@@ -272,24 +270,14 @@ public class WardrobeMainFragment extends BaseFragment
             }
           }
           mLockers.put(regions.get(i).id, ls);
-          if(chooseWardrobeListFragments.size()>i){
-            Fragment fragment = chooseWardrobeListFragments.get(i);
-            if(fragment instanceof WardrobeListFragment){
-              ((WardrobeListFragment) fragment).fresh();
-            }
-          }else{
-
-            chooseWardrobeListFragments.add(WardrobeListFragment.newInstance(ls, regions.get(i)));
-          }
+          chooseWardrobeListFragments.add(WardrobeListFragment.newInstance(ls, regions.get(i)));
         }
 
         fragmentAdapter =
             new FragmentAdapter(getChildFragmentManager(), chooseWardrobeListFragments);
         viewpager.setAdapter(fragmentAdapter);
-
         strip.setupWithViewPager(viewpager);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(strip));
-        fragmentAdapter.notifyDataSetChanged();
         mData.clear();
         for (int j = 0; j < regions.size(); j++) {
           mData.add(new SimpleChooseItemItem(regions.get(j)));
@@ -298,46 +286,41 @@ public class WardrobeMainFragment extends BaseFragment
         allRegionRv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
         allRegionRv.setAdapter(mAdapter);
       }
-    if (viewpager != null) {
-      int x = mSaveState.getInt("page", 0);
-      if (x < viewpager.getAdapter().getCount()) viewpager.setCurrentItem(x);
+    } else {
+      allRegionRv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
+      allRegionRv.setAdapter(mAdapter);
+      viewpager.setAdapter(fragmentAdapter);
+      strip.setupWithViewPager(viewpager);
+      viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(strip));
+      freshData(lockers);
     }
-    //} else {
-    //
-    //  allRegionRv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
-    //  allRegionRv.setAdapter(mAdapter);
-    //  viewpager.setAdapter(fragmentAdapter);
-    //  strip.setupWithViewPager(viewpager);
-    //  viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(strip));
-    //  freshData(lockers);
-    //}
   }
 
   private void freshData(List<Locker> lockers) {
-    //mLockers.clear();
-    //for (int i = 0; i < regions.size(); i++) {
-    //  List<Locker> ls = new ArrayList<>();
-    //
-    //  for (int j = 0; j < lockers.size(); j++) {
-    //    Locker locker = lockers.get(j);
-    //    if (locker.region != null && locker.region.id.longValue() == regions.get(i).id) {
-    //      ls.add(locker);
-    //    }
-    //    mLockers.put(regions.get(i).id, ls);
-    //  }
-    //  Fragment f = fragmentAdapter.findByTag(regions.get(i).id);
-    //  if (f != null && f instanceof WardrobeListFragment) {
-    //    ((WardrobeListFragment) f).fresh();
-    //  } else {
-    //    WardrobeListFragment wardrobeListFragment =
-    //        WardrobeListFragment.newInstance(ls, regions.get(i));
-    //    chooseWardrobeListFragments.add(wardrobeListFragment);
-    //    fragmentAdapter.addTag(wardrobeListFragment);
-    //    mData.add(new SimpleChooseItemItem(regions.get(i)));
-    //  }
-    //}
-    //fragmentAdapter.notifyDataSetChanged();
-    //mAdapter.updateDataSet(mData);
+    mLockers.clear();
+    for (int i = 0; i < regions.size(); i++) {
+      List<Locker> ls = new ArrayList<>();
+
+      for (int j = 0; j < lockers.size(); j++) {
+        Locker locker = lockers.get(j);
+        if (locker.region != null && locker.region.id.longValue() == regions.get(i).id) {
+          ls.add(locker);
+        }
+        mLockers.put(regions.get(i).id, ls);
+      }
+      Fragment f = fragmentAdapter.findByTag(regions.get(i).id);
+      if (f != null && f instanceof WardrobeListFragment) {
+        ((WardrobeListFragment) f).freshData(ls);
+      } else {
+        WardrobeListFragment wardrobeListFragment =
+            WardrobeListFragment.newInstance(ls, regions.get(i));
+        chooseWardrobeListFragments.add(wardrobeListFragment);
+        fragmentAdapter.addTag(wardrobeListFragment);
+        mData.add(new SimpleChooseItemItem(regions.get(i)));
+      }
+    }
+    fragmentAdapter.notifyDataSetChanged();
+    mAdapter.updateDataSet(mData);
     if (viewpager != null) {
       int x = mSaveState.getInt("page", 0);
       if (x < viewpager.getAdapter().getCount()) viewpager.setCurrentItem(x);
@@ -358,16 +341,21 @@ public class WardrobeMainFragment extends BaseFragment
   }
 
   public void searchLocker(String key) {
-    if (TextUtils.isEmpty(key)){
-      if (!searchResultFragment.isHidden() && searchResultFragment != null)
-        getChildFragmentManager().beginTransaction().hide(searchResultFragment).commitAllowingStateLoss();
+    if (TextUtils.isEmpty(key)) {
+      if (!searchResultFragment.isHidden() && searchResultFragment != null) {
+        getChildFragmentManager().beginTransaction()
+            .hide(searchResultFragment)
+            .commitAllowingStateLoss();
+      }
       return;
     }
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("q", key);
 
     RxRegiste(restRepository.getGet_api()
-        .qcGetAllLockers(loginStatus.staff_id(), params).onBackpressureBuffer().subscribeOn(Schedulers.io())
+        .qcGetAllLockers(loginStatus.staff_id(), params)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<AllLockers>>() {
           @Override public void call(QcDataResponse<AllLockers> qcResponse) {
@@ -385,15 +373,17 @@ public class WardrobeMainFragment extends BaseFragment
   }
 
   public void onSearch(List<Locker> regions) {
-    if (searchResultFragment == null){
+    if (searchResultFragment == null) {
       searchResultFragment = SearchResultFragment.newInstance(regions);
       getChildFragmentManager().beginTransaction()
-        .add(R.id.frag_search_result, searchResultFragment)
-        .commitAllowingStateLoss();
-    }else{
+          .add(R.id.frag_search_result, searchResultFragment)
+          .commitAllowingStateLoss();
+    } else {
       searchResultFragment.updateItems(regions);
-      if (searchResultFragment.isHidden()){
-        getChildFragmentManager().beginTransaction().show(searchResultFragment).commitAllowingStateLoss();
+      if (searchResultFragment.isHidden()) {
+        getChildFragmentManager().beginTransaction()
+            .show(searchResultFragment)
+            .commitAllowingStateLoss();
       }
     }
   }
@@ -406,7 +396,7 @@ public class WardrobeMainFragment extends BaseFragment
     super.onDestroyView();
   }
 
- public void onClick() {
+  public void onClick() {
     btnShowAll.toggle();
     if (allRegion.getVisibility() == View.VISIBLE) {
       allRegion.setVisibility(View.GONE);
@@ -415,7 +405,7 @@ public class WardrobeMainFragment extends BaseFragment
     }
   }
 
- public void onManageDistrict() {
+  public void onManageDistrict() {
     getFragmentManager().beginTransaction()
         .replace(mCallbackActivity.getFragId(), DistrictListFragment.newInstance())
         .addToBackStack(getFragmentName())

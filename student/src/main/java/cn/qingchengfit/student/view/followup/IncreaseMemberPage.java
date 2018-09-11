@@ -211,6 +211,8 @@ import javax.inject.Inject;
       toolbarModel.setMenu(R.menu.menu_cancel);
       toolbarModel.setListener(item -> {
         toggleToolbar(false, "");
+        mBinding.rbSelectAll.setChecked(false);
+
         return false;
       });
       mBinding.setToolbarModel(toolbarModel);

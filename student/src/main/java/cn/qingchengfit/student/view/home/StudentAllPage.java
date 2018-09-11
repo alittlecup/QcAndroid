@@ -206,6 +206,7 @@ import rx.functions.Action1;
       toolbarModel.setMenu(R.menu.menu_cancel);
       toolbarModel.setListener(item -> {
         toggleToolbar(false, "");
+        mBinding.rbSelectAll.setChecked(false);
         return false;
       });
       mBinding.setToolbarModel(toolbarModel);

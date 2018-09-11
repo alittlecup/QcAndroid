@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.bean.InactiveBean;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageSalerStudentStateBinding;
@@ -125,12 +127,26 @@ import javax.inject.Inject;
         showAlert(R.string.sorry_for_no_permission);
       }
     });
+    mBinding.rbSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        listView.selectAll(isChecked,buttonView);
+      }
+    });
   }
   public void onRemoveResult(boolean isSuccess){
     if(isSuccess){
       mViewModel.reLoad();
     }
     toggleToolbar(false,"");
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(event -> {
+          mBinding.rbSelectAll.setChecked(event.isSelected());
+        }));
   }
 
   private void toggleToolbar(boolean showCheckBox, String type) {
@@ -145,6 +161,7 @@ import javax.inject.Inject;
       toolbarModel.setMenu(R.menu.menu_cancel);
       toolbarModel.setListener(item -> {
         toggleToolbar(false, "");
+        mBinding.rbSelectAll.setChecked(false);
         return false;
       });
       mBinding.setToolbarModel(toolbarModel);
