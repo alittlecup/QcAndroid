@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.databinding.StPageIncreaseMemberBinding;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.home.StudentListView;
@@ -158,6 +160,11 @@ import javax.inject.Inject;
     super.onFinishAnimation();
     initTopViewModel();
     initAppbarLayout();
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(event -> {
+          mBinding.rbSelectAll.setChecked(event.isSelected());
+        }));
   }
 
   private void initTopViewModel() {

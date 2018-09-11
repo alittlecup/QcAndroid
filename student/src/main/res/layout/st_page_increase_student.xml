@@ -47,6 +47,7 @@
               android:background="@color/toolbar"
               android:button="@drawable/selector_qc_checkbox_2"
               android:gravity="center"
+              android:layout_marginLeft="10dp"
               android:padding="6dp"
               android:text="@string/qc_select_all"
               android:textColor="@color/white"

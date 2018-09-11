@@ -135,7 +135,7 @@ public interface StudentApi {
   /**
    * 获取教练列表
    */
-  @GET("/api/staffs/{staff_id}/coaches/")
+  @GET("/api/v2/staffs/{staff_id}/coaches/")
   Flowable<QcDataResponse<SalerTeachersListWrap>> qcGetAllAllocateCoaches(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 

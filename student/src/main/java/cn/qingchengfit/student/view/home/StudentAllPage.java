@@ -21,6 +21,7 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.databinding.StPageAllStudentBinding;
 import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
@@ -134,6 +135,15 @@ import rx.functions.Action1;
     } else {
       return super.onFragmentBackPress();
     }
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(event -> {
+          mBinding.rbSelectAll.setChecked(event.isSelected());
+        }));
   }
 
   Toolbar toolbar;

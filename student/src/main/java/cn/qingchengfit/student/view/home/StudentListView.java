@@ -22,6 +22,7 @@ import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.databinding.StViewStudentAllotBinding;
 import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
@@ -156,7 +157,7 @@ public class StudentListView
     }
     if (selectedAll) {
       adapter.selectAll();
-    } else {
+    } else if(adapter.getSelectedItemCount()==adapter.getItemCount()){
       adapter.clearSelection();
     }
     adapter.notifyDataSetChanged();
@@ -377,7 +378,9 @@ public class StudentListView
     }
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
-    mViewModel.mBottomSelectedCount.set(adapter.getSelectedItemCount());
+    int selectedItemCount = adapter.getSelectedItemCount();
+    mViewModel.mBottomSelectedCount.set(selectedItemCount);
+    RxBus.getBus().post(new StudentListSelectEvent(adapter.getSelectedItemCount()==adapter.getItemCount()));
     ids = getSelectIds();
     return false;
   }

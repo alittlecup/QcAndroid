@@ -9,7 +9,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
@@ -17,6 +19,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.databinding.StSalerStudentsPageBinding;
 import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 @Leaf(module = "student", path = "/student/seller/student") public class SalerStudentsPage
     extends StudentBaseFragment<StSalerStudentsPageBinding, SalerStudentsViewModel>
@@ -47,10 +51,10 @@ import javax.inject.Inject;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
-      if(TextUtils.isEmpty(staff.getId())){
-        listView.getListView().setAdapterTag("choose",-1);
-      }else {
-        listView.getListView().setAdapterTag("choose",type);
+      if (TextUtils.isEmpty(staff.getId())) {
+        listView.getListView().setAdapterTag("choose", -1);
+      } else {
+        listView.getListView().setAdapterTag("choose", type);
       }
       listView.setDatas(items);
     });
@@ -58,15 +62,15 @@ import javax.inject.Inject;
 
   @Override public StSalerStudentsPageBinding initDataBinding(LayoutInflater layoutInflater,
       ViewGroup viewGroup, Bundle bundle) {
-    if(mBinding!=null){
+    if (mBinding != null) {
       loadData(new HashMap<>());
-      toggleToolbar(false,"");
+      toggleToolbar(false, "");
       return mBinding;
     }
     mBinding = StSalerStudentsPageBinding.inflate(layoutInflater, viewGroup, false);
     initFragment();
     initListener();
-    toggleToolbar(false,"");
+    toggleToolbar(false, "");
 
     mViewModel.type = type;
     mViewModel.setSalerId(staff.getId());
@@ -75,26 +79,33 @@ import javax.inject.Inject;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    listView.getListView().setListener(
-        () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
-            (materialDialog, dialogAction) -> {
+    listView.getListView()
+        .setListener(() -> DialogUtils.shwoConfirm(getContext(),
+            "确定将选中的会员从" + staff.getUsername() + "的名下移除？", (materialDialog, dialogAction) -> {
               materialDialog.dismiss();
               if (dialogAction == DialogAction.POSITIVE) {
                 listView.getListView().removeStaffStudents();
               }
             }));
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(event -> {
+            mBinding.rbSelectAll.setChecked(event.isSelected());
+        }));
   }
-  public void onRemoveResult(boolean isSuccess){
-    if(isSuccess){
+
+  public void onRemoveResult(boolean isSuccess) {
+    if (isSuccess) {
       loadData(new HashMap<>());
     }
-    toggleToolbar(false,"");
+    toggleToolbar(false, "");
   }
+
   private void initListener() {
     mBinding.includeAllot.allotCoach.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.TRAINER_TYPE);
-        if(!TextUtils.isEmpty(staff.getId())&&(this.type==1)){
+        if (!TextUtils.isEmpty(staff.getId()) && (this.type == 1)) {
           listView.getListView().setCurId(staff.getId());
         }
       } else {
@@ -104,15 +115,20 @@ import javax.inject.Inject;
     mBinding.includeAllot.allotSale.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         toggleToolbar(true, StudentListView.SELLER_TYPE);
-        if(!TextUtils.isEmpty(staff.getId())&&(this.type==0)){
+        if (!TextUtils.isEmpty(staff.getId()) && (this.type == 0)) {
           listView.getListView().setCurId(staff.getId());
         }
       } else {
         showAlert(R.string.sorry_for_no_permission);
       }
     });
-    mBinding.includeAllot.allotMsg.setOnClickListener(view->{
+    mBinding.includeAllot.allotMsg.setOnClickListener(view -> {
       toggleToolbar(true, StudentListView.MSG_TYPE);
+    });
+    mBinding.rbSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        listView.selectAll(isChecked,buttonView);
+      }
     });
   }
 
@@ -125,7 +141,6 @@ import javax.inject.Inject;
     listView.setFilterView(filterView);
     listView.setLoadDataListener(this);
 
-
     filterView.setListener(params -> {
       mViewModel.loadSource(params);
       mBinding.drawer.closeDrawer(GravityCompat.END);
@@ -136,15 +151,16 @@ import javax.inject.Inject;
     String title;
     if (TextUtils.isEmpty(staff.getId())) {
       title = "未分配";
-    }else{
-      title=(type==0?"销售":"教练")+staff.getUsername();
+    } else {
+      title = (type == 0 ? "销售" : "教练") + staff.getUsername();
     }
     mBinding.setToolbarModel(new ToolbarModel(title));
     initToolbar(mBinding.includeToolbar.toolbar);
   }
-  private void toggleToolbar(boolean showCheckbox,String type){
-    if(showCheckbox){
-      if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)){
+
+  private void toggleToolbar(boolean showCheckbox, String type) {
+    if (showCheckbox) {
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
         showAlert(R.string.sorry_for_no_permission);
         return;
       }
@@ -168,12 +184,11 @@ import javax.inject.Inject;
       mBinding.includeAllot.getRoot().setVisibility(View.GONE);
       //收缩布局
       listView.getListView().setCurType(type);
-
-    }else{
+    } else {
       initToolbar();
       mBinding.rbSelectAll.setVisibility(View.GONE);
       mBinding.includeAllot.getRoot().setVisibility(View.VISIBLE);
-      if(listView.getListView()!=null){
+      if (listView.getListView() != null) {
         listView.getListView().removeSelected();
         listView.getListView().setCurId("");
       }

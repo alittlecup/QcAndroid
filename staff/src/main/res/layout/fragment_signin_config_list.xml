@@ -66,6 +66,7 @@
       app:civ_lable="@string/signin_use_zq"
       app:civ_text_color="@color/qc_text_black"
       app:civ_showright="true"
+      android:visibility="gone"
       app:civ_clickable="true"
       />
 

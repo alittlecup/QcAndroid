@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageStudentAllotBinding;
 import cn.qingchengfit.student.R;
@@ -57,6 +59,15 @@ import java.util.Map;
         hideLoading();
       }
     });
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(event -> {
+          mBinding.rbSelectAll.setChecked(event.isSelected());
+        }));
   }
 
   @Override

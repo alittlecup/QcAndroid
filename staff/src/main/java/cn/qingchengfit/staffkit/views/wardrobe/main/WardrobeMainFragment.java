@@ -272,7 +272,15 @@ public class WardrobeMainFragment extends BaseFragment
             }
           }
           mLockers.put(regions.get(i).id, ls);
-          chooseWardrobeListFragments.add(WardrobeListFragment.newInstance(ls, regions.get(i)));
+          if(chooseWardrobeListFragments.size()>i){
+            Fragment fragment = chooseWardrobeListFragments.get(i);
+            if(fragment instanceof WardrobeListFragment){
+              ((WardrobeListFragment) fragment).fresh();
+            }
+          }else{
+
+            chooseWardrobeListFragments.add(WardrobeListFragment.newInstance(ls, regions.get(i)));
+          }
         }
 
         fragmentAdapter =
