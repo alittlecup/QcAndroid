@@ -260,7 +260,7 @@ public class WardrobeMainFragment extends BaseFragment
 
   public void handleLockers(List<Locker> lockers) {
     mLockers.clear();
-    if (fragmentAdapter == null) {
+    //if (fragmentAdapter == null) {
       if (lockers != null) {
         chooseWardrobeListFragments.clear();
         for (int i = 0; i < regions.size(); i++) {
@@ -290,37 +290,46 @@ public class WardrobeMainFragment extends BaseFragment
         allRegionRv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
         allRegionRv.setAdapter(mAdapter);
       }
-    } else {
-
-      allRegionRv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
-      allRegionRv.setAdapter(mAdapter);
-      viewpager.setAdapter(fragmentAdapter);
-      strip.setupWithViewPager(viewpager);
-      viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(strip));
-      freshData(lockers);
+    if (viewpager != null) {
+      int x = mSaveState.getInt("page", 0);
+      if (x < viewpager.getAdapter().getCount()) viewpager.setCurrentItem(x);
     }
+    //} else {
+    //
+    //  allRegionRv.setLayoutManager(new SmoothScrollGridLayoutManager(getContext(), 2));
+    //  allRegionRv.setAdapter(mAdapter);
+    //  viewpager.setAdapter(fragmentAdapter);
+    //  strip.setupWithViewPager(viewpager);
+    //  viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(strip));
+    //  freshData(lockers);
+    //}
   }
 
   private void freshData(List<Locker> lockers) {
-    mLockers.clear();
-    for (int i = 0; i < regions.size(); i++) {
-      List<Locker> ls = new ArrayList<>();
-
-      for (int j = 0; j < lockers.size(); j++) {
-        Locker locker = lockers.get(j);
-        if (locker.region != null && locker.region.id.longValue() == regions.get(i).id) {
-          ls.add(locker);
-        }
-        mLockers.put(regions.get(i).id, ls);
-      }
-      Fragment f = fragmentAdapter.findByTag(regions.get(i).id);
-      if (f != null && f instanceof WardrobeListFragment) {
-        ((WardrobeListFragment) f).fresh();
-      } else {
-        chooseWardrobeListFragments.add(WardrobeListFragment.newInstance(ls, regions.get(i)));
-      }
-    }
-    fragmentAdapter.notifyDataSetChanged();
+    //mLockers.clear();
+    //for (int i = 0; i < regions.size(); i++) {
+    //  List<Locker> ls = new ArrayList<>();
+    //
+    //  for (int j = 0; j < lockers.size(); j++) {
+    //    Locker locker = lockers.get(j);
+    //    if (locker.region != null && locker.region.id.longValue() == regions.get(i).id) {
+    //      ls.add(locker);
+    //    }
+    //    mLockers.put(regions.get(i).id, ls);
+    //  }
+    //  Fragment f = fragmentAdapter.findByTag(regions.get(i).id);
+    //  if (f != null && f instanceof WardrobeListFragment) {
+    //    ((WardrobeListFragment) f).fresh();
+    //  } else {
+    //    WardrobeListFragment wardrobeListFragment =
+    //        WardrobeListFragment.newInstance(ls, regions.get(i));
+    //    chooseWardrobeListFragments.add(wardrobeListFragment);
+    //    fragmentAdapter.addTag(wardrobeListFragment);
+    //    mData.add(new SimpleChooseItemItem(regions.get(i)));
+    //  }
+    //}
+    //fragmentAdapter.notifyDataSetChanged();
+    //mAdapter.updateDataSet(mData);
     if (viewpager != null) {
       int x = mSaveState.getInt("page", 0);
       if (x < viewpager.getAdapter().getCount()) viewpager.setCurrentItem(x);

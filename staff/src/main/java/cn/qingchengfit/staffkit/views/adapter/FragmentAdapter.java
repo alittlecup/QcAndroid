@@ -46,6 +46,9 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
   public Fragment findByTag(Long tag) {
     return tags.get(tag);
   }
+  public void addTag(WardrobeListFragment fragment){
+    tags.put(fragment.getRegionId(),fragment);
+  }
 
   @Override public Object instantiateItem(ViewGroup container, int position) {
     Fragment fragment = (Fragment) super.instantiateItem(container, position);
