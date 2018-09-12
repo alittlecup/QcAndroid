@@ -95,7 +95,7 @@ import javax.inject.Inject;
             boolean isFirst = sharedPreferenceUtils.IsFirst("cardList");
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
-                bubblePopupView.show(toolbar, "点击管理会员卡种类", 70, 1000);
+                bubblePopupView.show(toolbar, "点击管理会员卡种类", 90, 400);
                 sharedPreferenceUtils.saveFlag("cardList", false);
             }
         }

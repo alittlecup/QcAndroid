@@ -78,7 +78,7 @@ import javax.inject.Inject;
       boolean isFirst = sharedPreferenceUtils.IsFirst("batchPrivate");
       if(isFirst) {
         bubblePopupView = new BubblePopupView(getContext());
-        bubblePopupView.show(toolbar, "私教的更多操作在这里", 50, 1000);
+        bubblePopupView.show(toolbar, "私教的更多操作在这里", 75, 400);
         sharedPreferenceUtils.saveFlag("batchPrivate", false);
       }
     }

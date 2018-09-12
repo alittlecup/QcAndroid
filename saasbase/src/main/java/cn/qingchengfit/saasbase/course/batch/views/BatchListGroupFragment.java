@@ -81,7 +81,7 @@ public class BatchListGroupFragment
             boolean isFirst = sharedPreferenceUtils.IsFirst("batchGroup");
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
-                bubblePopupView.show(toolbar, "团课的更多操作在这里", 50, 1000);
+                bubblePopupView.show(toolbar, "团课的更多操作在这里", 75, 400);
                 sharedPreferenceUtils.saveFlag("batchGroup", false);
             }
         }

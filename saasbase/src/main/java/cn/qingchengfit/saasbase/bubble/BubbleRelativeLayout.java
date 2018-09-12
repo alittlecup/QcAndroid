@@ -30,8 +30,9 @@ public class BubbleRelativeLayout extends RelativeLayout {
     public static int PADDING = 30;
     public static int LEG_HALF_BASE = 30;
     public static float STROKE_WIDTH = 2.0f;
-    public static float CORNER_RADIUS = 8.0f;
+    public static float CORNER_RADIUS = 20.0f;
     public static float BACKGROUND_COLOR = Color.rgb(0, 206, 216);
+    public static float ALPHA = 0.90f;
     public static float SHADOW_COLOR = Color.argb(100, 0, 0, 0);
     public static float MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
 
@@ -91,6 +92,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
         mFillPaint = new Paint(mPaint);
         mFillPaint.setColor(Color.WHITE);
         mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, (int)BACKGROUND_COLOR, (int)BACKGROUND_COLOR, Shader.TileMode.CLAMP));
+        mFillPaint.setAlpha((int)(255 * ALPHA));
 
         if (Build.VERSION.SDK_INT >= 11) {
             setLayerType(LAYER_TYPE_SOFTWARE, mFillPaint);

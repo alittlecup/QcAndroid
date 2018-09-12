@@ -92,7 +92,7 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         boolean isFirst = sharedPreferenceUtils.IsFirst("trainerHome");
         if(isFirst) {
           bubblePopupView = new BubblePopupView(getContext());
-          bubblePopupView.show(toolbar, "点击这里管理教练权限", 50, 1000);
+          bubblePopupView.show(toolbar, "点击这里管理教练权限", 75, 400);
           sharedPreferenceUtils.saveFlag("trainerHome", false);
         }
       }

@@ -74,10 +74,7 @@ public class BubblePopupWindow extends PopupWindow {
 
             switch (gravity) {
                 case Gravity.BOTTOM:
-                    if(location[0] > (parent.getWidth() /2))
-                        showAtLocation(parent, Gravity.NO_GRAVITY, location[0] - (parent.getWidth() / 2), location[1] + getMeasureHeight());
-                    else
-                        showAtLocation(parent, Gravity.NO_GRAVITY, location[0], location[1] + getMeasureHeight());
+                    showAtLocation(parent, Gravity.NO_GRAVITY, location[0] - parent.getWidth() - 100, location[1] + getMeasureHeight());
                     break;
                 case Gravity.TOP:
                     if(location[0] > (parent.getWidth() / 2))
