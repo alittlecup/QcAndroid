@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ public class NotificationPresenter extends BasePresenter {
   private int page = 1;
   private int totalpage = 1;
   @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
 
   @Inject public NotificationPresenter(RestRepository restRepository) {
     this.restRepository = restRepository;
@@ -131,7 +133,7 @@ public class NotificationPresenter extends BasePresenter {
 
   public void checkoutSellerStudentPermission(String user_id) {
     RxRegiste(restRepository.getGet_api()
-        .qcCheckSellerStudentPermission(loginStatus.staff_id(), user_id)
+        .qcCheckSellerStudentPermission(loginStatus.staff_id(), user_id,gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

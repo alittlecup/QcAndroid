@@ -1054,5 +1054,5 @@ public interface Get_Api {
 
   @GET("/api/staffs/{staff_id}/user/{user_id}/permission/")
   rx.Observable<QcDataResponse<JSONObject>> qcCheckSellerStudentPermission(
-      @Path("staff_id") String staff_id, @Path("user_id") String user_id);
+      @Path("staff_id") String staff_id, @Path("user_id") String user_id,@QueryMap HashMap<String, Object> params);
 }

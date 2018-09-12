@@ -248,6 +248,7 @@ public class NotificationFragment extends BaseFragment
                           //toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
                         } else if (msg.type == 17) {
                           showLoading();
+                          gymWrapper.setCoachService(coachService1);
                           presenter.checkoutSellerStudentPermission(msg.getUser().getId());
                           return;
                         } else if (msg.type == 19) {
