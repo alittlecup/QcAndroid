@@ -558,7 +558,7 @@
 
   <string name="module_service_group">团课</string>
   <string name="module_service_private">私教</string>
-  <string name="module_service_free">入场签到</string>
+  <string name="module_service_free">自主训练</string>
   <string name="module_service_shop">商品管理</string>
   <string name="module_service_commodity_list">商店</string>
   <string name="module_service_workbench_counter">收银台</string>
@@ -651,7 +651,7 @@
   <string name="lable_signin_wardrobe">更衣柜联动设置</string>
   <string name="lable_signin_screen">签到大屏幕</string>
   <string name="hint_set_signin_wardrobe">设置与更衣柜联动</string>
-  <string name="title_signin_config">入场签到设置</string>
+  <string name="title_signin_config">自主训练设置</string>
   <string name="copy_link_to_cpboard">复制链接到剪切板</string>
   <string name="link_has_copied">链接已复制</string>
   <string name="qc_student_tag">VIP会员</string>
