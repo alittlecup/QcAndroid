@@ -196,6 +196,9 @@ import javax.inject.Inject;
       if(TextUtils.isEmpty(s)){
         s=PreferenceUtils.getPrefString(getContext(),Configs.PREFER_WORK_NAME,"");
       }
+      if(TextUtils.isEmpty(s)){
+        s=PreferenceUtils.getPrefString(getContext(),Configs.PREFER_WORK_NAME_MIRROR,"");
+      }
       mSortViewModel.salerName.setValue(s);
     }
 

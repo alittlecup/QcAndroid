@@ -342,6 +342,9 @@ import rx.functions.Action1;
     } else {
       tvAllotsaleSelectCount.setText("" + DirtySender.studentList.size());
     }
+    if(DirtySender.studentList.size()==0){
+      rbSelectAll.setChecked(false);
+    }
   }
 
   @Override public void onDestroyView() {

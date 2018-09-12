@@ -28,6 +28,8 @@ public class Configs {
     public static final String PREFER_SESSION_ID = "session_id";
     public static final String PREFER_PHONE = "qingcheng.phone";
     public static final String PREFER_WORK_NAME = "qingcheng.work.name";
+    public static final String PREFER_WORK_NAME_MIRROR = "qingcheng.work.name.mirror";
+
     public static final String PREFER_WORK_ID = "qingcheng.work.id";
     public static final String PREFER_COACH_ID = "qingcheng.coach.id";
     public static final String PREFER_USER_ID = "qingcheng.user.id";

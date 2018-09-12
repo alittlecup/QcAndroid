@@ -125,6 +125,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     loginModel.setStaffId(AppUtils.getCurApp(mvpContext)==0?qcResponLogin.data.coach.getId():qcResponLogin.data.staff.getId());
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_NAME,
       qcResponLogin.data.staff.getUsername());
+    PreferenceUtils.setPrefString(mvpContext,Configs.PREFER_WORK_NAME_MIRROR,qcResponLogin.data.user.username);
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
       qcResponLogin.getData().user.getId());
     SensorsDataAPI.sharedInstance(mvpContext.getApplicationContext()).login(qcResponLogin.getData().user.id);
