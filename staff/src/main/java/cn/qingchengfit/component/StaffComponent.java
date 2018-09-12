@@ -19,6 +19,7 @@ public class StaffComponent implements IComponent {
     switch (actionName) {
       case "/add/student":
         Intent add = new Intent(qc.getContext(), StudentActivity.class);
+        add.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         add.putExtra("remote", "add");
         qc.getContext().startActivity(add);
         QC.sendQCResult(qc.getCallId(), QCResult.success());
@@ -26,6 +27,7 @@ public class StaffComponent implements IComponent {
       case "/home/student":
         Intent it = new Intent(qc.getContext(), StudentsDetailActivity.class);
         it.putExtra("qcstudent", (Parcelable) qc.getParams().get("qcstudent"));
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         qc.getContext().startActivity(it);
         QC.sendQCResult(qc.getCallId(), QCResult.success());
         return false;
@@ -35,6 +37,7 @@ public class StaffComponent implements IComponent {
         intent.putExtra("to", to);
         intent.putExtra("open", (boolean) qc.getParams().get("open"));
         intent.putExtra("callId", qc.getCallId());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         qc.getContext().startActivity(intent);
         return true;
     }

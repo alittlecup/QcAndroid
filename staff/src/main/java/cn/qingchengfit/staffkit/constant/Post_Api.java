@@ -41,6 +41,8 @@ import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.CoachResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
+import cn.qingchengfit.model.responese.Locker;
+import cn.qingchengfit.model.responese.LockerWrapper;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
@@ -480,7 +482,7 @@ public interface Post_Api {
         @Path("locker_id") String lockerid, @QueryMap HashMap<String, Object> params);
 
     //修改
-    @PUT("/api/v2/staffs/{staff_id}/lockers/{locker_id}/") rx.Observable<QcResponse> qcEditLocker(@Path("staff_id") String staff_id,
+    @PUT("/api/v2/staffs/{staff_id}/lockers/{locker_id}/") rx.Observable<QcDataResponse<LockerWrapper>> qcEditLocker(@Path("staff_id") String staff_id,
         @Path("locker_id") String lockerid, @QueryMap HashMap<String, Object> params, @Body EditWardrobeBody body);
 
     //归还
