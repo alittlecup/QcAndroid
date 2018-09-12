@@ -125,7 +125,7 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment
   protected void showTitle() {
     tvStudCount.setText(getString(
       type == CHOOSE_STUDENT ? R.string.qc_allotsale_select : R.string.qc_chat_friend_select,
-      datas.size()));
+      adapter.getItemCount()));
   }
 
   @Override public void dismiss() {

@@ -48,7 +48,10 @@ public class CheckoutComponent implements IComponent {
         Bundle bundle = new Bundle();
         String data = (String) params1.get("data");
         CashierBeanWrapper cashierBeanWrapper = new Gson().fromJson(data, CashierBeanWrapper.class);
-        bundle.putParcelable("orderData", cashierBeanWrapper);
+        Bundle parceWrapper = new Bundle();
+        parceWrapper.putParcelable("wrapper",
+            cashierBeanWrapper);//这里重新包一层的目的是因为在一些7.0版本的手机上Parcelable对象会无法传递报错
+        bundle.putBundle("orderData", parceWrapper);
         bundle.putString("type", cashierBeanWrapper.getType());
         bundle.putString("qcCallId", qc.getCallId());
         RouteUtil.routeTo(qc.getContext(), getName(), qc.getActionName(), bundle);

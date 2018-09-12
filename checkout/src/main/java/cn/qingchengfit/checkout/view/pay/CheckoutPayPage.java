@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -98,8 +99,9 @@ import timber.log.Timber;
   public CkPageCheckoutPayBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = CkPageCheckoutPayBinding.inflate(inflater, container, false);
-    orderData = getArguments().getParcelable("orderData");
-    mViewModel.IOrderData.setValue(orderData);
+    Bundle wrapper = getArguments().getBundle("orderData");
+    orderData = wrapper.getParcelable("wrapper");
+    mViewModel.IOrderData.setValue(this.orderData);
     initToolbar();
     initUI();
     initListener();

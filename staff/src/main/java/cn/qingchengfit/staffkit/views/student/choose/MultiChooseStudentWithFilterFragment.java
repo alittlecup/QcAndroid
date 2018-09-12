@@ -164,6 +164,7 @@ import rx.functions.Action1;
     setFilterFragment();
     rbSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isFromListView) return;
         if (chooseStudentListFragment != null) {
           DirtySender.studentList.clear();
           if (isChecked) {
@@ -208,11 +209,15 @@ import rx.functions.Action1;
         .register(StudentListSelectEvent.class)
         .subscribe(new Action1<StudentListSelectEvent>() {
           @Override public void call(StudentListSelectEvent event) {
+            isFromListView = true;
             rbSelectAll.setChecked(event.isSelected());
+            isFromListView = false;
           }
         }));
     return v;
   }
+
+  private boolean isFromListView = false;
 
   private void setToolbar(Toolbar toolbar) {
     toolbarTitile.setText("选择会员");
@@ -342,7 +347,7 @@ import rx.functions.Action1;
     } else {
       tvAllotsaleSelectCount.setText("" + DirtySender.studentList.size());
     }
-    if(DirtySender.studentList.size()==0){
+    if (DirtySender.studentList.size() == 0) {
       rbSelectAll.setChecked(false);
     }
   }

@@ -231,9 +231,9 @@ public class QcStudentBean extends Personage
 
     public String getSellersStr() {
         if (sellers == null || sellers.size() == 0) {
-            return "";
+            return "--";
         } else {
-            String ret = "";
+            String ret = "--";
             for (int i = 0; i < sellers.size(); i++) {
                 if (i < sellers.size() - 1) {
                     ret = ret.concat(sellers.get(i).getUsername()).concat(Constants.SEPARATOR_EN);
