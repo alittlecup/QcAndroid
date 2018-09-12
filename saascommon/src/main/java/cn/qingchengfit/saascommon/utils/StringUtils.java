@@ -62,7 +62,7 @@ public class StringUtils {
     }
 
     public static String List2StrWithChineseSplit(List<String> stringList) {
-        String ret = "";
+        String ret = "--";
         if (stringList == null) return null;
         for (int i = 0; i < stringList.size(); i++) {
             if (i < stringList.size() - 1) {
