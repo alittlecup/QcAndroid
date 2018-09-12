@@ -32,6 +32,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
     public static float STROKE_WIDTH = 2.0f;
     public static float CORNER_RADIUS = 20.0f;
     public static float BACKGROUND_COLOR = Color.rgb(0, 206, 216);
+    public static float BACKGROUND_COLOR_BLACK = Color.rgb(35, 36, 40);
     public static float ALPHA = 0.90f;
     public static float SHADOW_COLOR = Color.argb(100, 0, 0, 0);
     public static float MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
@@ -44,20 +45,16 @@ public class BubbleRelativeLayout extends RelativeLayout {
     private float mBubbleLegOffset = 0.75f;
     private BubbleLegOrientation mBubbleOrientation = BubbleLegOrientation.TOP;
 
-    public BubbleRelativeLayout(Context context) {
-        this(context, null);
+    public BubbleRelativeLayout(Context context, int identity) {
+        this(context, null, identity);
     }
 
-    public BubbleRelativeLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public BubbleRelativeLayout(Context context, AttributeSet attrs, int identity) {
+        super(context, attrs, identity);
+        init(context, attrs, identity);
     }
 
-    public BubbleRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, 0);
-        init(context, attrs);
-    }
-
-    private void init(final Context context, final AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs, int identity) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
         if(attrs != null) {
@@ -91,7 +88,11 @@ public class BubbleRelativeLayout extends RelativeLayout {
 
         mFillPaint = new Paint(mPaint);
         mFillPaint.setColor(Color.WHITE);
-        mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, (int)BACKGROUND_COLOR, (int)BACKGROUND_COLOR, Shader.TileMode.CLAMP));
+        if(identity == 0) {
+            mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, (int)BACKGROUND_COLOR, (int)BACKGROUND_COLOR, Shader.TileMode.CLAMP));
+        } else {
+            mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, (int)BACKGROUND_COLOR_BLACK, (int)BACKGROUND_COLOR_BLACK, Shader.TileMode.CLAMP));
+        }
         mFillPaint.setAlpha((int)(255 * ALPHA));
 
         if (Build.VERSION.SDK_INT >= 11) {

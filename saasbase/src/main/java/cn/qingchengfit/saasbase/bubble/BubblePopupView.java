@@ -21,11 +21,11 @@ public class BubblePopupView {
         bubblePopupWindow = new BubblePopupWindow(context);
     }
 
-    public void show(View view, String content, int gravity, float bubbleOffset) {
+    public void show(View view, String content, int gravity, float bubbleOffset, int identity) {
         View bubbleView = inflater.inflate(R.layout.view_popup_bubble, null);
         guideText = bubbleView.findViewById(R.id.guide_text);
         guideText.setText(content);
-        bubblePopupWindow.setBubbleView(bubbleView);
+        bubblePopupWindow.setBubbleView(bubbleView, identity);
         bubblePopupWindow.show(view, gravity, bubbleOffset);
     }
 }

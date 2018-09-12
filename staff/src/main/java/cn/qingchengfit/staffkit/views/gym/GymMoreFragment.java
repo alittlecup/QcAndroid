@@ -90,7 +90,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
             boolean isFirst = sharedPreferenceUtils.IsFirst("gymMore");
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
-                bubblePopupView.show(toolbar, "点击这里管理常用功能", 75, 400);
+                bubblePopupView.show(toolbar, "点击这里管理常用功能", 75, 400, 0);
                 sharedPreferenceUtils.saveFlag("gymMore", false);
             }
         }

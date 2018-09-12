@@ -47,7 +47,7 @@ import javax.inject.Inject;
       boolean isFirst = sharedPreferenceUtils.IsFirst("shopHome");
       if(isFirst) {
         bubblePopupView = new BubblePopupView(getContext());
-        bubblePopupView.show(mBinding.showWebPreview, "点击预览商品并推广", Gravity.BOTTOM, 400);
+        bubblePopupView.show(mBinding.showWebPreview, "点击预览商品并推广", Gravity.BOTTOM, 400, 0);
         sharedPreferenceUtils.saveFlag("shopHome", false);
       }
     }

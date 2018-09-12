@@ -22,13 +22,12 @@ public class BubblePopupWindow extends PopupWindow {
         setFocusable(true);
         setOutsideTouchable(false);
         setClippingEnabled(false);
-
         ColorDrawable dw = new ColorDrawable(0);
         setBackgroundDrawable(dw);
     }
 
-    public void setBubbleView(View view) {
-        bubbleView = new BubbleRelativeLayout(context);
+    public void setBubbleView(View view, int identity) {
+        bubbleView = new BubbleRelativeLayout(context, identity);
         bubbleView.setBackgroundColor(Color.TRANSPARENT);
         bubbleView.addView(view);
         setContentView(bubbleView);
