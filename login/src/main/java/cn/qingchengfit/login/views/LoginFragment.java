@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-
-
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
@@ -29,7 +27,6 @@ import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.bean.RegisteBody;
 import cn.qingchengfit.login.event.SendMsgEvent;
 import cn.qingchengfit.network.QcRestRepository;
-
 
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
@@ -62,31 +59,33 @@ import rx.android.schedulers.AndroidSchedulers;
 public class LoginFragment extends BaseFragment
     implements CheckProtocolPresenter.MVPView, LoginView {
 
-	ToggleButton mForgetpwBtn;
-	Button mLoginBtn;
+  ToggleButton mForgetpwBtn;
+  Button mLoginBtn;
   Observable<SendMsgEvent> RxObMsg;
-	LinearLayout rootView;
-	PhoneEditText loginPhone;
-	PasswordView pwView;
-	CheckBox btnAgreeProtocol;
-	LinearLayout layoutProtocol;
+  LinearLayout rootView;
+  PhoneEditText loginPhone;
+  PasswordView pwView;
+  CheckBox btnAgreeProtocol;
+  LinearLayout layoutProtocol;
   @Inject CheckProtocolPresenter presenter;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository restRepository;
   @Inject IWXAPI api;
+  InternalHandler handler;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    RxBus.getBus().register(SendAuth.Resp.class)
-      .compose(bindToLifecycle())
-      .onBackpressureDrop()
-      .delay(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<SendAuth.Resp>() {
-        @Override public void onNext(SendAuth.Resp resp) {
-          LogUtil.d("code ==== "+resp.code);
-          loginPresenter.loginWx(resp.code);
-        }
-      });
+    RxBus.getBus()
+        .register(SendAuth.Resp.class)
+        .compose(bindToLifecycle())
+        .onBackpressureDrop()
+        .delay(500, TimeUnit.MILLISECONDS)
+        .subscribe(new BusSubscribe<SendAuth.Resp>() {
+          @Override public void onNext(SendAuth.Resp resp) {
+            LogUtil.d("code ==== " + resp.code);
+            loginPresenter.loginWx(resp.code);
+          }
+        });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -152,31 +151,40 @@ public class LoginFragment extends BaseFragment
         }
       }
     });
-    final InternalHandler handler = new InternalHandler(getActivity());
+    if (handler == null) {
+      handler = new InternalHandler(getActivity());
+    }
     RxObMsg = RxBus.getBus().register(SendMsgEvent.class);
-    RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(
-      sendMsgEvent -> handler.sendEmptyMessage(0));
+    RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(sendMsgEvent -> {
+      if (isVisible()) {
+        handler.sendEmptyMessage(0);
+      }
+    });
 
     /*
      * 注册
      */
-    RxBusAdd(RegisteBody.class)
-      .subscribe(new BusSubscribe<RegisteBody>() {
-        @Override public void onNext(RegisteBody registeBody) {
-          loginPresenter.registe(registeBody);
-        }
-      });
+    RxBusAdd(RegisteBody.class).subscribe(new BusSubscribe<RegisteBody>() {
+      @Override public void onNext(RegisteBody registeBody) {
+        loginPresenter.registe(registeBody);
+      }
+    });
 
-    RxBusAdd(LoginBody.class)
-      .subscribe(new BusSubscribe<LoginBody>() {
-        @Override public void onNext(LoginBody registeBody) {
-          loginPresenter.doLogin(registeBody);
-        }
-      });
+    RxBusAdd(LoginBody.class).subscribe(new BusSubscribe<LoginBody>() {
+      @Override public void onNext(LoginBody registeBody) {
+        loginPresenter.doLogin(registeBody);
+      }
+    });
     return view;
   }
 
-  private void changeHost(){
+  @Override public void onDestroyView() {
+    handler.removeMessages(0);
+    handler = null;
+    super.onDestroyView();
+  }
+
+  private void changeHost() {
     if (loginPresenter.isDebug()) {
       final EditText et = new EditText(getContext());
       et.setMaxLines(1);
@@ -199,10 +207,10 @@ public class LoginFragment extends BaseFragment
       listFragment.loadData(itemList);
       listFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
         @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
-          if (selectedPos.get(0) == list.size() - 1){
+          if (selectedPos.get(0) == list.size() - 1) {
             et.setText("");
             et.setHint("请输入测试环境(如：cloudtest、c1等)");
-          }else{
+          } else {
             et.setText("http://" + list.get(selectedPos.get(0)) + "/");
           }
         }
@@ -221,53 +229,53 @@ public class LoginFragment extends BaseFragment
               MeasureUtils.dpToPx(50f, getResources())));
       mLoginBtn.setEnabled(false);
       btnChange.setOnClickListener(v -> {
-            String host = et.getText().toString();
+        String host = et.getText().toString();
 
-            if (!et.getText().toString().contains("http")) {
-              Constants.ServerDebug = "http://" + et.getText().toString().trim() + (isStartWithNumber(host)?"":".qingchengfit.cn/");
-              PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                  Constants.ServerDebug);
-            }else{
-              Constants.ServerDebug = et.getText().toString().trim();
-              PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                  Constants.ServerDebug);
-            }
-            restRepository.changeHost(Constants.ServerDebug);
-            ToastUtils.show("修改成功");
-
-        });
+        if (!et.getText().toString().contains("http")) {
+          Constants.ServerDebug =
+              "http://" + et.getText().toString().trim() + (isStartWithNumber(host) ? ""
+                  : ".qingchengfit.cn/");
+          PreferenceUtils.setPrefString(getContext(), "debug_ip", Constants.ServerDebug);
+        } else {
+          Constants.ServerDebug = et.getText().toString().trim();
+          PreferenceUtils.setPrefString(getContext(), "debug_ip", Constants.ServerDebug);
+        }
+        restRepository.changeHost(Constants.ServerDebug);
+        ToastUtils.show("修改成功");
+      });
     }
   }
+
   public static boolean isStartWithNumber(String str) {
     Pattern pattern = Pattern.compile("[0-9]*");
-    Matcher isNum = pattern.matcher(str.charAt(0)+"");
+    Matcher isNum = pattern.matcher(str.charAt(0) + "");
     return isNum.matches();
   }
 
- public void onAgree() {
+  public void onAgree() {
     mLoginBtn.setEnabled(btnAgreeProtocol.isChecked());
   }
 
- public void onProtocol() {
-    WebActivity.startWeb(restRepository.getHost() + LoConstants.USER_PROTOCOL_URL,
-        getContext());
+  public void onProtocol() {
+    WebActivity.startWeb(restRepository.getHost() + LoConstants.USER_PROTOCOL_URL, getContext());
   }
- public void loginWx(){
+
+  public void loginWx() {
     if (!api.isWXAppInstalled()) {
       showAlert("您还未安装微信客户端");
       return;
     }
     SendAuth.Req req = new SendAuth.Req();
     req.scope = "snsapi_userinfo";
-    req.state = AppUtils.getCurAppName(getContext())+"_login";
+    req.state = AppUtils.getCurAppName(getContext()) + "_login";
     api.sendReq(req);
   }
 
- public void toggle() {
+  public void toggle() {
     pwView.toggle();
   }
 
- public void onClick() {
+  public void onClick() {
     if (loginPhone.checkPhoneNum() && pwView.checkValid()) {
       loginPresenter.doLogin(new LoginBody.Builder().phone(loginPhone.getPhoneNum())
           .code(pwView.isPwMode() ? null : pwView.getCode())
@@ -310,15 +318,14 @@ public class LoginFragment extends BaseFragment
 
   /**
    * 跳去初始化页面，这个操作太花式
-   * @param
    */
   @Override public void toInit(String openid) {
-    if (getActivity() != null){
+    if (getActivity() != null) {
       getActivity().getSupportFragmentManager()
-        .beginTransaction()
-        .replace(R.id.frag,RegistInitFragment.newInstance(openid))
-        .addToBackStack("")
-        .commitAllowingStateLoss();
+          .beginTransaction()
+          .replace(R.id.frag, RegistInitFragment.newInstance(openid))
+          .addToBackStack("")
+          .commitAllowingStateLoss();
     }
   }
 

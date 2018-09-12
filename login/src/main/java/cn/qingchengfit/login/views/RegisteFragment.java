@@ -16,8 +16,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.login.LoConstants;
 import cn.qingchengfit.login.R;
@@ -25,7 +23,6 @@ import cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.login.bean.RegisteBody;
 import cn.qingchengfit.login.event.SendMsgEvent;
 import cn.qingchengfit.network.QcRestRepository;
-
 
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.SensorsUtils;
@@ -47,23 +44,24 @@ import rx.functions.Action1;
  */
 public class RegisteFragment extends BaseFragment implements LoginView {
 
-	TextView compleGenderLabel;
-	RadioButton compleGenderMale;
-	RadioButton compleGenderFemale;
-	RadioGroup compleGender;
-	LinearLayout registeGender;
-	Button registeBtn;
-	LinearLayout registeRootview;
-	PhoneEditText phoneNum;
-	PasswordView checkcode;
-	PasswordView password;
-	EditText etUsername;
-	CheckBox btnAgreeProtocol;
-	LinearLayout layoutProtocol;
+  TextView compleGenderLabel;
+  RadioButton compleGenderMale;
+  RadioButton compleGenderFemale;
+  RadioGroup compleGender;
+  LinearLayout registeGender;
+  Button registeBtn;
+  LinearLayout registeRootview;
+  PhoneEditText phoneNum;
+  PasswordView checkcode;
+  PasswordView password;
+  EditText etUsername;
+  CheckBox btnAgreeProtocol;
+  LinearLayout layoutProtocol;
   private Observable<SendMsgEvent> RxObMsg;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository qcRestRepository;
   @Inject IWXAPI api;
+   InternalHandler handler;
 
   public RegisteFragment() {
   }
@@ -115,8 +113,9 @@ public class RegisteFragment extends BaseFragment implements LoginView {
         compleGender.check(R.id.comple_gender_female);
       }
     });
-
-    final InternalHandler handler = new InternalHandler(getActivity());
+    if (handler == null) {
+      handler = new InternalHandler(getActivity());
+    }
     RxObMsg = RxBus.getBus().register(SendMsgEvent.class);
     RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<SendMsgEvent>() {
       @Override public void call(SendMsgEvent sendMsgEvent) {
@@ -143,30 +142,30 @@ public class RegisteFragment extends BaseFragment implements LoginView {
           .build());
     }
   }
- public void loginWx(){
+
+  public void loginWx() {
     if (!api.isWXAppInstalled()) {
       showAlert("您还未安装微信客户端");
       return;
     }
     SendAuth.Req req = new SendAuth.Req();
     req.scope = "snsapi_userinfo";
-    req.state = AppUtils.getCurAppName(getContext())+"_registe";
+    req.state = AppUtils.getCurAppName(getContext()) + "_registe";
     api.sendReq(req);
   }
 
- public void onAgree() {
+  public void onAgree() {
     registeBtn.setEnabled(btnAgreeProtocol.isChecked());
   }
 
- public void onProtocol() {
-    WebActivity.startWeb(qcRestRepository.getHost() + LoConstants.USER_PROTOCOL_URL,
-        getContext());
+  public void onProtocol() {
+    WebActivity.startWeb(qcRestRepository.getHost() + LoConstants.USER_PROTOCOL_URL, getContext());
   }
 
   /**
    * 确认注册
    */
- public void onRegiste() {
+  public void onRegiste() {
 
     if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()) {
       loginPresenter.registe(
@@ -179,14 +178,16 @@ public class RegisteFragment extends BaseFragment implements LoginView {
               .has_read_agreement(btnAgreeProtocol.isChecked())
               .build());
       SensorsUtils.track("QcRegister")
-        .addProperty("qc_user_gender",compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female ? "1" : "0")
-        .commit(getContext());
-
+          .addProperty("qc_user_gender",
+              compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female ? "1" : "0")
+          .commit(getContext());
     }
   }
 
   @Override public void onDestroyView() {
     RxBus.getBus().unregister(SendMsgEvent.class.getName(), RxObMsg);
+    handler.removeMessages(0);
+    handler=null;
     super.onDestroyView();
   }
 
