@@ -196,21 +196,21 @@ public class ChooseDetailItem
       switch (status) {
         case 0:
           desc = new StringBuilder().append("来源：")
-              .append(TextUtils.isEmpty(data.origin) ? "" : data.origin)
+              .append(TextUtils.isEmpty(data.origin) ? "--" : data.origin)
               .append("\n推荐人：")
               .append(
-                  data.recommend_by == null || TextUtils.isEmpty(data.recommend_by.username) ? ""
+                  data.recommend_by == null || TextUtils.isEmpty(data.recommend_by.username) ? "--"
                       : data.recommend_by.username)
               .append("\n注册时间：")
-              .append(TextUtils.isEmpty(data.joined_at) ? ""
+              .append(TextUtils.isEmpty(data.joined_at) ? "--"
                   : DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(data.joined_at)))
               .toString();
           break;
         case 1:
           desc = new StringBuilder().append("最新跟进：")
-              .append(TextUtils.isEmpty(data.track_record) ? "" : data.track_record)
+              .append(TextUtils.isEmpty(data.track_record) ? "--" : data.track_record)
               .append("\n跟进状态：")
-              .append(TextUtils.isEmpty(data.track_status) ? "" : data.track_status)
+              .append(TextUtils.isEmpty(data.track_status) ? "--" : data.track_status)
               .toString();
           break;
         case 2:

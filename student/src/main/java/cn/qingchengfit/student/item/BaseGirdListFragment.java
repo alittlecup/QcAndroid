@@ -78,7 +78,12 @@ public class BaseGirdListFragment extends BaseListFragment {
       List<Integer> integers = get();
       List<String> strings = new ArrayList<>();
       for (Integer pos : integers) {
-          strings.add(((ChooseSalerItem)datas.get(pos)).getSaler().getId());
+        Staff saler = ((ChooseSalerItem) datas.get(pos)).getSaler();
+        if(saler.getTeacher()!=null){
+          strings.add(saler.getTeacher().getId());
+        }else{
+          strings.add(saler.getId());
+        }
       }
       return strings;
   }

@@ -48,14 +48,15 @@ import java.util.Map;
     OnChartValueSelectedListener {
   @Need @IncreaseType String curType = IncreaseType.INCREASE_MEMBER;
   List<SalerStudentListView> fragmentList = new ArrayList<>();
-
+  private boolean isNoData=false;
   @Override protected void subscribeUI() {
     mViewModel.inactiveStat.observe(this, inactiveStat -> {
-      if (inactiveStat.getInactive().getTotal_count() == 0) {
-
-      } else {
-        initTab(inactiveStat.getInactive().getStat_data());
+      if(inactiveStat.getInactive().getTotal_count()==0){
+        isNoData=true;
+      }else{
+        isNoData=false;
       }
+      initTab(inactiveStat.getInactive().getStat_data());
     });
   }
 
@@ -97,8 +98,8 @@ import java.util.Map;
         ((CountDateView) childAt).setCount(inactiveBean.getCount());
         ((CountDateView) childAt).setOnCheckedChangeListener(this);
       }
-      dealFragmentList(inactiveBean,i);
-      entries.add(new PieEntry(inactiveBean.getCount(), i));
+      dealFragmentList(inactiveBean, i);
+      entries.add(new PieEntry(isNoData?1:inactiveBean.getCount(), i));
     }
     PieDataSet dataSet = new PieDataSet(entries, "");
     dataSet.setDrawValues(false);
@@ -117,9 +118,9 @@ import java.util.Map;
 
   private void dealFragmentList(InactiveBean inactiveBean, int position) {
     List<SellerStat> seller_stat = inactiveBean.getSeller_stat();
-    if(fragmentList.isEmpty()||fragmentList.size()<4){
+    if (fragmentList.isEmpty() || fragmentList.size() < 4) {
       fragmentList.add(generateListView(seller_stat));
-    }else{
+    } else {
       SalerStudentListView salerStudentListView = fragmentList.get(position);
       Collections.sort(seller_stat, (o1, o2) -> o2.getTotal_count() - o1.getTotal_count());
       List<SalerStudentInfoItem> items = new ArrayList<>();

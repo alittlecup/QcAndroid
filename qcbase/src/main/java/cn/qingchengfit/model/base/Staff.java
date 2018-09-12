@@ -37,6 +37,12 @@ public class Staff extends User implements Parcelable,ICommonUser {
     public boolean is_coach;
     public long amount;
 
+    public Staff getTeacher() {
+        return teacher;
+    }
+
+    public Staff teacher;//加这个是为了适应分配教练的v2接口
+
     public Staff() {
     }
 
@@ -128,46 +134,6 @@ public class Staff extends User implements Parcelable,ICommonUser {
         .build();
   }
 
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.gd_district_id);
-        dest.writeParcelable(this.gd_district, flags);
-        dest.writeParcelable(this.position, flags);
-        dest.writeLong(this.count);
-        dest.writeString(this.position_str);
-        dest.writeString(this.user_id);
-        dest.writeByte(this.is_staff ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.is_coach ? (byte) 1 : (byte) 0);
-        dest.writeLong(this.amount);
-    }
-
-    protected Staff(Parcel in) {
-        super(in);
-        this.gd_district_id = in.readString();
-        this.gd_district = in.readParcelable(District.class.getClassLoader());
-        this.position = in.readParcelable(StaffPosition.class.getClassLoader());
-        this.count = in.readLong();
-        this.position_str = in.readString();
-        this.user_id = in.readString();
-        this.is_staff = in.readByte() != 0;
-        this.is_coach = in.readByte() != 0;
-        this.amount = in.readLong();
-    }
-
-    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
-        @Override public Staff createFromParcel(Parcel source) {
-            return new Staff(source);
-        }
-
-        @Override public Staff[] newArray(int size) {
-            return new Staff[size];
-        }
-    };
-
     @Override public String getTitle() {
         return username;
     }
@@ -191,4 +157,42 @@ public class Staff extends User implements Parcelable,ICommonUser {
     @Override public boolean filter(String str) {
         return (username!=null&&username.contains(str)) || (phone!=null&& phone.contains(str));
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(this.position, flags);
+        dest.writeLong(this.count);
+        dest.writeString(this.position_str);
+        dest.writeString(this.user_id);
+        dest.writeByte(this.is_staff ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_coach ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.amount);
+        dest.writeParcelable(this.teacher, flags);
+    }
+
+    protected Staff(Parcel in) {
+        super(in);
+        this.position = in.readParcelable(StaffPosition.class.getClassLoader());
+        this.count = in.readLong();
+        this.position_str = in.readString();
+        this.user_id = in.readString();
+        this.is_staff = in.readByte() != 0;
+        this.is_coach = in.readByte() != 0;
+        this.amount = in.readLong();
+        this.teacher = in.readParcelable(Staff.class.getClassLoader());
+    }
+
+    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
+        @Override public Staff createFromParcel(Parcel source) {
+            return new Staff(source);
+        }
+
+        @Override public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
 }

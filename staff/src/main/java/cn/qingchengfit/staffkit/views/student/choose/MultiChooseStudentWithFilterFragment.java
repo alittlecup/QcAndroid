@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -33,6 +34,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterEvent;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -201,6 +203,14 @@ import rx.functions.Action1;
             }
           }
         });
+
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(new Action1<StudentListSelectEvent>() {
+          @Override public void call(StudentListSelectEvent event) {
+            rbSelectAll.setChecked(event.isSelected());
+          }
+        }));
     return v;
   }
 

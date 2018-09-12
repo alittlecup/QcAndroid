@@ -27,6 +27,12 @@ public class StudentHomePieChartView
   @Override protected void subscribeUI() {
     mViewModel.pieData.observe(this, statData -> {
       if (statData == null) return;
+      boolean isNoData;
+      if(statData.getTotal_count()==0){
+        isNoData=true;
+      }else{
+        isNoData=false;
+      }
       List<InactiveBean> stat_data = statData.getStat_data();
       ArrayList<PieEntry> entries = new ArrayList<>();
       for (int i = 0; i < stat_data.size(); i++) {
@@ -36,7 +42,7 @@ public class StudentHomePieChartView
           ((CountDateView) childAt).setContent(inactiveBean.getPeriod());
           ((CountDateView) childAt).setCount(inactiveBean.getCount());
         }
-        entries.add(new PieEntry(inactiveBean.getCount(), i));
+        entries.add(new PieEntry(isNoData?1:inactiveBean.getCount(), i));
       }
       PieDataSet dataSet = new PieDataSet(entries, "");
       dataSet.setDrawValues(false);

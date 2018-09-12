@@ -12,6 +12,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
@@ -35,6 +37,7 @@ import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.statuslayout.StatusLayoutManager;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -187,6 +190,14 @@ import javax.inject.Inject;
         .subscribe(event -> {
           mBinding.rbSelectAll.setChecked(event.isSelected());
         }));
+    if(!permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)){
+      mBinding.qftSaler.setClickable(false);
+      String s = loginStatus.staff_name();
+      if(TextUtils.isEmpty(s)){
+        s=PreferenceUtils.getPrefString(getContext(),Configs.PREFER_WORK_NAME,"");
+      }
+      mSortViewModel.salerName.setValue(s);
+    }
 
   }
 

@@ -45,7 +45,7 @@ import java.util.List;
     });
 
     mViewModel.getResponseSuccess().observe(this, aBoolean -> {
-      if (aBoolean) {
+      if (aBoolean != null && aBoolean) {
         getActivity().onBackPressed();
       }
     });

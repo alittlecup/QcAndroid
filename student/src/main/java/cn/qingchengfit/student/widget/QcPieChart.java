@@ -5,6 +5,10 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
+import java.util.ArrayList;
 
 public class QcPieChart extends PieChart {
   public QcPieChart(Context context) {
