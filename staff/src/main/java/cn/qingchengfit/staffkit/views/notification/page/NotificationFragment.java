@@ -251,6 +251,7 @@ public class NotificationFragment extends BaseFragment
                           presenter.checkoutSellerStudentPermission(msg.getUser().getId());
                           return;
                         } else if (msg.type == 19) {
+                          gymWrapper.setCoachService(coachService1);
                           QcRouteUtil.setRouteOptions(
                               new RouteOptions("student").setActionName("/student/birthday"))
                               .call();
