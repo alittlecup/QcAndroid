@@ -1,6 +1,8 @@
 package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.presenter.TrainerHomePresenter;
 import cn.qingchengfit.views.DialogSheet;
@@ -39,6 +43,9 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
 
   @Inject TrainerHomePresenter presenter;
 
+  private BubblePopupView bubblePopupView;
+  private SharedPreferenceUtils sharedPreferenceUtils;
+
   @Override void initFragment() {
     if (fragments.size() == 0){
       fragments.add(new TrainerTabListFragment());
@@ -50,6 +57,7 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(presenter,this);
+    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     View v = super.onCreateView(inflater, container, savedInstanceState);
     db.layoutSu.setVisibility(View.GONE);
     return v;
@@ -74,6 +82,21 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         return true;
       })
       .build());
+    updateBubbleView(toolbar);
+  }
+
+  private void updateBubbleView(Toolbar toolbar) {
+    new Handler().postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        boolean isFirst = sharedPreferenceUtils.IsFirst("trainerHome");
+        if(isFirst) {
+          bubblePopupView = new BubblePopupView(getContext());
+          bubblePopupView.show(toolbar, "点击这里管理教练权限", 50, 1000);
+          sharedPreferenceUtils.saveFlag("trainerHome", false);
+        }
+      }
+    },1000);
   }
 
   @Override public void freshData() {

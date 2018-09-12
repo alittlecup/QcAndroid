@@ -1,13 +1,18 @@
 package cn.qingchengfit.shop.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopHomeBinding;
@@ -33,6 +38,21 @@ import javax.inject.Inject;
   private List<Pair<String, Fragment>> fragmentList;
   @Inject GymWrapper gymWrapper;
 
+  private BubblePopupView bubblePopupView;
+  private SharedPreferenceUtils sharedPreferenceUtils;
+
+  private Handler popupHandler = new Handler() {
+    @Override
+    public void handleMessage(Message msg) {
+      boolean isFirst = sharedPreferenceUtils.IsFirst("shopHome");
+      if(isFirst) {
+        bubblePopupView = new BubblePopupView(getContext());
+        bubblePopupView.show(mBinding.showWebPreview, "点击预览商品并推广", Gravity.BOTTOM, 1000);
+        sharedPreferenceUtils.saveFlag("shopHome", false);
+      }
+    }
+  };
+
   @Override protected void subscribeUI() {
 
   }
@@ -40,6 +60,8 @@ import javax.inject.Inject;
   @Override public PageShopHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = PageShopHomeBinding.inflate(inflater, container, false);
+    popupHandler.sendEmptyMessageDelayed(0, 1000);
+    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     initToolBar();
     initView();
     mBinding.setViewModel(mViewModel);

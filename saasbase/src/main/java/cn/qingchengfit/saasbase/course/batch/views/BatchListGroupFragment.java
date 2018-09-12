@@ -78,11 +78,11 @@ public class BatchListGroupFragment
     private Handler popupHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            boolean isFirst = sharedPreferenceUtils.IsFirst("isFirst");
+            boolean isFirst = sharedPreferenceUtils.IsFirst("batchGroup");
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
                 bubblePopupView.show(toolbar, "团课的更多操作在这里", 50, 1000);
-                sharedPreferenceUtils.saveFlag("isFirst", false);
+                sharedPreferenceUtils.saveFlag("batchGroup", false);
             }
         }
     };

@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.view.ViewCompat;
@@ -20,6 +22,8 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
@@ -77,6 +81,21 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     private boolean mEditableMode = false;
     private FunHeaderItem mMyFuntions;
 
+    private BubblePopupView bubblePopupView;
+    private SharedPreferenceUtils sharedPreferenceUtils;
+
+    private Handler popupHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            boolean isFirst = sharedPreferenceUtils.IsFirst("gymMore");
+            if(isFirst) {
+                bubblePopupView = new BubblePopupView(getContext());
+                bubblePopupView.show(toolbar, "点击这里管理常用功能", 50, 1000);
+                sharedPreferenceUtils.saveFlag("gymMore", false);
+            }
+        }
+    };
+
     @Inject public GymMoreFragment() {
     }
 
@@ -92,6 +111,9 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
       toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
       mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
       myFunRecycleview = (RecyclerView) view.findViewById(R.id.my_fun_recycleview);
+
+      popupHandler.sendEmptyMessageDelayed(0, 1000);
+      sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
 
       delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");

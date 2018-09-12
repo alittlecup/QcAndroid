@@ -2,6 +2,8 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,7 +16,9 @@ import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
+import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
@@ -65,9 +69,26 @@ import javax.inject.Inject;
   @Inject QcRestRepository restRepository;
   @Inject GymWrapper gymWrapper;
 
+  private BubblePopupView bubblePopupView;
+  private SharedPreferenceUtils sharedPreferenceUtils;
+
+  private Handler popupHandler = new Handler() {
+    @Override
+    public void handleMessage(Message msg) {
+      boolean isFirst = sharedPreferenceUtils.IsFirst("batchPrivate");
+      if(isFirst) {
+        bubblePopupView = new BubblePopupView(getContext());
+        bubblePopupView.show(toolbar, "私教的更多操作在这里", 50, 1000);
+        sharedPreferenceUtils.saveFlag("batchPrivate", false);
+      }
+    }
+  };
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
+    popupHandler.sendEmptyMessageDelayed(0, 1000);
+    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     RxBusAdd(EventStaffWrap.class)
       .compose(doWhen(FragmentEvent.RESUME))
       .throttleFirst(1000, TimeUnit.MILLISECONDS)

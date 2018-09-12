@@ -1,6 +1,8 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,10 +25,12 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardListPresenter;
+import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -82,6 +86,20 @@ import javax.inject.Inject;
 	protected LinearLayout layoutCardOperate;
 	TextView tvCardCount;
 	protected RelativeLayout cardListLayout;
+    private BubblePopupView bubblePopupView;
+
+    private SharedPreferenceUtils sharedPreferenceUtils;
+    private Handler popupHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            boolean isFirst = sharedPreferenceUtils.IsFirst("cardList");
+            if(isFirst) {
+                bubblePopupView = new BubblePopupView(getContext());
+                bubblePopupView.show(toolbar, "点击管理会员卡种类", 70, 1000);
+                sharedPreferenceUtils.saveFlag("cardList", false);
+            }
+        }
+    };
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -103,6 +121,10 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_card_list, container, false);
+
+    popupHandler.sendEmptyMessageDelayed(0, 1000);
+    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
+
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
     tl = (ViewGroup) view.findViewById(R.id.toolbar_layout);
