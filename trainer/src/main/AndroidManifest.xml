@@ -66,6 +66,8 @@
   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
   <uses-permission android:name="android.permission.READ_LOGS"/>
   <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
 
 
   <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
