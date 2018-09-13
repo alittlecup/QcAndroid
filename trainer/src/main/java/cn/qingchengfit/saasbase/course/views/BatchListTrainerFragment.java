@@ -15,7 +15,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;

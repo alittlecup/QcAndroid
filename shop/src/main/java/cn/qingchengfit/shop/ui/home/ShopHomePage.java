@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;

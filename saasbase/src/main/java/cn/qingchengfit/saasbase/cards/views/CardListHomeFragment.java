@@ -25,7 +25,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;

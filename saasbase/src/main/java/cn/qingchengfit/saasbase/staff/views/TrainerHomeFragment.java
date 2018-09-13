@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.presenter.TrainerHomePresenter;

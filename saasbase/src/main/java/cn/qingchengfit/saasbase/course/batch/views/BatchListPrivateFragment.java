@@ -16,7 +16,7 @@ import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.constant.Configs;

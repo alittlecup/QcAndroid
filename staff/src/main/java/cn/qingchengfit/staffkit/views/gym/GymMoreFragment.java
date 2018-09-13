@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.MainActivity;

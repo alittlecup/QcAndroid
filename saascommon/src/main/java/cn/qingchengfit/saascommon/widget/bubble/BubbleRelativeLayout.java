@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.bubble;
+package cn.qingchengfit.saascommon.widget.bubble;
 
 import android.content.Context;
 import android.content.res.Configuration;
