@@ -127,31 +127,6 @@ public class BatchDetailCommonView extends BaseFragment {
         course.is_private = isPrivate;
       }
     }
-    RxBus.getBus()
-        .register(EventPayOnline.class)
-        .compose(bindToLifecycle())
-        .compose(doWhen(FragmentEvent.CREATE_VIEW))
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new BusSubscribe<EventPayOnline>() {
-          @Override public void onNext(EventPayOnline e) {
-            payOnlineRule = e.getRule();
-            openPayOnline(e.getRule() != null);
-          }
-        });
-    RxBus.getBus()
-        .register(EventCourse.class)
-        .compose(bindToLifecycle())
-        .compose(doWhen(FragmentEvent.CREATE_VIEW))
-        .observeOn(AndroidSchedulers.mainThread())
-        .filter(
-            eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(
-                eventCourse.getSrc()))
-        .subscribe(new BusSubscribe<EventCourse>() {
-          @Override public void onNext(EventCourse course) {
-            BatchDetailCommonView.this.course = course.getCourse();
-            setCourse(course.getCourse());
-          }
-        });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -210,6 +185,19 @@ public class BatchDetailCommonView extends BaseFragment {
 
     setCourse(course);
     setTrainer(trainer);
+    initRxbus();
+    if (isPrivate) {
+      elMultiSupport = view.findViewById(R.id.el_multi_support);
+      elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
+      elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
+        payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
+      });
+    }
+    payOnline.setLabelDrawable(R.drawable.vd_payment_wechat, R.drawable.vd_payment_alipay);
+    return view;
+  }
+
+  public void initRxbus() {
     RxBusAdd(EventBatchPayCard.class).onBackpressureBuffer()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new BusSubscribe<EventBatchPayCard>() {
@@ -232,20 +220,36 @@ public class BatchDetailCommonView extends BaseFragment {
             setSpace(eventSiteSelected.getSpaces());
           }
         });
-    if (isPrivate) {
-      elMultiSupport = view.findViewById(R.id.el_multi_support);
-      elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
-      elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
-        payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
-      });
-    }
-    payOnline.setLabelDrawable(R.drawable.vd_payment_wechat, R.drawable.vd_payment_alipay);
-    return view;
+    RxBus.getBus()
+        .register(EventPayOnline.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventPayOnline>() {
+          @Override public void onNext(EventPayOnline e) {
+            payOnlineRule = e.getRule();
+            openPayOnline(e.getRule() != null);
+          }
+        });
+    RxBus.getBus()
+        .register(EventCourse.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(
+            eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(
+                eventCourse.getSrc()))
+        .subscribe(new BusSubscribe<EventCourse>() {
+          @Override public void onNext(EventCourse course) {
+            BatchDetailCommonView.this.course = course.getCourse();
+            setCourse(course.getCourse());
+          }
+        });
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    changePaySetting(AppUtils.getCurApp(getActivity()) != 0 ? 1 : 0);
+    openPay(AppUtils.getCurApp(getActivity()) != 0);
   }
 
   public boolean isHasOrder() {
@@ -319,14 +323,14 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   public void setMutlSupport(boolean support) {
-    if(isPrivate){
+    if (isPrivate) {
       elMultiSupport.setExpanded(support);
       numHasChange = false;
     }
   }
 
   public boolean mutilSupportble() {
-    if(isPrivate){
+    if (isPrivate) {
       return elMultiSupport != null && elMultiSupport.isExpanded();
     }
     return prePriceChoosePos == 2;
@@ -336,8 +340,18 @@ public class BatchDetailCommonView extends BaseFragment {
     return prePriceChoosePos != 0;
   }
 
-  public void openPay(int position) {
-    changePaySetting(position);
+  public void openPay(boolean open) {
+    if(llPayContent!=null){
+      llPayContent.setVisibility(open?View.VISIBLE:View.GONE);
+    }
+    if(priceSetting!=null){
+      if(isPrivate){
+        priceSetting.setContent(open?"收费":"免费");
+      }else{
+        priceSetting.setContent(open?"统一价格":"免费");
+      }
+
+    }
   }
 
   public void openPayOnline(boolean open) {
@@ -472,7 +486,7 @@ public class BatchDetailCommonView extends BaseFragment {
       routeTo("/batch/pay/online/",
           new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
               .maxPeople(getOrderStudentCount())
-              .multiPrice(prePriceChoosePos==2)
+              .multiPrice(prePriceChoosePos == 2)
               .build());
     }
   }
@@ -504,9 +518,14 @@ public class BatchDetailCommonView extends BaseFragment {
     }
   }
 
+  private BottomChooseDialog dialog;
+
   private void showBatchPriceSettingDialog() {
+    if (dialog != null) {
+      dialog.show();
+      return;
+    }
     List<BottomChooseData> datas = new ArrayList<>();
-    BottomChooseDialog dialog = new BottomChooseDialog(getContext(), "课程价格", datas);
     if (isPrivate) {
       datas.add(new BottomChooseData("免费", "无需支付"));
       datas.add(new BottomChooseData("收费", "需要支付"));
@@ -515,11 +534,12 @@ public class BatchDetailCommonView extends BaseFragment {
       datas.add(new BottomChooseData("统一价格", "不论人数多少始终统一价格"));
       datas.add(new BottomChooseData("团课动态价格", "根据团课人数设置不同价格"));
     }
+    dialog = new BottomChooseDialog(getContext(), "课程价格", datas);
     dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
       @Override public boolean onItemClick(int position) {
-        if (AppUtils.getCurApp(getContext()) != 0&&hasOrder) {//非教练APP
-            showAlert(R.string.alert_batch_has_ordered);
-            return false;
+        if (AppUtils.getCurApp(getContext()) != 0 && hasOrder) {//非教练APP
+          showAlert(R.string.alert_batch_has_ordered);
+          return false;
         }
         changePaySetting(position);
         return true;
@@ -561,21 +581,23 @@ public class BatchDetailCommonView extends BaseFragment {
         case 1:
           priceSetting.setContent("统一价格");
           llPayContent.setVisibility(View.VISIBLE);
-          if (prePriceChoosePos != position) {
+          if (prePriceChoosePos == 0) {
             payOnline.setContent("未设置");
-            payCard.setContent(prePriceChoosePos == 0 ? "未设置" : "已关闭多人支持，请重新设置");
-          }
-          if (prePriceChoosePos == 2) {
+            payCard.setContent("未设置");
+          } else if (prePriceChoosePos == 2) {
+            payCard.setContent("已关闭多人支持，请重新设置");
             numHasChange = true;
           }
+
           break;
         case 2:
           priceSetting.setContent("团课动态价格");
           llPayContent.setVisibility(View.VISIBLE);
-          if (prePriceChoosePos != position) {
-            payOnline.setContent(prePriceChoosePos == 0 ? "未设置" : "已开启多人支持，请重新设置");
-          }
-          if (prePriceChoosePos == 1) {
+          if (prePriceChoosePos == 0) {
+            payOnline.setContent("未设置");
+            payCard.setContent("未设置");
+          } else if (prePriceChoosePos == 1) {
+            payCard.setContent("已开启多人支持，请重新设置");
             numHasChange = true;
           }
           break;

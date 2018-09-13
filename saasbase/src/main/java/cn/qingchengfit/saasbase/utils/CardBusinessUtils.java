@@ -45,6 +45,17 @@ public class CardBusinessUtils {
     }
   }
 
+  public static String getCardTypeCategorySimple(int type, Context context) {
+    switch (type) {
+      case 2:
+        return context.getResources().getStringArray(R.array.cardtype_category_simple)[1];
+      case 3:
+        return context.getResources().getStringArray(R.array.cardtype_category_simple)[2];
+      default:
+        return context.getResources().getStringArray(R.array.cardtype_category_simple)[0];
+    }
+  }
+
   public static String getCardTypeCategoryStrHead(int type, Context context) {
     switch (type) {
       case 2:

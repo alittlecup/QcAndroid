@@ -1,10 +1,15 @@
 package cn.qingchengfit.saasbase.course.course.views;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -39,7 +44,19 @@ public class CourseChooseFragment extends CourseListFragment {
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText(mIsPrivate ? "选择私教课":"选择团课");
+    toolbarTitle.setText(mIsPrivate ? "选择私教课":"选择团课种类");
+    if(!mIsPrivate){
+      floatingActionButton.setVisibility(View.GONE);
+      llBottomAdd.setVisibility(View.VISIBLE);
+    }
+  }
+
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if(!mIsPrivate){
+      TextView tvBottomContent = view.findViewById(R.id.tv_bottom_content);
+      tvBottomContent.setText("添加团课种类");
+    }
   }
 
   @Override public boolean onItemClick(int position) {

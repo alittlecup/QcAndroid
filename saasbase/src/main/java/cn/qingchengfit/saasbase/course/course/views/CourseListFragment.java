@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -77,6 +78,7 @@ import rx.schedulers.Schedulers;
 	RecyclerView rv;
 	public SwipeRefreshLayout srl;
 	public FloatingActionButton floatingActionButton;
+	public LinearLayout llBottomAdd;
   @Need public Boolean mIsPrivate = false;
 
   protected CommonFlexAdapter commonFlexAdapter;
@@ -104,6 +106,8 @@ import rx.schedulers.Schedulers;
     toolbarLayout = (ViewGroup) view.findViewById(R.id.toolbar_layout);
     rv = (RecyclerView) view.findViewById(R.id.rv);
     srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    llBottomAdd=view.findViewById(R.id.ll_bottom_add);
+    llBottomAdd.setOnClickListener(v -> onViewClicked());
     floatingActionButton = (FloatingActionButton) view.findViewById(R.id.add_course_btn);
     view.findViewById(R.id.add_course_btn).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

@@ -1,13 +1,22 @@
 package cn.qingchengfit.saasbase.coach.views;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.staff.items.StaffSelectSingleItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.List;
+import org.w3c.dom.Text;
 
 /**
  * power by
@@ -48,6 +57,28 @@ public class TrainerChooseFragment extends CoachListFragment {
 
   @Override public int getFbIcon() {
     return 0;
+  }
+
+  @Override protected String getTitle() {
+    return "选择教练";
+  }
+
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if(view instanceof LinearLayout){
+      View bottomView = LayoutInflater.from(getContext()).inflate(R.layout.view_bottom_add,
+          (ViewGroup) view,false);
+      ((LinearLayout) view).addView(bottomView);
+      TextView textView = bottomView.findViewById(R.id.tv_bottom_content);
+      textView.setText("邀请教练");
+      bottomView.setVisibility(View.VISIBLE);
+      bottomView.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          onClickFab();
+        }
+      });
+    }
+
   }
 
   @Override public void setDatas(List<? extends IFlexible> ds, int page) {

@@ -456,7 +456,9 @@
   <string name="buy_card_no_limit">不限张数</string>
   <string name="card_count_unit">%d张</string>
   <string name="alipay_grey">支付宝支付（暂不支持）</string>
-  <string name="online_pay_client">在线支付平台:</string>
+  <string name="online_pay_client">单次约课仅支持:</string>
+  <string name="single_class_pay">单次约课</string>
+
   <string name="login_pw">登录密码</string>
   <string name="phone_code">手机验证码</string>
 

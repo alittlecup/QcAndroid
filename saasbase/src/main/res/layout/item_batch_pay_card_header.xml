@@ -2,51 +2,41 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_content_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="50dp"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/bg_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     >
 
-  <include layout="@layout/divider_grey"/>
+  <TextView
+      android:id="@+id/tv_status"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/little"
+      android:layout_marginRight="@dimen/little"
+      android:background="@drawable/bg_tag_grey_radius"
+      android:paddingLeft="@dimen/little"
+      android:paddingRight="@dimen/little"
+      tools:text="@string/test_short"
+      />
 
-  <include layout="@layout/divider_grey_margin"/>
-
-  <LinearLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
-      android:layout_width="match_parent"
+  <TextView
+      android:id="@+id/tv_title"
+      android:layout_width="0dp"
       android:layout_height="@dimen/qc_item_height"
-      android:background="@drawable/bg_click"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:paddingRight="@dimen/activity_horizontal_margin"
-      >
+      android:layout_weight="1"
+      android:textColor="@color/white"
+      />
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/little"
-        android:layout_marginRight="@dimen/little"
-        android:background="@drawable/bg_tag_grey_radius"
-        android:paddingLeft="@dimen/little"
-        android:paddingRight="@dimen/little"
-        tools:text="@string/test_short"
-        />
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_weight="1"
-        />
-
-    <Switch
-        android:id="@+id/sw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        />
-  </LinearLayout>
+  <Switch
+      android:id="@+id/sw"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:clickable="false"
+      />
 </LinearLayout>

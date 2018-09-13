@@ -21,9 +21,8 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class BatchPayCardItem extends AbstractFlexibleItem<BatchPayCardItem.BatchPayCardVH>
-    implements ISectionable<BatchPayCardItem.BatchPayCardVH, BatchPayCardHeaderItem> {
+     {
 
-    BatchPayCardHeaderItem headerItem;
     int pos;
     boolean isPrivate;
     CardTpl cardTpl;
@@ -84,13 +83,6 @@ public class BatchPayCardItem extends AbstractFlexibleItem<BatchPayCardItem.Batc
         }
     }
 
-    @Override public BatchPayCardHeaderItem getHeader() {
-        return headerItem;
-    }
-
-    @Override public void setHeader(BatchPayCardHeaderItem header) {
-        this.headerItem = header;
-    }
 
     public class BatchPayCardVH extends FlexibleViewHolder {
 	TextView tvLable;
