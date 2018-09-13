@@ -37,6 +37,18 @@
           tools:text="《会员卡服务条款协议》"
           style="@style/QcTextStyleStandardDark"
           />
+      <ImageView
+          android:id="@+id/im_icon1"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:visibility="gone"
+          />
+      <ImageView
+          android:id="@+id/im_icon2"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:visibility="gone"
+          />
 
       <LinearLayout
           android:layout_width="0dp"

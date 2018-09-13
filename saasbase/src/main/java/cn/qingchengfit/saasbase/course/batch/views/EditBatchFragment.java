@@ -310,7 +310,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   private void inflateBatchInfo(BatchDetail batchDetail){
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
-    batchBaseFragment.openPay(!batchDetail.is_free);
+    batchBaseFragment.openPay(batchDetail.is_free?0:(batchDetail.supportMulti()?2:1));
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
   }

@@ -184,7 +184,7 @@ import rx.functions.Action1;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitile.setText("设置在线支付结算");
+    toolbarTitile.setText("设置单次约课价格");
     toolbar.inflateMenu(R.menu.menu_save);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

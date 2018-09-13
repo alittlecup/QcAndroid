@@ -101,7 +101,12 @@ public class BottomChooseDialog extends BottomSheetDialog
   }
 
   public interface onItemClickListener {
-    void onItemClick(int position);
+    /**
+     * 返回值是因为通过选中的item 进行业务判断，来反向控制是否选中
+     * @param position
+     * @return true-表示可以修改选择，false-表示不可以选中新的点击
+     */
+    boolean onItemClick(int position);
   }
 
   public interface onConfirmClickListener {
@@ -109,15 +114,18 @@ public class BottomChooseDialog extends BottomSheetDialog
   }
 
   @Override public boolean onItemClick(int position) {
-    adapter.toggleSelection(position);
-    adapter.notifyDataSetChanged();
-    if (adapter != null) {
-      if (adapter.getMode() == SelectableAdapter.Mode.SINGLE) {
-        if (listener != null) {
-          listener.onItemClick(position);
+    if (adapter.getMode() == SelectableAdapter.Mode.SINGLE) {
+      if (listener != null) {
+        boolean b = listener.onItemClick(position);
+        if (b) {
+          adapter.toggleSelection(position);
+          adapter.notifyDataSetChanged();
         }
-        dismiss();
       }
+      dismiss();
+    } else {
+      adapter.toggleSelection(position);
+      adapter.notifyDataSetChanged();
     }
     return false;
   }

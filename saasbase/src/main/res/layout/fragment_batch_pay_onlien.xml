@@ -71,7 +71,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@color/white"
-      app:el_label="@string/pay_online"
+      app:el_label="@string/single_class_pay"
       >
 
     <LinearLayout

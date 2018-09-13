@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
@@ -39,6 +41,7 @@ import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
@@ -82,8 +85,9 @@ public class BatchDetailCommonView extends BaseFragment {
   CommonInputView orderSutdentCount;
   CommonInputView payOnline;
   CommonInputView payCard;
-  ExpandedLayout elPay;
-  ExpandedLayout elMultiSupport;
+  CommonInputView priceSetting;
+  ExpandedLayout elMultiSupport;//这里是是否支持多人私教， 只有isPrivate==true的情况下是可用的否则为空
+  LinearLayout llPayContent;
 
   @Inject GymWrapper gymWrapper;
 
@@ -166,8 +170,8 @@ public class BatchDetailCommonView extends BaseFragment {
     orderSutdentCount = (CommonInputView) view.findViewById(R.id.order_sutdent_count);
     payOnline = (CommonInputView) view.findViewById(R.id.pay_online);
     payCard = (CommonInputView) view.findViewById(R.id.pay_card);
-    elPay = (ExpandedLayout) view.findViewById(R.id.el_pay);
-    elMultiSupport = (ExpandedLayout) view.findViewById(R.id.el_multi_support);
+    priceSetting = (CommonInputView) view.findViewById(R.id.price_setting);
+    llPayContent = view.findViewById(R.id.ll_price_content);
     view.findViewById(R.id.course_layout).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onCourseLayoutClicked();
@@ -198,6 +202,11 @@ public class BatchDetailCommonView extends BaseFragment {
         onPayCardClicked();
       }
     });
+    priceSetting.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showBatchPriceSettingDialog();
+      }
+    });
 
     setCourse(course);
     setTrainer(trainer);
@@ -223,37 +232,20 @@ public class BatchDetailCommonView extends BaseFragment {
             setSpace(eventSiteSelected.getSpaces());
           }
         });
-
-    elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
-    elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
-      //if (b && getOrderStudentCount() > 1){
-
-      payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
-      //}
-    });
-    elPay.setOnHeaderTouchListener((view1, motionEvent) -> {
-      if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        if (AppUtils.getCurApp(getContext()) != 0) {//非教练APP
-          if (hasOrder) {
-            showAlert(R.string.alert_batch_has_ordered);
-            return true;
-          } else {
-            return false;
-          }
-        } else {// 教练App
-          UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
-          return true;
-        }
-      } else {
-        return false;
-      }
-    });
+    if (isPrivate) {
+      elMultiSupport = view.findViewById(R.id.el_multi_support);
+      elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
+      elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
+        payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
+      });
+    }
+    payOnline.setLabelDrawable(R.drawable.vd_payment_wechat, R.drawable.vd_payment_alipay);
     return view;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    elPay.setExpanded(AppUtils.getCurApp(getActivity()) != 0);
+    changePaySetting(AppUtils.getCurApp(getActivity()) != 0 ? 1 : 0);
   }
 
   public boolean isHasOrder() {
@@ -327,27 +319,38 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   public void setMutlSupport(boolean support) {
-    elMultiSupport.setExpanded(support);
-    numHasChange = false;
+    if(isPrivate){
+      elMultiSupport.setExpanded(support);
+      numHasChange = false;
+    }
   }
 
   public boolean mutilSupportble() {
-    return elMultiSupport != null && elMultiSupport.isExpanded();
+    if(isPrivate){
+      return elMultiSupport != null && elMultiSupport.isExpanded();
+    }
+    return prePriceChoosePos == 2;
   }
 
   public boolean needPay() {
-    return elPay == null || elPay.isExpanded();
+    return prePriceChoosePos != 0;
   }
 
-  public void openPay(boolean open) {
-    if (elPay != null) elPay.setExpanded(open);
+  public void openPay(int position) {
+    changePaySetting(position);
   }
 
   public void openPayOnline(boolean open) {
     if (open) {
-      payOnline.setContent("已开启");
+      payOnline.setContent("已设置");
     } else {
       payOnline.setContent("未设置");
+    }
+  }
+
+  public void openMultiCardPay(boolean open) {
+    if (open) {
+      payCard.setContent("");
     }
   }
 
@@ -469,7 +472,7 @@ public class BatchDetailCommonView extends BaseFragment {
       routeTo("/batch/pay/online/",
           new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
               .maxPeople(getOrderStudentCount())
-              .multiPrice(elMultiSupport.isExpanded())
+              .multiPrice(prePriceChoosePos==2)
               .build());
     }
   }
@@ -500,6 +503,88 @@ public class BatchDetailCommonView extends BaseFragment {
       payCard.setHint(getString(R.string.common_un_setting));
     }
   }
+
+  private void showBatchPriceSettingDialog() {
+    List<BottomChooseData> datas = new ArrayList<>();
+    BottomChooseDialog dialog = new BottomChooseDialog(getContext(), "课程价格", datas);
+    if (isPrivate) {
+      datas.add(new BottomChooseData("免费", "无需支付"));
+      datas.add(new BottomChooseData("收费", "需要支付"));
+    } else {
+      datas.add(new BottomChooseData("免费", "无需支付"));
+      datas.add(new BottomChooseData("统一价格", "不论人数多少始终统一价格"));
+      datas.add(new BottomChooseData("团课动态价格", "根据团课人数设置不同价格"));
+    }
+    dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
+      @Override public boolean onItemClick(int position) {
+        if (AppUtils.getCurApp(getContext()) != 0&&hasOrder) {//非教练APP
+            showAlert(R.string.alert_batch_has_ordered);
+            return false;
+        }
+        changePaySetting(position);
+        return true;
+      }
+    });
+    dialog.show();
+  }
+
+  /**
+   * 修改
+   *
+   * @param position 0-免费，1-付费/统一价格，2-团课动态价格
+   */
+  private void changePaySetting(int position) {
+    if (isPrivate) {
+      switch (position) {
+        case 0:
+          priceSetting.setContent("免费");
+          llPayContent.setVisibility(View.GONE);
+          break;
+        case 1:
+          priceSetting.setContent("收费");
+          llPayContent.setVisibility(View.VISIBLE);
+          break;
+      }
+      if (prePriceChoosePos != position) {
+        payOnline.setContent("未设置");
+      }
+      prePriceChoosePos = position;
+    } else {
+      switch (position) {
+        case 0:
+          priceSetting.setContent("免费");
+          llPayContent.setVisibility(View.GONE);
+          if (prePriceChoosePos != position) {
+            payOnline.setContent("未设置");
+          }
+          break;
+        case 1:
+          priceSetting.setContent("统一价格");
+          llPayContent.setVisibility(View.VISIBLE);
+          if (prePriceChoosePos != position) {
+            payOnline.setContent("未设置");
+            payCard.setContent(prePriceChoosePos == 0 ? "未设置" : "已关闭多人支持，请重新设置");
+          }
+          if (prePriceChoosePos == 2) {
+            numHasChange = true;
+          }
+          break;
+        case 2:
+          priceSetting.setContent("团课动态价格");
+          llPayContent.setVisibility(View.VISIBLE);
+          if (prePriceChoosePos != position) {
+            payOnline.setContent(prePriceChoosePos == 0 ? "未设置" : "已开启多人支持，请重新设置");
+          }
+          if (prePriceChoosePos == 1) {
+            numHasChange = true;
+          }
+          break;
+      }
+      prePriceChoosePos = position;
+    }
+  }
+
+  private int prePriceChoosePos = 0;
 
   public List<String> getSupportSpace() {
     return ListUtils.getIdList(spaces);

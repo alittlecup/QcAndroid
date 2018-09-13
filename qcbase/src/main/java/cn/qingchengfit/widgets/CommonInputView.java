@@ -65,8 +65,7 @@ public class CommonInputView extends RelativeLayout {
   private boolean showDivier;
   private boolean showRight;
   private boolean enable = true;
-  @DrawableRes
-  private int leftDrawable;
+  @DrawableRes private int leftDrawable;
   private String strUnit;
   private ColorStateList contentColor;
   private CharSequence str_content;
@@ -185,8 +184,29 @@ public class CommonInputView extends RelativeLayout {
     disableView.setVisibility(enable ? GONE : VISIBLE);
   }
 
-  public void setLabelColor(@ColorRes int labelColor){
+  public void setLabelColor(@ColorRes int labelColor) {
     label.setTextColor(getResources().getColor(labelColor));
+  }
+
+  public void setLabelDrawable(@DrawableRes int drawable) {
+    View image1 = findViewById(R.id.im_icon1);
+    if (image1 instanceof ImageView) {
+      ((ImageView) image1).setImageResource(drawable);
+      image1.setVisibility(VISIBLE);
+    }
+  }
+
+  public void setLabelDrawable(@DrawableRes int firstDrawable, @DrawableRes int secondDrawable) {
+    View image1 = findViewById(R.id.im_icon1);
+    View image2 = findViewById(R.id.im_icon2);
+    if (image1 instanceof ImageView) {
+      ((ImageView) image1).setImageResource(firstDrawable);
+      image1.setVisibility(VISIBLE);
+    }
+    if (image2 instanceof ImageView) {
+      ((ImageView) image2).setImageResource(secondDrawable);
+      image2.setVisibility(VISIBLE);
+    }
   }
 
   public void setUnit(String u) {
@@ -371,11 +391,11 @@ public class CommonInputView extends RelativeLayout {
 
     label.setOnTouchListener((view, motionEvent) -> false);
   }
-  public void setOnEditNoClick(boolean enable){
+
+  public void setOnEditNoClick(boolean enable) {
     this.enable = enable;
     this.canClick = enable;
-    if (!enable)
-      edit.setTextColor(getResources().getColor(R.color.text_grey));
+    if (!enable) edit.setTextColor(getResources().getColor(R.color.text_grey));
   }
 
   public void setCanClick(boolean canClick) {
@@ -431,7 +451,6 @@ public class CommonInputView extends RelativeLayout {
     }
   }
 
-
   public String getContent() {
     return edit.getText().toString().trim();
   }
@@ -448,21 +467,22 @@ public class CommonInputView extends RelativeLayout {
     return onTextChangedListener;
   }
 
-  public void removeTextChangedListener(){
+  public void removeTextChangedListener() {
     this.onTextChangedListener = null;
   }
 
   public void setContent(String c) {
-    if (!TextUtils.isEmpty(c) && c.equalsIgnoreCase(edit.getText().toString())){
+    if (!TextUtils.isEmpty(c) && c.equalsIgnoreCase(edit.getText().toString())) {
       return;
     }
     edit.setText(c);
     if (c != null) edit.setSelection(edit.getText().length() > 20 ? 20 : edit.getText().length());
-    if (onTextChangedListener != null){
+    if (onTextChangedListener != null) {
       onTextChangedListener.onTextChanged();
     }
   }
-  public void setCivContent(String c){
+
+  public void setCivContent(String c) {
     setContent(c);
   }
 
@@ -518,23 +538,21 @@ public class CommonInputView extends RelativeLayout {
     dispatchThawSelfOnly(container);
   }
 
-
-
   static class SavedState extends BaseSavedState {
     public static final ClassLoaderCreator<SavedState> CREATOR =
-      new ClassLoaderCreator<SavedState>() {
-        @Override public SavedState createFromParcel(Parcel source, ClassLoader loader) {
-          return new SavedState(source, loader);
-        }
+        new ClassLoaderCreator<SavedState>() {
+          @Override public SavedState createFromParcel(Parcel source, ClassLoader loader) {
+            return new SavedState(source, loader);
+          }
 
-        @Override public SavedState createFromParcel(Parcel source) {
-          return createFromParcel(null);
-        }
+          @Override public SavedState createFromParcel(Parcel source) {
+            return createFromParcel(null);
+          }
 
-        public SavedState[] newArray(int size) {
-          return new SavedState[size];
-        }
-      };
+          public SavedState[] newArray(int size) {
+            return new SavedState[size];
+          }
+        };
     SparseArray childrenStates;
 
     SavedState(Parcelable superState) {
@@ -552,7 +570,7 @@ public class CommonInputView extends RelativeLayout {
     }
   }
 
-  public interface OnTextChangedListener{
+  public interface OnTextChangedListener {
     void onTextChanged();
   }
 
