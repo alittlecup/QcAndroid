@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopHomeBinding;
@@ -23,6 +22,7 @@ import cn.qingchengfit.shop.ui.home.productlist.ShopProductsListPage;
 import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -39,16 +39,15 @@ import javax.inject.Inject;
   @Inject GymWrapper gymWrapper;
 
   private BubblePopupView bubblePopupView;
-  private SharedPreferenceUtils sharedPreferenceUtils;
 
   private Handler popupHandler = new Handler() {
     @Override
     public void handleMessage(Message msg) {
-      boolean isFirst = sharedPreferenceUtils.IsFirst("shopHome");
+      boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "shopHome", true);
       if(isFirst) {
         bubblePopupView = new BubblePopupView(getContext());
         bubblePopupView.show(mBinding.showWebPreview, "点击预览商品并推广", Gravity.BOTTOM, 400, 0);
-        sharedPreferenceUtils.saveFlag("shopHome", false);
+        PreferenceUtils.setPrefBoolean(getContext(), "shopHome", false);
       }
     }
   };
@@ -61,7 +60,6 @@ import javax.inject.Inject;
       Bundle savedInstanceState) {
     mBinding = PageShopHomeBinding.inflate(inflater, container, false);
     popupHandler.sendEmptyMessageDelayed(0, 1000);
-    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     initToolBar();
     initView();
     mBinding.setViewModel(mViewModel);

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saascommon.R;
 
 /**
  * Created by Bob Du on 2018/9/11 13:51

@@ -18,7 +18,6 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
@@ -27,6 +26,7 @@ import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresente
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -70,16 +70,15 @@ import javax.inject.Inject;
   @Inject GymWrapper gymWrapper;
 
   private BubblePopupView bubblePopupView;
-  private SharedPreferenceUtils sharedPreferenceUtils;
 
   private Handler popupHandler = new Handler() {
     @Override
     public void handleMessage(Message msg) {
-      boolean isFirst = sharedPreferenceUtils.IsFirst("batchPrivate");
+      boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "batchListPrivate", true);
       if(isFirst) {
         bubblePopupView = new BubblePopupView(getContext());
         bubblePopupView.show(toolbar, "私教的更多操作在这里", 75, 400,0);
-        sharedPreferenceUtils.saveFlag("batchPrivate", false);
+        PreferenceUtils.setPrefBoolean(getContext(), "batchListPrivate", false);
       }
     }
   };
@@ -88,7 +87,6 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
     popupHandler.sendEmptyMessageDelayed(0, 1000);
-    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     RxBusAdd(EventStaffWrap.class)
       .compose(doWhen(FragmentEvent.RESUME))
       .throttleFirst(1000, TimeUnit.MILLISECONDS)

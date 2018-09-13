@@ -27,11 +27,11 @@ import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.course.presenters.CourseBatchDetailPresenter;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -70,20 +70,19 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   private DialogList dialogList;
 
   private BubblePopupView bubblePopupView;
-  private SharedPreferenceUtils sharedPreferenceUtils;
 
   private Handler popupHandler = new Handler() {
     @Override
     public void handleMessage(Message msg) {
-      boolean isFirstGroup = sharedPreferenceUtils.IsFirst("batchCategoryGroup");
-      boolean isFirstPrivate = sharedPreferenceUtils.IsFirst("batchCategoryPrivate");
+      boolean isFirstGroup = PreferenceUtils.getPrefBoolean(getContext(), "batchCategoryGroup", true);
+      boolean isFirstPrivate = PreferenceUtils.getPrefBoolean(getContext(), "batchCategoryPrivate", true);
       bubblePopupView = new BubblePopupView(getContext());
       if(isFirstGroup && mType == 0) {
         bubblePopupView.show(toolbar, "点击这里管理团课种类", 75, 400, 1);
-        sharedPreferenceUtils.saveFlag("batchCategoryGroup", false);
+        PreferenceUtils.setPrefBoolean(getContext(), "batchCategoryGroup", false);
       } else if(isFirstPrivate && mType == 1) {
         bubblePopupView.show(toolbar, "点击这里管理私教种类", 75, 400, 1);
-        sharedPreferenceUtils.saveFlag("batchCategoryPrivate", false);
+        PreferenceUtils.setPrefBoolean(getContext(), "batchCategoryPrivate", false);
       }
     }
   };
@@ -98,9 +97,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     View v = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(presenter, this);
     popupHandler.sendEmptyMessageDelayed(0, 1000);
-    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mType==1?"private":"group"));
-
     return v;
   }
 

@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.presenter.TrainerHomePresenter;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.DialogSheet;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
@@ -43,7 +43,6 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
   @Inject TrainerHomePresenter presenter;
 
   private BubblePopupView bubblePopupView;
-  private SharedPreferenceUtils sharedPreferenceUtils;
 
   @Override void initFragment() {
     if (fragments.size() == 0){
@@ -56,7 +55,6 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(presenter,this);
-    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
     View v = super.onCreateView(inflater, container, savedInstanceState);
     db.layoutSu.setVisibility(View.GONE);
     return v;
@@ -88,11 +86,11 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
     new Handler().postDelayed(new Runnable() {
       @Override
       public void run() {
-        boolean isFirst = sharedPreferenceUtils.IsFirst("trainerHome");
+        boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "trainerHome", true);
         if(isFirst) {
           bubblePopupView = new BubblePopupView(getContext());
           bubblePopupView.show(toolbar, "点击这里管理教练权限", 75, 400, 0);
-          sharedPreferenceUtils.saveFlag("trainerHome", false);
+          PreferenceUtils.setPrefBoolean(getContext(), "trainerHome", false);
         }
       }
     },1000);

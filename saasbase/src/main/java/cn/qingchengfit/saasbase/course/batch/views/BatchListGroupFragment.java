@@ -15,7 +15,6 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
@@ -24,6 +23,7 @@ import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 
@@ -73,16 +73,15 @@ public class BatchListGroupFragment
     GymWrapper gymWrapper;
 
     private BubblePopupView bubblePopupView;
-    private SharedPreferenceUtils sharedPreferenceUtils;
 
     private Handler popupHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            boolean isFirst = sharedPreferenceUtils.IsFirst("batchGroup");
+            boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "batchListGroup", true);
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
                 bubblePopupView.show(toolbar, "团课的更多操作在这里", 75, 400, 0);
-                sharedPreferenceUtils.saveFlag("batchGroup", false);
+                PreferenceUtils.setPrefBoolean(getContext(), "batchListGroup", false);
             }
         }
     };
@@ -92,7 +91,6 @@ public class BatchListGroupFragment
                              Bundle savedInstanceState) {
         delegatePresenter(privatePresenter, this);
         popupHandler.sendEmptyMessageDelayed(0, 1000);
-        sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

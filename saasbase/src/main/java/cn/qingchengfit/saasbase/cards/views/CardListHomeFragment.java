@@ -30,11 +30,11 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardListPresenter;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.jakewharton.rxbinding.view.RxMenuItem;
@@ -88,15 +88,14 @@ import javax.inject.Inject;
 	protected RelativeLayout cardListLayout;
     private BubblePopupView bubblePopupView;
 
-    private SharedPreferenceUtils sharedPreferenceUtils;
     private Handler popupHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            boolean isFirst = sharedPreferenceUtils.IsFirst("cardList");
+            boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "cardListHome", true);
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
                 bubblePopupView.show(toolbar, "点击管理会员卡种类", 90, 400, 0);
-                sharedPreferenceUtils.saveFlag("cardList", false);
+                PreferenceUtils.setPrefBoolean(getContext(), "cardListHome", false);
             }
         }
     };
@@ -123,7 +122,6 @@ import javax.inject.Inject;
     View view = inflater.inflate(R.layout.fragment_saas_card_list, container, false);
 
     popupHandler.sendEmptyMessageDelayed(0, 1000);
-    sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
 
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);

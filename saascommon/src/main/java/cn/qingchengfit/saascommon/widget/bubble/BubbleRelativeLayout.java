@@ -17,7 +17,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saascommon.R;
 
 /**
  * Created by Bob Du on 2018/9/10 16:53

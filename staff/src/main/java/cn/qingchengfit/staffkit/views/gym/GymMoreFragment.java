@@ -23,7 +23,6 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
-import cn.qingchengfit.saasbase.utils.SharedPreferenceUtils;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
@@ -35,6 +34,7 @@ import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -82,16 +82,15 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     private FunHeaderItem mMyFuntions;
 
     private BubblePopupView bubblePopupView;
-    private SharedPreferenceUtils sharedPreferenceUtils;
 
     private Handler popupHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            boolean isFirst = sharedPreferenceUtils.IsFirst("gymMore");
+            boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "gymMore", true);
             if(isFirst) {
                 bubblePopupView = new BubblePopupView(getContext());
                 bubblePopupView.show(toolbar, "点击这里管理常用功能", 75, 400, 0);
-                sharedPreferenceUtils.saveFlag("gymMore", false);
+                PreferenceUtils.setPrefBoolean(getContext(), "gymMore", false);
             }
         }
     };
@@ -113,7 +112,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
       myFunRecycleview = (RecyclerView) view.findViewById(R.id.my_fun_recycleview);
 
       popupHandler.sendEmptyMessageDelayed(0, 1000);
-      sharedPreferenceUtils = new SharedPreferenceUtils(getContext());
 
       delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");
