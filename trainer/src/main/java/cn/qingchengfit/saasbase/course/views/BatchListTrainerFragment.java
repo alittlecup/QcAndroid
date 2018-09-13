@@ -2,8 +2,6 @@ package cn.qingchengfit.saasbase.course.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +13,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
@@ -28,10 +25,10 @@ import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.course.presenters.CourseBatchDetailPresenter;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -69,24 +66,6 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   private boolean isShow;
   private DialogList dialogList;
 
-  private BubblePopupView bubblePopupView;
-
-  private Handler popupHandler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
-      boolean isFirstGroup = PreferenceUtils.getPrefBoolean(getContext(), "batchCategoryGroup", true);
-      boolean isFirstPrivate = PreferenceUtils.getPrefBoolean(getContext(), "batchCategoryPrivate", true);
-      bubblePopupView = new BubblePopupView(getContext());
-      if(isFirstGroup && mType == 0) {
-        bubblePopupView.show(toolbar, "点击这里管理团课种类", 75, 400, 1);
-        PreferenceUtils.setPrefBoolean(getContext(), "batchCategoryGroup", false);
-      } else if(isFirstPrivate && mType == 1) {
-        bubblePopupView.show(toolbar, "点击这里管理私教种类", 75, 400, 1);
-        PreferenceUtils.setPrefBoolean(getContext(), "batchCategoryPrivate", false);
-      }
-    }
-  };
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SaasbaseParamsInjector.inject(this);
@@ -96,7 +75,6 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(presenter, this);
-    popupHandler.sendEmptyMessageDelayed(0, 1000);
     SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mType==1?"private":"group"));
     return v;
   }
@@ -124,10 +102,13 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
         });
       }
       dialogList.show();
-
       return true;
-
-    });
+      });
+    if(mType == 0) {
+      BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理团课种类", "batchCategoryGroup", 1);
+    } else if(mType == 1) {
+      BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理私教种类", "batchCategoryPrivate", 1);
+    }
   }
 
   private void showDelCourse() {

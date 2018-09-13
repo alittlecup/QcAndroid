@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -9,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.presenter.TrainerHomePresenter;
-import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.views.DialogSheet;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
@@ -41,8 +39,6 @@ import javax.inject.Inject;
 public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHomePresenter.MVPView{
 
   @Inject TrainerHomePresenter presenter;
-
-  private BubblePopupView bubblePopupView;
 
   @Override void initFragment() {
     if (fragments.size() == 0){
@@ -79,21 +75,7 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         return true;
       })
       .build());
-    updateBubbleView(toolbar);
-  }
-
-  private void updateBubbleView(Toolbar toolbar) {
-    new Handler().postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "trainerHome", true);
-        if(isFirst) {
-          bubblePopupView = new BubblePopupView(getContext());
-          bubblePopupView.show(toolbar, "点击这里管理教练权限", 75, 400, 0);
-          PreferenceUtils.setPrefBoolean(getContext(), "trainerHome", false);
-        }
-      }
-    },1000);
+    BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理教练权限", "trainerHome", 0);
   }
 
   @Override public void freshData() {

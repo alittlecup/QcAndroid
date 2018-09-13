@@ -2,8 +2,6 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
@@ -22,19 +19,15 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
-
 import com.anbillon.flabellum.annotations.Leaf;
-
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 
 /**
@@ -72,27 +65,14 @@ public class BatchListGroupFragment
     @Inject
     GymWrapper gymWrapper;
 
-    private BubblePopupView bubblePopupView;
-
-    private Handler popupHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "batchListGroup", true);
-            if(isFirst) {
-                bubblePopupView = new BubblePopupView(getContext());
-                bubblePopupView.show(toolbar, "团课的更多操作在这里", 75, 400, 0);
-                PreferenceUtils.setPrefBoolean(getContext(), "batchListGroup", false);
-            }
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         delegatePresenter(privatePresenter, this);
-        popupHandler.sendEmptyMessageDelayed(0, 1000);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
 
     @Override
     public void initToolbar(@NonNull Toolbar toolbar) {
@@ -106,6 +86,7 @@ public class BatchListGroupFragment
                     .show();
             return true;
         });
+        BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "团课的更多操作在这里", "batchListGroup", 0);
     }
 
     /**

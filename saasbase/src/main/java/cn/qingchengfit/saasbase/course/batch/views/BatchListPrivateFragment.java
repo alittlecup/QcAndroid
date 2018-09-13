@@ -2,8 +2,6 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
@@ -24,9 +21,9 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -69,24 +66,9 @@ import javax.inject.Inject;
   @Inject QcRestRepository restRepository;
   @Inject GymWrapper gymWrapper;
 
-  private BubblePopupView bubblePopupView;
-
-  private Handler popupHandler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
-      boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "batchListPrivate", true);
-      if(isFirst) {
-        bubblePopupView = new BubblePopupView(getContext());
-        bubblePopupView.show(toolbar, "私教的更多操作在这里", 75, 400,0);
-        PreferenceUtils.setPrefBoolean(getContext(), "batchListPrivate", false);
-      }
-    }
-  };
-
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
-    popupHandler.sendEmptyMessageDelayed(0, 1000);
     RxBusAdd(EventStaffWrap.class)
       .compose(doWhen(FragmentEvent.RESUME))
       .throttleFirst(1000, TimeUnit.MILLISECONDS)
@@ -119,6 +101,7 @@ import javax.inject.Inject;
         return true;
       }
     });
+    BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "私教的更多操作在这里", "batchListPrivate", 0);
   }
 
   @Override public void onRefresh() {

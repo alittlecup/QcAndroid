@@ -1,8 +1,6 @@
 package cn.qingchengfit.shop.ui.home;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Pair;
@@ -11,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saascommon.widget.bubble.BubblePopupView;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopHomeBinding;
@@ -22,7 +20,6 @@ import cn.qingchengfit.shop.ui.home.productlist.ShopProductsListPage;
 import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -38,20 +35,6 @@ import javax.inject.Inject;
   private List<Pair<String, Fragment>> fragmentList;
   @Inject GymWrapper gymWrapper;
 
-  private BubblePopupView bubblePopupView;
-
-  private Handler popupHandler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
-      boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "shopHome", true);
-      if(isFirst) {
-        bubblePopupView = new BubblePopupView(getContext());
-        bubblePopupView.show(mBinding.showWebPreview, "点击预览商品并推广", Gravity.BOTTOM, 400, 0);
-        PreferenceUtils.setPrefBoolean(getContext(), "shopHome", false);
-      }
-    }
-  };
-
   @Override protected void subscribeUI() {
 
   }
@@ -59,7 +42,6 @@ import javax.inject.Inject;
   @Override public PageShopHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = PageShopHomeBinding.inflate(inflater, container, false);
-    popupHandler.sendEmptyMessageDelayed(0, 1000);
     initToolBar();
     initView();
     mBinding.setViewModel(mViewModel);
@@ -71,6 +53,8 @@ import javax.inject.Inject;
       WebActivity.startWeb(url, getActivity());
       SensorsUtils.track(ShopSensorsConstants.SHOP_PREVIEW_MALL_BTN_CLICK).commit(getContext());
     });
+    BubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
+            Gravity.BOTTOM, 400, 0);
     return mBinding;
   }
 
