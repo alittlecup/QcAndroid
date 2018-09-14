@@ -9,6 +9,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
@@ -69,10 +71,17 @@ public class AppUtils {
       i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        boolean hasInstallPermission = context.getPackageManager().canRequestPackageInstalls();
+        if(!hasInstallPermission) {
+          Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          context.startActivity(intent);
+        }
+      }
     } else {
       uri = Uri.fromFile(file);
     }
-
     i.setDataAndType(uri, "application/vnd.android.package-archive");
     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(i);
