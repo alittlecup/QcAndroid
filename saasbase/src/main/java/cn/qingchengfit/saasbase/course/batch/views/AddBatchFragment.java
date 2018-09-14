@@ -205,7 +205,7 @@ public class AddBatchFragment extends SaasBaseFragment
     if (savedInstanceState != null && savedInstanceState.containsKey("p")) {
       scrollRoot.scrollTo(0, savedInstanceState.getInt("p", 0));
     }
-    add.setText(!presenter.isPrivate() ? "新增课程时间" : "新增可约时间段");
+    add.setText(!presenter.isPrivate() ? "+ 新增课程时间" : "+ 新增可约时间段");
     SensorsUtils.trackScreen(
         this.getClass().getCanonicalName() + "_" + (presenter.isPrivate() ? "private" : "group"));
     return view;

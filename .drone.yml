@@ -29,7 +29,7 @@ pipeline:
       - /cache:/cache/
       - /data/gradle/gradle-4.7:/gradle/
     when:
-      branch: dev_student
+      branch: develop_guide
       event: push
     commands:
       - agree-license.sh android-sdk-license $LICENA
