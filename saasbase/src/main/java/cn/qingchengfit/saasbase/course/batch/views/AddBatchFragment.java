@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,7 +89,7 @@ public class AddBatchFragment extends SaasBaseFragment
   CommonInputView starttime;
   CommonInputView endtime;
   RecyclerView recyclerview;
-
+  LinearLayout linearLayout;
   TextView tvClearAutoBatch;
   CommonInputView civOpenTime;
   NestedScrollView scrollRoot;
@@ -158,6 +159,7 @@ public class AddBatchFragment extends SaasBaseFragment
     tvClearAutoBatch = (TextView) view.findViewById(R.id.tv_clear_auto_batch);
     civOpenTime = (CommonInputView) view.findViewById(R.id.civ_to_open_time);
     scrollRoot = (NestedScrollView) view.findViewById(R.id.scroll_root);
+    linearLayout = view.findViewById(R.id.ll_auto_container);
     view.findViewById(R.id.starttime).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onStartTime();
@@ -203,6 +205,7 @@ public class AddBatchFragment extends SaasBaseFragment
     if (savedInstanceState != null && savedInstanceState.containsKey("p")) {
       scrollRoot.scrollTo(0, savedInstanceState.getInt("p", 0));
     }
+    add.setText(!presenter.isPrivate() ? "新增课程时间" : "新增可约时间段");
     SensorsUtils.trackScreen(
         this.getClass().getCanonicalName() + "_" + (presenter.isPrivate() ? "private" : "group"));
     return view;
@@ -236,8 +239,7 @@ public class AddBatchFragment extends SaasBaseFragment
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof BatchDetailCommonView) {
       //必须是付费用户，且不是教练App
-      batchBaseFragment.openPay(
-          (AppUtils.getCurApp(getContext()) != 0));
+      batchBaseFragment.openPay(false);
     }
   }
 
@@ -273,7 +275,7 @@ public class AddBatchFragment extends SaasBaseFragment
     }
     ToastUtils.showS("已自动填充排期");
     tvBatchLoopHint.setText("课程周期 (已根据历史信息自动填充)");
-    tvClearAutoBatch.setVisibility(View.VISIBLE);
+    linearLayout.setVisibility(View.VISIBLE);
   }
 
   @Override public void onBatchDetail(BatchDetail batchDetail) {
@@ -288,7 +290,6 @@ public class AddBatchFragment extends SaasBaseFragment
   @Override public void onPause() {
     super.onPause();
     setBackPressNull();
-
   }
 
   @Override public void onLoppers(List<BatchLoop> loopers) {
@@ -484,7 +485,7 @@ public class AddBatchFragment extends SaasBaseFragment
   public void clearBatch() {
     commonFlexAdapter.clear();
     tvBatchLoopHint.setText(presenter.isPrivate() ? "课程周期" : "课程周期");
-    tvClearAutoBatch.setVisibility(View.GONE);
+    linearLayout.setVisibility(View.GONE);
   }
 
   @Override public boolean onItemClick(int position) {

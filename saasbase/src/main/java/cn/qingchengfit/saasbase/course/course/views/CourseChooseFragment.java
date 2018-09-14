@@ -36,35 +36,31 @@ import eu.davidea.flexibleadapter.items.IFlexible;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/11/29.
  */
-@Leaf(module = "course", path = "/choose/")
-public class CourseChooseFragment extends CourseListFragment {
+@Leaf(module = "course", path = "/choose/") public class CourseChooseFragment
+    extends CourseListFragment {
 
   @Need public String src;
   @Need public String courseId;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText(mIsPrivate ? "选择私教课":"选择团课种类");
-    if(!mIsPrivate){
-      floatingActionButton.setVisibility(View.GONE);
-      llBottomAdd.setVisibility(View.VISIBLE);
-    }
+    toolbarTitle.setText(mIsPrivate ? "选择私教课" : "选择团课种类");
+    floatingActionButton.setVisibility(View.GONE);
+    llBottomAdd.setVisibility(View.VISIBLE);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    if(!mIsPrivate){
-      TextView tvBottomContent = view.findViewById(R.id.tv_bottom_content);
-      tvBottomContent.setText("添加团课种类");
-    }
+    TextView tvBottomContent = view.findViewById(R.id.tv_bottom_content);
+    tvBottomContent.setText(mIsPrivate?"添加私教课种类":"添加团课种类");
   }
 
   @Override public boolean onItemClick(int position) {
     IFlexible flexible = commonFlexAdapter.getItem(position);
     if (flexible == null) return true;
-    if (flexible instanceof CourseItem){
+    if (flexible instanceof CourseItem) {
       Course c = ((CourseItem) flexible).getCourse();
-      RxBus.getBus().post(new EventCourse(src,c));
+      RxBus.getBus().post(new EventCourse(src, c));
       popBack();
     }
     return true;
@@ -86,5 +82,4 @@ public class CourseChooseFragment extends CourseListFragment {
       }
     }
   }
-
 }

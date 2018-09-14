@@ -73,8 +73,10 @@ import rx.android.schedulers.AndroidSchedulers;
     bottomView.setVisibility(View.VISIBLE);
     fab.setVisibility(View.GONE);
     initToolbar(toolbar);
+    if(v instanceof ViewGroup){
+      ((ViewGroup) v).addView(bottomView);
+    }
     parent.addView(v, 1);
-    parent.addView(bottomView, 2);
     return parent;
   }
 

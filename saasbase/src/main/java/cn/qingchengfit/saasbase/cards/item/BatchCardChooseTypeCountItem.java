@@ -35,7 +35,8 @@ public class BatchCardChooseTypeCountItem
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    return o instanceof BatchCardChooseTypeCountItem
+        && ((BatchCardChooseTypeCountItem) o).getType() == type;
   }
 
   @Override public int getLayoutRes() {

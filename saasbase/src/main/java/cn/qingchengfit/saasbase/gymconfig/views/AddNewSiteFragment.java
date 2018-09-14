@@ -90,6 +90,11 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     });
 
     initToolbar(toolbar);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
+      }
+    });
     toolbarTitile.setText("新增场地");
     name.addTextWatcher(textChange);
     count.addTextWatcher(textChange);

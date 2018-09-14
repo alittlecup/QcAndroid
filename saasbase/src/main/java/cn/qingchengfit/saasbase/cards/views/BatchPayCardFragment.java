@@ -114,6 +114,7 @@ import javax.inject.Inject;
     llBottom.setOnClickListener(v -> new DialogList(getContext()).list(
         getResources().getStringArray(R.array.cardtype_category),
         (parent, view1, position, id) -> onMenuAdd(position)).show());
+    llBottom.setVisibility(View.VISIBLE);
     onRefresh();
     return view;
   }
@@ -214,6 +215,8 @@ import javax.inject.Inject;
   public void onGetData(List<CardTpl> card_tpls) {
     srl.setRefreshing(false);
     mDatas.clear();
+    totalCount=new int[]{0,0,0,0};
+    openCount=new int[]{0,0,0,0};
     commonFlexAdapter.clear();
     if (card_tpls != null) {
       if (cardTplBatchShips != null) {
@@ -235,9 +238,9 @@ import javax.inject.Inject;
           int result = o1.getType() - o2.getType();
           if (result == 0) {
             if (cardCost.containsKey(o1.getId())) {
-              return 1;
-            } else if (cardCost.containsKey(o2.getId())) {
               return -1;
+            } else if (cardCost.containsKey(o2.getId())) {
+              return 1;
             }
           }
           return result;
@@ -328,6 +331,7 @@ import javax.inject.Inject;
       Object o = headerItems.get(i);
       if (o instanceof BatchCardChooseTypeCountItem
           && ((BatchCardChooseTypeCountItem) o).getType() == type) {
+
         ((BatchCardChooseTypeCountItem) o).setOpenCount(
             openCount[((BatchCardChooseTypeCountItem) o).getType()]);
         commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf((IFlexible) o));

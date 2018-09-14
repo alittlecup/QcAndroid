@@ -249,7 +249,7 @@ public class BatchDetailCommonView extends BaseFragment {
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    openPay(AppUtils.getCurApp(getActivity()) != 0);
+    openPay(false);
   }
 
   public boolean isHasOrder() {
@@ -341,16 +341,15 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   public void openPay(boolean open) {
-    if(llPayContent!=null){
-      llPayContent.setVisibility(open?View.VISIBLE:View.GONE);
+    if (llPayContent != null) {
+      llPayContent.setVisibility(open ? View.VISIBLE : View.GONE);
     }
-    if(priceSetting!=null){
-      if(isPrivate){
-        priceSetting.setContent(open?"收费":"免费");
-      }else{
-        priceSetting.setContent(open?"统一价格":"免费");
+    if (priceSetting != null) {
+      if (isPrivate) {
+        priceSetting.setContent(open ? "收费" : "免费");
+      } else {
+        priceSetting.setContent(open ? "统一价格" : "免费");
       }
-
     }
   }
 
@@ -565,45 +564,32 @@ public class BatchDetailCommonView extends BaseFragment {
           llPayContent.setVisibility(View.VISIBLE);
           break;
       }
-      if (prePriceChoosePos != position) {
-        payOnline.setContent("未设置");
-      }
-      prePriceChoosePos = position;
     } else {
       switch (position) {
         case 0:
           priceSetting.setContent("免费");
           llPayContent.setVisibility(View.GONE);
-          if (prePriceChoosePos != position) {
-            payOnline.setContent("未设置");
-          }
           break;
         case 1:
           priceSetting.setContent("统一价格");
           llPayContent.setVisibility(View.VISIBLE);
-          if (prePriceChoosePos == 0) {
-            payOnline.setContent("未设置");
-            payCard.setContent("未设置");
-          } else if (prePriceChoosePos == 2) {
+
+          if (prePriceChoosePos == 2) {
             payCard.setContent("已关闭多人支持，请重新设置");
             numHasChange = true;
           }
-
           break;
         case 2:
           priceSetting.setContent("团课动态价格");
           llPayContent.setVisibility(View.VISIBLE);
-          if (prePriceChoosePos == 0) {
-            payOnline.setContent("未设置");
-            payCard.setContent("未设置");
-          } else if (prePriceChoosePos == 1) {
+          if (prePriceChoosePos == 1) {
             payCard.setContent("已开启多人支持，请重新设置");
             numHasChange = true;
           }
           break;
       }
-      prePriceChoosePos = position;
     }
+    prePriceChoosePos = position;
   }
 
   private int prePriceChoosePos = 0;
