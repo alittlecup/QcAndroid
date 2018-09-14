@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.CornerPathEffect;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -29,18 +28,15 @@ public class BubbleRelativeLayout extends RelativeLayout {
     }
     public static int PADDING = 30;
     public static int LEG_HALF_BASE = 30;
-    public static float STROKE_WIDTH = 2.0f;
     public static float CORNER_RADIUS = 20.0f;
     public static float BACKGROUND_COLOR = Color.rgb(0, 206, 216);
     public static float BACKGROUND_COLOR_BLACK = Color.rgb(35, 36, 40);
-    public static float ALPHA = 0.90f;
-    public static float SHADOW_COLOR = Color.argb(100, 0, 0, 0);
+    public static float ALPHA = 0.95f;
     public static float MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
 
     private Paint mFillPaint = null;
     private final Path mPath = new Path();
     private final Path mBubbleLegPrototype = new Path();
-    private final Paint mPaint = new Paint(Paint.DITHER_FLAG);
 
     private float mBubbleLegOffset = 0.75f;
     private BubbleLegOrientation mBubbleOrientation = BubbleLegOrientation.TOP;
@@ -62,10 +58,8 @@ public class BubbleRelativeLayout extends RelativeLayout {
             try {
                 PADDING = a.getDimensionPixelSize(R.styleable.bubble_padding, PADDING);
                 BACKGROUND_COLOR = a.getFloat(R.styleable.bubble_backgroundColor, BACKGROUND_COLOR);
-                SHADOW_COLOR = a.getFloat(R.styleable.bubble_shadowColor, SHADOW_COLOR);
                 LEG_HALF_BASE = a.getDimensionPixelSize(R.styleable.bubble_halfBaseOfLeg, LEG_HALF_BASE);
                 MIN_LEG_DISTANCE = PADDING + LEG_HALF_BASE;
-                STROKE_WIDTH = a.getFloat(R.styleable.bubble_strokeWidth, STROKE_WIDTH);
                 CORNER_RADIUS = a.getFloat(R.styleable.bubble_cornerRadius, CORNER_RADIUS);
             } finally {
                 if (a != null) {
@@ -74,19 +68,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
             }
         }
 
-        mPaint.setColor((int)SHADOW_COLOR);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setStrokeCap(Paint.Cap.BUTT);
-        mPaint.setAntiAlias(true);
-        mPaint.setStrokeWidth(STROKE_WIDTH);
-        mPaint.setStrokeJoin(Paint.Join.MITER);
-        mPaint.setPathEffect(new CornerPathEffect(CORNER_RADIUS));
-
-        if (Build.VERSION.SDK_INT >= 11) {
-            setLayerType(LAYER_TYPE_SOFTWARE, mPaint);
-        }
-
-        mFillPaint = new Paint(mPaint);
+        mFillPaint = new Paint(Paint.DITHER_FLAG);
         mFillPaint.setColor(Color.WHITE);
         if(identity == 0) {
             mFillPaint.setShader(new LinearGradient(100f, 0f, 100f, 200f, (int)BACKGROUND_COLOR, (int)BACKGROUND_COLOR, Shader.TileMode.CLAMP));
@@ -98,8 +80,6 @@ public class BubbleRelativeLayout extends RelativeLayout {
         if (Build.VERSION.SDK_INT >= 11) {
             setLayerType(LAYER_TYPE_SOFTWARE, mFillPaint);
         }
-        mPaint.setShadowLayer(2f, 2F, 5F, (int)SHADOW_COLOR);
-
         renderBubbleLegPrototype();
 
         setPadding(PADDING, PADDING, PADDING, PADDING);
@@ -164,12 +144,9 @@ public class BubbleRelativeLayout extends RelativeLayout {
         final float height = canvas.getHeight();
 
         mPath.rewind();
-        mPath.addRoundRect(new RectF(PADDING, PADDING, width - PADDING, height - PADDING), CORNER_RADIUS, CORNER_RADIUS, Path.Direction.CW);
+        mPath.addRoundRect(new RectF(PADDING, PADDING, width - PADDING - 10, height - PADDING),
+                new float[]{CORNER_RADIUS, CORNER_RADIUS, CORNER_RADIUS, CORNER_RADIUS, CORNER_RADIUS, CORNER_RADIUS, CORNER_RADIUS, CORNER_RADIUS}, Path.Direction.CW);
         mPath.addPath(mBubbleLegPrototype, renderBubbleLegMatrix(width, height));
-
-        canvas.drawPath(mPath, mPaint);
-        canvas.scale((width - STROKE_WIDTH) / width, (height - STROKE_WIDTH) / height, width / 2f, height / 2f);
-
         canvas.drawPath(mPath, mFillPaint);
     }
 
