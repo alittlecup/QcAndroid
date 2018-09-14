@@ -17,6 +17,7 @@ import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.utils.DateUtils;
 import com.airbnb.lottie.L;
+import com.google.zxing.aztec.detector.Detector;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,14 +31,16 @@ public class StudentBirthdayViewModel
   public final MutableLiveData<String> date = new MutableLiveData<>();
   public final MutableLiveData<String> count = new MutableLiveData<>();
   public final LiveData<List<String>> dates;
-  public final MutableLiveData<Calendar> selectedCalendar=new MutableLiveData<>();
+  public final MutableLiveData<Calendar> selectedCalendar = new MutableLiveData<>();
   private final MutableLiveData<Map<String, Object>> loadDates = new MutableLiveData<>();
 
   @Inject public StudentBirthdayViewModel() {
     dates = Transformations.switchMap(loadDates,
         dates -> Transformations.map(getSource(dates), input -> {
-          List<QcStudentWithUsers> birthday = input.getBirthday();
           List<String> datess = new ArrayList<>();
+          if (input == null) return datess;
+          List<QcStudentWithUsers> birthday = input.getBirthday();
+          if (birthday == null) return datess;
           for (QcStudentWithUsers users : birthday) {
             if (users.getCount() > 0) {
               datess.add(users.getDate());
