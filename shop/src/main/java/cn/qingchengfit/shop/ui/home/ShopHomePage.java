@@ -54,7 +54,7 @@ import javax.inject.Inject;
       SensorsUtils.track(ShopSensorsConstants.SHOP_PREVIEW_MALL_BTN_CLICK).commit(getContext());
     });
     BubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
-            Gravity.BOTTOM, 400, 0);
+            Gravity.BOTTOM, 350, 0);
     return mBinding;
   }
 

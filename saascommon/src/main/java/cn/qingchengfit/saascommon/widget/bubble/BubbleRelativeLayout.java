@@ -28,7 +28,7 @@ public class BubbleRelativeLayout extends RelativeLayout {
     }
     public static int PADDING = 30;
     public static int LEG_HALF_BASE = 30;
-    public static float CORNER_RADIUS = 20.0f;
+    public static float CORNER_RADIUS = 25.0f;
     public static float BACKGROUND_COLOR = Color.rgb(0, 206, 216);
     public static float BACKGROUND_COLOR_BLACK = Color.rgb(35, 36, 40);
     public static float ALPHA = 0.95f;
@@ -92,9 +92,9 @@ public class BubbleRelativeLayout extends RelativeLayout {
     }
 
     private void renderBubbleLegPrototype() {
-        mBubbleLegPrototype.moveTo(0, 0);
-        mBubbleLegPrototype.lineTo(PADDING * 1.5f, -PADDING / 1.5f);
-        mBubbleLegPrototype.lineTo(PADDING * 1.5f, PADDING / 1.5f);
+        mBubbleLegPrototype.moveTo(15, 0);
+        mBubbleLegPrototype.lineTo(PADDING * 1.2f, -PADDING / 1.2f);
+        mBubbleLegPrototype.lineTo(PADDING * 1.2f, PADDING / 1.2f);
         mBubbleLegPrototype.close();
     }
 

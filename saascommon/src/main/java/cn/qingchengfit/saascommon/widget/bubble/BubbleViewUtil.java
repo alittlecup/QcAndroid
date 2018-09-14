@@ -24,6 +24,6 @@ public class BubbleViewUtil {
     }
 
     public static void showBubbleOnceDefaultToolbar(Toolbar view, String text, String flag, int identity) {
-        showBubbleOnce(view,text,flag,75, 400, identity);
+        showBubbleOnce(view,text,flag,75, 390, identity);
     }
 }
