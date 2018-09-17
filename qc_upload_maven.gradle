@@ -1,7 +1,16 @@
 apply plugin: 'maven'
-
-group "cn.qingchengfit.${project.name}".toString()
-version "1.0.$today"
+def modules = rootProject.ext.modules
+def projectName = project.name
+String path = modules[projectName]
+if (path) {
+  group = path.split(":")[0]
+  artifactId = path.split(":")[1]
+  version = path.split(":")[2]
+} else {
+  group "cn.qingchengfit.${project.name}".toString()
+  artifactId = $ { project.name }
+  version "1.0.$today-SNAPSHOT"
+}
 
 uploadArchives {
   repositories {
@@ -9,7 +18,14 @@ uploadArchives {
       repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
         authentication(userName: "admin", password: "admin123")
       }
-      pom.artifactId = "${project.name}".toString()
+      snapshotRepository(url: uri('http://43.241.209.158:15004/repository/maven-snapshots/')) {
+        authentication(userName: "admin", password: "admin123")
+      }
+      project.afterEvaluate {
+        pom.group = group
+        pom.artifactId = artifactId
+        pom.version = version
+      }
     }
   }
 }
