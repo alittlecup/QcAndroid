@@ -40,6 +40,12 @@ ext {
 
              "saascommon": "cn.qingchengfit.saascommon:saascommon:1.0.180814",
 
+             "weex"      : "cn.qingchengfit.weex:weex:1.0.180827.8",
+
+             "qcim"      : "cn.qingchengfit.chat:qcim:1.1.180917",
+
+             "recruit"   : "cn.qingchengfit.recruit:recruit:1.1.180613",
+
              "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180827",]
 
 
@@ -193,12 +199,15 @@ ext {
                   "reactive-streams"            : "android.arch.lifecycle:reactivestreams:1.0.0",
                   "lifecycle-common-java8"      : "android.arch.lifecycle:common-java8:1.0.0",
 
-
                   //weex
-                  "weex"                        : "cn.qingchengfit.weex:weex:1.0.180809.10",
+                  "weex-sdk"                    : "com.taobao.android:weex_sdk:0.17.0",
+                  "fastjson"                    : "com.alibaba:fastjson:1.1.46",
+                  "plugin-loader"               : "org.weex.plugin:plugin-loader:1.0.0",
+                  "bindingx-core"               : "com.alibaba.android:bindingx-core:1.0.1",
+                  "bindingx_weex_plugin"        : "com.alibaba.android:bindingx_weex_plugin:1.0.1",
 
-                  //recruit
-                  "recruit"                     : "cn.qingchengfit.recruit:recruit:1.1.180613",
+                  //recycler滚动捕捉位置
+                  "gravitysnaphelper"           : "com.github.rubensousa:gravitysnaphelper:1.5",
 
                   //flabellum Dagger自动生成和路由
                   "flabellum"                   : "com.anbillon.flabellum:flabellum:${libraries.flabellum}",

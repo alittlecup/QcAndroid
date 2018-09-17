@@ -1,78 +1,23 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'maven'
+apply from: rootProject.file('qc_settings.gradle')
+apply from: rootProject.file('qc_upload_maven.gradle')
 
 
-android {
-  compileSdkVersion 27
-  buildToolsVersion '27.0.3'
-  dataBinding {
-    enabled = true
-  }
-  defaultConfig {
-    minSdkVersion 16
-    targetSdkVersion 25
-    versionCode 1
-    versionName "1.0"
-    vectorDrawables.useSupportLibrary true
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments = [fragmentArgsLib               : 'true',
-                     fragmentArgsSupportAnnotations: 'true']
-      }
-    }
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
 
-  //  resourcePrefix "recruit_"
-}
 
 dependencies {
-  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
-  implementation 'cn.qingchengfit.widgets:qcbase:1.0.180808'
-  api project(path: ':qcim')
-  annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-  annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
-  testImplementation 'junit:junit:4.12'
 
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  addApiComponent("qcim",true)
+  addComponent("qcbase",false)
+  implementation dependens["fragmentargs"]
+  implementation dependens["gravitysnaphelper"]
+
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+  annotationProcessor annotations["fragmentargs"]
+
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:3.0.2"
   implementation "com.hannesdorfmann.fragmentargs:annotation:3.0.2"
 }
 
-
-group 'cn.qingchengfit.recruit'
-version "1.1.$today"
-def ci = "$isCI".endsWith("true")
-uploadArchives {
-  if (ci) {
-    repositories {
-      mavenDeployer {
-        repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
-          authentication(userName: "admin", password: "admin123")
-        }
-//      repository(url: uri('../../repo'))
-        pom.artifactId = 'recruit'
-      }
-    }
-  }else{
-    repositories {
-      mavenDeployer {
-        repository(url: uri('../../repo'))
-        pom.artifactId = 'recruit'
-      }
-    }
-  }
-}

@@ -192,7 +192,6 @@ dependencies {
   addComponent("student", false)
   addComponent("card", false)
 
-  implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
 

@@ -44,8 +44,10 @@ android {
 
 dependencies {
   addApiComponent("qcbase",false)
-  api 'cn.qingchengfit.weex:weex:1.0.180827.8'
-  api 'cn.qingchengfit.recruit:recruit:1.1.180613'
+
+  addApiComponent("qcbase",false)
+  addApiComponent("weex",false)
+  addApiComponent("recruit",false)
 
   api(dependens["taglib"]){
     exclude group: 'com.android.support'

@@ -16,10 +16,8 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.ActionSheetDialog;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import com.alibaba.fastjson.parser.deserializer.AbstractDateDeserializer;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
