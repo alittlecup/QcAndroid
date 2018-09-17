@@ -139,18 +139,6 @@
         android:windowSoftInputMode="adjustNothing|stateUnchanged"
         />
     <activity
-        android:name=".activity.LoginActivity"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
-        <action android:name="cn.qingcheng.login"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
-
-    </activity>
-    <activity
         android:name=".activity.RegisterActivity"
         android:label="@string/title_activity_register"
         />
