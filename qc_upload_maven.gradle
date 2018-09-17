@@ -2,15 +2,7 @@ apply plugin: 'maven'
 def modules = rootProject.ext.modules
 def projectName = project.name
 String path = modules[projectName]
-if (path) {
-  group = path.split(":")[0]
-  artifactId = path.split(":")[1]
-  version = path.split(":")[2]
-} else {
-  group "cn.qingchengfit.${project.name}".toString()
-  artifactId = $ { project.name }
-  version "1.0.$today-SNAPSHOT"
-}
+
 
 uploadArchives {
   repositories {
@@ -22,7 +14,15 @@ uploadArchives {
         authentication(userName: "admin", password: "admin123")
       }
       project.afterEvaluate {
-        pom.group = group
+        def group = "cn.qingchengfit.$project.name".toString()
+        def artifactId = "$project.name"
+        def version = "1.0.$today-SNAPSHOT"
+        if (path) {
+          group = path.split(":")[0]
+          artifactId = path.split(":")[1]
+          version = path.split(":")[2]
+        }
+        pom.groupId = group
         pom.artifactId = artifactId
         pom.version = version
       }
