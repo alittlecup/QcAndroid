@@ -63,20 +63,6 @@
       </intent-filter>
     </activity>
 
-    <!--登录页面-->
-    <activity
-        android:name="cn.qingchengfit.saasbase.login.LoginActivity"
-        android:launchMode="singleTop"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="cn.qingcheng.login"/>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
-
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
-    </activity>
     <!--<activity-->
         <!--android:name=".mvvm_student.StudentActivity"-->
         <!--android:launchMode="singleTask"-->

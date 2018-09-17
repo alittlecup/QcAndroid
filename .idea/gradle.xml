@@ -9,10 +9,18 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/qcim" />
+            <option value="$PROJECT_DIR$/card" />
+            <option value="$PROJECT_DIR$/checkout" />
+            <option value="$PROJECT_DIR$/login" />
+            <option value="$PROJECT_DIR$/qcbase" />
             <option value="$PROJECT_DIR$/recruit" />
-            <option value="$PROJECT_DIR$/sdk" />
+            <option value="$PROJECT_DIR$/router" />
+            <option value="$PROJECT_DIR$/saasbase" />
+            <option value="$PROJECT_DIR$/saascommon" />
+            <option value="$PROJECT_DIR$/shop" />
+            <option value="$PROJECT_DIR$/staff" />
+            <option value="$PROJECT_DIR$/student" />
+            <option value="$PROJECT_DIR$/trainer" />
             <option value="$PROJECT_DIR$/weex" />
           </set>
         </option>

@@ -2,11 +2,24 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/QcAndroid.iml" filepath="$PROJECT_DIR$/QcAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/QcRecuit.iml" filepath="$PROJECT_DIR$/QcRecuit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/card/card.iml" filepath="$PROJECT_DIR$/card/card.iml" />
+      <module fileurl="file://$PROJECT_DIR$/checkout/checkout.iml" filepath="$PROJECT_DIR$/checkout/checkout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qcbase/qcbase.iml" filepath="$PROJECT_DIR$/qcbase/qcbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/qcim/qcim.iml" filepath="$PROJECT_DIR$/qcim/qcim.iml" />
       <module fileurl="file://$PROJECT_DIR$/recruit/recruit.iml" filepath="$PROJECT_DIR$/recruit/recruit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recruit/recruit.iml" filepath="$PROJECT_DIR$/recruit/recruit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/router/router.iml" filepath="$PROJECT_DIR$/router/router.iml" />
+      <module fileurl="file://$PROJECT_DIR$/saasbase/saasbase.iml" filepath="$PROJECT_DIR$/saasbase/saasbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/saascommon/saascommon.iml" filepath="$PROJECT_DIR$/saascommon/saascommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdk/sdk.iml" filepath="$PROJECT_DIR$/sdk/sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop/shop.iml" filepath="$PROJECT_DIR$/shop/shop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/staff/staff.iml" filepath="$PROJECT_DIR$/staff/staff.iml" />
+      <module fileurl="file://$PROJECT_DIR$/student/student.iml" filepath="$PROJECT_DIR$/student/student.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trainer/trainer.iml" filepath="$PROJECT_DIR$/trainer/trainer.iml" />
       <module fileurl="file://$PROJECT_DIR$/weex/weex.iml" filepath="$PROJECT_DIR$/weex/weex.iml" />
     </modules>
   </component>
