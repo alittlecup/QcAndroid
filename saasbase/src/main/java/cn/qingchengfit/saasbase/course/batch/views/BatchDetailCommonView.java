@@ -527,11 +527,11 @@ public class BatchDetailCommonView extends BaseFragment {
     List<BottomChooseData> datas = new ArrayList<>();
     if (isPrivate) {
       datas.add(new BottomChooseData("免费", "无需支付"));
-      datas.add(new BottomChooseData("收费", "需要支付"));
+      datas.add(new BottomChooseData("收费", "使用会员卡或在线支付约课"));
     } else {
       datas.add(new BottomChooseData("免费", "无需支付"));
-      datas.add(new BottomChooseData("统一价格", "不论人数多少始终统一价格"));
-      datas.add(new BottomChooseData("团课动态价格", "根据团课人数设置不同价格"));
+      datas.add(new BottomChooseData("收费", "使用会员卡或在线支付约课"));
+      datas.add(new BottomChooseData("团课动态价格", "根据预约人数设置不同价格"));
     }
     dialog = new BottomChooseDialog(getContext(), "课程价格", datas);
     dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
@@ -571,7 +571,7 @@ public class BatchDetailCommonView extends BaseFragment {
           llPayContent.setVisibility(View.GONE);
           break;
         case 1:
-          priceSetting.setContent("统一价格");
+          priceSetting.setContent("收费");
           llPayContent.setVisibility(View.VISIBLE);
 
           if (prePriceChoosePos == 2) {
