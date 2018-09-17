@@ -152,6 +152,8 @@
       android:layout_height="@dimen/qc_item_height"
       app:civ_content="免费"
       app:civ_lable="课程价格"
+      app:civ_edit_able="false"
+      app:civ_clickable="true"
       app:civ_showright="true"
       app:civ_text_color="@color/text_black"
 
@@ -160,6 +162,7 @@
       android:id="@+id/ll_price_content"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       android:orientation="vertical"
       >
     <cn.qingchengfit.widgets.CommonInputView

@@ -232,13 +232,8 @@ public class AddBatchFragment extends SaasBaseFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     stuff(batchBaseFragment);
-  }
-
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
-    super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonView) {
-      //必须是付费用户，且不是教练App
+    if(batchBaseFragment!=null){
+      //这里默认同意置为false 即免费状态
       batchBaseFragment.openPay(false);
     }
   }
@@ -274,7 +269,7 @@ public class AddBatchFragment extends SaasBaseFragment
       batchBaseFragment.openPayOnline(openOnline);
     }
     ToastUtils.showS("已自动填充排期");
-    tvBatchLoopHint.setText("课程周期 (已根据历史信息自动填充)");
+    tvBatchLoopHint.setText("已根据历史信息自动填充课程时间");
     linearLayout.setVisibility(View.VISIBLE);
   }
 

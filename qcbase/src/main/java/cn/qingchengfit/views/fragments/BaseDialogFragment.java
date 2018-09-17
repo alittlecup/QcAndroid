@@ -24,7 +24,9 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.R;
@@ -116,10 +118,10 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
         getActivity().onBackPressed();
       }
     });
-    //if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  ) {
-    //  ((ViewGroup) toolbar.getParent()).setPadding(0,
-    //    MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
-    //}
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  ) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+        MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    }
   }
 
   public void showLoading() {

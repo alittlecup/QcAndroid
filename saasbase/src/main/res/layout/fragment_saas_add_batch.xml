@@ -102,7 +102,7 @@
             android:text="清除自动填充"
             android:textColor="@color/red"
             android:textSize="@dimen/min_font"
-            android:visibility="gone"
+            android:visibility="visible"
             />
       </LinearLayout>
 

@@ -26,10 +26,14 @@ import cn.qingchengfit.saasbase.cards.item.BatchCardChooseTypeCountItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardHeaderItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
+import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saasbase.utils.UpgradeDialog;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -111,9 +115,14 @@ import javax.inject.Inject;
     }
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recyclerview.setAdapter(commonFlexAdapter);
-    llBottom.setOnClickListener(v -> new DialogList(getContext()).list(
-        getResources().getStringArray(R.array.cardtype_category),
-        (parent, view1, position, id) -> onMenuAdd(position)).show());
+    llBottom.setOnClickListener(v -> {
+      if (AppUtils.getCurApp(getContext()) == 0) {
+        UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
+      } else {
+        new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category),
+            (parent, view1, position, id) -> onMenuAdd(position)).show();
+      }
+    });
     llBottom.setVisibility(View.VISIBLE);
     onRefresh();
     return view;
@@ -215,8 +224,8 @@ import javax.inject.Inject;
   public void onGetData(List<CardTpl> card_tpls) {
     srl.setRefreshing(false);
     mDatas.clear();
-    totalCount=new int[]{0,0,0,0};
-    openCount=new int[]{0,0,0,0};
+    totalCount = new int[] { 0, 0, 0, 0 };
+    openCount = new int[] { 0, 0, 0, 0 };
     commonFlexAdapter.clear();
     if (card_tpls != null) {
       if (cardTplBatchShips != null) {
@@ -318,7 +327,6 @@ import javax.inject.Inject;
         }
       }
       commonFlexAdapter.updateDataSet(mDatas);
-
     }
   }
 

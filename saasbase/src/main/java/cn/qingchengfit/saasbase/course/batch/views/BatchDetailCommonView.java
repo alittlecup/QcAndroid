@@ -247,10 +247,6 @@ public class BatchDetailCommonView extends BaseFragment {
         });
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    openPay(false);
-  }
 
   public boolean isHasOrder() {
     return hasOrder;

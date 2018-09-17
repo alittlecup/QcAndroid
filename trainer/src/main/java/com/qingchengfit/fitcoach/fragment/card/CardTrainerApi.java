@@ -75,6 +75,10 @@ public interface CardTrainerApi {
       @Query("type") String type, @Query("number") String money, @QueryMap
       ArrayMap<String, String> params);
 
+  //获取卡种类列表（排课）
+  @GET("/api/v2/coaches/{id}/cardtpls/")
+  rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsNoPermission(@Path("id") String id,
+      @QueryMap HashMap<String, Object> params);
 
 
 

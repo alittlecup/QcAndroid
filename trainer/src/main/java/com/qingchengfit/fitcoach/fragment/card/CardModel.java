@@ -52,7 +52,7 @@ public class CardModel implements ICardModel {
   @Inject public CardModel(QcRestRepository repository) {
     posApi = repository.createGetApi(CardTrainerApi.class);
     INSTANCE = this;
-    ComponentModuleManager.register(ICardModel.class,this);
+    ComponentModuleManager.register(ICardModel.class, this);
   }
 
   @Override
@@ -62,7 +62,8 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(
       HashMap<String, Object> params) {
-    return null;
+    //这里之前传过来的参数是管理哦端使用的
+    return posApi.qcGetCardTplsNoPermission(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {
@@ -80,7 +81,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
-    return posApi.qcGetCardDetail(loginStatus.staff_id(),card_id,gymWrapper.getParams());
+    return posApi.qcGetCardDetail(loginStatus.staff_id(), card_id, gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {
@@ -122,9 +123,9 @@ public class CardModel implements ICardModel {
       CardBuyBody ochargeBody) {
     CardBuyBody chargeBody = (CardBuyBody) ochargeBody.clone();
     chargeBody.setType(null);
-    chargeBody.staff_id=null;
+    chargeBody.staff_id = null;
     chargeBody.setCard_tpl_id(null);
-    chargeBody.seller_id=null;
+    chargeBody.seller_id = null;
     return posApi.qcCardCharge(loginStatus.staff_id(), cardId, gymWrapper.getParams(), chargeBody);
   }
 
