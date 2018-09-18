@@ -75,7 +75,7 @@ import rx.android.schedulers.AndroidSchedulers;
 	FloatingActionMenu addBatchBtn;
 
   protected CommonFlexAdapter commonFlexAdapter;
-  @Inject IPermissionModel serPermisAction;
+  @Inject IPermissionModel permissionModel;
 	FloatingActionButton fabMutiBatch;
 	FloatingActionButton fabCopyBatch;
   private LinearLayoutManager linearLayoutManager;
@@ -120,7 +120,7 @@ import rx.android.schedulers.AndroidSchedulers;
         /**
          * 预约限制 {@link OrderLimitFragment}
          */
-        if (!serPermisAction.check(PermissionServerUtils.TEAM_COURSE_LIMIT)) {
+        if (!permissionModel.check(PermissionServerUtils.TEAM_COURSE_LIMIT)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
@@ -130,7 +130,7 @@ import rx.android.schedulers.AndroidSchedulers;
         /**
          * 短信通知{@link MsgNotiFragment}
          */
-        if (!serPermisAction.check(PermissionServerUtils.TEAM_COURSE_MSG_SETTING)) {
+        if (!permissionModel.check(PermissionServerUtils.TEAM_COURSE_MSG_SETTING)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
@@ -140,14 +140,18 @@ import rx.android.schedulers.AndroidSchedulers;
         /**
          * 课件
          */
-        if (!serPermisAction.check(PermissionServerUtils.PLANSSETTING)) {
+        if (!permissionModel.check(PermissionServerUtils.PLANSSETTING)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
         QRActivity.start(getContext(), QRActivity.PLANS_SETTING_GROUP);
         break;
       default://课程种类
-        routeTo("/list/", new CourseListParams().mIsPrivate(isPrivate).build());
+        if(isPrivate&&permissionModel.check(PermissionServerUtils.PRISETTING)||(!isPrivate&&permissionModel.check(PermissionServerUtils.TEAMSETTING))){
+          routeTo("/list/", new CourseListParams().mIsPrivate(isPrivate).build());
+        }else{
+          showAlert(R.string.sorry_for_no_permission);
+        }
         break;
     }
   }

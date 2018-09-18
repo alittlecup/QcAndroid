@@ -232,11 +232,8 @@ public class AddBatchFragment extends SaasBaseFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     stuff(batchBaseFragment);
-    if(batchBaseFragment!=null){
-      //这里默认同意置为false 即免费状态
-      batchBaseFragment.openPay(false);
-    }
   }
+
 
   @Override public int getLayoutRes() {
     return R.id.frag_course_info;

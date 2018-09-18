@@ -131,6 +131,10 @@ import javax.inject.Inject;
   }
 
   @Override public void clickCopyBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
     routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), new BatchCopyParams().isPrivate(Boolean.TRUE).build());
   }
 
