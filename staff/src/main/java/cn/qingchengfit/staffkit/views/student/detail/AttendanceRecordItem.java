@@ -82,11 +82,11 @@ public class AttendanceRecordItem
               + DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(attendanceRecord.end))
               + "  "
               + attendanceRecord.shop.name);
-      if (!attendanceRecord.checked_in) {
-        holder.notSignClass.setVisibility(View.VISIBLE);
-      } else {
-        holder.notSignClass.setVisibility(View.GONE);
-      }
+      //if (!attendanceRecord.checked_in) {
+      //  holder.notSignClass.setVisibility(View.VISIBLE);
+      //} else {
+      //  holder.notSignClass.setVisibility(View.GONE);
+      //}
     }
   }
 
