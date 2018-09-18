@@ -58,8 +58,7 @@ public class QcPayModule extends WXSDKEngine.DestroyableModule {
     wrapper.add("info",info);
     wrapper.addProperty("type",channel);
 
-    QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay/params")
-        .addParam("type", channel)
+    QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
         .addParam("data", new Gson().toJson(wrapper))).callAsync(new IQcRouteCallback() {
       @Override public void onResult(QCResult qcResult) {
         LogUtil.d(qcResult.toString());
