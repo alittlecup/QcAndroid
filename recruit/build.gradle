@@ -9,7 +9,7 @@ def annotations = rootProject.ext.annotations
 dependencies {
 
   addApiComponent("qcim",true)
-  addComponent("qcbase",false)
+  addComponent("qcbase",true)
   implementation dependens["fragmentargs"]
   implementation dependens["gravitysnaphelper"]
 

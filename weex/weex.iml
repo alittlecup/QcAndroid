@@ -99,7 +99,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/library_and_local_jars_jni" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/packaged-aidl" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/packaged-classes" />
@@ -112,7 +111,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
+      <excludeFolder url="file://$MODULE_DIR$/build/ivy.xml" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/poms" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
@@ -131,7 +132,6 @@
     <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment-27.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.3.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/home/paper/Android/QcAndroid/qcbase/libs/mid-sdk-2.20.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:adapter-rxjava:2.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:runtime-1.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:design-27.1.1" level="project" />
@@ -178,7 +178,7 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:common:1.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.phrase:phrase:1.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton.rxbinding:rxbinding-0.4.0" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/home/paper/Android/QcAndroid/qcbase/libs/Bughd_android_sdk_v1.3.7.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: cn.qingchengfit.widgets:qcbase-1.0.180918" level="project" />
     <orderEntry type="library" name="Gradle: cn.qingchengfit.imagepicker:matisse-1.0.4" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: eu.davidea:flexible-adapter-databinding-1.0.0-b2" level="project" />
@@ -201,7 +201,6 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-1.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.upyun:upyun-android-sdk-2.0.1" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.persistence:db-framework-1.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/home/paper/Android/QcAndroid/qcbase/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.persistence:db-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: me.gujun.android.taggroup:library-1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.dagger:dagger-android-2.11" level="project" />
@@ -230,6 +229,5 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-core-1.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.chrisbanes:PhotoView-1.2.6" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v13-27.1.1" level="project" />
-    <orderEntry type="module" module-name="qcbase" />
   </component>
 </module>

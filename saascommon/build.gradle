@@ -43,11 +43,9 @@ android {
 }
 
 dependencies {
-  addApiComponent("qcbase",false)
-
-  addApiComponent("qcbase",false)
-  addApiComponent("weex",false)
-  addApiComponent("recruit",false)
+  addApiComponent("qcbase",true)
+  addApiComponent("weex",true)
+  addApiComponent("recruit",true)
 
   api(dependens["taglib"]){
     exclude group: 'com.android.support'

@@ -40,13 +40,13 @@ ext {
 
              "saascommon": "cn.qingchengfit.saascommon:saascommon:1.0.180814",
 
-             "weex"      : "cn.qingchengfit.weex:weex:1.0.180827.8",
+             "weex"      : "cn.qingchengfit.weex:weex:1.0.180918",
 
              "qcim"      : "cn.qingchengfit.chat:qcim:1.1.180917",
 
-             "recruit"   : "cn.qingchengfit.recruit:recruit:1.1.180613",
+             "recruit"   : "cn.qingchengfit.recruit:recruit:1.1.180918",
 
-             "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180827",]
+             "qcbase"    : "cn.qingchengfit.widgets:qcbase:1.0.180918",]
 
 
   dependencies = [//Android Support
