@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -16,13 +16,13 @@ import java.util.List;
 
 public class ChooseCoachItem extends AbstractFlexibleItem<ChooseCoachItem.ChooseSalerVH> {
 
-    private Coach data;
+    private Staff data;
 
-    public ChooseCoachItem(Coach data) {
+    public ChooseCoachItem(Staff data) {
         this.data = data;
     }
 
-    public Coach getData() {
+    public Staff getData() {
         return data;
     }
 
@@ -35,9 +35,9 @@ public class ChooseCoachItem extends AbstractFlexibleItem<ChooseCoachItem.Choose
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseSalerVH holder, int position, List payloads) {
-        int da = data.coach.getGender() == 0?R.drawable.default_manage_male:R.drawable.default_manager_female;
-        PhotoUtils.smallCircle(holder.salerHeaderImg,data.coach.avatar,da,da);
-        holder.salerNameTv.setText(data.coach.username);
+        int da = data.getGender() == 0?R.drawable.default_manage_male:R.drawable.default_manager_female;
+        PhotoUtils.smallCircle(holder.salerHeaderImg,data.avatar,da,da);
+        holder.salerNameTv.setText(data.username);
         //adapter.animateView(holder.itemView, position, adapter.isSelected(position));
 
         if (adapter.isSelected(position)) {

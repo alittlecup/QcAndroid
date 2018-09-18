@@ -1007,7 +1007,7 @@ public interface Get_Api {
   rx.Observable<QcDataResponse<AllocateStudentBean>> qcGetAllocateCoachStudents(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-  @GET("/api/staffs/{staff_id}/coaches/")
+  @GET("/api/v2/staffs/{staff_id}/coaches/")
   rx.Observable<cn.qingchengfit.network.response.QcDataResponse<Staffs>> qcGetAllAllocateCoaches(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
