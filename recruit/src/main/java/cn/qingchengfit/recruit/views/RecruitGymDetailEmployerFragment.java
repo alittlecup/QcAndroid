@@ -73,9 +73,6 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   @Inject QcRestRepository qcRestRepository;
 
   Gym gym;
-  //@BindView(R2.id.toolbar) Toolbar toolbar;
-  //@BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  //
   FragmentRecruitGymDetailEmployerBinding db;
 
   private int initPage = -1;
