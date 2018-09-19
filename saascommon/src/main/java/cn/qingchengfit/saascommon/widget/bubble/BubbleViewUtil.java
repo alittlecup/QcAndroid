@@ -1,7 +1,6 @@
 package cn.qingchengfit.saascommon.widget.bubble;
 
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -25,6 +24,6 @@ public class BubbleViewUtil {
     }
 
     public static void showBubbleOnceDefaultToolbar(Toolbar view, String text, String flag, int identity) {
-        showBubbleOnce(view,text,flag,75, 390, identity);
+        showBubbleOnce(view,text,flag,10, 400, identity);
     }
 }

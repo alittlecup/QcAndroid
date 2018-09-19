@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import com.bigkoo.pickerview.lib.DensityUtil;
+
+import cn.qingchengfit.utils.PreferenceUtils;
+
 /**
  * Created by Bob Du on 2018/9/10 17:28
  */
@@ -82,6 +86,9 @@ public class BubblePopupWindow extends PopupWindow {
             int[] location = new int[2];
             parent.getLocationOnScreen(location);
 
+            int screenWidth = PreferenceUtils.getPrefInt(context, "Screen Width", 0);
+            int screenHeight = PreferenceUtils.getPrefInt(context, "Screen Height", 0);
+
             switch (gravity) {
                 case Gravity.BOTTOM:
                     showAtLocation(parent, Gravity.NO_GRAVITY, location[0] - parent.getWidth() - 80, location[1] + getMeasureHeight());
@@ -96,7 +103,7 @@ public class BubblePopupWindow extends PopupWindow {
                     showAtLocation(parent, Gravity.NO_GRAVITY, location[0] - getMeasureWidth(), location[1]);
                     break;
                 default:
-                    showAtLocation(parent, Gravity.NO_GRAVITY, location[0] + (parent.getWidth() / 2) + gravity, location[1] + getMeasureHeight());
+                    showAtLocation(parent, Gravity.NO_GRAVITY, screenWidth - getMeasureWidth() - DensityUtil.px2dip(context, gravity) , location[1] + getMeasureHeight());
                     break;
             }
         } else {

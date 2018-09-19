@@ -20,7 +20,9 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -168,6 +170,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
       }
     });
 
+    getScreenSize();
     initInject();
     initRouter();
     registeGlobleEvent();
@@ -666,5 +669,18 @@ public class MainActivity extends BaseActivity implements FragCallBack {
           .start();
       ViewCompat.animate(fragChooseBrand).scaleY(0).setDuration(300).start();
     }
+  }
+
+  /**
+   * 获取屏幕的尺寸
+   */
+  public void getScreenSize() {
+    WindowManager manager = this.getWindowManager();
+    DisplayMetrics outMetrics = new DisplayMetrics();
+    manager.getDefaultDisplay().getMetrics(outMetrics);
+    int width = outMetrics.widthPixels;
+    int height = outMetrics.heightPixels;
+    PreferenceUtils.setPrefInt(this, "Screen Width", width);
+    PreferenceUtils.setPrefInt(this, "Screen Height", height);
   }
 }
