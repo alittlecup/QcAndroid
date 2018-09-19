@@ -1,6 +1,7 @@
 package cn.qingchengfit.saascommon.widget.bubble;
 
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 
 import cn.qingchengfit.utils.PreferenceUtils;

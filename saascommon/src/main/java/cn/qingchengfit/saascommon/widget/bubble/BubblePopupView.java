@@ -14,6 +14,11 @@ public class BubblePopupView {
 
     private LayoutInflater inflater;
     private TextView guideText;
+
+    public BubblePopupWindow getBubblePopupWindow() {
+        return bubblePopupWindow;
+    }
+
     private BubblePopupWindow bubblePopupWindow;
 
     public BubblePopupView(Context context) {
