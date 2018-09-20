@@ -74,6 +74,7 @@ import rx.schedulers.Schedulers;
   @Inject public ICourseModel courseApi;
 	Toolbar toolbar;
 	public TextView toolbarTitle;
+  TextView tvBottomContent;
 	ViewGroup toolbarLayout;
 	RecyclerView rv;
 	public SwipeRefreshLayout srl;
@@ -107,7 +108,8 @@ import rx.schedulers.Schedulers;
     rv = (RecyclerView) view.findViewById(R.id.rv);
     srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
     llBottomAdd=view.findViewById(R.id.ll_bottom_add);
-    llBottomAdd.setOnClickListener(v -> onViewClicked());
+    tvBottomContent = view.findViewById(R.id.tv_bottom_content);
+    tvBottomContent.setOnClickListener(v -> onViewClicked());
     floatingActionButton = (FloatingActionButton) view.findViewById(R.id.add_course_btn);
     view.findViewById(R.id.add_course_btn).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

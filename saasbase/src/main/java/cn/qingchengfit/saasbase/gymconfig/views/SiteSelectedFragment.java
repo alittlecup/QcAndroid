@@ -64,8 +64,8 @@ import rx.android.schedulers.AndroidSchedulers;
     toolbar = parent.findViewById(R.id.toolbar);
     toolbarTitle = parent.findViewById(R.id.toolbar_title);
     TextView textView = bottomView.findViewById(R.id.tv_bottom_content);
-    textView.setText("添加场地");
-    bottomView.setOnClickListener(new View.OnClickListener() {
+    textView.setText("+ 添加场地");
+    textView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onClickFab();
       }

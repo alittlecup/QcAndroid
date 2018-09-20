@@ -39,24 +39,22 @@ public class QcPayModule extends WXSDKEngine.DestroyableModule {
   public void pay(String json, final JSCallback successCallback, JSCallback createOrderCallback) {
     JSONObject jsonObject = JSON.parseObject(json);
 
-
     String channel = jsonObject.getString("channel");
 
-    JsonObject wrapper=new JsonObject();
+    JsonObject wrapper = new JsonObject();
     wrapper.addProperty("price", jsonObject.getString("price"));
 
-    JsonObject bean=new JsonObject();
+    JsonObject bean = new JsonObject();
     bean.addProperty("out_trade_no", jsonObject.getString("out_trade_no"));
-    bean.addProperty("url", jsonObject.getString("qrCodeUrl"));
-    wrapper.add("bean",bean);
+    bean.addProperty("url", Uri.decode(jsonObject.getString("qrCodeUrl")));
+    wrapper.add("bean", bean);
 
-
-    JsonObject info=new JsonObject();
+    JsonObject info = new JsonObject();
     info.addProperty("moduleName", "qcBase");
     info.addProperty("actionName", "/web/repay");
-    info.addProperty("params","{\"channel\":\""+channel+"\"}");
-    wrapper.add("info",info);
-    wrapper.addProperty("type",channel);
+    info.addProperty("params", "{\"channel\":\"" + channel + "\"}");
+    wrapper.add("info", info);
+    wrapper.addProperty("type", channel);
 
     QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
         .addParam("data", new Gson().toJson(wrapper))).callAsync(new IQcRouteCallback() {

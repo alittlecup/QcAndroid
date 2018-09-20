@@ -65,9 +65,9 @@ import org.w3c.dom.Text;
     View bottomView = LayoutInflater.from(getContext())
         .inflate(R.layout.view_bottom_add, frameLayout, false);
     TextView textView = bottomView.findViewById(R.id.tv_bottom_content);
-    textView.setText("邀请教练");
+    textView.setText("+ 邀请教练");
     bottomView.setVisibility(View.VISIBLE);
-    bottomView.setOnClickListener(new View.OnClickListener() {
+    textView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onClickFab();
       }

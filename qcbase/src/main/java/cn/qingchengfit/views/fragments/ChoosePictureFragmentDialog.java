@@ -110,34 +110,33 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     if (savedInstanceState != null) {
       mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
-    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
-        .subscribe(new Action1<Boolean>() {
-          @Override public void call(Boolean aBoolean) {
-            if (aBoolean) {
-              Matisse.from(ChoosePictureFragmentDialog.this)
-                  .choose(MimeType.ofAll(), false)
-                  .theme(R.style.QcPicAppTheme)
-                  .countable(true)
-                  .capture(true)
-                  .maxSelectable(1)
-                  .captureStrategy(
-                      new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
-                  //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
-                  .gridExpectedSize(
-                      getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                  .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-                  .thumbnailScale(0.85f)
-                  .imageEngine(new GlideEngine())
-                  .forResult(CHOOSE_CAMERA);
-              //Uri uri = Uri.fromFile(fileCamera);
-              //startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
-              //    CHOOSE_CAMERA);
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
+      @Override public void call(Boolean aBoolean) {
+        if (aBoolean) {
+          Matisse.from(ChoosePictureFragmentDialog.this)
+              .choose(MimeType.of(MimeType.JPEG, MimeType.PNG, MimeType.WEBP, MimeType.BMP), false)
+              .theme(R.style.QcPicAppTheme)
+              .countable(true)
+              .capture(true)
+              .maxSelectable(1)
+              .captureStrategy(
+                  new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+              //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+              .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+              .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+              .thumbnailScale(0.85f)
+              .imageEngine(new GlideEngine())
+              .forResult(CHOOSE_CAMERA);
+          //Uri uri = Uri.fromFile(fileCamera);
+          //startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
+          //    CHOOSE_CAMERA);
 
-            } else {
-              ToastUtils.show("请开启拍照及存储权限");
-            }
-          }
-        });
+        } else {
+          ToastUtils.show("请开启拍照及存储权限");
+        }
+      }
+    });
     return view;
   }
 
@@ -199,8 +198,8 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
   }
 
   /* 裁剪图片方法实现
-  * @param uri
-  */
+   * @param uri
+   */
   public void clipPhoto(Uri uri) {
     CropImage.activity(uri).setAspectRatio(1, 1).start(getContext(), this);
   }

@@ -98,7 +98,7 @@ public class CardTypeListPresenter extends BasePresenter {
 
   public void queryCardTypeNoNeedPermission(boolean isPrivate, boolean isAdd) {
     HashMap<String, Object> params = new HashMap<>();
-
+    params.put("show_all", 1);
     params.put("method", isAdd ? "post" : "put");//add -post ，edit= put
     params.put("key", isPrivate ? PermissionServerUtils.PRIARRANGE_CALENDAR
         : PermissionServerUtils.TEAMARRANGE_CALENDAR); //isprivate PRIARRANGE_CALENDAR， false  =TEAMARRANGE_CALENDAR

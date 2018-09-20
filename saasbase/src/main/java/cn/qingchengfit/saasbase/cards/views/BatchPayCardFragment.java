@@ -100,7 +100,7 @@ import javax.inject.Inject;
     View view = inflater.inflate(R.layout.fragment_saas_batch_pay_by_cards, container, false);
     llBottom = view.findViewById(R.id.ll_bottom_add);
     textBottom = view.findViewById(R.id.tv_bottom_content);
-    textBottom.setText("添加会员卡种类");
+    textBottom.setText("+ 添加会员卡种类");
     delegatePresenter(presenter, this);
     toolbar = view.findViewById(R.id.toolbar);
     toolbarTitile = view.findViewById(R.id.toolbar_title);
@@ -115,7 +115,7 @@ import javax.inject.Inject;
     }
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recyclerview.setAdapter(commonFlexAdapter);
-    llBottom.setOnClickListener(v -> {
+    textBottom.setOnClickListener(v -> {
       if (AppUtils.getCurApp(getContext()) == 0) {
         UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
       } else {

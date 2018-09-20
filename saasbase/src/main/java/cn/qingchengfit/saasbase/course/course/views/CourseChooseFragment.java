@@ -51,8 +51,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    TextView tvBottomContent = view.findViewById(R.id.tv_bottom_content);
-    tvBottomContent.setText(mIsPrivate?"添加私教课种类":"添加团课种类");
+    tvBottomContent.setText(mIsPrivate?"+ 添加私教课种类":"+ 添加团课种类");
   }
 
   @Override public boolean onItemClick(int position) {

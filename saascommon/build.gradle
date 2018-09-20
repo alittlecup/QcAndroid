@@ -43,8 +43,8 @@ android {
 }
 
 dependencies {
-  addApiComponent("qcbase",true)
-  addApiComponent("weex",true)
+  addApiComponent("qcbase",false)
+  addApiComponent("weex",false)
   addApiComponent("recruit",true)
 
   api(dependens["taglib"]){
