@@ -30,7 +30,7 @@ public class BubbleViewUtil {
     }
 
     public void showBubbleOnceDefaultToolbar(Toolbar view, String text, String flag, int identity) {
-        showBubbleOnce(view,text,flag,10, 390, identity);
+        showBubbleOnce(view,text,flag,90, 700, identity);
     }
 
     public void closeBubble() {

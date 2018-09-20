@@ -70,13 +70,14 @@ public class BubblePopupWindow extends PopupWindow {
                     orientation = BubbleRelativeLayout.BubbleLegOrientation.TOP;
                     break;
             }
-            bubbleView.setBubbleParams(orientation, bubbleOffset); // 设置气泡布局方向及尖角偏移
-
-            int[] location = new int[2];
-            parent.getLocationOnScreen(location);
 
             int screenWidth = PreferenceUtils.getPrefInt(context, "Screen Width", 0);
             int screenHeight = PreferenceUtils.getPrefInt(context, "Screen Height", 0);
+
+            int[] location = new int[2];
+            parent.getLocationOnScreen(location);
+            bubbleView.setBubbleParams(orientation, screenWidth - bubbleOffset); // 设置气泡布局方向及尖角偏移
+
 
             switch (gravity) {
                 case Gravity.BOTTOM:
@@ -92,7 +93,7 @@ public class BubblePopupWindow extends PopupWindow {
                     showAtLocation(parent, Gravity.NO_GRAVITY, location[0] - getMeasureWidth(), location[1]);
                     break;
                 default:
-                    showAtLocation(parent, Gravity.NO_GRAVITY, screenWidth - getMeasureWidth() - DensityUtil.px2dip(context, gravity) , location[1] + getMeasureHeight());
+                    showAtLocation(parent, Gravity.NO_GRAVITY, screenWidth - getMeasureWidth() + DensityUtil.px2dip(context,  gravity), location[1] + getMeasureHeight());
                     break;
             }
         } else {

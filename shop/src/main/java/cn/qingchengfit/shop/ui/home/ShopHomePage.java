@@ -57,7 +57,7 @@ import javax.inject.Inject;
     });
     bubbleViewUtil = new BubbleViewUtil(getContext());
     bubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
-            Gravity.BOTTOM, 350, 0);
+            Gravity.BOTTOM, 750, 0);
     return mBinding;
   }
 

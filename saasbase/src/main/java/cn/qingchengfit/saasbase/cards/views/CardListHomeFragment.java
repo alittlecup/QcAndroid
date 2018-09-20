@@ -172,7 +172,7 @@ import javax.inject.Inject;
       });
     initSearch(tl, "输入会员姓名或手机号查找会员卡");
     bubbleViewUtil = new BubbleViewUtil(getContext());
-    bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击管理会员卡种类", "cardListHome", 0);
+    bubbleViewUtil.showBubbleOnce(toolbar, "点击管理会员卡种类", "cardListHome", 90, 750, 0);
   }
 
     @Override
