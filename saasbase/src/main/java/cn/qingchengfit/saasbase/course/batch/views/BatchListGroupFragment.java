@@ -65,6 +65,8 @@ public class BatchListGroupFragment
     @Inject
     GymWrapper gymWrapper;
 
+    private BubbleViewUtil bubbleViewUtil;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +88,14 @@ public class BatchListGroupFragment
                     .show();
             return true;
         });
-        BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "团课的更多操作在这里", "batchListGroup", 0);
+        bubbleViewUtil = new BubbleViewUtil(getContext());
+        bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "团课的更多操作在这里", "batchListGroup", 0);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        bubbleViewUtil.closeBubble();
     }
 
     /**

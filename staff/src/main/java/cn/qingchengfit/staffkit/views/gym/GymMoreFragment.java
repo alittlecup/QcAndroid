@@ -77,6 +77,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     private List<AbstractFlexibleItem> mFunsDatas = new ArrayList<>();
     private boolean mEditableMode = false;
     private FunHeaderItem mMyFuntions;
+    private BubbleViewUtil bubbleViewUtil;
 
     @Inject public GymMoreFragment() {
     }
@@ -94,7 +95,8 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
       mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
       myFunRecycleview = (RecyclerView) view.findViewById(R.id.my_fun_recycleview);
 
-      BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理常用功能", "gymMore", 0);
+      bubbleViewUtil = new BubbleViewUtil(getContext());
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理常用功能", "gymMore", 0);
 
         delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");
@@ -383,6 +385,13 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
             }
         }
         return true;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bubbleViewUtil.closeBubble();
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

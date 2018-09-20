@@ -10,18 +10,14 @@ import cn.qingchengfit.saascommon.R;
 /**
  * Created by Bob Du on 2018/9/11 13:51
  */
-public class BubblePopupView {
+public class BubblePopupView extends View {
 
     private LayoutInflater inflater;
     private TextView guideText;
-
-    public BubblePopupWindow getBubblePopupWindow() {
-        return bubblePopupWindow;
-    }
-
     private BubblePopupWindow bubblePopupWindow;
 
     public BubblePopupView(Context context) {
+        super(context);
         inflater = LayoutInflater.from(context);
         bubblePopupWindow = new BubblePopupWindow(context);
     }
@@ -32,5 +28,11 @@ public class BubblePopupView {
         guideText.setText(content);
         bubblePopupWindow.setBubbleView(bubbleView, identity);
         bubblePopupWindow.show(view, gravity, bubbleOffset);
+    }
+
+    public void close() {
+        if(bubblePopupWindow != null) {
+            bubblePopupWindow.dismiss();
+        }
     }
 }

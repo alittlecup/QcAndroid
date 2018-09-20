@@ -35,6 +35,8 @@ import javax.inject.Inject;
   private List<Pair<String, Fragment>> fragmentList;
   @Inject GymWrapper gymWrapper;
 
+  private BubbleViewUtil bubbleViewUtil;
+
   @Override protected void subscribeUI() {
 
   }
@@ -53,9 +55,16 @@ import javax.inject.Inject;
       WebActivity.startWeb(url, getActivity());
       SensorsUtils.track(ShopSensorsConstants.SHOP_PREVIEW_MALL_BTN_CLICK).commit(getContext());
     });
-    BubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    bubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
             Gravity.BOTTOM, 350, 0);
     return mBinding;
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   private int preIndex = 0;

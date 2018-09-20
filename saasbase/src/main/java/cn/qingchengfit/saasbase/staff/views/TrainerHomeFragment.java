@@ -40,6 +40,8 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
 
   @Inject TrainerHomePresenter presenter;
 
+  private BubbleViewUtil bubbleViewUtil;
+
   @Override void initFragment() {
     if (fragments.size() == 0){
       fragments.add(new TrainerTabListFragment());
@@ -75,7 +77,14 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         return true;
       })
       .build());
-    BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理教练权限", "trainerHome", 0);
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理教练权限", "trainerHome", 0);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   @Override public void freshData() {

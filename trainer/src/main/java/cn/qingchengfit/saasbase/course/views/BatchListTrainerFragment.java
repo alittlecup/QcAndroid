@@ -65,6 +65,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
    */
   private boolean isShow;
   private DialogList dialogList;
+  private BubbleViewUtil bubbleViewUtil;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -104,11 +105,18 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       dialogList.show();
       return true;
       });
+    bubbleViewUtil = new BubbleViewUtil(getContext());
     if(mType == 0) {
-      BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理团课种类", "batchCategoryGroup", 1);
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理团课种类", "batchCategoryGroup", 1);
     } else if(mType == 1) {
-      BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理私教种类", "batchCategoryPrivate", 1);
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理私教种类", "batchCategoryPrivate", 1);
     }
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   private void showDelCourse() {

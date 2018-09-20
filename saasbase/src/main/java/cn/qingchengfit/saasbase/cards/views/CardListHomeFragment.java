@@ -82,6 +82,8 @@ import javax.inject.Inject;
 	TextView tvCardCount;
 	protected RelativeLayout cardListLayout;
 
+	private BubbleViewUtil bubbleViewUtil;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     cardListFragment = new CardListFragment();
@@ -169,10 +171,17 @@ import javax.inject.Inject;
         }
       });
     initSearch(tl, "输入会员姓名或手机号查找会员卡");
-    BubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击管理会员卡种类", "cardListHome", 0);
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击管理会员卡种类", "cardListHome", 0);
   }
 
-  @Override public void onTextSearch(String text) {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        bubbleViewUtil.closeBubble();
+    }
+
+    @Override public void onTextSearch(String text) {
     presenter.queryKeyworkd(text);
   }
 
