@@ -105,6 +105,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
         toolbar.inflateMenu(R.menu.menu_mangage);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
+                bubbleViewUtil.closeBubble();
                 if (mEditableMode) {
                     toolbar.getMenu().clear();
                     toolbar.inflateMenu(R.menu.menu_mangage);

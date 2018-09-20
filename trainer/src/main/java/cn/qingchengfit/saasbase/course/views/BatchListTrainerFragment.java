@@ -85,6 +85,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     toolbarTitile.setText(mType != 1 ? "团课排期" : "私教排期");
     toolbar.inflateMenu(R.menu.menu_flow);
     toolbar.setOnMenuItemClickListener(item -> {
+      bubbleViewUtil.closeBubble();
       if (dialogList == null) {
         dialogList = new DialogList(getContext());
         ArrayList<String> flows = new ArrayList<>();

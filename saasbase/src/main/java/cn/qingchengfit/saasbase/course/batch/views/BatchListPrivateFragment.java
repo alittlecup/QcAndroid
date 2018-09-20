@@ -91,6 +91,7 @@ import javax.inject.Inject;
     toolbar.inflateMenu(R.menu.menu_flow);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
+        bubbleViewUtil.closeBubble();
         DialogList.builder(getContext())
           .list(getResources().getStringArray(R.array.batch_list_private_flow),
             new AdapterView.OnItemClickListener() {

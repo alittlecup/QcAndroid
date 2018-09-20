@@ -48,6 +48,7 @@ import javax.inject.Inject;
     initView();
     mBinding.setViewModel(mViewModel);
     mBinding.showWebPreview.setOnClickListener(v -> {
+      bubbleViewUtil.closeBubble();
       String url = gymWrapper.getCoachService().getHost()
           + "/shop/"
           + gymWrapper.shop_id()

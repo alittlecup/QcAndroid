@@ -82,6 +82,7 @@ public class BatchListGroupFragment
         toolbarTitile.setText(R.string.t_group_batch_list);
         toolbar.inflateMenu(R.menu.menu_flow);
         toolbar.setOnMenuItemClickListener(item -> {
+            bubbleViewUtil.closeBubble();
             DialogList.builder(getContext())
                     .list(getResources().getStringArray(R.array.batch_list_group_flow),
                             (parent, view, position, id) -> menuSelected(position, false))

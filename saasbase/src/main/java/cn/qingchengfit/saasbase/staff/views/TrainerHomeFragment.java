@@ -68,6 +68,7 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         if (item.getItemId() == R.id.action_search){
           CommonUserSearchFragment.start(this,presenter.getAllCommonUser());
         }else if (item.getItemId() == R.id.action_flow){
+          bubbleViewUtil.closeBubble();
           DialogSheet.builder(getContext())
             .addButton("教练职位与权限设置", view -> {
               QRActivity.start(getContext(),QRActivity.PERMISSION_TRAINER);

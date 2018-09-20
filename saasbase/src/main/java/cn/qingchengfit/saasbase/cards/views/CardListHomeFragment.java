@@ -157,11 +157,12 @@ import javax.inject.Inject;
     RxMenuItem.clicks(toolbar.getMenu().getItem(1))
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
+          @Override public void onNext(Void aVoid) {
+              bubbleViewUtil.closeBubble();
+              showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-              if (!serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
+                if (!serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
                 showAlert(R.string.alert_permission_forbid);
                 return;
               }
