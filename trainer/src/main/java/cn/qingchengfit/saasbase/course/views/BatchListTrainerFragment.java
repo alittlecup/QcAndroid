@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,9 +109,11 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       });
     bubbleViewUtil = new BubbleViewUtil(getContext());
     if(mType == 0) {
-      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理团课种类", "batchCategoryGroup", 1);
+      bubbleViewUtil.showBubbleOnce(toolbarTitile, "点击这里管理团课种类", "batchCategoryGroup",
+              3050, -370, 1);
     } else if(mType == 1) {
-      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理私教种类", "batchCategoryPrivate", 1);
+      bubbleViewUtil.showBubbleOnce(toolbarTitile, "点击这里管理私教种类", "batchCategoryPrivate",
+              3050, -370, 1);
     }
   }
 
