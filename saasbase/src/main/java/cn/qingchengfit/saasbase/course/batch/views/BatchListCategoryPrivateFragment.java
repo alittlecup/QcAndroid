@@ -1,7 +1,12 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
@@ -49,9 +54,19 @@ import rx.schedulers.Schedulers;
 @Leaf(module = "course", path = "/batch/cate/private/")
 public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment {
 
-  @Need String trainer_id;
   private QcResponsePrivateDetail.PrivateCoach mCoach;
   @Inject IPermissionModel permissionModel;
+  private String trainer_id;
+  private String trainer_avatar;
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    Bundle bundle = getArguments();
+    trainer_id = bundle.getString("coach_id");
+    trainer_avatar = bundle.getString("coach_avatar");
+    return super.onCreateView(inflater, container, savedInstanceState);
+  }
+
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("私教排期");
@@ -67,8 +82,9 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
           if (ResponseConstant.checkSuccess(qcResponse)) {
             if (qcResponse.data.batches != null) {
               List<AbstractFlexibleItem> datas = new ArrayList<>();
-              datas.add(new BatchItem(qcResponse.data.coach));
               mCoach = qcResponse.data.coach;
+              mCoach.setAvatar(trainer_avatar);
+              datas.add(new BatchItem(mCoach));
               for (QcResponsePrivateDetail.PrivateBatch coach : qcResponse.data.batches) {
                 try {
                   datas.add(

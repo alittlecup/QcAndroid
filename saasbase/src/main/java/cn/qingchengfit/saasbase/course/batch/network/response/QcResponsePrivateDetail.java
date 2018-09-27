@@ -28,6 +28,10 @@ public class QcResponsePrivateDetail extends QcResponse {
       return avatar;
     }
 
+    public void setAvatar(String avatar) {
+      this.avatar = avatar;
+    }
+
     @Override public String getTitle() {
       return username;
     }
