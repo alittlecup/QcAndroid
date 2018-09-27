@@ -109,11 +109,9 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       });
     bubbleViewUtil = new BubbleViewUtil(getContext());
     if(mType == 0) {
-      bubbleViewUtil.showBubbleOnce(toolbarTitile, "点击这里管理团课种类", "batchCategoryGroup",
-              3050, -370, 1);
-    } else if(mType == 1) {
-      bubbleViewUtil.showBubbleOnce(toolbarTitile, "点击这里管理私教种类", "batchCategoryPrivate",
-              3050, -370, 1);
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理团课种类", "batchCategoryGroup", 1);
+    } else if (mType == 1) {
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理私教种类", "batchCategoryPrivate", 1);
     }
   }
 
