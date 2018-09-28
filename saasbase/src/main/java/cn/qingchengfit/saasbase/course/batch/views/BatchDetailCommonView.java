@@ -298,8 +298,9 @@ public class BatchDetailCommonView extends BaseFragment {
     if (coach == null) return;
     this.trainer = staff;
     String trainerName = staff.getUsername();
-    if(trainerName != null && mSource.equals("addbatch"))
+    if(trainerName != null && mSource.equals("addbatch")) {
       coach.setShowRight(false);
+    }
     coach.setContent(trainerName);
     queryTemple();
   }

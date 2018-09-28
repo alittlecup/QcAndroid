@@ -123,11 +123,9 @@ import javax.inject.Inject;
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
     if (item instanceof BatchItem) {
-      Bundle bundle = new Bundle();
-      BatchCoach coach = ((BatchItem) item).getBatchCoach();
-      bundle.putString("coach_id", coach.getId());
-      bundle.putString("coach_avatar", coach.getAvatar());
-      routeTo("/batch/cate/private/", bundle);
+      routeTo("/batch/cate/private/",
+              new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
+                      ((BatchItem) item).getBatchCoach().id).build());
     }else if (item instanceof TitleHintItem){
       WebActivity.startWeb(Configs.WEB_HOW_TO_USE_BATCH_PRIVATE,getContext());
     }

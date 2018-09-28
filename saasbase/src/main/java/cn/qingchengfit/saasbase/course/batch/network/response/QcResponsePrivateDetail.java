@@ -40,7 +40,7 @@ public class QcResponsePrivateDetail extends QcResponse {
       return "累计"+course_count+"节, 服务"+users_count+"人次";
     }
 
-    public int getGender(){
+    public int getGender() {
       return gender;
     }
 
