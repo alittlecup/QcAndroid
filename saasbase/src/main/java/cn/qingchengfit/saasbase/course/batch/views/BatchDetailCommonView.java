@@ -102,6 +102,7 @@ public class BatchDetailCommonView extends BaseFragment {
   private String mSource;
   private boolean hasOrder;
   private boolean isPrivate = true; //true -私教，false-团课
+  private boolean isStaff = true; //true -管理端 false -教练端
 
   public static BatchDetailCommonView newInstance(Course course, Staff trainer, String source,
       boolean isPrivate) {
@@ -115,6 +116,19 @@ public class BatchDetailCommonView extends BaseFragment {
     return fragment;
   }
 
+  public static BatchDetailCommonView newInstance(Course course, Staff trainer, String source,
+                                 boolean isPrivate, boolean isStaff) {
+    Bundle args = new Bundle();
+    args.putParcelable("course", course);
+    args.putParcelable("trainer", trainer);
+    args.putString("source", source);
+    args.putBoolean("private", isPrivate);
+    args.putBoolean("staff", isStaff);
+    BatchDetailCommonView fragment = new BatchDetailCommonView();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
@@ -122,6 +136,7 @@ public class BatchDetailCommonView extends BaseFragment {
       trainer = getArguments().getParcelable("trainer");
       mSource = getArguments().getString("source");
       isPrivate = getArguments().getBoolean("private");
+      isStaff = getArguments().getBoolean("staff");
 
       if (course == null) {
         course = new Course();
@@ -298,7 +313,7 @@ public class BatchDetailCommonView extends BaseFragment {
     if (coach == null) return;
     this.trainer = staff;
     String trainerName = staff.getUsername();
-    if(trainerName != null && mSource.equals("addbatch")) {
+    if((trainerName != null && mSource.equals("addbatch")) || (mSource.equals("editbatch") && (isStaff == false))) {
       coach.setShowRight(false);
     }
     coach.setContent(trainerName);

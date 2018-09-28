@@ -105,7 +105,7 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
     if (item instanceof BatchCateItem) {
       routeTo("/batch/edit/",
         new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams().batchId(
-          ((BatchCateItem) item).getId()).isPrvite(true).build());
+          ((BatchCateItem) item).getId()).isPrvite(true).isStaff(true).build());
     }
     return true;
   }

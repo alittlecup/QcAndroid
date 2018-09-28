@@ -197,10 +197,11 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     if (commonFlexAdapter.getItem(position) instanceof BatchItem) {
       BatchItem batchItem = (BatchItem) commonFlexAdapter.getItem(position);
       if (batchItem != null && batchItem.getBatchModel() != null) {
-        routeTo("course", "/batch/edit/", EditBatchParams.builder()
-            .batchId(batchItem.getId())
-            .isPrvite(mType == Configs.TYPE_PRIVATE)
-            .build());
+          routeTo("course", "/batch/edit/", EditBatchParams.builder()
+                  .batchId(batchItem.getId())
+                  .isPrvite(mType == Configs.TYPE_PRIVATE)
+                  .isStaff(false)
+                  .build());
       }
     } else if (commonFlexAdapter.getItem(position) instanceof HideBatchItem) {
       commonFlexAdapter.toggleSelection(position);

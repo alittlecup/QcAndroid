@@ -104,6 +104,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   CommonFlexAdapter commonFlexAdapter;
   @Need public String batchId;
   @Need public Boolean isPrvite = false;
+  @Need public Boolean isStaff = false;
 
   private BatchDetailCommonView batchBaseFragment;
   private TimeDialogWindow timeWindow;
@@ -266,7 +267,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     if (batchBaseFragment == null) {
       batchBaseFragment =
           BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher, "editbatch",
-              isPrvite);
+              isPrvite, isStaff);
     } else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);

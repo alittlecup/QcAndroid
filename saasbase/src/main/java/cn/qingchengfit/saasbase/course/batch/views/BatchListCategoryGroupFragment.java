@@ -138,7 +138,7 @@ import rx.schedulers.Schedulers;
     if (item instanceof BatchCateItem) {
       routeTo("/batch/edit/",
           new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams().batchId(
-              ((BatchCateItem) item).getId()).isPrvite(false).build());
+              ((BatchCateItem) item).getId()).isPrvite(false).isStaff(true).build());
     }
     return true;
   }
