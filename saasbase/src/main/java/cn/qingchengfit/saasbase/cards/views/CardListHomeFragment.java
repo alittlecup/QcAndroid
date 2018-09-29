@@ -89,6 +89,7 @@ import javax.inject.Inject;
     cardListFragment = new CardListFragment();
     cardListFragment.initListener(this);
     filterFragment = new CardListFilterFragment();
+    bubbleViewUtil = new BubbleViewUtil(getContext());
     RxBus.getBus()
       .register(EventSaasFresh.CardList.class)
       .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
@@ -135,8 +136,8 @@ import javax.inject.Inject;
         onFilterStatusClicked();
       }
     });
-
     initToolbar(toolbar);
+    handleBubble(bubbleViewUtil);
     delegatePresenter(presenter, this);
     return view;
   }
@@ -172,8 +173,6 @@ import javax.inject.Inject;
         }
       });
     initSearch(tl, "输入会员姓名或手机号查找会员卡");
-    bubbleViewUtil = new BubbleViewUtil(getContext());
-    bubbleViewUtil.showBubbleOnce(toolbar, "点击管理会员卡种类", "cardListHome", 90, 750, 0);
   }
 
     @Override
@@ -216,6 +215,10 @@ import javax.inject.Inject;
 
   @Override public String getFragmentName() {
     return CardListHomeFragment.class.getName();
+  }
+
+  public void handleBubble(BubbleViewUtil bubbleViewUtil) {
+      bubbleViewUtil.showBubbleOnce(toolbar, "点击管理会员卡种类", "cardListHome", 90, 750, 0);
   }
 
   /**

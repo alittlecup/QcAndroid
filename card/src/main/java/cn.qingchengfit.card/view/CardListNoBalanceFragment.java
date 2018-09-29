@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.cards.views.CardBalanceFragment;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.utils.DialogUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
     View view = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(detailPresenter,this);
     return view;
@@ -40,6 +42,9 @@ import javax.inject.Inject;
     super.initToolbar(toolbar);
     toolbar.getMenu().clear();
   }
+
+  @Override
+  public void handleBubble(BubbleViewUtil bubbleViewUtil) {}
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
