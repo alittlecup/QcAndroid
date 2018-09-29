@@ -521,13 +521,13 @@ import rx.functions.Action1;
   }
 
   public void onCivBindMenbersClicked() {
-    //routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
-    //    new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
+//    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
+//        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
 
     Map<String, Object> map = new HashMap<>();
     map.put("studentIdList", presenter.getChoseStuIds());
     QcRouteUtil.setRouteOptions(
-        new RouteOptions("student").setActionName("/choose/student/").addParams(map)).call();
+        new RouteOptions("student").setActionName("/choose/student/").addParam("studentIdList", presenter.getChoseStuIds())).call();
   }
 
   public void onCivSalerClicked() {

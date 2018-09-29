@@ -69,7 +69,7 @@ public class SalerChooseDialogFragment extends BaseDialogFragment implements Sal
         recyclerview.setAdapter(adapter);
         adapter.setListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {
-                if (salers != null && salers.size() > pos) {
+                if (salers != null && salers.size() + 1 > pos) {
                     if (pos > 0) {
                         RxBus.getBus().post(salers.get(pos - 1));
                     } else {

@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -28,7 +26,6 @@ import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -80,7 +77,9 @@ import javax.inject.Inject;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (chooseType == null || chooseType == 0 )chooseType = SelectableAdapter.Mode.MULTI;
+    ChooseAndSearchStudentParams.inject(this);
+    if (chooseType == null || chooseType == 0 )
+      chooseType = SelectableAdapter.Mode.MULTI;
     chooseStudentListFragment =  ChooseStudentListFragment.newInstance(chooseType);
     RxBus.getBus()
       .register(EventSaasFresh.StudentList.class)
@@ -119,8 +118,6 @@ import javax.inject.Inject;
             chooseStudentListFragment.filter(etSearch.getText().toString());
           }
         });
-
-
     srl.setRefreshing(true);
     srl.setOnRefreshListener(this);
     return view;
