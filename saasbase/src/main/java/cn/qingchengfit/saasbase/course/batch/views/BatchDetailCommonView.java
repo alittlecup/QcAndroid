@@ -341,7 +341,11 @@ public class BatchDetailCommonView extends BaseFragment {
     if (spaces == null) return;
     this.spaces.clear();
     this.spaces.addAll(spaces);
-    space.setContent(ListUtils.ListObj2StrCN(spaces));
+    if((mSource.equals("addbatch") || mSource.equals("editbatch")) && isPrivate == true) {
+      space.setContent(spaces.size()+"处场地");
+    } else {
+      space.setContent(ListUtils.ListObj2StrCN(spaces));
+    }
   }
 
   /**
