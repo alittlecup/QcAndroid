@@ -57,7 +57,7 @@ import com.google.gson.JsonObject;
     ScanRepayInfo info = new ScanRepayInfo();
     info.setModuleName("checkout");
     info.setActionName("reOrder");
-    JsonObject params=new JsonObject();
+    JsonObject params = new JsonObject();
     params.addProperty("price", mViewModel.count.getValue());
     switch (mViewModel.getType()) {
       case PayChannel.ALIPAY_QRCODE:
@@ -65,7 +65,7 @@ import com.google.gson.JsonObject;
         info.setParams(params.toString());
         wrapper.setType("ALIPAY_QRCODE");
         wrapper.setInfo(info);
-
+        break;
       case PayChannel.WEIXIN_QRCODE:
         params.addProperty("channel", "WEIXIN_QRCODE");
         wrapper.setType("WEIXIN_QRCODE");
@@ -79,8 +79,8 @@ import com.google.gson.JsonObject;
         .addParam("data", json)).callAsync(callback);
   }
 
-  private IQcRouteCallback callback = qcResult -> QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home"))
-      .call();
+  private IQcRouteCallback callback = qcResult -> QcRouteUtil.setRouteOptions(
+      new RouteOptions("checkout").setActionName("/checkout/home")).call();
 
   @Override
   public CkPageCheckoutMoneyBinding initDataBinding(LayoutInflater inflater, ViewGroup container,

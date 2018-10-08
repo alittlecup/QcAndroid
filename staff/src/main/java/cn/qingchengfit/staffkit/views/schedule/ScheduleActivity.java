@@ -101,6 +101,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
       scheduleCalendarIc = (ImageView) findViewById(R.id.schedule_calendar_ic);
       scheduleCalendar = (RelativeLayout) findViewById(R.id.schedule_calendar);
       scheduleTab = (PagerSlidingTabStrip) findViewById(R.id.schedule_tab);
+      scheduleTab.setShouldExpand(false);
       scheduleCalendarHeader = (LinearLayout) findViewById(R.id.schedule_calendar_header);
       scheduleExpendView = (LinearLayout) findViewById(R.id.schedule_expend_view);
       scheduleVp = (ViewPager) findViewById(R.id.schedule_vp);
