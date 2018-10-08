@@ -32,7 +32,6 @@ import javax.inject.Inject;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    super.onCreateView(inflater, container, savedInstanceState);
     View view = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(detailPresenter,this);
     return view;
