@@ -135,6 +135,12 @@ import com.google.gson.JsonObject;
           if (s.contains(".") && s.indexOf(".") < s.length() - 2) {
             return;
           }
+          if(s.length()>=9){
+            return;
+          }
+          if(i==R.id.tv_0&&s.equals("0")){
+            return;
+          }
         }
         mViewModel.count.setValue(s + "" + ((TextView) v).getText());
       }

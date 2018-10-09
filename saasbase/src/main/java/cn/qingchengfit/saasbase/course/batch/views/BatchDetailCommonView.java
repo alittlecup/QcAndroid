@@ -2,10 +2,8 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -26,7 +24,6 @@ import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
-import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
@@ -34,7 +31,6 @@ import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
 import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
 import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
-import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -47,6 +43,7 @@ import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
+import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -117,7 +114,7 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   public static BatchDetailCommonView newInstance(Course course, Staff trainer, String source,
-                                 boolean isPrivate, boolean isStaff) {
+      boolean isPrivate, boolean isStaff) {
     Bundle args = new Bundle();
     args.putParcelable("course", course);
     args.putParcelable("trainer", trainer);
@@ -313,7 +310,9 @@ public class BatchDetailCommonView extends BaseFragment {
     if (coach == null) return;
     this.trainer = staff;
     String trainerName = staff.getUsername();
-    if((trainerName != null && mSource.equals("addbatch")) || (mSource.equals("editbatch") && (isStaff == false))) {
+    if ((trainerName != null && mSource.equals("addbatch")) || (mSource.equals("editbatch") && (
+        isStaff
+            == false))) {
       coach.setShowRight(false);
     }
     coach.setContent(trainerName);
@@ -341,11 +340,12 @@ public class BatchDetailCommonView extends BaseFragment {
     if (spaces == null) return;
     this.spaces.clear();
     this.spaces.addAll(spaces);
-    if((mSource.equals("addbatch") || mSource.equals("editbatch")) && isPrivate == true) {
-      if(spaces.size() == 1)
+    if ((mSource.equals("addbatch") || mSource.equals("editbatch")) && isPrivate == true) {
+      if (spaces.size() == 1) {
         space.setContent(ListUtils.ListObj2StrCN(spaces));
-      else
-        space.setContent(spaces.size()+"处场地");
+      } else {
+        space.setContent(spaces.size() + "处场地");
+      }
     } else {
       space.setContent(ListUtils.ListObj2StrCN(spaces));
     }
@@ -354,7 +354,10 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 设置可约人数
    */
+  private int max_user = 1;
+
   public void setOrderSutdentCount(@IntRange(from = 1) int x) {
+    max_user = x;
     if (orderSutdentCount != null) orderSutdentCount.setContent(Integer.toString(x));
   }
 
@@ -378,13 +381,14 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public void openPay(boolean open) {
     if (llPayContent != null) {
-      llPayContent.setVisibility(open ? View.VISIBLE : View.GONE);
+      llPriceContentVisibility = open ? View.VISIBLE : View.GONE;
     }
     if (priceSetting != null) {
-      if (isPrivate) {
-        priceSetting.setContent(open ? "收费" : "免费");
+      priceSetting.setContent(open ? "收费" : "免费");
+      if (open) {
+        prePriceChoosePos = 1;
       } else {
-        priceSetting.setContent(open ? "统一价格" : "免费");
+        prePriceChoosePos = 0;
       }
     }
   }
@@ -405,12 +409,16 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public void setRules(List<Rule> rules, ArrayList<CardTplBatchShip> ships) {
     List<Rule> rules1 = new ArrayList<>();
-    if (rules != null) {
+    if ((rules != null) && !rules.isEmpty()) {
       for (Rule rule : rules) {
         if (rule.channel.equalsIgnoreCase("ONLINE")) {
           payOnlineRule = rule;
         } else {
           rules1.add(rule);
+          if (rule.to_number != (max_user + 1)) {
+            prePriceChoosePos = 2;
+            priceSetting.setContent("团课动态价格");
+          }
         }
       }
     }
@@ -637,8 +645,20 @@ public class BatchDetailCommonView extends BaseFragment {
   public List<Rule> getRules() {
     List<Rule> rules = new ArrayList<>();
     if (!numHasChange) {
-      if (payOnlineRule != null) rules.add(payOnlineRule);
-      if (rulesPayCards.size() > 0) rules.addAll(rulesPayCards);
+      if (payOnlineRule != null) {
+        if (prePriceChoosePos == 1) {
+          payOnlineRule.to_number = getOrderStudentCount() + 1;
+        }
+        rules.add(payOnlineRule);
+      }
+      if (rulesPayCards != null && rulesPayCards.size() > 0) {
+        if (prePriceChoosePos == 1) {
+          for (Rule rule : rulesPayCards) {
+            rule.to_number = getOrderStudentCount() + 1;
+          }
+        }
+        rules.addAll(rulesPayCards);
+      }
     }
     return rules;
   }
@@ -658,6 +678,6 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   public interface BatchTempleListener {
-    public void onBatchTemple();
+    void onBatchTemple();
   }
 }
