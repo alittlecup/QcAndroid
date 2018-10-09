@@ -210,6 +210,7 @@ public class MineFragmentFragment extends BaseFragment {
           @Override public void onNext(QcCoachRespone qcCoachRespone) {
             if (ResponseConstant.checkSuccess(qcCoachRespone)) {
               user = qcCoachRespone.getData().getCoach();
+              App.gUser.avatar=user.getAvatar();
               if (user != null && tvName != null && imgHeader != null) {
                 tvName.setText(user.getUsername());
                 Glide.with(getContext())

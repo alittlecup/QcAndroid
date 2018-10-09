@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -525,6 +526,20 @@ public class WebFragment extends BaseFragment
     }
 
     mWebviewWebView.setWebChromeClient(new WebChromeClient() {
+      @Override
+      public boolean onCreateWindow(WebView webView, boolean b, boolean b1, Message message) {
+        WebView newWebView = new WebView(webView.getContext());
+        newWebView.setWebViewClient(new WebViewClient() {
+          @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            WebActivity.startWeb(url, view.getContext());
+            return true;
+          }
+        });
+        WebView.WebViewTransport transport = (WebView.WebViewTransport) message.obj;
+        transport.setWebView(newWebView);
+        message.sendToTarget();
+        return true;
+      }
 
       public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
         mValueCallback = valueCallback;
@@ -962,27 +977,24 @@ public class WebFragment extends BaseFragment
       Uri uri = Uri.parse(Uri.decode(s));
       String channel = uri.getQueryParameter("channel");
 
-      JsonObject wrapper=new JsonObject();
+      JsonObject wrapper = new JsonObject();
       wrapper.addProperty("price", uri.getQueryParameter("price"));
 
-      JsonObject bean=new JsonObject();
+      JsonObject bean = new JsonObject();
       bean.addProperty("out_trade_no", uri.getQueryParameter("out_trade_no"));
       bean.addProperty("url", uri.getQueryParameter("qrCodeUrl"));
-      wrapper.add("bean",bean);
+      wrapper.add("bean", bean);
 
-
-      JsonObject info=new JsonObject();
+      JsonObject info = new JsonObject();
       info.addProperty("moduleName", "qcBase");
       info.addProperty("actionName", "/web/repay");
-      info.addProperty("params","{\"channel\":\""+channel+"\"}");
-      wrapper.add("info",info);
-      wrapper.addProperty("type",channel);
-
-
+      info.addProperty("params", "{\"channel\":\"" + channel + "\"}");
+      wrapper.add("info", info);
+      wrapper.addProperty("type", channel);
 
       QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
           .setContext(getContext())
-          .addParam("data",new Gson().toJson(wrapper))).callAsync(qcResult -> {
+          .addParam("data", new Gson().toJson(wrapper))).callAsync(qcResult -> {
         Flowable.just(qcResult)
             .subscribeOn(io.reactivex.schedulers.Schedulers.io())
             .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())

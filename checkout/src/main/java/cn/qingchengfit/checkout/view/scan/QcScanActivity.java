@@ -91,9 +91,17 @@ public class QcScanActivity extends SaasCommonActivity
         Map<String, Object> dataMap = qcResult.getDataMap();
         Object data = dataMap.get("cashierBean");
         if (data != null) {
-          CashierBean cashierBean = new Gson().fromJson((String) data, CashierBean.class);
-          mViewModel.scanPay(barCode, ((CashierBean) cashierBean).getOut_trade_no(),
-              ((CashierBean) cashierBean).getPay_trade_no());
+          CashierBean cashierBean = null;
+          if (data instanceof String) {
+            cashierBean = new Gson().fromJson((String) data, CashierBean.class);
+          } else if (data instanceof CashierBean) {
+            cashierBean = (CashierBean) data;
+          }
+          if(cashierBean==null){
+            ToastUtils.show("网络连接异常");
+            return;
+          }
+          mViewModel.scanPay(barCode, cashierBean.getOut_trade_no(), cashierBean.getPay_trade_no());
         } else {
           Object out_trade_no = dataMap.get("out_trade_no");
           Object pay_trade_no = dataMap.get("pay_trade_no");
