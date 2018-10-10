@@ -17,7 +17,7 @@ public class BatchDetail {
   public Space space;
   //public boolean is_open_for_bodys;
   @SerializedName("course") public BatchCourse course;
-  @SerializedName(value = "rule",alternate = {"rules"}) public List<Rule> rule;
+  @SerializedName(value = "rule", alternate = { "rules" }) public List<Rule> rule;
   @SerializedName("is_free") public boolean is_free;
   @SerializedName("teacher") public Staff teacher;
   @SerializedName("time_repeats") public List<Time_repeat> time_repeats;
@@ -36,28 +36,26 @@ public class BatchDetail {
   }
 
   public boolean supportMulti() {
-    if (course != null && course.is_private){
-      return max_users > 1;
-    }else {
-      return hasCardTplid(rule);
-    }
-
+    //这里修改成只判断私教，有逻辑问题
+    return max_users > 1;
   }
 
   /**
    * 判断多人团课
-   * @param rules
-   * @return
    */
-  private boolean hasCardTplid(List<Rule> rules){
-    if (rules != null){
+  private boolean hasCardTplid(List<Rule> rules) {
+    if (rules != null) {
       List<String> strs = new ArrayList<>();
       for (Rule rule1 : rules) {
-        if (strs.contains(rule1.card_tpl_id))
+        if (strs.contains(rule1.card_tpl_id)) {
           return true;
-        else strs.add(rule1.card_tpl_id);
+        } else {
+          strs.add(rule1.card_tpl_id);
+        }
       }
       return false;
-    }else return false;
+    } else {
+      return false;
+    }
   }
 }

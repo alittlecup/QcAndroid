@@ -59,7 +59,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
   protected Rule rulePayOnline;
 
   //是否为私教课程
-  private boolean isPrivate;
+   boolean isPrivate;
 
   public boolean isPro() {
     return !body.is_free;
@@ -169,7 +169,6 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     body.teacher_id = mvpView.getTrainerId();
     body.time_repeats = mvpView.getBatchLoops() == null?mvpView.getTimeRepeats():BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
     body.is_free = !mvpView.needPay();
-    body.max_users = mvpView.suportMemberNum();
   }
 
   /**

@@ -199,6 +199,7 @@ public class BatchDetailCommonView extends BaseFragment {
     setCourse(course);
     setTrainer(trainer);
     initRxbus();
+
     if (isPrivate) {
       elMultiSupport = view.findViewById(R.id.el_multi_support);
       elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);

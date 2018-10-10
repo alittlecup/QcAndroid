@@ -15,7 +15,6 @@ public class BatchEditPresenter extends IBatchPresenter {
 
   String batchId;
   BatchDetail batchDetail;
-  boolean isPrivate;
 
   public boolean isPrivate() {
     return isPrivate;
