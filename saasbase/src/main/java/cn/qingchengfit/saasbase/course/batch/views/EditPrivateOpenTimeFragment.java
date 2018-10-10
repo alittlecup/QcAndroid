@@ -145,8 +145,8 @@ public class EditPrivateOpenTimeFragment extends BottomSheetDialogFragment {
       interValpicker = new SimpleScrollPicker(getContext());
       interValpicker.setLabel("分钟");
       interValpicker.setListener(pos -> {
-        db.civOrderInterval.setContent(60 * pos / 12 + "分钟");
-        timeRepeat.setSlice(60 * pos * 5);
+        db.civOrderInterval.setContent(60 * (pos+1) / 12 + "分钟");
+        timeRepeat.setSlice(60 * (pos+1) * 5);
       });
     }
     int pos  = 0;
@@ -158,7 +158,7 @@ public class EditPrivateOpenTimeFragment extends BottomSheetDialogFragment {
     }catch (Exception e){
 
     }
-    interValpicker.show(0, 65, 5, pos);
+    interValpicker.show(5, 65, 5, pos);
   }
 
   @Override public void onStart() {

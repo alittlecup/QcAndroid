@@ -135,8 +135,7 @@ afterEvaluate {
             def apkpath = output.outputFile as File
             exec {
               ignoreExitValue true
-              def rootFile = new File("output")
-              commandLine "sh", rootFile.absolutePath+"/../../.reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+              commandLine "sh", rootProject.file('reinforce.sh').absolutePath, apkpath, rootProject.file('reinforce.sh').getParentFile().absolutePath,"trainer"
             }
         }
 

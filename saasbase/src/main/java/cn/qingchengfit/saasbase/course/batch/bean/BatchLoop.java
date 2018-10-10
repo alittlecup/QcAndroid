@@ -89,6 +89,7 @@ public class BatchLoop implements Parcelable {
                     time_repeat.setStart(DateUtils.getTimeHHMM(batchLoop.dateStart));
                     time_repeat.setEnd(DateUtils.getTimeHHMM(batchLoop.dateEnd));
                     time_repeat.setWeekday(week);
+                    time_repeat.setSlice(batchLoop.slice);
                     time_repeat.is_cross = batchLoop.isCross;
                     ret.add(time_repeat);
                 }
