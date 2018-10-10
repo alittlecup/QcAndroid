@@ -217,7 +217,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
     Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonView){
+    if (f instanceof BatchDetailCommonView&&!hadSetData){
       inflateBatchInfo(presenter.getBatchDetail());
     }
   }
@@ -307,13 +307,14 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     }else
       return new CmLRTxtItem(tr);
   }
-
+  private boolean hadSetData;
   private void inflateBatchInfo(BatchDetail batchDetail){
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
     batchBaseFragment.openPay(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
+    hadSetData=true;
   }
 
   @Override public void onLoppers(List<BatchLoop> loopers) {
