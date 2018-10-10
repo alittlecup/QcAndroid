@@ -92,7 +92,7 @@ public class BatchDetailCommonView extends BaseFragment {
   private Course course;
   private Staff trainer;
   private ArrayList<Rule> rulesPayCards = new ArrayList<>();
-  private Rule payOnlineRule;
+  public Rule payOnlineRule;
   private List<Space> spaces = new ArrayList<>();
   private ArrayList<CardTplBatchShip> cardtplships;
   private boolean numHasChange = false;//人数已经修改
@@ -210,11 +210,13 @@ public class BatchDetailCommonView extends BaseFragment {
     return view;
   }
 
-  private int llPriceContentVisibility = View.GONE;
+  private int llPriceContentVisibility = View.INVISIBLE;
 
   @Override public void onResume() {
     super.onResume();
-    llPayContent.setVisibility(llPriceContentVisibility);
+    if (llPriceContentVisibility != View.INVISIBLE) {
+      llPayContent.setVisibility(llPriceContentVisibility);
+    }
   }
 
   @Override public void onPause() {
@@ -381,7 +383,7 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public void openPay(boolean open) {
     if (llPayContent != null) {
-      llPriceContentVisibility = open ? View.VISIBLE : View.GONE;
+      llPayContent.setVisibility(open ? View.VISIBLE : View.GONE);
     }
     if (priceSetting != null) {
       priceSetting.setContent(open ? "收费" : "免费");
@@ -416,8 +418,10 @@ public class BatchDetailCommonView extends BaseFragment {
         } else {
           rules1.add(rule);
           if (rule.to_number != (max_user + 1)) {
-            prePriceChoosePos = 2;
-            priceSetting.setContent("团课动态价格");
+            if (!isPrivate) {
+              prePriceChoosePos = 2;
+              priceSetting.setContent("团课动态价格");
+            }
           }
         }
       }

@@ -260,10 +260,13 @@ public class AddBatchFragment extends SaasBaseFragment
     popBack();
   }
 
-  @Override public void onTemplete(boolean isFree, boolean openOnline, int maxuer) {
+  @Override public void onTemplete(boolean isFree, boolean openOnline, int maxuer,Rule onLineRule) {
     if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
       batchBaseFragment.setOrderSutdentCount(maxuer);
       batchBaseFragment.openPayOnline(openOnline);
+      if(openOnline){
+        batchBaseFragment.payOnlineRule=onLineRule;
+      }
     }
     ToastUtils.showS("已自动填充排期");
     tvBatchLoopHint.setText("已根据历史信息自动填充课程时间");

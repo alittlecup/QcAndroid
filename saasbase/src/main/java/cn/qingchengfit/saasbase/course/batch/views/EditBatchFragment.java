@@ -255,7 +255,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
 
   }
 
-  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer) {
+  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer,Rule onLineRule) {
 
   }
 

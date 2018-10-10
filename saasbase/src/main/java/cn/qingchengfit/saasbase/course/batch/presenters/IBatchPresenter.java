@@ -255,7 +255,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
             }
             mvpView.onLoppers(BatchLoop.getBeansFromTimeRep(mTimeRep));
             mvpView.onTemplete(qcResponse.data.is_free, rulePayOnline != null,
-              qcResponse.data.max_users);
+              qcResponse.data.max_users,rulePayOnline);
           } else {
             mvpView.onShowError(qcResponse.getMsg());
           }
@@ -266,7 +266,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
   public interface MVPView extends CView {
     void onSuccess();
 
-    void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer);
+    void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer,Rule onLineRule);
 
     void onBatchDetail(BatchDetail batchDetail);
 
