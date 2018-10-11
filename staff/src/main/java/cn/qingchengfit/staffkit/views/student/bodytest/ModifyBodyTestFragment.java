@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestExtra;
@@ -31,12 +32,14 @@ import cn.qingchengfit.model.responese.BodyTestTemplateBase;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.widget.NumberInputFilter;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.adapter.ImageGridAdapter;
 import cn.qingchengfit.staffkit.views.custom.GalleryPhotoViewDialog;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -85,7 +88,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
   CommonInputView rightCalf;
 
   @Inject ModifyBodyTestPresenter presenter;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
@@ -304,8 +307,24 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
         }
       }
     });
-
+    setCommonInputViewFilter();
     return view;
+  }
+
+  private void setCommonInputViewFilter() {
+    bmi.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    weight.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    height.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    bodyFatRate.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    leftCalf.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    leftThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    leftUpper.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    rightCalf.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    rightThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    rightUpper.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    chest.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    hipline.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    waistline.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
   }
 
   public void onClickDate() {
@@ -484,47 +503,58 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     if (!TextUtils.isEmpty(mMeasure.height)) {
       height.setVisibility(View.VISIBLE);
       height.setContent(String.format("%s", mMeasure.height));
+
     }
     if (!TextUtils.isEmpty(mMeasure.body_fat_rate)) {
       bodyFatRate.setVisibility(View.VISIBLE);
       bodyFatRate.setContent(String.format("%s", mMeasure.body_fat_rate));
+
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
       leftCalf.setVisibility(View.VISIBLE);
       leftCalf.setContent(String.format("%s", mMeasure.circumference_of_left_calf));
+
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
       rightCalf.setVisibility(View.VISIBLE);
       rightCalf.setContent(String.format("%s", mMeasure.circumference_of_right_calf));
+
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
       chest.setVisibility(View.VISIBLE);
       chest.setContent(String.format("%s", mMeasure.circumference_of_chest));
+
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
       rightThigh.setVisibility(View.VISIBLE);
       rightThigh.setContent(String.format("%s", mMeasure.circumference_of_right_thigh));
+
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
       leftThigh.setVisibility(View.VISIBLE);
       leftThigh.setContent(String.format("%s", mMeasure.circumference_of_left_thigh));
+
     }
 
     if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
       leftUpper.setVisibility(View.VISIBLE);
       leftUpper.setContent(String.format("%s", mMeasure.circumference_of_left_upper));
+
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
       rightUpper.setVisibility(View.VISIBLE);
       rightUpper.setContent(String.format("%s", mMeasure.circumference_of_right_upper));
+
     }
     if (!TextUtils.isEmpty(mMeasure.hipline)) {
       hipline.setVisibility(View.VISIBLE);
       hipline.setContent(String.format("%s", mMeasure.hipline));
+
     }
     if (!TextUtils.isEmpty(mMeasure.waistline)) {
       waistline.setVisibility(View.VISIBLE);
       waistline.setContent(String.format("%s", mMeasure.waistline));
+
     }
   }
 

@@ -11,8 +11,8 @@ import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
-import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -21,9 +21,8 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class BatchPayCardItem extends AbstractFlexibleItem<BatchPayCardItem.BatchPayCardVH>
-    implements ISectionable<BatchPayCardItem.BatchPayCardVH, BatchPayCardHeaderItem> {
+     {
 
-    BatchPayCardHeaderItem headerItem;
     int pos;
     boolean isPrivate;
     CardTpl cardTpl;
@@ -84,13 +83,6 @@ public class BatchPayCardItem extends AbstractFlexibleItem<BatchPayCardItem.Batc
         }
     }
 
-    @Override public BatchPayCardHeaderItem getHeader() {
-        return headerItem;
-    }
-
-    @Override public void setHeader(BatchPayCardHeaderItem header) {
-        this.headerItem = header;
-    }
 
     public class BatchPayCardVH extends FlexibleViewHolder {
 	TextView tvLable;

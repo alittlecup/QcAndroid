@@ -110,7 +110,7 @@
 
                     </android.support.v4.widget.SwipeRefreshLayout>
 
-                    <cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller
+                    <cn.qingchengfit.saascommon.widget.ModifiedFastScroller
                         android:id="@+id/fast_scroller"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
 
@@ -30,7 +28,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBalancePresenter;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -68,23 +66,23 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by Paper on 2017/11/24.
  */
 @Leaf(module = "card", path = "/balance/") public class CardBalanceFragment extends SaasBaseFragment
-  implements FlexibleAdapter.OnItemClickListener, CardBalancePresenter.MVPView,
-  SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.EndlessScrollListener {
+    implements FlexibleAdapter.OnItemClickListener, CardBalancePresenter.MVPView,
+    SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.EndlessScrollListener {
 
-  CardListFragment cardListFragment;
+  protected CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	FrameLayout toolbarLayout;
-	TextView textFilterTips;
-	TextView textFilterCondition;
-	TextView textChangeButton;
-	LinearLayout llBalanceCondition;
-	QcFilterToggle filterTpl;
-	QcFilterToggle filterStatus;
-	TextView tvCardCount;
-	FrameLayout fragCardList;
-	FrameLayout fragCardFilter;
+  Toolbar toolbar;
+  protected TextView toolbarTitle;
+  FrameLayout toolbarLayout;
+  TextView textFilterTips;
+  TextView textFilterCondition;
+  TextView textChangeButton;
+  protected LinearLayout llBalanceCondition;
+  QcFilterToggle filterTpl;
+  QcFilterToggle filterStatus;
+  TextView tvCardCount;
+  FrameLayout fragCardList;
+  FrameLayout fragCardFilter;
 
   @Inject CardBalancePresenter presenter;
   private PopupWindow popupWindow;
@@ -100,18 +98,18 @@ import rx.android.schedulers.AndroidSchedulers;
     cardListFragment.initListener(this);
     filterFragment = CardListFilterFragment.newFragmentWithOutStopCardFilter();
     RxBus.getBus()
-      .register(EventSaasFresh.CardList.class)
-      .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
-      .compose(this.<EventSaasFresh.CardList>doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
-        @Override public void onNext(EventSaasFresh.CardList cardList) {
-          onRefresh();
-        }
-      });
+        .register(EventSaasFresh.CardList.class)
+        .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
+        .compose(this.<EventSaasFresh.CardList>doWhen(FragmentEvent.CREATE_VIEW))
+        .subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
+          @Override public void onNext(EventSaasFresh.CardList cardList) {
+            onRefresh();
+          }
+        });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_card_balance, container, false);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
@@ -142,10 +140,13 @@ import rx.android.schedulers.AndroidSchedulers;
     });
 
     delegatePresenter(presenter, this);
+    loadBalanceCondition();
     initToolbar(toolbar);
-    presenter.queryBalanceCondition();
     initPopView();
     return view;
+  }
+  public void loadBalanceCondition(){
+    presenter.queryBalanceCondition();
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -153,13 +154,13 @@ import rx.android.schedulers.AndroidSchedulers;
     toolbarTitle.setText("续卡提醒");
     toolbar.getMenu().add("自动提醒").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
-      .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          routeTo("/autonotify/", null);
-        }
-      });
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<Void>() {
+          @Override public void onNext(Void aVoid) {
+            routeTo("/autonotify/", null);
+          }
+        });
   }
 
   @Override protected void onFinishAnimation() {
@@ -182,10 +183,10 @@ import rx.android.schedulers.AndroidSchedulers;
 
   private void initPopView() {
     View mPopView =
-      LayoutInflater.from(getContext()).inflate(R.layout.layout_balance_setting, null);
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_balance_setting, null);
     if (popupWindow == null) {
       popupWindow = new PopupWindow(mPopView, ViewGroup.LayoutParams.MATCH_PARENT,
-        MeasureUtils.dpToPx(214.0f, getResources()), true);
+          MeasureUtils.dpToPx(214.0f, getResources()), true);
       storeEdit = (EditText) mPopView.findViewById(R.id.edit_store_money);
       secondEdit = (EditText) mPopView.findViewById(R.id.edit_second_money);
       timeEdit = (EditText) mPopView.findViewById(R.id.edit_remain_time);
@@ -270,7 +271,6 @@ import rx.android.schedulers.AndroidSchedulers;
     configsBeanList.add(configsBean3);
     presenter.putBalanceRemindCondition(configsBeanList);
     delayRefreshData();
-
   }
 
   private void delayRefreshData() {
@@ -310,28 +310,27 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @Override public void onGetBalance(List<BalanceDetail> balanceDetailList) {
     if (popupWindow != null) popupWindow.dismiss();
-    int storeValue=0, secondValue=0, timeValue=0;
+    int storeValue = 0, secondValue = 0, timeValue = 0;
 
     for (BalanceDetail balanceDetail : balanceDetailList) {
 
       if (balanceDetail.key.equalsIgnoreCase(presenter.QUERY_STORE_BALANCE)) {
-        storeValue = (int)balanceDetail.value;
+        storeValue = (int) balanceDetail.value;
         storeEdit.setText(storeValue + "");
         idMap.put(presenter.QUERY_STORE_BALANCE, balanceDetail.id);
-      }else if (balanceDetail.key.equalsIgnoreCase(presenter.QUERY_SECOND_BALANCE)) {
-        secondValue = (int)balanceDetail.value;
+      } else if (balanceDetail.key.equalsIgnoreCase(presenter.QUERY_SECOND_BALANCE)) {
+        secondValue = (int) balanceDetail.value;
         secondEdit.setText(secondValue + "");
         idMap.put(presenter.QUERY_SECOND_BALANCE, balanceDetail.id);
-      }else if(balanceDetail.key.equalsIgnoreCase(presenter.QUERY_DAYS_BALANCE)){
-        timeValue = (int)balanceDetail.value;
+      } else if (balanceDetail.key.equalsIgnoreCase(presenter.QUERY_DAYS_BALANCE)) {
+        timeValue = (int) balanceDetail.value;
         timeEdit.setText(timeValue + "");
         idMap.put(presenter.QUERY_DAYS_BALANCE, balanceDetail.id);
       }
-
     }
     if (textFilterCondition != null) {
       textFilterCondition.setText(
-        "储值卡<" + storeValue + "元， 次卡<" + secondValue + "次， 有效期<" + timeValue + "天");
+          "储值卡<" + storeValue + "元， 次卡<" + secondValue + "次， 有效期<" + timeValue + "天");
     }
   }
 
@@ -345,7 +344,7 @@ import rx.android.schedulers.AndroidSchedulers;
     IFlexible iFlexible = cardListFragment.getItem(position);
     if (iFlexible instanceof CardItem) {
       routeTo("/detail/", new cn.qingchengfit.saasbase.cards.views.CardDetailParams().cardid(
-        ((CardItem) iFlexible).getRealCard().getId()).build());
+          ((CardItem) iFlexible).getRealCard().getId()).build());
     }
     return true;
   }
@@ -354,20 +353,23 @@ import rx.android.schedulers.AndroidSchedulers;
     super.onDestroyView();
   }
 
- public void onFilterTplClicked() {
+  public void onFilterTplClicked() {
     toggleFilter(0);
   }
 
- public void onFilterStatusClicked() {
+  public void onFilterStatusClicked() {
     toggleFilter(1);
   }
- public void onFilter(View view) {
+
+  public void onFilter(View view) {
     showAsDropDown(popupWindow, view);
   }
+
   public void showAsDropDown(PopupWindow mPopupWindow, View view) {
     if (mPopupWindow != null && !mPopupWindow.isShowing()) {
       if (mPopupWindow == popupWindow) {
-        mPopupWindow.showAtLocation(view, Gravity.TOP, 0, MeasureUtils.dpToPx(75.0f, getResources()));
+        mPopupWindow.showAtLocation(view, Gravity.TOP, 0,
+            MeasureUtils.dpToPx(75.0f, getResources()));
       } else {
         mPopupWindow.showAsDropDown(view);
       }
@@ -392,12 +394,11 @@ import rx.android.schedulers.AndroidSchedulers;
         }
       } else {
         getFragmentManager().beginTransaction()
-          .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
-          .show(filterFragment)
-          .commit();
+            .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
+            .show(filterFragment)
+            .commit();
         filterFragment.showPage(index);
       }
     }
   }
-
 }

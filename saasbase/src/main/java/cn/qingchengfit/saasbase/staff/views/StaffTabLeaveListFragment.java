@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import eu.davidea.flexibleadapter.items.IFlexible;

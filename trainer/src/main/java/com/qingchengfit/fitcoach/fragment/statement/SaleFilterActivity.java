@@ -15,7 +15,7 @@ import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;

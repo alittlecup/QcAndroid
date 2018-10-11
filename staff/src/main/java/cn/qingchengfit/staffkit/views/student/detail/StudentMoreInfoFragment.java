@@ -13,12 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.base.User_Student;
@@ -38,6 +36,7 @@ import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.score.ScoreDetailActivity;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -74,27 +73,27 @@ public class StudentMoreInfoFragment extends BaseFragment
   public static final int RESULT_SCORE = 13;
   public static final int RESULT_COACH = 14;
 
-	TextView baseinfoLabel;
-	ImageView bodytestImg;
-	TextView updateInfo;
-	ImageView signinImg;
-	TextView noCheckinImg;
-	TextView mSalesName;
-	TextView tvStudentSource;
-	TextView tvStudentReferrer;
-	TextView tvStudentScoreValue;
+  TextView baseinfoLabel;
+  ImageView bodytestImg;
+  TextView updateInfo;
+  ImageView signinImg;
+  TextView noCheckinImg;
+  TextView mSalesName;
+  TextView tvStudentSource;
+  TextView tvStudentReferrer;
+  TextView tvStudentScoreValue;
 
   @Inject StudentMoreInfoPresenter presenter;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
 
-	LinearLayout coachLayout;
-	TextView coachName;
-	LinearLayout bodyLayout;
-	RelativeLayout baseinfoLayout;
-	RelativeLayout rlScore;
+  LinearLayout coachLayout;
+  TextView coachName;
+  LinearLayout bodyLayout;
+  RelativeLayout baseinfoLayout;
+  RelativeLayout rlScore;
 
   private User_Student user_student;
   private Observable<EditStudentEvent> mObEdit;
@@ -179,7 +178,9 @@ public class StudentMoreInfoFragment extends BaseFragment
         if (user_student != null) {
           if (editStudentEvent.getType() == EditStudentEvent.EDIT) {
             getParentFragment().getFragmentManager()
-                .beginTransaction().replace(mCallbackActivity.getFragId(), EditStudentInfoFragment.newInstance(false, user_student))
+                .beginTransaction()
+                .replace(mCallbackActivity.getFragId(),
+                    EditStudentInfoFragment.newInstance(false, user_student))
                 .addToBackStack(null)
                 .commit();
           } else if (editStudentEvent.getType() == EditStudentEvent.DEL) {
@@ -208,12 +209,13 @@ public class StudentMoreInfoFragment extends BaseFragment
     super.onHiddenChanged(hidden);
   }
 
- public void oneditStudent() {
+  public void oneditStudent() {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       getParentFragment().getFragmentManager()
           .beginTransaction()
-          .add(mCallbackActivity.getFragId(), EditStudentInfoFragment.newInstance(false, user_student))
+          .add(mCallbackActivity.getFragId(),
+              EditStudentInfoFragment.newInstance(false, user_student))
           .addToBackStack(null)
           .commit();
     } else {
@@ -263,7 +265,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     if (coaches != null) {
       if (coaches.size() > 0) {
         coachName.setText(
-            coaches.size() > 2 ? coaches.get(0).username + "、" + coaches.get(1).username
+            coaches.size() >= 2 ? coaches.get(0).username + "、" + coaches.get(1).username
                 : coaches.get(0).username);
       } else {
         coachName.setText("无教练");
@@ -315,7 +317,7 @@ public class StudentMoreInfoFragment extends BaseFragment
   /**
    * 点击体测
    */
- public void onClickBodyTest() {
+  public void onClickBodyTest() {
     if (user_student == null) {
       Timber.e("获取学员信息失败");
       return;
@@ -332,7 +334,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     return StudentMoreInfoFragment.class.getName();
   }
 
- public void onSignInImg() {
+  public void onSignInImg() {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       getParentFragment().getFragmentManager()
@@ -345,13 +347,13 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
- public void scoreClick(View view) {
+  public void scoreClick(View view) {
     // // 跳转会员积分
     Intent toScore = new Intent(getContext(), ScoreDetailActivity.class);
     startActivityForResult(toScore, RESULT_SCORE);
   }
 
- public void allotSaler() {
+  public void allotSaler() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       changeSaler();
     } else {
@@ -362,7 +364,7 @@ public class StudentMoreInfoFragment extends BaseFragment
   /**
    * 选择教练
    */
- public void allocateCoach() {
+  public void allocateCoach() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       Intent toChooseSaler = new Intent(getActivity(), MutiChooseCoachActivity.class);
       toChooseSaler.putExtra("hasReturn", false);
@@ -371,28 +373,28 @@ public class StudentMoreInfoFragment extends BaseFragment
       toChooseSaler.putStringArrayListExtra(MutiChooseCoachActivity.INPUT_COACHES,
           (ArrayList<String>) StringUtils.coachIds(user_student.getCoaches()));
       startActivityForResult(toChooseSaler, RESULT_COACH);
-    }else{
+    } else {
       showAlert(R.string.alert_permission_forbid);
     }
   }
 
-
-  public void onClickLoginMethod(){
-    if (user_student != null && user_student.getCloud_user() !=null) {
-      routeTo(LoginMethodFragment.newInstance(new StaffLoginMethod.Builder().wx_active(user_student.getCloud_user().isWeixin_active())
-        .phone_active(user_student.getCloud_user().isPhone_active())
-        .wx(user_student.getCloud_user().getWeixin())
-        .phone(user_student.getCloud_user().phone)
-        .build()), "");
+  public void onClickLoginMethod() {
+    if (user_student != null && user_student.getCloud_user() != null) {
+      routeTo(LoginMethodFragment.newInstance(
+          new StaffLoginMethod.Builder().wx_active(user_student.getCloud_user().isWeixin_active())
+              .phone_active(user_student.getCloud_user().isPhone_active())
+              .wx(user_student.getCloud_user().getWeixin())
+              .phone(user_student.getCloud_user().phone)
+              .build()), "");
     }
   }
 
- public void sourceClick(View view) {
+  public void sourceClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       // TODO: 2017/11/6
       Intent toChooseOrigin = new Intent(getContext(), ChooseOriginActivity.class);
-      startActivityForResult(toChooseOrigin,RESULT_ORIGIN);
+      startActivityForResult(toChooseOrigin, RESULT_ORIGIN);
       //startActivityForResult(new ChooseOriginActivityIntentBuilder().build(getContext()),
       //    RESULT_ORIGIN);
     } else {
@@ -403,7 +405,7 @@ public class StudentMoreInfoFragment extends BaseFragment
   /**
    * 推荐
    */
- public void referrerClick(View view) {
+  public void referrerClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       startActivityForResult(new Intent(getActivity(), ChooseReferrerActivity.class),

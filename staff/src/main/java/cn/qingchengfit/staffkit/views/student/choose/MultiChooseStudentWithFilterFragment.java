@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,17 +22,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterEvent;
+import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -73,21 +76,21 @@ import rx.functions.Action1;
     implements DrawerLayout.DrawerListener, StudentListPresenter.MVPView {
   @Arg(required = false) boolean expandedChosen;
 
-	Toolbar toolbar;
-	CheckBox rbSelectAll;
-	TextView toolbarTitile;
-	EditText etSearch;
-	MyDrawerLayout drawer;
-	QcToggleButton tgSortAlphabet;
-	QcToggleButton tgSortRegist;
-	QcToggleButton tgFilter;
-	TextView tvAllotsaleSelectCount;
-	ImageView searchClear;
+  Toolbar toolbar;
+  CheckBox rbSelectAll;
+  TextView toolbarTitile;
+  EditText etSearch;
+  MyDrawerLayout drawer;
+  QcToggleButton tgSortAlphabet;
+  QcToggleButton tgSortRegist;
+  QcToggleButton tgFilter;
+  TextView tvAllotsaleSelectCount;
+  ImageView searchClear;
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject StudentListPresenter presenter;
-	LinearLayout layoutMultiChoose;
+  LinearLayout layoutMultiChoose;
 
   private StudentFilterWithBirthFragment filterFragment;
   private ChooseStudentListFragment chooseStudentListFragment;
@@ -161,6 +164,7 @@ import rx.functions.Action1;
     setFilterFragment();
     rbSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isFromListView) return;
         if (chooseStudentListFragment != null) {
           DirtySender.studentList.clear();
           if (isChecked) {
@@ -200,8 +204,20 @@ import rx.functions.Action1;
             }
           }
         });
+
+    RxRegiste(RxBus.getBus()
+        .register(StudentListSelectEvent.class)
+        .subscribe(new Action1<StudentListSelectEvent>() {
+          @Override public void call(StudentListSelectEvent event) {
+            isFromListView = true;
+            rbSelectAll.setChecked(event.isSelected());
+            isFromListView = false;
+          }
+        }));
     return v;
   }
+
+  private boolean isFromListView = false;
 
   private void setToolbar(Toolbar toolbar) {
     toolbarTitile.setText("选择会员");
@@ -214,20 +230,23 @@ import rx.functions.Action1;
       }
     });
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup) {
-      layoutMultiChoose.setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
-          0, 0);
+      layoutMultiChoose.setPadding(0, MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
     }
   }
 
- public void onComplete() {
+  public void onComplete() {
     Intent ret = new Intent();
     //DirtySender.studentList.clear();
     //DirtySender.studentList.addAll(chooseStudentListFragment.getSelectedStudents());
     getActivity().setResult(Activity.RESULT_OK, ret);
     getActivity().finish();
+    String callId = getActivity().getIntent().getStringExtra("callId");
+    if (!TextUtils.isEmpty(callId)) {
+      QC.sendQCResult(callId, QCResult.success());
+    }
   }
 
- public void onSortChange(View v) {
+  public void onSortChange(View v) {
     switch (v.getId()) {
       case R.id.tg_sort_alphabet:
         if (tgSortAlphabet.isChecked()) return;
@@ -307,7 +326,7 @@ import rx.functions.Action1;
     chooseStudentListFragment.setDatas(studentBeens, etSearch.getText().toString().trim());
   }
 
- public void showSelect() {
+  public void showSelect() {
     BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
     selectSutdentFragment.setListener(list -> {
       DirtySender.studentList.clear();
@@ -327,6 +346,9 @@ import rx.functions.Action1;
       tvAllotsaleSelectCount.setText("...");
     } else {
       tvAllotsaleSelectCount.setText("" + DirtySender.studentList.size());
+    }
+    if (DirtySender.studentList.size() == 0) {
+      rbSelectAll.setChecked(false);
     }
   }
 

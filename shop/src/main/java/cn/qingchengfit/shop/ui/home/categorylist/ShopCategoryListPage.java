@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
@@ -46,7 +46,7 @@ public class ShopCategoryListPage
   @Override protected void subscribeUI() {
     mViewModel.getAddEvent().observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_WRITE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       ShopCategoryPage.getInstance(new Category(), ShopCategoryPage.ADD)
@@ -54,7 +54,7 @@ public class ShopCategoryListPage
     });
     mViewModel.getDeleteEvent().observe(this, category -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_DELETE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       ShopCategoryPage.getInstance(category, ShopCategoryPage.DELETE)
@@ -62,7 +62,7 @@ public class ShopCategoryListPage
     });
     mViewModel.getUpdateEvent().observe(this, category -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_CATEGORY_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       ShopCategoryPage.getInstance(category, ShopCategoryPage.UPDATE)

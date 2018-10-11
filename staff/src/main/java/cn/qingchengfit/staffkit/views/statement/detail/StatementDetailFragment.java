@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.qingchengfit.utils.SensorsUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -257,6 +258,7 @@ public class StatementDetailFragment extends BaseFragment
         return true;
       }
     });
+    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

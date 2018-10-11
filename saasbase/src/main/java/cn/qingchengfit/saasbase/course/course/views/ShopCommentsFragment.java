@@ -18,7 +18,7 @@ import cn.qingchengfit.saasbase.course.course.bean.CommentShop;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.ShopCommentItem;
 import cn.qingchengfit.saasbase.course.course.presenters.ShopCommentPresenter;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.anbillon.flabellum.annotations.Leaf;

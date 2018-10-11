@@ -5,17 +5,17 @@ import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
-import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -44,9 +44,9 @@ public class StudentsDetailActivity extends BaseActivity implements FragCallBack
 	TextView toolbarTitile;
 	ImageView down;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
-    @Inject Provider<StudentWrapperComponent.Builder> requestComponentProvider;
+
     @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     private int statusTOTab = -1;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class StudentsDetailActivity extends BaseActivity implements FragCallBack
     }
 
     @Override protected void onDestroy() {
-        studentWrapper.setStudentBean(null);
+        //studentWrapper.setStudentBean(null);
         super.onDestroy();
     }
 

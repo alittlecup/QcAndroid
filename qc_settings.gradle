@@ -1,0 +1,132 @@
+Properties localProperties = new Properties()
+try {
+  def localFile = project.rootProject.file('local.properties')
+  if (localFile != null && localFile.exists()) {
+    localProperties.load(localFile.newDataInputStream())
+  }
+} catch (Exception ignored) {
+  println("local.properties not found")
+}
+def runAsApp = 'true' == localProperties.getProperty(project.name)
+println(runAsApp)
+ext.runAsApp = runAsApp
+
+if (runAsApp) {
+  apply plugin: 'com.android.application'
+} else {
+  apply plugin: 'com.android.library'
+}
+
+def cfg = rootProject.ext.configuration
+android {
+  dataBinding {
+    enabled true
+  }
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion cfg.targetSdk
+    versionCode 1
+    versionName "1.0"
+    multiDexEnabled true
+    vectorDrawables.useSupportLibrary true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true',
+                     packageName                   : "cn.qingchengfit.${project.name}".toString()]
+      }
+    }
+    if (runAsApp) {
+      manifestPlaceholders = [APP_NAME          : "内部测试",
+                              APP_SCHAME        : "qc${project.name}".toString(),
+                              bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
+                              APP_PACKAGE       : "cn.qingchengfit.${project.name}".toString(),
+                              file_provider     : "cn.qingchengfit.staffkit.internaltest.provider"]
+
+
+    }
+    buildConfigField "String", "PROJECT_NAME", "\"qc${project.name}\""
+    buildConfigField "boolean", "RUN_AS_APP", "${runAsApp}"
+  }
+  resourcePrefix "${project.name.substring(0, 2)}_".toString()
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    debug {}
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+
+  buildToolsVersion cfg.buildToolsVersion
+
+  sourceSets {
+    main {
+      //默认的作为application运行时Manifest文件路径
+      def debugManifest = 'src/main/debug/AndroidManifest.xml'
+      if (runAsApp && project.file(debugManifest).exists()) {
+        manifest.srcFile debugManifest
+      } else {
+        manifest.srcFile 'src/main/AndroidManifest.xml'
+        //集成开发模式下自动排除debug文件夹中的所有Java文件
+        // 可以将debug代码放在这个包内，例如：Application子类
+        java {
+          exclude 'debug/**'
+        }
+      }
+      if (runAsApp) {
+        //debug模式下，如果存在src/main/debug/assets，则自动将其添加到assets源码目录
+        if (project.file('src/main/debug/assets').exists()) {
+          assets.srcDirs = ['src/main/assets', 'src/main/debug/assets']
+        }
+        //debug模式下，如果存在src/main/debug/java，则自动将其添加到java源码目录
+        if (project.file('src/main/debug/java').exists()) {
+          java.srcDirs = ['src/main/java', 'src/main/debug/java']
+        }
+        //debug模式下，如果存在src/main/debug/res，则自动将其添加到资源目录
+        if (project.file('src/main/debug/res').exists()) {
+          res.srcDirs = ['src/main/res', 'src/main/debug/res']
+        }
+      }
+    }
+  }
+}
+apply from: rootProject.file('qc_component.gradle')
+
+if (runAsApp) {
+  apply plugin: 'auto-register'
+  autoregister {
+    registerInfo = [[//自动注册组件
+                     'scanInterface'          : 'cn.qingchengfit.router.IComponent'
+                     , 'codeInsertToClassName': 'cn.qingchengfit.router.ComponentManager'
+                     , 'registerMethodName'   : 'registerComponent'
+                     , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                                 'cn.qingchengfit.router.'.replaceAll("\\.",
+                                                     "/") + ".*"]],
+                    [//自动注册全局拦截器
+                     'scanInterface'          : 'cn.qingchengfit.router.IGlobalCCInterceptor'
+                     , 'codeInsertToClassName': 'cn.qingchengfit.router.GlobalCCInterceptorManager'
+                     , 'registerMethodName'   : 'registerGlobalInterceptor'
+                     , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                                 'cn.qingchengfit.router.'.
+                                                     replaceAll("\\.",
+                                                         "/") + ".*"]],
+                    [//自动注册跨进程通信时自定义类型的json转换器，可以用Gson、FastJson等工具来实现
+                     // 参考： demo_base/src/main/java/com.billy.cc.demo.base.GsonParamConverter
+                     'scanInterface'          : 'cn.qingchengfit.router.IParamJsonConverter'
+                     , 'codeInsertToClassName': 'cn.qingchengfit.router.RemoteParamUtil'
+                     , 'registerMethodName'   : 'initRemoteCCParamJsonConverter'
+                     , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                                 'cn.qingchengfit.router.'.
+                                                     replaceAll("\\.",
+                                                         "/") + ".*"]]]
+  }
+}

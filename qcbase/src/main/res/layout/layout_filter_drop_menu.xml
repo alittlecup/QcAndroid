@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.qingchengfit.widgets.DropDownMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ddm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:dddividerColor="@color/divider_grey"
+    app:ddmaskColor="@color/halftrans_background"
+    app:ddmenuBackgroundColor="@color/white"
+    app:ddmenuMenuHeightPercent="0.7"
+    app:ddmenuSelectedIcon="@drawable/ic_arrow_down_black_16dp"
+    app:ddmenuTextSize="13sp"
+    app:ddmenuUnselectedIcon="@drawable/ic_arrow_down_black_16dp"
+    app:ddtextSelectedColor="?colorPrimary"
+    app:ddtextUnselectedColor="@color/text_dark"
+    app:ddunderlineColor="@color/divider_grey"
+    />

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@color/bg_white"
+        android:gravity="center"
+        tools:text="title"
+        style="@style/QcTextStyleSmallWarm"
+        />
+    <include layout="@layout/divider_white"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        />
+    <FrameLayout
+        android:id="@+id/bottom_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        >
+      <ImageView
+
+          android:layout_width="14dp"
+          android:layout_height="14dp"
+          android:layout_gravity="center"
+          android:tint="@color/text_grey"
+          app:srcCompat="@drawable/vd_linear_delete_black"
+
+          />
+    </FrameLayout>
+
+  </LinearLayout>
+</layout>

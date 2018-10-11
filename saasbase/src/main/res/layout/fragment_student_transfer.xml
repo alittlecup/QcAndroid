@@ -5,13 +5,13 @@
 
     <data>
 
-        <variable
-            name="toolbarModel"
-            type="cn.qingchengfit.model.others.ToolbarModel" />
+        <!--<variable-->
+            <!--name="toolbarModel"-->
+            <!--type="cn.qingchengfit.model.others.ToolbarModel" />-->
 
-        <variable
-            name="fragment"
-            type="cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment" />
+        <!--<variable-->
+            <!--name="fragment"-->
+            <!--type="cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment" />-->
 
     </data>
 
@@ -21,117 +21,117 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/include_toolbar"
-            layout="@layout/common_simple_toolbar"
-            bind:toolbarModel="@{toolbarModel}" />
+        <!--<include-->
+            <!--android:id="@+id/include_toolbar"-->
+            <!--layout="@layout/common_simple_toolbar"-->
+            <!--bind:toolbarModel="@{toolbarModel}" />-->
 
-        <cn.qingchengfit.widgets.QcRadioGroup
-            android:id="@+id/qc_radio_group"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+        <!--<cn.qingchengfit.widgets.QcRadioGroup-->
+            <!--android:id="@+id/qc_radio_group"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:paddingRight="@dimen/activity_horizontal_margin">-->
 
-            <cn.qingchengfit.widgets.QcFilterToggle
-                android:id="@+id/qft_saler"
-                style="@style/QcFilterStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_click"
-                android:onClick="@{fragment::onSalerClick}"
-                android:text="@{fragment.topSalerName}"
-                app:ft_text_off="销售"
-                app:ft_text_on="销售"
-                app:ft_text_size="13sp" />
+            <!--<cn.qingchengfit.widgets.QcFilterToggle-->
+                <!--android:id="@+id/qft_saler"-->
+                <!--style="@style/QcFilterStyle"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/bg_click"-->
+                <!--android:onClick="@{fragment::onSalerClick}"-->
+                <!--android:text="@{fragment.topSalerName}"-->
+                <!--app:ft_text_off="销售"-->
+                <!--app:ft_text_on="销售"-->
+                <!--app:ft_text_size="13sp" />-->
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/divider_grey" />
+            <!--<View-->
+                <!--android:layout_width="1px"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:background="@color/divider_grey" />-->
 
-            <cn.qingchengfit.widgets.QcFilterToggle
-                android:id="@+id/qft_times"
-                style="@style/QcFilterStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_click"
-                android:onClick="@{fragment::onDayClick}"
-                android:text="@{fragment.topDay}"
-                app:ft_text_off="最近7天"
-                app:ft_text_on="最近7天"
-                app:ft_text_size="13sp" />
-        </cn.qingchengfit.widgets.QcRadioGroup>
+            <!--<cn.qingchengfit.widgets.QcFilterToggle-->
+                <!--android:id="@+id/qft_times"-->
+                <!--style="@style/QcFilterStyle"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/bg_click"-->
+                <!--android:onClick="@{fragment::onDayClick}"-->
+                <!--android:text="@{fragment.topDay}"-->
+                <!--app:ft_text_off="最近7天"-->
+                <!--app:ft_text_on="最近7天"-->
+                <!--app:ft_text_size="13sp" />-->
+        <!--</cn.qingchengfit.widgets.QcRadioGroup>-->
 
-        <include layout="@layout/divider_grey" />
+        <!--<include layout="@layout/divider_grey" />-->
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <include layout="@layout/divider_grey" />
+            <!--<include layout="@layout/divider_grey" />-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:background="@color/bg_grey"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="15dp"-->
+                <!--android:background="@color/bg_grey"-->
+                <!--app:layout_scrollFlags="scroll|exitUntilCollapsed" />-->
 
-            <include layout="@layout/divider_grey" />
+            <!--<include layout="@layout/divider_grey" />-->
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/scroll_root"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
+            <!--<android.support.design.widget.CoordinatorLayout-->
+                <!--android:id="@+id/scroll_root"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:orientation="vertical">-->
 
-                <android.support.design.widget.AppBarLayout
-                    android:id="@+id/myhome_appBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/bg_grey"
-                    android:fitsSystemWindows="true"
-                    app:elevation="0dp">
-
-
-                    <FrameLayout
-                        android:id="@+id/frag_transfer_graph"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:minHeight="300dp"
-                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways" />
-
-                    <TextView
-                        android:id="@+id/tv_student_list_hint"
-                        style="@style/TextTitleHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:text="最近7天注册的会员" />
-
-                </android.support.design.widget.AppBarLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-            </android.support.design.widget.CoordinatorLayout>
+                <!--<android.support.design.widget.AppBarLayout-->
+                    <!--android:id="@+id/myhome_appBar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@color/bg_grey"-->
+                    <!--android:fitsSystemWindows="true"-->
+                    <!--app:elevation="0dp">-->
 
 
-            <FrameLayout
-                android:id="@+id/frag_filter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/halftransparent_grey"
-                android:visibility="gone" />
-        </FrameLayout>
+                    <!--<FrameLayout-->
+                        <!--android:id="@+id/frag_transfer_graph"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="300dp"-->
+                        <!--android:minHeight="300dp"-->
+                        <!--app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_student_list_hint"-->
+                        <!--style="@style/TextTitleHint"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:text="最近7天注册的会员" />-->
+
+                <!--</android.support.design.widget.AppBarLayout>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/recycler_view"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+            <!--</android.support.design.widget.CoordinatorLayout>-->
+
+
+            <!--<FrameLayout-->
+                <!--android:id="@+id/frag_filter"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/halftransparent_grey"-->
+                <!--android:visibility="gone" />-->
+        <!--</FrameLayout>-->
     </LinearLayout>
 </layout>

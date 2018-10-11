@@ -1,7 +1,7 @@
 package cn.qingchengfit.saasbase.cards.bean;
 
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.DateUtils;
 
 /**

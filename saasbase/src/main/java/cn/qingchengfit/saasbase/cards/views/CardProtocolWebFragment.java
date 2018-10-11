@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
@@ -9,11 +11,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import cn.qingchengfit.saasbase.R;
 
@@ -29,17 +31,16 @@ import java.io.Serializable;
 
 public class CardProtocolWebFragment extends WebFragment {
 
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	FrameLayout toolbarLayout;
-	TextView tvReadProtocol;
-	Button refreshNetwork;
-	LinearLayout noNewwork;
-	LinearLayout webviewRoot;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  FrameLayout toolbarLayout;
+  TextView tvReadProtocol;
+  Button refreshNetwork;
+  LinearLayout noNewwork;
+  LinearLayout webviewRoot;
   private String content;
   private String url;
-  @MenuRes
-  private int menuId;
+  @MenuRes private int menuId;
   private OnMenuClickListener onMenuClickListener;
 
   public static CardProtocolWebFragment newInstance(String url, String content) {
@@ -99,10 +100,20 @@ public class CardProtocolWebFragment extends WebFragment {
     initWebSetting();
     //initWebClient();
     mWebviewWebView.loadUrl(url);
+    webviewRoot.getViewTreeObserver()
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+          @Override public void onGlobalLayout() {
+            if (webviewRoot == null) return;
+            CompatUtils.removeGlobalLayout(webviewRoot.getViewTreeObserver(), this);
+            mWebviewWebView.addJavascriptInterface(new JsInterface(), "NativeMethod");
+          }
+        });
+
     return view;
   }
 
-  private void setToolbar(){
+  private void setToolbar() {
     toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -121,19 +132,31 @@ public class CardProtocolWebFragment extends WebFragment {
         }
       });
     }
-    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
-      ((ViewGroup) toolbar.getParent()).setPadding(0,
-          MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
+          0, 0);
     }
+    setBackPress();
+  }
 
+  @Override public boolean onFragmentBackPress() {
+    Intent intent = new Intent();
+    intent.putExtra("path", signPath);
+    getActivity().setResult(Activity.RESULT_OK, intent);
+    return super.onFragmentBackPress();
+  }
+
+  private String signPath;
+
+  @Override public void setSignaturePath(String path) {
+    this.signPath = path;
   }
 
   @Override public void onDestroyView() {
     super.onDestroyView();
   }
 
-  public interface OnMenuClickListener extends Serializable{
+  public interface OnMenuClickListener extends Serializable {
     void onMenuClick();
   }
-
 }

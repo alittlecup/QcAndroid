@@ -48,6 +48,7 @@ import com.anbillon.flabellum.annotations.Need;
     super.initToolbar(toolbar);
     toolbarTitle.setText(title);
     et.setText(content);
+    et.setSelection(et.getText().length());
     et.setHint(hint);
   }
 

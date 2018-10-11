@@ -2,8 +2,8 @@ package com.qingchengfit.fitcoach.fragment.statement.item;
 
 import android.view.View;
 import android.widget.TextView;
+import cn.qingchengfit.model.base.QcStudentBean;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;

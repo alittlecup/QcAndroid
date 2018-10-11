@@ -38,76 +38,77 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 public class MainWebFragment extends WebFragment {
 
-    public boolean isLoaded = false;
+  public boolean isLoaded = false;
 
-    public static MainWebFragment newInstance(String url) {
-        Bundle args = new Bundle();
+  public static MainWebFragment newInstance(String url) {
+    Bundle args = new Bundle();
 
-        args.putString("url", url);
-        MainWebFragment fragment = new MainWebFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    args.putString("url", url);
+    MainWebFragment fragment = new MainWebFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
-    @Override public void initToolbar(Toolbar toolbar) {
-        mTitle.setText(R.string.explore);
-    }
+  @Override public void initToolbar(Toolbar toolbar) {
+    mTitle.setText(R.string.explore);
+  }
 
-    @Override public void onLoadedView() {
-        super.onLoadedView();
-    }
+  @Override public void onLoadedView() {
+    super.onLoadedView();
+  }
 
-    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        //可见，但还没被初始化
-    }
+  @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+    //可见，但还没被初始化
+  }
 
-    @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-        View v= super.onCreateView(inflater, container, savedInstanceState);
-        mWebClose.setVisibility(View.GONE);
-        return v;
-    }
+    View v = super.onCreateView(inflater, container, savedInstanceState);
+    mWebClose.setVisibility(View.GONE);
+    return v;
+  }
 
-    @Override protected void onVisible() {
-        SensorsUtils.track("AND_discover_tab_click", null, getContext());
-    }
+  @Override protected void onVisible() {
+    SensorsUtils.track("AND_discover_tab_click", null, getContext());
+  }
 
-    @Override public void initWebClient() {
-        mWebviewWebView.setWebViewClient(new WebViewClient() {
+  @Override public void initWebClient() {
+    mWebviewWebView.setWebViewClient(new WebViewClient() {
 
-            @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                LogUtil.e(" start url:" + url);
-            }
+      @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+        LogUtil.e(" start url:" + url);
+      }
 
-            @Override public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
+      @Override public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+      }
 
-            @Override public void onLoadResource(WebView view, String url) {
-                super.onLoadResource(view, url);
-            }
+      @Override public void onLoadResource(WebView view, String url) {
+        super.onLoadResource(view, url);
+      }
 
-            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
-                if (!url.startsWith("http")) {
-                    if (url.contains("qcstaff")) {
-                        url = url.replace("qcstaff", "qccoach");
-                    }
-                    handleSchema(url);
-                    return true;
-                }
-                WebActivity.startWeb(url, getActivity());
-                return true;
-            }
+      @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
+        if (!url.startsWith("http")) {
+          if (url.contains("qcstaff")) {
+            url = url.replace("qcstaff", "qccoach");
+          }
+          handleSchema(url);
+          return true;
+        }
+        WebActivity.startWeb(url, getActivity());
+        return true;
+      }
 
-            @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                LogUtil.e("errorCode:" + errorCode);
-                mTitle.setText("");
-                showNoNet();
-            }
-        });
-    }
+      @Override public void onReceivedError(WebView view, int errorCode, String description,
+          String failingUrl) {
+        LogUtil.e("errorCode:" + errorCode);
+        mTitle.setText("");
+        showNoNet();
+      }
+    });
+  }
 }

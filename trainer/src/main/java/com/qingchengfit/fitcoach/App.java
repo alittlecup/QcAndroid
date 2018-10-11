@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import cn.qingchengfit.db.QCDbManagerImpl;
@@ -14,6 +13,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -30,6 +30,7 @@ import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import im.fir.sdk.FIR;
 import javax.inject.Inject;
+import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 import timber.log.Timber;
@@ -66,7 +67,8 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   //   SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
   //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
   // 注意！请不要在正式发布的 App 中使用 Debug 模式！
-  final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_OFF;
+  final SensorsDataAPI.DebugMode SA_DEBUG_MODE =BuildConfig.DEBUG?SensorsDataAPI.DebugMode.DEBUG_ONLY:
+  SensorsDataAPI.DebugMode.DEBUG_OFF;
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
   private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";
@@ -107,6 +109,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     initBaseUser();
     initSensor();
     initInject();
+    QC.init(this);
+    QC.enableDebug(true);
+    QC.enableVerboseLog(true);
 
     RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
       @Override public void handleError(Throwable e) {
@@ -151,6 +156,16 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       SA_DEBUG_MODE);
     try {
       SensorsDataAPI.sharedInstance(this).enableAutoTrack();
+      SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
+
+      JSONObject properties = new JSONObject();
+      properties.put("qc_app_name", "Trainer");
+      SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
+      JSONObject properties2 = new JSONObject();
+      //这里示例 DownloadChannel 记录下载商店的渠道(下载渠道)。如果需要多个字段来标记渠道包，请按业务实际需要添加。
+      properties2.put("DownloadChannel", "qc_official");
+      //记录激活事件、渠道追踪，这里激活事件取名为 AppInstall。
+      SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties2);
     } catch (Exception e) {
 
     }
@@ -184,14 +199,11 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
   }
 
-  @Override protected void attachBaseContext(Context base) {
-    super.attachBaseContext(base);
-    MultiDex.install(this);
-  }
 
-  public void finishActivity() {
+  public static void finishActivity() {
     //杀死该应用进程
     android.os.Process.killProcess(android.os.Process.myPid());
+    System.exit(0);
   }
 
   @Override public DispatchingAndroidInjector<Activity> activityInjector() {

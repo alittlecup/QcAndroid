@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
@@ -160,11 +160,11 @@ import javax.inject.Inject;
     mBinding.llBottomContainerModify.setVisibility(View.VISIBLE);
     mBinding.fabToCamera.setVisibility(View.GONE);
 
-    mBinding.buttonDelete.setText(getString(R.string.delete));
+    mBinding.buttonDelete.setText("删除");
     mBinding.buttonSale.setText(productStatus ? "下架" : "上架");
     mBinding.buttonDelete.setOnClickListener(v -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_DELETE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       ViewUtil.instanceDelDialog(getContext(), "确定删除商品？", (dialog, which) -> {
@@ -176,7 +176,7 @@ import javax.inject.Inject;
     });
     mBinding.buttonSale.setOnClickListener(v -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       mViewModel.changeProductSaleStatus(!productStatus);
@@ -190,7 +190,7 @@ import javax.inject.Inject;
     toolbarModel.setMenu(R.menu.menu_edit);
     toolbarModel.setListener(item -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return false;
       }
       if (item.getTitle().equals("编辑")) {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+  <include layout="@layout/divider_grey"/>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+    <TextView
+        android:id="@+id/tv_count"
+        style="@style/QcTextStyleStandardDark"
+        android:textColor="@color/white"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/bg_circle_primary"
+        />
+    <android.support.v4.widget.Space
+        android:layout_width="@dimen/little"
+        android:layout_height="match_parent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/has_chosen"
+        />
+    <cn.qingchengfit.widgets.AnimatedButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <android.support.v4.widget.Space
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        />
+    <TextView
+        android:id="@+id/btn_clear"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="清空选择"
+        />
+  </LinearLayout>
+  <include layout="@layout/divider_grey"/>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+</LinearLayout>

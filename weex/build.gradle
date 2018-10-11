@@ -1,0 +1,26 @@
+apply from: rootProject.file('qc_settings.gradle')
+apply from: rootProject.file('qc_upload_maven.gradle')
+
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
+
+//android {
+//    ndk {
+//      abiFilters "armeabi"
+//    }
+//}
+
+dependencies {
+  addComponent("qcbase",true)
+  implementation dependens["constraint-layout"]
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+
+  api dependens["weex-sdk"]
+  implementation dependens["fastjson"]
+  implementation dependens["plugin-loader"]
+  implementation dependens["bindingx-core"]
+  implementation dependens["bindingx_weex_plugin"]
+
+}
+

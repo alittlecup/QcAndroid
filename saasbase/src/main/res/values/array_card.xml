@@ -5,6 +5,11 @@
     <item >次卡类型</item>
     <item >期限类型</item>
   </string-array>
+  <string-array name="cardtype_category_simple">
+    <item >储值卡</item>
+    <item >次卡</item>
+    <item >期限卡</item>
+  </string-array>
 
   <string-array name="cardtype_disable_stauts">
     <item >正常</item>

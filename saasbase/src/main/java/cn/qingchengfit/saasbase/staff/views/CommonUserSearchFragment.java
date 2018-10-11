@@ -16,7 +16,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentCommonUserSearchBinding;
 import cn.qingchengfit.saasbase.staff.beans.Invitation;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.subscribes.BusSubscribe;

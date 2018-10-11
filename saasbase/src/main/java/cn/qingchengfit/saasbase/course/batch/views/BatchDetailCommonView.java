@@ -4,28 +4,26 @@ import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
 
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
-import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
@@ -33,7 +31,6 @@ import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
 import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
 import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -41,10 +38,12 @@ import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
+import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -72,33 +71,35 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class BatchDetailCommonView extends BaseFragment {
 
-	ImageView img;
-	FrameLayout imgLayout;
-	ImageView imgFoot;
-	TextView text1;
-	TextView text3;
-	ImageView righticon;
-	RelativeLayout courseLayout;
-	CommonInputView coach;
-	CommonInputView space;
-	CommonInputView orderSutdentCount;
-	CommonInputView payOnline;
-	CommonInputView payCard;
-	ExpandedLayout elPay;
-	ExpandedLayout elMultiSupport;
+  ImageView img;
+  FrameLayout imgLayout;
+  ImageView imgFoot;
+  TextView text1;
+  TextView text3;
+  ImageView righticon;
+  RelativeLayout courseLayout;
+  CommonInputView coach;
+  CommonInputView space;
+  CommonInputView orderSutdentCount;
+  CommonInputView payOnline;
+  CommonInputView payCard;
+  CommonInputView priceSetting;
+  ExpandedLayout elMultiSupport;//这里是是否支持多人私教， 只有isPrivate==true的情况下是可用的否则为空
+  LinearLayout llPayContent;
 
   @Inject GymWrapper gymWrapper;
 
   private Course course;
   private Staff trainer;
   private ArrayList<Rule> rulesPayCards = new ArrayList<>();
-  private Rule payOnlineRule;
+  public Rule payOnlineRule;
   private List<Space> spaces = new ArrayList<>();
   private ArrayList<CardTplBatchShip> cardtplships;
   private boolean numHasChange = false;//人数已经修改
   private String mSource;
   private boolean hasOrder;
   private boolean isPrivate = true; //true -私教，false-团课
+  private boolean isStaff = true; //true -管理端 false -教练端
 
   public static BatchDetailCommonView newInstance(Course course, Staff trainer, String source,
       boolean isPrivate) {
@@ -112,6 +113,19 @@ public class BatchDetailCommonView extends BaseFragment {
     return fragment;
   }
 
+  public static BatchDetailCommonView newInstance(Course course, Staff trainer, String source,
+      boolean isPrivate, boolean isStaff) {
+    Bundle args = new Bundle();
+    args.putParcelable("course", course);
+    args.putParcelable("trainer", trainer);
+    args.putString("source", source);
+    args.putBoolean("private", isPrivate);
+    args.putBoolean("staff", isStaff);
+    BatchDetailCommonView fragment = new BatchDetailCommonView();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
@@ -119,37 +133,13 @@ public class BatchDetailCommonView extends BaseFragment {
       trainer = getArguments().getParcelable("trainer");
       mSource = getArguments().getString("source");
       isPrivate = getArguments().getBoolean("private");
+      isStaff = getArguments().getBoolean("staff");
 
       if (course == null) {
         course = new Course();
         course.is_private = isPrivate;
       }
     }
-    RxBus.getBus()
-        .register(EventPayOnline.class)
-        .compose(bindToLifecycle())
-        .compose(doWhen(FragmentEvent.CREATE_VIEW))
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new BusSubscribe<EventPayOnline>() {
-          @Override public void onNext(EventPayOnline e) {
-            payOnlineRule = e.getRule();
-            openPayOnline(e.getRule() != null);
-          }
-        });
-    RxBus.getBus()
-        .register(EventCourse.class)
-        .compose(bindToLifecycle())
-        .compose(doWhen(FragmentEvent.CREATE_VIEW))
-        .observeOn(AndroidSchedulers.mainThread())
-        .filter(
-            eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(
-                eventCourse.getSrc()))
-        .subscribe(new BusSubscribe<EventCourse>() {
-          @Override public void onNext(EventCourse course) {
-            BatchDetailCommonView.this.course = course.getCourse();
-            setCourse(course.getCourse());
-          }
-        });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -168,8 +158,8 @@ public class BatchDetailCommonView extends BaseFragment {
     orderSutdentCount = (CommonInputView) view.findViewById(R.id.order_sutdent_count);
     payOnline = (CommonInputView) view.findViewById(R.id.pay_online);
     payCard = (CommonInputView) view.findViewById(R.id.pay_card);
-    elPay = (ExpandedLayout) view.findViewById(R.id.el_pay);
-    elMultiSupport = (ExpandedLayout) view.findViewById(R.id.el_multi_support);
+    priceSetting = (CommonInputView) view.findViewById(R.id.price_setting);
+    llPayContent = view.findViewById(R.id.ll_price_content);
     view.findViewById(R.id.course_layout).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onCourseLayoutClicked();
@@ -200,9 +190,44 @@ public class BatchDetailCommonView extends BaseFragment {
         onPayCardClicked();
       }
     });
+    priceSetting.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showBatchPriceSettingDialog();
+      }
+    });
 
     setCourse(course);
     setTrainer(trainer);
+    initRxbus();
+
+    if (isPrivate) {
+      elMultiSupport = view.findViewById(R.id.el_multi_support);
+      elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
+      elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
+        payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
+      });
+    }
+    payOnline.setLabelDrawable(R.drawable.vd_payment_wechat, R.drawable.vd_payment_alipay);
+    return view;
+  }
+
+  private int llPriceContentVisibility = View.INVISIBLE;
+
+  @Override public void onResume() {
+    super.onResume();
+    if (llPriceContentVisibility != View.INVISIBLE) {
+      llPayContent.setVisibility(llPriceContentVisibility);
+    }
+  }
+
+  @Override public void onPause() {
+    super.onPause();
+    if (null != llPayContent) {
+      llPriceContentVisibility = llPayContent.getVisibility();
+    }
+  }
+
+  public void initRxbus() {
     RxBusAdd(EventBatchPayCard.class).onBackpressureBuffer()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new BusSubscribe<EventBatchPayCard>() {
@@ -225,43 +250,31 @@ public class BatchDetailCommonView extends BaseFragment {
             setSpace(eventSiteSelected.getSpaces());
           }
         });
-
-    elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
-    elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
-      //if (b && getOrderStudentCount() > 1){
-
-      payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
-      //}
-    });
-    elPay.setOnHeaderTouchListener((view1, motionEvent) -> {
-      if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        if (AppUtils.getCurApp(getContext()) != 0) {//非教练APP
-          if (gymWrapper.isPro()) {
-            if (hasOrder) {
-              showAlert(R.string.alert_batch_has_ordered);
-              return true;
-            } else {
-              return false;
-            }
-          } else {
-            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey("course_batch_pay"))
-                .show(getFragmentManager(), "");
-            return true;
+    RxBus.getBus()
+        .register(EventPayOnline.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventPayOnline>() {
+          @Override public void onNext(EventPayOnline e) {
+            payOnlineRule = e.getRule();
+            openPayOnline(e.getRule() != null);
           }
-        } else {// 教练App
-          UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
-          return true;
-        }
-      } else {
-        return false;
-      }
-    });
-    return view;
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    elPay.setExpanded(AppUtils.getCurApp(getActivity()) != 0);
+        });
+    RxBus.getBus()
+        .register(EventCourse.class)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(
+            eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(
+                eventCourse.getSrc()))
+        .subscribe(new BusSubscribe<EventCourse>() {
+          @Override public void onNext(EventCourse course) {
+            BatchDetailCommonView.this.course = course.getCourse();
+            setCourse(course.getCourse());
+          }
+        });
   }
 
   public boolean isHasOrder() {
@@ -299,7 +312,13 @@ public class BatchDetailCommonView extends BaseFragment {
     if (staff == null) return;
     if (coach == null) return;
     this.trainer = staff;
-    coach.setContent(staff.getUsername());
+    String trainerName = staff.getUsername();
+    if ((trainerName != null && mSource.equals("addbatch")) || (mSource.equals("editbatch") && (
+        isStaff
+            == false))) {
+      coach.setShowRight(false);
+    }
+    coach.setContent(trainerName);
     queryTemple();
   }
 
@@ -324,49 +343,87 @@ public class BatchDetailCommonView extends BaseFragment {
     if (spaces == null) return;
     this.spaces.clear();
     this.spaces.addAll(spaces);
-    space.setContent(ListUtils.ListObj2StrCN(spaces));
+    if ((mSource.equals("addbatch") || mSource.equals("editbatch")) && isPrivate == true) {
+      if (spaces.size() == 1) {
+        space.setContent(ListUtils.ListObj2StrCN(spaces));
+      } else {
+        space.setContent(spaces.size() + "处场地");
+      }
+    } else {
+      space.setContent(ListUtils.ListObj2StrCN(spaces));
+    }
   }
 
   /**
    * 设置可约人数
    */
+  private int max_user = 1;
+
   public void setOrderSutdentCount(@IntRange(from = 1) int x) {
+    max_user = x;
     if (orderSutdentCount != null) orderSutdentCount.setContent(Integer.toString(x));
   }
 
   public void setMutlSupport(boolean support) {
-    elMultiSupport.setExpanded(support);
-    numHasChange = false;
+    if (isPrivate) {
+      elMultiSupport.setExpanded(support);
+      numHasChange = false;
+    }
   }
 
   public boolean mutilSupportble() {
-    return elMultiSupport != null && elMultiSupport.isExpanded();
+    if (isPrivate) {
+      return elMultiSupport != null && elMultiSupport.isExpanded();
+    }
+    return prePriceChoosePos == 2;
   }
 
   public boolean needPay() {
-    return elPay == null || elPay.isExpanded();
+    return prePriceChoosePos != 0;
   }
 
   public void openPay(boolean open) {
-    if (elPay != null) elPay.setExpanded(open);
+    if (llPayContent != null) {
+      llPayContent.setVisibility(open ? View.VISIBLE : View.GONE);
+    }
+    if (priceSetting != null) {
+      priceSetting.setContent(open ? "收费" : "免费");
+      if (open) {
+        prePriceChoosePos = 1;
+      } else {
+        prePriceChoosePos = 0;
+      }
+    }
   }
 
   public void openPayOnline(boolean open) {
     if (open) {
-      payOnline.setContent("已开启");
+      payOnline.setContent("已设置");
     } else {
       payOnline.setContent("未设置");
     }
   }
 
+  public void openMultiCardPay(boolean open) {
+    if (open) {
+      payCard.setContent("");
+    }
+  }
+
   public void setRules(List<Rule> rules, ArrayList<CardTplBatchShip> ships) {
     List<Rule> rules1 = new ArrayList<>();
-    if (rules != null) {
+    if ((rules != null) && !rules.isEmpty()) {
       for (Rule rule : rules) {
         if (rule.channel.equalsIgnoreCase("ONLINE")) {
           payOnlineRule = rule;
         } else {
           rules1.add(rule);
+          if (rule.to_number != (max_user + 1)) {
+            if (!isPrivate) {
+              prePriceChoosePos = 2;
+              priceSetting.setContent("团课动态价格");
+            }
+          }
         }
       }
     }
@@ -417,7 +474,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改课程
    */
- public void onCourseLayoutClicked() {
+  public void onCourseLayoutClicked() {
     routeTo("course", "/choose/",
         CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
   }
@@ -425,7 +482,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改教练
    */
- public void onCoachClicked() {
+  public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0) return;
     routeTo("staff", "/trainer/choose/",
         new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
@@ -434,7 +491,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改场地
    */
- public void onSpaceClicked() {
+  public void onSpaceClicked() {
     routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(isPrivate)
         .selectIds(ListUtils.getIdList(spaces))
         .build());
@@ -443,7 +500,7 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 更改上课人数
    */
- public void onOrderSutdentCountClicked() {
+  public void onOrderSutdentCountClicked() {
     new DialogList(getContext()).list(
         isPrivate ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
         (parent, view, position, id) -> {
@@ -466,19 +523,27 @@ public class BatchDetailCommonView extends BaseFragment {
   /**
    * 在线支付 动态价格，私教需要1对多私教，团课需要开启动态价格
    */
- public void onPayOnlineClicked() {
-    routeTo("/batch/pay/online/",
-        new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
-            .maxPeople(getOrderStudentCount())
-            .multiPrice(elMultiSupport.isExpanded())
-            .build());
+  public void onPayOnlineClicked() {
+    if (isPrivate) {
+      routeTo("/batch/pay/online/",
+          new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
+              .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
+              .multiPrice(elMultiSupport.isExpanded())
+              .build());
+    } else {
+      routeTo("/batch/pay/online/",
+          new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
+              .maxPeople(getOrderStudentCount())
+              .multiPrice(prePriceChoosePos == 2)
+              .build());
+    }
   }
 
   /**
    * 卡支付设置
    */
- public void onPayCardClicked() {
-    boolean isAdd ;
+  public void onPayCardClicked() {
+    boolean isAdd;
     if (mSource != null && mSource.contains("add")) {
       isAdd = true;
     } else {
@@ -501,6 +566,83 @@ public class BatchDetailCommonView extends BaseFragment {
     }
   }
 
+  private BottomChooseDialog dialog;
+
+  private void showBatchPriceSettingDialog() {
+    if (dialog != null) {
+      dialog.show();
+      return;
+    }
+    List<BottomChooseData> datas = new ArrayList<>();
+    if (isPrivate) {
+      datas.add(new BottomChooseData("免费", "无需支付"));
+      datas.add(new BottomChooseData("收费", "使用会员卡或在线支付约课"));
+    } else {
+      datas.add(new BottomChooseData("免费", "无需支付"));
+      datas.add(new BottomChooseData("收费", "使用会员卡或在线支付约课"));
+      datas.add(new BottomChooseData("团课动态价格", "根据预约人数设置不同价格"));
+    }
+    dialog = new BottomChooseDialog(getContext(), "课程价格", datas);
+    dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
+      @Override public boolean onItemClick(int position) {
+        if (AppUtils.getCurApp(getContext()) != 0 && hasOrder) {//非教练APP
+          showAlert(R.string.alert_batch_has_ordered);
+          return false;
+        }
+        changePaySetting(position);
+        return true;
+      }
+    });
+    dialog.show();
+  }
+
+  /**
+   * 修改
+   *
+   * @param position 0-免费，1-付费/统一价格，2-团课动态价格
+   */
+  private void changePaySetting(int position) {
+    if (isPrivate) {
+      switch (position) {
+        case 0:
+          priceSetting.setContent("免费");
+          llPayContent.setVisibility(View.GONE);
+          break;
+        case 1:
+          priceSetting.setContent("收费");
+          llPayContent.setVisibility(View.VISIBLE);
+          break;
+      }
+    } else {
+      switch (position) {
+        case 0:
+          priceSetting.setContent("免费");
+          llPayContent.setVisibility(View.GONE);
+          break;
+        case 1:
+          priceSetting.setContent("收费");
+          llPayContent.setVisibility(View.VISIBLE);
+
+          if (prePriceChoosePos == 2) {
+            payCard.setContent("已关闭多人支持，请重新设置");
+            numHasChange = true;
+          }
+          break;
+        case 2:
+          priceSetting.setContent("团课动态价格");
+          llPayContent.setVisibility(View.VISIBLE);
+          if (prePriceChoosePos == 1) {
+            payCard.setContent("已开启多人支持，请重新设置");
+            numHasChange = true;
+          }
+          break;
+      }
+    }
+    prePriceChoosePos = position;
+  }
+
+  private int prePriceChoosePos = 0;
+
   public List<String> getSupportSpace() {
     return ListUtils.getIdList(spaces);
   }
@@ -508,8 +650,20 @@ public class BatchDetailCommonView extends BaseFragment {
   public List<Rule> getRules() {
     List<Rule> rules = new ArrayList<>();
     if (!numHasChange) {
-      if (payOnlineRule != null) rules.add(payOnlineRule);
-      if (rulesPayCards.size() > 0) rules.addAll(rulesPayCards);
+      if (payOnlineRule != null) {
+        if (prePriceChoosePos == 1) {
+          payOnlineRule.to_number = getOrderStudentCount() + 1;
+        }
+        rules.add(payOnlineRule);
+      }
+      if (rulesPayCards != null && rulesPayCards.size() > 0) {
+        if (prePriceChoosePos == 1) {
+          for (Rule rule : rulesPayCards) {
+            rule.to_number = getOrderStudentCount() + 1;
+          }
+        }
+        rules.addAll(rulesPayCards);
+      }
     }
     return rules;
   }
@@ -529,6 +683,6 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   public interface BatchTempleListener {
-    public void onBatchTemple();
+    void onBatchTemple();
   }
 }

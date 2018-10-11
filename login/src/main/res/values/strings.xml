@@ -1,0 +1,6 @@
+<resources>
+  <string name="lo_pay_wx">微信</string>
+  <string name="lo_label_username">名称</string>
+  <string formatted="false" name="login_resend_msg">%d秒后重新发送</string>
+</resources>
+

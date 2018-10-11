@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.qingchengfit.checkout">
+  <uses-permission android:name="android.permission.CAMERA"/>
+
+  <application>
+    <activity
+        android:name=".CheckoutCounterActivity"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="checkout"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+
+    </activity>
+    <activity android:name=".view.scan.QcScanActivity"/>
+  </application>
+
+</manifest>

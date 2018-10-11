@@ -1,21 +1,41 @@
 package cn.qingchengfit.model;
 
+import android.content.Context;
+import android.net.Uri;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.login.ILoginModel;
+import cn.qingchengfit.login.LoginApi;
+import cn.qingchengfit.login.bean.CheckCodeBody;
+import cn.qingchengfit.login.bean.GetCodeBody;
+import cn.qingchengfit.login.bean.Login;
+import cn.qingchengfit.login.bean.LoginBody;
+import cn.qingchengfit.login.bean.RegisteBody;
+import cn.qingchengfit.login.views.CheckProtocolModel;
+import cn.qingchengfit.login.views.LoginView;
+import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.login.ILoginModel;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
-import cn.qingchengfit.saasbase.login.bean.RegisteBody;
-import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
+
+import cn.qingchengfit.saasbase.apis.GymConfigApi;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
-import cn.qingchengfit.saasbase.login.LoginApi;
+import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.views.fragments.EventFreshCoachService;
 import com.google.gson.JsonObject;
+import com.tencent.qcloud.sdk.Constant;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import java.util.HashMap;
+import java.util.List;
 import rx.Observable;
 
 /**
@@ -44,12 +64,16 @@ public class LoginModel implements ILoginModel {
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
   LoginApi api;
+  QcDbManager qcDbManager;
+  GymConfigApi gymConfigApi;
 
   public LoginModel(GymWrapper gymWrapper, LoginStatus loginStatus,
-    QcRestRepository qcRestRepository) {
+    QcRestRepository qcRestRepository,QcDbManager qcDbManager) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
     api = qcRestRepository.createGetApi(LoginApi.class);
+    gymConfigApi = qcRestRepository.createGetApi(GymConfigApi.class);
+    this.qcDbManager = qcDbManager;
   }
 
 
@@ -60,6 +84,66 @@ public class LoginModel implements ILoginModel {
   @Override public boolean isDebug() {
     return BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("dev");
   }
+
+  @Override public void doOnLogin(Context ctx, Login login,LoginView mvpView) {
+    qcDbManager.delAllStudent();
+    getService(ctx,login,mvpView);
+  }
+
+  /**
+   * 更新场馆信息
+   */
+  public void getService(Context mvpContext,final Login data,LoginView mvpView) {
+    Staff staff = new Staff(data.user);
+    staff.id = AppUtils.getCurApp(mvpContext) == 0? data.coach.getId():data.staff.getId();
+    loginStatus.setLoginUser(staff);
+    loginStatus.setSession(data.session_id);
+    loginStatus.setUserId(data.user.getId());
+    gymConfigApi.qcGetCoachService(staff.id,null)
+      .onBackpressureDrop()
+      .subscribeOn(rx.schedulers.Schedulers.newThread())
+      .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+      .subscribe(gymListQcResponseData -> {
+        mvpView.cancelLogin();
+        if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
+          List<CoachService> services = gymListQcResponseData.getData().services;
+          qcDbManager.writeGyms(services);
+          if (services == null || services.size() == 0) {
+            gymWrapper.setNoService(true);
+          } else if (services.size() == 1) {
+            gymWrapper.setBrand(new Brand.Builder().id(services.get(0).brand_id())
+              .name(services.get(0).name())
+              .build());
+            gymWrapper.setCoachService(services.get(0));
+          } else {
+            gymWrapper.setBrand(new Brand.Builder().id(services.get(0).brand_id())
+              .name(services.get(0).name())
+              .build());
+          }
+          mvpView.onSuccess(1);
+          initIM(mvpContext);
+          RxBus.getBus().post(new EventFreshCoachService());
+          RxBus.getBus().post(new EventLoginChange());
+        }
+      }, throwable -> {
+        mvpView.cancelLogin();
+        mvpView.onError("登录错误");
+      });
+  }
+
+
+  private void initIM(Context context) {
+    Constant.setAccountType(isDebug() ? 12162 : 12165);
+    Constant.setSdkAppid(isDebug() ? 1400029014 : 1400029022);
+    Constant.setXiaomiPushAppid("2882303761517568688");
+    Constant.setBussId(isDebug() ? 609 : 604);
+    Constant.setXiaomiPushAppkey("5651756859688");
+    Constant.setHuaweiBussId(606);
+    Constant.setUsername(
+      context.getResources().getString(R.string.chat_user_id_header, loginStatus.getUserId()));
+    Constant.setHost(Uri.parse(Configs.Server).getHost());
+  }
+
 
   @Override public Observable<QcDataResponse<Login>> doLogin(LoginBody body) {
     return api.qcLogin(body);

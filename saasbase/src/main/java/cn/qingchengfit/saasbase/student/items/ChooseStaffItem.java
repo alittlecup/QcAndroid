@@ -29,7 +29,8 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
 
     @Override
     public int getLayoutRes() {
-        return R.layout.item_choose_saler;
+        //return R.layout.item_choose_saler;re
+        return -1;
     }
 
     @Override
@@ -70,9 +71,9 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
 
         public ChooseStaffVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-          salerHeaderImg = (ImageView) view.findViewById(R.id.saler_header_img);
-          chooseImg = (ImageView) view.findViewById(R.id.choose_img);
-          salerNameTv = (TextView) view.findViewById(R.id.saler_name_tv);
+          //salerHeaderImg = (ImageView) view.findViewById(R.id.saler_header_img);
+          //chooseImg = (ImageView) view.findViewById(R.id.choose_img);
+          //salerNameTv = (TextView) view.findViewById(R.id.saler_name_tv);
         }
 
         @Override

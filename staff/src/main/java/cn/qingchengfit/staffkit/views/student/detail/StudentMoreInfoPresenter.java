@@ -7,7 +7,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.responese.QcResponseStudentInfo;
 import cn.qingchengfit.model.responese.Score;
 import cn.qingchengfit.model.responese.ScoreStatus;
@@ -24,6 +24,7 @@ import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
 import cn.qingchengfit.model.base.User_Student;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.StringUtils;
 import javax.inject.Inject;
@@ -46,7 +47,7 @@ import rx.functions.Action1;
  */
 public class StudentMoreInfoPresenter extends BasePresenter {
 
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentAction studentAction;

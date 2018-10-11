@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_click"
+              android:gravity="center_vertical"
+              android:minHeight="90dp"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingTop="@dimen/activity_vertical_margin">
+  
+  <ImageView
+      android:id="@+id/item_delete"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginStart="@dimen/activity_horizontal_margin"
+
+      android:scaleType="fitXY"
+      android:src="@drawable/ic_item_delete"
+      android:visibility="gone"
+      />
+  <CheckBox
+      android:id="@+id/cb"
+      style="@style/Qc.CheckBox2"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginStart="@dimen/activity_horizontal_margin"
+      android:visibility="gone" />
+
+  <RelativeLayout
+      android:id="@+id/item_student_header_loop"
+      android:layout_width="47dp"
+      android:layout_height="47dp"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/item_student_header"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerInParent="true"
+        tools:src="@drawable/head_other"
+        />
+  </RelativeLayout>
+  <android.support.v4.widget.Space
+      android:layout_width="@dimen/activity_horizontal_margin"
+      android:layout_height="match_parent"
+      />
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="center_vertical"
+      android:layout_gravity="center_vertical"
+      >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+      <TextView
+          android:id="@+id/tv_title"
+          style="@style/QcTextStyleMediumDark"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="@string/app_name"
+          />
+      <ImageView
+          android:id="@+id/img_gender"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:scaleType="fitXY"
+          />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleXsWarm"/>
+
+    <TextView
+        android:id="@+id/tv_sub_content"
+        style="@style/QcTextStyleXsWarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/app_name"/>
+  </LinearLayout>
+  <TextView
+      android:id="@+id/tv_end"
+      style="@style/QcTextStyleStandardGrey"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+  <ImageView
+      android:id="@+id/icon_right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:src="@drawable/ic_arrow_right" />
+</LinearLayout>

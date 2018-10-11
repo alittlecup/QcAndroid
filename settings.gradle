@@ -1,6 +1,15 @@
-include ':saasbase',
-    ':trainer',
-    //    ':atest',
-    ':staff',
-    ':shop'
+//include ':atest'
+include ':staff'
+include ':trainer'
+include ':card'
+include ':student'
+include ':shop'
+include ':login'
+include ':checkout'
+include ':saasbase'
+include ':saascommon'
+include ':recruit'
+include ':weex'
+include ':router'
+include ':qcbase'
 

@@ -104,6 +104,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   CommonFlexAdapter commonFlexAdapter;
   @Need public String batchId;
   @Need public Boolean isPrvite = false;
+  @Need public Boolean isStaff = false;
 
   private BatchDetailCommonView batchBaseFragment;
   private TimeDialogWindow timeWindow;
@@ -216,7 +217,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
     Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonView){
+    if (f instanceof BatchDetailCommonView&&!hadSetData){
       inflateBatchInfo(presenter.getBatchDetail());
     }
   }
@@ -254,7 +255,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
 
   }
 
-  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer) {
+  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer,Rule onLineRule) {
 
   }
 
@@ -266,7 +267,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     if (batchBaseFragment == null) {
       batchBaseFragment =
           BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher, "editbatch",
-              isPrvite);
+              isPrvite, isStaff);
     } else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
@@ -306,13 +307,14 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     }else
       return new CmLRTxtItem(tr);
   }
-
+  private boolean hadSetData;
   private void inflateBatchInfo(BatchDetail batchDetail){
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
     batchBaseFragment.openPay(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
+    hadSetData=true;
   }
 
   @Override public void onLoppers(List<BatchLoop> loopers) {

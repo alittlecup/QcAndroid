@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.items;
 
 import android.view.View;
+import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemEmptyImageBinding;
 import com.bumptech.glide.Glide;

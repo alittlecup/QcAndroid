@@ -5,6 +5,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
 

@@ -29,7 +29,7 @@ import cn.qingchengfit.saasbase.items.ChatGymItem;
 import cn.qingchengfit.saasbase.items.ChooseStaffItem;
 import cn.qingchengfit.saasbase.items.ChooseStudentItem;
 import cn.qingchengfit.saasbase.utils.QcPersonalComparator;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AlphabetLessView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.course.course.bean.CommentShop;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.ListUtils;
 import co.hkm.soltag.TagContainerLayout;

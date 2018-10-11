@@ -9,6 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -19,16 +20,19 @@ import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
-import cn.qingchengfit.saasbase.events.EventSelectedStudent;
+import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,6 +51,11 @@ public class CardBuyPresenter extends BasePresenter {
   private int cardCate;
   private List<CardTplOption> mOptions = new ArrayList<>();
   private ArrayList<String> choseStuIds = new ArrayList<>();
+
+  public CardTplOption getmChosenOption() {
+    return mChosenOption;
+  }
+
   /**
    * 选中的支付价格
    */
@@ -81,6 +90,12 @@ public class CardBuyPresenter extends BasePresenter {
   public void setCardCate(int cate) {
     cardBuyBody.setType(cate);
     cardCate = cate;
+  }
+  public void setSignaturePath(String path){
+    cardBuyBody.signature=path;
+  }
+  public String getSignaturePath(){
+    return  cardBuyBody.signature;
   }
 
   public void setOtherOption(boolean isOther) {
@@ -169,12 +184,24 @@ public class CardBuyPresenter extends BasePresenter {
     RxBusAdd(EventSelectedStudent.class).onBackpressureLatest()
         .subscribe(new BusSubscribe<EventSelectedStudent>() {
           @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+            qcStudentBeans=eventSelectedStudent.getStudents();
             view.bindStudent(eventSelectedStudent.getNameStr());
             cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
             choseStuIds = eventSelectedStudent.getIDlist();
           }
         });
   }
+
+  public List<QcStudentBean> getQcStudentBeans() {
+    return qcStudentBeans;
+  }
+
+  public void setQcStudentBeans(List<QcStudentBean> qcStudentBeans) {
+    this.qcStudentBeans = qcStudentBeans;
+  }
+
+  private List<QcStudentBean> qcStudentBeans;
+
 
   /**
    * 获取卡种类详情
@@ -275,9 +302,11 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setSeller_id(null);
       cardBuyBody.staff_id = loginStatus.staff_id();
     }
-
-    RxRegiste(cardModel.qcChargeCard(mCard.getId(), cardBuyBody)
-        .onBackpressureLatest()
+    balanceInfo = new HashMap<>();
+    balanceInfo.put("cardId", mCard.getId());
+    balanceInfo.put("chargeBody", new Gson().toJson(cardBuyBody));
+    RxRegiste((isFromCheckout ? cardModel.qcChargeCardFromCheckout(mCard.getId(), cardBuyBody)
+        : cardModel.qcChargeCard(mCard.getId(), cardBuyBody)).onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new NetSubscribe<QcDataResponse<JsonObject>>() {
@@ -290,6 +319,18 @@ public class CardBuyPresenter extends BasePresenter {
           }
         }));
   }
+
+  private boolean isFromCheckout = false;
+
+  public void setFromCheckout(boolean isFromCheckout) {
+    this.isFromCheckout = isFromCheckout;
+  }
+
+  public Map<String, String> getBalanceInfo() {
+    return balanceInfo;
+  }
+
+  private Map<String, String> balanceInfo;
 
   //扣费操作
   public void proactiveDeduction(String cardId, ChargeBody body) {
@@ -332,8 +373,7 @@ public class CardBuyPresenter extends BasePresenter {
           mChosenOption);
     }
 
-    if (cardBuyBody.checkData() > 0) {
-      view.showAlert(cardBuyBody.checkData());
+    if (view.checkCardBuyBody(cardBuyBody)) {
       return;
     }
     cardBuyBody.setCharge_type(view.payMethod());
@@ -341,9 +381,16 @@ public class CardBuyPresenter extends BasePresenter {
     buyCardRequest();
   }
 
+  public String getRePayJson() {
+    return rePayJson;
+  }
+
+  private String rePayJson;
+
   public void buyCardRequest() {
-    RxRegiste(cardModel.buyCard(cardBuyBody)
-        .onBackpressureLatest()
+    rePayJson = new Gson().toJson(cardBuyBody);
+    RxRegiste((isFromCheckout ? cardModel.buyCardFromCheckout(cardBuyBody)
+        : cardModel.buyCard(cardBuyBody)).onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new NetSubscribe<QcDataResponse<JsonObject>>() {
@@ -403,6 +450,8 @@ public class CardBuyPresenter extends BasePresenter {
     String chargeMoney();
 
     int payMethod();
+
+    boolean checkCardBuyBody(CardBuyBody cardBuyBody);
 
     /**
      * 是否设置有效期

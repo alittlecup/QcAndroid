@@ -1,0 +1,150 @@
+import org.gradle.api.tasks.options.Option
+import groovy.text.GStringTemplateEngine
+import groovy.text.SimpleTemplateEngine
+class GreetingToFileTask extends DefaultTask {
+
+
+  /**
+   * 模块名称
+   */
+  private String module;
+  /**
+   * project 目录
+   */
+
+  @Option(option = "module", description = "输入modle名")
+   void setModule(String url) {
+    this.module = url
+  }
+
+  @Input
+  String getModule() {
+    return this.module
+  }
+
+  def destination = project.rootDir.path
+
+  File getDestination() {
+    project.file(destination)
+  }
+
+  def rootfile = getDestination()
+  @TaskAction
+  def greet() {
+    //println rootfile.path
+
+    copyDirDebug("debug/")
+    copyDirDebug("res/")
+    copyDirTaget("scrpit/","")
+    copyDirTaget("manifest/","/src/main/")
+    copyCodeToPacage("","cn.qingchengfit."+getModule())
+  //  addModuleToSettings()
+    println "finished!"
+
+  }
+
+  /**
+   * 拷贝文件到 对应路径
+   * @param relativePath
+   * @return
+   */
+  def copyDirDebug(String relativePath) {
+    def debugTemp = project.file(rootfile.path + "/init_module_files/template/" + relativePath)
+    debugTemp.listFiles().findAll().forEach() {
+      if (!it.isDirectory()) {
+        generateByTemplate(rootfile.path + "/" + getModule() + "/src/main/"+relativePath, it)
+      }else {
+        copyDirDebug(relativePath+it.name+"/")
+      }
+    }
+  }
+
+  /**
+   * 拷贝文件到 对应包
+   * @param relativePath
+   * @return
+   */
+  def copyCodeToPacage(String relativePath,String packageName) {
+    def debugTemp = project.file(rootfile.path + "/init_module_files/template/java/" + relativePath)
+    debugTemp.listFiles().findAll().forEach() {
+      if (!it.isDirectory()) {
+        generateByTemplate(rootfile.path + "/" + getModule() + "/src/main/java/"+packageName+"/"+relativePath, it)
+      }else {
+        it.mkdirs()
+        copyCodeToPacage(relativePath+it.name+"/",packageName)
+      }
+    }
+  }
+
+
+  /**
+   * 将文件复制到制定目录
+   * @param relativePath
+   * @param target
+   * @return
+   */
+  def copyDirTaget(String relativePath,String target) {
+    def debugTemp = project.file(rootfile.path + "/init_module_files/template/" + relativePath)
+    debugTemp.listFiles().findAll().forEach() {
+      if (!it.isDirectory()) {
+        generateByTemplate(rootfile.path + "/" + getModule() + "/"+target, it)
+      }
+    }
+  }
+
+
+
+  /**
+   * 按模板生成文件
+   * @param fp 生成路径
+   * @param templatePath 模板文件
+   */
+  def generateByTemplate(String fp, File templatePath) {
+    /**
+     * 替换字典
+     */
+    def binding = [module       : getModule(),
+                   Module: (toCamel(getModule()))
+                   //                 APP_PACKAGE: "\${APP_PACKAGE}",
+                   //                 APP_SCHAME: "\${APP_SCHAME}"
+    ]
+    // change file contents
+    println templatePath.path
+    def template = project.file(templatePath)
+    def tmp = new GStringTemplateEngine()
+        .createTemplate(template)
+        .make(binding)
+    def filename = new SimpleTemplateEngine().createTemplate(template.name).make(binding).toString()
+    project.file(fp).mkdirs()
+    project.file(fp + filename).write(tmp.toString())
+  }
+
+  /**
+   * 在配置中添加当前模块
+   * @return
+   */
+  def addModuleToSettings() {
+    def settingFile = project.file(rootfile.path + "/settings.gradle")
+    def inSetting = false
+    settingFile.readLines().forEach({
+      if(it.contains("':"+getModule())+"'"){
+        inSeting = true
+      }
+    })
+    if (!inSetting)
+      settingFile.append("include ':" + getModule() + "'")
+  }
+
+  def toCamel(String s) {
+    if (s == null || s.length() < 1) {
+      return s
+    }
+    s = s.toLowerCase()
+    return s.charAt(0).toUpperCase().toString() + s.substring(1)
+  }
+}
+
+task newModule(type: GreetingToFileTask) {
+  //    destination = { project.rootDir.path }
+}
+

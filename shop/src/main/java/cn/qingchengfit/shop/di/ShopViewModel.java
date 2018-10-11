@@ -1,11 +1,13 @@
 package cn.qingchengfit.shop.di;
 
 import android.arch.lifecycle.ViewModel;
-import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
+import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.repository.ShopRepositoryImpl;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepositoryImpl;
+import cn.qingchengfit.shop.routers.ShopRouterCenter;
+import cn.qingchengfit.shop.routers.shopImpl;
 import cn.qingchengfit.shop.ui.category.ShopCategoryViewModel;
 import cn.qingchengfit.shop.ui.home.ShopHomeViewModel;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListViewModel;
@@ -21,6 +23,7 @@ import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayViewModel;
 import cn.qingchengfit.shop.ui.product.prices.ProductPricesViewModel;
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.multibindings.IntoMap;
 
 /**
@@ -28,12 +31,16 @@ import dagger.multibindings.IntoMap;
  */
 @Module public abstract class ShopViewModel {
   //@Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+  private static ShopRouterCenter shopRouterCenter = new ShopRouterCenter().registe(new shopImpl());
+
+  @Provides public static ShopRouterCenter provideShopRouterCenter() {
+    return shopRouterCenter;
+  }
 
   @Binds
   abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteRepository);
 
   @Binds abstract ShopRepository bindShopRepository(ShopRepositoryImpl repository);
-
 
   @Binds @IntoMap @ViewModelKey(ShopHomeViewModel.class)
   abstract ViewModel bindShopHomeViewModel(ShopHomeViewModel shopHomeViewModel);
@@ -67,7 +74,6 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(ProductPricesViewModel.class)
   abstract ViewModel bindProductPricesViewModel(ProductPricesViewModel shopHomeViewModel);
-
 
   @Binds @IntoMap @ViewModelKey(ProductDeliverViewModel.class)
   abstract ViewModel bindProductDeliverViewModel(ProductDeliverViewModel shopHomeViewModel);

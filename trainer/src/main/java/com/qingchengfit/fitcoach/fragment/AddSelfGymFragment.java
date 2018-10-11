@@ -28,6 +28,7 @@ import com.qingchengfit.fitcoach.Utils.GymCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChangeTimeActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
@@ -58,7 +59,7 @@ public class AddSelfGymFragment extends Fragment {
     private PostPrivateGym postPrivateGym;
     private boolean mIsNew;
     private MaterialDialog delDialog;
-    private MaterialDialog loadingDialog;
+    private LoadingDialog loadingDialog;
 
 
     public AddSelfGymFragment() {
@@ -84,9 +85,8 @@ public class AddSelfGymFragment extends Fragment {
 
     public void ShowLoading(String content) {
         if (loadingDialog == null) {
-            loadingDialog = new MaterialDialog.Builder(getContext()).content("请稍后").progress(true, 0).cancelable(false).build();
+            loadingDialog = new LoadingDialog(getContext(),content);
         }
-        if (content != null) loadingDialog.setContent(content);
         loadingDialog.show();
     }
 

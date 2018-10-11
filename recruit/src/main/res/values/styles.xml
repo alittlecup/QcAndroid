@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="RecruitStyle" parent="@style/Theme.AppCompat.Light.NoActionBar">
+
+    <item name="colorPrimary">@color/green</item>
+    <item name="colorPrimaryDark">@color/green</item>
+    <item name="colorAccent">@color/red</item>
+  </style>
+</resources>

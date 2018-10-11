@@ -2,10 +2,10 @@ package cn.qingchengfit.shop.ui.items.product;
 
 import android.graphics.Color;
 import android.view.View;
+import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductListBinding;
-import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
-import cn.qingchengfit.shop.util.SpanUtils;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

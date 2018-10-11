@@ -16,8 +16,8 @@ import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.export.bean.ExportRecord;
 import cn.qingchengfit.saasbase.export.presenter.ImportExportPresenter;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Leaf;

@@ -28,10 +28,9 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Shop;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -50,8 +49,11 @@ import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterEvent;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragmentBuilder;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -69,6 +71,7 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/3/4 2016.
  */
+@SensorsDataTrackFragmentAppViewScreen
 public class StudentListFragment extends FilterCommonFragment {
 
 	public EditText searchviewEt;
@@ -82,7 +85,7 @@ public class StudentListFragment extends FilterCommonFragment {
     @Inject StudentListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentWrapper;
+    @Inject StudentWrap studentWrapper;
     @Inject IPermissionModel permissionModel;
     private String keyWord;//搜索关键字
     private StudentAdapter studentAdapter;
@@ -161,6 +164,7 @@ public class StudentListFragment extends FilterCommonFragment {
 
         // 注册 event 刷新列表
         RxBusAdd(EventFreshStudent.class).subscribe(eventFreshStudent -> freshData());
+      SensorsUtils.trackScreen(this.getClass().getCanonicalName());
         return view;
     }
 

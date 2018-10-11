@@ -34,7 +34,7 @@
 //
 //import cn.qingchengfit.saasbase.coach.presenter.CoachDetailView;
 //import cn.qingchengfit.saasbase.coach.presenter.EditCoachInfoPresenter;
-//import cn.qingchengfit.saasbase.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import cn.qingchengfit.saasbase.permission.SerPermisAction;
 //import cn.qingchengfit.utils.CircleImgWrapper;
 //import cn.qingchengfit.utils.CompatUtils;

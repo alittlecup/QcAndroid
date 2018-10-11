@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.presenter.TrainerHomePresenter;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.views.DialogSheet;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
@@ -39,6 +40,8 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
 
   @Inject TrainerHomePresenter presenter;
 
+  private BubbleViewUtil bubbleViewUtil;
+
   @Override void initFragment() {
     if (fragments.size() == 0){
       fragments.add(new TrainerTabListFragment());
@@ -65,6 +68,7 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         if (item.getItemId() == R.id.action_search){
           CommonUserSearchFragment.start(this,presenter.getAllCommonUser());
         }else if (item.getItemId() == R.id.action_flow){
+          bubbleViewUtil.closeBubble();
           DialogSheet.builder(getContext())
             .addButton("教练职位与权限设置", view -> {
               QRActivity.start(getContext(),QRActivity.PERMISSION_TRAINER);
@@ -74,6 +78,14 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
         return true;
       })
       .build());
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理教练权限", "trainerHome", 0);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   @Override public void freshData() {

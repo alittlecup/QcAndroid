@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -27,7 +28,8 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -72,10 +74,12 @@ import rx.schedulers.Schedulers;
   @Inject public ICourseModel courseApi;
 	Toolbar toolbar;
 	public TextView toolbarTitle;
+  TextView tvBottomContent;
 	ViewGroup toolbarLayout;
 	RecyclerView rv;
 	public SwipeRefreshLayout srl;
 	public FloatingActionButton floatingActionButton;
+	public LinearLayout llBottomAdd;
   @Need public Boolean mIsPrivate = false;
 
   protected CommonFlexAdapter commonFlexAdapter;
@@ -103,6 +107,9 @@ import rx.schedulers.Schedulers;
     toolbarLayout = (ViewGroup) view.findViewById(R.id.toolbar_layout);
     rv = (RecyclerView) view.findViewById(R.id.rv);
     srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    llBottomAdd=view.findViewById(R.id.ll_bottom_add);
+    tvBottomContent = view.findViewById(R.id.tv_bottom_content);
+    tvBottomContent.setOnClickListener(v -> onViewClicked());
     floatingActionButton = (FloatingActionButton) view.findViewById(R.id.add_course_btn);
     view.findViewById(R.id.add_course_btn).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -129,6 +136,8 @@ import rx.schedulers.Schedulers;
     rv.setAdapter(commonFlexAdapter);
     srl.setOnRefreshListener(this);
     onRefresh();
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mIsPrivate?"private":"group"));
+
     return view;
   }
 

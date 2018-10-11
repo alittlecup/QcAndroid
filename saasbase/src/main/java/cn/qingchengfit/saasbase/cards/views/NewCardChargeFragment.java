@@ -12,7 +12,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -25,6 +25,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.inject.Inject;
+import org.w3c.dom.Text;
 
 /**
  * Created by fb on 2017/12/18.
@@ -34,15 +35,16 @@ import javax.inject.Inject;
 public class NewCardChargeFragment extends CardBuyFragment {
 
   @Need protected Card card;
-  @Inject LoginStatus loginStatus;
+  @Inject public LoginStatus loginStatus;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     cardTpl = card.getCard_tpl();
     View view = super.onCreateView(inflater, container, savedInstanceState);
     toolbarTitle.setText("续卡");
-    if (card.is_open_service_term) {
+    if (card.is_open_service_term&&card.card_tpl_service_term!=null&&!TextUtils.isEmpty(card.card_tpl_service_term.id)) {
       cardProtocol.setVisibility(View.VISIBLE);
+      resetSignaturePath("");
     }else{
       cardProtocol.setVisibility(View.GONE);
     }
@@ -136,7 +138,8 @@ public class NewCardChargeFragment extends CardBuyFragment {
 
   @Override public void onCardProrocol() {
     if (card.card_tpl_service_term != null){
-      CardProtocolActivity.startWeb(card.card_tpl_service_term.content_link, getContext(), false);
+      presenter.setQcStudentBeans(card.getUsers());
+      routeToProrocolWeb();
     }
   }
 

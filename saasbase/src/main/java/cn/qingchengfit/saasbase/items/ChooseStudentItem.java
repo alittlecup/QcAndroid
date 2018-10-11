@@ -11,7 +11,7 @@ import android.widget.TextView;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.student.widget.CircleView;
+import cn.qingchengfit.saascommon.widget.CircleView;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

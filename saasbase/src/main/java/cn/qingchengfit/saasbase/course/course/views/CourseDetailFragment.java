@@ -30,9 +30,10 @@ import cn.qingchengfit.saasbase.course.course.adapter.CourseTeacherAdapter;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.bean.TeacherImpression;
 import cn.qingchengfit.saasbase.course.course.presenters.CourseDetailPresenter;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.CircleIndicator;
@@ -143,6 +144,8 @@ import javax.inject.Inject;
     if (savedInstanceState != null){
       scrollView.scrollTo(0,savedInstanceState.getInt("p",0));
     }
+   SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mCourseDetail.is_private?"private":"group"));
+
     return view;
   }
 

@@ -1,6 +1,6 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 

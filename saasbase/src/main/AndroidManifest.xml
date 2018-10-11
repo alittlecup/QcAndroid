@@ -20,7 +20,7 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name=".qrcode.views.QRActivity">
+    <activity android:name="cn.qingchengfit.saascommon.qrcode.views.QRActivity">
 
     </activity>
     <activity android:name=".cards.views.CardProtocolActivity"/>
@@ -63,41 +63,27 @@
       </intent-filter>
     </activity>
 
-    <!--登录页面-->
-    <activity
-        android:name="cn.qingchengfit.saasbase.login.LoginActivity"
-        android:launchMode="singleTop"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="cn.qingcheng.login"/>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
+    <!--<activity-->
+        <!--android:name=".mvvm_student.StudentActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--&gt;-->
+      <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
+        <!--<action android:name="${APP_PACKAGE}"/>-->
 
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".mvvm_student.StudentActivity"
-        android:launchMode="singleTask"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
+        <!--<category android:name="android.intent.category.DEFAULT"/>-->
+        <!--<category android:name="android.intent.category.BROWSABLE"/>-->
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data
-            android:host="student"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
+        <!--<data-->
+            <!--android:host="student"-->
+            <!--android:scheme="qcstaff"-->
+            <!--/>-->
+      <!--</intent-filter>-->
+    <!--</activity>-->
 
     <!-- Common 页面 存储一些通用 无业务页面-->
     <activity
-        android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity"
+        android:name="cn.qingchengfit.saasbase.common.views.SaasCommActivity"
         android:screenOrientation="portrait">
 
       <intent-filter>

@@ -18,8 +18,8 @@ import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
-import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.Calendar;

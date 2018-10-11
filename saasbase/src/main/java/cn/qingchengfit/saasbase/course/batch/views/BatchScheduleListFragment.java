@@ -23,7 +23,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchSchedule;
 import cn.qingchengfit.saasbase.course.batch.items.BatchScheduleItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchScheduleListPresenter;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ListUtils;

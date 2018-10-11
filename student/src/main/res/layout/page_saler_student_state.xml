@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+    <import type="cn.qingchengfit.widgets.QcFilterToggle"/>
+
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.student.view.state.SalerStudentStateViewModel"/>
+  </data>
+  <LinearLayout
+      android:layout_width="match_parent"
+
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+      <include
+          layout="@layout/common_simple_toolbar"
+          android:id="@+id/include_toolbar"
+          bind:toolbarModel="@{toolbarModel}"
+          />
+      <CheckBox
+          android:id="@+id/rb_select_all"
+          android:layout_width="wrap_content"
+          android:layout_height="?attr/actionBarSize"
+          android:layout_marginLeft="10dp"
+          android:layout_marginStart="10dp"
+          android:background="@color/toolbar"
+          android:button="@drawable/selector_qc_checkbox_2"
+          android:padding="6dp"
+          android:text="@string/qc_select_all"
+          android:textColor="@color/white"
+          android:visibility="visible"
+          />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/bg_white"
+        >
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/qc_filter_toggle"
+          android:layout_width="match_parent"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),1)}"
+          app:qc_color_off="@color/text_black"
+          app:qc_color_on="@color/text_black"
+          style="@style/QcFilterStyle"
+          />
+    </FrameLayout>
+    <include layout="@layout/divider_grey"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:layout_height="match_parent"
+          >
+        <FrameLayout
+            android:id="@+id/fragment_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <include
+            layout="@layout/layout_bottom_allot_action"
+            android:id="@+id/bottom_allot"
+            />
+      </LinearLayout>
+
+      <FrameLayout
+          android:id="@+id/fragment_filter"
+          android:visibility="gone"
+          app:visibleGone="@{viewModel.filterVisible}"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
+    </FrameLayout>
+
+
+  </LinearLayout>
+</layout>

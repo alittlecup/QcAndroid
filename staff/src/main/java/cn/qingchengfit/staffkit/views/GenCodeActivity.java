@@ -6,8 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
+import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGContents;
+import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGEncoder;
 
 
 import cn.qingchengfit.staffkit.R;

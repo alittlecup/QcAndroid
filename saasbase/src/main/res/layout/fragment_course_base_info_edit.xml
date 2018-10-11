@@ -54,6 +54,7 @@
       android:id="@+id/course_name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      civ:civ_nonnull="true"
       civ:civ_lable="@string/name_call"
       />
 
@@ -62,6 +63,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       civ:civ_inputnum="true"
+      civ:civ_nonnull="true"
       civ:civ_lable="@string/course_length"
       />
 
@@ -71,6 +73,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       civ:civ_clickable="true"
+      civ:civ_nonnull="true"
       civ:civ_lable="单节可约人数"
       />
 
@@ -80,6 +83,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       civ:civ_clickable="true"
+      civ:civ_nonnull="true"
       civ:civ_lable="@string/course_min_num"
       />
 

@@ -5,7 +5,7 @@ import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
 import cn.qingchengfit.saasbase.bill.beans.BillTotalWrapper;
 import cn.qingchengfit.saasbase.bill.beans.BillWrapper;
-import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
+import cn.qingchengfit.saascommon.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;

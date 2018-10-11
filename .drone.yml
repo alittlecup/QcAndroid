@@ -11,7 +11,13 @@ pipeline:
     volumes:
       - /cache:/cache/
 
-
+  commits:
+      image: plugins/git
+      commands:
+        - echo 'start'
+        - echo ${DRONE_COMMIT_LINK:57}
+        - git log ${DRONE_COMMIT_LINK:57} --pretty=format:"%h - %an %ad - %s " --date=format:'%Y-%m-%d' >changelog.txt
+        - cat changelog.txt
 
   build:
     image: androidci
@@ -21,15 +27,19 @@ pipeline:
       - LICENB
     volumes:
       - /cache:/cache/
-      - /data/gradle/gradle-4.6:/gradle/
-#    when:
-#      event: pull_request
+      - /data/gradle/gradle-4.7:/gradle/
+    when:
+      branch: develop_guide
+      event: push
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - /gradle/bin/gradle -g gradle_cache assembleDevDebug --no-daemon
-      - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG
+      - /gradle/bin/gradle -g gradle_cache :staff:assembleDevDebug --no-daemon
+      - echo $LANG
+      - echo $DOCKER_ANDROID_LANG
+      - cat changelog.txt
+      - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG -c changelog.txt
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
     image: androidci
@@ -41,13 +51,13 @@ pipeline:
       branch: develop
     volumes:
       - /cache:/cache/
-      - /data/gradle/gradle-4.6:/gradle/
+      - /data/gradle/gradle-4.7:/gradle/
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - /gradle/bin/gradle -g gradle_cache assembleProductRelease --no-daemon
-      - fir publish staff/build/outputs/apk/product/release/staff-product-release.apk -T $PRO
+      - ./gradlew -g gradle_cache assembleProductRelease --no-daemon
+#      - fir publish staff/build/outputs/apk/product/release/staff-product-release.apk -T $PRO
 #      - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
 
   rebuild-cache:

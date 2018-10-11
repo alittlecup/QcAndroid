@@ -43,7 +43,9 @@ import cn.qingchengfit.staffkit.views.signin.in.SignInFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -56,6 +58,7 @@ import timber.log.Timber;
 /**
  * Created by yangming on 16/8/30.
  */
+@SensorsDataTrackFragmentAppViewScreen
 public class SignInHomeFragment extends BaseFragment implements SignInConfigPresenter.SignInConfigView, ModuleConfigsPresenter.MVPView {
 
 	TabLayout tabLayout;
@@ -106,6 +109,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
         showLoading();
         presenter.getCardCostList();
         moduleConfigsPresenter.getModuleConfigs();
+        SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

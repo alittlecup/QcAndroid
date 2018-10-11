@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.qingchengfit.staffkit.MainActivity">
+  <item
+      android:id="@+id/action_flow"
+      android:icon="@drawable/vd_more_vert_24dp"
+      android:orderInCategory="100"
+      android:title="more"
+      app:showAsAction="always"
+      />
+</menu>

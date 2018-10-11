@@ -61,7 +61,7 @@ public class StudentOperationFragment extends BaseFragment
           R.string.qc_student_allot_coach, proGym, true));
         datas.add(new StudentOperationItem(R.drawable.vector_student_management_follow,
           R.string.qc_student_follow_up, proGym, true));
-        datas.add(new StudentOperationItem(R.drawable.vd_student_transfer,
+        datas.add(new StudentOperationItem(R.drawable.vector_student_management_export,
           R.string.qc_student_follow_transfer, proGym, true));
         datas.add(new StudentOperationItem(R.drawable.vector_student_management_attend,
           R.string.qc_student_attendance, proGym, true));

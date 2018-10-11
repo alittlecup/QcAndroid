@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,10 +24,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.events.EventSessionError;
+import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -331,7 +332,8 @@ public class SettingFragment extends BaseFragment implements SettingView {
   }
 
   void goLogin() {
-    Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+    Intent toLogin = new Intent(getContext().getPackageName(),
+      Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
     toLogin.putExtra("isRegiste", false);
     toLogin.putExtra("setting", true);
     startActivityForResult(toLogin, RESULT_LOGIN);

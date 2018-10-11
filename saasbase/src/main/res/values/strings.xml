@@ -31,7 +31,7 @@
   <string name="change_su">变更超级管理员</string>
   <string name="next_step">下一步</string>
   <string name="send_msg_to_sb_hint">向%s发送验证码</string>
-  <string formatted="false" name="login_resend_msg">%d秒后重新发送</string>
+
   <string name="alert_remove_su">变更成功后，%s将自动从工作人员中移除，如有需要请重新添加</string>
   <string formatted="false" name="alert_change_su">确定将超级管理员身份从%s(%s)变更为%s(%s)？</string>
   <string name="common_cancel">取消</string>
@@ -55,9 +55,7 @@
   <string name="hint_login_web">请登录［网页端］管理工作人员身份权限</string>
 
   <!--工具类-->
-  <string name="unit_yuan">元</string>
-  <string name="unit_time">次</string>
-  <string name="unit_day">天</string>
+
   <string formatted="false" name="pay_money">￥%s</string>
 
   <!--账单-->
@@ -213,5 +211,10 @@
   <string name="warning_copy_batch_time_long">所选日期不能超过31天</string>
   <string name="description_copy_batch" formatted="false">即：将%s至%s期间%s的%s，复制到%s至%s</string>
   <string name="successed_copy_batch">复制排期成功</string>
+
+  <string name="me_phone_number">手机(%s)</string>
+  <string name="me_wx_number">微信(%s)</string>
+  <string name="me_wx_unbind">解绑</string>
+  <string name="me_wx_bind">立即绑定</string>
 </resources>
 

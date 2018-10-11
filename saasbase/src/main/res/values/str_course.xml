@@ -108,9 +108,11 @@
   <string name="buy_card_no_limit">不限张数</string>
   <string name="card_count_unit">%d张</string>
   <string name="alipay_grey">支付宝支付（暂不支持）</string>
-  <string name="online_pay_client">在线支付平台:</string>
+  <string name="online_pay_client">单次约课仅支持:</string>
   <string name="wechat_pay">微信支付</string>
+  <string name="ali_pay">支付宝支付</string>
   <string name="pay_online">在线支付</string>
+  <string name="single_class_pay">单次约课</string>
   <string name="course_type_private">私教课</string>
 
   <string name="alert_edit_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有编辑课程种类权限的用户才能进行编辑.</string>

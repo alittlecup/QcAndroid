@@ -1,8 +1,10 @@
 package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
+import cn.qingchengfit.card.StaffCardRouters;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.model.CardModel;
 import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.LoginModel;
@@ -10,13 +12,13 @@ import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.apis.CourseModel;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saasbase.login.ILoginModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IExportModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
@@ -32,15 +34,15 @@ import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.card.StaffCardRouters;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
-import cn.qingchengfit.saasbase.apis.CourseModel;
 import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.staff.StaffModel;
 import cn.qingchengfit.staffkit.student.network.StudentModel;
+import cn.qingchengfit.student.routers.StudentRouterCenter;
+import cn.qingchengfit.student.routers.studentImpl;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
@@ -92,46 +94,44 @@ import java.util.List;
     this.router = router;
     this.qcrestRepository = qcrestRepository;
     this.qcDbManager = qcDbManager;
-    cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
-    exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
-    courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
-    gymConfigModel = new GymConfigModel(gymWrapper,loginStatus,qcrestRepository);
-    loginModel = new LoginModel(gymWrapper,loginStatus,qcrestRepository);
-    userModel = new UserModel(gymWrapper,loginStatus,qcrestRepository);
+    cardModel = new CardModel(qcrestRepository, gymWrapper, loginStatus);
+    exportModel = new ExportModel(qcrestRepository, gymWrapper, loginStatus);
+    courseModel = new CourseModel(qcrestRepository, gymWrapper, loginStatus);
+    gymConfigModel = new GymConfigModel(gymWrapper, loginStatus, qcrestRepository);
+    loginModel = new LoginModel(gymWrapper, loginStatus, qcrestRepository,qcDbManager);
+    userModel = new UserModel(gymWrapper, loginStatus, qcrestRepository);
     api = WXAPIFactory.createWXAPI(app, app.getString(R.string.wechat_code));
-    this.saasbaseRouterCenter = new SaasbaseRouterCenter()
-      .registe(new exportImpl())
-      .registe(new gymImpl())
-      .registe(new StaffCardRouters())
-      .registe(new staffImpl())
-      .registe(new commonImpl())
-      .registe(new courseImpl())
-      .registe(new CardStudentRouters())
-      .registe(new userImpl())
-      .registe(new billImpl());
-
-
+    this.saasbaseRouterCenter = new SaasbaseRouterCenter().registe(new exportImpl())
+        .registe(new gymImpl())
+        .registe(new StaffCardRouters())
+        .registe(new staffImpl())
+        .registe(new commonImpl())
+        .registe(new courseImpl())
+        .registe(new CardStudentRouters())
+        .registe(new userImpl())
+        .registe(new billImpl());
   }
 
-  @Provides IWXAPI provideWx(){
+  @Provides IWXAPI provideWx() {
     return api;
   }
 
-  @Provides ILoginModel providerLogin(){
+  @Provides ILoginModel providerLogin() {
     return loginModel;
   }
 
-  @Provides IUserModel providerUserModel(){
+  @Provides IUserModel providerUserModel() {
     return userModel;
   }
 
-  @Provides IGymConfigModel provideGymConfigModel(){
+  @Provides IGymConfigModel provideGymConfigModel() {
     return gymConfigModel;
   }
 
   @Provides App provideApplicationContext() {
     return app;
   }
+
   @Provides Application provideApplication() {
     return app;
   }
@@ -168,35 +168,36 @@ import java.util.List;
     return qcrestRepository;
   }
 
-  @Provides QcDbManager providerQcDBManager(){
+  @Provides QcDbManager providerQcDBManager() {
     return qcDbManager;
   }
 
-  @Provides SaasModel providerSaasModel(){
+  @Provides SaasModel providerSaasModel() {
     return new SaasModelImpl(qcrestRepository);
   }
 
-  @Provides IStaffModel providerStaffModel(){
+  @Provides IStaffModel providerStaffModel() {
     return new StaffModel(qcrestRepository, gymWrapper, loginStatus);
   }
 
-  @Provides SaasbaseRouterCenter provideRc(){
+  @Provides SaasbaseRouterCenter provideRc() {
     return saasbaseRouterCenter;
   }
 
-  @Provides ICourseModel provideCourseApi(){
+  @Provides ICourseModel provideCourseApi() {
     return courseModel;
   }
 
-  @Provides public ICardModel provideCardModel(){
-    return new CardModel(qcrestRepository, gymWrapper, loginStatus);
-  }
-  @Provides IExportModel provideExportModel(){return  exportModel;}
 
-  @Provides public IPermissionModel providePermissModel(){
+  @Provides static StudentRouterCenter provideStudentRouterCenter() {
+    return new StudentRouterCenter().registe(new studentImpl());
+  }
+
+
+  @Provides public IPermissionModel providePermissModel() {
     return new IPermissionModel() {
       @Override public boolean check(String permission) {
-        return qcDbManager.check(gymWrapper.shop_id(),permission);
+        return qcDbManager.check(gymWrapper.shop_id(), permission);
       }
 
       @Override public boolean checkAllGym(String permission) {
@@ -208,15 +209,19 @@ import java.util.List;
       }
 
       @Override public boolean check(String permission, List<String> shopids) {
-        return qcDbManager.checkMuti(permission,shopids);
+        return qcDbManager.checkMuti(permission, shopids);
       }
     };
   }
 
-  @Provides IStudentModel provideStudent(){
+  @Provides IStudentModel provideStudent() {
     return new StudentModel(qcrestRepository, gymWrapper, loginStatus);
   }
+  @Provides IExportModel provideExportModel(){
+    return exportModel;
+  }
 
-
-
+  @Provides ICardModel provideCardmodel(){
+    return cardModel;
+  }
 }

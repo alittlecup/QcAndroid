@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.saasbase.R;
 
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
@@ -79,8 +79,8 @@ public class BatchHomeFragment extends BaseFragment {
     //    @Override public void call(RxAddCourse o) {
     //        Course c = new Course();
     //
-    //        if ((!c.is_private && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
-    //            || (c.is_private && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+    //        if ((!c.is_private && !permissionModel.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
+    //            || (c.is_private && !permissionModel.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
     //            showAlert(R.string.alert_permission_forbid);
     //            return;
     //        }

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.squareup.sqldelight'
-def libs = rootProject.ext.libraries;
-def cfg = rootProject.ext.configuration;
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
 
 android {
   dataBinding {

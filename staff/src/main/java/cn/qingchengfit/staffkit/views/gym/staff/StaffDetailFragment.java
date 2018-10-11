@@ -29,7 +29,7 @@ import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.responese.StaffPosition;
 import cn.qingchengfit.model.responese.StaffShip;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_recycler_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <android.support.v4.widget.SwipeRefreshLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/srl"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="40dp"
+        />
+  </android.support.v4.widget.SwipeRefreshLayout>
+
+  <com.github.clans.fab.FloatingActionMenu
+      android:id="@+id/fab"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_gravity="bottom|end"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:menu_colorRipple="@color/colorPrimary"
+      app:menu_colorNormal="@color/colorPrimary"
+      app:menu_colorPressed="@color/colorPrimaryDark"
+      app:menu_labels_textColor="@color/text_dark"
+      app:menu_labels_colorNormal="@color/white"
+      app:menu_fab_show_animation="@null"
+      app:menu_labels_position="left"
+      app:menu_labels_ellipsize="end"
+      android:scaleType="fitXY"
+      android:visibility="gone"
+      app:fabSize="normal"
+      tools:visibility="visible"
+      app:menu_backgroundColor="#ccffffff"
+      />
+</FrameLayout>

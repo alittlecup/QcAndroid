@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.bean.PayMethod;
@@ -45,24 +44,30 @@ public class ItemPayMethod extends AbstractFlexibleItem<ItemPayMethod.PayMethodV
       List payloads) {
     holder.imgPayMethod.setImageResource(payMethod.icon);
     holder.textPayName.setText(payMethod.name);
-    if (adapter.isSelected(position)){
+    if (adapter.isSelected(position)) {
       holder.imgHook.setVisibility(View.VISIBLE);
-    }else{
+    } else {
       holder.imgHook.setVisibility(View.GONE);
     }
+    holder.imgPayMethod.setAlpha(payMethod.isPro ? 1 : 0.4f);
+    holder.textPayName.setAlpha(payMethod.isPro ? 1 : 0.4f);
+    holder.imgPro.setVisibility(payMethod.isPro ? View.GONE : View.VISIBLE);
+    holder.itemView.setClickable(payMethod.isPro);
   }
 
   class PayMethodVH extends FlexibleViewHolder {
 
-	ImageView imgPayMethod;
-	TextView textPayName;
-	ImageView imgHook;
+    ImageView imgPayMethod;
+    TextView textPayName;
+    ImageView imgHook;
+    ImageView imgPro;
 
     public PayMethodVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       imgPayMethod = (ImageView) view.findViewById(R.id.img_pay_method);
       textPayName = (TextView) view.findViewById(R.id.text_pay_name);
       imgHook = (ImageView) view.findViewById(R.id.img_hook);
+      imgPro = (ImageView) view.findViewById(R.id.img_pro);
     }
   }
 }

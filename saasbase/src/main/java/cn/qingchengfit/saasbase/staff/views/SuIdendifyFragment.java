@@ -20,10 +20,12 @@ import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+
+
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.presenter.SuIdendifyPresenter;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -177,7 +179,7 @@ public class SuIdendifyFragment extends SaasBaseFragment implements SuIdendifyPr
                     } else {
                         sendMsg.setEnabled(false);
                         sendMsg.setTextColor(CompatUtils.getColor(getContext(), R.color.text_grey));
-                        sendMsg.setText(String.format(getString(R.string.login_resend_msg), (int) (60 - aLong)));
+                        sendMsg.setText(String.format("%d秒后重发", (int) (60 - aLong)));
                         sendMsg.setBackgroundResource(R.drawable.bg_rect_grey);
                     }
                 }

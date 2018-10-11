@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.student.network.api;
 
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
+import cn.qingchengfit.saasbase.student.bean.StudentListWrappeForFollow;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,14 +10,12 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
-import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
@@ -236,7 +236,7 @@ public interface StudentApi {
     /**
      * @param params 必传start, end，
      *               可选排序字段 加 “-”说明是倒序
-     *               order_by=
+     *               order_by=abase
      *               days      -days
      *               group     -group
      *               private     -private
@@ -266,7 +266,7 @@ public interface StudentApi {
     Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(
             @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-
+    //
     /**
      * 来源列表
      * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=

@@ -1,68 +1,47 @@
 package cn.qingchengfit.shop.base;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.ViewDataBinding;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.shop.BuildConfig;
 import cn.qingchengfit.shop.routers.ShopParamsInjector;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/12/18.
  */
 
-public abstract class ShopBaseFragment<DB extends ViewDataBinding, VM extends ViewModel>
-    extends SaasBaseFragment {
-  public DB mBinding;
-  public VM mViewModel;
+public abstract class ShopBaseFragment<DB extends ViewDataBinding, VM extends BaseViewModel>
+    extends SaasBindingFragment<DB,VM> {
 
-  @Inject public ViewModelProvider.Factory factory;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     ShopParamsInjector.inject(this);
-    mViewModel = ViewModelProviders.of(this, factory).get(getVMClass());
-    subscribeUI();
+    super.onCreate(savedInstanceState);
   }
 
   @Override public boolean isBlockTouch() {
     return false;
   }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    //        if (mBinding == null) {
-    mBinding = initDataBinding(inflater, container, savedInstanceState);
-    //        }
-    ViewGroup parent = (ViewGroup) mBinding.getRoot().getParent();
-    if (parent != null) {
-      parent.removeView(mBinding.getRoot());
-      parent.removeAllViews();
+  @Override protected void routeTo(String uri, Bundle bd, boolean b) {
+    if (BuildConfig.RUN_AS_APP) {
+      if (!uri.startsWith("/")) {
+        uri = "/" + uri;
+      }
+      if (this.getActivity() instanceof BaseActivity) {
+        this.routeTo(Uri.parse(BuildConfig.PROJECT_NAME
+            + "://"
+            + ((BaseActivity) this.getActivity()).getModuleName()
+            + uri), bd, b);
+      }
+    } else {
+      super.routeTo(uri, bd, b);
     }
-    return mBinding.getRoot();
-  }
-
-  protected abstract void subscribeUI();
-
-  public abstract DB initDataBinding(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState);
-
-  protected Class<VM> getVMClass() {
-    Type[] actualTypeArguments =
-        ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
-    if (actualTypeArguments.length == 2) {
-      return (Class<VM>) actualTypeArguments[1];
-    }
-    return (Class<VM>) BaseViewModel.class;
   }
 }

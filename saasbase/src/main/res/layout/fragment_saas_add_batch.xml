@@ -41,7 +41,7 @@
           android:background="@color/bg_grey"
           android:paddingLeft="@dimen/activity_horizontal_margin"
           android:paddingRight="@dimen/activity_horizontal_margin"
-          android:text="课程日期"
+          android:text="课程排期"
           android:gravity="center_vertical"
           android:textSize="@dimen/min_font"
           />
@@ -69,24 +69,15 @@
           style="@style/QcCivClickStyle"
           />
 
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/civ_to_open_time"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_hint="立即开放"
-          app:civ_lable="何时开放预约"
-          app:civ_showdivier="false"
-          app:civ_showright="true"
-          style="@style/QcCivInputStyle"
-          />
 
       <include layout="@layout/divider_grey"/>
 
       <LinearLayout
+          android:id="@+id/ll_auto_container"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:orientation="horizontal"
+          android:visibility="gone"
           android:paddingLeft="@dimen/activity_horizontal_margin"
           android:paddingRight="@dimen/activity_horizontal_margin"
 
@@ -111,11 +102,10 @@
             android:text="清除自动填充"
             android:textColor="@color/red"
             android:textSize="@dimen/min_font"
-            android:visibility="gone"
+            android:visibility="visible"
             />
       </LinearLayout>
 
-      <include layout="@layout/divider_grey"/>
 
       <android.support.v7.widget.RecyclerView
           android:id="@+id/recyclerview"
@@ -138,6 +128,19 @@
           />
 
       <include layout="@layout/divider_grey"/>
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_to_open_time"
+          android:layout_marginTop="15dp"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_hint="立即开放"
+          app:civ_lable="何时开放预约"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
+          />
+
 
     </LinearLayout>
   </android.support.v4.widget.NestedScrollView>

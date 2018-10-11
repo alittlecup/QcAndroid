@@ -22,14 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardParams;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
@@ -43,6 +42,8 @@ import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
+import cn.qingchengfit.student.bean.StudentWrap;
+import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -53,6 +54,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
@@ -79,28 +81,28 @@ import rx.functions.Action1;
 public class StudentHomeFragment extends BaseFragment implements View.OnClickListener {
 
   public int statusToTab = -1;
-	ImageView header;
-	ImageView gender;
-	TextView name;
-	TabLayout tab;
-	ViewPager student;
-	Button buycard;
-	Button orderGroup;
-	Button orderPrivate;
-	LinearLayout orderbtnLayout;
-	TextView studentStatus;
-	TextView phone;
-	ImageView tvStudentCall;
-	ImageView tvStudentMsg;
+  ImageView header;
+  ImageView gender;
+  TextView name;
+  TabLayout tab;
+  ViewPager student;
+  Button buycard;
+  Button orderGroup;
+  Button orderPrivate;
+  LinearLayout orderbtnLayout;
+  TextView studentStatus;
+  TextView phone;
+  ImageView tvStudentCall;
+  ImageView tvStudentMsg;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject RestRepository restRepository;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject StudentAction studentAction;
-	Toolbar toolbar;
-	TextView toolbarTitile;
+  Toolbar toolbar;
+  TextView toolbarTitile;
   ArrayList<Fragment> fragments = new ArrayList<>();
   private FragmentAdapter mAdapter;
   private Observable<StudentBaseInfoEvent> ObInfo;
@@ -193,6 +195,17 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
                 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female)
             .into(gender);
         phone.setText(studentBaseInfoEvent.user_student.getPhone());
+        StudentBean tmpStudentBean = new StudentBean();
+        tmpStudentBean.id = studentBaseInfoEvent.user_student.getId();
+        tmpStudentBean.avatar = studentBaseInfoEvent.user_student.getAvatar();
+        tmpStudentBean.checkin_avatar = studentBaseInfoEvent.user_student.getCheckin_avatar();
+        tmpStudentBean.sellers = studentBaseInfoEvent.user_student.getSellers();
+        tmpStudentBean.coaches = studentBaseInfoEvent.user_student.getCoaches();
+        tmpStudentBean.gender = studentBaseInfoEvent.user_student.getGender() == 0;
+        tmpStudentBean.phone = studentBaseInfoEvent.user_student.getPhone();
+        tmpStudentBean.username = studentBaseInfoEvent.user_student.getUsername();
+        studentBean.setStudentBean(tmpStudentBean);
+        updateQcStudentBean(tmpStudentBean);
       }
 
       orderPrivate.setOnClickListener(new View.OnClickListener() {
@@ -243,6 +256,29 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         }, throwable -> {
         }));
 
+    isLoading = true;
+    view.findViewById(R.id.ll_student_call).setOnClickListener(this);
+    view.findViewById(R.id.ll_student_msg).setOnClickListener(this);
+
+    return view;
+  }
+
+  private void updateQcStudentBean(StudentBean studentBean) {
+    mQcStudentBean =
+        new QcStudentBean(studentBean.getId(), studentBean.getUsername(), studentBean.status,
+            studentBean.getPhone(), studentBean.getAvatar(), studentBean.checkin_avatar,
+            studentBean.gender ? "0" : "1", studentBean.getHead(), studentBean.getBrandid(),
+            studentBean.getjoined_at(), "", "", "", null);
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    fragments.add(new ClassRecordFragment());
+    fragments.add(new StudentsCardsFragment());
+    FollowRecordPage followRecordPage = new FollowRecordPage();
+    fragments.add(followRecordPage);
+    fragments.add(new StudentMoreInfoFragment());
+    mAdapter.notifyDataSetChanged();
     switch (statusToTab) {
       case 0:
         student.setCurrentItem(3);
@@ -254,21 +290,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         student.setCurrentItem(1);
         break;
     }
-    isLoading = true;
-    view.findViewById(R.id.ll_student_call).setOnClickListener(this);
-    view.findViewById(R.id.ll_student_msg).setOnClickListener(this);
-    return view;
   }
-
-  @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
-    fragments.add(new ClassRecordFragment());
-    fragments.add(new StudentsCardsFragment());
-    fragments.add(new FollowRecordFragment());
-    fragments.add(new StudentMoreInfoFragment());
-    mAdapter.notifyDataSetChanged();
-  }
-
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -282,7 +304,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     });
   }
 
- public void onClick() {
+  public void onClick() {
 
     if (gymWrapper.inBrand()) {
       MutiChooseGymFragment.start(this, true, null, 9);
@@ -399,7 +421,6 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     switch (view.getId()) {
       case R.id.ll_student_call:
         new MaterialDialog.Builder(getContext()).autoDismiss(true)
-
             .content(new StringBuilder().append("确定呼叫号码\n")
                 .append(mQcStudentBean.getPhone())
                 .append("吗？")

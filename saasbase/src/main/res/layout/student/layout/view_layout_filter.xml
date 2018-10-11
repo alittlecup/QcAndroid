@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <cn.qingchengfit.saasbase.mvvm_student.QcToggleButton
+            <cn.qingchengfit.saascommon.widget.QcToggleButton
                 android:id="@+id/tv_sort_register"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -64,7 +64,7 @@
             android:layout_gravity="center"
             android:layout_weight="1">
 
-            <cn.qingchengfit.saasbase.mvvm_student.QcToggleButton
+            <cn.qingchengfit.saascommon.widget.QcToggleButton
                 android:id="@+id/tv_sort_alpha"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -95,7 +95,7 @@
             android:layout_gravity="center"
             android:layout_weight="1">
 
-            <cn.qingchengfit.saasbase.mvvm_student.QcToggleButton
+            <cn.qingchengfit.saascommon.widget.QcToggleButton
                 android:id="@+id/tv_sort_filter"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_horizontal"

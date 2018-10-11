@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="student_status">
+    <item >新注册</item>
+    <item >已接洽</item>
+    <item >会员</item>
+  </string-array>
+
+  <string-array name="st_week_string_array">
+    <item >周日</item>
+    <item >周一</item>
+    <item >周二</item>
+    <item >周三</item>
+    <item >周四</item>
+    <item >周五</item>
+    <item >周六</item>
+  </string-array>
+
+  <string-array name="st_follow_record_method">
+    <item >电话</item>
+    <item >微信</item>
+    <item >客户到馆</item>
+    <item >上门拜访</item>
+  </string-array>
+
+</resources>

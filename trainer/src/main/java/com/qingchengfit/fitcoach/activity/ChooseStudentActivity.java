@@ -19,6 +19,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Contact;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -29,6 +30,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
@@ -62,7 +64,7 @@ public class ChooseStudentActivity extends BaseActivity {
     private StudentAdapter studentAdapter;
     private int chosenCount = 0;
     private HashMap<String, Integer> alphabetSort = new HashMap<>();
-    private MaterialDialog loadingDialog;
+    private LoadingDialog loadingDialog;
     private CoachService mCoachService;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -206,9 +208,8 @@ public class ChooseStudentActivity extends BaseActivity {
 
     public void ShowLoading(String content) {
         if (loadingDialog == null) {
-            loadingDialog = new MaterialDialog.Builder(this).content("请稍后").progress(true, 0).cancelable(false).build();
+            loadingDialog = new LoadingDialog(this,content);
         }
-        if (content != null) loadingDialog.setContent(content);
         loadingDialog.show();
     }
 

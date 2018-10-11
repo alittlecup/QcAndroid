@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
+import cn.qingchengfit.saasbase.student.bean.StudentListWrappeForFollow;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,7 +10,6 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
-import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
@@ -16,7 +17,6 @@ import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
@@ -125,6 +125,7 @@ public interface IStudentModel {
                                            HashMap<String, Object> body);
 
     /**
+     * 获取教练列表
      * 获取教练列表
      *
      * @param staff_id

@@ -1,0 +1,95 @@
+<resources>
+  <string name="app_name">widgets</string>
+
+  <string name="mark">备注</string>
+  <string name="start_day">开始日期</string>
+  <string name="end_day">结束日期</string>
+  <string name="name_call">名称</string>
+
+  <string name="please_input_phone_num">请输入手机号</string>
+  <string name="login_getcode">获取验证码</string>
+  <string name="login_pw">登录密码</string>
+  <string name="err_password_length">密码错误</string>
+  <string name="err_checkcode_length">请填写正确的验证码</string>
+  <string name="phone_code">验证码</string>
+  <string name="err_login_phonenum">请填写正确的手机号码</string>
+  <string name="test_long">首先，要知道自己为什么要减肥。是想拥有马甲女神袁姗姗那样性感的马甲线，还是男神黄晓明那让许多女生喷鼻血的八块腹肌，又或者是不想过早地在床笫之私上吭哧吭哧地三秒完事。为了身材也好，为了健康也罢。总要有个目标，没有目标当然坚持不下去。别和我抱怨减肥难。三天打鱼两天晒网，当然没什么卵用。别人在健身房埋头苦练，汗水湿了一件又一件衣服。你呢，东边吹会牛逼，西边看会美女帅哥，心思早不知道跑哪去了。别人一星期基本上天天都能出现在健身房，你呢，一个月都看不到几次。等别人脱胎换骨，你还一副熊样。你就又开始四处抱怨，还逢人就说原来健身也是需要有天赋的。我就想问了，你怎么不看看自己到底都干嘛了？</string>
+  <string name="test_short">首先，要知道自己为什么要减肥。是想拥有马甲女神袁姗姗那样性感的马甲线，还是男神黄晓明那让许多女生喷鼻血的八块腹肌</string>
+  <string name="has_chosen">已选择</string>
+  <string name="count_image">张照片</string>
+  <string name="complete">完成</string>
+  <string name="please_choose">请选择</string>
+  <string name="please_input">请填写</string>
+  <string name="gender_male">男</string>
+  <string name="gender_female">女</string>
+  <string name="action_search">搜索</string>
+
+  <string name="cm_edit">编辑</string>
+  <string name="start">开始</string>
+
+
+  <string name="pickerview_cancel">取消</string>
+  <string name="pickerview_submit">确定</string>
+  <string name="pickerview_year">年</string>
+  <string name="pickerview_month">月</string>
+  <string name="pickerview_day">日</string>
+  <string name="pickerview_hours">时</string>
+  <string name="pickerview_minutes">分</string>
+  <string name="pickerview_seconds">秒</string>
+  <string name="common_complete">完成</string>
+  <string name="common_save">保存</string>
+  <string name="common_written">已填写</string>
+  <string name="common_city">城市</string>
+  <string name="common_address">详细地址</string>
+  <string name="common_cancel">取消</string>
+  <string name="common_name">名称</string>
+  <string name="common_nextstep">下一步</string>
+  <string name="common_time_length">时长</string>
+  <string name="common_min">分钟</string>
+  <string name="course_time_length">时长%s分钟</string>
+  <string name="common_please_choose">请选择</string>
+  <string name="common_please_write">请填写</string>
+  <string name="common_un_setting">未设置</string>
+  <string name="common_have_setting">已设置</string>
+  <string name="common_wait">请稍后&#8230;</string>
+  <string name="common_del">删除</string>
+
+
+
+  <string name="detail_address">具体地址</string>
+  <string name="please_input_detail_address">请填写具体地址</string>
+  <string name="please_drag_map">请拖动地图到健身房的正确位置</string>
+  <string name="common_comfirm">确定</string>
+  <string name="common_i_konw">知道了</string>
+  <string name="alert_permission_forbid">抱歉，您无该功能权限</string>
+  <string name="alert_permission_forbid_contact_su">抱歉，您无该功能权限,请联系超级管理员</string>
+  <string name="hint_rich_txt">用人单位更关注求职者的专业能力、沟通能力和形象气质，建议从这方面来描述</string>
+  <string name="webview_student_guide_1">复制会员端页面链接</string>
+  <string name="complete_gym_info">完善场馆信息</string>
+  <string name="title_hint_wrap">-- %s --</string>
+
+  //用户协议
+  <string name="text_user_protocol">我已阅读并同意</string>
+  <string name="text_protocol_name">《用户注册协议》</string>
+
+
+  <string name="name">姓名</string>
+  <string name="gender">性别</string>
+  <string name="phone">手机</string>
+  <string name="type">类型</string>
+  <string name="birthday">生日</string>
+  <string name="address">地址</string>
+  <string name="registe_date">注册日期</string>
+
+
+  <string name="sorry_for_no_permission">抱歉，您无权限查看该模块</string>
+  <string name="permission_forbid_del">无删除权限</string>
+  <string name="alert_del_course">该课程种类适用于%d家场馆，删除后，已有的排期和课程预约都不会受到影响。</string>
+  <string name="alert_del_course_forbid">需由同时具有%d家场馆删除课程种类权限的工作人员，才可删除该课程种类</string>
+
+
+  <string name="title_welcome_trial">欢迎试用高级版</string>
+
+  <!--空页面-->
+  <string name="text_empty_title">暂无数据</string>
+</resources>

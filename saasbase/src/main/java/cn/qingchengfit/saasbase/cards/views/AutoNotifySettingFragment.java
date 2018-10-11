@@ -16,7 +16,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.NotifyIsOpen;
 import cn.qingchengfit.saasbase.cards.presenters.ChangeAutoNotifyPresenter;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.List;
 import javax.inject.Inject;

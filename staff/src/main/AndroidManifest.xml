@@ -25,6 +25,7 @@
   <uses-permission android:name="android.permission.RECORD_AUDIO"/>
   <uses-permission android:name="android.permission.WAKE_LOCK"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
   <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
@@ -608,7 +609,9 @@
         android:exported="false"
         />
 
-    <activity android:name=".views.notification.NotificationActivity"/>
+    <activity android:name=".views.notification.NotificationActivity"
+        android:screenOrientation="portrait"
+        />
     <activity
         android:name=".views.wardrobe.WardrobeActivity"
         android:screenOrientation="portrait"
@@ -881,23 +884,7 @@
             />
       </intent-filter>
     </activity>
-    <activity
-        android:name=".card.StaffCardActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/QcAppTheme"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
 
-        <data
-            android:host="card"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
     <activity
         android:name="cn.qingchengfit.saasbase.export.ImportExportActivity"
         android:screenOrientation="portrait"

@@ -51,7 +51,7 @@ public class Card implements Parcelable {
     public boolean is_open_service_term;
     public CardProtocol card_tpl_service_term;
     public Staff seller;
-
+    public String content_link;//卡详情界面的服务协议信息地址
     public Staff getSeller() {
         return seller;
     }
@@ -454,6 +454,7 @@ public class Card implements Parcelable {
         dest.writeByte(this.is_open_service_term ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.card_tpl_service_term, flags);
         dest.writeParcelable(this.seller, flags);
+        dest.writeString(this.content_link);
     }
 
     protected Card(Parcel in) {
@@ -494,9 +495,10 @@ public class Card implements Parcelable {
         this.is_open_service_term = in.readByte() != 0;
         this.card_tpl_service_term = in.readParcelable(CardProtocol.class.getClassLoader());
         this.seller = in.readParcelable(Staff.class.getClassLoader());
+        this.content_link = in.readString();
     }
 
-    public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
         @Override public Card createFromParcel(Parcel source) {
             return new Card(source);
         }

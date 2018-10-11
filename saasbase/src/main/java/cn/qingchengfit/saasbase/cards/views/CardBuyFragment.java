@@ -1,5 +1,8 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,17 +20,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
@@ -35,17 +37,19 @@ import cn.qingchengfit.saasbase.cards.event.PayEvent;
 import cn.qingchengfit.saasbase.cards.item.CardTplCustomOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
+import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
-import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
+import cn.qingchengfit.utils.PermissionUtils;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -55,7 +59,10 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.squareup.phrase.Phrase;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
@@ -63,7 +70,9 @@ import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
@@ -95,39 +104,40 @@ import rx.functions.Action1;
   public static final int TYPE_CARD_BUY_CARD_NO = 1001;
   public static final int TYPE_CARD_BUY_REMARK = 1002;
 
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	TextView tvCardTplType;
-	TextView tvCardtplName;
-	TextView tvGymName;
-	TextView tvCardId;
-	RelativeLayout cardview;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  TextView tvCardTplType;
+  TextView tvCardtplName;
+  TextView tvGymName;
+  TextView tvCardId;
+  RelativeLayout cardview;
 
-	RecyclerView rv;
-	protected TextView tvMoneyLabel;
-	protected TextView tvPayMoney;
-	Button btnPay;
-	protected CommonInputView civBindMenbers;
-	protected CommonInputView civSaler;
-	protected CommonInputView civStartTime;
-	protected CommonInputView civEndTime;
-	protected ExpandedLayout elAutoOpen;
-	ExpandTextView tvCardExpandDesc;
+  RecyclerView rv;
+  protected TextView tvMoneyLabel;
+  protected TextView tvPayMoney;
+  Button btnPay;
+  protected CommonInputView civBindMenbers;
+  protected CommonInputView civSaler;
+  protected CommonInputView civStartTime;
+  protected CommonInputView civEndTime;
+  protected ExpandedLayout elAutoOpen;
+  ExpandTextView tvCardExpandDesc;
 
-	CommonInputView civRealCardNum;
-	CommonInputView civMark;
-	CommonInputView civPayMethod;
-	LinearLayout loInputMoney;
-	TextView tvCardAppend;
+  CommonInputView civRealCardNum;
+  CommonInputView civMark;
+  CommonInputView civPayMethod;
+  LinearLayout loInputMoney;
+  TextView tvCardAppend;
 
   @Inject public CardBuyPresenter presenter;
-  @Inject LoginStatus loginStatus;
+  @Inject public LoginStatus loginStatus;
   @Inject IPermissionModel permissionModel;
+  @Inject GymWrapper gymWrapper;
   @Need public CardTpl cardTpl;
   @Need QcStudentBean qcStudentBean;
-	LinearLayout layoutValidate;
-	TextView tvCardValidateTotal;
-	CommonInputView cardProtocol;
+  LinearLayout layoutValidate;
+  TextView tvCardValidateTotal;
+  CommonInputView cardProtocol;
 
   protected CardTplOption cardOptionCustom = new CardTplOption();
   private List<CardTplOption> optionList = new ArrayList<>();
@@ -211,7 +221,10 @@ import rx.functions.Action1;
         onSelectPayMethod();
       }
     });
-
+    Bundle extras = getActivity().getIntent().getExtras();
+    if (extras != null && !TextUtils.isEmpty(extras.getString("qcCallId"))) {
+      presenter.setFromCheckout(true);
+    }
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     setCardInfo();
@@ -229,17 +242,21 @@ import rx.functions.Action1;
     elAutoOpen.setVisibility(View.GONE);
     //civSaler.setContent(loginStatus.staff_name());
 
-    if (qcStudentBean != null){
+    if (qcStudentBean != null) {
       civBindMenbers.setContent(qcStudentBean.username());
       presenter.setUserIds(qcStudentBean.id());
+      List<QcStudentBean> studentBeans = new ArrayList<>();
+      studentBeans.add(qcStudentBean);
+      presenter.setQcStudentBeans(studentBeans);
     }
 
     civStartTime.setNoSaved();
     civEndTime.setNoSaved();
 
     civEndTime.setClickable(false);
-    if (cardTpl.has_service_term) {
+    if (cardTpl.has_service_term&&cardTpl.is_open_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
+      cardProtocol.setContent("未签名");
     } else {
       cardProtocol.setVisibility(View.GONE);
     }
@@ -346,7 +363,7 @@ import rx.functions.Action1;
   /**
    * 点击支付
    */
- public void onViewClicked() {
+  public void onViewClicked() {
     onConfirmPay();
   }
 
@@ -376,13 +393,96 @@ import rx.functions.Action1;
     presenter.setmChosenOption(cardOptionCustom);
     commonFlexAdapter.toggleSelection(position);
     commonFlexAdapter.notifyDataSetChanged();
+    resetSignaturePath("");
     return true;
   }
 
- public void onCardProrocol() {
+  public void onCardProrocol() {
     if (cardTpl.card_tpl_service_term != null) {
-      CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(),
-          false);
+      routeToProrocolWeb();
+    }
+  }
+
+  protected void routeToProrocolWeb() {
+
+    CardTplOption cardTplOption = presenter.getmChosenOption();
+    int selectedItemCount = commonFlexAdapter.getSelectedItemCount();
+    if (selectedItemCount < 1||cardOptionCustom==null) {
+      DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
+      return;
+    }
+    if (cardTplOption == null) {
+      cardTplOption = cardOptionCustom;
+    }
+
+    List<QcStudentBean> qcStudentBeans = presenter.getQcStudentBeans();
+    if (qcStudentBeans == null || qcStudentBeans.isEmpty()) {
+      DialogUtils.showAlert(getContext(), R.string.e_member_empty);
+      return;
+    }
+
+    String host = gymWrapper.getCoachService().getHost();
+    String balance = cardTplOption.getCharge();
+    JsonArray jsonArray = new JsonArray();
+    for (QcStudentBean qcStudentBean : qcStudentBeans) {
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.addProperty("name", qcStudentBean.getUsername());
+      jsonObject.addProperty("phone", qcStudentBean.getPhone());
+      jsonArray.add(jsonObject);
+    }
+    String format = Phrase.from(host
+        + "/shop/{shop_id}/mobile/card/term/{cardtpl_id}/signature/?balance={balance}&users={users}")
+        .put("shop_id", gymWrapper.getCoachService().getShop_id())
+        .put("cardtpl_id", cardTpl.getId())
+        .put("balance", balance)
+        .put("users", Uri.encode(new Gson().toJson(jsonArray)))
+        .format()
+        .toString();
+    StringBuilder stringBuilder = new StringBuilder(format);
+    if (presenter.getRealCardNo() != null) {
+      stringBuilder.append("&card_no=").append(presenter.getRealCardNo());
+    }
+    if (!TextUtils.isEmpty(startDay())) {
+      if(cardTpl.getType()==3||cardTplOption.limit_days){
+        stringBuilder.append("&start=").append(startDay());
+      }else{
+        stringBuilder.append("&start=");
+      }
+    }
+    if (!TextUtils.isEmpty(endDay())) {
+      if(cardTpl.getType()==3||cardTplOption.limit_days){
+        stringBuilder.append("&end=").append(endDay());
+      }else{
+        stringBuilder.append("&end=");
+      }
+    }
+    if (!TextUtils.isEmpty(presenter.getSignaturePath())) {
+      stringBuilder.append("&signature=").append(presenter.getSignaturePath());
+    }
+    CardProtocolActivity.startWebForResult(stringBuilder.toString(), this, false, 200);
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == 200) {
+        String path = data.getStringExtra("path");
+        if (TextUtils.isEmpty(path)) {
+          resetSignaturePath(presenter.getSignaturePath());
+        } else {
+          resetSignaturePath(path);
+        }
+      }
+    }
+  }
+
+  protected void resetSignaturePath(String path) {
+    if (TextUtils.isEmpty(path)) {
+      presenter.setSignaturePath("");
+      cardProtocol.setContent("未签名");
+    } else {
+      presenter.setSignaturePath(path);
+      cardProtocol.setContent("已签名");
     }
   }
 
@@ -420,16 +520,21 @@ import rx.functions.Action1;
     }
   }
 
- public void onCivBindMenbersClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
-        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
+  public void onCivBindMenbersClicked() {
+//    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
+//        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
+
+    Map<String, Object> map = new HashMap<>();
+    map.put("studentIdList", presenter.getChoseStuIds());
+    QcRouteUtil.setRouteOptions(
+        new RouteOptions("student").setActionName("/choose/student/").addParam("studentIdList", presenter.getChoseStuIds())).call();
   }
 
- public void onCivSalerClicked() {
+  public void onCivSalerClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/staff/choose/saler/"), null);
   }
 
- public void onCivStartTimeClicked() {
+  public void onCivStartTimeClicked() {
     choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, new Date(), civStartTime,
         new TimeDialogWindow.OnTimeSelectListener() {
           @Override public void onTimeSelect(Date date) {
@@ -450,7 +555,7 @@ import rx.functions.Action1;
             cardOptionCustom.getCharge()) - 1 : cardOptionCustom.getDays() - 1)));
   }
 
- public void onCivMarkClicked() {
+  public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
         new CommonInputParams().title("会员卡备注")
             .content(presenter.getRemarks())
@@ -458,7 +563,7 @@ import rx.functions.Action1;
             .build());
   }
 
- public void onClickCardId() {
+  public void onClickCardId() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
         new CommonInputParams().title("添加实体卡号")
             .content(presenter.getRealCardNo())
@@ -466,8 +571,9 @@ import rx.functions.Action1;
             .build());
   }
 
- public void onSelectPayMethod() {
-    BottomPayDialog f = BottomPayDialog.newInstance(presenter.hasEditPermission(), selectPos);
+  public void onSelectPayMethod() {
+    BottomPayDialog f = BottomPayDialog.newInstance(
+        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,gymWrapper.isPro());
     f.show(getFragmentManager(), "");
   }
 
@@ -504,6 +610,7 @@ import rx.functions.Action1;
 
   @Override public void bindStudent(String student) {
     civBindMenbers.setContent(student);
+    resetSignaturePath("");
   }
 
   @Override public void bindSaler(String saler) {
@@ -543,6 +650,14 @@ import rx.functions.Action1;
 
   @Override public int payMethod() {
     return patType == 0 ? 7 : patType;
+  }
+
+  @Override public boolean checkCardBuyBody(CardBuyBody cardBuyBody) {
+    if (cardBuyBody.checkData() > 0) {
+      showAlert(cardBuyBody.checkData());
+      return true;
+    }
+    return false;
   }
 
   @Override public boolean openValidDay() {

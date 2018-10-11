@@ -41,6 +41,7 @@ import cn.qingchengfit.staffkit.views.statement.excel.OutExcelFragment;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -224,6 +225,7 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
                 }
             }
         });
+        SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

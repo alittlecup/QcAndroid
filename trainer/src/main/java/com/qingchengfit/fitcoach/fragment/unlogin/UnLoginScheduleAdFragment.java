@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.unlogin;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.HttpThrowable;
-import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -93,7 +94,8 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
      */
  public void onClickUseNow() {
         if (!loginStatus.isLogined()) {
-            Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+          Intent toLogin = new Intent(getContext().getPackageName(),
+            Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
             toLogin.putExtra("isRegiste", true);
             startActivity(toLogin);
         }else {
@@ -105,8 +107,9 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
      * 立即登录
      */
  public void onLogin() {
-        Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", false);
+   Intent toLogin = new Intent(getContext().getPackageName(),
+     Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+   toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }
 

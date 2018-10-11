@@ -1,8 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'maven'
-def libs = rootProject.ext.libraries;
-def cfg = rootProject.ext.configuration;
+apply from: rootProject.file('qc_upload_maven.gradle')
+apply from: rootProject.file('qc_component.gradle')
+
+def annotations = rootProject.ext.annotations
+
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
 
 android {
   compileSdkVersion cfg.compileVersion
@@ -10,6 +14,7 @@ android {
   dataBinding {
     enabled true
   }
+
   defaultConfig {
     minSdkVersion 16
     targetSdkVersion 27
@@ -18,13 +23,12 @@ android {
     vectorDrawables.useSupportLibrary true
     javaCompileOptions {
       annotationProcessorOptions {
-        arguments = [fragmentArgsLib               : 'true',
+        arguments = [fragmentArgsLib: 'true',
                      fragmentArgsSupportAnnotations: 'true',
-                     packageName                   : 'cn.qingchengfit.saasbase',]
+                     packageName: 'cn.qingchengfit.saasbase',]
       }
     }
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    //        manifestPlaceholders = [APP_SCHAME        : "qcstaff"]
   }
   buildTypes {
     release {
@@ -35,6 +39,7 @@ android {
       minifyEnabled false
       shrinkResources false
       debuggable true
+
       debug {
         ext.enableCrashlytics = false
       }
@@ -57,62 +62,32 @@ android {
   }
   sourceSets {
     main {
-      res.srcDirs = ['src/main/res/layout/student',
-                     'src/main/res']
+      res.srcDirs = ['src/main/res']
     }
   }
+  android {
+    lintOptions {
+      abortOnError false
+    }
+  }
+
 }
 
 dependencies {
+  addApiComponent('saascommon',false)
 
-  api "cn.qingchengfit.widgets:qcbase:1.0.180601"
-  api "cn.qingchengfit.weex:weex:1.0.180601"
-  api "cn.qingchengfit.recruit:recruit:1.1.180613"
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
 
 
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
-    exclude group: 'com.google.googlejavaformat'
-  }
-  api('com.hkm.taglib:tag:1.6.0') {
-    exclude group: 'com.android.support'
-  }
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-  api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-  api("android.arch.lifecycle:extensions:1.0.0") {
-    exclude group: 'android.arch.lifecycle', module: 'runtime'
-  }
-  api "android.arch.lifecycle:reactivestreams:1.0.0"
-  api "io.reactivex:rxjava-reactive-streams:1.2.1"
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
 
-  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+  annotationProcessor annotations["fragmentargs"]
 
-  api 'me.gujun.android.taggroup:library:1.4@aar'
+  annotationProcessor annotations["room"]
 
-  api "android.arch.lifecycle:common-java8:1.0.0"
-  //    // Room
-  api "android.arch.persistence.room:runtime:1.0.0"
-  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-  api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-  api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
 }
 
-
-group 'cn.qingchengfit.saas'
-version '1.0.5'
-
-uploadArchives {
-
-  repositories {
-    mavenDeployer {
-      repository(url: uri('../repo'))
-      pom.artifactId = 'sass'
-    }
-  }
-}
-repositories {
-  mavenCentral()
-}
 

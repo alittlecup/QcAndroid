@@ -92,11 +92,10 @@ public class CardFilterTplFragment extends BaseFragment {
             .withBottomEdge(true));
     rvLeft.setAdapter(adapterLeft);
     rvRight.setAdapter(adapterRight);
+    loadData();
     return view;
   }
-
-  @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
+  private void loadData(){
     RxRegiste(cardModel.qcGetCardFilterTpls(true)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -151,6 +150,7 @@ public class CardFilterTplFragment extends BaseFragment {
         }));
 
   }
+
 
 
   @Override public String getFragmentName() {

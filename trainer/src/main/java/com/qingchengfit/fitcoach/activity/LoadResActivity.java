@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.activity;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.multidex.MultiDex;
 import android.view.Window;
 import android.view.WindowManager;
 import cn.qingchengfit.utils.LogUtil;
@@ -39,7 +38,6 @@ public class LoadResActivity extends Activity {
     class LoadDexTask extends AsyncTask {
         @Override protected Object doInBackground(Object[] params) {
             try {
-                MultiDex.install(getApplication());
                 LogUtil.d("loadDex", "install finish");
                 //((App) getApplication()).installFinish(getApplication());
             } catch (Exception e) {

@@ -3,14 +3,15 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
-import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.model.QrEvent;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.views.activity.WebActivity;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,7 +32,12 @@ public class CardProtocolActivity extends WebActivity{
     intent.putExtra("isHave", isHaveModify);
     context.startActivity(intent);
   }
-
+  public static void startWebForResult(String url, Fragment context, boolean isHaveModify,int requestCode) {
+    Intent intent = new Intent(context.getContext(), CardProtocolActivity.class);
+    intent.putExtra("url", url);
+    intent.putExtra("isHave", isHaveModify);
+    context.startActivityForResult(intent,requestCode);
+  }
   public static void startWeb(String url, Context context, boolean isHaveModify, String content) {
     Intent intent = new Intent(context, CardProtocolActivity.class);
     intent.putExtra("url", url);
@@ -85,7 +91,7 @@ public class CardProtocolActivity extends WebActivity{
   }
 
   private void initBus(){
-    RxBus.getBus().register(OnBackEvent.class)
+    RxBus.getBus().register(QrEvent.class)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .subscribe(onBackEvent -> finish());

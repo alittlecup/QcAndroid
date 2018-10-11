@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_clickable="true"
-            app:civ_content="0"
+            app:civ_content="不限张数"
             app:civ_lable="@string/student_limit_buy_count"
             app:civ_showright="true"
             />

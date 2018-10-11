@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+
+  </data>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        >
+
+      <CheckBox
+          android:id="@+id/cb"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:visibility="gone"
+          style="@style/Qc.CheckBox2"
+          />
+
+      <RelativeLayout
+          android:id="@+id/item_student_header_loop"
+          android:layout_width="47dp"
+          android:layout_height="47dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:id="@+id/item_person_header"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true"
+            />
+      </RelativeLayout>
+
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@id/item_student_header_loop"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_toRightOf="@id/item_student_header_loop"
+          android:layout_weight="1"
+          android:orientation="vertical"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+          <TextView
+              android:id="@+id/item_person_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="陈驰元"
+              style="@style/Qc.TextCommonBlack"
+              />
+
+          <ImageView
+              android:id="@+id/item_person_gender"
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="10dp"
+              android:scaleType="fitXY"
+              android:src="@drawable/ic_gender_signal_female"
+              />
+
+          <View
+              android:layout_width="wrap_content"
+              android:layout_height="1px"
+              android:layout_weight="1"
+              />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+          <TextView
+              android:id="@+id/item_phone_text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="手机 :"
+              android:visibility="gone"
+              />
+
+          <TextView
+              android:id="@+id/item_person_phonenum"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="2dp"
+              android:textSize="@dimen/min_font"
+              tools:text="15123358198"
+              style="@style/Qc.TextCommonGrey"
+              />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_person_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/min_font"
+            android:visibility="visible"
+            tools:text="青橙工作室"
+            style="@style/Qc.TextCommonGrey"
+            />
+        <TextView
+            android:id="@+id/item_person_coach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/min_font"
+            android:visibility="gone"
+            tools:text="青橙工作室"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginRight="20dp"
+          >
+        <TextView
+            android:id="@+id/tv_student_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:drawablePadding="4dp"
+            android:textSize="12sp"
+            tools:text="新注册"
+            />
+        <TextView
+            android:id="@+id/btn_contact_him"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_contact_him"
+            android:background="@drawable/textview_border_black"
+            style="@style/QcTextStyleMediumDark"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:layout_marginTop="14dp"
+            android:paddingTop="2dp"
+            android:visibility="gone"
+            android:paddingBottom="2dp"
+            android:layout_gravity="center_vertical"
+            />
+
+      </LinearLayout>
+
+      <ImageView
+          android:id="@+id/icon_right"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_arrow_right"
+          android:visibility="gone"
+          />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+      <Space
+          android:id="@+id/cb_space"
+          android:layout_width="35dp"
+          android:layout_height="0dp"
+          android:visibility="gone"
+          />
+      <Space
+          android:layout_width="77dp"
+          android:layout_height="0dp"
+          />
+      <TextView
+          android:id="@+id/tv_student_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:background="@color/bg_grey"
+          android:lineSpacingExtra="6dp"
+          android:padding="6dp"
+          android:text="来源：\n推荐人\n注册时间"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="11sp"
+          android:visibility="visible"
+          />
+    </LinearLayout>
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        />
+
+  </LinearLayout>
+
+</layout>

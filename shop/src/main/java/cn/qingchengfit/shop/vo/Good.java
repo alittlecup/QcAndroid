@@ -4,7 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.shop.BR;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;

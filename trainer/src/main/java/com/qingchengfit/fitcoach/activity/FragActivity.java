@@ -2,7 +2,9 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
@@ -19,6 +21,7 @@ import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
 import com.qingchengfit.fitcoach.fragment.manage.EditGymFragment;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -37,12 +40,16 @@ public class FragActivity extends BaseActivity {
 
     Fragment fragment;
     CoachService mCoachService;
+    @Inject GymWrapper gymWrapper;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_base_frag);
         int type = getIntent().getIntExtra("type", 0);
         mCoachService = getIntent().getParcelableExtra("service");
+        if(mCoachService==null){
+            mCoachService=gymWrapper.getCoachService();
+        }
 
         switch (type) {
             case 0:

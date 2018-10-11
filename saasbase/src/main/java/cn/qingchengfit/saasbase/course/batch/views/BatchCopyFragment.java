@@ -21,6 +21,7 @@ import cn.qingchengfit.saasbase.course.batch.event.CourseTypeEvent;
 import cn.qingchengfit.saasbase.course.batch.viewmodel.BatchCopyViewModel;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.databinding.FragmentCopyBatchBinding;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -75,6 +76,8 @@ public class BatchCopyFragment extends SaasBaseFragment{
     initToolbar(binding.includeLayoutToolbar.toolbar);
     initView();
     initBus();
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(isPrivate?"private":"group"));
+
     return binding.getRoot();
   }
 

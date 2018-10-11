@@ -18,6 +18,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -72,6 +73,7 @@ public class NotiSettingHomeFragment extends BaseFragment {
     initToolbar(toolbar);
     vp.setAdapter(adapter);
     tablayout.setupWithViewPager(vp);
+    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

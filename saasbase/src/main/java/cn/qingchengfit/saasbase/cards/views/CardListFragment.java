@@ -10,7 +10,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
@@ -41,14 +41,16 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/14.
  */
-@Leaf(module = "card", path = "/card/list/")
-public class CardListFragment extends BaseListFragment {
+@Leaf(module = "card", path = "/card/list/") public class CardListFragment
+    extends BaseListFragment {
 
   @Inject IPermissionModel permissionModel;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    fabDrawable = R.drawable.ic_add_card;
+    if (fabVisible) {
+      fabDrawable = R.drawable.ic_add_card;
+    }
     return super.onCreateView(inflater, container, savedInstanceState);
   }
 
@@ -62,15 +64,22 @@ public class CardListFragment extends BaseListFragment {
     if (srl != null) srl.setBackgroundResource(R.color.transparent);
     rv.setPadding(15, 0, 15, 0);
     rv.addItemDecoration(
-      new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
+        new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
+  }
+
+  private boolean fabVisible = true;
+
+  public void setFabVisible(boolean visible) {
+    fabVisible = visible;
   }
 
   @Override public void onClickFab() {
     super.onClickFab();
-    if (permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)){
+    if (permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
       routeTo(AppUtils.getRouterUri(getContext(), "/card/choose/cardtpl/"), null);
-    }else{
-      DialogUtils.showAlert(getContext(), getResources().getString(R.string.buy_card_no_permission));
+    } else {
+      DialogUtils.showAlert(getContext(),
+          getResources().getString(R.string.buy_card_no_permission));
     }
   }
 
@@ -86,8 +95,9 @@ public class CardListFragment extends BaseListFragment {
           commonFlexAdapter.clear();
           if (datas.size() == 0) datas.add(commonNoDataItem);
           commonFlexAdapter.updateDataSet(datas, true);
-        }else
+        } else {
           commonFlexAdapter.onLoadMoreComplete(datas, 500);
+        }
       } else {
         commonFlexAdapter.onLoadMoreComplete(null, 500);
       }

@@ -29,6 +29,7 @@ import cn.qingchengfit.staffkit.views.statement.detail.SigninReportFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.Date;
@@ -120,7 +121,7 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
         initView();
         delegatePresenter(presenter, this);
         presenter.querySignInGlance(null);
-
+      SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

@@ -19,7 +19,6 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentCoachDetailBinding;
@@ -70,7 +69,7 @@ public class CoachDetailFragment extends SaasBaseFragment
         toolbarModel.setMenu(empty ? R.menu.menu_multi_allot : R.menu.menu_multi_modify);
         toolbarModel.setListener(item -> {
             Uri uri = Uri.parse("qcstaff://student/multi/coach");
-            routeTo(uri, new cn.qingchengfit.saasbase.student.views.allot.MultiAllotCoachParams().title(item.getTitle().toString()).trainer(trainer).build());
+            //routeTo(uri, new cn.qingchengfit.saasbase.student.views.allot.MultiAllotCoachParams().title(item.getTitle().toString()).trainer(trainer).build());
             return true;
         });
         binding.setToolbarModel(toolbarModel);

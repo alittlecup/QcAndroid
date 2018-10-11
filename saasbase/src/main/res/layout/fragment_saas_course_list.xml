@@ -2,9 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
   <include layout="@layout/common_simple_toolbar"/>
   <FrameLayout
@@ -36,6 +37,7 @@
         app:fabSize="normal"
         app:srcCompat="@drawable/vd_add_batch"
         />
+      <include layout="@layout/view_bottom_add"/>
   </FrameLayout>
 
 </LinearLayout>

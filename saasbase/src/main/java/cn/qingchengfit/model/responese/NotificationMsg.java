@@ -1,5 +1,7 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.model.base.User;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -45,7 +47,16 @@ public class NotificationMsg {
     private String shop_id;
     private String brand_id;
     private String description;
+    private User user;
     private Long id;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getType() {
         return type;

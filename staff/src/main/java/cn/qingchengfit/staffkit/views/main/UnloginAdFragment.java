@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,12 +16,13 @@ import android.widget.Button;
 
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
+import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
-import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import rx.functions.Action1;
@@ -122,8 +124,9 @@ public class UnloginAdFragment extends BaseFragment {
                 ((HomeUnLoginFragment) getParentFragment()).replace(new ChooseBrandInMainFragmentBuilder().build(), true);
             }
         } else {
-            Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-            toLogin.putExtra("isRegiste", v.getId() == R.id.btn_use_now);
+          Intent toLogin = new Intent(getContext().getPackageName(),
+            Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+          toLogin.putExtra("isRegiste", v.getId() == R.id.btn_use_now);
             toLogin.putExtra("ad", true);
             startActivityForResult(toLogin, RESULT_LOGIN);
         }

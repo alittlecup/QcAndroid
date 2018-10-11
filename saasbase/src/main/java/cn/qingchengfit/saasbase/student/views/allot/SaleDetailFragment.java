@@ -68,7 +68,7 @@ public class SaleDetailFragment extends SaasBaseFragment implements SalesDetailP
         toolbarModel.setMenu(empty ? R.menu.menu_multi_allot : R.menu.menu_multi_modify);
         toolbarModel.setListener(item->{
             Uri uri = Uri.parse("qcstaff://student/multi/sales");
-            routeTo(uri, new MultiAllotSalesParams().staff(staff).title(item.getTitle().toString()).build());
+            //routeTo(uri, new MultiAllotSalesParams().staff(staff).title(item.getTitle().toString()).build());
             return true;
         });
         binding.setToolbarModel(toolbarModel);

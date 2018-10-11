@@ -194,7 +194,7 @@ public class SendChannelTabFragment extends VpFragment
     int i = 0;
     for (String s : getResources().getStringArray(R.array.noti_setting_methods_user)) {
       if (i == 0) {
-        ret.add(new CmBottomListChosenItem(s, "优先发送微信模板消息，不能发送时自动转为短信发送", true));
+        ret.add(new CmBottomListChosenItem(s, "优先发送微信模板消息，不能发送时自动转为短信发送", presenter.isHasWXbinded()));
       } else if (i == 1) {
         ret.add(new CmBottomListChosenItem(s, "", true));
       } else {

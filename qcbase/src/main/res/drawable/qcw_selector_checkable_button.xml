@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/qcw_shape_bgcenter_green" android:state_selected="true" />
+    <item android:drawable="@drawable/qcw_shape_bgcenter_white" android:state_selected="false" />
+
+</selector>

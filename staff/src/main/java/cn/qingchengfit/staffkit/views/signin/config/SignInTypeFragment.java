@@ -22,7 +22,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInCostBody;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;

@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.student.presenters.allot;
 
 import android.text.TextUtils;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,19 +10,12 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
-import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.student.items.QcStudentWithCoach;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import cn.qingchengfit.saascommon.network.RxHelper;
 
 /**
  * Created by huangbaole on 2017/11/1.

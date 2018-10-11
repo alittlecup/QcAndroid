@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
+
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CompatUtils;
@@ -60,7 +60,7 @@ public class ScoreDetailActivity extends BaseActivity implements FragCallBack {
 
     @Inject ScoreDetailFragment scoreDetailFragment;
 
-    private StudentWrapperComponent component;
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

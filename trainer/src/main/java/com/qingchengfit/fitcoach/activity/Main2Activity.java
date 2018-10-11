@@ -12,7 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +30,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
@@ -145,6 +147,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     tabview = findViewById(R.id.tabview);
     layoutFrag = findViewById(R.id.frag_main);
     tvNotiCount = findViewById(R.id.tv_noti_count);
+
+    getScreenSize();
     initRouter();
     RxBus.getBus()
         .register(EventCloseApp.class)
@@ -719,5 +723,18 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
       }
     }
+  }
+
+  /**
+   * 获取屏幕的尺寸
+   */
+  public void getScreenSize() {
+    WindowManager manager = this.getWindowManager();
+    DisplayMetrics outMetrics = new DisplayMetrics();
+    manager.getDefaultDisplay().getMetrics(outMetrics);
+    int width = outMetrics.widthPixels;
+    int height = outMetrics.heightPixels;
+    PreferenceUtils.setPrefInt(this, "Screen Width", width);
+    PreferenceUtils.setPrefInt(this, "Screen Height", height);
   }
 }

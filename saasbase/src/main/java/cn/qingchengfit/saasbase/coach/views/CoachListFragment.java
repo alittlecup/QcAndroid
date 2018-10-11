@@ -14,10 +14,10 @@ import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
-import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.items.StaffSelectSingleItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
@@ -55,7 +55,6 @@ public class CoachListFragment extends BaseStaffListFragment {
     SaasbaseParamsInjector.inject(this);
   }
 
-
   @Override public void initToolbar(@NonNull final Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("教练");
@@ -66,17 +65,17 @@ public class CoachListFragment extends BaseStaffListFragment {
         if (item.getItemId() == R.id.action_flow) {
           //TODO 移动BottomSheetListDialogFragment
           //BottomSheetListDialogFragment.start(CoachListFragment.this, RESULT_FLOW, new String[] { "教练权限设置" });
-        }else if (item.getItemId() == R.id.action_search){
+        } else if (item.getItemId() == R.id.action_search) {
           showSearch(toolbarRoot);
         }
         return true;
       }
     });
-    initSearch(toolbarRoot,"搜索教练");
+    initSearch(toolbarRoot, "搜索教练");
   }
 
   @Override public void onTextSearch(String text) {
-    commonFlexAdapter.setSearchText(text != null?text:"");
+    commonFlexAdapter.setSearchText(text != null ? text : "");
     commonFlexAdapter.filterItems();
   }
 
@@ -87,33 +86,38 @@ public class CoachListFragment extends BaseStaffListFragment {
 
   public void initData() {
     RxRegiste(staffModel.getTrainers()
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<StaffShipsListWrap>>() {
-        @Override public void onNext(QcDataResponse<StaffShipsListWrap> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            if (qcResponse.data.staffships != null){
-              List<CommonUserItem> staffItems  = new ArrayList<>();
-              for (StaffShip coach : qcResponse.data.staffships) {
-                try {
-                  coach.id = coach.user.id;
-                  staffItems.add(generateItem(coach));
-                }catch (Exception e){
-                  CrashUtils.sendCrash(e);
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnTerminate(this::stopRefresh)
+        .subscribe(new NetSubscribe<QcDataResponse<StaffShipsListWrap>>() {
+          @Override public void onNext(QcDataResponse<StaffShipsListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.staffships != null) {
+                List<CommonUserItem> staffItems = new ArrayList<>();
+                for (StaffShip coach : qcResponse.data.staffships) {
+                  try {
+                    if (coach.teacher != null) {
+                      coach.id = coach.teacher.getId();
+                    } else {
+                      coach.id = coach.teacher.id;
+                    }
+                    staffItems.add(generateItem(coach));
+                  } catch (Exception e) {
+                    CrashUtils.sendCrash(e);
+                  }
                 }
+                setDatas(staffItems, 1);
               }
-              setDatas(staffItems ,1);
+            } else {
+              onShowError(qcResponse.getMsg());
             }
-          } else {
-            onShowError(qcResponse.getMsg());
           }
-        }
-      }));
+        }));
   }
 
   @Override public void setDatas(List<? extends IFlexible> ds, int page) {
-      commonFlexAdapter.updateDataSet(ds,true);
+    commonFlexAdapter.updateDataSet(ds, true);
   }
 
   @Override protected CommonUserItem generateItem(ICommonUser staff) {
@@ -130,10 +134,10 @@ public class CoachListFragment extends BaseStaffListFragment {
 
   @Override public void onClickFab() {
     if (!serPermisAction.check(PermissionServerUtils.COACHSETTING_CAN_WRITE)) {
-        showAlert(R.string.alert_permission_forbid);
-        return;
+      showAlert(R.string.alert_permission_forbid);
+      return;
     }
-    routeTo("/trainer/add/",null);
+    routeTo("/trainer/add/", null);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

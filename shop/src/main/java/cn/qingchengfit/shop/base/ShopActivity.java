@@ -2,10 +2,9 @@ package cn.qingchengfit.shop.base;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.SaasContainerActivity;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.shop.di.ShopViewModel;
 import cn.qingchengfit.shop.routers.ShopRouterCenter;
-import cn.qingchengfit.shop.routers.shopImpl;
 import cn.qingchengfit.shop.ui.category.ShopCategoryPage;
 import cn.qingchengfit.shop.ui.home.ShopHomePage;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListPage;
@@ -25,6 +24,7 @@ import cn.qingchengfit.shop.ui.product.prices.ProductPricesPage;
 import cn.qingchengfit.shop.ui.product.productdetail.ShopProductDetailPage;
 import cn.qingchengfit.shop.ui.product.productdetail.ShopProductModifyDetailPage;
 import com.anbillon.flabellum.annotations.Trunk;
+import javax.inject.Inject;
 
 @Trunk(fragments = {
     ShopHomePage.class, ShopProductsListPage.class, ShopCategoryListPage.class,
@@ -34,12 +34,13 @@ import com.anbillon.flabellum.annotations.Trunk;
     ProductPricesPage.class, ShopBottomCategoryFragment.class, ShopProductAddPage.class,
     ShopProductModifyPage.class, ShopViewModel.class, ShopProductDetailPage.class,
     ShopProductModifyDetailPage.class
-}) public class ShopActivity extends SaasContainerActivity {
+}) public class ShopActivity extends SaasCommonActivity {
+  @Inject ShopRouterCenter routerCenter;
   @Override public String getModuleName() {
     return "shop";
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    return new ShopRouterCenter().registe(new shopImpl()).getFragment(intent.getData(), intent.getExtras());
+    return routerCenter.getFragment(intent.getData(), intent.getExtras());
   }
 }

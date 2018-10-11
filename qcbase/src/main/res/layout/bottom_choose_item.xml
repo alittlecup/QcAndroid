@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+  </data>
+
+  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/bg_white"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/btn_text_grey_color"
+          tools:text="sadafdfadf"
+          style="@style/QcTextStyleStandardDark"
+          />
+      <TextView
+          android:id="@+id/sub_content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="3dp"
+          tools:text="sadafdfadf"
+          style="@style/QcTextStyleSmallGrey"
+          />
+
+    </LinearLayout>
+    <CheckBox
+        android:id="@+id/select_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/selector_qc_checkbox_2"
+        android:button="@null"
+        />
+
+  </FrameLayout>
+</layout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.qingchengfit.widgets.QcRadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/qrg"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/white"
+    android:divider="@drawable/divier_linear"
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:showDividers="middle"
+    />

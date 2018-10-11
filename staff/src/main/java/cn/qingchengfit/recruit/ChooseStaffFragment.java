@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -22,14 +23,16 @@ import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.BusinessUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ListUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +135,10 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
           }, new NetWorkThrowable()));
       return false;
     });
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    }
   }
 
   @Override protected void initView() {

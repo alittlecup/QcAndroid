@@ -1,0 +1,23 @@
+apply from: rootProject.file('qc_settings.gradle')
+apply from: rootProject.file('qc_upload_maven.gradle')
+
+
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
+
+
+dependencies {
+
+  addApiComponent("qcim",true)
+  addComponent("qcbase",true)
+  implementation dependens["fragmentargs"]
+  implementation dependens["gravitysnaphelper"]
+
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+  annotationProcessor annotations["fragmentargs"]
+
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:3.0.2"
+  implementation "com.hannesdorfmann.fragmentargs:annotation:3.0.2"
+}
+

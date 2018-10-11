@@ -30,7 +30,7 @@ public class SourceBean implements Parcelable {
         this.name = in.readString();
     }
 
-    public static final Parcelable.Creator<SourceBean> CREATOR = new Parcelable.Creator<SourceBean>() {
+    public static final Creator<SourceBean> CREATOR = new Creator<SourceBean>() {
         @Override
         public SourceBean createFromParcel(Parcel source) {
             return new SourceBean(source);

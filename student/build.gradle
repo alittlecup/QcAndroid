@@ -1,64 +1,24 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.jakewharton.butterknife'
+apply from: rootProject.file('qc_settings.gradle')
+apply from: rootProject.file('qc_upload_maven.gradle')
 
 
-def cfg = rootProject.ext.configuration
-def libs = rootProject.ext.libraries
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
 
-android {
-
-    compileSdkVersion cfg.compileVersion
-    buildToolsVersion cfg.buildToolsVersion
-    dataBinding {
-        enabled true
-    }
-
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-        vectorDrawables.useSupportLibrary true
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        fragmentArgsLib               : 'true',
-                        fragmentArgsSupportAnnotations: 'true',
-                        packageName                   : 'cn.qingchengfit.student'
-                ]
-            }
-        }
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-  buildToolsVersion '27.0.1'
-}
 
 dependencies {
-    api project(path: ':saasbase')
 
-    annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-    annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  addComponent('saascommon',false)
+  appComponent('login',false)
 
-    annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-    annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-
-    annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+  implementation dependens["constraint-layout"]
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
 
 
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
 
 
 }
+

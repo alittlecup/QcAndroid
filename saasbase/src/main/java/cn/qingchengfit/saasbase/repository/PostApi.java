@@ -1,24 +1,21 @@
 package cn.qingchengfit.saasbase.repository;
 
+
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.coach.model.CoachResponse;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
-import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.body.FeedBackBody;
 import cn.qingchengfit.saasbase.network.body.SystemInitBody;
-import cn.qingchengfit.saasbase.network.response.CreatBrand;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
-import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -36,22 +33,10 @@ import rx.Observable;
 
 public interface PostApi {
 
-  @POST("/api/staffs/login/") Observable<QcResponseData<Login>> qcLogin(@Body LoginBody loginBody);
 
   //获取电话验证码
   @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBody account);
 
-  //注册
-  @POST("/api/staffs/register/") rx.Observable<QcResponseData<Login>> qcRegister(@Body
-      RegisteBody params);
-
-  //修改密码
-  @POST("/api/staffs/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") String id, @Body
-    ModifyPwBody modifyPwBean);
-
-  //修改电话号码
-  @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") String id,
-      @Body FixPhoneBody fixPhoneBody);
 
   //发送意见
   @POST("/api/feedback/") rx.Observable<QcResponse> qcFeedBack(@Body FeedBackBody bean);
@@ -82,11 +67,6 @@ public interface PostApi {
   @POST("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<CoachResponse>> qcAddCoach(@Path("id") String id,
       @Query("id") String gymid, @Query("model") String model, @Body Staff coach);
 
-  /**
-   * 扫描二维码
-   */
-  @PUT("/api/scans/{uuid}/") rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body
-      ScanBody body);
 
   /**
    * 验证验证码

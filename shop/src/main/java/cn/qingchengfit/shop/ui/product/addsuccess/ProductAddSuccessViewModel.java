@@ -1,6 +1,6 @@
 package cn.qingchengfit.shop.ui.product.addsuccess;
 
-import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
+import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import javax.inject.Inject;
 

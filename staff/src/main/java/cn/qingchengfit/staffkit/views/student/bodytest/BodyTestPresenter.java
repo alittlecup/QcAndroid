@@ -5,12 +5,13 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.student.bean.StudentWrap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -31,7 +32,7 @@ import rx.schedulers.Schedulers;
  */
 public class BodyTestPresenter extends BasePresenter {
 
-    @Inject StudentWrapper studentBean;
+    @Inject StudentWrap studentBean;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;

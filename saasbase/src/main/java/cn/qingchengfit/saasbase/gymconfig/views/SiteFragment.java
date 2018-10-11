@@ -9,11 +9,13 @@ import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.gymconfig.item.SiteItem;
 import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -45,8 +47,8 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2017/12/1.
  */
 public class SiteFragment extends BaseListFragment
-  implements SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.OnItemClickListener,
-  FlexibleAdapter.OnUpdateListener {
+    implements SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.OnItemClickListener,
+    FlexibleAdapter.OnUpdateListener {
 
   @Inject IGymConfigModel gymConfigModel;
   private int queryType = -1;
@@ -67,7 +69,7 @@ public class SiteFragment extends BaseListFragment
   @Override protected void addDivider() {
     initListener(this);
     rv.addItemDecoration(
-      new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
+        new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
   }
 
   @Override protected void onFinishAnimation() {
@@ -89,28 +91,31 @@ public class SiteFragment extends BaseListFragment
 
   @Override public void onRefresh() {
     RxRegiste(gymConfigModel.getSites()
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<SpaceListWrap>>() {
-        @Override public void onNext(QcDataResponse<SpaceListWrap> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            List<IFlexible> datas = new ArrayList<>();
-            if (qcResponse.data.spaces != null){
-              for (Space space : qcResponse.data.spaces) {
-                if (queryType <0 || (space.is_support_private() && queryType == 1)|| (space.is_support_team() && queryType == 0))
-                  datas.add(generateItem(space));
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<SpaceListWrap>>() {
+          @Override public void onNext(QcDataResponse<SpaceListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              List<IFlexible> datas = new ArrayList<>();
+              if (qcResponse.data.spaces != null) {
+                for (Space space : qcResponse.data.spaces) {
+                  if (queryType < 0
+                      || (space.is_support_private() && queryType == 1)
+                      || (space.is_support_team() && queryType == 0)) {
+                    datas.add(generateItem(space));
+                  }
+                }
               }
+              setDatas(datas, 1);
+            } else {
+              onShowError(qcResponse.getMsg());
             }
-            setDatas(datas,1);
-          } else {
-            onShowError(qcResponse.getMsg());
           }
-        }
-      }));
+        }));
   }
 
-  protected SiteItem generateItem(Space space){
+  protected SiteItem generateItem(Space space) {
     return new SiteItem(space);
   }
 
@@ -120,7 +125,7 @@ public class SiteFragment extends BaseListFragment
   }
 
   @Override public void onUpdateEmptyView(int size) {
-    if (size == 0){
+    if (size == 0) {
 
     }
   }
@@ -130,13 +135,17 @@ public class SiteFragment extends BaseListFragment
   }
 
   @Override public void onClickFab() {
-    AddNewSiteFragment.start(this,11,11);
+    if (AppUtils.getCurApp(getContext()) == 0) {
+      UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
+    } else {
+      AddNewSiteFragment.start(this, 11, 11);
+    }
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK){
-      if (requestCode == 11){
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == 11) {
         onRefresh();
       }
     }

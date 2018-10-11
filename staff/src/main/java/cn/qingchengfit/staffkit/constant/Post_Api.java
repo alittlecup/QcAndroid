@@ -29,7 +29,6 @@ import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.body.RenewBody;
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
 import cn.qingchengfit.model.body.ScanBody;
-import cn.qingchengfit.model.body.ShortMsgBody;
 import cn.qingchengfit.model.body.SignInBody;
 import cn.qingchengfit.model.body.SignInCostBody;
 import cn.qingchengfit.model.body.SignInIgnorBody;
@@ -42,6 +41,8 @@ import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.CoachResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
+import cn.qingchengfit.model.responese.Locker;
+import cn.qingchengfit.model.responese.LockerWrapper;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
@@ -51,8 +52,8 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
+import cn.qingchengfit.login.bean.Login;
+import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
@@ -481,7 +482,7 @@ public interface Post_Api {
         @Path("locker_id") String lockerid, @QueryMap HashMap<String, Object> params);
 
     //修改
-    @PUT("/api/v2/staffs/{staff_id}/lockers/{locker_id}/") rx.Observable<QcResponse> qcEditLocker(@Path("staff_id") String staff_id,
+    @PUT("/api/v2/staffs/{staff_id}/lockers/{locker_id}/") rx.Observable<QcDataResponse<LockerWrapper>> qcEditLocker(@Path("staff_id") String staff_id,
         @Path("locker_id") String lockerid, @QueryMap HashMap<String, Object> params, @Body EditWardrobeBody body);
 
     //归还
@@ -616,17 +617,7 @@ public interface Post_Api {
     @PUT("/api/staffs/{staff_id}/configs/") rx.Observable<QcResponse> qcPostBalanceNotify(@Path("staff_id") String staff_id,
         @Body CardBalanceNotifyBody body);
 
-    /**
-     * 短信相关
-     */
-    @POST("/api/staffs/{staffid}/group/messages/") rx.Observable<QcResponse> qcPostShortMsg(@Path("staffid") String staffid,
-        @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
 
-    @DELETE("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcResponse> qcDelShortMsg(@Path("staffid") String staffid,
-        @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
-
-    @PUT("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcResponse> qcPutShortMsg(@Path("staffid") String staffid,
-        @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
 
 
     //新建分组

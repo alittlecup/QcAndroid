@@ -2,8 +2,10 @@ package cn.qingchengfit.saasbase.apis;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.user.bean.EditUserBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -45,6 +47,26 @@ public interface UserApi {
   //修改电话号码
   @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcDataResponse> qcModifyPhoneNum(@Path("id") String id,
     @Body FixPhoneBody fixPhoneBody);
+
+  /**
+   * 解绑微信
+   */
+  @POST("/api/user/wechat/unbind/")
+  rx.Observable<QcDataResponse> unBindWx(@Body CheckCodeBody body);
+
+  /**
+   * 解绑微信
+   */
+  @POST("/api/user/wechat/bind/")
+  rx.Observable<QcDataResponse> bindWx(@Body CheckCodeBody body);
+
+  //获取电话验证码
+  @POST("/api/send/verify/") rx.Observable<QcDataResponse> qcGetCode(@Body GetCodeBody account);
+  /**
+   * 验证验证码
+   */
+  @POST("api/check/verify/") rx.Observable<QcDataResponse> qcCheckCode(@Body CheckCodeBody body);
+
 
 
 }

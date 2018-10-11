@@ -456,7 +456,9 @@
   <string name="buy_card_no_limit">不限张数</string>
   <string name="card_count_unit">%d张</string>
   <string name="alipay_grey">支付宝支付（暂不支持）</string>
-  <string name="online_pay_client">在线支付平台:</string>
+  <string name="online_pay_client">单次约课仅支持:</string>
+  <string name="single_class_pay">单次约课</string>
+
   <string name="login_pw">登录密码</string>
   <string name="phone_code">手机验证码</string>
 
@@ -548,7 +550,6 @@
   <string name="qc_title_student_score_config">积分设置</string>
   <string name="qc_title_student_score_config_base">基础积分</string>
   <string name="qc_title_student_score_award_add">积分</string>
-  <string name="caclu_score_hint">本次购卡获得积分%s。由于会员卡绑定多个会员，请手动为会员分配积分。</string>
 
 
   <!--module IDs-->
@@ -559,9 +560,10 @@
 
   <string name="module_service_group">团课</string>
   <string name="module_service_private">私教</string>
-  <string name="module_service_free">入场签到</string>
+  <string name="module_service_free">自主训练</string>
   <string name="module_service_shop">商品管理</string>
   <string name="module_service_commodity_list">商店</string>
+  <string name="module_service_workbench_counter">收银台</string>
 
 
   <string name="module_student">会员</string>
@@ -579,7 +581,7 @@
   <string name="module_op_koubei">接入口碑网</string>
   <string name="module_op_registe">注册送会员卡</string>
   <string name="module_op_anounce">场馆公告</string>
-  <string name="module_op_discount">优惠卷</string>
+  <string name="module_op_discount">优惠券</string>
   <string name="module_op_hongbao">健身红包</string>
   <string name="module_op_private_share">私教拼课</string>
   <string name="module_op_group_share">组队拼课</string>
@@ -651,7 +653,7 @@
   <string name="lable_signin_wardrobe">更衣柜联动设置</string>
   <string name="lable_signin_screen">签到大屏幕</string>
   <string name="hint_set_signin_wardrobe">设置与更衣柜联动</string>
-  <string name="title_signin_config">入场签到设置</string>
+  <string name="title_signin_config">自主训练设置</string>
   <string name="copy_link_to_cpboard">复制链接到剪切板</string>
   <string name="link_has_copied">链接已复制</string>
   <string name="qc_student_tag">VIP会员</string>

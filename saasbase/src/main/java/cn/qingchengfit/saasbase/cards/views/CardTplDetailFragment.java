@@ -31,20 +31,20 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventLimitBuyCount;
-import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.network.model.Shop;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.model.QrEvent;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
@@ -268,6 +268,7 @@ import rx.functions.Action1;
     expandSettingLimit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         tvCardAppend.setVisibility(b ? View.VISIBLE : View.GONE);
+        cardLimit.is_limit=b;
         editInfoListener(false);
       }
     });
@@ -280,11 +281,11 @@ import rx.functions.Action1;
 
   private void initBus() {
     RxBus.getBus()
-      .register(OnBackEvent.class)
-      .compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
-      .compose(this.<OnBackEvent>bindToLifecycle())
-      .subscribe(new BusSubscribe<OnBackEvent>() {
-        @Override public void onNext(OnBackEvent cardList) {
+      .register(QrEvent.class)
+      .compose(this.<QrEvent>doWhen(FragmentEvent.RESUME))
+      .compose(this.<QrEvent>bindToLifecycle())
+      .subscribe(new BusSubscribe<QrEvent>() {
+        @Override public void onNext(QrEvent cardList) {
           Uri toUri;
           if (!gymWrapper.inBrand()) {
             toUri = AppUtils.getRouterUri(getContext(), "card/cardtpl/list/");
@@ -891,7 +892,7 @@ public boolean hasAddPermission(boolean toast) {
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
       routeTo("/cardtpl/option/",
-        new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
+        new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).cardCate(presenter.getCardCate()).build());
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
       routeTo("/cardtpl/option/add/",

@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
+import cn.qingchengfit.saascommon.filtertime.FilterTimesFragment;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;

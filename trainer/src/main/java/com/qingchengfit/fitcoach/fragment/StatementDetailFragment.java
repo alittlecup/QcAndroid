@@ -25,8 +25,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -35,6 +33,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragmentAdapter;
@@ -84,23 +83,23 @@ public class StatementDetailFragment extends BaseFragment
   public static final int TYPE_MONTH = 2;
   public static final int TYPE_WEEK = 1;
   public static final int TYPE_DAY = 0;
-	ImageButton statementDetailLess;
-	ImageButton statementDetailMore;
-	TextView statementDetailTime;
-	TextView statementDetailFilter;
-	TextView itemStatementDetailContent;
-	RecycleViewWithNoImg recyclerview;
-	Button statementDetailChange;
-	ViewPager viewpager;
-	CircleIndicator indicator;
-	CoordinatorLayout scrollRoot;
+  ImageButton statementDetailLess;
+  ImageButton statementDetailMore;
+  TextView statementDetailTime;
+  TextView statementDetailFilter;
+  TextView itemStatementDetailContent;
+  RecycleViewWithNoImg recyclerview;
+  Button statementDetailChange;
+  ViewPager viewpager;
+  CircleIndicator indicator;
+  CoordinatorLayout scrollRoot;
   @Inject StatementDetailPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	AppBarLayout myhomeAppBar;
-	CheckBox btnFilter;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  AppBarLayout myhomeAppBar;
+  CheckBox btnFilter;
   private StatementDetailAdapter mStatementDetailAdapter;
   private List<QcResponseStatementDetail.StatamentSchedule> statementBeans = new ArrayList<>();
   private List<QcResponseStatementDetail.StatamentSchedule> mAllSchedule = new ArrayList<>();
@@ -145,14 +144,14 @@ public class StatementDetailFragment extends BaseFragment
     return fragment;
   }
 
-  public static StatementDetailFragment newInstance(int type, String starttime, String endtime, String model, String sysId,
-      String teacher_id, String courseId, String course_extra,
+  public static StatementDetailFragment newInstance(int type, String starttime, String endtime,
+      String model, String sysId, String teacher_id, String courseId, String course_extra,
       ClassStatmentFilterBean bean) {
     Bundle args = new Bundle();
     args.putInt("type", type);
     args.putString("start", starttime);
     args.putString("end", endtime);
-      args.putString("system", sysId);
+    args.putString("system", sysId);
     args.putString("course", courseId);
     args.putString("teacher", teacher_id);
     args.putString("model", model);
@@ -250,6 +249,7 @@ public class StatementDetailFragment extends BaseFragment
         return true;
       }
     });
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 
@@ -364,11 +364,11 @@ public class StatementDetailFragment extends BaseFragment
     super.onDestroyView();
   }
 
- public void onClickLess() {
+  public void onClickLess() {
     changeCalendar(-1);
   }
 
- public void onClickMore() {
+  public void onClickMore() {
     changeCalendar(1);
   }
 
@@ -376,7 +376,9 @@ public class StatementDetailFragment extends BaseFragment
    * 增加或者减少 +1 -1
    */
   private void changeCalendar(int symbol) {
-    Observable.just(symbol).onBackpressureBuffer().subscribeOn(Schedulers.io())
+    Observable.just(symbol)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
         .throttleFirst(500, TimeUnit.MILLISECONDS)
         .map(new Func1<Integer, Integer>() {
           @Override public Integer call(Integer symbol) {
@@ -440,7 +442,7 @@ public class StatementDetailFragment extends BaseFragment
         });
   }
 
- public void btnFilter() {
+  public void btnFilter() {
     Intent toFilter = new Intent(getActivity(), StatmentFilterActivity.class);
     toFilter.putParcelableArrayListExtra("course", mFilterCourse);
     toFilter.putParcelableArrayListExtra("coach", mFilterCoaches);
@@ -509,16 +511,21 @@ public class StatementDetailFragment extends BaseFragment
     for (int i = 0; i < mAllSchedule.size(); i++) {
       QcResponseStatementDetail.StatamentSchedule statamentSchedule = mAllSchedule.get(i);
 
-      if ((mFilter.course_type == -1 || mFilter.course_type == 99 || ((mFilter.course_type == -2 && statamentSchedule.course.is_private()) || (mFilter.course_type == -3
+      if ((mFilter.course_type == -1 || mFilter.course_type == 99 || ((mFilter.course_type == -2
+          && statamentSchedule.course.is_private()) || (mFilter.course_type == -3
           && !statamentSchedule.course.is_private())))
           && (mFilter.course == null
           || mFilter.course.getId() == null
-          || (mFilter.course.getId().equalsIgnoreCase(statamentSchedule.course.getId()))) && (mFilter.coach == null
+          || (mFilter.course.getId().equalsIgnoreCase(statamentSchedule.course.getId())))
+          && (mFilter.coach == null
           || mFilter.coach.id == null
-          || (TextUtils.equals(mFilter.coach.id, statamentSchedule.teacher.id))) && (mFilter.student == null
-          || (statamentSchedule.getUsersIds().contains(mFilter.student.id))) && (DateUtils.formatDateFromYYYYMMDD(mFilter.start)
-          .getTime() <= DateUtils.formatDateFromServer(statamentSchedule.start).getTime()) && ((DateUtils.formatDateFromYYYYMMDD(
-          mFilter.end).getTime() + DateUtils.DAY_TIME) > DateUtils.formatDateFromServer(statamentSchedule.end).getTime())) {
+          || (TextUtils.equals(mFilter.coach.id, statamentSchedule.teacher.id)))
+          && (mFilter.student == null || (statamentSchedule.getUsersIds()
+          .contains(mFilter.student.id)))
+          && (DateUtils.formatDateFromYYYYMMDD(mFilter.start).getTime()
+          <= DateUtils.formatDateFromServer(statamentSchedule.start).getTime())
+          && ((DateUtils.formatDateFromYYYYMMDD(mFilter.end).getTime() + DateUtils.DAY_TIME)
+          > DateUtils.formatDateFromServer(statamentSchedule.end).getTime())) {
         statementBeans.add(statamentSchedule);
 
         /**
@@ -660,17 +667,17 @@ public class StatementDetailFragment extends BaseFragment
    * recycle view
    */
   class StatementDetailVH extends RecyclerView.ViewHolder {
-	View itemStatementDetailBottomdivier;
-	View itemStatementDetailHeaderdivier;
-	TextView itemStatementDetailDay;
-	TextView itemStatementDetailMonth;
-	LinearLayout itemStatementDetailDate;
-	ImageView itemStatementDetailPic;
-	TextView itemStatementDetailName;
-	TextView itemStatementDetailContent;
-	TextView itemUsers;
-	TextView textRealIncome;
-	ImageView imageCourseType;
+    View itemStatementDetailBottomdivier;
+    View itemStatementDetailHeaderdivier;
+    TextView itemStatementDetailDay;
+    TextView itemStatementDetailMonth;
+    LinearLayout itemStatementDetailDate;
+    ImageView itemStatementDetailPic;
+    TextView itemStatementDetailName;
+    TextView itemStatementDetailContent;
+    TextView itemUsers;
+    TextView textRealIncome;
+    ImageView imageCourseType;
 
     public StatementDetailVH(View view) {
       super(view);
@@ -684,9 +691,10 @@ public class StatementDetailFragment extends BaseFragment
       itemStatementDetailPic = (ImageView) view.findViewById(R.id.item_statement_detail_pic);
       itemStatementDetailName = (TextView) view.findViewById(R.id.item_statement_detail_name);
       itemUsers = (TextView) view.findViewById(R.id.item_card_cost);
+      itemStatementDetailContent = (TextView) view.findViewById(R.id.item_statement_time_shop);
+
       textRealIncome = (TextView) view.findViewById(R.id.text_real_income);
       imageCourseType = (ImageView) view.findViewById(R.id.image_course_type);
-
     }
   }
 
@@ -735,7 +743,9 @@ public class StatementDetailFragment extends BaseFragment
       }
       holder.textRealIncome.setCompoundDrawablesWithIntrinsicBounds(null, null,
           ContextCompat.getDrawable(getContext(), R.drawable.ic_smallarrow_right), null);
-      holder.imageCourseType.setImageResource(bean.course.is_private ? R.drawable.ic_course_private_conner : R.drawable.ic_course_group_conner);
+      holder.imageCourseType.setImageResource(
+          bean.course.is_private ? R.drawable.ic_course_private_conner
+              : R.drawable.ic_course_group_conner);
 
       if (position == getItemCount() - 1) {
         holder.itemStatementDetailBottomdivier.setVisibility(View.VISIBLE);

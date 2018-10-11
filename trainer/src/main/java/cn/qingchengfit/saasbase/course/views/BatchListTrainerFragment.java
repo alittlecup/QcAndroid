@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,13 @@ import cn.qingchengfit.saasbase.course.batch.views.EditBatchParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.course.presenters.CourseBatchDetailPresenter;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
@@ -63,6 +66,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
    */
   private boolean isShow;
   private DialogList dialogList;
+  private BubbleViewUtil bubbleViewUtil;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -73,6 +77,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(presenter, this);
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mType==1?"private":"group"));
     return v;
   }
 
@@ -81,6 +86,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     toolbarTitile.setText(mType != 1 ? "团课排期" : "私教排期");
     toolbar.inflateMenu(R.menu.menu_flow);
     toolbar.setOnMenuItemClickListener(item -> {
+      bubbleViewUtil.closeBubble();
       if (dialogList == null) {
         dialogList = new DialogList(getContext());
         ArrayList<String> flows = new ArrayList<>();
@@ -100,7 +106,19 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       }
       dialogList.show();
       return true;
-    });
+      });
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    if(mType == 0) {
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理团课种类", "batchCategoryGroup", 1);
+    } else if (mType == 1) {
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理私教种类", "batchCategoryPrivate", 1);
+    }
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   private void showDelCourse() {
@@ -179,10 +197,11 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     if (commonFlexAdapter.getItem(position) instanceof BatchItem) {
       BatchItem batchItem = (BatchItem) commonFlexAdapter.getItem(position);
       if (batchItem != null && batchItem.getBatchModel() != null) {
-        routeTo("course", "/batch/edit/", EditBatchParams.builder()
-            .batchId(batchItem.getId())
-            .isPrvite(mType == Configs.TYPE_PRIVATE)
-            .build());
+          routeTo("course", "/batch/edit/", EditBatchParams.builder()
+                  .batchId(batchItem.getId())
+                  .isPrvite(mType == Configs.TYPE_PRIVATE)
+                  .isStaff(false)
+                  .build());
       }
     } else if (commonFlexAdapter.getItem(position) instanceof HideBatchItem) {
       commonFlexAdapter.toggleSelection(position);

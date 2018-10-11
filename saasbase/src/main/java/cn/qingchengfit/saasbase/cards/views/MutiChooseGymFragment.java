@@ -27,12 +27,12 @@ import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.cards.bean.ImageTwoTextBean;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.network.model.Shop;
 import cn.qingchengfit.saasbase.repository.ICardModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;

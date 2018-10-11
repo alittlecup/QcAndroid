@@ -1,0 +1,31 @@
+apply plugin: 'maven'
+def modules = rootProject.ext.modules
+def projectName = project.name
+String path = modules[projectName]
+
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
+        authentication(userName: "admin", password: "admin123")
+      }
+      snapshotRepository(url: uri('http://43.241.209.158:15004/repository/maven-snapshots/')) {
+        authentication(userName: "admin", password: "admin123")
+      }
+      project.afterEvaluate {
+        def group = "cn.qingchengfit.$project.name".toString()
+        def artifactId = "$project.name"
+        def version = "1.0.$today-SNAPSHOT"
+        if (path) {
+          group = path.split(":")[0]
+          artifactId = path.split(":")[1]
+          version = path.split(":")[2]
+        }
+        pom.groupId = group
+        pom.artifactId = artifactId
+        pom.version = version
+      }
+    }
+  }
+}

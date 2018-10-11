@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.StatementBean;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;

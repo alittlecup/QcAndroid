@@ -68,8 +68,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      */
     @Override public void uncaughtException(Thread thread, Throwable ex) {
         if (!BuildConfig.DEBUG) MobclickAgent.reportError(App.AppContex, ex);
-        RxBus.getBus().post(new EventCloseApp());
-        PushManager.stopWork(mContext);
+        App.finishActivity();
     }
 
     /**

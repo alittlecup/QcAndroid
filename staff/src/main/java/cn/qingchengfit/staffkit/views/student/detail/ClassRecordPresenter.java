@@ -6,13 +6,14 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.responese.ClassRecords;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.StringUtils;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -35,7 +36,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class ClassRecordPresenter extends BasePresenter {
-    @Inject StudentWrapper studentBase;
+    @Inject StudentWrap studentBase;
 
     @Inject StudentUsecase usecase;
     @Inject RestRepository restRepository;

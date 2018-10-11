@@ -21,10 +21,10 @@ import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.responese.FollowRecord;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
@@ -35,6 +35,7 @@ import cn.qingchengfit.staffkit.views.custom.ChatInputView;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -74,7 +75,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
 
 	ChatInputView chatInput;
 	View disableInput;
-    @Inject StudentWrapper studentBean;
+    @Inject StudentWrap studentBean;
     @Inject FollowRecordPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;

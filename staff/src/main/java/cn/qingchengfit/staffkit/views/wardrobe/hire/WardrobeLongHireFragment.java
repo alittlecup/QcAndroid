@@ -15,10 +15,11 @@ import android.widget.TextView;
 
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.HireWardrobeBody;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.Locker;
-import cn.qingchengfit.saasbase.events.EventSelectedStudent;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
+import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -36,8 +37,10 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -198,8 +201,12 @@ public class WardrobeLongHireFragment extends BaseFragment
         //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
         //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");
         //startActivityForResult(toChooseStudent, 1);
-        routeTo("student", "/choose/student/",
-            ChooseAndSearchStudentParams.builder().source(getFragmentName()).chooseType(1).build());
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("source",getFragmentName());
+        map.put("chooseType",1);
+        QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
+            .addParams(map)).call();
         //                toChooseStudent.putExtra(MutiChooseStudentActivity.EXTRA_STUDENTS)
         break;
       case R.id.start_day: //开始时间

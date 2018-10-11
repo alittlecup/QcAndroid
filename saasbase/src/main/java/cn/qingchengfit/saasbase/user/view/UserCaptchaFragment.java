@@ -13,10 +13,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.login.ILoginModel;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
+import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -52,7 +52,6 @@ import rx.schedulers.Schedulers;
 @Leaf(module = "user", path = "/check/code/")
 public class UserCaptchaFragment extends BaseFragment {
 
-  @Inject ILoginModel loginModel;
   @Inject IUserModel userModel;
   @Inject LoginStatus loginStatus;
 
@@ -94,7 +93,7 @@ public class UserCaptchaFragment extends BaseFragment {
   void sendMsg() {
     civCode.setVisibility(View.VISIBLE);
     btnNext.setVisibility(View.VISIBLE);
-    RxRegiste(loginModel.getCode(
+    RxRegiste(userModel.getCode(
       new GetCodeBody.Builder().area_code(loginStatus.getLoginUser().area_code)
         .phone(loginStatus.getLoginUser().phone)
         .build()).onBackpressureDrop().flatMap(qcDataResponse -> {
@@ -116,7 +115,7 @@ public class UserCaptchaFragment extends BaseFragment {
 
   //下一步
   void doNext() {
-    RxRegiste(loginModel.checkCode(
+    RxRegiste(userModel.checkCode(
       new CheckCodeBody.Builder().phone(loginStatus.getLoginUser().phone)
         .code(civCode.getContent())
         .area_code(loginStatus.getLoginUser().area_code)

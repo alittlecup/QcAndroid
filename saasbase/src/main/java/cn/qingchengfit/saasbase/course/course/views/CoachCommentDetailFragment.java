@@ -12,7 +12,7 @@ import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseTeacher;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.ListUtils;
 import co.hkm.soltag.TagContainerLayout;
 

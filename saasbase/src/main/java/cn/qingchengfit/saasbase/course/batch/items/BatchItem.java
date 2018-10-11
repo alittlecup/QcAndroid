@@ -55,7 +55,13 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, BatchVH holder, int position, List payloads) {
-    PhotoUtils.small(holder.img, batchModel.getAvatar());
+    if(batchModel.getAvatar().equals("DefaultMale")) {
+      holder.img.setImageResource(R.drawable.ic_default_staff_male_head);
+    } else if(batchModel.getAvatar().equals("DefaultFemale")) {
+      holder.img.setImageResource(R.drawable.ic_default_staff_female_head);
+    } else {
+      PhotoUtils.small(holder.img, batchModel.getAvatar());
+    }
     holder.text1.setText(batchModel.getTitle());
     holder.text2.setText(batchModel.getText());
   }

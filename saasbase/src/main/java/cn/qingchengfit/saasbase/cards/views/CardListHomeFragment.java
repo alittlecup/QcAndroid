@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
@@ -27,8 +25,9 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardListPresenter;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.widgets.QcFilterToggle;
@@ -67,9 +66,9 @@ import javax.inject.Inject;
   implements CardListPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
   SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.EndlessScrollListener {
 
-  CardListFragment cardListFragment;
+ public CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
-  @Inject CardListPresenter presenter;
+  @Inject public CardListPresenter presenter;
   @Inject IPermissionModel serPermisAction;
 	Toolbar toolbar;
 	TextView toolbarTitle;
@@ -83,11 +82,14 @@ import javax.inject.Inject;
 	TextView tvCardCount;
 	protected RelativeLayout cardListLayout;
 
+	private BubbleViewUtil bubbleViewUtil;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     cardListFragment = new CardListFragment();
     cardListFragment.initListener(this);
     filterFragment = new CardListFilterFragment();
+    bubbleViewUtil = new BubbleViewUtil(getContext());
     RxBus.getBus()
       .register(EventSaasFresh.CardList.class)
       .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
@@ -134,8 +136,8 @@ import javax.inject.Inject;
         onFilterStatusClicked();
       }
     });
-
     initToolbar(toolbar);
+    handleBubble(bubbleViewUtil);
     delegatePresenter(presenter, this);
     return view;
   }
@@ -156,11 +158,12 @@ import javax.inject.Inject;
     RxMenuItem.clicks(toolbar.getMenu().getItem(1))
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
+          @Override public void onNext(Void aVoid) {
+              bubbleViewUtil.closeBubble();
+              showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-              if (!serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
+                if (!serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
                 showAlert(R.string.alert_permission_forbid);
                 return;
               }
@@ -172,7 +175,13 @@ import javax.inject.Inject;
     initSearch(tl, "输入会员姓名或手机号查找会员卡");
   }
 
-  @Override public void onTextSearch(String text) {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        bubbleViewUtil.closeBubble();
+    }
+
+    @Override public void onTextSearch(String text) {
     presenter.queryKeyworkd(text);
   }
 
@@ -206,6 +215,10 @@ import javax.inject.Inject;
 
   @Override public String getFragmentName() {
     return CardListHomeFragment.class.getName();
+  }
+
+  public void handleBubble(BubbleViewUtil bubbleViewUtil) {
+      bubbleViewUtil.showBubbleOnce(toolbar, "点击管理会员卡种类", "cardListHome", 90, 750, 0);
   }
 
   /**

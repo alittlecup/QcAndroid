@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.subscribes.BusSubscribe;

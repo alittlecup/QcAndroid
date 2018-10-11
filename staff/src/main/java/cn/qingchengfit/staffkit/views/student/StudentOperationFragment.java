@@ -29,7 +29,6 @@ import cn.qingchengfit.staffkit.views.student.attendance.AttendanceActivity;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
 import cn.qingchengfit.staffkit.views.student.followup.RouterFollowUp;
 import cn.qingchengfit.staffkit.views.student.list.StudentOperationItem;
-import cn.qingchengfit.staffkit.views.student.sendmsgs.SendMsgsActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -224,9 +223,11 @@ public class StudentOperationFragment extends BaseFragment
             showAlert(R.string.alert_permission_forbid);
             return false;
           }
-          Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
-          toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
-          startActivity(toChoose);
+          routeTo("student","/student/sendmsg/", null);
+
+          //Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
+          //toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
+          //startActivity(toChoose);
           break;
         case R.string.qc_student_allot_coach:
           if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
@@ -238,9 +239,10 @@ public class StudentOperationFragment extends BaseFragment
           startActivity(i);
           break;
         case R.string.fun_name_export:
-          Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
-          exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
-          startActivity(exportIntent);
+          //Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
+          //exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
+          //startActivity(exportIntent);
+          routeTo("student","/student/export",null);
           break;
         case R.string.qc_student_birthday_notice:
           DialogUtils.showAlert(getContext(),"即将上线，敬请期待");

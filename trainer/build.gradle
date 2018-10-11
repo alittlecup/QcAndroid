@@ -1,45 +1,15 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.squareup.sqldelight'
+apply from: rootProject.file('qc_component.gradle')
 
-//apply plugin: 'com.neenbedankt.android-apt'
-//def buildNumber = "1"
-//apply plugin: 'packer'                     //版本管理 多渠道打包
-def libs = rootProject.ext.libraries;
-def cfg = rootProject.ext.configuration;
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
 
 def getDate() {
   def date = new Date()
   def formattedDate = date.format('yyyyMMddHHmm')
   return formattedDate
-}
-
-def overrideMapsKey(buildVariant) {
-  def appName = getAppName(buildVariant)
-
-  // override line ... this is not necessary to this question
-
-  renameAPK(buildVariant, appName)
-}
-
-// *** RENAME APK ***
-def renameAPK(buildVariant, appName) {
-  def apk = buildVariant.packageApplication.outputFile;
-  def newName = "";
-
-  // get data for apk renaming
-  def versionName = android.defaultConfig.versionName
-  def versionNameSuffix = buildVariant.buildType.versionNameSuffix
-  if (versionNameSuffix.toString().equals("null")) versionNameSuffix = ""
-  def buildTypeOfApp = buildVariant.buildType.name
-
-  if (buildVariant.zipAlign) {
-    //        newName = "etscanner-" + appName + "-" + buildTypeOfApp.toUpperCase() + "-v" + versionName + versionNameSuffix + ".apk"
-    newName = "debug_unalign.apk"
-  } else {
-    //        newName = "etscanner-" + appName + "-" + buildTypeOfApp.toUpperCase() + "-v" + versionName + versionNameSuffix + "-ALIGNED" + ".apk"
-    newName = "debug.apk"
-  }
-  buildVariant.packageApplication.outputFile = new File(apk.parentFile, newName);
 }
 
 android {
@@ -113,6 +83,16 @@ android {
 
       dimension 'qc'
     }
+    //动态修改配置
+    applicationVariants.all { variant ->
+      if (variant.buildType.name == "release") {
+        println(rootProject.ext.today)
+        variant.outputs.all { output ->
+          output.setVersionNameOverride("1." + rootProject.ext.today)
+          output.setVersionCodeOverride(rootProject.ext.today)
+        }
+      }
+    }
   }
 
   buildTypes {
@@ -142,6 +122,7 @@ android {
     resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
     resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
   }
+
 }
 
 //自动加固
@@ -154,8 +135,7 @@ afterEvaluate {
             def apkpath = output.outputFile as File
             exec {
               ignoreExitValue true
-              def rootFile = new File("output")
-              commandLine "sh", rootFile.absolutePath+"/../reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+              commandLine "sh", rootProject.file('reinforce.sh').absolutePath, apkpath, rootProject.file('reinforce.sh').getParentFile().absolutePath,"trainer"
             }
         }
 
@@ -165,42 +145,65 @@ afterEvaluate {
 }
 
 dependencies {
-  implementation project(path: ':saasbase')
+  addComponent('saasbase',false)
+  addComponent('login',false)
+  addComponent('card',false)
+  addComponent('student',false)
+  addComponent('checkout',false)
 
 
-  implementation 'org.glassfish:javax.annotation:10.0-b28'
-  //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
+
   implementation 'cn.qingchegfit.widgets:weekview:1.1@aar'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-//  implementation files('libs/wup-1.0.0-SNAPSHOT.jar')
-//  implementation files('libs/pushservice-4.5.3.48.jar')
-  implementation files('libs/pinyin4j-2.5.0.jar')
-//  implementation files('libs/pushservice-4.5.6.88.jar')
-  //  compile project(path: ':fir-sdk-1.3.7')
   implementation files('libs/pushservice-5.2.0.12.jar')
-  implementation 'com.android.support:multidex:1.0.2'
-  //若使用annotation需要单独引用,对于tinker的其他库都无需再引用
-//  provided "com.tencent.tinker:tinker-android-anno:${libs.tinker}"
-//  compile "com.tinkerpatch.sdk:tinkerpatch-android-sdk:${libs.tinkerpatch}"
 
-  implementation 'com.getbase:floatingactionbutton:1.10.0'
   implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
+
   implementation 'com.github.badoualy:stepper-indicator:1.0.6'
-  implementation 'com.hkm.taglib:tag:1.6.0'
-  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
-  implementation "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
-  implementation('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
+
+  implementation dependens["wechat"]
+  implementation dependens["taglib"]
+  implementation dependens["floatingactionbutton"]
 
 
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+
+
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
+
+  annotationProcessor annotations["fragmentargs"]
+
+  annotationProcessor annotations["room"]
 
 }
+apply plugin: 'auto-register'
+autoregister {
+  registerInfo = [[//自动注册组件
+                   'scanInterface'          : 'cn.qingchengfit.router.IComponent'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.ComponentManager'
+                   , 'registerMethodName'   : 'registerComponent'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.replaceAll("\\.",
+                                                   "/") + ".*"]],
+                  [//自动注册全局拦截器
+                   'scanInterface'          : 'cn.qingchengfit.router.IGlobalCCInterceptor'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.GlobalCCInterceptorManager'
+                   , 'registerMethodName'   : 'registerGlobalInterceptor'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.
+                                                   replaceAll("\\.",
+                                                       "/") + ".*"]],
+                  [//自动注册跨进程通信时自定义类型的json转换器，可以用Gson、FastJson等工具来实现
+                   // 参考： demo_base/src/main/java/com.billy.cc.demo.base.GsonParamConverter
+                   'scanInterface'          : 'cn.qingchengfit.router.IParamJsonConverter'
+                   , 'codeInsertToClassName': 'cn.qingchengfit.router.RemoteParamUtil'
+                   , 'registerMethodName'   : 'initRemoteCCParamJsonConverter'
+                   , 'exclude'              : [//排除的类，支持正则表达式（包分隔符需要用/表示，不能用.）
+                                               'cn.qingchengfit.router.'.
+                                                   replaceAll("\\.",
+                                                       "/") + ".*"]]]
+}
 
-//apply from: 'tinkerpatch.gradle'

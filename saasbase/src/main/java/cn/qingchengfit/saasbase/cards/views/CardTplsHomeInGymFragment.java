@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,8 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
@@ -27,8 +26,8 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.DialogList;
@@ -62,16 +61,16 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "card", path = "/cardtpl/list/") public class CardTplsHomeInGymFragment
-  extends SaasBaseFragment
-  implements CardTypeListPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener,
-  FlexibleAdapter.OnItemClickListener {
+    extends SaasBaseFragment
+    implements CardTypeListPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener,
+    FlexibleAdapter.OnItemClickListener {
 
-	TabLayout tab;
-	ViewPager viewpager;
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	TextView cardCount;
-	TextView cardDisable;
+ public TabLayout tab;
+  public ViewPager viewpager;
+  Toolbar toolbar;
+  public TextView toolbarTitle;
+  TextView cardCount;
+  TextView cardDisable;
 
   @Inject CardTypeListPresenter presenter;
   @Inject IPermissionModel permissionModel;
@@ -84,14 +83,14 @@ import javax.inject.Inject;
     super.onCreate(savedInstanceState);
     initFragments();
     RxBus.getBus()
-      .register(EventSaasFresh.CardTplList.class)
-      .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
-      .compose(this.<EventSaasFresh.CardTplList>doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
-        @Override public void onNext(EventSaasFresh.CardTplList cardTplList) {
-          onRefresh();
-        }
-      });
+        .register(EventSaasFresh.CardTplList.class)
+        .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
+        .compose(this.<EventSaasFresh.CardTplList>doWhen(FragmentEvent.CREATE_VIEW))
+        .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
+          @Override public void onNext(EventSaasFresh.CardTplList cardTplList) {
+            onRefresh();
+          }
+        });
   }
 
   void initFragments() {
@@ -107,7 +106,7 @@ import javax.inject.Inject;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtype_home, container, false);
     tab = (TabLayout) view.findViewById(R.id.tab);
     viewpager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -138,25 +137,25 @@ import javax.inject.Inject;
   }
 
   void initVp() {
-      pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
-      viewpager.setAdapter(pageAdapter);
-      tab.setupWithViewPager(viewpager);
-      viewpager.setOffscreenPageLimit(fragmentList.size());
-      viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
+    viewpager.setAdapter(pageAdapter);
+    tab.setupWithViewPager(viewpager);
+    viewpager.setOffscreenPageLimit(fragmentList.size());
+    viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        }
+      }
 
-        //页面变化
-        @Override public void onPageSelected(int position) {
-          cardCount.setText(fragmentList.get(position).getItemCount() + "");
-        }
+      //页面变化
+      @Override public void onPageSelected(int position) {
+        cardCount.setText(fragmentList.get(position).getItemCount() + "");
+      }
 
-        @Override public void onPageScrollStateChanged(int state) {
+      @Override public void onPageScrollStateChanged(int state) {
 
-        }
-      });
+      }
+    });
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -168,29 +167,30 @@ import javax.inject.Inject;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category),
-          new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              onMenuAdd(position);
-            }
-          }).show();
+            new AdapterView.OnItemClickListener() {
+              @Override
+              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onMenuAdd(position);
+              }
+            }).show();
         return true;
       }
     });
   }
 
-  public void onMenuAdd(int position){
-    if(permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)){
+  public void onMenuAdd(int position) {
+    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
       routeTo("/cardtpl/add/",
-          new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
-              position + 1).build());
-    }else{
-      DialogUtils.showAlert(getContext(), getResources().getString(R.string.add_cardtpl_no_permission));
+          new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(position + 1)
+              .build());
+    } else {
+      DialogUtils.showAlert(getContext(),
+          getResources().getString(R.string.add_cardtpl_no_permission));
     }
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof CardTplListFragment) {
       childCount++;
@@ -206,7 +206,7 @@ import javax.inject.Inject;
     return CardTplsHomeInGymFragment.class.getName();
   }
 
- public void onClickCardDisable() {
+  public void onClickCardDisable() {
     final String[] status = getResources().getStringArray(R.array.cardtype_disable_stauts);
     DialogList.builder(getContext()).list(status, new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -238,8 +238,8 @@ import javax.inject.Inject;
     if (item instanceof CardTplItem) {
       getPresenter().chooseOneCardTpl(((CardTplItem) item).getCardTpl());
       routeTo("/cardtpl/detail/",
-        new cn.qingchengfit.saasbase.cards.views.CardTplDetailParams().cardTpl(
-          ((CardTplItem) item).getCardTpl()).build());
+          new cn.qingchengfit.saasbase.cards.views.CardTplDetailParams().cardTpl(
+              ((CardTplItem) item).getCardTpl()).build());
     }
     return true;
   }

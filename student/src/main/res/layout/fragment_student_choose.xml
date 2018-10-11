@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingStart="@dimen/activity_horizontal_margin"
+      android:gravity="center_vertical"
+      >
+    <cn.qingchengfit.widgets.CompatEditView
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@drawable/bg_common_search"
+        android:hint="会员姓名、手机号"
+        android:paddingLeft="@dimen/little"
+        android:paddingStart="@dimen/little"
+        app:drawableStart="@drawable/vd_search_grey_14dp"
+        android:drawablePadding="@dimen/little"
+        android:textSize="@dimen/txt_14sp"
+        />
+    <ImageView
+        android:id="@+id/btn_add_student"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        app:srcCompat="@drawable/vd_add_member"
+        />
+  </LinearLayout>
+
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/srl"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <FrameLayout
+        android:id="@+id/frag_student_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+  </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

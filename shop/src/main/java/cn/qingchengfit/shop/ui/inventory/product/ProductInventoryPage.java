@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
@@ -34,7 +34,7 @@ import javax.inject.Inject;
   @Override protected void subscribeUI() {
     mViewModel.getAddInventoryEvent().observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       routeTo("/update/inventory", new UpdateInventoryPageParams().action(UpdateInventoryPage.ADD)
@@ -43,7 +43,7 @@ import javax.inject.Inject;
     });
     mViewModel.getReduceInventoryEvent().observe(this, aVoid -> {
       if (!permissionModel.check(ShopPermissionUtils.COMMODITY_INVENTORY_CAN_CHANGE)) {
-        showAlert(R.string.sorry_for_no_permission_shop);
+        showAlert(R.string.sorry_for_no_permission);
         return;
       }
       routeTo("/update/inventory",

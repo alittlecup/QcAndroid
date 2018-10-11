@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
@@ -24,6 +24,8 @@ import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.CommonInputViewAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -74,7 +76,7 @@ public class ShopProductsListPage
       if (permissionModel.check(ShopPermissionUtils.COMMODITY_LIST_CAN_WRITE)) {
         routeTo("/product/add", null);
       } else {
-        showAlert(getString(R.string.sorry_for_no_permission_shop));
+        showAlert(getString(R.string.sorry_for_no_permission));
       }
     });
   }
@@ -187,7 +189,6 @@ public class ShopProductsListPage
     Log.d("TAG", "noMoreLoad: " + newItemsSize);
   }
 
-  //todo 加载更多的问题，是全量还是分页
   @Override public void onLoadMore(int lastPosition, int currentPage) {
     Log.d("TAG", "onLoadMore: +" + lastPosition + "--> " + currentPage);
     Integer page = (Integer) mViewModel.getParams().get("page");

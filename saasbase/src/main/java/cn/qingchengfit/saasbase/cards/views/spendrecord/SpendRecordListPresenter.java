@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.StatementBean;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v4.view.ViewCompat;
@@ -17,7 +18,8 @@ import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -114,7 +116,7 @@ public class SplashActivity extends BaseActivity {
         getString(R.string.baidu_api_release));
 
     String u = PreferenceUtils.getPrefString(this, "user_info", "");
-    String id = PreferenceUtils.getPrefString(this, cn.qingchengfit.saasbase.constant.Configs.PREFER_COACH_ID, "");
+    String id = PreferenceUtils.getPrefString(this, Configs.PREFER_COACH_ID, "");
     if (!TextUtils.isEmpty(u) && !TextUtils.isEmpty(id) && !TextUtils.equals("0",id)) {
             /*
                 已登录跳转
@@ -258,7 +260,9 @@ public class SplashActivity extends BaseActivity {
   }
 
   @UiThread public void goLogin(int registe) {
-    Intent toLogin = new Intent(this, LoginActivity.class);
+
+    Intent toLogin = new Intent(getPackageName(),
+      Uri.parse(AppUtils.getCurAppSchema(this)+"://login/"));
     toLogin.putExtra("isRegiste", registe==1);
     startActivity(toLogin);
     this.finish();

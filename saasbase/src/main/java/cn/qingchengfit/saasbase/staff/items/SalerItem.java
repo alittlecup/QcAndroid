@@ -4,6 +4,7 @@ import android.support.v4.content.ContextCompat;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

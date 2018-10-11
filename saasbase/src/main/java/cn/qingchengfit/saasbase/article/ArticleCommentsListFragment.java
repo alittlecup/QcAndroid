@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.article;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,7 +29,6 @@ import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.article.presenter.ArticleCommentsPresenter;
 import cn.qingchengfit.saasbase.items.ArticleCommentItem;
-import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -152,7 +152,9 @@ import rx.functions.Action1;
         if (loginStatus.isLogined()) {
             presenter.queryCommenList(newsId, 1);
         } else {
-            startActivityForResult(new Intent(getActivity(), LoginActivity.class), 1);
+          Intent to = new Intent(getContext().getPackageName(),
+            Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+          startActivityForResult(to, 1);
         }
         return view;
     }

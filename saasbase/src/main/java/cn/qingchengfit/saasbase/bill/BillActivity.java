@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.bill;
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.bill.filter.BillFilterFragment;
 import cn.qingchengfit.saasbase.bill.view.BillDetailFragment;
 import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
 import com.anbillon.flabellum.annotations.Trunk;

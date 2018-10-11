@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="32dp"
+    android:layout_gravity="center"
+    android:divider="@drawable/divider_linearlayout_6dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    >
+
+  <ImageView
+      android:id="@+id/img_recruit_demand"
+      android:layout_width="14dp"
+      android:layout_height="14dp"
+      app:srcCompat="@drawable/vd_recruit_jobintro_education"
+      />
+
+  <TextView
+      android:id="@+id/tv_content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="女性"
+      style="@style/QcTextStyleMediumDark"
+      />
+
+  <android.support.v4.widget.Space
+      android:layout_width="30px"
+      android:layout_height="wrap_content"
+      />
+</LinearLayout>

@@ -22,7 +22,8 @@
 
   <string name="card_unit_value">(元/人)</string>
   <string name="card_unit_times">(次/人)</string>
-  <string name="card_content_lable">1对%d单价</string>
+  <string name="card_content_lable">1对%d</string>
+  <string name="card_simple_count_total">%s(%d/%d)</string>
 
   <!--停卡文案-->
   <string name="unregiste_card">停卡</string>
@@ -57,6 +58,7 @@
   <string name="tips_auto_open_card">开启提前激活后，允许该会员卡在开始日期之前被使用。一旦使用，有效期自动从当天开始计算。</string>
   <string name="card_protocol_content">会员卡服务条款内容</string>
   <string formatted="false" name="card_protocol_user_read_info">已阅读第%d版(%s版)</string>
+  <string formatted="false" name="card_protocol_user_sign_info">已签名第%d版(%s版)</string>
   <string name="card_protocol_first_can_not">在电脑中编辑条款</string>
 
   <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>

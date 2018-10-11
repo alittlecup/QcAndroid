@@ -53,25 +53,6 @@ public class BodyTestActivity extends AppCompatActivity {
                 .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId, mModel, mModelId, mUserId))
                 .commit();
         }
-
-        //        mChosepicOb = RxBus.getBus().register(RxBus.BUS_CHOOSEPIC);
-        //        mChosepicOb.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<String>() {
-        //            @Override
-        //            public void onCompleted() {
-        //
-        //            }
-        //
-        //            @Override
-        //            public void onError(Throwable e) {
-        //
-        //            }
-        //
-        //            @Override
-        //            public void onNext(String s) {
-        //                LogUtil.e("s:" + s);
-        //                chooseDate();
-        //            }
-        //        });
     }
 
     public void goModify() {
@@ -81,120 +62,6 @@ public class BodyTestActivity extends AppCompatActivity {
             .commit();
     }
 
-    //    public void otherClickable(boolean click) {
-    //        for (int i = 0; i < otherData.getChildCount(); i++) {
-    //            CommonInputView v = (CommonInputView) otherData.getChildAt(i);
-    //
-    //            v.setOnClickListener(new View.OnClickListener() {
-    //                @Override
-    //                public void onClick(View v) {
-    //
-    //                }
-    //            });
-    //            v.setCanClick(click);
-    //        }
-    //    }
-
-    //    public void saveInfo() {
-    //        Measure mMeasure = mModifyBodyTestFragment.getMeasure();
-    //        AddBodyTestBean addBodyTestBean = new AddBodyTestBean();
-    //        addBodyTestBean.model = mModel;
-    //        addBodyTestBean.id = mModelId;
-    //        if (!TextUtils.isEmpty(mMeasure.bmi)) {
-    //            addBodyTestBean.bmi = mMeasure.bmi;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.weight)) {
-    //            addBodyTestBean.weight = mMeasure.weight;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.height)) {
-    //            addBodyTestBean.height = mMeasure.height;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.body_fat_rate)) {
-    //            addBodyTestBean.body_fat_rate = mMeasure.body_fat_rate;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.circumference_of_calf)) {
-    //            addBodyTestBean.circumference_of_calf = mMeasure.circumference_of_calf;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
-    //            addBodyTestBean.circumference_of_chest = mMeasure.circumference_of_chest;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.circumference_of_thigh)) {
-    //            addBodyTestBean.circumference_of_thigh = mMeasure.circumference_of_thigh;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.circumference_of_upper)) {
-    //            addBodyTestBean.circumference_of_upper = mMeasure.circumference_of_upper;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.hipline)) {
-    //            addBodyTestBean.hipline = mMeasure.hipline;
-    //        }
-    //        if (!TextUtils.isEmpty(mMeasure.waistline)) {
-    //            addBodyTestBean.waistline = mMeasure.waistline;
-    //        }
-    //        List<QcBodyTestTemplateRespone.Extra> extras = new ArrayList<>();
-    //        for (int i = 0; i < otherData.getChildCount(); i++) {
-    //            CommonInputView v = (CommonInputView) otherData.getChildAt(i);
-    //            QcBodyTestTemplateRespone.Extra extra = new QcBodyTestTemplateRespone.Extra();
-    //            extra.id = (String) v.getTag(R.id.tag_1);
-    //            extra.unit = (String) v.getTag(R.id.tag_2);
-    //            extra.name = (String) v.getTag(R.id.tag_0);
-    //            extra.value = v.getContent();
-    //            extras.add(extra);
-    //        }
-    //        addBodyTestBean.extra = new Gson().toJson(extras);
-    //        addBodyTestBean.photos = datas;
-    //        if (!TextUtils.isEmpty(measureId)) {//修改
-    //            QcCloudClient.getApi().postApi.qcUpdateBodyTest(measureId, addBodyTestBean)
-    //                    .observeOn(AndroidSchedulers.mainThread())
-    //                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
-    //                    .subscribe(new Subscriber<QcResponse>() {
-    //                        @Override
-    //                        public void onCompleted() {
-    //
-    //                        }
-    //
-    //                        @Override
-    //                        public void onError(Throwable e) {
-    //
-    //                        }
-    //
-    //                        @Override
-    //                        public void onNext(QcResponse qcResponse) {
-    //                            if (qcResponse.status == ResponseResult.SUCCESS) {
-    //                                ToastUtils.showDefaultStyle("保存成功");
-    //
-    //                                BodyTestActivity.this.onBackPressed();
-    //                            }
-    //                        }
-    //                    });
-    //
-    //        } else { //添加
-    //            QcCloudClient.getApi().postApi.qcAddBodyTest(addBodyTestBean)
-    //                    .observeOn(AndroidSchedulers.mainThread())
-    //                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
-    //                    .subscribe(new Subscriber<QcResponse>() {
-    //                        @Override
-    //                        public void onCompleted() {
-    //
-    //                        }
-    //
-    //                        @Override
-    //                        public void onError(Throwable e) {
-    //
-    //                        }
-    //
-    //                        @Override
-    //                        public void onNext(QcResponse qcResponse) {
-    //                            if (qcResponse.status == ResponseResult.SUCCESS) {
-    //                                ToastUtils.showDefaultStyle("保存成功");
-    //                                BodyTestActivity.this.finish();
-    //                            }
-    //                        }
-    //                    });
-    //        }
-    //    }
-    //
-    //
-    //
     public HashMap<String, String> getParams() {
         HashMap<String, String> params = new HashMap<>();
         params.put("model", mModel);
@@ -203,7 +70,6 @@ public class BodyTestActivity extends AppCompatActivity {
     }
 
     @Override protected void onDestroy() {
-        //        RxBus.getBus().unregister(RxBus.BUS_CHOOSEPIC.getClass().getName(), mChosepicOb);
         super.onDestroy();
     }
 }

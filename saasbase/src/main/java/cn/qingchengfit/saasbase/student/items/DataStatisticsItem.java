@@ -5,8 +5,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
-import cn.qingchengfit.saasbase.student.widget.LineCharDate;
+import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
+import cn.qingchengfit.saascommon.widget.LineCharDate;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -52,7 +52,7 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
         holder.tvDataToday.setText(String.valueOf(bean.today_count));
         holder.tvData7day.setText(String.valueOf(bean.week_count));
         holder.tvData30day.setText(String.valueOf(bean.month_count));
-        holder.lineChar.setData(StudentBusinessUtils.transformBean2DataByType(bean, 30, position));
+        //holder.lineChar.setData(StudentBusinessUtils.transformBean2DataByType(bean, 30, position));
 
 
     }

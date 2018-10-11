@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
+import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.BaseActivity;

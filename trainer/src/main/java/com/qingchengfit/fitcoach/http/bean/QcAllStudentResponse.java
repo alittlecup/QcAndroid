@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

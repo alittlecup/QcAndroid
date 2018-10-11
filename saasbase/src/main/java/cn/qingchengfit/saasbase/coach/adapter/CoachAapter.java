@@ -10,7 +10,7 @@ import android.widget.TextView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;

@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;

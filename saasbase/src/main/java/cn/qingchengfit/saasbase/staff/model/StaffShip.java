@@ -185,7 +185,7 @@ public class StaffShip implements Parcelable, ICommonUser {
   }
 
   @Override public boolean filter(String str) {
-    return phone.contains(str) || username.contains(str);
+    return (username != null && username.contains(str)) || (phone != null && phone.contains(str));
   }
 
   @Override public int describeContents() {
@@ -233,5 +233,4 @@ public class StaffShip implements Parcelable, ICommonUser {
       return new StaffShip[size];
     }
   };
-
 }

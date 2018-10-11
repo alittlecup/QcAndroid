@@ -3,7 +3,9 @@ package cn.qingchengfit.staffkit;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
+import cn.qingchengfit.card.StaffCardActivity;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.commpont.AppComponent;
@@ -11,18 +13,18 @@ import cn.qingchengfit.inject.commpont.DaggerAppComponent;
 import cn.qingchengfit.inject.model.CardTypeWrapper;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.inject.model.StaffWrapper;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
+
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
-import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.gymconfig.GymConfigAcitivty;
 import cn.qingchengfit.sass.course.StaffCourseActivity;
-import cn.qingchengfit.staffkit.card.StaffCardActivity;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.debug.LogView;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
@@ -34,6 +36,7 @@ import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
 import cn.qingchengfit.staffkit.views.custom.CitiesData;
 import cn.qingchengfit.utils.CrashHandler;
 import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.weex.utils.WeexDelegate;
@@ -112,18 +115,21 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     //    TinkerPatch.with().fetchPatchUpdate(true);
     //}
     WeexDelegate.initWXSDKEngine(this);
+    QC.init(this);
+    QC.enableDebug(true);
+    QC.enableVerboseLog(true);
     try {
       FIR.init(this);
     } catch (Exception e) {
 
     }
     if (MsfSdkUtils.isMainProcess(this)) {
-      Log.d("MyApplication", "main process");
+      LogUtil.d("MyApplication", "main process");
 
       // 设置离线推送监听器
       TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
         @Override public void handleNotification(TIMOfflinePushNotification notification) {
-          Log.d("MyApplication", "recv offline push");
+          LogUtil.d("MyApplication", "recv offline push");
 
           // 这里的doNotify是ImSDK内置的通知栏提醒，应用也可以选择自己利用回调参数notification来构造自己的通知栏提醒
           notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
@@ -176,12 +182,18 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       JSONObject properties = new JSONObject();
       properties.put("qc_app_name", "Staff");
       SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
+
+      JSONObject properties2 = new JSONObject();
+      //这里示例 DownloadChannel 记录下载商店的渠道(下载渠道)。如果需要多个字段来标记渠道包，请按业务实际需要添加。
+      properties2.put("DownloadChannel", "qc_official");
+      //记录激活事件、渠道追踪，这里激活事件取名为 AppInstall。
+      SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties2);
     } catch (JSONException e) {
-      Log.e("hs_bug", e.getMessage());
+      LogUtil.e("hs_bug", e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
-      Log.e("hs_bug", e.getMessage());
+      LogUtil.e("hs_bug", e.getMessage());
     }
     //}
     initX5();
@@ -189,7 +201,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
 
   @Override protected void attachBaseContext(Context base) {
     super.attachBaseContext(base);
-    //MultiDex.install(this);
+    MultiDex.install(this);
   }
 
   private void initX5() {
@@ -216,7 +228,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
             new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),
             new QCDbManagerImpl(this)))
         .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
-        .studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
+        //.studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
         .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))
         .realcardModule(new RealcardModule(new RealcardWrapper(null)))
         .trainMoudle(new TrainMoudle(new TrainIds.Builder().build()))

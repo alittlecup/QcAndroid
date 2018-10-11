@@ -33,7 +33,7 @@ import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;

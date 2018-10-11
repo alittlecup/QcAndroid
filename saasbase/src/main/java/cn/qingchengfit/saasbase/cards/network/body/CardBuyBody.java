@@ -20,7 +20,7 @@ import cn.qingchengfit.utils.DateUtils;
  * <p/>
  * Created by Paper on 16/4/27 2016.
  */
-public class CardBuyBody implements Parcelable,Cloneable {
+public class CardBuyBody implements Parcelable, Cloneable {
   /**
    * 卡类型
    */
@@ -50,36 +50,79 @@ public class CardBuyBody implements Parcelable,Cloneable {
 
   public String card_id;
   public String staff_id;
+  public String version;
+  public String signature;
 
   public int origin;
   public boolean customize_option;
 
-
   public int checkData() {
     if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
-    if (CmStringUtils.isEmpty(seller_id) && CmStringUtils.isEmpty(staff_id)) return R.string.e_card_saler_cannot_empty;
+
     if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
     if (CmStringUtils.isEmpty(user_ids)) return R.string.e_member_empty;
-    if (check_valid ){
-      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to))
+    if (check_valid) {
+      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)) {
         return R.string.e_card_start_or_end_cannot_empty;
-      if (DateUtils.formatDateFromYYYYMMDD(valid_from).getTime() > DateUtils.formatDateFromYYYYMMDD(valid_to).getTime())
+      }
+      if (DateUtils.formatDateFromYYYYMMDD(valid_from).getTime() > DateUtils.formatDateFromYYYYMMDD(
+          valid_to).getTime()) {
         return R.string.e_start_great_end;
+      }
+    }
+    if (CmStringUtils.isEmpty(seller_id) && CmStringUtils.isEmpty(staff_id)) {
+      return R.string.e_card_saler_cannot_empty;
     }
     switch (type) {
       case 1:
-        if (!CmStringUtils.checkMoney(account))
-          return R.string.e_card_charge_money_cannot_empty;
+        if (!CmStringUtils.checkMoney(account)) return R.string.e_card_charge_money_cannot_empty;
         break;
       case 2:
-        if (!CmStringUtils.checkMoney(times))
-          return R.string.e_card_charge_times_cannot_empty;
+        if (!CmStringUtils.checkMoney(times)) return R.string.e_card_charge_times_cannot_empty;
         break;
       case 3:
-        if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end))
+        if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end)) {
           return R.string.e_card_charge_period_cannot_empty;
-        if (DateUtils.formatDateFromYYYYMMDD(start).getTime() > DateUtils.formatDateFromYYYYMMDD(end).getTime())
+        }
+        if (DateUtils.formatDateFromYYYYMMDD(start).getTime() > DateUtils.formatDateFromYYYYMMDD(
+            end).getTime()) {
           return R.string.e_start_great_end;
+        }
+        break;
+      default:
+        return R.string.e_card_buy_cate;
+    }
+    return 0;
+  }
+
+  public int checkWithOutSeller() {
+    if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
+    if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
+    if (CmStringUtils.isEmpty(user_ids)) return R.string.e_member_empty;
+    if (check_valid) {
+      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)) {
+        return R.string.e_card_start_or_end_cannot_empty;
+      }
+      if (DateUtils.formatDateFromYYYYMMDD(valid_from).getTime() > DateUtils.formatDateFromYYYYMMDD(
+          valid_to).getTime()) {
+        return R.string.e_start_great_end;
+      }
+    }
+    switch (type) {
+      case 1:
+        if (!CmStringUtils.checkMoney(account)) return R.string.e_card_charge_money_cannot_empty;
+        break;
+      case 2:
+        if (!CmStringUtils.checkMoney(times)) return R.string.e_card_charge_times_cannot_empty;
+        break;
+      case 3:
+        if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end)) {
+          return R.string.e_card_charge_period_cannot_empty;
+        }
+        if (DateUtils.formatDateFromYYYYMMDD(start).getTime() > DateUtils.formatDateFromYYYYMMDD(
+            end).getTime()) {
+          return R.string.e_start_great_end;
+        }
         break;
       default:
         return R.string.e_card_buy_cate;
@@ -89,19 +132,19 @@ public class CardBuyBody implements Parcelable,Cloneable {
 
   @Override public Object clone() {
     CardBuyBody stu = null;
-    try{
-      stu = (CardBuyBody)super.clone();
-    }catch(CloneNotSupportedException e) {
+    try {
+      stu = (CardBuyBody) super.clone();
+    } catch (CloneNotSupportedException e) {
       e.printStackTrace();
     }
     return stu;
   }
 
-  public void setBuyAccount(String account ,String start,String end,CardTplOption cto){
-    switch (type){
+  public void setBuyAccount(String account, String start, String end, CardTplOption cto) {
+    switch (type) {
       case 1:
         this.account = account;
-        if (cto != null && cto.limit_days){
+        if (cto != null && cto.limit_days) {
           this.check_valid = true;
           this.valid_from = start;
           this.valid_to = end;
@@ -109,7 +152,7 @@ public class CardBuyBody implements Parcelable,Cloneable {
         break;
       case 2:
         this.times = account;
-        if (cto != null && cto.limit_days){
+        if (cto != null && cto.limit_days) {
           this.check_valid = true;
           this.valid_from = start;
           this.valid_to = end;
@@ -129,7 +172,6 @@ public class CardBuyBody implements Parcelable,Cloneable {
         break;
     }
   }
-
 
   public CardBuyBody() {
   }
@@ -181,7 +223,6 @@ public class CardBuyBody implements Parcelable,Cloneable {
   public void setPrice(String price) {
     this.price = price;
   }
-
 
   public String getAccount() {
     return account;
@@ -394,8 +435,6 @@ public class CardBuyBody implements Parcelable,Cloneable {
       return this;
     }
 
-
-
     public Builder card_id(String val) {
       card_id = val;
       return this;
@@ -446,6 +485,8 @@ public class CardBuyBody implements Parcelable,Cloneable {
     dest.writeByte(this.is_auto_start ? (byte) 1 : (byte) 0);
     dest.writeString(this.card_id);
     dest.writeString(this.staff_id);
+    dest.writeString(this.version);
+    dest.writeString(this.signature);
     dest.writeInt(this.origin);
     dest.writeByte(this.customize_option ? (byte) 1 : (byte) 0);
   }
@@ -471,6 +512,8 @@ public class CardBuyBody implements Parcelable,Cloneable {
     this.is_auto_start = in.readByte() != 0;
     this.card_id = in.readString();
     this.staff_id = in.readString();
+    this.version = in.readString();
+    this.signature = in.readString();
     this.origin = in.readInt();
     this.customize_option = in.readByte() != 0;
   }

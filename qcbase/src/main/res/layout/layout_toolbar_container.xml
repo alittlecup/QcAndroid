@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true"
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/searchview"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+
+      <FrameLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="5"
+          >
+
+        <EditText
+            android:id="@+id/tb_searchview_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_searchview"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:hint="搜索职位/公司"
+            android:imeOptions="actionDone"
+            android:lines="1"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:paddingLeft="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/tb_searchview_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/vd_close_grey_24dp"
+            />
+      </FrameLayout>
+
+      <Button
+          android:id="@+id/tb_searchview_cancle"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="5dp"
+          android:layout_weight="1"
+          android:background="@color/transparent"
+          android:text="@string/pickerview_cancel"
+          />
+    </LinearLayout>
+
+  </FrameLayout>
+</LinearLayout>

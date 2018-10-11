@@ -16,7 +16,7 @@ import rx.functions.Action3;
  */
 
 public class AttendanceStudentListFilterFragment extends BaseFilterFragment {
-    public AttendanceStudentFilterFragment filterFragment;
+    //public AttendanceStudentFilterFragment filterFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,14 +31,14 @@ public class AttendanceStudentListFilterFragment extends BaseFilterFragment {
     }
 
     private void initFragment() {
-        filterFragment = new AttendanceStudentFilterFragment();
-        filterFragment.setListItemString(new String[]{
-                getString(R.string.absence_three_seven)
-                , getString(R.string.absence_thirty)
-                , getString(R.string.absence_sixty)
-                , "自定义"
-        });
-        filterFragment.setSelectDayAction(daySelect);
+        //filterFragment = new AttendanceStudentFilterFragment();
+        //filterFragment.setListItemString(new String[]{
+        //        getString(R.string.absence_three_seven)
+        //        , getString(R.string.absence_thirty)
+        //        , getString(R.string.absence_sixty)
+        //        , "自定义"
+        //});
+        //filterFragment.setSelectDayAction(daySelect);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AttendanceStudentListFilterFragment extends BaseFilterFragment {
 
     @Override
     protected Fragment getFragmentByTag(String tag) {
-        if (tag.equalsIgnoreCase(getTags()[0])) return filterFragment;
+        //if (tag.equalsIgnoreCase(getTags()[0])) return filterFragment;
         return new EmptyFragment();
     }
 

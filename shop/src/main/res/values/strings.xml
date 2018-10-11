@@ -124,5 +124,9 @@
   <string name="choose_product_deliver">请选择交货方式</string>
   <string name="weight_not_below_zero">权重不能小于等于0</string>
 
+  <string name="add_success">添加成功</string>
+  <string name="no_access">禁止访问</string>
+
+  <string name="no_current_page_permission">您没有当前页面的访问权限</string>
 
 </resources>

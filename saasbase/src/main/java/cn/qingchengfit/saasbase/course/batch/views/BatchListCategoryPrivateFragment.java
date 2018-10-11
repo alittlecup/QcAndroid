@@ -2,6 +2,8 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
@@ -11,7 +13,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
@@ -48,7 +50,6 @@ import rx.schedulers.Schedulers;
  */
 @Leaf(module = "course", path = "/batch/cate/private/")
 public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment {
-
   @Need String trainer_id;
   private QcResponsePrivateDetail.PrivateCoach mCoach;
   @Inject IPermissionModel permissionModel;
@@ -67,8 +68,15 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
           if (ResponseConstant.checkSuccess(qcResponse)) {
             if (qcResponse.data.batches != null) {
               List<AbstractFlexibleItem> datas = new ArrayList<>();
-              datas.add(new BatchItem(qcResponse.data.coach));
               mCoach = qcResponse.data.coach;
+              if(mCoach.getAvatar() == "") {
+                if(mCoach.getGender() == 0) {
+                  mCoach.setAvatar("DefaultMale");
+                }else if (mCoach.getGender() == 1) {
+                  mCoach.setAvatar("DefaultFemale");
+                }
+              }
+              datas.add(new BatchItem(mCoach));
               for (QcResponsePrivateDetail.PrivateBatch coach : qcResponse.data.batches) {
                 try {
                   datas.add(
@@ -97,7 +105,7 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
     if (item instanceof BatchCateItem) {
       routeTo("/batch/edit/",
         new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams().batchId(
-          ((BatchCateItem) item).getId()).isPrvite(true).build());
+          ((BatchCateItem) item).getId()).isPrvite(true).isStaff(true).build());
     }
     return true;
   }

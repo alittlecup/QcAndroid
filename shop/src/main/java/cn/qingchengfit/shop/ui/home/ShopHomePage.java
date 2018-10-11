@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopHomeBinding;
@@ -33,6 +35,8 @@ import javax.inject.Inject;
   private List<Pair<String, Fragment>> fragmentList;
   @Inject GymWrapper gymWrapper;
 
+  private BubbleViewUtil bubbleViewUtil;
+
   @Override protected void subscribeUI() {
 
   }
@@ -44,6 +48,7 @@ import javax.inject.Inject;
     initView();
     mBinding.setViewModel(mViewModel);
     mBinding.showWebPreview.setOnClickListener(v -> {
+      bubbleViewUtil.closeBubble();
       String url = gymWrapper.getCoachService().getHost()
           + "/shop/"
           + gymWrapper.shop_id()
@@ -51,7 +56,16 @@ import javax.inject.Inject;
       WebActivity.startWeb(url, getActivity());
       SensorsUtils.track(ShopSensorsConstants.SHOP_PREVIEW_MALL_BTN_CLICK).commit(getContext());
     });
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    bubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
+            Gravity.BOTTOM, 750, 0);
     return mBinding;
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   private int preIndex = 0;

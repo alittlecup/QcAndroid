@@ -20,7 +20,8 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
@@ -76,6 +77,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     private List<AbstractFlexibleItem> mFunsDatas = new ArrayList<>();
     private boolean mEditableMode = false;
     private FunHeaderItem mMyFuntions;
+    private BubbleViewUtil bubbleViewUtil;
 
     @Inject public GymMoreFragment() {
     }
@@ -93,13 +95,17 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
       mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
       myFunRecycleview = (RecyclerView) view.findViewById(R.id.my_fun_recycleview);
 
-      delegatePresenter(mGymMorePresenter, this);
+      bubbleViewUtil = new BubbleViewUtil(getContext());
+      bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "点击这里管理常用功能", "gymMore", 0);
+
+        delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");
         initToolbar(toolbar);
         toolbarTitile.setText("全部功能");
         toolbar.inflateMenu(R.menu.menu_mangage);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
+                bubbleViewUtil.closeBubble();
                 if (mEditableMode) {
                     toolbar.getMenu().clear();
                     toolbar.inflateMenu(R.menu.menu_mangage);
@@ -202,7 +208,8 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     workFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_COMMODITY_LIST),
                     workFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), workFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_WORKBENCH_COUNTER),
+                    workFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), workFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), workFuntion));
 
@@ -379,6 +386,13 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
             }
         }
         return true;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bubbleViewUtil.closeBubble();
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.student.other;
 
+import cn.qingchengfit.saascommon.network.RxHelper;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,18 +8,11 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
-import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
-import cn.qingchengfit.saasbase.utils.StringUtils;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 
 /**
  * Created by huangbaole on 2017/11/2.

@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.utils.SensorsUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,6 +33,7 @@ import rx.functions.Action1;
 /**
  * Created by huangbaole on 2017/10/26.
  */
+@SensorsDataTrackFragmentAppViewScreen
 @Leaf(module = "student", path = "/student/home")
 public class StudentHomeFragment extends SaasBaseFragment implements StudentHomePresenter.MVPView,SwipeRefreshLayout.OnRefreshListener {
     FragmentStudentlistBinding binding;
@@ -68,6 +71,7 @@ public class StudentHomeFragment extends SaasBaseFragment implements StudentHome
 
         binding.setToolbarModel(toolbarModel);
         freshData();
+
         return binding.getRoot();
     }
 

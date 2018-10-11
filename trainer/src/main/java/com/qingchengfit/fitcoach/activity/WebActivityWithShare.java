@@ -45,6 +45,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -100,7 +101,7 @@ public class WebActivityWithShare extends BaseActivity
 
   private List<Integer> mlastPosition = new ArrayList<>(); //记录深度
   private List<String> mTitleStack = new ArrayList<>(); //记录标题
-  private MaterialDialog loadingDialog;
+  private LoadingDialog loadingDialog;
   private ValueCallback<Uri> mValueCallback;
   private ValueCallback<Uri[]> mValueCallbackNew;
   private PicChooseDialog dialog;
@@ -565,12 +566,8 @@ public class WebActivityWithShare extends BaseActivity
 
   public void ShowLoading(String content) {
     if (loadingDialog == null) {
-      loadingDialog = new MaterialDialog.Builder(this).content("请稍后")
-          .progress(true, 0)
-          .cancelable(false)
-          .build();
+      loadingDialog =new LoadingDialog(this,content);
     }
-    if (content != null) loadingDialog.setContent(content);
     loadingDialog.show();
   }
 

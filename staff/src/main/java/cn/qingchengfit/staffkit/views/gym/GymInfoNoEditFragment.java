@@ -15,6 +15,7 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -69,6 +70,7 @@ public class GymInfoNoEditFragment extends BaseFragment {
 
       initToolbar(toolbar);
         initGym(gymWrapper.getCoachService());
+      SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

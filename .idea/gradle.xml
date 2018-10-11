@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../gradle/gradle-4.4.1" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/card" />
+            <option value="$PROJECT_DIR$/checkout" />
+            <option value="$PROJECT_DIR$/login" />
+            <option value="$PROJECT_DIR$/qcbase" />
+            <option value="$PROJECT_DIR$/recruit" />
+            <option value="$PROJECT_DIR$/router" />
+            <option value="$PROJECT_DIR$/saasbase" />
+            <option value="$PROJECT_DIR$/saascommon" />
+            <option value="$PROJECT_DIR$/shop" />
+            <option value="$PROJECT_DIR$/staff" />
+            <option value="$PROJECT_DIR$/student" />
+            <option value="$PROJECT_DIR$/trainer" />
+            <option value="$PROJECT_DIR$/weex" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

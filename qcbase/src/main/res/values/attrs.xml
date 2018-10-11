@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--
+
+  attrs for pwview
+  -->
+  <declare-styleable name="PasswordView">
+    <attr format="boolean" name="pw_mode"/>
+    <attr format="boolean" name="pw_show_left"/>
+    <attr format="boolean" name="pw_nonull"/>
+  </declare-styleable>
+
+  <declare-styleable name="AnimatedButton">
+    <attr format="reference" name="ab_drawable_on"/>
+    <attr format="reference" name="ab_drawable_off"/>
+    <attr format="color" name="ab_color"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="PhoneEditText">
+    <attr format="boolean" name="phone_show_icon"/>
+    <attr format="boolean" name="phone_nonull"/>
+    <attr format="string" name="phone_hint"/>
+    <attr format="boolean" name="phone_only_mainland"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="TabView">
+    <attr format="dimension" name="text_size"/>
+    <attr format="color" name="text_normal_color"/>
+    <attr format="color" name="text_select_color"/>
+    <attr format="dimension" name="item_padding"/>
+    <attr format="reference" name="tvn_icon_on"/>
+    <attr format="reference" name="tvn_icon_off"/>
+    <attr format="reference" name="tvn_txt"/>
+  </declare-styleable>
+
+  <declare-styleable name="CheckableButton">
+    <attr format="dimension" name="cb_text_size"/>
+    <attr format="color" name="cb_text_normal_color"/>
+    <attr format="color" name="cb_text_select_color"/>
+    <attr format="string" name="cb_text_content"/>
+    <attr format="boolean" name="cb_select"/>
+    <attr format="reference" name="cb_background_select"/>
+    <attr format="reference" name="cb_background_normal"/>
+    <attr format="reference" name="cb_hook_icon_select"/>
+    <attr format="reference" name="cb_hook_icon_normal"/>
+    <attr format="string" name="cb_hook_icon_location"/>
+
+  </declare-styleable>
+
+
+  <declare-styleable name="ExpandedLayout">
+    <attr format="boolean" name="el_expanded"/>
+    <attr format="string" name="el_label"/>
+    <attr format="reference" name="el_left_icon"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="RecycleNoImg">
+    <attr format="reference" name="rn_drawable"/>
+    <attr format="string" name="rn_hint"/>
+    <attr format="color" name="rn_color"/>
+    <attr format="dimension" name="rn_bottom_padding"/>
+    <attr format="dimension" name="rn_no_data_top"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="BezelImageView">
+    <attr format="reference" name="maskDrawable"/>
+    <attr format="reference" name="borderDrawable"/>
+    <attr format="boolean" name="desaturateOnPress"/>
+  </declare-styleable>
+
+  <declare-styleable name="ConnerTag">
+    <attr format="string" name="text"/>
+    <attr format="color" name="bg_color"/>
+    <attr format="dimension" name="radius"/>
+  </declare-styleable>
+
+  <declare-styleable name="CircleBackground">
+    <attr format="color" name="border_color"/>
+    <attr format="dimension" name="border_width"/>
+    <attr format="string" name="content"/>
+    <attr format="dimension" name="contentSize"/>
+  </declare-styleable>
+
+  <declare-styleable name="QcToggleButtom">
+    <attr format="string" name="qc_text"/>
+    <attr format="dimension" name="qc_text_size"/>
+    <attr format="color" name="qc_color_on"/>
+    <attr format="color" name="qc_color_off"/>
+    <attr format="boolean" name="qc_checked"/>
+    <attr format="reference" name="qc_vc_drawable"/>
+  </declare-styleable>
+
+  <declare-styleable name="QcFilterToggle">
+    <attr format="string" name="ft_text_on"/>
+    <attr format="string" name="ft_text_off"/>
+    <attr format="dimension" name="ft_text_size"/>
+    <attr format="color" name="ft_color_on"/>
+    <attr format="color" name="ft_color_off"/>
+    <attr format="boolean" name="ft_checked"/>
+    <attr format="reference" name="ft_vc_drawable_on"/>
+    <attr format="reference" name="ft_vc_drawable_off"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="CommonInputView">
+    <attr format="string" name="civ_lable"/>
+    <attr format="string" name="civ_content"/>
+    <attr format="boolean" name="civ_clickable"/>
+    <attr format="boolean" name="civ_inputnum"/>
+    <attr format="boolean" name="civ_nonnull"/>
+    <attr format="reference" name="civ_right_icon"/>
+    <attr format="boolean" name="civ_showdivier"/>
+    <attr format="boolean" name="civ_showright"/>
+    <attr format="integer" name="civ_max_length"/>
+    <attr format="integer" name="civ_text_color"/>
+    <attr format="reference" name="civ_content_color"/>
+    <attr format="string" name="civ_hint"/>
+    <attr format="string" name="civ_unit"/>
+    <attr format="dimension" name="civ_label_width"/>
+    <attr format="boolean" name="civ_is_show_left"/>
+    <attr format="integer" name="civ_left_icon"/>
+    <attr format="boolean" name="civ_edit_able"/>
+  </declare-styleable>
+
+  <declare-styleable name="PagerSlidingTabStrip">
+    <attr format="color" name="pst_text_color"/>
+    <attr format="dimension" name="pst_text_size"/>
+    <attr format="color" name="pst_text_highlight_color"/>
+  </declare-styleable>
+
+
+
+  <declare-styleable name="CompatTextView">
+    <attr format="reference" name="drawableStart"/>
+    <attr format="reference" name="drawableTop"/>
+    <attr format="reference" name="drawableEnd"/>
+    <attr format="reference" name="drawableBottom"/>
+  </declare-styleable>
+
+  <declare-styleable name="DropDownMenu">
+    <attr format="color" name="ddunderlineColor"/>
+    <attr format="color" name="dddividerColor"/>
+    <attr format="color" name="ddtextSelectedColor"/>
+    <attr format="color" name="ddtextUnselectedColor"/>
+    <attr format="color" name="ddmenuBackgroundColor"/>
+    <attr format="color" name="ddmaskColor"/>
+    <attr format="dimension" name="ddmenuTextSize"/>
+    <attr format="reference" name="ddmenuSelectedIcon"/>
+    <attr format="reference" name="ddmenuUnselectedIcon"/>
+    <attr format="float" name="ddmenuMenuHeightPercent"/>
+  </declare-styleable>
+
+  <declare-styleable name="FilterTextLayout">
+    <attr format="reference" name="img_filter"/>
+    <attr format="string" name="filter_label"/>
+  </declare-styleable>
+
+  <declare-styleable name="QcRadioGroup">
+    <attr format="boolean" name="qc_single"/>
+  </declare-styleable>
+
+  <declare-styleable name="LayoutSwitcher">
+    <attr format="string" name="sw_lable"/>
+    <attr format="reference" name="sw_layout"/>
+    <attr format="boolean" name="sw_showdivier"/>
+    <attr format="boolean" name="sw_open"/>
+    <attr format="integer" name="sw_text_color"/>
+    <attr format="integer" name="sw_background"/>
+  </declare-styleable>
+  <declare-styleable name="CircleIndicator">
+    <attr format="dimension" name="ci_width"/>
+    <attr format="dimension" name="ci_height"/>
+    <attr format="dimension" name="ci_margin"/>
+    <attr format="reference" name="ci_animator"/>
+    <attr format="reference" name="ci_animator_reverse"/>
+    <attr format="reference" name="ci_drawable"/>
+    <attr format="reference" name="ci_drawable_unselected"/>
+    <attr format="integer" name="ci_count_less"/>
+  </declare-styleable>
+
+  <declare-styleable name="LargeInputView">
+    <attr format="string" name="liv_lable"/>
+  </declare-styleable>
+
+  <declare-styleable name="ExpandTextView">
+    <attr format="boolean" name="el_tv_isExpand"/>
+    <attr format="integer" name="el_tv_drawable"/>
+    <attr format="string" name="el_tv_content"/>
+    <attr format="integer" name="el_tv_max_line"/>
+  </declare-styleable>
+
+  <item name="expand_text" type="id"/>
+  <item name="expand_image" type="id"/>
+
+</resources>

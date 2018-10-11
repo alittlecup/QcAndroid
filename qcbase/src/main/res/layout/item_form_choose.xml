@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:background="@color/bg_white"
+      android:paddingLeft="15dp"
+      >
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textColor="@color/btn_text_grey_color"
+        tools:text="新注册"
+        style="@style/Qc.TextCommonBlack"
+        />
+    <CheckBox
+        android:id="@+id/choose_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="15dp"
+        android:button="@null"
+        android:background="@drawable/selector_qc_checkbox_2"
+        />
+  </LinearLayout>
+</layout>

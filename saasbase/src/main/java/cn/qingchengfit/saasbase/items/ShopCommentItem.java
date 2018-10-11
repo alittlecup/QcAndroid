@@ -8,7 +8,7 @@
 //import cn.qingchengfit.model.responese.QcResponseShopComment;
 //import cn.qingchengfit.saasbase.R;
 //
-//import cn.qingchengfit.saasbase.utils.StringUtils;
+//import cn.qingchengfit.saascommon.utils.StringUtils;
 //import co.hkm.soltag.TagContainerLayout;
 //import com.bumptech.glide.Glide;
 //import com.tencent.qcloud.timchat.widget.CircleImgWrapper;

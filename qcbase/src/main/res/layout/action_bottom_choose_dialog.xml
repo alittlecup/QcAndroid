@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FBFBFB"
+        >
+      <ImageView
+          android:id="@+id/image_cancel"
+          android:layout_width="45dp"
+          android:layout_height="45dp"
+          android:layout_centerVertical="true"
+          android:layout_gravity="center"
+          android:padding="15dp"
+          android:tint="@color/text_grey"
+          app:srcCompat="@drawable/vd_linear_delete_black"
+          />
+      <TextView
+          android:id="@+id/title"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          tools:text="title"
+          style="@style/QcTextStyleStandardWarm"
+          />
+      <TextView
+          android:id="@+id/btn_confirm"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="15dp"
+          android:text="确定"
+          android:textColor="@color/colorPrimary"
+          style="@style/QcTextStyleStandardDark"
+          />
+    </RelativeLayout>
+
+    <include layout="@layout/divider_white"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        />
+
+  </LinearLayout>
+</layout>

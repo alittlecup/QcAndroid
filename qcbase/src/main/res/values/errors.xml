@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="err_no_course">请选择课程</string>
+  <string name="err_no_trainer">请选择教练</string>
+  <string name="err_no_start_date">请选择开始日期</string>
+  <string name="err_no_end_date">请选择结束日期</string>
+  <string name="err_start_great_end">开始日期大于结束日期</string>
+  <string name="err_max_user">最小上课人数不能小于1</string>
+  <string name="err_no_space">请选择场地</string>
+  <string name="err_no_rule">会员卡结算未填写完整</string>
+  <string name="err_no_time_repeat">请添加课程周期</string>
+  <string name="err_no_openrule">请设置何时开放约课</string>
+
+  <string name="err_no_course_name">请填写课程名称</string>
+  <string name="err_no_course_time">请填写课程时长</string>
+  <string name="err_no_course_min_count">请填写最小上课人数</string>
+  <string name="err_no_course_max_count">请填写单节可约人数</string>
+
+</resources>

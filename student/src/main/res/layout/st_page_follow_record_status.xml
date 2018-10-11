@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+    <variable
+        name="vm"
+        type="cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel"
+        />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_view"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:items="@{vm.getLiveItems()}"
+          />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+  </LinearLayout>
+</layout>

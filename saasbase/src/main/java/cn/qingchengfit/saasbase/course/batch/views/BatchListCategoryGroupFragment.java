@@ -18,7 +18,8 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseSchedule;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
@@ -115,7 +116,7 @@ import rx.schedulers.Schedulers;
     fabMutiBatch.setLabelTextColor(R.color.white);
     if (course != null) {
 
-      routeTo("/batch/add/", null);
+      routeTo("/batch/add/", new AddBatchParams().mCourse(course).build());
     }
   }
 
@@ -137,7 +138,7 @@ import rx.schedulers.Schedulers;
     if (item instanceof BatchCateItem) {
       routeTo("/batch/edit/",
           new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams().batchId(
-              ((BatchCateItem) item).getId()).isPrvite(false).build());
+              ((BatchCateItem) item).getId()).isPrvite(false).isStaff(true).build());
     }
     return true;
   }

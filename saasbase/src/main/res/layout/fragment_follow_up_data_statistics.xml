@@ -86,7 +86,7 @@
 
         <include layout="@layout/divider_grey" />
 
-        <cn.qingchengfit.saasbase.student.widget.LineCharDate
+        <cn.qingchengfit.saascommon.widget.LineCharDate
             android:id="@+id/lineChar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

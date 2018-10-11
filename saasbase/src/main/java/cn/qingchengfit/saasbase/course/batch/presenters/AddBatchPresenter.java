@@ -3,7 +3,7 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;

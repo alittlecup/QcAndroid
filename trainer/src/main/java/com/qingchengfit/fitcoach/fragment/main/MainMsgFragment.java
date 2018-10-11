@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import cn.qingchengfit.utils.SensorsUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
@@ -148,6 +149,7 @@ public class MainMsgFragment extends BaseFragment
     RxBusAdd(EventLoginChange.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(eventLoginChange -> changeLogin());
     changeLogin();
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

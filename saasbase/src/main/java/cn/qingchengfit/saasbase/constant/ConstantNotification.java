@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.AppUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,6 +48,9 @@ public class ConstantNotification {
   public static final int TYPE_FITNESS_COACH_REST = 14;               //健身房-通知教练休息时间-教练
   public static final int TYPE_FITNESS_AFTER_CARD_ORDER_DONE = 15;
     //健身房-在线购卡/冲卡成功-工作人员
+    public static final int TYPE_FITNESS_FOLLOW_RECORD = 17; //会员跟进
+    public static final int TYPE_FITNESS_REMIND_TRACK = 18; //会员跟进下一次跟进提醒通知
+    public static final int TYPE_FITNESS_REMIND_BIRTHDAY = 19; //健身房-生日提醒-工作人员
   public static final int TYPE_FITNESS_TRAINER_CHANGED = 16;                //健身房-教练变更
   public static final int TYPE_MEETING_PAY = 10001;               //会议-支付成功-购票人
   public static final int TYPE_MEETING_TICKET = 10002;                //会议-报名成功-参会人
@@ -73,7 +76,7 @@ public class ConstantNotification {
   public static final String GYM_NOTIFICATION_STR = "gym";
   public static final int[] GYM_NOTIFICATION = {
     TYPE_FITNESS_SELLER_CHANGED, TYPE_FITNESS_WITHOUT_SELLER, TYPE_FITNESS_REMIND_CARD_BALANCE,
-    TYPE_FITNESS_AFTER_CARD_ORDER_DONE,
+    TYPE_FITNESS_AFTER_CARD_ORDER_DONE,TYPE_FITNESS_FOLLOW_RECORD,TYPE_FITNESS_REMIND_TRACK,TYPE_FITNESS_REMIND_BIRTHDAY
   };
   public static final int[] GYM_NOTIFICATION_TRAINER = {
     TYPE_FITNESS_ORDER, TYPE_FITNESS_ORDER_CANCEL, TYPE_FITNESS_SCORE, TYPE_FITNESS_TEAM_ERROR, TYPE_FITNESS_COACH,

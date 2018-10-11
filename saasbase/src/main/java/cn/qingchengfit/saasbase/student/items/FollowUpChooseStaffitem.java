@@ -21,12 +21,12 @@ public class FollowUpChooseStaffitem extends ChooseStaffItem {
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, ChooseStaffVH holder, int position, List payloads) {
         if ("-1".equals(staff.id)) {// 全部
-            int avatarRes;
-            if (adapter.isSelected(position)) {
-                avatarRes = R.drawable.ic_all_selected;
-            } else {
-                avatarRes = R.drawable.ic_all_normal;
-            }
+            int avatarRes=-1;
+            //if (adapter.isSelected(position)) {
+            //    avatarRes = R.drawable.ic_all_selected;
+            //} else {
+            //    avatarRes = R.drawable.ic_all_normal;
+            //}
             Glide.with(holder.itemView.getContext())
                     .load(avatarRes)
                     .asBitmap()

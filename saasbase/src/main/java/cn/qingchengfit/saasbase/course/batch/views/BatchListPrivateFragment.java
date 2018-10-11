@@ -15,12 +15,13 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -65,6 +66,8 @@ import javax.inject.Inject;
   @Inject QcRestRepository restRepository;
   @Inject GymWrapper gymWrapper;
 
+  private BubbleViewUtil bubbleViewUtil;
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
@@ -88,6 +91,7 @@ import javax.inject.Inject;
     toolbar.inflateMenu(R.menu.menu_flow);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
+        bubbleViewUtil.closeBubble();
         DialogList.builder(getContext())
           .list(getResources().getStringArray(R.array.batch_list_private_flow),
             new AdapterView.OnItemClickListener() {
@@ -100,6 +104,14 @@ import javax.inject.Inject;
         return true;
       }
     });
+    bubbleViewUtil = new BubbleViewUtil(getContext());
+    bubbleViewUtil.showBubbleOnceDefaultToolbar(toolbar, "私教的更多操作在这里", "batchListPrivate", 0);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    bubbleViewUtil.closeBubble();
   }
 
   @Override public void onRefresh() {
@@ -112,8 +124,8 @@ import javax.inject.Inject;
     if (item == null) return true;
     if (item instanceof BatchItem) {
       routeTo("/batch/cate/private/",
-        new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
-          ((BatchItem) item).getBatchCoach().id).build());
+              new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
+                      ((BatchItem) item).getBatchCoach().id).build());
     }else if (item instanceof TitleHintItem){
       WebActivity.startWeb(Configs.WEB_HOW_TO_USE_BATCH_PRIVATE,getContext());
     }
@@ -129,6 +141,10 @@ import javax.inject.Inject;
   }
 
   @Override public void clickCopyBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
     routeTo(AppUtils.getRouterUri(getContext(), "/course/batch/copy/"), new BatchCopyParams().isPrivate(Boolean.TRUE).build());
   }
 

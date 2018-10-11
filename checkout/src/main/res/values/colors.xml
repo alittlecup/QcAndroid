@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="ck_deep_blue">#4A90E2</color>
+  <color name="ck_light_green">#06C6B8</color>
+  <color name="ck_ali_blue">#19A0E5</color>
+  <color name="ck_ali_blue_half">#6319A0E5</color>
+  <color name="ck_wx_green">#3DC06F</color>
+  <color name="ck_wx_green_half">#633DC06F</color>
+
+  <color name="ck_ali_start">#95D1FB</color>
+  <color name="ck_ali_end">#5FB1EB</color>
+
+  <color name="ck_wx_start">#78E2A9</color>
+  <color name="ck_wx_end">#5DCB86</color>
+</resources>

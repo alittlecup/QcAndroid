@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestExtra;
 import cn.qingchengfit.model.responese.BodyTestMeasure;
@@ -30,6 +30,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.adapter.ImageGridAdapter;
 import cn.qingchengfit.staffkit.views.custom.InterupteLinearLayout;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -70,7 +71,7 @@ public class BodyTestFragment extends BaseFragment implements BodyTestView {
 	TextView testPicTitle;
 
   @Inject BodyTestPresenter presenter;
-  @Inject StudentWrapper studentBean;
+  @Inject StudentWrap studentBean;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;

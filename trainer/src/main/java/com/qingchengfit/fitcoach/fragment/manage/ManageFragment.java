@@ -26,9 +26,12 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -163,7 +166,7 @@ public class ManageFragment extends BaseFragment
     mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_sale_statement)
         .text(getString(R.string.sale_statement))
         .build()));
-    mData.add(new DailyWorkItem(null));
+    mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ck_ic_modules_workbench_counter).text("收银台").build()));
     //mData.add(new DailyWorkItem(
     //    new FunctionBean.Builder().resImg(R.drawable.ic_template_coursepaln).text(getString(R.string.course_plan)).build()));
     mAdapter = new CommonFlexAdapter(mData, this);
@@ -262,7 +265,7 @@ public class ManageFragment extends BaseFragment
       toGym.putExtra("service", gymWrapper.getCoachService());
       startActivity(toGym);
     });
-
+    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 
@@ -290,7 +293,7 @@ public class ManageFragment extends BaseFragment
                 PreferenceUtils.setPrefString(getContext(), App.coachid + "permission", ps);
                 updatePermission(qcResponsePermission.data);
               } else {
-                ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                ToastUtils.show("权限更新失败");
               }
             }
           }, new NetWorkThrowable()));
@@ -420,6 +423,10 @@ public class ManageFragment extends BaseFragment
           toPlan.putExtra("type", 8);
           toPlan.putExtra("service", gymWrapper.getCoachService());
           startActivity(toPlan);
+          break;
+        case R.drawable.ck_ic_modules_workbench_counter:
+          QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
+
           break;
         default:
       }

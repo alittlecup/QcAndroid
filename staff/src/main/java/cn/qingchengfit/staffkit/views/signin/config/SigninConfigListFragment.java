@@ -20,8 +20,8 @@ import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
@@ -229,6 +229,12 @@ public class SigninConfigListFragment extends BaseFragment
         break;
     }
   }
+
+  @Override public void onResume() {
+    super.onResume();
+    zqPresenter.getAccess();
+  }
+
   @Override public void onShowError(String e) {
 
   }

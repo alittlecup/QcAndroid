@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.qingchengfit.login">
+  <application>
+    <activity android:name=".LoginActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="login"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+        <action android:name="cn.qingcheng.login"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>

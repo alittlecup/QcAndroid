@@ -1,0 +1,201 @@
+apply plugin: "com.android.library"
+apply plugin: "maven"
+
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
+def dependens = rootProject.ext.dependencies
+def annotations = rootProject.ext.annotations
+android {
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+  dataBinding {
+    enabled true
+  }
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+    vectorDrawables.useSupportLibrary = true
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true']
+      }
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  configurations.all {
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+    resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+  }
+}
+
+
+
+dependencies {
+  api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+
+  api dependens["support-v4"]
+  api dependens["support-v13"]
+  api dependens["appcompat-v7"]
+  api dependens["cardview-v7"]
+  api dependens["desigin"]
+  api dependens["percent"]
+  api dependens["support-annotations"]
+  api dependens["constraint-layout"]
+
+  api dependens["logger"]
+
+  api dependens["dagger"]
+  api dependens["dagger-android"]
+  api dependens["dagger-android-support"]
+  annotationProcessor annotations["dagger-compiler"]
+  annotationProcessor annotations["dagger-android-processor"]
+
+  api(dependens["retrofit"]) {
+    exclude module: 'okhttp'
+  }
+  api dependens["adapter-rxjava"]
+  api dependens["converter-gson"]
+  api dependens["retrofit2-rxjava2-adapter"]
+
+  api dependens["okhttp"]
+  api dependens["logging-interceptor"]
+
+  api dependens["rxjava"]
+  api dependens["rxandroid"]
+  api dependens["rxjava2"]
+  api dependens["rxandroid2"]
+
+  api dependens["rxlifecycle"]
+  api dependens["rxlifecycle-android"]
+  api dependens["rxlifecycle-components"]
+
+
+  api dependens["rxbinding"]
+
+  api dependens["rxjava-reactive-streams"]
+
+  api dependens["threetenabp"]
+
+  api dependens["gson"]
+
+  api dependens["qrcodereaderview"]
+
+  api dependens["nineold-androids"]
+
+  api dependens["photoView"]
+
+  api dependens["flexible-adapter"]
+  api dependens["flexible-adapter-databinding"]
+
+  api dependens["glide"]
+
+  api dependens["sqlbrite"]
+
+  api dependens["rxpermissions"]
+
+  api dependens["matisse"]
+
+  api dependens["dialog"]
+
+  api dependens["umeng"]
+
+  api dependens["sensorsdata"]
+
+  api dependens["flexbox"]
+
+  api dependens["fragmentargs"]
+  annotationProcessor annotations["fragmentargs"]
+
+  api dependens["floatingactionbutton"]
+
+  api dependens["android-image-cropper"]
+
+  api dependens["cam2"]
+
+  api dependens["fab"]
+
+  api dependens["tag-group"]
+
+  api dependens["upyun"]
+
+  api files('libs/Bughd_android_sdk_v1.3.7.jar')
+
+  api dependens["map2d"]
+  api dependens["map-search"]
+  api dependens["map-location"]
+
+  api dependens["wechat"]
+  implementation files(dependens["tencent-tbs"])
+  implementation files(dependens["tencent-mid"])
+
+  api dependens["lottie"]
+
+  api(dependens["io-client"]) {
+    exclude group: 'org.json', module: 'json'
+  }
+
+  api dependens["room-rxjava2"]
+  annotationProcessor annotations["room"]
+
+  api dependens["phrase"]
+
+  api dependens["rxjava2-interop"]
+
+  api dependens["router"]
+
+  api dependens["flabellum"]
+
+  api dependens["lifecycle-extensions"]
+  api dependens["reactive-streams"]
+  api dependens["lifecycle-common-java8"]
+
+
+  androidTestImplementation dependens["android-test"]
+  testImplementation dependens["junit"]
+  androidTestImplementation(dependens["espresso-core"]){
+    exclude group: 'com.android.support', module: 'support-annotations'
+  }
+}
+
+group 'cn.qingchengfit.widgets'
+version "1.0.$today"
+def ci = true
+uploadArchives {
+  if (ci) {
+    repositories {
+      mavenDeployer {
+        repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')) {
+          authentication(userName: "admin", password: "admin123")
+        }
+        pom.artifactId = 'qcbase'
+      }
+    }
+  } else {
+    repositories {
+      mavenDeployer {
+        repository(url: uri('../../../repo'))
+        pom.artifactId = 'qcbase'
+      }
+    }
+  }
+}

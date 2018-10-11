@@ -15,8 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
@@ -28,6 +26,7 @@ import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.presenters.AddCoursePresenter;
 import cn.qingchengfit.saasbase.network.model.Shop;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -35,14 +34,15 @@ import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
-@Leaf(module = "course", path = "/add/") public class AddCourseFragment extends SaasBaseFragment implements AddCoursePresenter.MVPview{
+@Leaf(module = "course", path = "/add/") public class AddCourseFragment extends SaasBaseFragment
+    implements AddCoursePresenter.MVPview {
 
   private static final int RESULT_GYMS = 601;
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	FrameLayout fragBaseinfo;
-	CommonInputView btnSuitGyms;
-	LinearLayout layoutSuitGym;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  FrameLayout fragBaseinfo;
+  CommonInputView btnSuitGyms;
+  LinearLayout layoutSuitGym;
 
   private CourseBaseInfoEditFragment mEditBaseInfo;
 
@@ -74,14 +74,14 @@ import javax.inject.Inject;
             Planid = Long.toString(courseDetail.getPlan().getId());
           }
           CourseBody body = new CourseBody.Builder().name(courseDetail.getName())
-            .capacity(courseDetail.getCapacity())
-            .is_private(isPrivate ? 1 : 0)
-            .length(courseDetail.getLength())
-            .min_users(isPrivate ? null : courseDetail.getMin_users())
-            .photo(courseDetail.getPhoto())
-            .plan_id(Planid)
-            .shop_ids(support_gym)
-            .build();
+              .capacity(courseDetail.getCapacity())
+              .is_private(isPrivate ? 1 : 0)
+              .length(courseDetail.getLength())
+              .min_users(isPrivate ? null : courseDetail.getMin_users())
+              .photo(courseDetail.getPhoto())
+              .plan_id(Planid)
+              .shop_ids(support_gym)
+              .build();
           showLoading();
           presenter.addCourse(body);
         }
@@ -93,11 +93,11 @@ import javax.inject.Inject;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (isPrivate == null ) isPrivate = true;
+    if (isPrivate == null) isPrivate = true;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_course_add, container, false);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
@@ -115,6 +115,8 @@ import javax.inject.Inject;
     if (mEditBaseInfo == null) {
       mEditBaseInfo = CourseBaseInfoEditFragment.newInstance(new CourseType(isPrivate));
     }
+    SensorsUtils.trackScreen(
+        this.getClass().getCanonicalName() + "_" + (isPrivate ? "private" : "group"));
     return view;
   }
 
@@ -138,11 +140,10 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
-
   public void onClickSuitGyms() {
     MutiChooseGymFragment.start(this, false, null,
-        getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE : PermissionServerUtils.TEAMSETTING_CAN_WRITE,
-        RESULT_GYMS);
+        getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE
+            : PermissionServerUtils.TEAMSETTING_CAN_WRITE, RESULT_GYMS);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

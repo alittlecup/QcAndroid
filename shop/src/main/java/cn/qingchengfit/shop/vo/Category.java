@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.shop.ui.items.category.ICategotyItemData;
 
-
 /**
  * Created by huangbaole on 2017/12/19.
  */

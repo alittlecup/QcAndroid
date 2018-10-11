@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.inject.model.StudentWrapper;
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.model.responese.ScoreHistory;
 import cn.qingchengfit.model.responese.StudentScoreHistoryBean;
 import cn.qingchengfit.staffkit.R;
@@ -21,6 +21,8 @@ import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.student.score.item.HistoryItem;
+
+import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -51,7 +53,7 @@ import javax.inject.Inject;
 public class ScoreDetailFragment extends BaseFragment implements ScoreDetailPresenter.PresenterView {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject StudentWrapper studentBean;
+    @Inject StudentWrap studentBean;
     @Inject ScoreDetailPresenter presenter;
     @Inject ScoreModifyFragment scoreModifyFragment;
 

@@ -24,9 +24,10 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
-import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -494,6 +495,14 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @Override public int payMethod() {
     return 0;
+  }
+
+  @Override public boolean checkCardBuyBody(CardBuyBody cardBuyBody) {
+    if(cardBuyBody.checkData()>0){
+      showAlert(cardBuyBody.checkData());
+      return true;
+    }
+    return false;
   }
 
   @Override public boolean openValidDay() {
