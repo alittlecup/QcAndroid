@@ -135,10 +135,10 @@ import com.google.gson.JsonObject;
           if (s.contains(".") && s.indexOf(".") < s.length() - 2) {
             return;
           }
-          if(s.length()>=9){
+          if (s.length() >= 9) {
             return;
           }
-          if(i==R.id.tv_0&&s.equals("0")){
+          if (i == R.id.tv_0 && s.equals("0")) {
             return;
           }
         }
@@ -174,6 +174,10 @@ import com.google.gson.JsonObject;
   }
 
   private boolean checkMoney(String s) {
+    if (TextUtils.isEmpty(mBinding.edRemarks.getText())) {
+      ToastUtils.show("请填写备注信息");
+      return false;
+    }
     try {
       if (TextUtils.isEmpty(s)) return false;
       float money = Float.valueOf(s);

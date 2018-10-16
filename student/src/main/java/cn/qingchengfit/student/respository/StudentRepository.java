@@ -2,6 +2,7 @@ package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AbsentceListWrap;
@@ -129,6 +130,8 @@ public interface StudentRepository {
 
   void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
       MutableLiveData<Resource<Object>> rst, String studentId);
+
+  void qcLoadStudentInfoById(MutableLiveData<QcStudentBean> liveData,MutableLiveData<Resource<Object>>rst,String studentId);
 
   /**
    * @param params track_status

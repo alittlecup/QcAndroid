@@ -2,6 +2,8 @@ package debug;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
+import cn.qingchengfit.checkout.repository.CheckoutModel;
+import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
@@ -33,6 +35,7 @@ import javax.inject.Singleton;
   static GymWrapper gymWrapper = new GymWrapper.Builder().build();
 
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+  @Binds abstract ICheckoutModel bindICheckoutModel(CheckoutModel checkoutModel);
 
   @Provides static LoginStatus provideLogin() {
     return loginStatus;
@@ -50,7 +53,7 @@ import javax.inject.Singleton;
   }
 
   @Provides static QcRestRepository provideQcRestRepository(Application application) {
-    return new QcRestRepository(application, "http://cloudtest02.qingchengfit.cn/", "staff-qingcheng");
+    return new QcRestRepository(application, "http://cloudtest.qingchengfit.cn/", "staff-qingcheng");
   }
 
   @Provides static IPermissionModel providePermission() {

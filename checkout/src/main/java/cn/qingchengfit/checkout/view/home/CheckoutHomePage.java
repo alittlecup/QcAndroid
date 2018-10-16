@@ -41,8 +41,11 @@ import com.anbillon.flabellum.annotations.Leaf;
           .callAsync(callback);
     });
     mBinding.flAppendCard.setOnClickListener(view -> {
-      QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/list/nobalance"))
-          .callAsync(callback);
+      //QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/list/nobalance"))
+      //    .callAsync(callback);
+      QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
+          .addParam("addAble", false)
+          .addParam("chooseType", 1)).callAsync(callback);
     });
     mBinding.flCheckout.setOnClickListener(view -> {
       QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/money"))

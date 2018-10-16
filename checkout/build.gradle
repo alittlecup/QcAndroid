@@ -7,6 +7,8 @@ def annotations = rootProject.ext.annotations
 dependencies {
   addComponent('saascommon',false)
   appComponent('login',false)
+  appComponent('student',false)
+  appComponent('card',false)
 
 
 

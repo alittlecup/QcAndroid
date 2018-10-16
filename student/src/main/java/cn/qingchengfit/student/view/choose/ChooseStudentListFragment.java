@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.item.ChosenStudentItem;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.flexibleadapter.items.IHeader;
@@ -51,6 +52,12 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return v;
   }
 
+  private FlexibleAdapter.OnItemClickListener onItemClickListener;
+
+  public void setOnItemClickListener(FlexibleAdapter.OnItemClickListener listener) {
+    this.onItemClickListener = listener;
+  }
+
   @Override public boolean onItemClick(int i) {
     if (commonFlexAdapter.getItem(i) instanceof StudentItem) {
       int lastChoose = -1;
@@ -58,6 +65,9 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
       if (commonFlexAdapter.getMode() == 1) {//单选模式
         lastChoose = commonFlexAdapter.getSelectedPositions().size() > 0
             ? commonFlexAdapter.getSelectedPositions().get(0) : -1;
+        if (onItemClickListener != null) {
+          return onItemClickListener.onItemClick(i);
+        }
       }
       StudentItem item = (StudentItem) commonFlexAdapter.getItem(i);
       if (item instanceof ChosenStudentItem) {
@@ -77,6 +87,11 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return true;
   }
 
+  public StudentItem getItem(int position) {
+    if (commonFlexAdapter == null) return null;
+    return (StudentItem) commonFlexAdapter.getItem(position);
+  }
+
   @Override protected IFlexible instanceItem(QcStudentBean qcStudentBean, IHeader iHeader) {
     return new ChosenStudentItem(qcStudentBean, iHeader);
   }
@@ -94,10 +109,6 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
 
   public int getSelectedCount() {
     return commonFlexAdapter.getSelectedItemCount();
-  }
-
-  @Override public void filter(String s) {
-    super.filter(s);
   }
 
   public void selectStudent(ArrayList<String> studentIdList) {

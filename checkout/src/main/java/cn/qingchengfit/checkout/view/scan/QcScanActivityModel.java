@@ -2,9 +2,7 @@ package cn.qingchengfit.checkout.view.scan;
 
 import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
-import cn.qingchengfit.checkout.repository.CheckoutModel;
 import cn.qingchengfit.checkout.repository.CheckoutRepository;
-import cn.qingchengfit.saascommon.calendar.BaseView;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import java.util.HashMap;
 import java.util.Map;

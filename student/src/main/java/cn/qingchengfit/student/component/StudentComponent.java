@@ -2,11 +2,14 @@ package cn.qingchengfit.student.component;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentParams;
+import cn.qingchengfit.student.view.choose.SearchStudentParams;
+import com.upyun.library.common.Params;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -30,15 +33,23 @@ public class StudentComponent implements IComponent {
         QC.sendQCResult(qc.getCallId(), QCResult.success());
         return true;
       case "/choose/student/":
+      case "/search/student/":
         Bundle studentIdList =
-            new ChooseAndSearchStudentParams()
+            new SearchStudentParams()
                 .chooseType(qc.getParams().get("chooseType")==null?null:(int)qc.getParams().get("chooseType"))
                 .source(qc.getParams().get("source")==null?null:(String) qc.getParams().get("source"))
                 .studentIdList(qc.getParams().get("studentIdList")==null?null:((ArrayList<String>)qc.getParams().get("studentIdList")))
                 .build();
-        RouteUtil.routeTo(qc.getContext(), getName(), actionName, studentIdList);
-        QC.sendQCResult(qc.getCallId(), QCResult.success());
-        return true;
+        if(qc.getParams().get("addAble")!=null){
+          studentIdList.putBoolean("addAble", (Boolean) qc.getParams().get("addAble"));
+          studentIdList.putString("qcCallId",qc.getCallId());
+          RouteUtil.routeTo(qc.getContext(), getName(), actionName, studentIdList);
+          return true;
+        }else {
+          RouteUtil.routeTo(qc.getContext(), getName(), actionName, studentIdList);
+          QC.sendQCResult(qc.getCallId(), QCResult.success());
+          return false;
+        }
       case "/student/birthday":
         RouteUtil.routeTo(qc.getContext(), getName(), actionName, null);
         QC.sendQCResult(qc.getCallId(), QCResult.success());

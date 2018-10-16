@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.qingchengfit.RxBus;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -60,15 +63,17 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-  extends SaasCommonFragment
-  implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	FrameLayout toolbarLayout;
-	CompatEditView etSearch;
-	SwipeRefreshLayout srl;
+    extends SaasCommonFragment
+    implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  FrameLayout toolbarLayout;
+  CompatEditView etSearch;
+  SwipeRefreshLayout srl;
+  LinearLayout llSearchAll;
+  ImageView addStudent;
 
-  private ChooseStudentListFragment chooseStudentListFragment;
+  ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
   @Inject IPermissionModel permissionModel;
   @Need public ArrayList<String> studentIdList;
@@ -78,29 +83,30 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ChooseAndSearchStudentParams.inject(this);
-    if (chooseType == null || chooseType == 0 )
-      chooseType = SelectableAdapter.Mode.MULTI;
-    chooseStudentListFragment =  ChooseStudentListFragment.newInstance(chooseType);
+    if (chooseType == null || chooseType == 0) chooseType = SelectableAdapter.Mode.MULTI;
+    chooseStudentListFragment = ChooseStudentListFragment.newInstance(chooseType);
     RxBus.getBus()
-      .register(EventSaasFresh.StudentList.class)
-      .compose(this.<EventSaasFresh.StudentList>bindToLifecycle())
-      .compose(this.<EventSaasFresh.StudentList>doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<EventSaasFresh.StudentList>() {
-        @Override public void onNext(EventSaasFresh.StudentList studentList) {
-          onRefresh();
-        }
-      });
+        .register(EventSaasFresh.StudentList.class)
+        .compose(this.<EventSaasFresh.StudentList>bindToLifecycle())
+        .compose(this.<EventSaasFresh.StudentList>doWhen(FragmentEvent.CREATE_VIEW))
+        .subscribe(new BusSubscribe<EventSaasFresh.StudentList>() {
+          @Override public void onNext(EventSaasFresh.StudentList studentList) {
+            onRefresh();
+          }
+        });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_student_choose, container, false);
+    View view = inflater.inflate(R.layout.st_fragment_student_choose, container, false);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
     toolbarLayout = (FrameLayout) view.findViewById(R.id.toolbar_layout);
     etSearch = (CompatEditView) view.findViewById(R.id.et_search);
     srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+    llSearchAll = view.findViewById(R.id.ll_search_all);
+    addStudent = view.findViewById(R.id.btn_add_student);
     view.findViewById(R.id.btn_add_student).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onBtnAddStudentClicked();
@@ -111,20 +117,25 @@ import javax.inject.Inject;
     initToolbar(toolbar);
     RxTextView.afterTextChangeEvents(etSearch)
         .throttleLast(1000, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(textViewAfterTextChangeEvent -> {
-          if (chooseStudentListFragment != null
-              && chooseStudentListFragment.isAdded()
-              && etSearch != null) {
-            chooseStudentListFragment.filter(etSearch.getText().toString());
-          }
+          filterText(etSearch.getText().toString());
         });
     srl.setRefreshing(true);
     srl.setOnRefreshListener(this);
     return view;
   }
 
+  protected void filterText(String text) {
+    if (chooseStudentListFragment != null
+        && chooseStudentListFragment.isAdded()
+        && etSearch != null) {
+      chooseStudentListFragment.filter(text);
+    }
+  }
+
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     if (f instanceof ChooseStudentListFragment) {
       onRefresh();
     }
@@ -147,7 +158,7 @@ import javax.inject.Inject;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus()
-          .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent(),source));
+            .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent(), source));
         popBack();
         return false;
       }
@@ -165,11 +176,12 @@ import javax.inject.Inject;
   /**
    * 新增会员
    */
- public void onBtnAddStudentClicked() {
+  public void onBtnAddStudentClicked() {
     if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
       QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
-    }else{
-      DialogUtils.showAlert(getContext(), getResources().getString(R.string.alert_permission_forbid));
+    } else {
+      DialogUtils.showAlert(getContext(),
+          getResources().getString(R.string.alert_permission_forbid));
     }
   }
 
@@ -185,14 +197,7 @@ import javax.inject.Inject;
     getData();
   }
 
-  public void getData(){
+  public void getData() {
     presenter.getAllStudents();
   }
-
-  ///**
-  // * 底部选择框
-  // */
-  //@OnClick(R2.id.ll_show_select) public void onLlShowSelectClicked() {
-  //
-  //}
 }

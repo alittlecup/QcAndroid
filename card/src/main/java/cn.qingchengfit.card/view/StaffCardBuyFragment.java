@@ -51,24 +51,23 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
-      JsonObject wrapper=new JsonObject();
-      wrapper.addProperty("price",realMoney());
-      wrapper.add("bean",payBusinessResponse);
-      JsonObject info=new JsonObject();
-      info.addProperty("moduleName","card");
-      info.addProperty("actionName","/repay/newcard");
-      info.addProperty("params",presenter.getRePayJson());
-      wrapper.add("info",info);
+      JsonObject wrapper = new JsonObject();
+      wrapper.addProperty("price", realMoney());
+      wrapper.add("bean", payBusinessResponse);
+      JsonObject info = new JsonObject();
+      info.addProperty("moduleName", "card");
+      info.addProperty("actionName", "/repay/newcard");
+      info.addProperty("params", presenter.getRePayJson());
+      wrapper.add("info", info);
 
       if (payMethod() == 7) {
-        wrapper.addProperty("type","WEIXIN_QRCODE");
+        wrapper.addProperty("type", "WEIXIN_QRCODE");
       } else if (payMethod() == 12) {
-        wrapper.addProperty("type","ALIPAY_QRCODE");
+        wrapper.addProperty("type", "ALIPAY_QRCODE");
       }
       QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/pay")
           .setContext(getContext())
           .addParam("data", new Gson().toJson(wrapper))).callAsync(callback);
-
     }
   }
 
@@ -79,6 +78,16 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       onFailed("充值失败");
     }
   };
+
+  @Override public void onCivBindMenbersClicked() {
+    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+    if (TextUtils.isEmpty(qcCallId)) {
+      super.onCivBindMenbersClicked();
+    } else {
+      QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
+          .addParam("studentIdList", presenter.getChoseStuIds())).call();
+    }
+  }
 
   @Override public void onSalers(List<Staff> salers) {
 
@@ -106,23 +115,24 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     getActivity().setResult(Activity.RESULT_OK);
     getActivity().finish();
     String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
-    if(TextUtils.isEmpty(qcCallId)){
+    if (TextUtils.isEmpty(qcCallId)) {
       routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
-    }else{
-      QC.sendQCResult(qcCallId,QCResult.success());
+    } else {
+      QC.sendQCResult(qcCallId, QCResult.success());
     }
   }
 
   @Override public void onFailed(String s) {
     getActivity().finish();
     String qcCallId = getActivity().getIntent().getExtras().getString("qcCallId");
-    if(TextUtils.isEmpty(qcCallId)){
+    if (TextUtils.isEmpty(qcCallId)) {
       routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
-    }else{
-      QC.sendQCResult(qcCallId,QCResult.error(s));
+    } else {
+      QC.sendQCResult(qcCallId, QCResult.error(s));
     }
     ToastUtils.show(s);
   }
+
   @Override public void onWxPay(String url) {
     Intent toWeb = new Intent(getContext(), WebActivity.class);
     toWeb.putExtra("url", url);
