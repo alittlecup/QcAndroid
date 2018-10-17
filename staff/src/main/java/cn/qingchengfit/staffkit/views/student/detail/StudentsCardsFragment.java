@@ -70,29 +70,16 @@ public class StudentsCardsFragment extends BaseFragment
     recycleview.setAdapter(adatper);
     recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-        if (serPermisAction.checkAtLeastOne(PermissionServerUtils.CARDSETTING)) {
-          presenter.querData();
-        } else {
-          recycleview.setNoDataImgRes(R.drawable.ic_no_permission);
-          recycleview.setNodataHint(getString(R.string.alert_permission_forbid));
-          recycleview.setNoData(true);
-        }
+`        presenter.querData();
       }
     });
-
 
     return view;
   }
 
   @Override public void onResume() {
     super.onResume();
-    if (serPermisAction.checkAtLeastOne(PermissionServerUtils.CARDSETTING)) {
-      presenter.querData();
-    } else {
-      recycleview.setNoDataImgRes(R.drawable.ic_no_permission);
-      recycleview.setNodataHint(getString(R.string.alert_permission_forbid));
-      recycleview.setNoData(true);
-    }
+    presenter.querData();
   }
 
   @Override public void onDestroyView() {
