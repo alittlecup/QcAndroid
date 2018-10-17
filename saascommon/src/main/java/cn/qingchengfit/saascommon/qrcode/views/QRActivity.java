@@ -154,6 +154,8 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_OPERATE_PRIVATE_SHARE = "/private/collage";
     public static final String MODULE_OPERATE_GROUP_SHARE = "/group/collage";
     public static final String MODULE_OPERATE_MORE = "/spread/more";
+    public static final String MODULE_MARKET_ALI = "/tmall/retail";
+    public static final String MODULE_MARKET_DIANPING = "/meituan/dianping";
 
     /**
      * 财务

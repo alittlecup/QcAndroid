@@ -52,6 +52,8 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_HOME;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_COACH;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_STAFF;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_STAFF_ADD;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_ALI;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_DIANPING;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MSG;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_NONE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_OPERATE_ACTIVITY;
@@ -233,6 +235,10 @@ public class GymFunctionFactory {
 
       case MODULE_SMARTGYM_SMART:
         return R.drawable.vd_module_aigym;
+      case MODULE_MARKET_ALI:
+        return R.drawable.tmall_icon;
+      case MODULE_MARKET_DIANPING:
+        return R.drawable.dazhongdianping_icon;
 
       default:
         return 0;
@@ -406,6 +412,10 @@ public class GymFunctionFactory {
 
       case MODULE_SMARTGYM_SMART:
         return R.string.module_smartgym;
+      case MODULE_MARKET_ALI:
+        return R.string.module_op_ali;
+      case MODULE_MARKET_DIANPING:
+        return R.string.module_op_dianping;
 
       default:
         return R.string.none;
@@ -479,7 +489,7 @@ public class GymFunctionFactory {
         //goQrScan(fragment, module, null, coachService);
         //fragment.routeTo("shop","/shop/home",null);
         WeexUtil.loadJsMap(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
-            Configs.WEEX_PAGE_INDEX,BuildConfig.DEBUG);
+            Configs.WEEX_PAGE_INDEX, BuildConfig.DEBUG);
 
         //fragment.routeTo("student", "/student/home", null);
         return;
@@ -547,6 +557,12 @@ public class GymFunctionFactory {
        * 会员积分  活动   场馆主页广告
        * 介入口碑  注册送卡 场馆公告
        */
+      case MODULE_MARKET_ALI:
+        goQrScan(fragment, "/enter-ali", null, coachService);
+        return;
+      case MODULE_MARKET_DIANPING:
+        goQrScan(fragment, "/enter-dianping", null, coachService);
+        return;
       case MODULE_OPERATE_SCORE:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
             PermissionServerUtils.SCORE_SETTING)) {

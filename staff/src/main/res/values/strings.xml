@@ -161,7 +161,7 @@
   <string name="cardtype_value">储值类型</string>
   <string name="cardtype_times">次卡类型</string>
   <string name="cardtype_date">期限类型</string>
-  <string  formatted="false" name="balance_card_total">(%s张)</string>
+  <string formatted="false" name="balance_card_total">(%s张)</string>
   <string name="cardtype_all_all">全部会员卡</string>
   <string name="all_cardtype_value">全部储值类型</string>
   <string name="all_cardtype_times">全部次卡类型</string>
@@ -390,7 +390,6 @@
   <string name="notification">通知</string>
 
 
-
   <string name="wardrobe_no">更衣柜号</string>
   <string name="wardrobe_district">更衣柜区域</string>
   <string name="district_choose">区域选择</string>
@@ -438,7 +437,6 @@
         L36.0 20.0
         L33.17 17.17z
     </string>
-
 
 
   <string name="qc_signin_log_footer">只能查看3小时内的签到/签出记录\n更多信息请查看签到/签出报表</string>
@@ -585,6 +583,8 @@
   <string name="module_op_hongbao">健身红包</string>
   <string name="module_op_private_share">私教拼课</string>
   <string name="module_op_group_share">组队拼课</string>
+  <string name="module_op_ali">天猫新零售</string>
+  <string name="module_op_dianping">美团点评</string>
   <string name="module_op_more">更多功能</string>
 
 
@@ -596,7 +596,6 @@
   <string name="module_fi_signin_statement">签到报表</string>
   <string name="module_fi_class_statement">预约报表</string>
   <string name="module_fi_visual_statement">可视化报表</string>
-
 
 
   <string name="module_gym_info">场馆信息</string>

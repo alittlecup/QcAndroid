@@ -16,15 +16,16 @@
       android:id="@+id/frag_main"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginBottom="@dimen/qc_item_height"
+      android:layout_marginBottom="50dp"
       android:background="@color/bg_grey"
       />
 
   <cn.qingchengfit.widgets.TabViewNoVp
       android:id="@+id/tabview"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="50dp"
       android:layout_alignParentBottom="true"
+      android:layout_marginTop="5dp"
       android:background="@color/toolbar"
       android:gravity="center_vertical"
       app:text_select_color="@color/colorPrimary"
@@ -34,47 +35,67 @@
 
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="50dp"
       android:layout_alignParentBottom="true"
       android:orientation="horizontal"
+      android:paddingTop="5dp"
       >
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
 
+        />
+    <FrameLayout
+        android:layout_width="0dp"
+        android:background="@color/green"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+      <TextView
+          android:id="@+id/tv_ad_text"
+          android:layout_width="48dp"
+          android:layout_height="16dp"
+          android:layout_gravity="right"
+          android:background="@drawable/bg_fill_red_slide_white"
+          android:paddingBottom="2dp"
+          android:paddingLeft="5dp"
+          android:paddingRight="5dp"
+          android:paddingTop="2dp"
+          android:text="大众点评"
+          android:textColor="@color/white"
+          android:textSize="9sp"
+          />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+      <TextView
+          android:id="@+id/tv_noti_count"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_gravity="center"
+          android:layout_marginLeft="12dp"
+          android:background="@drawable/bg_notification"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="10sp"
+          android:visibility="gone"
+          tools:text="99"
+          tools:visibility="visible"
+          />
+    </FrameLayout>
     <Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2.9"
-        />
-
-    <TextView
-        android:id="@+id/tv_noti_count"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/bg_notification"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        android:visibility="gone"
-        tools:text="99"
-        tools:visibility="visible"
-        />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         />
   </LinearLayout>
-
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:layout_alignParentBottom="true"
-      android:layout_marginBottom="@dimen/qc_item_height"
-      android:background="@color/divider_grey"
-      />
-
   <FrameLayout
       android:id="@+id/layout_brands"
       android:layout_width="match_parent"
