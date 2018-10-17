@@ -162,12 +162,20 @@ public class BatchDetailCommonView extends BaseFragment {
     llPayContent = view.findViewById(R.id.ll_price_content);
     view.findViewById(R.id.course_layout).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        onCourseLayoutClicked();
+        if (isPrivate) {
+          onCoachClicked();
+        } else {
+          onCourseLayoutClicked();
+        }
       }
     });
     view.findViewById(R.id.coach).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        onCoachClicked();
+        if (isPrivate) {
+          onCourseLayoutClicked();
+        } else {
+          onCoachClicked();
+        }
       }
     });
     view.findViewById(R.id.space).setOnClickListener(new View.OnClickListener() {
@@ -291,9 +299,15 @@ public class BatchDetailCommonView extends BaseFragment {
   public void setCourse(Course course) {
     if (course == null) return;
     if (text1 == null) return;
-    PhotoUtils.small(img, course.getPhoto());
-    text1.setText(course.getName());
-    text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
+    if (isPrivate) {
+      if (coach == null) return;
+      coach.setLabel("课程");
+      coach.setContent(course.getName());
+    } else {
+      PhotoUtils.small(img, course.getPhoto());
+      text1.setText(course.getName());
+      text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
+    }
     queryTemple();
   }
 
@@ -312,13 +326,19 @@ public class BatchDetailCommonView extends BaseFragment {
     if (staff == null) return;
     if (coach == null) return;
     this.trainer = staff;
-    String trainerName = staff.getUsername();
-    if ((trainerName != null && mSource.equals("addbatch")) || (mSource.equals("editbatch") && (
-        isStaff
-            == false))) {
-      coach.setShowRight(false);
+    if (isPrivate) {
+      if (text1 == null || text3 == null) return;
+      PhotoUtils.small(img, staff.getAvatar());
+      text1.setText(staff.getUsername());
+      text3.setVisibility(View.GONE);
+    } else {
+      String trainerName = staff.getUsername();
+      if ((trainerName != null && mSource.equals("addbatch")) || (mSource.equals("editbatch")
+          && (!isStaff))) {
+        coach.setShowRight(false);
+      }
+      coach.setContent(trainerName);
     }
-    coach.setContent(trainerName);
     queryTemple();
   }
 

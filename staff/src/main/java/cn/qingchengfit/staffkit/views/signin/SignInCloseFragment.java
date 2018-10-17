@@ -68,9 +68,7 @@ public class SignInCloseFragment extends BaseFragment implements SignInConfigPre
     }
 
  public void onClickOpen() {
-        //presenter.getSignInConfigs();
         if (!serPermisAction.check(PermissionServerUtils.CHECKIN_SETTING)
-            //                        || !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE)
             ) {
             showAlert(R.string.alert_permission_forbid);
             return;

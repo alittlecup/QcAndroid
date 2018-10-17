@@ -33,10 +33,11 @@ public class SiteSelectedItem extends SiteItem {
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, SiteItemVH holder, int position,
-    List payloads) {
+      List payloads) {
     super.bindViewHolder(adapter, holder, position, payloads);
     holder.cb.setVisibility(View.VISIBLE);
     holder.righticon.setVisibility(View.GONE);
     holder.cb.setChecked(adapter.isSelected(position));
+    holder.text2.setText("支持" + space.getCapacity() + "," + space.getSupportString());
   }
 }

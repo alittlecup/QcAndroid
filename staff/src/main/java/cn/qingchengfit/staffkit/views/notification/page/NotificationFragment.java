@@ -236,16 +236,13 @@ public class NotificationFragment extends BaseFragment
                           QcRouteUtil.setRouteOptions(
                               new RouteOptions("student").setActionName("/student/home")).call();
                           return;
-                          //toActivity = new Intent(getActivity(), cn.qingchengfit.saasbase.mvvm_student.StudentActivity.class);
                         } else if (msg.type == 13) {
                           if (msg.card_id == 0) return;
-                          //toActivity = new Intent(getActivity(), CardDetailActivity.class);
                           Card realCard = new Card();
                           realCard.setCard_no("#70A4A9");
                           realCard.setId(msg.card_id + "");
                           routeTo("card", "/detail/",
                               CardDetailParams.builder().cardid(msg.card_id + "").build());
-                          //toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
                         } else if (msg.type == 17) {
                           showLoading();
                           gymWrapper.setCoachService(coachService1);

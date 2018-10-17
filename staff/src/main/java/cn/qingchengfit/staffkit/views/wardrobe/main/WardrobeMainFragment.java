@@ -242,7 +242,7 @@ public class WardrobeMainFragment extends BaseFragment
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText("更衣柜");
-    initSearch(toolbarLayout, "输入更衣柜号或会员手机号进行搜索");
+    initSearch(toolbarLayout, "输入更衣柜号或会员手机号、姓名进行搜索");
     toolbar.inflateMenu(R.menu.menu_student);
     toolbar.setOnMenuItemClickListener(menuItemClickListener);
   }

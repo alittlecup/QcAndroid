@@ -26,14 +26,19 @@ import rx.functions.Action1;
  */
 
 public class NetWorkThrowable implements Action1<Throwable> {
-    @Override public void call(Throwable throwable) {
-      String s = throwable.getMessage();
-      if (s == null) {
-        s = "";
-      }
-      throwable.printStackTrace();
-      LogUtil.e("NetWorkThrowable", s);
-      ToastUtils.show(s);
-      //RxBus.getBus().post();
+  @Override public void call(Throwable throwable) {
+    String s = throwable.getMessage();
+    if (s == null) {
+      s = "网络连接异常，请稍后重试";
     }
+    throwable.printStackTrace();
+    LogUtil.e("NetWorkThrowable", s);
+    if (s.matches("[a-zA-Z]+")) {
+      ToastUtils.show("网络连接异常，请稍后重试");
+    } else {
+      ToastUtils.show(s);
+    }
+
+    //RxBus.getBus().post();
+  }
 }
