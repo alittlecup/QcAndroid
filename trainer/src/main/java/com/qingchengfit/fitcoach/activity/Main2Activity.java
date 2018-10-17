@@ -85,7 +85,9 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import tencent.tls.platform.TLSErrInfo;
 
 import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
@@ -108,8 +110,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
   @Inject BaseRouter baseRouter;
-  @Inject
-  QcRestRepository qcRestRepository;
+  @Inject QcRestRepository qcRestRepository;
   AsyncDownloader mDownloadThread;
   private Gson gson;
   private Date mChooseDate;
@@ -132,8 +133,10 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   //@BindView(R.id.order_studnet) View orderStudnet;
   //@BindView(R.id.web_position) View webPosition;
   TextView tvNotiCount;
+  TextView tvAdText;
   private FrameLayout layoutFrag;
   private LoginProcessor loginProcessor;
+  CompositeSubscription sps = new CompositeSubscription();
 
   public Date getChooseDate() {
     return mChooseDate;
@@ -151,7 +154,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     tabview = findViewById(R.id.tabview);
     layoutFrag = findViewById(R.id.frag_main);
     tvNotiCount = findViewById(R.id.tv_noti_count);
-
+    tvAdText = findViewById(R.id.tv_ad_text);
     getScreenSize();
     initRouter();
     loadAdData();
@@ -247,7 +250,24 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
   private void loadAdData() {
     AdvertiseUtils advertiseUtils = new AdvertiseUtils();
-    advertiseUtils.showAdvertise(qcRestRepository, "staff", Main2Activity.this);
+    advertiseUtils.showAdvertise(qcRestRepository, "coach", Main2Activity.this);
+    sps.add(RxBus.getBus()
+        .register(AdvertiseUtils.class, String.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<String>() {
+          @Override public void call(String s) {
+            updateAdText(s);
+          }
+        }));
+  }
+
+  private void updateAdText(String s) {
+    if (TextUtils.isEmpty(s)) {
+      tvAdText.setVisibility(View.GONE);
+    } else {
+      tvAdText.setVisibility(View.VISIBLE);
+      tvAdText.setText(s);
+    }
   }
 
   /**
@@ -317,9 +337,17 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     //默认设置发现页面有红点
     tabview.setupTabView(mIconSelect, mIconNormal);
     tabview.setPoint(1);
+    String discover_text = PreferenceUtils.getPrefString(this, "discover_text", "");
+    if (!TextUtils.isEmpty(discover_text)) {
+      tvAdText.setText(discover_text);
+      tvAdText.setVisibility(View.VISIBLE);
+    }
     tabview.setListener(pos -> {
       if (pos == 1 || pos == 2) {
         tabview.clearPoint(pos);
+      }
+      if (pos == 2) {
+        tvAdText.setVisibility(View.GONE);
       }
       showPage(pos);
     });
@@ -363,7 +391,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                 (!PreferenceUtils.getPrefBoolean(this, App.coachid + "_has_show_orders", false)
                     && qcResponsePage.data.total_count > 0));
             ordersCount = qcResponsePage.data.total_count;
-          },new HttpThrowable());
+          }, new HttpThrowable());
     }
   }
 
@@ -480,11 +508,11 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                   .progress(false, 100)
                   .cancelable(false)
                   .positiveText("后台更新")
-                  .onNegative((dialog,action)->{
+                  .onNegative((dialog, action) -> {
                     dialog.dismiss();
                     mDownloadThread.cancel(true);
                   })
-                  .onPositive((dialog,aciton)->dialog.dismiss())
+                  .onPositive((dialog, aciton) -> dialog.dismiss())
                   .build();
               updateDialog.show();
             } catch (Exception e) {

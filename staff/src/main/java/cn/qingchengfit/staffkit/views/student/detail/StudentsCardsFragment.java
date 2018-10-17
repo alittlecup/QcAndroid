@@ -70,7 +70,7 @@ public class StudentsCardsFragment extends BaseFragment
     recycleview.setAdapter(adatper);
     recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-`        presenter.querData();
+        presenter.querData();
       }
     });
 

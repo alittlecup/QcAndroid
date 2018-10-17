@@ -558,10 +558,12 @@ public class GymFunctionFactory {
        * 介入口碑  注册送卡 场馆公告
        */
       case MODULE_MARKET_ALI:
-        goQrScan(fragment, "/enter-ali", null, coachService);
+        WebActivity.startWeb("https://jinshuju.net/f/xrU0bu", fragment.getContext());
         return;
       case MODULE_MARKET_DIANPING:
-        goQrScan(fragment, "/enter-dianping", null, coachService);
+        WebActivity.startWeb(
+            "https://cloud.qingchengfit.cn/activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
+            fragment.getContext());
         return;
       case MODULE_OPERATE_SCORE:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
