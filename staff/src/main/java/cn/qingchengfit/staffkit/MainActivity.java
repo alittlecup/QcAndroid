@@ -1,7 +1,6 @@
 package cn.qingchengfit.staffkit;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,15 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.qingchengfit.di.PView;
-import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saascommon.model.AdvertiseInfo;
-import cn.qingchengfit.saascommon.network.SaasCommonApi;
-import cn.qingchengfit.saascommon.network.response.AdvertiseWrap;
-import cn.qingchengfit.saascommon.presenter.AdvertisePresenter;
 import cn.qingchengfit.saascommon.utils.AdvertiseUtils;
-import cn.qingchengfit.saascommon.views.AdvertiseDialog;
 import cn.qingchengfit.utils.DialogUtils;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -51,7 +42,6 @@ import com.tencent.qcloud.timchat.common.AppData;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;

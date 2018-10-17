@@ -3,7 +3,6 @@ package cn.qingchengfit.saascommon.utils;
         import android.app.Dialog;
         import android.content.Context;
         import rx.android.schedulers.AndroidSchedulers;
-        import java.util.Date;
         import java.util.List;
 
         import cn.qingchengfit.network.QcRestRepository;
@@ -22,7 +21,6 @@ package cn.qingchengfit.saascommon.utils;
  */
 public class AdvertiseUtils {
     CompositeSubscription sps = new CompositeSubscription();
-    private String today;
 
     public void showAdvertise(QcRestRepository qcRestRepository, String source, Context context) {
         String today = DateUtils.getStringToday();

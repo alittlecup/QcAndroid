@@ -1,8 +1,6 @@
 package cn.qingchengfit.saascommon.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -11,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,7 +17,6 @@ import java.util.List;
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.saascommon.model.AdvertiseInfo;
 import cn.qingchengfit.saascommon.views.AdvertiseDialog;
-import cn.qingchengfit.utils.PhotoUtils;
 
 public class AdvertiseAdapter extends PagerAdapter {
     private Context context;
