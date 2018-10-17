@@ -8,4 +8,9 @@
         <attr name="cornerRadius" format="float" />
         <attr name="halfBaseOfLeg" format="dimension" />
     </declare-styleable>
+
+    <style name="QcStyleDialog">
+        <item name="android:windowEnterAnimation">@anim/anim_popup_zoom_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_popup_zoom_exit</item>
+    </style>
 </resources>

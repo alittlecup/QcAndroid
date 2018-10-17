@@ -26,11 +26,13 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.HttpThrowable;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.utils.AdvertiseUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
@@ -106,6 +108,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
   @Inject BaseRouter baseRouter;
+  @Inject
+  QcRestRepository qcRestRepository;
   AsyncDownloader mDownloadThread;
   private Gson gson;
   private Date mChooseDate;
@@ -150,6 +154,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
     getScreenSize();
     initRouter();
+    loadAdData();
     RxBus.getBus()
         .register(EventCloseApp.class)
         .onBackpressureDrop()
@@ -238,6 +243,11 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
       }
     }
+  }
+
+  private void loadAdData() {
+    AdvertiseUtils advertiseUtils = new AdvertiseUtils();
+    advertiseUtils.showAdvertise(qcRestRepository, "staff", Main2Activity.this);
   }
 
   /**
