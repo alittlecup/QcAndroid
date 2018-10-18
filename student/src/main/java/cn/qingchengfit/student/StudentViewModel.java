@@ -20,6 +20,7 @@ import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankViewModel;
 import cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel;
 import cn.qingchengfit.student.view.choose.ChooseStaffViewModel;
+import cn.qingchengfit.student.view.detail.StudentDetailWithCardViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordViewModel;
@@ -150,6 +151,11 @@ import javax.inject.Singleton;
 
   @Binds @IntoMap @ViewModelKey(StudentHomePieChartViewModel.class)
   abstract ViewModel bindStudentHomePieChartViewModel(StudentHomePieChartViewModel model);
+
+
+
+  @Binds @IntoMap @ViewModelKey(StudentDetailWithCardViewModel.class)
+  abstract ViewModel bindStudentDetailWithCardViewModel(StudentDetailWithCardViewModel model);
 
 }
 

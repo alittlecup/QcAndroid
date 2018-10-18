@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:background="@color/white"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/card_num"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        tools:text="0张会员卡"
+        />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycle_view"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+  </LinearLayout>
+</layout>

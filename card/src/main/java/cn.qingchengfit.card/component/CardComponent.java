@@ -2,6 +2,7 @@ package cn.qingchengfit.card.component;
 
 import android.os.Bundle;
 import cn.qingchengfit.card.network.CardApi;
+import cn.qingchengfit.card.view.student.SimpleCardListFragment;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
@@ -122,15 +123,18 @@ public class CardComponent implements IComponent {
                 if (!element.isJsonArray()) {
                   QC.sendQCResult(qc.getCallId(), QCResult.error("not json"));
                 }
-                QC.sendQCResult(qc.getCallId(),
-                    QCResult.success("cardtpls", element.toString()));
+                QC.sendQCResult(qc.getCallId(), QCResult.success("cardtpls", element.toString()));
               } else {
                 QC.sendQCResult(qc.getCallId(), QCResult.error(response.msg));
               }
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));
         return true;
+      case "/card/fragment":
+        QC.sendQCResult(qc.getCallId(), QCResult.success("fragment", new SimpleCardListFragment()));
+        return false;
     }
+
     return false;
   }
 }

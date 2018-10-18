@@ -3,6 +3,7 @@ package cn.qingchengfit.inject.commpont;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.card.di.BindStaffCardActivity;
+import cn.qingchengfit.card.view.student.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
 import cn.qingchengfit.inject.moudle.AppAbstractModule;
@@ -303,10 +304,9 @@ import javax.inject.Singleton;
 
 @SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" })
 @Component(modules = {
-    AppModel.class,AppAbstractModule.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class,
-    AppComponent.ContainterModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
-    BindImportExportActivity.class,
+    AppModel.class, AppAbstractModule.class, AndroidInjectionModule.class,
+    AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
+    BindRecruitModule.class, BindSeacherOrgModule.class, BindImportExportActivity.class,
 
     BindStaffCourseActivity.class, BindStaffCardActivity.class,
     BindStaffStaffActivity.class,
@@ -388,8 +388,7 @@ import javax.inject.Singleton;
     AppComponent.ArticleReplyFragmentModule.class, AppComponent.ChooseOriginModule.class,
 
     AppComponent.GymInfoNoEditFragmentModule.class, AppComponent.GymInfoFragmentModule.class,
-    AppComponent.ChooseAddressFragmentModule.class,
-
+    AppComponent.ChooseAddressFragmentModule.class, AppComponent.SimpleCardListFragmentModule.class,
     //赛事训练营
     TrainMoudle.class, AppComponent.TrainChooseGymFragmentModule.class,
     AppComponent.SignUpPersonalDetailFragmentModule.class,
@@ -681,7 +680,6 @@ public interface AppComponent {
     }
   }
 
-
   @Subcomponent() public interface GymsSubcomponent extends AndroidInjector<GymsFragment> {
     @Subcomponent.Builder public abstract class Builder
         extends AndroidInjector.Builder<GymsFragment> {
@@ -834,7 +832,6 @@ public interface AppComponent {
         extends AndroidInjector.Builder<StatementGlanceFragment> {
     }
   }
-
 
   @Subcomponent() public interface StatementDetailSubcomponent
       extends AndroidInjector<StatementDetailFragment> {
@@ -1772,6 +1769,13 @@ public interface AppComponent {
       extends AndroidInjector<FollowRecordPage> {
     @Subcomponent.Builder public abstract class Builder
         extends AndroidInjector.Builder<FollowRecordPage> {
+    }
+  }
+
+  @Subcomponent() public interface SimpleCardListFragmentSubcomponent
+      extends AndroidInjector<SimpleCardListFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<SimpleCardListFragment> {
     }
   }
 
@@ -3392,6 +3396,13 @@ public interface AppComponent {
         FollowRecordPageSubcomponent.Builder builder);
   }
 
+  @Module(subcomponents = SimpleCardListFragmentSubcomponent.class)
+  abstract class SimpleCardListFragmentModule {
+    @Binds @IntoMap @FragmentKey(SimpleCardListFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        SimpleCardListFragmentSubcomponent.Builder builder);
+  }
+
   @Module(subcomponents = ClassRecordSubcomponent.class) abstract class ClassRecordModule {
     @Binds @IntoMap @FragmentKey(ClassRecordFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
@@ -4138,7 +4149,4 @@ public interface AppComponent {
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         UpgradeDoneFragmentSubcomponent.Builder builder);
   }
-
-
-
 }

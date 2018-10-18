@@ -18,6 +18,7 @@ import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.student.view.choose.ChooseStaffPage;
 import cn.qingchengfit.student.view.choose.SearchStudentFragment;
 import cn.qingchengfit.student.view.choose.TrainerChooseAndSearchFragment;
+import cn.qingchengfit.student.view.detail.StudentDetailWithCardPage;
 import cn.qingchengfit.student.view.export.ImportExportFragment;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditPage;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusPage;
@@ -57,7 +58,7 @@ import javax.inject.Inject;
     AttendanceRankPage.class, AttendanceNosignPage.class, AttendanceAbsentPage.class,
     NotiOthersPage.class, SalerStudentStatePage.class, ChooseStaffPage.class,
     ChooseAndSearchStudentFragment.class, StudentHomePieChartView.class,
-    TrainerChooseAndSearchFragment.class, SearchStudentFragment.class
+    TrainerChooseAndSearchFragment.class, SearchStudentFragment.class,StudentDetailWithCardPage.class
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 

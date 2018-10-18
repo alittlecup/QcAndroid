@@ -131,7 +131,7 @@ public interface StudentRepository {
   void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
       MutableLiveData<Resource<Object>> rst, String studentId);
 
-  void qcLoadStudentInfoById(MutableLiveData<QcStudentBean> liveData,MutableLiveData<Resource<Object>>rst,String studentId);
+  //void qcLoadStudentInfoById(MutableLiveData<QcStudentBean> liveData,MutableLiveData<Resource<Object>>rst,String studentId);
 
   /**
    * @param params track_status

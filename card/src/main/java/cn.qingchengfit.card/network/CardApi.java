@@ -5,6 +5,7 @@ import cn.qingchengfit.model.body.ChargeBody;
 import cn.qingchengfit.model.body.CreateCardBody;
 import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
+import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.model.responese.Sellers;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
@@ -52,4 +53,10 @@ public interface CardApi {
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(@Path("id") String id,
       @QueryMap HashMap<String, Object> params, @Query("type") String type,
       @Query("is_enable") String isEnable);
+
+  //获取某个学员的cardlist
+  @GET("/api/staffs/{staff_id}/users/{id}/cards/?order_by=-id")
+  rx.Observable<QcResponseStudentCards> qcGetStudentCards(@Path("staff_id") String staffid,
+      @Path("id") String studentid, @Query("id") String gymid, @Query("model") String model,
+      @Query("brand_id") String brand_id);
 }

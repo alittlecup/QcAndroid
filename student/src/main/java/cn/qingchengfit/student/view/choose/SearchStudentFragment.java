@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.view.detail.StudentDetailWithCardPage;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -18,6 +19,15 @@ import java.util.List;
 @Leaf(module = "student", path = "/search/student/") public class SearchStudentFragment
     extends ChooseAndSearchStudentFragment {
   @Need Boolean addAble = true;
+  View root;
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    if (root == null) {
+      root = super.onCreateView(inflater, container, savedInstanceState);
+    }
+    return root;
+  }
 
   @Override public void onStudentList(List<QcStudentBean> stus) {
     if (llSearchAll != null) {
@@ -39,13 +49,15 @@ import java.util.List;
       addStudent.setVisibility(View.GONE);
       toolbar.getMenu().clear();
     }
-    if(chooseStudentListFragment!=null){
+    if (chooseStudentListFragment != null) {
       chooseStudentListFragment.setOnItemClickListener(new FlexibleAdapter.OnItemClickListener() {
         @Override public boolean onItemClick(int position) {
           StudentItem item = chooseStudentListFragment.getItem(position);
-          if(item!=null){
+          if (item != null) {
             QcStudentBean qcStudentBean = item.getQcStudentBean();
-            routeTo();
+            Bundle bundle = new Bundle();
+            bundle.putString("studentId", qcStudentBean.getId());
+            routeTo("/student/card/list", bundle);
           }
           return false;
         }

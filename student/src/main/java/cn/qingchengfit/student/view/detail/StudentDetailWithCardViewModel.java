@@ -15,7 +15,7 @@ public class StudentDetailWithCardViewModel extends BaseViewModel {
   @Inject StudentDetailWithCardViewModel() {
   }
 
-  public void loadQcStudentData(String id) {
-    studentRepository.qcLoadStudentInfoById(student, defaultResult, id);
-  }
+  //public void loadQcStudentData(String id) {
+  //  studentRepository.qcLoadStudentInfoById(student, defaultResult, id);
+  //}
 }
