@@ -16,6 +16,7 @@ echo "------ running! ------"
 java -jar ${BASE} -version
 java -jar ${BASE} -login ${NAME} ${PASSWORD}
 java -jar ${BASE} -showsign
+java -jar ${BASE} -importsign ${KEY_PATH} ${KEY_PASSWORD} ${ALIAS} ${ALIAS_PASSWORD}
 java -jar ${BASE}/jiagu.jar -importmulpkg ${BASE}/多渠道模板.txt #根据自身情况使用
 java -jar ${BASE} -showmulpkg
 java -jar ${BASE} -showconfig
