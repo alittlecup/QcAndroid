@@ -98,7 +98,7 @@ public class ManageFragment extends BaseFragment
   @Inject GymWrapper gymWrapper;
   @Inject RepoCoachServiceImpl repoCoachService;
   @Inject LoginStatus loginStatus;
-	TextView changeGym;
+	TextView showGym;
 	TextView dataoff;
 	TextView renewal;
 
@@ -120,10 +120,10 @@ public class ManageFragment extends BaseFragment
     gymInfoLayout = (LinearLayout) view.findViewById(R.id.gym_info_layout);
     shopImg = (ImageView) view.findViewById(R.id.shop_img);
     gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
-    changeGym = (TextView) view.findViewById(R.id.change_gym);
+    showGym = (TextView) view.findViewById(R.id.show_gym);
     dataoff = (TextView) view.findViewById(R.id.dataoff);
     renewal = (TextView) view.findViewById(R.id.renewal);
-    view.findViewById(R.id.change_gym).setOnClickListener(new View.OnClickListener() {
+    view.findViewById(R.id.show_gym).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         ManageFragment.this.onClick(v);
       }
@@ -260,10 +260,10 @@ public class ManageFragment extends BaseFragment
     getServer();
     isInit = true;
 
-    changeGym.setOnClickListener(v -> {
-      Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
-      toGym.putExtra("service", gymWrapper.getCoachService());
-      startActivity(toGym);
+    showGym.setOnClickListener(v -> {
+//      Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
+//      toGym.putExtra("service", gymWrapper.getCoachService());
+//      startActivity(toGym);
     });
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
@@ -436,14 +436,14 @@ public class ManageFragment extends BaseFragment
 
  public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.change_gym:
-        //Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
-        //toGym.putExtra("service", gymWrapper.getCoachService());
-        //startActivity(toGym);
+      case R.id.show_gym:
+
         break;
       case R.id.title:
       case R.id.angle_show:
-
+        Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
+        toGym.putExtra("service", gymWrapper.getCoachService());
+        startActivity(toGym);
         break;
     }
   }

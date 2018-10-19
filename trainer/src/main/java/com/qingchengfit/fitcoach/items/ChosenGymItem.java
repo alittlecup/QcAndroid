@@ -9,6 +9,14 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
 
 public class ChosenGymItem extends GymItem {
+    private String gymID;
+    private boolean isLast;
+
+    public ChosenGymItem(CoachService coachService, String gymID, boolean isLast) {
+        super(coachService);
+        this.gymID = gymID;
+        this.isLast = isLast;
+    }
 
     public ChosenGymItem(CoachService coachService) {
         super(coachService);
@@ -24,7 +32,15 @@ public class ChosenGymItem extends GymItem {
             .asBitmap()
             .into(new CircleImgWrapper(holder.itemGymHeader, holder.itemView.getContext()));
         holder.itemGymName.setText(coachService.name);
-        holder.itemGymBrand.setText(coachService.brand_name);
+//        holder.itemGymBrand.setText(coachService.brand_name);
+        String gymId = coachService.gym_id;
+        if(gymID != null && gymId.equals(gymID)) {
+            holder.itemGymCurrent.setVisibility(View.VISIBLE);
+        }
+        if(isLast == false) {
+            holder.line.setVisibility(View.VISIBLE);
+        }
+        holder.itemGymBrand.setText("我的职位： 教练");
         holder.itemGymPhonenum.setVisibility(View.GONE);
         holder.forbid.setVisibility(View.GONE);
         if (adapter.isSelected(position)) {

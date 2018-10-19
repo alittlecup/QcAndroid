@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -76,6 +77,7 @@ import rx.schedulers.Schedulers;
     List<Brand> brands = new ArrayList<>();
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
+    private String gymID;
 
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,9 +90,9 @@ import rx.schedulers.Schedulers;
       recyclerview = (RecyclerView) view.findViewById(R.id.recyclerview);
 
       if (getActivity() instanceof PopFromBottomActivity) {
-            getActivity().setTitle("选择健身房");
+            getActivity().setTitle("切换场馆");
         }
-
+        gymID = gymWrapper.getCoachService().gym_id;
         mDatas.clear();
         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
         mAdapter = new CommonFlexAdapter(mDatas, this);
@@ -156,12 +158,16 @@ import rx.schedulers.Schedulers;
                         List<ChosenGymItem> ds = new ArrayList<ChosenGymItem>();
                         if (lists.get(i).size() > 0) {
                             for (int j = 0; j < lists.get(i).size(); j++) {
-                                ds.add(new ChosenGymItem(lists.get(i).get(j)));
+                                if(j == lists.get(i).size()-1) {
+                                    ds.add(new ChosenGymItem(lists.get(i).get(j), gymID, true));
+                                } else {
+                                    ds.add(new ChosenGymItem(lists.get(i).get(j), gymID, false));
+                                }
                             }
                         }
                         mDatas.add(new BrandShopsItem(b, ds));
                     }
-                    mDatas.add(new AddCardStyleItem("新建健身房"));
+//                    mDatas.add(new AddCardStyleItem("新建健身房"));
                     mAdapter.clear();
                     mAdapter.updateDataSet(mDatas);
                 }

@@ -54,23 +54,28 @@ public class GymItem extends AbstractFlexibleItem<GymItem.GymVH> {
 
 	ImageView itemGymHeader;
 	TextView itemGymName;
+	TextView itemGymCurrent;
 	TextView itemIsPersonal;
 	ImageView qcIdentify;
 	TextView itemGymBrand;
 	TextView itemGymPhonenum;
 	ImageView itemRight;
 	View forbid;
+	View line;
+
 
         public GymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
           itemGymHeader = (ImageView) view.findViewById(R.id.item_gym_header);
           itemGymName = (TextView) view.findViewById(R.id.item_gym_name);
+          itemGymCurrent = (TextView) view.findViewById(R.id.item_gym_current);
           itemIsPersonal = (TextView) view.findViewById(R.id.item_is_personal);
           qcIdentify = (ImageView) view.findViewById(R.id.qc_identify);
           itemGymBrand = (TextView) view.findViewById(R.id.item_gym_brand);
           itemGymPhonenum = (TextView) view.findViewById(R.id.item_gym_phonenum);
           itemRight = (ImageView) view.findViewById(R.id.item_right);
           forbid = (View) view.findViewById(R.id.forbid);
+          line = (View) view.findViewById(R.id.item_line);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment.brandmanange;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,8 +66,8 @@ import rx.schedulers.Schedulers;
  */
 public class BrandDetailFragment extends BaseFragment {
 
-	ImageView bg;
 	ImageView img;
+	ImageView edit;
 	TextView name;
 	TextView tvBrand;
 	TextView contact;
@@ -98,8 +97,8 @@ public class BrandDetailFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand_detail, container, false);
-      bg = (ImageView) view.findViewById(R.id.bg);
       img = (ImageView) view.findViewById(R.id.img);
+      edit = (ImageView) view.findViewById(R.id.edit);
       name = (TextView) view.findViewById(R.id.name);
       tvBrand = (TextView) view.findViewById(R.id.brand);
       contact = (TextView) view.findViewById(R.id.contact);
@@ -112,7 +111,7 @@ public class BrandDetailFragment extends BaseFragment {
             brand = getArguments().getParcelable("brand");
             if (brand != null) {
                 if (getActivity() instanceof BrandManageActivity) {
-                    ((BrandManageActivity) getActivity()).settoolbar(brand.getName(), R.menu.menu_edit,
+                    ((BrandManageActivity) getActivity()).settoolbar("品牌管理", 0,
                         new Toolbar.OnMenuItemClickListener() {
                             @Override public boolean onMenuItemClick(MenuItem item) {
                                 getFragmentManager().beginTransaction()
@@ -129,7 +128,6 @@ public class BrandDetailFragment extends BaseFragment {
                     .asBitmap()
                     .placeholder(R.drawable.ic_default_header)
                     .into(new CircleImgWrapper(img, getContext()));
-                Glide.with(getContext()).load(PhotoUtils.getGauss(brand.getPhoto())).placeholder(R.drawable.bg_brand).into(bg);
                 this.name.setText(brand.getName());
                 if (TextUtils.isEmpty(brand.getCreated_at())) {
                     this.createTime.setText(getString(R.string.create_time));
@@ -147,6 +145,15 @@ public class BrandDetailFragment extends BaseFragment {
                 if (phone == null) phone = "";
                 this.contact.setText(
                     getString(R.string.creator_colon).concat(creator).concat("    ").concat(getString(R.string.phone_colon)).concat(phone));
+                this.edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.frag, BrandEditFragment.newInstance(brand))
+                                .addToBackStack(getFragmentName())
+                                .commit();
+                    }
+                });
                 adapter = new BrandGymsAdapter(datas);
                 recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerview.setAdapter(adapter);

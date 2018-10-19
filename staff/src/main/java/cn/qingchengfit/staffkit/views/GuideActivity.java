@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -96,6 +97,9 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
       toolbarLayout = (RelativeLayout) findViewById(R.id.toolbar_layout);
       searchviewEt = (EditText) findViewById(R.id.searchview_et);
       searchview = (LinearLayout) findViewById(R.id.searchview);
+
+        Window window = getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.primary));
       findViewById(R.id.searchview_clear).setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           onSearch(v);
@@ -150,7 +154,7 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
             ((ViewGroup) toolbar.getParent()).setPadding(0,
               MeasureUtils.getStatusBarHeight(this), 0, 0);
         }
-        toolbarTitile.setText("新建健身房");
+        toolbarTitile.setText("完善资料");
 
         saveObservabl = RxBus.getBus().register(SaveEvent.class);
         saveObservabl.subscribe(new Action1<SaveEvent>() {
@@ -233,6 +237,10 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
         if (spQueryBrand != null && spQueryBrand.isUnsubscribed()) {
             spQueryBrand.unsubscribe();
         }
+    }
+
+    @Override protected boolean isFitSystemBar() {
+        return false;
     }
 
     @Override public int getFragId() {

@@ -43,8 +43,8 @@ public class AddGymFragment extends GuideSetGymFragment {
         if (view instanceof LinearLayout) {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar)v.findViewById(R.id.toolbar);
-            ((TextView)v.findViewById(R.id.toolbar_title)).setText("新建健身房");
-            tb.setNavigationIcon(R.drawable.ic_arrow_left);
+            ((TextView)v.findViewById(R.id.toolbar_title)).setText("完善资料");
+            tb.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
             tb.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

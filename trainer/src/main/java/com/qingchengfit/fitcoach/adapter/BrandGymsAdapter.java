@@ -74,9 +74,9 @@ public class BrandGymsAdapter extends RecyclerView.Adapter<BrandGymsAdapter.Bran
         if (getItemViewType(position) == 0) {
             Shop brandShop = datas.get(position - 1);
             holder.gymName.setText(brandShop.name);
-            holder.imgPro.setImageResource(
-                DateUtils.dayNumFromToday(DateUtils.formatDateFromServer(brandShop.system_end)) >= 0 ? R.drawable.ic_pro_green
-                    : R.drawable.ic_pro_free);
+//            holder.imgPro.setImageResource(
+//                DateUtils.dayNumFromToday(DateUtils.formatDateFromServer(brandShop.system_end)) >= 0 ? R.drawable.ic_pro_green
+//                    : R.drawable.ic_pro_free);
             //            holder.gymName.setCompoundDrawables(null,null,ContextCompat.getDrawable(holder.gymName.getContext(),R.drawable.ic_pro_green),null);
             Glide.with(holder.itemView.getContext())
                 .load(PhotoUtils.getSmall(PhotoUtils.getSmall(brandShop.photo)))
@@ -84,10 +84,10 @@ public class BrandGymsAdapter extends RecyclerView.Adapter<BrandGymsAdapter.Bran
                 .placeholder(R.drawable.ic_default_header)
                 .error(R.drawable.ic_default_header)
                 .into(new CircleImgWrapper(holder.gymImg, holder.gymImg.getContext()));
-            holder.gymContact.setText("联系方式: ".concat(brandShop.contact));
+            holder.gymContact.setText("联系方式：".concat(brandShop.superuser.phone));
             holder.gymDate.setText("超级管理员：".concat(
                 brandShop.superuser == null ? "" : (brandShop.superuser.getUsername() == null ? "" : brandShop.superuser.getUsername())));
-            holder.gymPermission.setText("我的职位: ".concat(brandShop.position == null ? "" : brandShop.position));
+            holder.gymPermission.setText("我的职位：".concat(brandShop.position == null ? "" : brandShop.position));
         }
     }
 
@@ -111,7 +111,7 @@ public class BrandGymsAdapter extends RecyclerView.Adapter<BrandGymsAdapter.Bran
 	TextView gymContact;
 	TextView gymPermission;
 	TextView del;
-	ImageView imgPro;
+//	ImageView imgPro;
 
         public BrandGymsVH(View itemView) {
             super(itemView);
@@ -121,7 +121,7 @@ public class BrandGymsAdapter extends RecyclerView.Adapter<BrandGymsAdapter.Bran
           gymContact = (TextView) itemView.findViewById(R.id.gym_contact);
           gymPermission = (TextView) itemView.findViewById(R.id.gym_permission);
           del = (TextView) itemView.findViewById(R.id.del);
-          imgPro = (ImageView) itemView.findViewById(R.id.img_pro);
+//          imgPro = (ImageView) itemView.findViewById(R.id.img_pro);
         }
     }
 }

@@ -112,7 +112,7 @@
   <string name="wechat_code">wx81e378c8fd03319d</string>
   <string name="err_server">服务器错误</string>
   <string name="label_brand_logo">品牌LOGO</string>
-  <string name="label_gym_logo">场馆LOGO</string>
+  <string name="label_gym_logo">场馆logo</string>
   <string name="label_city">城市</string>
   <string name="personal_homepage">我的主页</string>
   <string name="edit_mine_info">基本信息</string>
@@ -133,6 +133,7 @@
   <string name="gym_name">场馆名称</string>
   <string name="please_input_gym_name">请填写场馆名称</string>
   <string name="please_input">请填写</string>
+  <string name="please_input_address">请填写地址</string>
   <string name="address">地址</string>
   <string name="start_date">开始日期</string>
   <string name="end_date">结束日期</string>
@@ -189,7 +190,7 @@
   <string name="err_write_course_order_num">请填写单节可约人数</string>
   <string name="add_course_circle">+课程周期</string>
   <string name="time_long_d_min">时长%d分钟</string>
-  <string name="change_gym">切换健身房</string>
+  <string name="show_gym">预览</string>
   <string name="write_gym_info">填写健身房信息</string>
   <string name="err_please_input_start_end">请填写开始日期和结束日期</string>
   <string name="err_at_least_one_circle">请至少选择一个课程周期</string>

@@ -16,6 +16,7 @@
       android:layout_height="30dp"
       android:gravity="center"
       android:text="@string/guide_set_gym_hint"
+      android:visibility="gone"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -27,6 +28,7 @@
       android:background="@color/white"
       android:gravity="center_vertical"
       android:orientation="horizontal"
+      android:visibility="gone"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
       >
@@ -56,9 +58,9 @@
         />
   </LinearLayout>
 
-  <include layout="@layout/divider_grey"/>
+  <!--<include layout="@layout/divider_grey"/>-->
 
-  <include layout="@layout/divider_grey_margin"/>
+  <!--<include layout="@layout/divider_grey_margin"/>-->
 
   <LinearLayout
       android:id="@+id/layout_gym_img"
@@ -75,6 +77,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="15sp"
         android:text="@string/label_gym_logo"
         style="@style/Qc.TextCommonBlack"
         />
@@ -100,22 +103,62 @@
       android:id="@+id/gym_name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="20dp"
       app:civ_hint="@string/please_input_gym_name"
       app:civ_lable="场馆名称(店名)"
       app:civ_nonnull="true"
-      app:civ_text_color="@color/text_black"
-      />
+      app:civ_text_color="@color/text_black" />
 
-  <include layout="@layout/divider_grey_left_right"/>
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gym_type"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_content="工作室"
+      app:civ_lable="类型"
+      app:civ_nonnull="true"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black" />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gym_phone"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="联系方式"
+      app:civ_content="12345678901"
+      app:civ_nonnull="true"
+      app:civ_text_color="@color/text_black" />
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gym_address"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
+      app:civ_hint="@string/please_input_address"
       app:civ_lable="@string/address"
       app:civ_nonnull="true"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gym_size"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="营业面积"
+      app:civ_nonnull="true"
+      app:civ_showright="true"
+      app:civ_content="1500 m2"
+      app:civ_text_color="@color/text_black" />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gym_describe"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_hint="@string/please_input"
+      app:civ_lable="描述您的场馆"
+      app:civ_nonnull="false"
       app:civ_showdivier="false"
       app:civ_showright="true"
       app:civ_text_color="@color/text_black"
@@ -128,7 +171,9 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/activity_horizontal_margin"
-      android:text="创建健身房"
+      android:textSize="14sp"
+      android:textColor="@color/white"
+      android:text="完成"
       />
 
 </LinearLayout>

@@ -36,23 +36,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="147dp"
-
-            >
-
-          <ImageView
-              android:id="@+id/bg"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:scaleType="centerCrop"
-              android:src="@drawable/bg_brand"
-              />
-
-          <View
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/halftrans_background"
-              />
+            android:layout_height="130dp"
+            android:background="@color/white">
 
           <LinearLayout
               android:layout_width="match_parent"
@@ -67,6 +52,7 @@
                 android:id="@+id/img"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:background="@color/grey"
                 />
 
             <LinearLayout
@@ -77,22 +63,33 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 >
-
-              <TextView
-                  android:id="@+id/name"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="@color/white"
-                  android:textSize="16sp"
-                  tools:text="中美引力"
-                  />
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    tools:text="中美引力"
+                    />
+                <ImageView
+                    android:id="@+id/edit"
+                    android:layout_alignRight="@id/name"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="17dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_edit_btn"/>
+              </RelativeLayout>
 
               <TextView
                   android:id="@+id/brand"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="2dp"
-                  android:textColor="#aaffffff"
+                  android:layout_marginTop="3dp"
+                  android:textColor="@color/text_grey"
                   tools:text="中美引力"
                   />
 
@@ -100,11 +97,10 @@
                   android:id="@+id/contact"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-
                   android:layout_marginTop="2dp"
                   android:textColor="@color/white"
                   android:visibility="gone"
-                  tools:text="中美引力"
+                  tools:text="品牌ID"
                   />
 
               <TextView
@@ -160,7 +156,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="-40dp"
+        android:layout_marginTop="-30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 

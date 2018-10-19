@@ -47,16 +47,17 @@
             android:id="@+id/gym_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="阳光上东店"
-            style="@style/Qc.TextCommonBlack"
+            android:text="阳光上东店"
+            android:textSize="15dp"
+            android:textColor="@color/black"
             />
 
-        <ImageView
-            android:id="@+id/img_pro"
-            android:layout_width="24dp"
-            android:layout_height="12dp"
-            app:srcCompat="@drawable/ic_pro_green"
-            />
+        <!--<ImageView-->
+            <!--android:id="@+id/img_pro"-->
+            <!--android:layout_width="24dp"-->
+            <!--android:layout_height="12dp"-->
+            <!--app:srcCompat="@drawable/ic_pro_green"-->
+            <!--/>-->
 
       </LinearLayout>
 
@@ -66,9 +67,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="4dp"
-          android:textSize="12sp"
-          tools:text="有效期至：2017-01-01"
-
+          android:textSize="13sp"
+          android:text="有效期至：2017-01-01"
+          android:textColor="@color/warm_grey_2"
           />
 
       <TextView
@@ -76,8 +77,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="4dp"
-          android:textSize="12sp"
-          tools:text="有效期至：2017-01-01"
+          android:textSize="13sp"
+          android:text="有效期至：2017-01-01"
+          android:textColor="@color/warm_grey_2"
           />
 
       <TextView
@@ -86,8 +88,8 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="4dp"
           android:textSize="12sp"
-          tools:text="有效期至：2017-01-01"
-
+          android:text="有效期至：2017-01-01"
+          android:textColor="@color/warm_grey_2"
           />
     </LinearLayout>
 
@@ -97,8 +99,8 @@
         android:layout_height="match_parent"
         android:gravity="start"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/common_del"
-        android:textColor="@color/text_orange"
+        android:text="@string/common_edit"
+        android:textColor="@color/primary"
         />
   </LinearLayout>
 

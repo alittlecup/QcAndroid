@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -47,7 +48,9 @@ public class PopFromBottomActivity extends BaseActivity {
       toolbarTitile = (TextView) findViewById(R.id.toolbar_title);
       frag = (FrameLayout) findViewById(R.id.frag);
 
-      toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
+      Window window = getWindow();
+      window.setStatusBarColor(this.getResources().getColor(R.color.primary));
+      toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         Fragment f = new Fragment();
         int to = getIntent().getIntExtra("to", 0);
