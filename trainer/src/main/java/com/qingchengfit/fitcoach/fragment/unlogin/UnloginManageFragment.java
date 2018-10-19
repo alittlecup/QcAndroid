@@ -13,6 +13,7 @@ import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.LazyloadFragment;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.manage.Manage2Fragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.concurrent.TimeUnit;
@@ -40,13 +41,13 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by Paper on 2017/5/17.
  */
 public class UnloginManageFragment extends LazyloadFragment {
-    ManageFragment manageFragment;
+    Manage2Fragment manageFragment;
     HomeBannerFragment homeBannerFragment;
     @Inject LoginStatus loginStatus;
     @Inject RepoCoachServiceImpl repoCoachService;
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        manageFragment = new ManageFragment();
+        manageFragment = new Manage2Fragment();
         homeBannerFragment = new HomeBannerFragment();
         RxBus.getBus().register(EventLoginChange.class)
           .onBackpressureDrop()

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.model.responese.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventRouter;
 import cn.qingchengfit.utils.LogUtil;

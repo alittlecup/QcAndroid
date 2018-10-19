@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.constant;
 
-import android.support.annotation.IntRange;
 import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.login.views.CheckProtocolModel;
 import cn.qingchengfit.model.common.Absentces;
@@ -33,7 +32,7 @@ import cn.qingchengfit.model.responese.CourseTypes;
 import cn.qingchengfit.model.responese.DayOffs;
 import cn.qingchengfit.model.responese.FollowRecords;
 import cn.qingchengfit.model.responese.FollowUpConver;
-import cn.qingchengfit.model.responese.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.GroupCourseResponse;
 import cn.qingchengfit.model.responese.GroupCourseScheduleDetail;
 import cn.qingchengfit.model.responese.GymCardtpl;

@@ -13,7 +13,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventFilterClick;
-import cn.qingchengfit.model.responese.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;

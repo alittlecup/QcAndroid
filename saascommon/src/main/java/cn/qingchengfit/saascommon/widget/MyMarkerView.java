@@ -29,6 +29,18 @@ public class MyMarkerView extends MarkerView {
     initView();
   }
 
+  public MyMarkerView(Context context, int layoutResource, @ColorInt int statusColor, String unit) {
+    super(context, layoutResource);
+    initView();
+    setStringUnit(unit);
+    setDrawableTintColor(statusColor);
+  }
+  public MyMarkerView(Context context, int layoutResource, @ColorInt int statusColor) {
+    super(context, layoutResource);
+    initView();
+    setDrawableTintColor(statusColor);
+  }
+
   private void initView() {
     tvDate = findViewById(R.id.tv_date);
     tvContent = findViewById(R.id.tvContent);

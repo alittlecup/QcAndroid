@@ -1,8 +1,4 @@
-package cn.qingchengfit.staffkit.views.charts;
-
-import cn.qingchengfit.utils.StringUtils;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+package cn.qingchengfit.saascommon.events;
 
 /**
  * power by
@@ -22,11 +18,38 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/2/15.
+ * Created by Paper on 2017/1/20.
  */
 
-public class NumChartYValueFormatter implements IAxisValueFormatter {
-    @Override public String getFormattedValue(float value, AxisBase axis) {
-        return StringUtils.getNumString(value);
+public class EventChartTitle {
+
+    int chartType;
+
+    private EventChartTitle(Builder builder) {
+        chartType = builder.chartType;
+    }
+
+    public int getChartType() {
+        return chartType;
+    }
+
+    public void setChartType(int chartType) {
+        this.chartType = chartType;
+    }
+
+    public static final class Builder {
+        private int chartType;
+
+        public Builder() {
+        }
+
+        public Builder chartType(int val) {
+            chartType = val;
+            return this;
+        }
+
+        public EventChartTitle build() {
+            return new EventChartTitle(this);
+        }
     }
 }

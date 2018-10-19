@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.student.presenters.followup;
 
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -9,7 +10,6 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.DateUtils;

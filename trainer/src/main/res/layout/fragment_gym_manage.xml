@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        />
+    <ImageView
+        android:id="@+id/img_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/include_toolbar"
+        android:background="@color/theme_black"
+        android:src="@drawable/manage_gym_top"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/img_top"
+        android:background="@color/bg_white"
+        android:paddingTop="50dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/manage_gym_bottom"
+        />
+    <TextView
+        android:id="@+id/tv_open_staff"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/img_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-22.5dp"
+        android:background="@drawable/bg_fill_prime_roval"
+        android:gravity="center"
+        android:text="立即使用"
+        android:textColor="@color/bg_white"
+        android:textSize="17sp"
+        />
+
+  </RelativeLayout>
+</layout>

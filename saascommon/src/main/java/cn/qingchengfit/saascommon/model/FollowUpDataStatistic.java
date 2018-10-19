@@ -1,8 +1,7 @@
-package cn.qingchengfit.saasbase.student.network.body;
+package cn.qingchengfit.saascommon.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class FollowUpDataStatistic {
     public NewCreateUsersBean new_member_users;
 
     public static class NewCreateUsersBean implements Parcelable {
-        public static final Creator<NewCreateUsersBean> CREATOR = new Creator<NewCreateUsersBean>() {
+        public static final Parcelable.Creator<NewCreateUsersBean> CREATOR = new Parcelable.Creator<NewCreateUsersBean>() {
             @Override public NewCreateUsersBean createFromParcel(Parcel source) {
                 return new NewCreateUsersBean(source);
             }
@@ -59,7 +58,6 @@ public class FollowUpDataStatistic {
         public int today_count;
         public int week_count;
         public int month_count;
-        public String title;
         public ArrayList<DateCountsBean> date_counts = new ArrayList<>();
 
         public NewCreateUsersBean() {
@@ -67,7 +65,6 @@ public class FollowUpDataStatistic {
 
         protected NewCreateUsersBean(Parcel in) {
             this.count = in.readString();
-            this.title = in.readString();
             this.today_count = in.readInt();
             this.week_count = in.readInt();
             this.month_count = in.readInt();
@@ -80,7 +77,6 @@ public class FollowUpDataStatistic {
 
         @Override public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.count);
-            dest.writeString(this.title);
             dest.writeInt(this.today_count);
             dest.writeInt(this.week_count);
             dest.writeInt(this.month_count);

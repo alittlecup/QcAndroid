@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import com.google.gson.annotations.SerializedName;
 
 /**

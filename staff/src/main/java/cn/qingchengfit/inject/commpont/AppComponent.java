@@ -91,7 +91,7 @@ import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
 import cn.qingchengfit.staffkit.views.allotsales.SalesListFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
+import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.course.CourseReverseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;

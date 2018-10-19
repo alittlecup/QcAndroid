@@ -15,7 +15,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.StudentTrackPreview;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;

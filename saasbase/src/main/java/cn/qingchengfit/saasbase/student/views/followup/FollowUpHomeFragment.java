@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import com.anbillon.flabellum.annotations.Leaf;
 
 import java.lang.annotation.Retention;
@@ -24,7 +25,6 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentFollowUpBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.student.items.DataStatisticsItem;
-import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.presenters.followup.FollowUpHomePresenter;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

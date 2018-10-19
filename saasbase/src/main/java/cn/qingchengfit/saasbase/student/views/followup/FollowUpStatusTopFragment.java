@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,7 +18,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.FragmentFollowUpDataStatisticsBinding;
 import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
-import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.presenters.followup.FollowUpHomePresenter;
 import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;

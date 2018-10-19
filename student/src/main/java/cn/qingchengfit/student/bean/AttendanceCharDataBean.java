@@ -1,5 +1,6 @@
 package cn.qingchengfit.student.bean;
 
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

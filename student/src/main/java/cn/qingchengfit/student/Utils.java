@@ -3,7 +3,7 @@ package cn.qingchengfit.student;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.util.Pair;
-import cn.qingchengfit.student.bean.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.utils.DateUtils;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;

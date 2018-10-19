@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.view.attendance;
 
-import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
@@ -10,15 +9,12 @@ import android.databinding.ObservableInt;
 import android.graphics.Color;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
-import cn.qingchengfit.saascommon.utils.StudentBusinessUtils;
 import cn.qingchengfit.student.Utils;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
-import cn.qingchengfit.student.bean.FollowUpDataStatistic;
-import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.respository.StudentRepository;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.Util;
 import com.github.mikephil.charting.data.LineData;
 import java.util.ArrayList;
 import java.util.Date;

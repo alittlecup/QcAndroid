@@ -37,6 +37,7 @@ import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
+import com.qingchengfit.fitcoach.fragment.manage.Manage2Fragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
@@ -108,7 +109,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
-    AppComponent.RecruitMessageListFragmentModule.class
+    AppComponent.RecruitMessageListFragmentModule.class,AppComponent.Manage2FragmentModule.class
 }) public interface AppComponent {
   void inject(App app);
 
@@ -216,7 +217,12 @@ import dagger.multibindings.IntoMap;
         extends AndroidInjector.Builder<ManageFragment> {
     }
   }
-
+  @Subcomponent() public interface Manage2FragmentSubcomponent
+      extends AndroidInjector<Manage2Fragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<Manage2Fragment> {
+    }
+  }
   @Subcomponent() public interface CustomStatmentFragmentSubcomponent
       extends AndroidInjector<CustomStatmentFragment> {
     @Subcomponent.Builder public abstract class Builder
@@ -419,6 +425,12 @@ import dagger.multibindings.IntoMap;
     @Binds @IntoMap @FragmentKey(ManageFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ManageFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = Manage2FragmentSubcomponent.class) abstract class Manage2FragmentModule {
+    @Binds @IntoMap @FragmentKey(Manage2Fragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        Manage2FragmentSubcomponent.Builder builder);
   }
 
   @Module(subcomponents = CustomStatmentFragmentSubcomponent.class)

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_charts"
+        android:background="@color/bg_white"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        />
+    <cn.qingchengfit.widgets.CircleIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/white"
+        app:ci_drawable="@drawable/splash_indicator_doc"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/bg_grey"
+        android:paddingLeft="15dp"
+        android:text="教练功能"
+        android:textSize="12sp"
+        style="@style/QcTextStyleSmallWarm"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+  </LinearLayout>
+</layout>

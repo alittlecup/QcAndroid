@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.charts;
+package cn.qingchengfit.saascommon.widget;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,12 +14,11 @@ import android.view.ViewTreeObserver;
 
 
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.model.responese.FollowUpDataStatistic;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.event.EventChartTitle;
-import cn.qingchengfit.staffkit.views.custom.LinerChartHightRender;
-import cn.qingchengfit.staffkit.views.custom.MyMarkerView;
-import cn.qingchengfit.staffkit.views.student.followup.MyXAxisValueFormatter;
+import cn.qingchengfit.saascommon.R;
+import cn.qingchengfit.saascommon.events.EventChartTitle;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.MyXAxisValueFormatter;
+import cn.qingchengfit.saascommon.model.NumChartYValueFormatter;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
