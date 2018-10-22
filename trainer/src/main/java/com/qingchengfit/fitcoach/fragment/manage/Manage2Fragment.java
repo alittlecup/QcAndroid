@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
@@ -21,12 +22,14 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.databinding.ManageFragmentBinding;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
@@ -75,10 +78,21 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     initViewPager();
     initRxbus();
     checkPermission();
+    initListener();
     getServer();
     isInit = true;
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return mBinding;
+  }
+
+  private void initListener() {
+    mBinding.angleShow.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
+        toGym.putExtra("service", gymWrapper.getCoachService());
+        startActivity(toGym);
+      }
+    });
   }
 
   private void getServer() {
@@ -118,7 +132,8 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
 
   private void setGymInfo(CoachService coachService) {
     //TODO 设置顶部title
-
+    mBinding.title.setText(coachService.getName());
+    PhotoUtils.smallCircle(mBinding.imgGymPhoto,coachService.getPhoto());
     mViewModel.loadPremission(App.coachid + "");
   }
 
