@@ -53,6 +53,7 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_C
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_STAFF;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_STAFF_ADD;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_ALI;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_ALI11;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_DIANPING;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MSG;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_NONE;
@@ -237,6 +238,8 @@ public class GymFunctionFactory {
         return R.drawable.vd_module_aigym;
       case MODULE_MARKET_ALI:
         return R.drawable.tmall_icon;
+      case MODULE_MARKET_ALI11:
+        return R.drawable.tmall11_icon;
       case MODULE_MARKET_DIANPING:
         return R.drawable.dazhongdianping_icon;
 
@@ -414,6 +417,8 @@ public class GymFunctionFactory {
         return R.string.module_smartgym;
       case MODULE_MARKET_ALI:
         return R.string.module_op_ali;
+      case MODULE_MARKET_ALI11:
+        return R.string.module_op_ali11;
       case MODULE_MARKET_DIANPING:
         return R.string.module_op_dianping;
 
@@ -560,9 +565,12 @@ public class GymFunctionFactory {
       case MODULE_MARKET_ALI:
         WebActivity.startWeb("https://jinshuju.net/f/xrU0bu", fragment.getContext());
         return;
+      case MODULE_MARKET_ALI11:
+        WebActivity.startWeb(Configs.Server+"mobile/activity/enter-ali/#/", fragment.getContext());
+        return;
       case MODULE_MARKET_DIANPING:
         WebActivity.startWeb(
-            "https://cloud.qingchengfit.cn/activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
+            Configs.Server+"activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
             fragment.getContext());
         return;
       case MODULE_OPERATE_SCORE:

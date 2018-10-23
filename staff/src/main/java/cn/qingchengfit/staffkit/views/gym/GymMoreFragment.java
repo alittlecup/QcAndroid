@@ -240,6 +240,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), internalFuntion));
 
                 FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_ALI11), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_ALI), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_DIANPING), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_SCORE), runFuntion));
@@ -257,7 +258,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_PRIVATE_SHARE), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_GROUP_SHARE), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_MORE), runFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), runFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), runFuntion));
 
