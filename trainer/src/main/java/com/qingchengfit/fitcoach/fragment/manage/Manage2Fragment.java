@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -31,6 +32,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.databinding.ManageFragmentBinding;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
@@ -44,7 +46,7 @@ import javax.inject.Inject;
 import rx.functions.Action1;
 
 public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, ManageViewModel>
-    implements FlexibleAdapter.OnItemClickListener {
+    implements FlexibleAdapter.OnItemClickListener, AdapterView.OnItemClickListener {
   CommonFlexAdapter adapter;
   GymDetailChartAdapter mPageAdapter;
   @Inject GymWrapper gymWrapper;
@@ -63,6 +65,9 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
       upDatePremission(data);
     });
     mViewModel.coachServiceData.observe(this, this::setGymInfo);
+    mViewModel.quitAction.observe(this, aVoid -> {
+      getServer();
+    });
   }
 
   private void setChartData() {
@@ -85,12 +90,26 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     return mBinding;
   }
 
+  private DialogList dialogList;
+
   private void initListener() {
     mBinding.angleShow.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
         toGym.putExtra("service", gymWrapper.getCoachService());
         startActivity(toGym);
+      }
+    });
+    mBinding.actionFlow.setOnClickListener(new View.OnClickListener() {
+
+      @Override public void onClick(View v) {
+        if (dialogList == null) {
+          dialogList = new DialogList(getContext());
+          ArrayList<String> flows = new ArrayList<>();
+          flows.add("离职退出该场馆");
+          dialogList.list(flows, Manage2Fragment.this);
+        }
+        dialogList.show();
       }
     });
   }
@@ -133,7 +152,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   private void setGymInfo(CoachService coachService) {
     //TODO 设置顶部title
     mBinding.title.setText(coachService.getName());
-    PhotoUtils.smallCircle(mBinding.imgGymPhoto,coachService.getPhoto());
+    PhotoUtils.smallCircle(mBinding.imgGymPhoto, coachService.getPhoto());
     mViewModel.loadPremission(App.coachid + "");
   }
 
@@ -226,6 +245,20 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
         break;
     }
     return false;
+  }
+
+  //离职场馆的点击事件处理
+  @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    if (dialogList != null) {
+      dialogList.dismiss();
+      QuitGymFragment build = new QuitGymFragmentBuilder(gymWrapper.getCoachService()).build();
+      build.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          mViewModel.quitGym(App.coachid + "");
+        }
+      });
+      build.show(getFragmentManager(), "");
+    }
   }
 
   /**

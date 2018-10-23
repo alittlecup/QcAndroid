@@ -84,9 +84,11 @@ public class BrandGymsAdapter extends RecyclerView.Adapter<BrandGymsAdapter.Bran
                 .placeholder(R.drawable.ic_default_header)
                 .error(R.drawable.ic_default_header)
                 .into(new CircleImgWrapper(holder.gymImg, holder.gymImg.getContext()));
-            holder.gymContact.setText("联系方式：".concat(brandShop.superuser.phone));
-            holder.gymDate.setText("超级管理员：".concat(
-                brandShop.superuser == null ? "" : (brandShop.superuser.getUsername() == null ? "" : brandShop.superuser.getUsername())));
+            if(brandShop.superuser!=null){
+                holder.gymContact.setText("联系方式："+((brandShop.superuser.phone)==null?"":brandShop.superuser.phone));
+                holder.gymDate.setText("超级管理员：".concat(
+                    brandShop.superuser == null ? "" : (brandShop.superuser.getUsername() == null ? "" : brandShop.superuser.getUsername())));
+            }
             holder.gymPermission.setText("我的职位：".concat(brandShop.position == null ? "" : brandShop.position));
         }
     }

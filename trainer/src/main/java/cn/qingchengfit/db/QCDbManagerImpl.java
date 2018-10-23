@@ -24,8 +24,8 @@ public class QCDbManagerImpl implements QcDbManager {
 
   public QCDbManagerImpl(App application) {
     appDatabase = Room.databaseBuilder(application, AppDatabase.class, "qc_coach")
-      .allowMainThreadQueries()
-      .build();
+        .allowMainThreadQueries()
+        .build();
   }
 
   public String getLikeString(String keyword) {
@@ -60,7 +60,7 @@ public class QCDbManagerImpl implements QcDbManager {
 
   @Deprecated
   public Maybe<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid,
-    final String keyword) {
+      final String keyword) {
     return appDatabase.studentDao().getStudentByKeyWord(getLikeString(keyword));
   }
 
@@ -75,23 +75,22 @@ public class QCDbManagerImpl implements QcDbManager {
   public void delStudentByBrand(String brandid, final String id) {
     appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
       appDatabase.studentDao().delStudent(qcStudentBean);
-    },new HttpThrowable());
+    }, new HttpThrowable());
   }
 
   public void delAllStudent() {
     Maybe.just("")
-      .observeOn(Schedulers.io())
-      .subscribe(s -> appDatabase.studentDao().delStudentAll(),
-        throwable -> LogUtil.e("db", throwable.getMessage()));
+        .observeOn(Schedulers.io())
+        .subscribe(s -> appDatabase.studentDao().delStudentAll(),
+            throwable -> LogUtil.e("db", throwable.getMessage()));
   }
 
   //删除会员 场馆下也直接删除
   public void delStudentByGym(final String gymid, final String gymmodel, final String id) {
     appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
       appDatabase.studentDao().delStudent(qcStudentBean);
-    },new HttpThrowable());
+    }, new HttpThrowable());
   }
-
 
   public void saveStudent(final QcStudentBean qcStudent) {
     appDatabase.studentDao().getStudentById(qcStudent.getId()).subscribe(qcStudentBean -> {
@@ -136,21 +135,21 @@ public class QCDbManagerImpl implements QcDbManager {
         }
         appDatabase.studentDao().insertStudent(qcStudent);
       }
-    } ,new HttpThrowable());
+    }, new HttpThrowable());
   }
 
   public void saveStudent(List<QcStudentBean> studentBeens, String brandid) {
     appDatabase.studentDao().getAllStudent().subscribe(qcStudentBeans -> {
       appDatabase.studentDao().delStudentAll();
       appDatabase.studentDao().insertStudent(studentBeens.toArray(new QcStudentBean[] {}));
-    },new HttpThrowable());
+    }, new HttpThrowable());
   }
 
   public void updateStudentCheckin(String avatar, String id) {
     appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
       qcStudentBean.setCheckin_avatar(avatar);
       appDatabase.studentDao().updataStudent(qcStudentBean);
-    },new HttpThrowable());
+    }, new HttpThrowable());
   }
 
   public void delByBrandId(String brandId) {
@@ -172,17 +171,18 @@ public class QCDbManagerImpl implements QcDbManager {
   }
 
   public void writeGyms(final List<CoachService> services) {
-    Maybe.just("")
-      .observeOn(Schedulers.io())
-      .subscribe(s -> {appDatabase.serviceDao().deleteAll();
-        appDatabase.serviceDao().insertService(services.toArray(new CoachService[] {}));}
-        ,throwable -> LogUtil.e("db",throwable.getMessage())
-        );
-
+    Maybe.just("").observeOn(Schedulers.io()).subscribe(s -> {
+      appDatabase.serviceDao().deleteAll();
+      appDatabase.serviceDao().insertService(services.toArray(new CoachService[] {}));
+    }, throwable -> LogUtil.e("db", throwable.getMessage()));
   }
 
   @Override public void delGyms(List<CoachService> services) {
     appDatabase.serviceDao().deleteAll();
+  }
+
+  @Override public void delGymByIdAndModel(String brand_id, String model) {
+    appDatabase.serviceDao().deleteGymByIdAndBrandId(brand_id, model);
   }
 
   @Override public void delGym(CoachService services) {
@@ -265,8 +265,8 @@ public class QCDbManagerImpl implements QcDbManager {
   public boolean checkAll(String key) {
 
     return appDatabase.permissonDao().getByKey(key).size() == appDatabase.permissonDao()
-      .getByKeyValue(true, key)
-      .size();
+        .getByKeyValue(true, key)
+        .size();
   }
 
   public Flowable<List<String>> queryAllFunctions() {
@@ -290,6 +290,6 @@ public class QCDbManagerImpl implements QcDbManager {
         list.add(f1);
       }
       appDatabase.functionDao().insert(list);
-    } ,new HttpThrowable());
+    }, new HttpThrowable());
   }
 }

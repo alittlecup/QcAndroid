@@ -3,6 +3,7 @@ package cn.qingchengfit.repository;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.utils.LogUtil;
+import co.hkm.soltag.helper;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,44 +32,44 @@ import javax.inject.Inject;
 
 public class RepoCoachServiceImpl implements RepoCoachService {
 
-    @Inject QcDbManager db;
+  @Inject QcDbManager db;
 
-    @Inject public RepoCoachServiceImpl() {
-    }
+  @Inject public RepoCoachServiceImpl() {
+  }
 
-    /**
-     * 本地存储
-     */
-    @Override public void createService(CoachService coachService) {
-        List<CoachService> r = new ArrayList<>();
-        r.add(coachService);
-        db.writeGyms(r);
-    }
+  /**
+   * 本地存储
+   */
+  @Override public void createService(CoachService coachService) {
+    List<CoachService> r = new ArrayList<>();
+    r.add(coachService);
+    db.writeGyms(r);
+  }
 
-    @Override public void createServices(List<CoachService> coachServices) {
-        db.writeGyms(coachServices);
-    }
+  @Override public void createServices(List<CoachService> coachServices) {
+    db.writeGyms(coachServices);
+  }
 
-    @Override public Flowable<CoachService> readServiceByIdModel(String id, String model) {
-        return db.getGymByModel(id,model);
-    }
+  @Override public Flowable<CoachService> readServiceByIdModel(String id, String model) {
+    return db.getGymByModel(id, model);
+  }
 
-    @Override public Flowable<List<CoachService>> readAllServices() {
-        return db.getAllCoachService();
-    }
+  @Override public Flowable<List<CoachService>> readAllServices() {
+    return db.getAllCoachService();
+  }
 
-    @Override public void updateService(CoachService coachService) {
-        LogUtil.e("updateService undo");
-    }
+  @Override public void updateService(CoachService coachService) {
+    LogUtil.e("updateService undo");
+  }
 
-    @Override public void updateServices(List<CoachService> coachServices) {
-        LogUtil.e("updateServices undo");
-    }
+  @Override public void updateServices(List<CoachService> coachServices) {
+    LogUtil.e("updateServices undo");
+  }
 
-    @Override public void deleteServiceByIdModel(String id, String model) {
-        //db.
-    }
+  @Override public void deleteServiceByIdModel(String id, String model) {
+    db.delGymByIdAndModel(id, model);
+  }
 
-    @Override public void deleteAllServices() {
-    }
+  @Override public void deleteAllServices() {
+  }
 }

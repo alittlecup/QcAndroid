@@ -185,6 +185,10 @@ public class QCDbManagerImpl implements QcDbManager {
     appDatabase.serviceDao().deleteAll();
   }
 
+  @Override public void delGymByIdAndModel(String brand_id, String model) {
+
+  }
+
   @Override public void delGym(CoachService services) {
     appDatabase.serviceDao().delete(services);
   }

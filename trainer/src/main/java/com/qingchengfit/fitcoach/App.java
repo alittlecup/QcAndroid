@@ -127,7 +127,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
    *  初始化Debug环境
    */
   void initDebug(){
-    if (!BuildConfig.DEBUG) CrashHandler.getInstance().init(this);
     ToastUtils.init(this);
     if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
       Timber.plant(new Timber.DebugTree());

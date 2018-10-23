@@ -32,6 +32,7 @@ import java.util.List;
  */
 @Dao public interface CoachServiceDao {
   @Query("SELECT * FROM coachservice") public Flowable<List<CoachService>> getAllCoachService();
+
   @Query("SELECT * FROM coachservice") public List<CoachService> getAllCoachServiceNow();
 
   @Query("SELECT * FROM coachservice WHERE brand_id = (:arg0)")
@@ -44,9 +45,10 @@ import java.util.List;
   CoachService getByIdModelNow(String arg0, String arg1);
 
   @Query("SELECT * FROM coachservice WHERE gym_id = (:arg0) ") Flowable<CoachService> getByGymId(
-    String arg0);
- @Query("SELECT * FROM coachservice WHERE gym_id = (:arg0) ") CoachService getByGymIdNow(
-    String arg0);
+      String arg0);
+
+  @Query("SELECT * FROM coachservice WHERE gym_id = (:arg0) ") CoachService getByGymIdNow(
+      String arg0);
 
   @Query("SELECT * FROM coachservice WHERE brand_id = (:arg0) and shop_id = (:arg1)")
   Flowable<CoachService> getByBrandIdAndShopId(String arg0, String arg1);
@@ -58,10 +60,14 @@ import java.util.List;
   Flowable<List<CoachService>> getByBrandIdAndShops(String arg0, List<String> arg1);
 
   @Delete public void delete(CoachService... services);
+
   @Query("DELETE FROM coachservice") public void deleteAll();
 
+  @Query("DELETE FROM coachservice WHERE id= (:arg0) and model = (:arg1)")
+  void deleteGymByIdAndBrandId(String arg0, String arg1);
+
   @Insert(onConflict = OnConflictStrategy.REPLACE) void insertService(
-    CoachService... coachServices);
+      CoachService... coachServices);
 
   @Update public void upDateServiceById(CoachService coachService);
 }
