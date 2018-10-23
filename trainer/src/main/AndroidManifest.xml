@@ -88,7 +88,7 @@
   <application
       android:name=".App"
       android:allowBackup="true"
-      android:icon="@drawable/app_dianping_icon"
+      android:icon="@drawable/app_ali_double_eleven"
       android:label="${APP_NAME}"
       android:theme="@style/QcAppTheme"
       tools:replace="android:label, android:allowBackup"
