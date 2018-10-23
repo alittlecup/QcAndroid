@@ -101,8 +101,7 @@ public class FragActivity extends SaasCommonActivity {
       //    fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count", 1), getIntent().getBooleanExtra("isfree", true));
       //    break;
       case 13:
-        fragment = EditGymFragment.newInstance(mCoachService.id, mCoachService.model,
-            mCoachService.getBrand_name());
+        fragment = EditGymFragment.newInstance(mCoachService);
         break;
       case 14:
         fragment = new CoursePlanHomeFragment();

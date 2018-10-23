@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,7 +15,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -56,15 +59,32 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2016/12/1.
  */
  public class EditGymFragment extends GuideSetGymFragment {
+    private static final String TAG = "EditGymFragment";
 
     private String id;
     private String model;
+
+    private String name;
+    private String photo;
+    private String phone;
+    private String address;
 
     public static EditGymFragment newInstance(String id, String model, String name) {
         Bundle args = new Bundle();
         args.putString("id", id);
         args.putString("model", model);
         args.putString("name", name);
+        EditGymFragment fragment = new EditGymFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static EditGymFragment newInstance(CoachService coachService) {
+        Bundle args = new Bundle();
+        args.putString("name", coachService.name);
+        args.putString("photo", coachService.photo);
+        args.putString("phone", coachService.phone);
+        args.putString("address", coachService.address);
         EditGymFragment fragment = new EditGymFragment();
         fragment.setArguments(args);
         return fragment;
@@ -78,6 +98,11 @@ import rx.schedulers.Schedulers;
             brandNameStr = getArguments().getString("name");
             lng = getArguments().getDouble("gd_lng");
             lat = getArguments().getDouble("gd_lat");
+
+            name = getArguments().getString("name");
+            photo = getArguments().getString("photo");
+            phone = getArguments().getString("phone");
+            address = getArguments().getString("address");
         }
     }
 
@@ -159,34 +184,51 @@ import rx.schedulers.Schedulers;
       return view;
     }
 
-    @Override public void initData() {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("id", id);
-        params.put("model", model);
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachServer(App.coachid + "", params)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseServiceDetail>() {
-                @Override public void call(QcResponseServiceDetail qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        Glide.with(getContext())
-                            .load(qcResponse.data.gym.getPhoto())
-                            .asBitmap()
-                            .into(new CircleImgWrapper(gymImg, getContext()));
-                        gymName.setContent(qcResponse.data.gym.getName());
-                        gymAddress.setContent(qcResponse.data.gym.getDistrictStr());
-                        lat = qcResponse.data.gym.gd_lat;
-                        lng = qcResponse.data.gym.gd_lng;
-                        city_code = Integer.valueOf(qcResponse.data.gym.getGd_district().city.id);
-                    } else {
-                        ToastUtils.show(qcResponse.getMsg());
-                    }
-                }
-            }, new NetWorkThrowable()));
+//    @Override public void initData() {
+//        HashMap<String, Object> params = new HashMap<>();
+//        params.put("id", id);
+//        params.put("model", model);
+//        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachServer(App.coachid + "", params)
+//            .onBackpressureBuffer()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(new Action1<QcResponseServiceDetail>() {
+//                @Override public void call(QcResponseServiceDetail qcResponse) {
+//                    if (ResponseConstant.checkSuccess(qcResponse)) {
+//                        Glide.with(getContext())
+//                            .load(qcResponse.data.gym.getPhoto())
+//                            .asBitmap()
+//                            .into(new CircleImgWrapper(gymImg, getContext()));
+//                        gymName.setContent(qcResponse.data.gym.getName());
+//                        gymAddress.setContent(qcResponse.data.gym.getDistrictStr());
+//                        lat = qcResponse.data.gym.gd_lat;
+//                        lng = qcResponse.data.gym.gd_lng;
+//                        city_code = Integer.valueOf(qcResponse.data.gym.getGd_district().city.id);
+//                    } else {
+//                        ToastUtils.show(qcResponse.getMsg());
+//                    }
+//                }
+//            }, new NetWorkThrowable()));
+//    }
+
+
+    @Override
+        public void initData() {
+        Log.i(TAG, "name = " + name);
+        Log.i(TAG, "address = " + address);
+        Log.i(TAG, "phone = " + phone);
+        gymName.setContent(name);
+        gymAddress.setContent(address);
+        gymPhone.setContent(phone);
+        gymNameStr = name;
+        addressStr = address;
+        phoneStr = phone;
+        Glide.with(getContext()).load(photo)
+                .asBitmap()
+                .into(new CircleImgWrapper(gymImg, getContext()));
     }
 
- public void onNextStep() {
+    public void onNextStep() {
         showAlert(R.string.contact_gm);
     }
 }

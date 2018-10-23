@@ -83,6 +83,7 @@ import rx.schedulers.Schedulers;
 	protected CommonInputView gymName;
 	protected Button nextStep;
 	protected CommonInputView gymAddress;
+    protected CommonInputView gymPhone;
 	protected TextView hint;
 	protected LinearLayout layoutBrand;
 
@@ -91,8 +92,9 @@ import rx.schedulers.Schedulers;
     protected int city_code;
     @Inject RepoCoachServiceImpl repoCoachService;
 
-    private String addressStr;
-    private String gymNameStr;
+    protected String addressStr;
+    protected String gymNameStr;
+    protected String phoneStr;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +107,7 @@ import rx.schedulers.Schedulers;
       brandName = (TextView) view.findViewById(R.id.brand_name);
       gymImg = (ImageView) view.findViewById(R.id.gym_img);
       gymName = (CommonInputView) view.findViewById(R.id.gym_name);
+      gymPhone = (CommonInputView) view.findViewById(R.id.gym_phone);
       nextStep = (Button) view.findViewById(R.id.next_step);
       gymAddress = (CommonInputView) view.findViewById(R.id.gym_address);
       hint = (TextView) view.findViewById(R.id.hint);
@@ -195,6 +198,7 @@ import rx.schedulers.Schedulers;
         super.onViewStateRestored(savedInstanceState);
         gymName.setContent(gymNameStr);
         gymAddress.setContent(addressStr);
+        gymPhone.setContent(phoneStr);
     }
 
     public void initData() {
