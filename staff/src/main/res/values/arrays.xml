@@ -78,7 +78,7 @@
   <array name="home_tab">
     <item>@string/home_tab_gyms</item>
     <item>@string/home_tab_special</item>
-    <item></item>
+    <item>天猫双11</item>
     <item>消息</item>
     <item>@string/home_tab_setting</item>
   </array>
