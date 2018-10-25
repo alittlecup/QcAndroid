@@ -15,6 +15,7 @@ import cn.qingchengfit.bean.FunctionBean;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.router.qc.QcRouteUtil;
@@ -40,6 +41,7 @@ import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -68,10 +70,36 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     mViewModel.quitAction.observe(this, aVoid -> {
       getServer();
     });
+    mViewModel.chartData.observe(this, chartdata -> {
+      if (chartdata != null) {
+        setChartData(chartdata);
+      }
+    });
+    mViewModel.hasPrivate.observe(this, aBoolean -> {
+      upDateItem(aBoolean, 0);
+    });
+    mViewModel.hasGroup.observe(this, aBoolean -> {
+      upDateItem(aBoolean, 1);
+    });
   }
 
-  private void setChartData() {
+  private void upDateItem(Boolean hasSetted, int pos) {
+    if (hasSetted != null && !hasSetted) {
+      IFlexible item = adapter.getItem(pos);
+      if (item instanceof DailyWorkItem) {
+        ((DailyWorkItem) item).setRightTopText("未设置");
+      }
+      adapter.notifyItemChanged(pos);
+    }
+  }
 
+  private void setChartData(HomeStatement stats) {
+    if (mPageAdapter != null) {
+      if (stats != null) {
+        if (stats.new_sells != null) mPageAdapter.setData(0, stats.new_sells.date_counts);
+        if (stats.new_orders != null) mPageAdapter.setData(1, stats.new_orders.date_counts);
+      }
+    }
   }
 
   @Override
@@ -87,6 +115,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     getServer();
     isInit = true;
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
+    mViewModel.loadGymWelcomeDeta();
     return mBinding;
   }
 
@@ -144,6 +173,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
           PreferenceUtils.setPrefString(getContext(), "coachservice_id_str",
               gymWrapper.getCoachService().getId());
           setGymInfo(coachService.getCoachService());
+          mViewModel.loadGymWelcomeDeta();
         }
       }
     }, new HttpThrowable());
@@ -174,7 +204,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     List<DailyWorkItem> items = new ArrayList<>();
     DailyWorkItem privateSetting = new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.moudule_service_private).text("私教排期").build());
-    privateSetting.setRightTopText("未设置");
     items.add(privateSetting);
     items.add(new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.moudule_service_group).text("团课排期").build()));
@@ -273,7 +302,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     }
 
     @Override public int getCount() {
-      return 4;
+      return 2;
     }
 
     @Override public Fragment getItem(int position) {

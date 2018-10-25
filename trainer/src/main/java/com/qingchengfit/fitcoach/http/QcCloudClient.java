@@ -12,6 +12,7 @@ import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
+import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.network.QcRestRepository;
@@ -301,6 +302,11 @@ public class QcCloudClient {
 
     @GET("/api/qingcheng/activities/notify/")
     rx.Observable<QcResponseActivities> getActivitiesCount();
+
+
+    @GET("/api/v1/coaches/{id}/gyms/welcome/") rx.Observable<QcDataResponse<GymDetail>> qcGetGymWelcome(
+        @Path("id") String staffid, @Query("id") String id, @Query("model") String model);
+
 
     @GET("/api/coaches/{id}/systems/") rx.Observable<QcResponCoachSys> qcGetSystem(
         @Path("id") String id, @Header("Cookie") String session_id);

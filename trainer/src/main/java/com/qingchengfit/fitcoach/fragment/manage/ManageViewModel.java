@@ -7,9 +7,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.repository.RepoCoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
@@ -18,7 +18,6 @@ import cn.qingchengfit.utils.GymUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,6 +28,9 @@ public class ManageViewModel extends BaseViewModel {
   public MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
   public MutableLiveData<QcResponsePermission.Data> permissionData = new MutableLiveData<>();
   public MutableLiveData<CoachService> coachServiceData = new MutableLiveData<>();
+  public MutableLiveData<HomeStatement> chartData=new MutableLiveData<>();
+  public MutableLiveData<Boolean> hasPrivate =new MutableLiveData<>();
+  public MutableLiveData<Boolean> hasGroup =new MutableLiveData<>();
   public final ActionLiveEvent quitAction = new ActionLiveEvent();
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
@@ -94,5 +96,18 @@ public class ManageViewModel extends BaseViewModel {
             ToastUtils.show(response.getMsg());
           }
         }, new NetWorkThrowable());
+  }
+
+  public void loadGymWelcomeDeta() {
+    QcCloudClient.getApi().getApi.qcGetGymWelcome(loginStatus.staff_id(), gymWrapper.id(),
+        gymWrapper.model()).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+      if (ResponseConstant.checkSuccess(response)) {
+        chartData.setValue(response.data.stat);
+        hasPrivate.setValue(response.data.has_private);
+        hasGroup.setValue(response.data.has_team);
+      } else {
+        ToastUtils.show(response.getMsg());
+      }
+    }, new NetWorkThrowable());
   }
 }
