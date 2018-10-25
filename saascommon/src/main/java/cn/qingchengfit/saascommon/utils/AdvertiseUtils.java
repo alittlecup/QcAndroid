@@ -25,7 +25,7 @@ public class AdvertiseUtils {
 
   public void showAdvertise(QcRestRepository qcRestRepository, String source, Context context) {
     String today = DateUtils.getStringToday();
-    String oldDay = PreferenceUtils.getPrefString(context, "advertise_today", "default");
+    String oldDay = PreferenceUtils.getPrefString(context, "advertise_today_"+source, "default");
     if (!today.equals(oldDay)) {
       loadAdvertise(qcRestRepository, source, context);
     }
@@ -33,7 +33,7 @@ public class AdvertiseUtils {
 
   public void loadAdvertise(QcRestRepository qcRestRepository, String source, Context context) {
     qcRestRepository.createGetApi(SaasCommonApi.class)
-        .qcGetAdvertise("staff")
+        .qcGetAdvertise(source)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(response -> {
@@ -52,7 +52,7 @@ public class AdvertiseUtils {
             });
             dialog.setAdData(ad_data);
             dialog.showDialog();
-            PreferenceUtils.setPrefString(context, "advertise_today", DateUtils.getStringToday());
+            PreferenceUtils.setPrefString(context, "advertise_today_"+source, DateUtils.getStringToday());
           }
 
           if (TextUtils.isEmpty(response.getData().ad_text)) {

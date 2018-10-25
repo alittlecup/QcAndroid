@@ -465,6 +465,10 @@ public class WebFragment extends BaseFragment
   }
 
   public void initCookie(String url) {
+    if (TextUtils.isEmpty(QcRestRepository.getSession(getContext()))) {
+      cookieManager.removeAllCookie();
+      return;
+    }
     if (getContext() == null) return;
     sessionid = QcRestRepository.getSession(getContext());
     if (sessionid == null) sessionid = "";

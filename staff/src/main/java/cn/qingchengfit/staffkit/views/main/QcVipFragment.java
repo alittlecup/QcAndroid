@@ -129,11 +129,10 @@ public class QcVipFragment extends WebFragment {
         cn.qingchengfit.utils.LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
         try {
           if (url.startsWith("http")) {
-            if(!TextUtils.isEmpty(QcRestRepository.getSession(getContext()))){
-              WebActivity.startWeb(url, getContext());
-            }else{
+            if (TextUtils.isEmpty(QcRestRepository.getSession(getContext()))) {
               cookieManager.removeAllCookie();
             }
+            WebActivity.startWeb(url, getContext());
           } else {
             Intent to = new Intent();
             to.setAction(Intent.ACTION_VIEW);
@@ -155,14 +154,6 @@ public class QcVipFragment extends WebFragment {
         showNoNet();
       }
     });
-  }
-
-  @Override public void initCookie(String url) {
-    if (TextUtils.isEmpty(QcRestRepository.getSession(getContext()))) {
-      cookieManager.removeAllCookie();
-      return;
-    }
-    super.initCookie(url);
   }
 
   @Override public void onPause() {
