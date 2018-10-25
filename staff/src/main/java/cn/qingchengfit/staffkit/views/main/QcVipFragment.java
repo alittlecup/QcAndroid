@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.LogUtil;
@@ -121,9 +123,10 @@ public class QcVipFragment extends WebFragment {
 
       @Override public void doUpdateVisitedHistory(WebView webView, String s, boolean b) {
         Log.d("TAG", "doUpdateVisitedHistory: " + s + "/" + b);
-        if (!s.equals(mCurUrl)&&!hasStarted) {
+        if (!s.equals(mCurUrl)&&!TextUtils.isEmpty(QcRestRepository.getSession(getContext()))) {
           WebActivity.startWeb(s, getContext());
-          hasStarted=true;
+        }else{
+          cookieManager.removeAllCookie();
         }
       }
 
@@ -154,7 +157,14 @@ public class QcVipFragment extends WebFragment {
       }
     });
   }
-  private boolean hasStarted;
+
+  @Override public void initCookie(String url) {
+    if (TextUtils.isEmpty(QcRestRepository.getSession(getContext()))) {
+      cookieManager.removeAllCookie();
+      return;
+    }
+    super.initCookie(url);
+  }
 
   @Override public void onPause() {
     super.onPause();

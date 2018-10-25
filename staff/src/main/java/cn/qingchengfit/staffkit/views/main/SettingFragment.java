@@ -262,6 +262,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
       PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
       PreferenceUtils.setPrefString(getContext(), Configs.PREFER_WORK_ID, "");
       PreferenceUtils.setPrefString(getContext(), Configs.CUR_BRAND_ID, "");
+      PreferenceUtils.setPrefString(getContext(), "session_id", "");
       MiPushClient.unregisterPush(getContext().getApplicationContext());
       RxBus.getBus().post(new EventLoginChange());
       onVisible();

@@ -195,10 +195,11 @@ public class LoginFragment extends BaseFragment
       }
       List<AbstractFlexibleItem> itemList = new ArrayList<>();
       final List<String> list = new ArrayList<>();
+      list.add("cloud.qingchengfit.cn");
       list.add("cloudtest.qingchengfit.cn");
       list.add("cloudtest01.qingchengfit.cn");
-      list.add("c1.qingchengfit.cn");
-      list.add("c2.qingchengfit.cn");
+      list.add("cloudtest02.qingchengfit.cn");
+      list.add("cloudmirror.qingchengfit.cn");
       list.add("自定义");
       for (String str : list) {
         itemList.add(new SimpleTextItemItem(str));

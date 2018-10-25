@@ -106,7 +106,7 @@ public class CardBuyPresenter extends BasePresenter {
     if (studentList.size() > 0) {
       choseStuIds.clear();
     }
-    this.choseStuIds.addAll(choseStuIds);
+    this.choseStuIds.addAll(studentList);
   }
 
   public void setUserIds(String userIds) {

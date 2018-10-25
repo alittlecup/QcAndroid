@@ -35,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.events.EventNativePay;
 import cn.qingchengfit.events.EventRePay;
 import cn.qingchengfit.events.EventShareFun;
@@ -133,7 +134,7 @@ public class WebFragment extends BaseFragment
   LinearLayout mNoNetwork;
   RelativeLayout webviewRoot;
   GestureDetectorCompat gestureDetectorCompat;
-  private CookieManager cookieManager;
+  protected CookieManager cookieManager;
   private IWXAPI msgApi;
   private ChoosePictureFragmentDialog choosePictureFragmentDialog;
   private ValueCallback<Uri> mValueCallback;
@@ -364,6 +365,12 @@ public class WebFragment extends BaseFragment
             }
           }
         }));
+    RxRegiste(RxBus.getBus().register(EventLoginChange.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(eventLoginChange -> {
+          initCookie(mCurUrl);
+          mWebviewWebView.loadUrl(mCurUrl);
+        }));
 
     loadUrl.observe(this, url -> {
       Log.d("TAG", "initBus: " + url);
@@ -482,6 +489,7 @@ public class WebFragment extends BaseFragment
     sb.append("=");
     sb.append(value).append(";");
     cookieManager.setCookie(url, sb.toString());
+
   }
 
   private void initChromClient() {
@@ -1026,6 +1034,7 @@ public class WebFragment extends BaseFragment
               }
             }
           }));
+
     }
 
     @JavascriptInterface public void goNativePath(String s) {
