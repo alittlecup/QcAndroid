@@ -123,18 +123,17 @@ public class QcVipFragment extends WebFragment {
 
       @Override public void doUpdateVisitedHistory(WebView webView, String s, boolean b) {
         Log.d("TAG", "doUpdateVisitedHistory: " + s + "/" + b);
-        if (!s.equals(mCurUrl)&&!TextUtils.isEmpty(QcRestRepository.getSession(getContext()))) {
-          WebActivity.startWeb(s, getContext());
-        }else{
-          cookieManager.removeAllCookie();
-        }
       }
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
         cn.qingchengfit.utils.LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
         try {
           if (url.startsWith("http")) {
-            WebActivity.startWeb(url, getContext());
+            if(!TextUtils.isEmpty(QcRestRepository.getSession(getContext()))){
+              WebActivity.startWeb(url, getContext());
+            }else{
+              cookieManager.removeAllCookie();
+            }
           } else {
             Intent to = new Intent();
             to.setAction(Intent.ACTION_VIEW);
