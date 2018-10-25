@@ -150,7 +150,7 @@ public class Configs {
       BuildConfig.DEBUG ? (BuildConfig.FLAVOR.contains("dev") ? Constants.ServerDebug
           : Constants.ServerMirror) : Constants.Server;
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
-  public static String URL_ALI_Eleven =  "mobile/activity/enter-ali/#/";
+  public static String URL_ALI_Eleven =  "mobile/activity/enter-ali/?utm_source=staffapp&utm_medium=module&utm_campaign=enterali";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
 
   //用户协议
