@@ -333,6 +333,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     ts.commit();
   }
 
+
   public Fragment generateFragment(int pos) {
     switch (pos) {
       case 1:
@@ -341,7 +342,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         return QcVipFragment.newInstance(
             ((BuildConfig.DEBUG ? (PreferenceUtils.getPrefString(this, "debug_ip",
                 Constants.ServerDebug)) : Constants.Server) + Configs.URL_ALI_Eleven).replace(
-                "http", "https"), true);
+                "http", "https"),true);
       case 3:
         return new MainMsgFragment();
       case 4:

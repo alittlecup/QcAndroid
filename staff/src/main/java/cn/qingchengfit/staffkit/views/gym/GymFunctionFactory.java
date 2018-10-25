@@ -566,11 +566,16 @@ public class GymFunctionFactory {
         WebActivity.startWeb("https://jinshuju.net/f/xrU0bu", fragment.getContext());
         return;
       case MODULE_MARKET_ALI11:
-        WebActivity.startWeb(Configs.Server+"mobile/activity/enter-ali/#/", fragment.getContext());
+        WebActivity.startWeb(Configs.Server
+            + "mobile/activity/enter-ali/#/brand/"
+            + coachService.getBrand_id()
+            + "/gym/"
+            + coachService.getGym_id()
+            + "/info-complete", fragment.getContext());
         return;
       case MODULE_MARKET_DIANPING:
-        WebActivity.startWeb(
-            Configs.Server+"activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
+        WebActivity.startWeb(Configs.Server
+                + "activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
             fragment.getContext());
         return;
       case MODULE_OPERATE_SCORE:
