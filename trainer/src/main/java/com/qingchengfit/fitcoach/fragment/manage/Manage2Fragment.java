@@ -39,7 +39,6 @@ import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -115,7 +114,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     getServer();
     isInit = true;
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
-    mViewModel.loadGymWelcomeDeta();
     return mBinding;
   }
 
@@ -173,7 +171,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
           PreferenceUtils.setPrefString(getContext(), "coachservice_id_str",
               gymWrapper.getCoachService().getId());
           setGymInfo(coachService.getCoachService());
-          mViewModel.loadGymWelcomeDeta();
         }
       }
     }, new HttpThrowable());
@@ -184,6 +181,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     mBinding.title.setText(coachService.getName());
     PhotoUtils.smallCircle(mBinding.imgGymPhoto, coachService.getPhoto());
     mViewModel.loadPremission(App.coachid + "");
+    mViewModel.loadGymWelcomeDeta();
   }
 
   private void upDatePremission(QcResponsePermission.Data data) {

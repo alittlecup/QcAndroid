@@ -63,6 +63,7 @@ public class CoachService implements Parcelable{
   public boolean can_trial;
   public double gd_lng;
   public double gd_lat;
+  @Ignore
   public MiniProgram mimi_program;
 
   private CoachService(Builder builder) {
