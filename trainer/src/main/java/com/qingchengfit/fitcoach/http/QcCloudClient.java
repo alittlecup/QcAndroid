@@ -30,6 +30,7 @@ import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
+import cn.qingchengfit.saasbase.gymconfig.bean.GymTypeData;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -750,6 +751,9 @@ public class QcCloudClient {
     @GET(" /api/user/check/read_agreement/")
     rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(
         @QueryMap HashMap<String, Object> params);
+
+    //获取场馆类型
+    @GET("/api/v2/gym/types/")rx.Observable<QcDataResponse<GymTypeData>> qcGetGymType();
   }
 
   public interface PostApi {
@@ -834,8 +838,12 @@ public class QcCloudClient {
     //删除工作经验
     @DELETE("/api/experiences/{id}/") rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);
 
-    //新增健身房
-    @POST("/api/gym/") rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymPostBean addGymBean);
+    //修改健身房
+    @PUT("/api/gym/{id}/") rx.Observable<QcResponse> qcEditGym(
+            @Path("id") String id, @QueryMap HashMap<String, Object> params, @Body Shop shop);
+
+    //删除健身房
+    @DELETE("/api/gym/{id}/") rx.Observable<QcResponse> qcDelGym(@Path("id") String id);
 
     //新增组织
     @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(

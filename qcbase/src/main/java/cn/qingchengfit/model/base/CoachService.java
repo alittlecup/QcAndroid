@@ -24,6 +24,17 @@ import com.google.gson.annotations.SerializedName;
 @Entity(primaryKeys = {"id","model"},tableName = "coachservice")
 public class CoachService implements Parcelable{
 
+  @Ignore
+  public static final Parcelable.Creator<CoachService> CREATOR =
+      new Parcelable.Creator<CoachService>() {
+        @Override public CoachService createFromParcel(Parcel source) {
+          return new CoachService(source);
+        }
+
+        @Override public CoachService[] newArray(int size) {
+          return new CoachService[size];
+        }
+      };
   //public static RowMapper<CoachService> SELECT_ALL_MAPPER = FACTORY.getAllCoachServiceMapper();
   @NonNull
   @SerializedName("model") public String model = "";
@@ -63,8 +74,9 @@ public class CoachService implements Parcelable{
   public boolean can_trial;
   public double gd_lng;
   public double gd_lat;
-  @Ignore
-  public MiniProgram mimi_program;
+  public int gym_type;
+  public String description;
+  public int area;
 
   private CoachService(Builder builder) {
     setModel(builder.model);
@@ -86,12 +98,40 @@ public class CoachService implements Parcelable{
     setAddress(builder.address);
     setShop_id(builder.shop_id);
     setPosition(builder.position);
+    setGym_type(builder.gym_type);
+    setDescription(builder.description);
+    setArea(builder.area);
     can_trial = builder.can_trial;
   }
 
   public CoachService() {
   }
 
+  protected CoachService(Parcel in) {
+    this.model = in.readString();
+    this.type = in.readInt();
+    this.id = in.readString();
+    this.name = in.readString();
+    this.color = in.readString();
+    this.photo = in.readString();
+    this.phone = in.readString();
+    this.host = in.readString();
+    this.brand_name = in.readString();
+    this.courses_count = in.readInt();
+    this.users_count = in.readInt();
+    this.brand_id = in.readString();
+    this.has_permission = in.readByte() != 0;
+    this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
+    this.system_end = in.readString();
+    this.gym_id = in.readString();
+    this.address = in.readString();
+    this.shop_id = in.readString();
+    this.position = in.readString();
+    this.gym_type = in.readInt();
+    this.description = in.readString();
+    this.area = in.readInt();
+    this.can_trial = in.readByte() != 0;
+  }
   @Ignore
   @Nullable  public String id() {
     return id + "";
@@ -361,6 +401,60 @@ public class CoachService implements Parcelable{
     this.users_count = users_count;
   }
 
+  public void setArea(int area) {
+    this.area = area;
+  }
+
+  public int getArea() {
+    return area;
+  }
+
+  public void setGym_type(int gym_type) {
+    this.gym_type = gym_type;
+  }
+
+  public int getGym_type() {
+    return gym_type;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.model);
+    dest.writeInt(this.type);
+    dest.writeString(this.id);
+    dest.writeString(this.name);
+    dest.writeString(this.color);
+    dest.writeString(this.photo);
+    dest.writeString(this.phone);
+    dest.writeString(this.host);
+    dest.writeString(this.brand_name);
+    dest.writeInt(this.courses_count);
+    dest.writeInt(this.users_count);
+    dest.writeString(this.brand_id);
+    dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
+    dest.writeParcelable(this.gd_district, flags);
+    dest.writeString(this.system_end);
+    dest.writeString(this.gym_id);
+    dest.writeString(this.address);
+    dest.writeString(this.shop_id);
+    dest.writeString(this.position);
+    dest.writeString(this.description);
+    dest.writeInt(this.area);
+    dest.writeInt(this.gym_type);
+    dest.writeByte(this.can_trial ? (byte) 1 : (byte) 0);
+  }
+
   public static final class Builder {
     private String model;
     private int type;
@@ -382,6 +476,9 @@ public class CoachService implements Parcelable{
     private String shop_id;
     private String position;
     private boolean can_trial;
+    private int area;
+    private String description;
+    private int gym_type;
 
     public Builder() {
     }
@@ -486,74 +583,23 @@ public class CoachService implements Parcelable{
       return this;
     }
 
+    public Builder area(int val) {
+      area = val;
+      return this;
+    }
+
+    public Builder description(String val) {
+      description = val;
+      return this;
+    }
+
+    public Builder gym_type(int val) {
+      gym_type = val;
+      return this;
+    }
+
     public CoachService build() {
       return new CoachService(this);
     }
   }
-
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.model);
-    dest.writeInt(this.type);
-    dest.writeString(this.id);
-    dest.writeString(this.name);
-    dest.writeString(this.color);
-    dest.writeString(this.photo);
-    dest.writeString(this.phone);
-    dest.writeString(this.host);
-    dest.writeString(this.brand_name);
-    dest.writeInt(this.courses_count);
-    dest.writeInt(this.users_count);
-    dest.writeString(this.brand_id);
-    dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
-    dest.writeParcelable(this.gd_district, flags);
-    dest.writeString(this.system_end);
-    dest.writeString(this.gym_id);
-    dest.writeString(this.address);
-    dest.writeString(this.shop_id);
-    dest.writeString(this.position);
-    dest.writeByte(this.can_trial ? (byte) 1 : (byte) 0);
-    dest.writeDouble(this.gd_lng);
-    dest.writeDouble(this.gd_lat);
-    dest.writeParcelable(this.mimi_program, flags);
-  }
-
-  protected CoachService(Parcel in) {
-    this.model = in.readString();
-    this.type = in.readInt();
-    this.id = in.readString();
-    this.name = in.readString();
-    this.color = in.readString();
-    this.photo = in.readString();
-    this.phone = in.readString();
-    this.host = in.readString();
-    this.brand_name = in.readString();
-    this.courses_count = in.readInt();
-    this.users_count = in.readInt();
-    this.brand_id = in.readString();
-    this.has_permission = in.readByte() != 0;
-    this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
-    this.system_end = in.readString();
-    this.gym_id = in.readString();
-    this.address = in.readString();
-    this.shop_id = in.readString();
-    this.position = in.readString();
-    this.can_trial = in.readByte() != 0;
-    this.gd_lng = in.readDouble();
-    this.gd_lat = in.readDouble();
-    this.mimi_program = in.readParcelable(MiniProgram.class.getClassLoader());
-  }
-
-  public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {
-    @Override public CoachService createFromParcel(Parcel source) {
-      return new CoachService(source);
-    }
-
-    @Override public CoachService[] newArray(int size) {
-      return new CoachService[size];
-    }
-  };
 }

@@ -113,7 +113,6 @@
       android:id="@+id/gym_type"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
-      app:civ_content="工作室"
       app:civ_lable="类型"
       app:civ_nonnull="true"
       app:civ_showright="true"
@@ -124,6 +123,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="联系方式"
+      app:civ_hint="@string/please_input_gym_phone"
       app:civ_content="12345678901"
       app:civ_nonnull="true"
       app:civ_text_color="@color/text_black" />
@@ -146,9 +146,8 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="营业面积"
+      app:civ_content=" m2"
       app:civ_nonnull="true"
-      app:civ_showright="true"
-      app:civ_content="1500 m2"
       app:civ_text_color="@color/text_black" />
 
   <cn.qingchengfit.widgets.CommonInputView

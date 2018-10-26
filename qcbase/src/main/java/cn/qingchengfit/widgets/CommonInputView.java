@@ -495,6 +495,10 @@ public class CommonInputView extends RelativeLayout {
     edit.setTextColor(color);
   }
 
+  public void setContentType(int type) {
+    edit.setInputType(type);
+  }
+
   public boolean isEmpty() {
     return TextUtils.isEmpty(edit.getText());
   }

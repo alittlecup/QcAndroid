@@ -2,9 +2,11 @@ package com.qingchengfit.fitcoach.fragment.guide;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +24,26 @@ import cn.qingchengfit.bean.EventStep;
 import cn.qingchengfit.events.EventAddress;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.gymconfig.bean.GymType;
+import cn.qingchengfit.saasbase.gymconfig.bean.GymTypeData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.UpYunClient;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.views.fragments.CommonInputTextFragment;
+import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -47,10 +59,22 @@ import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.tbruyelle.rxpermissions.RxPermissions;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static com.tencent.qcloud.timchat.MyApplication.getContext;
 
 /**
  * power by
@@ -84,17 +108,28 @@ import rx.schedulers.Schedulers;
 	protected Button nextStep;
 	protected CommonInputView gymAddress;
     protected CommonInputView gymPhone;
+    protected CommonInputView gymType;
+    protected CommonInputView gymSize;
+    protected CommonInputView gymDescribe;
 	protected TextView hint;
 	protected LinearLayout layoutBrand;
 
     protected double lat;
     protected double lng;
     protected int city_code;
+    protected int gym_type;
     @Inject RepoCoachServiceImpl repoCoachService;
 
     protected String addressStr;
     protected String gymNameStr;
     protected String phoneStr;
+    protected String sizeStr;
+    protected String descriptionStr;
+    protected int typeInt;
+
+    private BottomChooseDialog dialog;
+    private GymTypeData gymTypeData;
+    private List<GymType> gymTypes;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +145,12 @@ import rx.schedulers.Schedulers;
       gymPhone = (CommonInputView) view.findViewById(R.id.gym_phone);
       nextStep = (Button) view.findViewById(R.id.next_step);
       gymAddress = (CommonInputView) view.findViewById(R.id.gym_address);
+      gymType = (CommonInputView) view.findViewById(R.id.gym_type);
+      gymSize = (CommonInputView) view.findViewById(R.id.gym_size);
+      gymDescribe = (CommonInputView) view.findViewById(R.id.gym_describe);
       hint = (TextView) view.findViewById(R.id.hint);
       layoutBrand = (LinearLayout) view.findViewById(R.id.layout_brand);
+      gymSize.setContentType(InputType.TYPE_CLASS_NUMBER);
       view.findViewById(R.id.layout_brand).setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           GuideSetGymFragment.this.onClick(v);
@@ -126,6 +165,18 @@ import rx.schedulers.Schedulers;
         @Override public void onClick(View v) {
           GuideSetGymFragment.this.onClick(v);
         }
+      });
+      view.findViewById(R.id.gym_type).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GuideSetGymFragment.this.onClick(v);
+            }
+      });
+      view.findViewById(R.id.gym_describe).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              GuideSetGymFragment.this.onClick(v);
+          }
       });
       view.findViewById(R.id.next_step).setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
@@ -152,6 +203,10 @@ import rx.schedulers.Schedulers;
             gymNameStr = initBean.shop.name;
             gymAddress.setContent(initBean.shop.address);
             addressStr = initBean.shop.address;
+            sizeStr = initBean.shop.area + " m2";
+            gymSize.setContent(sizeStr);
+            descriptionStr = initBean.shop.description;
+            gymDescribe.setContent(descriptionStr);
             Glide.with(getContext())
                 .load(PhotoUtils.getSmall(initBean.shop.photo))
                 .asBitmap()
@@ -190,8 +245,21 @@ import rx.schedulers.Schedulers;
                     },new NetWorkThrowable());
             }
         });
+        getGymType();
         initData();
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        RxBusAdd(EventTxT.class).onBackpressureLatest()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BusSubscribe<EventTxT>() {
+                    @Override public void onNext(EventTxT eventTxT) {
+                        gymDescribe.setContent(eventTxT.txt);
+                    }
+                });
     }
 
     @Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -202,7 +270,6 @@ import rx.schedulers.Schedulers;
     }
 
     public void initData() {
-
     }
 
     @Override protected void lazyLoad() {
@@ -217,6 +284,7 @@ import rx.schedulers.Schedulers;
  public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_brand:
+
                 break;
             case R.id.layout_gym_img:
                 ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance(true);;
@@ -235,29 +303,55 @@ import rx.schedulers.Schedulers;
                             }
                         }
                     });
-
                 break;
-
+            case R.id.gym_type:
+                showGymTypeDialog();
+                break;
+            case R.id.gym_describe:
+                getFragmentManager().beginTransaction()
+                        .add(((BaseActivity) getActivity()).getFragId(),
+                                CommonInputTextFragment.newInstance("描述您的场馆", "", "请填写场馆描述"))
+                        .addToBackStack(null)
+                        .commit();
+                break;
         }
     }
 
  public void onNextStep() {
-        if (gymAddress.isEmpty()) {
-            ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
+        if(gymName.isEmpty()) {
+             ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
+             return;
+        }
+        if(gymType.isEmpty()) {
+            ToastUtils.showDefaultStyle(getString(R.string.err_write_type));
             return;
         }
-        if (gymName.isEmpty()) {
-            ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
+        if(gymPhone.isEmpty()) {
+            ToastUtils.showDefaultStyle(getString(R.string.err_write_phone));
             return;
+        }
+        if(gymAddress.isEmpty()) {
+             ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
+             return;
+        }
+        if(gymSize.isEmpty()) {
+             ToastUtils.showDefaultStyle(getString(R.string.err_write_size));
+             return;
         }
         if (getParentFragment() instanceof GuideFragment) {
-            ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder().address(gymAddress.getContent())
-                .gd_district_id(city_code + "")
-                .name(gymName.getContent())
-                .gd_lat(lat)
-                .gd_lng(lng)
-                .photo(imgUrl)
-                .build();
+            int gymSizeInt = Integer.parseInt(gymSize.getContent().substring(0, gymSize.getContent().length()-4));
+            ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder()
+                    .address(gymAddress.getContent())
+                    .gd_district_id(city_code + "")
+                    .name(gymName.getContent())
+                    .gym_type(gym_type)
+                    .phone(gymPhone.getContent())
+                    .area(gymSizeInt)
+                    .description(gymDescribe.getContent())
+                    .gd_lat(lat)
+                    .gd_lng(lng)
+                    .photo(imgUrl)
+                    .build();
             gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
             showLoading();
@@ -298,11 +392,58 @@ import rx.schedulers.Schedulers;
         }
     }
 
+    private void showGymTypeDialog() {
+        if(dialog != null) {
+            dialog.show();
+            return;
+        }
+        List<BottomChooseData> datas = new ArrayList<>();
+        if(gymTypeData != null) {
+            gymTypes = gymTypeData.gym_types;
+            for(int i = 0; i<gymTypes.size(); i++) {
+                GymType gymType = gymTypes.get(i);
+                datas.add(new BottomChooseData(gymType.gym_type_value));
+            }
+        }
+        dialog = new BottomChooseDialog(getContext(), "场馆类型", datas);
+        dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
+            @Override
+            public boolean onItemClick(int position) {
+                gymType.setContent(datas.get(position).getContent().toString());
+                gym_type = gymTypes.get(position).gym_type;
+                return true;
+            }
+        });
+        dialog.show();
+    }
+
+    private void getGymType() {
+        RxRegiste((Subscription) QcCloudClient.getApi().getApi.qcGetGymType()
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<QcDataResponse<GymTypeData>>() {
+                    @Override
+                    public void call(QcDataResponse<GymTypeData> qcResponse) {
+                        if(qcResponse.status == 200) {
+                            gymTypeData = qcResponse.data;
+                            gymType.setContent(gymTypeData.gym_types.get(0).gym_type_value);
+                        } else {
+                            ToastUtils.showDefaultStyle("获取场馆类型失败!");
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        ToastUtils.showDefaultStyle("获取场馆类型失败!");
+                    }
+                }));
+    }
+
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
-
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
                 brandImgUrl = brand.getPhoto();
                 brandNameStr = brand.getName();

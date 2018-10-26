@@ -29,6 +29,11 @@ public class GuideActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public int getFragId() {
+        return R.id.frag;
+    }
+
     @Override protected void onDestroy() {
         String initStr = PreferenceUtils.getPrefString(this, "initSystem", "");
 

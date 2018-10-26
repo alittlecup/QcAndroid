@@ -1,9 +1,11 @@
 package com.qingchengfit.fitcoach.fragment.brandmanange;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.util.CircularArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.DateUtils;
@@ -30,6 +33,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.BrandGymsAdapter;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -118,7 +122,6 @@ public class BrandDetailFragment extends BaseFragment {
                       .replace(R.id.frag, BrandEditFragment.newInstance(brand))
                       .addToBackStack(getFragmentName())
                       .commit();
-
                   return true;
                 }
               });
@@ -162,15 +165,28 @@ public class BrandDetailFragment extends BaseFragment {
         adapter.setListener(new OnRecycleItemClickListener() {
           @Override public void onItemClick(View v, int pos) {
             if (adapter.getItemViewType(pos) == 0) {
-
-              DialogUtils.showConfirm(getContext(), "", getString(R.string.contact_gm),
-                  (dialog, action) -> {
-                    dialog.dismiss();
-                    if (action == DialogAction.POSITIVE) {
-                      PhoneFuncUtils.callPhone(getContext(),
-                          getString(R.string.qingcheng_gm_phone));
-                    }
-                  });
+//              DialogUtils.showConfirm(getContext(), "", getString(R.string.contact_gm),
+//                  (dialog, action) -> {
+//                    dialog.dismiss();
+//                    if (action == DialogAction.POSITIVE) {
+//                      PhoneFuncUtils.callPhone(getContext(),
+//                          getString(R.string.qingcheng_gm_phone));
+//                    }
+//                  });
+              Shop shop = datas.get(pos-1);
+              CoachService coachService = new CoachService();
+              coachService.id = shop.id;
+              coachService.name = shop.name;
+              coachService.photo = shop.photo;
+              coachService.phone = shop.superuser.phone;
+              coachService.address = shop.address;
+              coachService.gym_type = shop.gym_type;
+              coachService.area = shop.area;
+              coachService.description = shop.description;
+              Intent guide = new Intent(getActivity(), FragActivity.class);
+              guide.putExtra("type", 13);
+              guide.putExtra("service", coachService);
+              startActivity(guide);
             } else if (adapter.getItemViewType(pos) == 1) {
               //getFragmentManager().beginTransaction()
               //    .replace(R.id.frag,

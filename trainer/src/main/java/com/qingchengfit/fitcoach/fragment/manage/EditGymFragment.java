@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.manage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -15,25 +16,29 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.gymconfig.bean.GymTypeData;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcResponseServiceDetail;
 import java.util.HashMap;
+
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -68,6 +73,9 @@ import rx.schedulers.Schedulers;
     private String photo;
     private String phone;
     private String address;
+    private String description;
+    private int area;
+    private int gym_type;
 
     public static EditGymFragment newInstance(String id, String model, String name) {
         Bundle args = new Bundle();
@@ -81,10 +89,14 @@ import rx.schedulers.Schedulers;
 
     public static EditGymFragment newInstance(CoachService coachService) {
         Bundle args = new Bundle();
+        args.putString("id", coachService.id);
         args.putString("name", coachService.name);
         args.putString("photo", coachService.photo);
         args.putString("phone", coachService.phone);
         args.putString("address", coachService.address);
+        args.putInt("gym_type", coachService.gym_type);
+        args.putInt("area", coachService.area);
+        args.putString("description",coachService.description);
         EditGymFragment fragment = new EditGymFragment();
         fragment.setArguments(args);
         return fragment;
@@ -103,6 +115,9 @@ import rx.schedulers.Schedulers;
             photo = getArguments().getString("photo");
             phone = getArguments().getString("phone");
             address = getArguments().getString("address");
+            gym_type = getArguments().getInt("gym_type");
+            area = getArguments().getInt("area");
+            description = getArguments().getString("description");
         }
     }
 
@@ -130,24 +145,42 @@ import rx.schedulers.Schedulers;
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     //修改会员
                     if (TextUtils.isEmpty(gymName.getContent())) {
-                        ToastUtils.show("健身房名称不能为空");
+                        ToastUtils.show("场馆名称不能为空");
+                        return true;
+                    }
+                    if(gymType.isEmpty()) {
+                        com.qingchengfit.fitcoach.Utils.ToastUtils.showDefaultStyle(getString(R.string.err_write_type));
+                        return true;
+                    }
+                    if(gymPhone.isEmpty()) {
+                        com.qingchengfit.fitcoach.Utils.ToastUtils.showDefaultStyle(getString(R.string.err_write_phone));
+                        return true;
+                    }
+                    if(gymSize.isEmpty()) {
+                        com.qingchengfit.fitcoach.Utils.ToastUtils.showDefaultStyle(getString(R.string.err_write_size));
                         return true;
                     }
                     if (lat == 0 || lng == 0) {
-                        ToastUtils.show("请重新选择健身房地址");
+                        ToastUtils.show("请重新选择场馆地址");
                         return true;
                     }
                     if (getActivity() instanceof FragActivity) {
+                        int gymSizeInt = Integer.parseInt(gymSize.getContent().substring(0, gymSize.getContent().length()-4));
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("id", ((FragActivity) getActivity()).getCoachService().getId());
                         params.put("model", ((FragActivity) getActivity()).getCoachService().getModel());
-                        Shop shop = new Shop.Builder().photo(imgUrl)
-                            .gd_district_id(city_code + "")
-                            .gd_lat(lat)
-                            .gd_lng(lng)
-                            .name(gymName.getContent())
-                            .build();
-                        RxRegiste(QcCloudClient.getApi().postApi.qcUpdateGym(App.coachid + "", params, shop)
+                        Shop shop = new Shop.Builder()
+                                .photo(imgUrl)
+                                .gd_district_id(city_code + "")
+                                .gd_lat(lat)
+                                .gd_lng(lng)
+                                .gym_type(gym_type)
+                                .name(gymName.getContent())
+                                .phone(gymPhone.getContent())
+                                .area(gymSizeInt)
+                                .address(gymAddress.getContent())
+                                .build();
+                        RxRegiste(QcCloudClient.getApi().postApi.qcEditGym(id, params, shop)
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -214,21 +247,52 @@ import rx.schedulers.Schedulers;
 
     @Override
         public void initData() {
-        Log.i(TAG, "name = " + name);
-        Log.i(TAG, "address = " + address);
-        Log.i(TAG, "phone = " + phone);
-        gymName.setContent(name);
-        gymAddress.setContent(address);
-        gymPhone.setContent(phone);
         gymNameStr = name;
         addressStr = address;
         phoneStr = phone;
+        descriptionStr = description;
+        sizeStr = area + " m2";
+        typeInt = gym_type;
+
         Glide.with(getContext()).load(photo)
                 .asBitmap()
                 .into(new CircleImgWrapper(gymImg, getContext()));
     }
 
     public void onNextStep() {
-        showAlert(R.string.contact_gm);
+//        showAlert(R.string.contact_gm);
+        DialogUtils.showConfirm(getContext(), "提示", "确定要删除该场馆吗？", new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog dialog, DialogAction which) {
+                if(which == DialogAction.POSITIVE) {
+                    RxRegiste((Subscription) QcCloudClient.getApi().postApi.qcDelGym(id)
+                            .onBackpressureBuffer()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<QcResponse>() {
+                                @Override
+                                public void call(QcResponse qcResponse) {
+                                    if(qcResponse.status == 200) {
+                                        ToastUtils.showDefaultStyle("删除场馆成功!");
+                                        Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                                        toMain.putExtra(Main2Activity.ACTION, Main2Activity.INIT);
+                                        startActivity(toMain);
+                                        getActivity().finish();
+                                    } else {
+                                        showAlert("删除场馆失败!");
+                                    }
+                                }
+                            }, new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    showAlert("删除场馆失败!");
+                                }
+                            }));
+                    dialog.dismiss();
+                } else {
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 }

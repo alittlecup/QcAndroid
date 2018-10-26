@@ -132,6 +132,7 @@
   <string name="guide_set_gym_hint">-- 设置场馆 -- </string>
   <string name="gym_name">场馆名称</string>
   <string name="please_input_gym_name">请填写场馆名称</string>
+  <string name="please_input_gym_phone">请填写联系方式</string>
   <string name="please_input">请填写</string>
   <string name="please_input_address">请填写地址</string>
   <string name="address">地址</string>
@@ -185,6 +186,9 @@
   <string name="hint_function_in_staff_app">请在青橙健身房管理App中使用该功能</string>
   <string name="err_write_gym_name">请填写场馆名称</string>
   <string name="err_write_address">请选择地址信息</string>
+  <string name="err_write_type">请选择场馆类型</string>
+  <string name="err_write_phone">请填写联系方式</string>
+  <string name="err_write_size">请填写营业面积</string>
   <string name="err_write_course_name">请填写课程名称</string>
   <string name="err_write_course_time_long">请填写课程时长</string>
   <string name="err_write_course_order_num">请填写单节可约人数</string>

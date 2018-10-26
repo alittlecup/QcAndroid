@@ -48,6 +48,8 @@ public class Shop implements Parcelable {
     public String contact;
     public User superuser;
     public String position;
+    public int area;
+    public int gym_type;
 
     private Shop(Builder builder) {
         id = builder.id;
@@ -59,6 +61,8 @@ public class Shop implements Parcelable {
         gd_district_id = builder.gd_district_id;
         gd_lat = builder.gd_lat;
         gd_lng = builder.gd_lng;
+        area = builder.area;
+        gym_type = builder.gym_type;
     }
 
     protected Shop(Parcel in) {
@@ -71,6 +75,8 @@ public class Shop implements Parcelable {
         this.gd_district_id = in.readString();
         this.gd_lat = in.readDouble();
         this.gd_lng = in.readDouble();
+        this.area = in.readInt();
+        this.gym_type = in.readInt();
     }
 
     @Override public int describeContents() {
@@ -87,6 +93,8 @@ public class Shop implements Parcelable {
         dest.writeString(this.gd_district_id);
         dest.writeDouble(this.gd_lat);
         dest.writeDouble(this.gd_lng);
+        dest.writeInt(this.area);
+        dest.writeInt(this.gym_type);
     }
 
     public static final class Builder {
@@ -99,6 +107,8 @@ public class Shop implements Parcelable {
         private String gd_district_id;
         private double gd_lat;
         private double gd_lng;
+        private int area;
+        private int gym_type;
 
         public Builder() {
         }
@@ -145,6 +155,16 @@ public class Shop implements Parcelable {
 
         public Builder gd_lng(double val) {
             gd_lng = val;
+            return this;
+        }
+
+        public Builder area(int val) {
+            area = val;
+            return this;
+        }
+
+        public Builder gym_type(int val) {
+            gym_type = val;
             return this;
         }
 
