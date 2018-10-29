@@ -111,14 +111,15 @@ public class GuideView {
             guideButton = contentView.findViewById(R.id.guide_btn);
             guideParent = contentView.findViewById(R.id.guide_parent);
             setGuideClickListener(guideButton, index);
-            guideParent.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-                @Override
-                public void onScrollChanged() {
-                    int scrollX = guideParent.getScrollX();
-                    int scrollY = guideParent.getScrollY();
-                    guideParent.scrollTo(scrollX, scrollY);
-                }
-            });
+//            guideParent.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+//                @Override
+//                public void onScrollChanged() {
+//                    int scrollX = guideParent.getScrollX();
+//                    int scrollY = guideParent.getScrollY();
+//                    guideParent.scrollTo(scrollX, scrollY);
+//                }
+//            });
+            guideParent.setOnScrollChangeListener(new GuideScrollChangeListener());
         }
     }
 
@@ -148,11 +149,11 @@ public class GuideView {
     }
 
     //SDK > 23
-//    private class GuideScrollChangeListener implements View.OnScrollChangeListener {
-//        @Override
-//        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//            if(scrollView != null)
-//                scrollView.scrollTo(scrollX, scrollY);
-//        }
-//    }
+    private class GuideScrollChangeListener implements View.OnScrollChangeListener {
+        @Override
+        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            if(scrollView != null)
+                scrollView.scrollTo(scrollX, scrollY);
+        }
+    }
 }

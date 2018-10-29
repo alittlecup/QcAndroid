@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,7 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.qingchengfit.Constants;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.saascommon.model.AdvertiseInfo;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.utils.AdvertiseUtils;
+import cn.qingchengfit.saascommon.views.CommonDialog;
+import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.utils.DialogUtils;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -121,6 +128,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   @Inject GymWrapper gymWrapper;
   @Inject BaseRouter baseRouter;
   @Inject GymBaseInfoAction gymBaseInfoAction;
+  @Inject IPermissionModel permissionModel;
   CompositeSubscription sps = new CompositeSubscription();
   String[] tags = new String[] { "gyms", "find", "msg", "setting", "ali" };
   private int[] mIconSelect = {
@@ -289,7 +297,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<String>() {
           @Override public void call(String s) {
-            //                        updateAdText(s);
+            updateAdText(s);
           }
         }));
   }
@@ -333,10 +341,10 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     ts.commit();
   }
 
-
   public Fragment generateFragment(int pos) {
     switch (pos) {
       case 1:
+        showCRMDialog();
         return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
       case 2:
         return QcVipFragment.newInstance(
@@ -421,6 +429,32 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     loginStatus.setLoginUser(staff);
     if (!TextUtils.isEmpty(user_id)) loginStatus.setUserId(user_id);
     loginStatus.setSession(session);
+  }
+
+  private void showCRMDialog() {
+    boolean isFirst = PreferenceUtils.getPrefBoolean(MainActivity.this, "crm_dialog", true);
+    if(isFirst == true) {
+      CommonDialog dialog = new CommonDialog(MainActivity.this);
+//      dialog.setImageView();
+      dialog.setClickListener(new CommonDialog.DialogClickListener() {
+        @Override
+        public void onCloseClickListener(Dialog dialog) {
+          dialog.dismiss();
+        }
+
+        @Override
+        public void onItemClickListener(Dialog dialog) {
+          if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
+            QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
+                    .call();
+          } else {
+            DialogUtils.showAlert(MainActivity.this, R.string.alert_permission_forbid);
+          }
+        }
+      });
+      dialog.showDialog();
+      PreferenceUtils.setPrefBoolean(MainActivity.this, "crm_dialog", false);
+    }
   }
 
   private void registeGlobleEvent() {

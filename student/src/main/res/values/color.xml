@@ -6,5 +6,5 @@
   <color name="st_new_member_color">#4987FF</color>
   <color name="st_follow_ing_color">#F9944E</color>
   <color name="st_new_student_color">#0DB14B</color>
-
+  <color name="st_half_transparent_color">#e0000000</color>
 </resources>

@@ -2,7 +2,6 @@ package cn.qingchengfit.saascommon.views;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -13,13 +12,9 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.saascommon.adapter.AdvertiseAdapter;
 import cn.qingchengfit.saascommon.model.AdvertiseInfo;
-import cn.qingchengfit.saascommon.model.Advertisement;
-import cn.qingchengfit.saascommon.presenter.AdvertisePresenter;
 
 public class AdvertiseDialog extends Dialog {
     private static final String TAG = "AdvertiseDialog";
@@ -53,12 +48,6 @@ public class AdvertiseDialog extends Dialog {
         viewPager = findViewById(R.id.vp_advertise);
         group = findViewById(R.id.dot_parent);
         setCanceledOnTouchOutside(true);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     public void setAdData(@NonNull List<AdvertiseInfo> advertiseInfos) {

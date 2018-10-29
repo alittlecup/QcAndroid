@@ -22,6 +22,7 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.saascommon.utils.StringUtils;
+import cn.qingchengfit.saascommon.widget.GuideView;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.bean.StatData;
@@ -48,6 +49,8 @@ import javax.inject.Inject;
 @Leaf(module = "student", path = "/student/home") public class StudentHomePage
     extends StudentBaseFragment<StPageStudentHomeBinding, StudentHomeViewModel> {
   @Inject IPermissionModel permissionModel;
+  private GuideView guideView;
+  private int[] guidePages = {R.layout.page_guide01, R.layout.page_guide02, R.layout.page_guide03};
 
   @Override protected void subscribeUI() {
     mViewModel.increaseFollowers.observe(this, msg -> mBinding.tvFollowMemberCount.setText(msg));
@@ -98,6 +101,7 @@ import javax.inject.Inject;
     initToolbar();
     initListener();
     initTabLayout();
+    showGuide();
     return mBinding;
   }
 
@@ -260,6 +264,12 @@ import javax.inject.Inject;
     ToolbarModel toolbarModel = new ToolbarModel("会员");
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
+  }
+
+  private void showGuide() {
+    guideView = GuideView.getInstance();
+    guideView.initGuide(getActivity(),"StudentHomePage", mBinding.scrollRoot);
+    guideView.addGuide(guidePages);
   }
 
   class StateViewPager extends FragmentStatePagerAdapter {
