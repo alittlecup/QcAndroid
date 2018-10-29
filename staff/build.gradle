@@ -188,6 +188,7 @@ dependencies {
   addComponent("checkout", false)
   addComponent("student", false)
   addComponent("card", false)
+  addComponent("wxpreview", false)
 
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')

@@ -185,12 +185,8 @@ public class WebFragment extends BaseFragment
       hideNav = getArguments().getBoolean("hide_nav", false);
     }
     gestureDetectorCompat = new GestureDetectorCompat(getContext(), this);
-    try {
-      wxApiStr = AppUtils.getManifestData(getActivity(), "WX_ID");
-      oemTag = AppUtils.getManifestData(getActivity(), "APP_OEM");
-    } catch (PackageManager.NameNotFoundException e) {
-      LogUtil.e(e.getMessage());
-    }
+    wxApiStr = AppUtils.getManifestData(getActivity(), "WX_ID");
+    oemTag = AppUtils.getManifestData(getActivity(), "APP_OEM");
   }
 
   @Nullable @Override

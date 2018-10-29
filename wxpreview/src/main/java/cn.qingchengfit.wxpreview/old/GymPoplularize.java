@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.gym.gym_web;
+package cn.qingchengfit.wxpreview.old;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.event.EventPoplularize;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
+import cn.qingchengfit.wxpreview.R;
+import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 
 /**
  * power by
@@ -50,14 +50,13 @@ public class GymPoplularize extends ShareDialogFragment {
   }
 
   @Override public int getLayoutRes() {
-    return R.layout.fragment_share_popularize;
+    return R.layout.wx_fragment_share_popularize;
   }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
-
     btnToWX = (TextView) view.findViewById(R.id.connect_public);
     btnToWX.setText(getArguments().getBoolean("s", false) ? "已对接" : "未对接");
     view.findViewById(R.id.btn_to_wechat_public).setOnClickListener(new View.OnClickListener() {
@@ -75,6 +74,15 @@ public class GymPoplularize extends ShareDialogFragment {
         onBtnMorePopularizeClicked();
       }
     });
+    view.findViewById(R.id.btn_home_mini).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (MiniProgramUtil.getMiniProgream(getContext()) != null) {
+          RouteUtil.routeTo(getContext(), "wxmini", "/show/mini", null);
+        } else {
+          RouteUtil.routeTo(getContext(), "wxmini", "/mini/page", null);
+        }
+      }
+    });
     return view;
   }
 
@@ -83,17 +91,35 @@ public class GymPoplularize extends ShareDialogFragment {
   }
 
   public void onBtnToWechatPublicClicked() {
-    RxBus.getBus().post(new EventPoplularize(R.id.btn_to_wechat_public));
-    dismiss();
+    if (listener != null) {
+      listener.onBtnToWechatPublicClicked(this);
+    }
   }
 
   public void onBtnHomeQrClicked() {
-    RxBus.getBus().post(new EventPoplularize(R.id.btn_home_qr));
-    dismiss();
+    if (listener != null) {
+      listener.onBtnHomeQrClicked(this);
+    }
   }
 
   public void onBtnMorePopularizeClicked() {
-    RxBus.getBus().post(new EventPoplularize(R.id.btn_more_popularize));
-    dismiss();
+    if (listener != null) {
+      listener.onBtnMorePopularizeClicked(this);
+    }
+  }
+
+  private GymPoplularizeListener listener;
+
+  public void setOnListItemClickListener(GymPoplularizeListener listener) {
+    this.listener = listener;
+  }
+
+  public interface GymPoplularizeListener {
+
+    void onBtnToWechatPublicClicked(GymPoplularize dialog);
+
+    void onBtnHomeQrClicked(GymPoplularize dialog);
+
+    void onBtnMorePopularizeClicked(GymPoplularize dialog);
   }
 }

@@ -27,6 +27,7 @@ import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -120,25 +121,29 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   private DialogList dialogList;
 
   private void initListener() {
-    mBinding.angleShow.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
-        toGym.putExtra("service", gymWrapper.getCoachService());
-        startActivity(toGym);
-      }
+    mBinding.angleShow.setOnClickListener(v -> {
+      Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
+      toGym.putExtra("service", gymWrapper.getCoachService());
+      startActivity(toGym);
     });
-    mBinding.actionFlow.setOnClickListener(new View.OnClickListener() {
-
-      @Override public void onClick(View v) {
-        if (dialogList == null) {
-          dialogList = new DialogList(getContext());
-          ArrayList<String> flows = new ArrayList<>();
-          flows.add("离职退出该场馆");
-          dialogList.list(flows, Manage2Fragment.this);
-        }
-        dialogList.show();
+    mBinding.actionFlow.setOnClickListener(v -> {
+      if (dialogList == null) {
+        dialogList = new DialogList(getContext());
+        ArrayList<String> flows = new ArrayList<>();
+        flows.add("离职退出该场馆");
+        dialogList.list(flows, Manage2Fragment.this);
       }
+      dialogList.show();
     });
+    mBinding.showGym.setOnClickListener(v -> {
+        //guideToStudentPreview();
+    });
+  }
+  private void guideToStudentPreview(String preViewUrl,String copyUrl) {
+    Intent toWebForGuide = new Intent(getActivity(), WebActivityForGuide.class);
+    toWebForGuide.putExtra("url", preViewUrl);
+    toWebForGuide.putExtra("copyurl", copyUrl);
+    startActivity(toWebForGuide);
   }
 
   private void getServer() {

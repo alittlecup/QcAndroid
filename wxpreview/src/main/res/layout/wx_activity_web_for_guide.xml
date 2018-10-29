@@ -31,7 +31,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bg_white_click"
         android:gravity="center"
         android:orientation="vertical"
         >
@@ -45,18 +44,19 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/help"
+          android:text="@string/wx_help"
           android:textSize="@dimen/min_font"
           style="@style/Qc.TextCommonBlack"
           />
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/btn_config_homepage"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bg_white_click"
+        android:visibility="g"
         android:gravity="center"
         android:orientation="vertical"
 
@@ -71,7 +71,31 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/config_homepage"
+          android:text="@string/wx_config_homepage"
+          android:textSize="@dimen/min_font"
+          style="@style/Qc.TextCommonBlack"
+          />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/btn_wx_pm"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        >
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          app:srcCompat="@drawable/ic_wx_pm"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="小程序"
           android:textSize="@dimen/min_font"
           style="@style/Qc.TextCommonBlack"
           />
@@ -82,7 +106,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bg_white_click"
         android:gravity="center"
         android:orientation="vertical"
 
@@ -97,7 +120,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/popularize"
+          android:text="@string/wx_popularize"
           android:textSize="@dimen/min_font"
           style="@style/Qc.TextCommonBlack"
           />

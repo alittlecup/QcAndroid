@@ -98,11 +98,8 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
       } else {
         mUrl = mUrl + "?app=" + (AppUtils.getCurApp(getContext()) == 0 ? "coach" : "staff");
       }
-      try {
-        wechat_code = AppUtils.getManifestData(getActivity(), "WX_ID");
-      } catch (PackageManager.NameNotFoundException e) {
-        //e.printStackTrace();
-      }
+      wechat_code = AppUtils.getManifestData(getActivity(), "WX_ID");
+
       mBitmap = getArguments().getParcelable("bitmap");
     }
   }
@@ -114,8 +111,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     api = WXAPIFactory.createWXAPI(getActivity(), wechat_code, true);
     api.registerApp(wechat_code);
     layoutExtends = (LinearLayout) view.findViewById(R.id.layout_extends);
-    if (layoutExtends != null)
-      layoutExtends.setVisibility(GONE);
+    if (layoutExtends != null) layoutExtends.setVisibility(GONE);
     if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null)) {
       isImg = true;
     } else {

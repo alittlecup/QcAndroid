@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+    <variable
+        name="toolbar"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:bind="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_white"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbar}"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/wx_pm_unset"
+
+            />
+        <include layout="@layout/divider_medium"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp"
+            >
+          <Button
+              android:id="@+id/btn_start_mini"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:text="立即开通"
+              style="@style/QcBtnPrimary"
+              />
+        </FrameLayout>
+      </LinearLayout>
+    </ScrollView>
+  </LinearLayout>
+</layout>

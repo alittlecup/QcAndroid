@@ -99,8 +99,7 @@ public interface Post_Api {
 
     @PUT("api/brands/{id}/") Observable<QcResponse> qcEditBrand(@Path("id") String brand_id, @Body BrandBody body);
 
-    @PUT("/api/staffs/{staff_id}/shops/detail/") Observable<QcResponse> qcEditShop(@Path("staff_id") String staffId,
-        @Body ArrayMap<String, Object> body);
+
 
     @DELETE("/api/brands/{id}/") Observable<QcResponse> qcDelbrand(@Path("id") String id);
 

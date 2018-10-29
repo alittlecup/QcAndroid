@@ -517,10 +517,7 @@
             />
       </intent-filter>
     </activity>
-    <activity
-        android:name=".views.WebActivityForGuide"
-        android:screenOrientation="portrait"
-        />
+
     <activity
         android:name=".views.login.SplashActivity"
         android:screenOrientation="portrait"

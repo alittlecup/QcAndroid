@@ -8,13 +8,13 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_simple_toolbar"/>
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_wechat_name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
-      app:civ_hint="@string/hint_write_wechat_public"
+      app:civ_hint="@string/wx_hint_write_wechat_public"
       app:civ_lable="公众号名称"
       app:civ_text_color="@color/text_black"
 
@@ -35,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/label_upload_public_qr"
+        android:text="@string/wx_label_upload_public_qr"
         style="@style/Qc.TextCommonBlack"
         />
 
@@ -43,7 +43,9 @@
         android:id="@+id/img_wechat_public"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:srcCompat="@drawable/ic_camara_grey"
+        android:background="@color/bg_grey"
+        android:padding="5dp"
+        app:srcCompat="@drawable/ic_photo_camera_white_24dp"
         />
 
     <ImageView

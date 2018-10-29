@@ -1,0 +1,16 @@
+<resources>
+  <string name="wx_help">帮助</string>
+  <string name="wx_popularize">推广</string>
+  <string name="wx_config_homepage">配置页面</string>
+  <string name="wx_connect_to_wechat_public">对接到微信公众号</string>
+  <string name="wx_hint_write_wechat_public">请填写公众号名称</string>
+  <string name="wx_label_upload_public_qr">上传公众号二维码</string>
+
+
+  <string name="wx_alert_title_what_is_home_page">什么是会员端页面？</string>
+  <string name="wx_alert_content_what_is_home_page">
+        会员端页面是健身房提供给会员使用的页面。会员或潜在会员可以通过会员端页面了解健身房信息、购买会员卡、预约课程或 参加活动等
+    </string>
+
+</resources>
+

@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.qingchengfit.wxpreview">
+  <application>
+    <activity android:name=".old.WebActivityForGuide"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="wxpreview"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+    </activity>
+    <activity android:name=".old.newa.WxMiniActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="wxmini"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>

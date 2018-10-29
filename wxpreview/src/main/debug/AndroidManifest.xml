@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.qingchengfit.wxpreview">
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <application
+      android:name="debug.MyApp"
+      android:allowBackup="false"
+      android:theme="@style/QcAppTheme"
+      tools:replace="allowBackup">
+
+    <activity android:name="debug.SplashActivity"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity android:name=".WxpreviewActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="wxpreview"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>

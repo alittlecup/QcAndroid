@@ -43,6 +43,7 @@ import cn.qingchengfit.staffkit.staff.StaffModel;
 import cn.qingchengfit.staffkit.student.network.StudentModel;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
 import cn.qingchengfit.student.routers.studentImpl;
+import cn.qingchengfit.wxpreview.routers.wxminiImpl;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
@@ -192,6 +193,7 @@ import java.util.List;
   @Provides static StudentRouterCenter provideStudentRouterCenter() {
     return new StudentRouterCenter().registe(new studentImpl());
   }
+
 
 
   @Provides public IPermissionModel providePermissModel() {

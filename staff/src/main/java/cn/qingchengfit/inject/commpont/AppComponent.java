@@ -86,7 +86,6 @@ import cn.qingchengfit.staffkit.views.GuideChooseBrandAcitivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
 import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
-import cn.qingchengfit.staffkit.views.WebActivityForGuide;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
 import cn.qingchengfit.staffkit.views.allotsales.SalesListFragment;
@@ -112,7 +111,6 @@ import cn.qingchengfit.staffkit.views.gym.SetGymFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteAddressFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachDetailFragment;
-import cn.qingchengfit.staffkit.views.gym.gym_web.HomePageQrCodeFragment;
 import cn.qingchengfit.staffkit.views.gym.site.AddNewSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.ChooseSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.MutiChooseSiteFragment;
@@ -274,6 +272,7 @@ import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import cn.qingchengfit.views.fragments.WebFragment;
 import cn.qingchengfit.views.fragments.WebFragmentNoFresh;
 import cn.qingchengfit.weex.di.WeexModule;
+import cn.qingchengfit.wxpreview.old.newa.WxPreviewModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -315,7 +314,7 @@ import javax.inject.Singleton;
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,
-
+    WxPreviewModule.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,
@@ -323,7 +322,7 @@ import javax.inject.Singleton;
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class,
     AppComponent.ChooseModule.class, AppComponent.MainModule.class, AppComponent.GymsModule.class,
     AppComponent.SettingModule.class, AppComponent.FixSelfInfoModule.class,
-    AppComponent.WebActivityForGuideModule.class, AppComponent.ChooseGymModule.class,
+    AppComponent.ChooseGymModule.class,
     AppComponent.PopFromBottomModule.class, AppComponent.StatmentFilterModule.class,
     AppComponent.FixCheckinModule.class, AppComponent.ReportModule.class,
     AppComponent.FixNotifySettingModule.class, AppComponent.GymDetailModule.class,
@@ -336,7 +335,7 @@ import javax.inject.Singleton;
     AppComponent.QuitGymFragmentModule.class, AppComponent.SaleTradeTypeFormFragmentModule.class,
     AppComponent.CourseCardFormFragmentModule.class, AppComponent.SaleCardTypeFragmentModule.class,
     AppComponent.SaleFilterModule.class, AppComponent.GuideChooseBrandModule.class,
-    AppComponent.AddBrandModule.class, AppComponent.HomePageQrCodeFragmentModule.class,
+    AppComponent.AddBrandModule.class,
     AppComponent.BottomBuyLimitFragmentModule.class, AppComponent.ChooseStaffFragmentModule.class,
 
     AppComponent.SigninGlanceModule.class, AppComponent.SignInDetailModule.class,
@@ -595,12 +594,7 @@ public interface AppComponent {
     }
   }
 
-  @Subcomponent() public interface WebActivityForGuideSubcomponent
-      extends AndroidInjector<WebActivityForGuide> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<WebActivityForGuide> {
-    }
-  }
+
 
   @Subcomponent() public interface PopFromBottomSubcomponent
       extends AndroidInjector<PopFromBottomActivity> {
@@ -2218,13 +2212,6 @@ public interface AppComponent {
     }
   }
 
-  @Subcomponent() public interface HomePageQrCodeFragmentSubcomponent
-      extends AndroidInjector<HomePageQrCodeFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<HomePageQrCodeFragment> {
-    }
-  }
-
   @Subcomponent() public interface GymInfoFragmentSubcomponent
       extends AndroidInjector<GymInfoFragment> {
     @Subcomponent.Builder public abstract class Builder
@@ -2474,12 +2461,6 @@ public interface AppComponent {
         ChooseSubcomponent.Builder builder);
   }
 
-  @Module(subcomponents = WebActivityForGuideSubcomponent.class)
-  abstract class WebActivityForGuideModule {
-    @Binds @IntoMap @ActivityKey(WebActivityForGuide.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-        WebActivityForGuideSubcomponent.Builder builder);
-  }
 
   @Module(subcomponents = PopFromBottomSubcomponent.class) abstract class PopFromBottomModule {
     @Binds @IntoMap @ActivityKey(PopFromBottomActivity.class)
@@ -3766,13 +3747,6 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(GymInfoNoEditFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         GymInfoNoEditFragmentSubcomponent.Builder builder);
-  }
-
-  @Module(subcomponents = HomePageQrCodeFragmentSubcomponent.class)
-  abstract class HomePageQrCodeFragmentModule {
-    @Binds @IntoMap @FragmentKey(HomePageQrCodeFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        HomePageQrCodeFragmentSubcomponent.Builder builder);
   }
 
   @Module(subcomponents = GymInfoFragmentSubcomponent.class) abstract class GymInfoFragmentModule {

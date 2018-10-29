@@ -71,9 +71,9 @@ public class AppUtils {
       i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
       i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         boolean hasInstallPermission = context.getPackageManager().canRequestPackageInstalls();
-        if(!hasInstallPermission) {
+        if (!hasInstallPermission) {
           Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           context.startActivity(intent);
@@ -159,11 +159,18 @@ public class AppUtils {
     return typedValue.data;
   }
 
-  public static String getManifestData(Activity context, String dataname)
-      throws PackageManager.NameNotFoundException {
-    ApplicationInfo info = context.getPackageManager()
-        .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-    return info.metaData.getString(dataname);
+  public static String getManifestData(Context context, String dataname) {
+    ApplicationInfo info = null;
+    try {
+      info = context.getPackageManager()
+          .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+    } catch (PackageManager.NameNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (info != null) {
+      return info.metaData.getString(dataname);
+    }
+    return "";
   }
 
   public static int getCurApp(Context context) {
@@ -256,5 +263,4 @@ public class AppUtils {
     }
     return false;
   }
-
 }
