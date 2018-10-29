@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
+import cn.qingchengfit.saascommon.widget.GuideView;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
@@ -51,6 +52,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     implements FlexibleAdapter.OnItemClickListener, AdapterView.OnItemClickListener {
   CommonFlexAdapter adapter;
   GymDetailChartAdapter mPageAdapter;
+  private GuideView guideView;
   @Inject GymWrapper gymWrapper;
 
   @Override protected void subscribeUI() {
@@ -113,6 +115,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     checkPermission();
     initListener();
     getServer();
+    showGuide();
     isInit = true;
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return mBinding;
@@ -144,6 +147,13 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     toWebForGuide.putExtra("url", preViewUrl);
     toWebForGuide.putExtra("copyurl", copyUrl);
     startActivity(toWebForGuide);
+  }
+
+  private void showGuide() {
+    guideView = GuideView.getInstance();
+    guideView.initGuide(getActivity(), "ManagerFragment");
+    guideView.addGuide(R.layout.page_guide_manager);
+    guideView.setNoScroll();
   }
 
   private void getServer() {
