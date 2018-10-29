@@ -57,6 +57,5 @@ public interface CardApi {
   //获取某个学员的cardlist
   @GET("/api/staffs/{staff_id}/users/{id}/cards/?order_by=-id")
   rx.Observable<QcResponseStudentCards> qcGetStudentCards(@Path("staff_id") String staffid,
-      @Path("id") String studentid, @Query("id") String gymid, @Query("model") String model,
-      @Query("brand_id") String brand_id);
+      @Path("id") String studentid,   @QueryMap HashMap<String, Object> params);
 }

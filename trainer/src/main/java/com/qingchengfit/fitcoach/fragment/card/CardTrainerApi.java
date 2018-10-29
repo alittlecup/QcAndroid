@@ -4,6 +4,7 @@ import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.Cards;
 import cn.qingchengfit.model.responese.QcResponseOption;
+import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
@@ -12,7 +13,10 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import com.google.gson.JsonObject;
+import com.qingchengfit.fitcoach.adapter.StudentCardAdapter;
+import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import java.util.HashMap;
+import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -79,6 +83,11 @@ public interface CardTrainerApi {
   @GET("/api/v2/coaches/{id}/cardtpls/")
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsNoPermission(@Path("id") String id,
       @QueryMap HashMap<String, Object> params);
+
+
+  //学员卡列表
+  @GET("/api/students/{id}/cards/") rx.Observable<StudentCarsResponse> qcGetStuedntCard(
+      @Path("id") String student_id, @QueryMap Map<String, Object> params);
 
 
 

@@ -38,7 +38,7 @@ public class CheckoutMoneyViewModel extends BaseViewModel {
     }
   }
 
-  public void getOrderInfo(@PayChannel int channel, String price) {
+  public void getOrderInfo(@PayChannel int channel, String price, String remarks) {
     Map<String, Object> params = new HashMap<>();
     type = channel;
     params.put("channel", "ALIPAY_QRCODE");
@@ -52,6 +52,7 @@ public class CheckoutMoneyViewModel extends BaseViewModel {
         return;
     }
     params.put("price", Double.parseDouble(price));
+    params.put("remarks", remarks);
     repository.qcPostCashierOrder(cashierBean, defaultResult, params);
   }
 }

@@ -10,12 +10,8 @@ import javax.inject.Inject;
 public class StudentDetailWithCardViewModel extends BaseViewModel {
 
   public MutableLiveData<QcStudentBean> student = new MutableLiveData<>();
-  @Inject  StudentRepository studentRepository;
 
   @Inject StudentDetailWithCardViewModel() {
   }
 
-  //public void loadQcStudentData(String id) {
-  //  studentRepository.qcLoadStudentInfoById(student, defaultResult, id);
-  //}
 }

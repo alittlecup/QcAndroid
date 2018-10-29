@@ -2,7 +2,7 @@ package cn.qingchengfit.card.component;
 
 import android.os.Bundle;
 import cn.qingchengfit.card.network.CardApi;
-import cn.qingchengfit.card.view.student.SimpleCardListFragment;
+import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
@@ -15,7 +15,6 @@ import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;

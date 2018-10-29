@@ -22,7 +22,7 @@ public class QcResponseStudentCards extends QcResponse {
 
     @SerializedName("data") public Data data;
 
-    public class Data {
+    public static class Data {
         @SerializedName("cards") public List<Card> cards;
     }
 }

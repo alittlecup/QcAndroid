@@ -1,36 +1,34 @@
-package cn.qingchengfit.card.view.student;
+package cn.qingchengfit.card.view;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import cn.qingchengfit.card.R;
 import cn.qingchengfit.card.databinding.CaSimpleCardListBinding;
-import cn.qingchengfit.card.network.CardApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
-import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
+import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
+import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.listener.ICardListFragment;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import dagger.android.support.HasSupportFragmentInjector;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,12 +36,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class SimpleCardListFragment extends SaasCommonFragment implements ICardListFragment {
+public class SimpleCardListFragment extends SaasCommonFragment
+    implements ICardListFragment, FlexibleAdapter.OnItemClickListener, CardDetailPresenter.MVPView {
   CaSimpleCardListBinding mBinding;
   CommonFlexAdapter mAdapter;
-  @Inject QcRestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
+  @Inject CardDetailPresenter detailPresenter;
+
+  @Inject ICardModel cardModel;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,6 +52,10 @@ public class SimpleCardListFragment extends SaasCommonFragment implements ICardL
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = DataBindingUtil.inflate(inflater, R.layout.ca_simple_card_list, container, false);
     initRecyclerView();
+    delegatePresenter(detailPresenter, this);
+    if (!TextUtils.isEmpty(studentID)) {
+      onRefresh(studentID);
+    }
     return mBinding.getRoot();
   }
 
@@ -67,11 +72,12 @@ public class SimpleCardListFragment extends SaasCommonFragment implements ICardL
   private void initRecyclerView() {
     mBinding.recycleView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recycleView.setAdapter(mAdapter = new CommonFlexAdapter(new ArrayList(), this));
-    mBinding.swipe.setOnRefreshListener(SimpleCardListFragment.this::onRefresh);
+    mBinding.swipe.setOnRefreshListener(() -> SimpleCardListFragment.this.onRefresh(studentID));
   }
 
-  private void onRefresh() {
+  private void onRefresh(String studentID) {
     if (!TextUtils.isEmpty(studentID)) {
+      mBinding.swipe.setRefreshing(true);
       loadStudentCards(studentID);
     }
   }
@@ -79,9 +85,7 @@ public class SimpleCardListFragment extends SaasCommonFragment implements ICardL
   private String studentID;
 
   private void loadStudentCards(String id) {
-    RxRegiste(restRepository.createGetApi(CardApi.class)
-        .qcGetStudentCards(loginStatus.staff_id(), id, gymWrapper.id(), gymWrapper.model(),
-            gymWrapper.brand_id())
+    RxRegiste(cardModel.qcGetStudentCards(id)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnTerminate(() -> mBinding.swipe.setRefreshing(false))
@@ -91,12 +95,20 @@ public class SimpleCardListFragment extends SaasCommonFragment implements ICardL
               if (responseStudentCards.data.cards != null
                   && responseStudentCards.data.cards.size() > 0) {
                 updataItems(responseStudentCards.data.cards);
+              } else {
+                setNoDataItem();
               }
             } else {
               ToastUtils.show(responseStudentCards.msg);
             }
           }
         }, new NetWorkThrowable()));
+  }
+
+  private void setNoDataItem() {
+    List<CommonNoDataItem> itemList = new ArrayList<>();
+    itemList.add(new CommonNoDataItem(null, null, "当前会员名下无会员卡"));
+    mAdapter.updateDataSet(itemList);
   }
 
   private void updataItems(List<Card> cards) {
@@ -110,9 +122,28 @@ public class SimpleCardListFragment extends SaasCommonFragment implements ICardL
   }
 
   @Override public void setQcStudentId(String id) {
-    this.studentID = id;
-    if (isAdded()) {
-      onRefresh();
+    studentID = id;
+    if (mAdapter != null) {
+      onRefresh(studentID);
     }
+  }
+
+  @Override public boolean onItemClick(int position) {
+    IFlexible item = mAdapter.getItem(position);
+    if (item instanceof CardItem) {
+      Bundle b = new Bundle();
+      b.putParcelable("card", ((CardItem) item).getRealCard());
+      b.putString("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
+      routeTo("card", "/charge/", b);
+    }
+    return false;
+  }
+
+  @Override public void onCardDetail(Card card) {
+    hideLoading();
+    Bundle b = new Bundle();
+    b.putParcelable("card", card);
+    b.putString("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
+    routeTo("card", "/charge/", b);
   }
 }

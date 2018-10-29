@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.di;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.card.di.BindStaffCardActivity;
+import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
 import cn.qingchengfit.login.di.BindLoginActivity;
@@ -18,6 +19,7 @@ import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
+import cn.qingchengfit.saasbase.di.BindStaffActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
@@ -86,7 +88,7 @@ import dagger.multibindings.IntoMap;
     BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
     BindStudentActivity.class, StudentViewModel.class, BindCheckoutCounterActivity.class,
     CheckViewModule.class, BindLoginActivity.class, BindSaasCommActivity.class,BindStaffCardActivity.class,
-    ViewModelModule.class,
+    ViewModelModule.class,BindStaffActivity.class,
 
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class, AppComponent.ArticleCommentsListFragmentModule.class,
@@ -109,7 +111,8 @@ import dagger.multibindings.IntoMap;
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
-    AppComponent.RecruitMessageListFragmentModule.class,AppComponent.Manage2FragmentModule.class
+    AppComponent.RecruitMessageListFragmentModule.class,AppComponent.SimpleCardListFragmentModule.class
+    AppComponent.Manage2FragmentModule.class
 }) public interface AppComponent {
   void inject(App app);
 
@@ -119,7 +122,19 @@ import dagger.multibindings.IntoMap;
         extends AndroidInjector.Builder<ChooseStaffFragment> {
     }
   }
+  @Subcomponent() public interface SimpleCardListFragmentSubcomponent
+      extends AndroidInjector<SimpleCardListFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<SimpleCardListFragment> {
+    }
+  }
 
+  @Module(subcomponents = SimpleCardListFragmentSubcomponent.class)
+  abstract class SimpleCardListFragmentModule {
+    @Binds @IntoMap @FragmentKey(SimpleCardListFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        SimpleCardListFragmentSubcomponent.Builder builder);
+  }
   @Subcomponent() public interface ConversationFriendsFragmentSubcomponent
       extends AndroidInjector<ConversationFriendsFragment> {
     @Subcomponent.Builder public abstract class Builder

@@ -6,10 +6,12 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.model.responese.CacluScore;
+import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
@@ -30,12 +32,17 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
+import cn.qingchengfit.saasbase.report.bean.QcResponseSaleDetail;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import com.google.gson.JsonObject;
+import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class CardModel implements ICardModel {
 
@@ -82,6 +89,51 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
     return posApi.qcGetCardDetail(loginStatus.staff_id(), card_id, gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcResponseStudentCards> qcGetStudentCards(String studentID) {
+    return posApi.qcGetStuedntCard(studentID, gymWrapper.getParams())
+        .map(new Func1<StudentCarsResponse, QcResponseStudentCards>() {
+          @Override public QcResponseStudentCards call(StudentCarsResponse studentCarsResponse) {
+            List<Card> cards = new ArrayList<>();
+            if (studentCarsResponse != null
+                && studentCarsResponse.data != null
+                && studentCarsResponse.data.cards != null
+                && studentCarsResponse.data.cards.size() > 0) {
+              for (StudentCarsResponse.Card remote : studentCarsResponse.data.cards) {
+                Card copy = new Card();
+                copy.setId(remote.id);
+                copy.setType(remote.type);
+                copy.setTotal_account(Float.valueOf(remote.account));
+                copy.setTotal_times(Float.valueOf(remote.times));
+                copy.url = remote.url;
+                copy.setCheck_valid(remote.check_valid);
+                copy.setStart(remote.start);
+                copy.setEnd(remote.end);
+                copy.setValid_from(remote.valid_from);
+                copy.setValid_to(remote.valid_to);
+                copy.setUserNames(remote.users);
+                copy.setIs_locked(remote.is_locked);
+                copy.setIs_active(remote.is_active);
+                copy.setExpired(remote.expired);
+                copy.setBalance(remote.balance);
+                copy.setCard_tpl_id(remote.card_tpl_id);
+                copy.setCard_tpl(remote.card_tpl);
+                cards.add(copy);
+              }
+            }
+            QcResponseStudentCards qcResponseStudentCards=new QcResponseStudentCards();
+            QcResponseStudentCards.Data data = new QcResponseStudentCards.Data();
+            data.cards=cards;
+            qcResponseStudentCards.data=data;
+            qcResponseStudentCards.status=studentCarsResponse.status;
+            qcResponseStudentCards.msg=studentCarsResponse.msg;
+            qcResponseStudentCards.error_code=studentCarsResponse.error_code;
+            qcResponseStudentCards.info=studentCarsResponse.info;
+            qcResponseStudentCards.level=studentCarsResponse.level;
+            return qcResponseStudentCards;
+          }
+        });
   }
 
   @Override public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {

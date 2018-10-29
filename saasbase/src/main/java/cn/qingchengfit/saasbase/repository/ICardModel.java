@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.repository;
 
 import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.model.responese.CacluScore;
+import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
@@ -29,6 +30,7 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -92,6 +94,10 @@ public interface ICardModel {
    * 获取会员卡详情
    */
   rx.Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id);
+  /**
+   *获取某个学员的cardlist
+   */
+  rx.Observable<QcResponseStudentCards> qcGetStudentCards(String studentID);
 
   /**
    * 获取会员卡扣费时默认的销售信息

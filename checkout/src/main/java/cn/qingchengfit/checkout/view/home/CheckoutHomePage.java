@@ -31,8 +31,12 @@ import com.anbillon.flabellum.annotations.Leaf;
     mBinding.setLifecycleOwner(this);
     initToolbar();
     initListener();
-    mViewModel.loadHomePageInfo();
     return mBinding;
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    mViewModel.loadHomePageInfo();
   }
 
   private void initListener() {

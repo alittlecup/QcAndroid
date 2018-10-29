@@ -85,6 +85,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       super.onCivBindMenbersClicked();
     } else {
       QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
+          .addParam("addAble",true)
           .addParam("studentIdList", presenter.getChoseStuIds())).call();
     }
   }

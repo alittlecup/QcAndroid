@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
@@ -38,5 +39,13 @@ public class StudentCarsResponse extends QcResponse {
         @SerializedName("end") public String end;
         @SerializedName("times") public String times;
         @SerializedName("check_valid") public boolean check_valid;
+        public float balance;
+        public boolean is_locked;
+        public boolean is_active;
+        public String card_tpl_id;
+        public CardTpl card_tpl;
+        public boolean expired;
+
+
     }
 }

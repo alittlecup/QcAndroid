@@ -3,7 +3,7 @@ package cn.qingchengfit.inject.commpont;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.card.di.BindStaffCardActivity;
-import cn.qingchengfit.card.view.student.SimpleCardListFragment;
+import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
 import cn.qingchengfit.inject.moudle.AppAbstractModule;

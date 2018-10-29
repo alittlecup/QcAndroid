@@ -6,6 +6,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.model.responese.CacluScore;
+import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.model.responese.SellerWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -91,6 +92,10 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
     return posApi.qcGetCardDetail(loginStatus.staff_id(), card_id, gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcResponseStudentCards> qcGetStudentCards(String studentID) {
+    return cardApi.qcGetStudentCards(loginStatus.staff_id(),studentID,gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {

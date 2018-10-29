@@ -64,6 +64,13 @@ public interface IStudentModel {
   Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission();
 
   /**
+   * 收银台模块获取会员列表，通过手机号前几位筛选
+   * @return
+   */
+  Flowable<QcDataResponse<StudentBeanListWrapper>> loadStudentsByPhone(String phone);
+
+
+  /**
    * 新增会员
    */
   //Observable<QcDataResponse> addStudent(AddStudentBody body);

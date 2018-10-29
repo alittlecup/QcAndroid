@@ -32,12 +32,14 @@ import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.report.bean.GymCardtpl;
 import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
+import cn.qingchengfit.student.bean.StudentBeanListWrapper;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -134,6 +136,7 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
+import io.reactivex.Flowable;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -328,6 +331,10 @@ public class QcCloudClient {
     rx.Observable<QcResponsePermission> qcGetPermission(@Path("coach_id") String coach_id,
         @QueryMap HashMap<String, Object> params);
 
+    //获取销售 卖卡  包含销售和教练
+    @GET("/api/coaches/{coach_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(@Path("coach_id") String staff_id,
+        @QueryMap HashMap<String, Object> params);
+
     //
     //        //获取通知 分页和不分页接口 ,后者只为拿 未读
     //        @GET("/api/messages/")
@@ -446,6 +453,10 @@ public class QcCloudClient {
     //获取教练所有学员
     @GET("/api/v2/coaches/{id}/students/") rx.Observable<QcAllStudentResponse> qcGetAllStudent(
         @Path("id") int id, @QueryMap HashMap<String, Object> params);
+
+    @GET("api/v2/coaches/{id}/cashier/users/")
+    rx.Observable<QcDataResponse<StudentBeanListWrapper>> qcLoadStudentByPhone(@Path("id") String id,
+        @QueryMap Map<String, Object> params);
 
     //获取所有课程计划
     @GET("/api/v2/coaches/{id}/plantpls/") rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(

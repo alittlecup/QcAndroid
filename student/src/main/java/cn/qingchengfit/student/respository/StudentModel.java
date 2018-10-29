@@ -77,6 +77,15 @@ public class StudentModel implements IStudentModel {
     params.put("method", "post");
     return studentApi.qcGetCardBundldStudents(loginStatus.staff_id(), params);
   }
+
+  @Override
+  public Flowable<QcDataResponse<StudentBeanListWrapper>> loadStudentsByPhone(String phone) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("q", phone);
+    params.put("show_all",1);
+    return studentApi.qcLoadStudentByPhone(loginStatus.staff_id(), params);
+  }
+
   //
   //@Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
   //  return null;
@@ -178,34 +187,35 @@ public class StudentModel implements IStudentModel {
   @Override
   public Flowable<QcDataResponse<Object>> qcAddTrackStatus(HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return studentApi.qcAddTrackStatus(loginStatus.staff_id(),params);
+    return studentApi.qcAddTrackStatus(loginStatus.staff_id(), params);
   }
 
   @Override public Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus() {
-    return studentApi.qcGetTrackStatus(loginStatus.staff_id(),gymWrapper.getParams());
+    return studentApi.qcGetTrackStatus(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
   @Override public Flowable<QcDataResponse<Object>> qcEditTrackStatus(String track_status_id,
-    HashMap<String, Object> params) {
+      HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return studentApi.qcEditTrackStatus(loginStatus.staff_id(),track_status_id,params);
+    return studentApi.qcEditTrackStatus(loginStatus.staff_id(), track_status_id, params);
   }
 
   @Override public Flowable<QcDataResponse<Object>> qcDelTrackStatus(String track_status_id) {
-    return studentApi.qcDelTrackStatus(loginStatus.staff_id(),track_status_id,gymWrapper.getParams());
+    return studentApi.qcDelTrackStatus(loginStatus.staff_id(), track_status_id,
+        gymWrapper.getParams());
   }
 
   @Override
   public Flowable<QcDataResponse<Object>> qcAddTrackRecord(String user_id, FollowRecordAdd body) {
     body.setId(gymWrapper.id());
     body.setModel(gymWrapper.model());
-    return studentApi.qcAddTrackRecord(loginStatus.staff_id(),user_id,body);
+    return studentApi.qcAddTrackRecord(loginStatus.staff_id(), user_id, body);
   }
 
   @Override public Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
-    HashMap<String, Object> params) {
+      HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return studentApi.qcGetTrackRecords(loginStatus.staff_id(),user_id,params);
+    return studentApi.qcGetTrackRecords(loginStatus.staff_id(), user_id, params);
   }
 
   //@Override
@@ -227,7 +237,8 @@ public class StudentModel implements IStudentModel {
   //
   @Override public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id,
       String brandid, String shopid, String gymid, String model) {
-    return studentApi.qcGetSalers(loginStatus.staff_id(), null, null, gymWrapper.id(), gymWrapper.model());
+    return studentApi.qcGetSalers(loginStatus.staff_id(), null, null, gymWrapper.id(),
+        gymWrapper.model());
   }
 
   //
@@ -247,6 +258,7 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> body) {
     return studentApi.qcAllocateCoach(staff_id, body);
   }
+
   //
   //@Override
   //public Observable<QcResponse> qcRemoveStudent(String staff_id, HashMap<String, Object> body) {
@@ -262,6 +274,7 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> body) {
     return studentApi.qcRemoveStaff(staff_id, type, body);
   }
+
   //
   //@Override public Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
   //    String staff_id, HashMap<String, Object> params) {
@@ -294,19 +307,21 @@ public class StudentModel implements IStudentModel {
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
   }
-  @Override public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterCoaches(
-      String staff_id, HashMap<String, Object> params) {
+
+  @Override
+  public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterCoaches(String staff_id,
+      HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsFilterCoaches(staff_id, params);
   }
+
   //
-  @Override
-  public Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id,
-      HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
+      String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsConver(staff_id, params);
   }
+
   //
-  @Override
-  public Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
+  @Override public Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
       HashMap<String, Object> params) {
     return studentApi.qcGetAttendanceChart(id, params);
   }
@@ -333,8 +348,7 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcGetTrackStudentsRecommends(staff_id, params);
   }
 
-  @Override
-  public Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id,
+  @Override public Flowable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id,
       HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsOrigins(staff_id, params);
   }

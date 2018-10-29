@@ -10,7 +10,7 @@ import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import javax.inject.Inject;
 
-public class TrainerChooseAndSearchFragment extends ChooseAndSearchStudentFragment {
+public class TrainerChooseAndSearchFragment extends SearchStudentFragment {
   @Inject IPermissionModel permissionModel;
 
   @Override public void onBtnAddStudentClicked() {

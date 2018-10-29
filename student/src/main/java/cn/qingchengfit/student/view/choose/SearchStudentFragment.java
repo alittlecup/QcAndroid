@@ -2,6 +2,8 @@ package cn.qingchengfit.student.view.choose;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +17,20 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
+import junit.framework.Test;
 
 @Leaf(module = "student", path = "/search/student/") public class SearchStudentFragment
     extends ChooseAndSearchStudentFragment {
-  @Need Boolean addAble = true;
+  @Need public Boolean addAble = true;
   View root;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     if (root == null) {
+      SearchStudentParams.inject(this);
       root = super.onCreateView(inflater, container, savedInstanceState);
+      srl.setRefreshing(false);
+      llSearchAll.setVisibility(View.VISIBLE);
     }
     return root;
   }
@@ -39,6 +45,12 @@ import java.util.List;
       }
     }
     super.onStudentList(stus);
+  }
+
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
+    chooseStudentListFragment.changeOrderType(1);
+    chooseStudentListFragment.setAlphabetViewVisible(false);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -56,7 +68,11 @@ import java.util.List;
           if (item != null) {
             QcStudentBean qcStudentBean = item.getQcStudentBean();
             Bundle bundle = new Bundle();
-            bundle.putString("studentId", qcStudentBean.getId());
+            bundle.putParcelable("qcStudentBean", qcStudentBean);
+            String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+            if(!TextUtils.isEmpty(qcCallId)){
+              bundle.putString("qcCallId",qcCallId);
+            }
             routeTo("/student/card/list", bundle);
           }
           return false;
@@ -65,15 +81,29 @@ import java.util.List;
     }
   }
 
-  @Override protected void filterText(String text) {
-    if (!TextUtils.isEmpty(text) && text.length() >= 4) {
-      super.filterText(text);
-      llSearchAll.setVisibility(View.GONE);
-    } else {
-      llSearchAll.setVisibility(View.VISIBLE);
+  @Override public void onRefresh() {
+    if (llSearchAll != null) {
+      if (!TextUtils.isEmpty(etSearch.getText().toString())
+          && etSearch.getText().toString().length() >= 4) {
+        presenter.loadStudentByPhoneStart(etSearch.getText().toString());
+      } else {
+        llSearchAll.setVisibility(View.VISIBLE);
+        srl.setRefreshing(false);
+      }
     }
-    if (TextUtils.isEmpty(text)) {
-      super.filterText("");
+  }
+
+  @Override protected void filterText(String text) {
+    if (!TextUtils.isEmpty(text)) {
+      if (text.length() > 4) {
+        super.filterText(text);
+        llSearchAll.setVisibility(View.GONE);
+      } else if (text.length() == 4) {
+        srl.setRefreshing(true);
+        presenter.loadStudentByPhoneStart(text);
+      } else {
+        llSearchAll.setVisibility(View.VISIBLE);
+      }
     }
   }
 }

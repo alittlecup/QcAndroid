@@ -74,6 +74,14 @@ public class StudentModel implements IStudentModel {
             }));
   }
 
+  @Override
+  public Flowable<QcDataResponse<StudentBeanListWrapper>> loadStudentsByPhone(String phone) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("q",phone);
+    params.put("show_all",1);
+    return RxJavaInterop.toV2Flowable(api.qcLoadStudentByPhone(loginStatus.staff_id(),params));
+  }
+
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
       Map<String, Object> params) {
     return null;

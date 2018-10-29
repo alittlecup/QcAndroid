@@ -163,18 +163,20 @@ import com.google.gson.JsonObject;
     } else if (i == R.id.fl_alipay) {
       if (checkMoney(s)) {
         showLoading();
-        mViewModel.getOrderInfo(PayChannel.ALIPAY_QRCODE, s);
+        mViewModel.getOrderInfo(PayChannel.ALIPAY_QRCODE, s,
+            mBinding.edRemarks.getText().toString());
       }
     } else if (i == R.id.fl_wxpay) {
       if (checkMoney(s)) {
         showLoading();
-        mViewModel.getOrderInfo(PayChannel.WEIXIN_QRCODE, s);
+        mViewModel.getOrderInfo(PayChannel.WEIXIN_QRCODE, s,
+            mBinding.edRemarks.getText().toString());
       }
     }
   }
 
   private boolean checkMoney(String s) {
-    if (TextUtils.isEmpty(mBinding.edRemarks.getText())) {
+    if (TextUtils.isEmpty(mBinding.edRemarks.getText().toString())) {
       ToastUtils.show("请填写备注信息");
       return false;
     }

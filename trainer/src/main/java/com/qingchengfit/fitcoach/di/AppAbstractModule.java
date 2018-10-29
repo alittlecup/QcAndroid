@@ -9,6 +9,7 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.student.respository.IStudentModel;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.fragment.card.CardModel;
 import com.qingchengfit.fitcoach.fragment.card.StaffModel;
 import com.qingchengfit.fitcoach.fragment.card.StudentModel;
@@ -28,6 +29,10 @@ import javax.inject.Singleton;
   @Binds abstract IStaffModel bindStaffModel(StaffModel cardModel);
 
   @Binds abstract IStudentModel bindStudentModel(StudentModel cardModel);
+
+
+  @ContributesAndroidInjector()
+  abstract StudentHomeActivity contributeStudentHomeActivity();
 
   @Binds abstract RepoCoachService bindRepoCoachService(RepoCoachServiceImpl repoCoachService);
 

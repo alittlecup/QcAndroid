@@ -6,6 +6,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.student.bean.StudentListWrapper;
@@ -36,6 +37,18 @@ public class ChooseAndSearchPresenter extends BasePresenter {
           }
         }, throwable -> {
         }));
+  }
+
+  public void loadStudentByPhoneStart(String phone) {
+    RxRegiste(studentModel.loadStudentsByPhone(phone)
+        .compose(RxHelper.schedulersTransformerFlow())
+        .subscribe(qcResponse -> {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onStudentList(qcResponse.data.users);
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        },throwable ->{} ));
   }
 
   @Override public void attachView(PView v) {

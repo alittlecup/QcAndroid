@@ -4,6 +4,7 @@ import android.view.View;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.List;
 
@@ -40,7 +41,11 @@ public class ChosenStudentItem extends StudentItem {
 
   @Override public StudentVH createViewHolder(View view, FlexibleAdapter adapter) {
     StudentVH vh = super.createViewHolder(view, adapter);
-    vh.cb.setVisibility(View.VISIBLE);
+    if(adapter.getMode()==SelectableAdapter.Mode.SINGLE){
+      vh.cb.setVisibility(View.GONE);
+    }else{
+      vh.cb.setVisibility(View.VISIBLE);
+    }
     vh.iconRight.setVisibility(View.GONE);
     vh.itemTvStudentStatus.setVisibility(View.GONE);
     return vh;

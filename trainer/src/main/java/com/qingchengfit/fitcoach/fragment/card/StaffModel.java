@@ -1,5 +1,9 @@
 package com.qingchengfit.fitcoach.fragment.card;
 
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.login.bean.Login;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.staff.beans.body.InvitationBody;
 import cn.qingchengfit.saasbase.staff.beans.response.InvitationListWrap;
@@ -12,12 +16,16 @@ import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import com.google.gson.JsonObject;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import java.util.HashMap;
 import javax.inject.Inject;
 import retrofit2.http.PUT;
 import rx.Observable;
 
 public class StaffModel implements IStaffModel {
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  @Inject QcRestRepository restRepository;
   @Inject public  StaffModel(){
 
   }
@@ -26,7 +34,8 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
-    return null;
+
+    return restRepository.createGetApi(QcCloudClient.GetApi.class).qcGetSalers(loginStatus.staff_id(),gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<StaffShipsListWrap>> getStaffList() {
