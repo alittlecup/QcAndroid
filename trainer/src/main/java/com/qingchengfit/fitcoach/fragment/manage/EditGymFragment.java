@@ -160,8 +160,8 @@ import rx.schedulers.Schedulers;
                         com.qingchengfit.fitcoach.Utils.ToastUtils.showDefaultStyle(getString(R.string.err_write_size));
                         return true;
                     }
-                    if (lat == 0 || lng == 0) {
-                        ToastUtils.show("请重新选择场馆地址");
+                    if (gymAddress.isEmpty()) {
+                        ToastUtils.show("请选择场馆地址");
                         return true;
                     }
                     if (getActivity() instanceof FragActivity) {

@@ -308,11 +308,14 @@ import static com.tencent.qcloud.timchat.MyApplication.getContext;
                 showGymTypeDialog();
                 break;
             case R.id.gym_describe:
-                getFragmentManager().beginTransaction()
-                        .add(((BaseActivity) getActivity()).getFragId(),
-                                CommonInputTextFragment.newInstance("描述您的场馆", "", "请填写场馆描述"))
-                        .addToBackStack(null)
-                        .commit();
+                if(gymName.getContent() == null) {
+                    getFragmentManager().beginTransaction().add(R.id.guide_frag,
+                            CommonInputTextFragment.newInstance("描述您的场馆", "", "请填写场馆描述"))
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+                    routeTo(CommonInputTextFragment.newInstance("描述您的场馆", "", "请填写场馆描述"));
+                }
                 break;
         }
     }
