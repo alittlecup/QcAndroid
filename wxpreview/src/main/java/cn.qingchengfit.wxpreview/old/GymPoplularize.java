@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.wxpreview.R;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -35,6 +37,7 @@ import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 public class GymPoplularize extends ShareDialogFragment {
 
   private TextView btnToWX;
+  @Inject GymWrapper gymWrapper;
 
   public static GymPoplularize newInstance(String title, String text, String img, String url,
       boolean success) {
@@ -76,10 +79,8 @@ public class GymPoplularize extends ShareDialogFragment {
     });
     view.findViewById(R.id.btn_home_mini).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (MiniProgramUtil.getMiniProgream(getContext()) != null) {
-          RouteUtil.routeTo(getContext(), "wxmini", "/show/mini", null);
-        } else {
-          RouteUtil.routeTo(getContext(), "wxmini", "/mini/page", null);
+        if (listener != null) {
+          listener.onBtnMiniProgramClicked(GymPoplularize.this);
         }
       }
     });
@@ -121,5 +122,7 @@ public class GymPoplularize extends ShareDialogFragment {
     void onBtnHomeQrClicked(GymPoplularize dialog);
 
     void onBtnMorePopularizeClicked(GymPoplularize dialog);
+
+    void onBtnMiniProgramClicked(GymPoplularize dialog);
   }
 }

@@ -2,6 +2,7 @@ package cn.qingchengfit.model.responese;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.MiniProgram;
 import cn.qingchengfit.model.base.Staff;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
@@ -19,6 +20,7 @@ public class GymDetail {
   @SerializedName("banners") public List<Banner> banners;
   @SerializedName("recharge") public Recharge recharge;
   @SerializedName("qingcheng_activity_count") public int qingcheng_activity_count;
+
   public boolean has_team;
   public boolean has_private;
 

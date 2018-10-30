@@ -50,4 +50,21 @@ public class WebActivityForGuideViewModel extends BaseViewModel {
           ToastUtils.show("网络异常");
         });
   }
+
+  public void loadTrainerShopDetail() {
+
+    qcRestRepository.createGetApi(WxPreviewApi.class)
+        .qcGetShopDetail(loginStatus.staff_id(), gymWrapper.getParams())
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            shopMutableLiveData.setValue(response.data.shop);
+            miniProgramMutableLiveData.setValue(response.data.mini_program);
+          } else {
+            defaultResult.setValue(Resource.error(response.getMsg(), null));
+          }
+        }, throwable -> {
+          ToastUtils.show("网络异常");
+        });
+  }
 }

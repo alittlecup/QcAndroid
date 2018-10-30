@@ -29,8 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
@@ -38,6 +36,7 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.ButtonItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.MiniProgram;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
@@ -47,6 +46,7 @@ import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -63,6 +63,7 @@ import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
+import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
@@ -85,7 +86,12 @@ import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.wxpreview.old.ConnectWechatFragment;
+import cn.qingchengfit.wxpreview.old.GymPoplularize;
+import cn.qingchengfit.wxpreview.old.HomePageQrCodeFragment;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
+import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
+import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
@@ -120,28 +126,28 @@ import rx.functions.Action1;
  * Created by Paper on 16/2/1 2016.
  */
 public class GymDetailFragment extends BaseFragment
-  implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener {
+    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener {
 
   public static final int RESULT_STAFF_MANAGE = 12;
 
-	RecyclerView recycleview;
-	ImageView shopImg;
-	Toolbar toolbar;
-	TextView toolbarTitile;
-	ImageView down;
-	RelativeLayout toolbarLayout;
-	LinearLayout gymLayout;
-	TextView toolbarLeft;
-	AppBarLayout layoutCollapsed;
-	TextView scheduleNotificationCount;
-	ViewPager vpCharts;
-	CircleIndicator indicator;
-	TextView gymName;
-	TextView gymSu;
-	Button mRechargeBtn;
-	ImageView tagPro;
-	LinearLayout layoutCharge;
-	CompatTextView tvPrice;
+  RecyclerView recycleview;
+  ImageView shopImg;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  ImageView down;
+  RelativeLayout toolbarLayout;
+  LinearLayout gymLayout;
+  TextView toolbarLeft;
+  AppBarLayout layoutCollapsed;
+  TextView scheduleNotificationCount;
+  ViewPager vpCharts;
+  CircleIndicator indicator;
+  TextView gymName;
+  TextView gymSu;
+  Button mRechargeBtn;
+  ImageView tagPro;
+  LinearLayout layoutCharge;
+  CompatTextView tvPrice;
 
   @Inject GymDetailPresenter gymDetailPresenter;
   @Inject RestRepository restRepository;
@@ -162,7 +168,7 @@ public class GymDetailFragment extends BaseFragment
    */
   private GymExpireFragment mGymExpireDialog;
   private String mPreViewUrl;
-  private boolean firstMonthClose ;
+  private boolean firstMonthClose;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -170,7 +176,7 @@ public class GymDetailFragment extends BaseFragment
   }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
     recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
     shopImg = (ImageView) view.findViewById(R.id.shop_img);
@@ -205,6 +211,25 @@ public class GymDetailFragment extends BaseFragment
         onLeft();
       }
     });
+    view.findViewById(R.id.btn_preview).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        guideToStudentPreview();
+      }
+    });
+    view.findViewById(R.id.btn_wx_pm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (MiniProgramUtil.getMiniProgream(getContext(),gymWrapper.getGymId()) != null) {
+          RouteUtil.routeTo(getContext(), "wxmini", "/show/mini", null);
+        } else {
+          RouteUtil.routeTo(getContext(), "wxmini", "/mini/page", null);
+        }
+      }
+    });
+    view.findViewById(R.id.btn_poplularize).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onExportClick();
+      }
+    });
 
     delegatePresenter(gymDetailPresenter, this);
     initToolbar(toolbar);
@@ -212,10 +237,10 @@ public class GymDetailFragment extends BaseFragment
     registeSensors();
     view.setOnTouchListener((v, event) -> true);
     view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {
-      if (showTime >0) {
+      if (showTime > 0) {
         SensorsUtils.track("QcSaasSpecialPriceBannerClose")
-          .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
-          .commit(getContext());
+            .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
+            .commit(getContext());
       }
       layoutCharge.setVisibility(View.GONE);
       firstMonthClose = true;
@@ -224,7 +249,7 @@ public class GymDetailFragment extends BaseFragment
       switch (eventChartTitle.getChartType()) {
         case 1:
           if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-            PermissionServerUtils.COST_REPORT)) {
+              PermissionServerUtils.COST_REPORT)) {
             return;
           }
           Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
@@ -234,7 +259,7 @@ public class GymDetailFragment extends BaseFragment
           break;
         case 2:
           if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-            PermissionServerUtils.CHECKIN_REPORT)) {
+              PermissionServerUtils.CHECKIN_REPORT)) {
             return;
           }
           Intent toSignIn = new Intent(getActivity(), ContainerActivity.class);
@@ -271,7 +296,10 @@ public class GymDetailFragment extends BaseFragment
     });
     RxBusAdd(GoToGuideEvent.class).subscribe(goToGuideEvent -> onHowtoUse());
     RxBusAdd(EventLoginChange.class).delay(600, TimeUnit.MILLISECONDS)
-      .subscribe(eventLoginChange -> setGymInfo());
+        .subscribe(eventLoginChange -> setGymInfo());
+    if(getParentFragment() instanceof MainFirstFragment){
+      view.findViewById(R.id.gym_bottom_export).setVisibility(View.GONE);
+    }
     return view;
   }
 
@@ -283,29 +311,72 @@ public class GymDetailFragment extends BaseFragment
     gymDetailPresenter.updatePermission();
   }
 
+  private void onExportClick() {
+    GymPoplularize gymPoplularize =
+        GymPoplularize.newInstance(gymWrapper.name(), "", gymWrapper.photo(), mCopyUrl, false);
+    gymPoplularize.setOnListItemClickListener(new GymPoplularize.GymPoplularizeListener() {
+      @Override public void onBtnToWechatPublicClicked(GymPoplularize dialog) {
+        dialog.dismiss();
+        Bundle bundle = new Bundle();
+        bundle.putString("wxQr", "");
+        bundle.putString("wxName", "");
+        Intent intent=new Intent(getContext(), WxPreviewEmptyActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("to",1);
+        startActivity(intent);
+      }
+
+      @Override public void onBtnHomeQrClicked(GymPoplularize dialog) {
+        dialog.dismiss();
+        Bundle bundle = new Bundle();
+        bundle.putString("mUrl", mCopyUrl);
+        Intent intent=new Intent(getContext(), WxPreviewEmptyActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("to",2);
+        startActivity(intent);
+      }
+
+      @Override public void onBtnMorePopularizeClicked(GymPoplularize dialog) {
+        dialog.dismiss();
+        WebActivity.startWeb(
+            "http://cloud.qingchengfit.cn/mobile/urls/eeb0e361a378428fa1a862c949495e0d/",
+            getContext());
+      }
+
+      @Override public void onBtnMiniProgramClicked(GymPoplularize dialog) {
+        if (MiniProgramUtil.getMiniProgream(getContext(),gymWrapper.getGymId()) != null) {
+          RouteUtil.routeTo(getContext(), "wxmini", "/show/mini", null);
+        } else {
+          RouteUtil.routeTo(getContext(), "wxmini", "/mini/page", null);
+        }
+      }
+    });
+    gymPoplularize.show(getChildFragmentManager(), "");
+  }
+
   /**
    * 点击标题弹出场馆信息
    */
- public void onTitleClick() {
+  public void onTitleClick() {
     gymLayout.setPivotY(0);
     if (gymLayout.getVisibility() == View.VISIBLE) {
       ViewCompat.animate(gymLayout)
-        .scaleY(0)
-        .setDuration(200L)
-        .setListener(new ViewPropertyAnimatorListener() {
-          @Override public void onAnimationStart(View view) {
-          }
-
-          @Override public void onAnimationEnd(View view) {
-            if (view.getScaleY() == 0) {
-              if (gymLayout != null) gymLayout.setVisibility(View.GONE);
+          .scaleY(0)
+          .setDuration(200L)
+          .setListener(new ViewPropertyAnimatorListener() {
+            @Override public void onAnimationStart(View view) {
             }
-          }
 
-          @Override public void onAnimationCancel(View view) {
-          }
-        })
-        .start();
+            @Override public void onAnimationEnd(View view) {
+              if (view.getScaleY() == 0) {
+                if (gymLayout != null) gymLayout.setVisibility(View.GONE);
+              }
+            }
+
+            @Override public void onAnimationCancel(View view) {
+            }
+          })
+          .start();
       down.setRotation(0);
     } else {
       gymLayout.setScaleY(0);
@@ -330,9 +401,9 @@ public class GymDetailFragment extends BaseFragment
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_settings) {
           getFragmentManager().beginTransaction()
-            .replace(mCallbackActivity.getFragId(), new SettingFragment())
-            .addToBackStack(null)
-            .commit();
+              .replace(mCallbackActivity.getFragId(), new SettingFragment())
+              .addToBackStack(null)
+              .commit();
         } else if (item.getItemId() == R.id.action_notifi) {
 
         } else if (item.getItemId() == R.id.action_flow) {
@@ -360,12 +431,12 @@ public class GymDetailFragment extends BaseFragment
     //  ContextCompat.getDrawable(getContext(), R.drawable.ic_vector_info_grey), null, null, null);
     datas.clear();
     datas.add(new GymFuntionItem(
-      new GymFuntion.Builder().img(R.drawable.ic_function_more).text(R.string.more).build()));
+        new GymFuntion.Builder().img(R.drawable.ic_function_more).text(R.string.more).build()));
     adapter = new GymMoreAdapter(datas, this);
     adapter.setTag("isPro", gymWrapper.isPro());
 
     SmoothScrollGridLayoutManager layoutManager =
-      new SmoothScrollGridLayoutManager(getContext(), 4);
+        new SmoothScrollGridLayoutManager(getContext(), 4);
     layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
       @Override public int getSpanSize(int position) {
         switch (adapter.getItemViewType(position)) {
@@ -379,36 +450,36 @@ public class GymDetailFragment extends BaseFragment
     recycleview.setLayoutManager(layoutManager);
     recycleview.setHasFixedSize(true);
     recycleview.addItemDecoration(
-      new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_button, 20)
-        .withTopEdge(true));
+        new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_button, 20)
+            .withTopEdge(true));
     recycleview.setAdapter(adapter);
     notifyMyFunctions();
     recycleview.getViewTreeObserver().
-      addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                                  @Override public void onGlobalLayout() {
-                                    if (recycleview != null) {
-                                      CompatUtils.removeGlobalLayout(recycleview.getViewTreeObserver(), this);
-                                      //判断是否调至会员端预览
-                                      if (!PreferenceUtils.getPrefBoolean(getContext(), "goStudentPre", false)) {
-                                        getChildFragmentManager().beginTransaction()
-                                          .replace(R.id.top_frag, new GymDetailShowGuideDialogFragment())
-                                          .addToBackStack(null)
-                                          .commit();
-                                        //rootScroll.fullScroll(View.FOCUS_DOWN);
-                                        layoutCollapsed.setExpanded(false);
-                                        PreferenceUtils.setPrefBoolean(getContext(), "goStudentPre", true);
-                                      } else {
-                                        //rootScroll.fullScroll(View.FOCUS_UP);
-                                        layoutCollapsed.setExpanded(true);
+        addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                                    @Override public void onGlobalLayout() {
+                                      if (recycleview != null) {
+                                        CompatUtils.removeGlobalLayout(recycleview.getViewTreeObserver(), this);
+                                        //判断是否调至会员端预览
+                                        if (!PreferenceUtils.getPrefBoolean(getContext(), "goStudentPre", false)) {
+                                          getChildFragmentManager().beginTransaction()
+                                              .replace(R.id.top_frag, new GymDetailShowGuideDialogFragment())
+                                              .addToBackStack(null)
+                                              .commit();
+                                          //rootScroll.fullScroll(View.FOCUS_DOWN);
+                                          layoutCollapsed.setExpanded(false);
+                                          PreferenceUtils.setPrefBoolean(getContext(), "goStudentPre", true);
+                                        } else {
+                                          //rootScroll.fullScroll(View.FOCUS_UP);
+                                          layoutCollapsed.setExpanded(true);
+                                        }
+                                        vpCharts.setOffscreenPageLimit(3);
+                                        vpCharts.setAdapter(mChartAdapter);
+                                        indicator.setViewPager(vpCharts);
                                       }
-                                      vpCharts.setOffscreenPageLimit(3);
-                                      vpCharts.setAdapter(mChartAdapter);
-                                      indicator.setViewPager(vpCharts);
                                     }
                                   }
-                                }
 
-      );
+        );
 
     onGymInfo(gymWrapper.getCoachService());
   }
@@ -416,15 +487,13 @@ public class GymDetailFragment extends BaseFragment
   void notifyMyFunctions() {
     int addcount = ((4 - (datas.size()) % 4) % 4);
     for (int i = 0; i < addcount; i++) {
-      datas.add(
-        new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE)));
+      datas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE)));
     }
-    datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
     datas.add(SimpleTextItemItem.newBuilder()
-      .bg(R.color.transparent)
-      .gravity(Gravity.CENTER)
-      .text("如何使用")
-      .build());
+        .bg(R.color.transparent)
+        .gravity(Gravity.CENTER)
+        .text("如何使用")
+        .build());
     adapter.updateDataSet(datas);
   }
 
@@ -485,29 +554,31 @@ public class GymDetailFragment extends BaseFragment
       if (stats.new_checkin != null) mChartAdapter.setData(2, stats.new_checkin.date_counts);
     }
   }
+
   long showTime = 0L;
+
   @Override
   public void setRecharge(final GymDetail.Recharge recharge, boolean hasFirst, String price) {
     hideLoading();
     showTime = 0L;
-    layoutCharge.setVisibility((hasFirst && !firstMonthClose)? View.VISIBLE : View.GONE);
+    layoutCharge.setVisibility((hasFirst && !firstMonthClose) ? View.VISIBLE : View.GONE);
     if (hasFirst && !firstMonthClose) {
-      showTime = System.currentTimeMillis()/1000;
+      showTime = System.currentTimeMillis() / 1000;
       SensorsUtils.track("QcSaasSpecialPriceBannerShow").commit(getContext());
     }
     tvPrice.setText(getString(R.string.underline_pro_update_now, price));
     mRechargeBtn.setOnClickListener(v -> {
       SensorsUtils.track("QcSaasEnterRechargePageBtnClick")
-        .addProperty("qc_saas_shop_status",gymWrapper.isPro()?"pro":"free")
-        .addProperty("qc_saas_shop_expire_date",gymWrapper.system_end())
-        .commit(getContext());
+          .addProperty("qc_saas_shop_status", gymWrapper.isPro() ? "pro" : "free")
+          .addProperty("qc_saas_shop_expire_date", gymWrapper.system_end())
+          .commit(getContext());
       toCharge();
     });
     layoutCharge.setOnClickListener(view -> {
-      if (showTime >0) {
+      if (showTime > 0) {
         SensorsUtils.track("QcSaasEnterRechargePageBtnClick")
-          .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
-          .commit(getContext());
+            .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
+            .commit(getContext());
       }
       toCharge();
     });
@@ -534,33 +605,33 @@ public class GymDetailFragment extends BaseFragment
     gymWrapper.setCoachService(coachService);
     CoachService gym = coachService;
     if (GymUtils.getSystemEndDay(gymWrapper.getCoachService()) >= 0
-      && GymUtils.getSystemEndDay(gymWrapper.getCoachService()) <= 7) {
+        && GymUtils.getSystemEndDay(gymWrapper.getCoachService()) <= 7) {
       if (!cn.qingchengfit.utils.PreferenceUtils.getPrefString(getContext(), Prefer.SYSTEM_END_HINT,
-        "").equalsIgnoreCase(DateUtils.Date2YYYYMMDD(new Date()))) {
+          "").equalsIgnoreCase(DateUtils.Date2YYYYMMDD(new Date()))) {
         if (mGymExpireDialog == null) mGymExpireDialog = new GymExpireFragment();
         if (!mGymExpireDialog.isVisible()) mGymExpireDialog.show(getFragmentManager(), "");
         cn.qingchengfit.utils.PreferenceUtils.setPrefString(getContext(), Prefer.SYSTEM_END_HINT,
-          DateUtils.Date2YYYYMMDD(new Date()));
+            DateUtils.Date2YYYYMMDD(new Date()));
       }
     }
 
     gymName.setText(gym.getName());
     Glide.with(getContext())
-      .load(PhotoUtils.getSmall(gym.getPhoto()))
-      .asBitmap()
-      .placeholder(R.drawable.ic_default_header)
-      .into(new CircleImgWrapper(shopImg, getContext()));
+        .load(PhotoUtils.getSmall(gym.getPhoto()))
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_header)
+        .into(new CircleImgWrapper(shopImg, getContext()));
     if (gymWrapper.isPro()) {
       mRechargeBtn.setBackgroundResource(R.drawable.bg_rect_prime);
       mRechargeBtn.setText("续费");
       mRechargeBtn.setTextColor(
-        cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.colorPrimary));
+          cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.colorPrimary));
       tagPro.setImageResource(R.drawable.ic_pro_green);
     } else {
       mRechargeBtn.setBackgroundResource(R.drawable.btn_prime);
       mRechargeBtn.setText("升级");
       mRechargeBtn.setTextColor(
-        cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.white));
+          cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.white));
       tagPro.setImageResource(R.drawable.ic_pro_free);
     }
 
@@ -582,9 +653,9 @@ public class GymDetailFragment extends BaseFragment
       }
     }
     datas.add(new GymFuntionItem(new GymFuntion.Builder().img(R.drawable.ic_function_more)
-      .moduleName("more")
-      .text(R.string.more)
-      .build()));
+        .moduleName("more")
+        .text(R.string.more)
+        .build()));
 
     notifyMyFunctions();
   }
@@ -619,10 +690,14 @@ public class GymDetailFragment extends BaseFragment
 
   }
 
+  @Override public void onMiniProgram(MiniProgram miniProgram) {
+    MiniProgramUtil.saveMiniProgream(getContext(),gymWrapper.getGymId(),miniProgram);
+  }
+
   /**
    * 单场馆新增健身房
    */
- public void onLeft() {
+  public void onLeft() {
 
     //新增健身房
     SystemInitBody body;
@@ -630,7 +705,7 @@ public class GymDetailFragment extends BaseFragment
       body = new SystemInitBody();
     } else {
       body = new Gson().fromJson(PreferenceUtils.getPrefString(getContext(), "init", ""),
-        SystemInitBody.class);
+          SystemInitBody.class);
     }
     App.caches.put("init", body);
     Intent toGuide = new Intent(getActivity(), GuideActivity.class);
@@ -655,7 +730,7 @@ public class GymDetailFragment extends BaseFragment
       if (getActivity() instanceof MainActivity && position == 0) {
         gymDetailPresenter.manageBrand();
       } else if ((getActivity() instanceof MainActivity && position == 1) || (position
-        == 0)) {//离职退出场馆
+          == 0)) {//离职退出场馆
         if (quitDialog == null) {
           quitDialog = new QuitGymFragment();
           quitDialog.setOnClickListener(new View.OnClickListener() {
@@ -706,13 +781,13 @@ public class GymDetailFragment extends BaseFragment
           if (getActivity() instanceof GymActivity) {
             ViewCompat.setTransitionName(recycleview, "funcitonView");
             getActivity().getSupportFragmentManager()
-              .beginTransaction()
-              .addSharedElement(recycleview, "funcitonView")
-              .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
-                R.anim.slide_left_in, R.anim.slide_right_out)
-              .add(mCallbackActivity.getFragId(), new GymMoreFragment())
-              .addToBackStack(null)
-              .commit();
+                .beginTransaction()
+                .addSharedElement(recycleview, "funcitonView")
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,
+                    R.anim.slide_left_in, R.anim.slide_right_out)
+                .add(mCallbackActivity.getFragId(), new GymMoreFragment())
+                .addToBackStack(null)
+                .commit();
           } else {
             Intent toMore = new Intent(getActivity(), GymActivity.class);
             toMore.putExtra(GymActivity.GYM_TO, GymActivity.GYM_MORE);
@@ -720,11 +795,12 @@ public class GymDetailFragment extends BaseFragment
           }
         } else {
           if (GymFunctionFactory.getModuleStatus(name) > 0 && !gymWrapper.isPro()) {
-            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(name)).show(getFragmentManager(), "");
+            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(name))
+                .show(getFragmentManager(), "");
             return true;
           }
           gymFunctionFactory.getJumpIntent(name, gymWrapper.getCoachService(),
-            gymWrapper.getBrand(), new GymStatus.Builder().build(), this);
+              gymWrapper.getBrand(), new GymStatus.Builder().build(), this);
         }
       }
     } else if (item instanceof ButtonItem) {
@@ -773,7 +849,7 @@ public class GymDetailFragment extends BaseFragment
   /**
    * 记录神策的公共事件
    */
-  void registeSensors(){
+  void registeSensors() {
     try {
       JSONObject properties = new JSONObject();
       properties.put("qc_shop_id", gymWrapper.shop_id());

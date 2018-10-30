@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +21,8 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
@@ -36,6 +40,7 @@ import cn.qingchengfit.widgets.CustomSwipeRefreshLayout;
 import cn.qingchengfit.wxpreview.R;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import cn.qingchengfit.wxpreview.old.newa.WebActivityForGuideViewModel;
+import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Trunk;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -43,6 +48,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebView;
+import dagger.android.AndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -67,13 +74,12 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 15/10/12 2015.
  */
 @Trunk(fragments = {
-    CompletedConnectFragment.class, ConnectWechatFragment.class, HomePageQrCodeFragment.class
-}) public class WebActivityForGuide extends BaseActivity implements FragCallBack {
+    CompletedConnectFragment.class,
+}) public class WebActivityForGuide extends SaasCommonActivity implements FragCallBack {
   @Inject IPermissionModel permissionModel;
   @Inject GymWrapper gymWrapper;
   @Inject ViewModelProvider.Factory factory;
   CompletedConnectFragment completedConnectFragment;
-  HomePageQrCodeFragment homePageQrCodeFragment;
   private String mUrl;
   private String mCopyUrl;
   private boolean mWXSuccess;
@@ -95,14 +101,17 @@ import rx.schedulers.Schedulers;
         .commit();
     initViewModel();
     mViewModel.loadShopDetail();
-    if(AppUtils.getCurApp(this)==0){
+    if (AppUtils.getCurApp(this) == 0) {
       findViewById(R.id.btn_config_homepage).setVisibility(View.GONE);
+      mViewModel.loadTrainerShopDetail();
+    }else{
+      mViewModel.loadShopDetail();
+
     }
   }
 
   private void initFragment() {
     completedConnectFragment = new CompletedConnectFragment();
-    homePageQrCodeFragment = new HomePageQrCodeFragment();
   }
 
   private WebActivityForGuideViewModel mViewModel;
@@ -115,20 +124,15 @@ import rx.schedulers.Schedulers;
       mWxName = shop.weixin;
       mWxQr = shop.weixin_image;
     });
-    mViewModel.miniProgramMutableLiveData.observe(this,miniprogram->{
-      if(miniprogram!=null){
-        MiniProgramUtil.saveMiniProgream(WebActivityForGuide.this,miniprogram);
+    mViewModel.miniProgramMutableLiveData.observe(this, miniprogram -> {
+      if (miniprogram != null) {
+        MiniProgramUtil.saveMiniProgream(WebActivityForGuide.this, gymWrapper.getGymId(),
+            miniprogram);
       }
     });
   }
 
-  public void doneConnectWechat() {
-    completedConnectFragment.mCopyUrl = mCopyUrl;
-    getSupportFragmentManager().beginTransaction()
-        .replace(R.id.other_frag, completedConnectFragment)
-        .addToBackStack("")
-        .commit();
-  }
+
 
   public void onTabClick(View view) {
     int i = view.getId();
@@ -169,24 +173,24 @@ import rx.schedulers.Schedulers;
       gymPoplularize.setOnListItemClickListener(new GymPoplularize.GymPoplularizeListener() {
         @Override public void onBtnToWechatPublicClicked(GymPoplularize dialog) {
           dialog.dismiss();
-          ConnectWechatFragment fragment = new ConnectWechatFragment();
           Bundle bundle = new Bundle();
           bundle.putString("wxQr", mWxQr);
           bundle.putString("wxName", mWxName);
-          fragment.setArguments(bundle);
-          getSupportFragmentManager().beginTransaction()
-              .replace(R.id.other_frag, fragment)
-              .addToBackStack("wechat")
-              .commit();
+          bundle.putString("mCopyUrl",mCopyUrl);
+          Intent intent = new Intent(WebActivityForGuide.this, WxPreviewEmptyActivity.class);
+          intent.putExtras(bundle);
+          intent.putExtra("to", 1);
+          startActivity(intent);
         }
 
         @Override public void onBtnHomeQrClicked(GymPoplularize dialog) {
           dialog.dismiss();
-          homePageQrCodeFragment.mUrl = mUrl;
-          getSupportFragmentManager().beginTransaction()
-              .replace(R.id.other_frag, homePageQrCodeFragment)
-              .addToBackStack("")
-              .commit();
+          Bundle bundle = new Bundle();
+          bundle.putString("mUrl", mUrl);
+          Intent intent = new Intent(WebActivityForGuide.this, WxPreviewEmptyActivity.class);
+          intent.putExtras(bundle);
+          intent.putExtra("to", 2);
+          startActivity(intent);
         }
 
         @Override public void onBtnMorePopularizeClicked(GymPoplularize dialog) {
@@ -195,14 +199,22 @@ import rx.schedulers.Schedulers;
               "http://cloud.qingchengfit.cn/mobile/urls/eeb0e361a378428fa1a862c949495e0d/",
               WebActivityForGuide.this);
         }
+
+        @Override public void onBtnMiniProgramClicked(GymPoplularize dialog) {
+          toMiniProgramPage();
+        }
       });
       gymPoplularize.show(getSupportFragmentManager(), "");
     } else if (i == R.id.btn_wx_pm) {
-      if (MiniProgramUtil.getMiniProgream(this) != null) {
-        RouteUtil.routeTo(this, "wxmini", "/show/mini", null);
-      } else {
-        RouteUtil.routeTo(this, "wxmini", "/mini/page", null);
-      }
+      toMiniProgramPage();
+    }
+  }
+
+  private void toMiniProgramPage() {
+    if (MiniProgramUtil.getMiniProgream(this, gymWrapper.getGymId()) != null) {
+      RouteUtil.routeTo(this, "wxmini", "/show/mini", null);
+    } else {
+      RouteUtil.routeTo(this, "wxmini", "/mini/page", null);
     }
   }
 

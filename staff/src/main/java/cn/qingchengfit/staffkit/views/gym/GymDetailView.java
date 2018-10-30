@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.gym;
 
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.MiniProgram;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.model.responese.GymDetail;
@@ -53,6 +54,7 @@ public interface GymDetailView extends PView {
     void onManageBrand();
 
     void onSpecialPoint(int count);
+    void onMiniProgram(MiniProgram miniProgram);
 
     void onQuitGym();
 

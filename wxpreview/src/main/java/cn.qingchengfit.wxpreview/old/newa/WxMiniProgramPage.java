@@ -53,10 +53,9 @@ import javax.inject.Inject;
             final Bitmap drawingCache = mBinding.rlContainer.getDrawingCache();
             WxShareUtil.shareBitmap(getContext(), drawingCache, isFriend);
             mBinding.rlContainer.destroyDrawingCache();
-
           }
         });
-        dialog.show(getChildFragmentManager(),"");
+        dialog.show(getChildFragmentManager(), "");
       }
     });
   }
@@ -74,7 +73,7 @@ import javax.inject.Inject;
   }
 
   private void initView() {
-    MiniProgram miniProgream = MiniProgramUtil.getMiniProgream(getContext());
+    MiniProgram miniProgream = MiniProgramUtil.getMiniProgream(getContext(), gymWrapper.getGymId());
     if (miniProgream != null) {
       mBinding.tvGymName.setText(gymWrapper.getBrand().getName());
       mBinding.tvSerivceName.setText(miniProgream.nick_name);

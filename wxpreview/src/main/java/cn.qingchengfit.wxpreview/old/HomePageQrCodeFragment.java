@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.wxpreview.R;
@@ -44,13 +45,14 @@ import static android.graphics.Color.WHITE;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/1/21.
  */
-public class HomePageQrCodeFragment extends BaseFragment {
+public class HomePageQrCodeFragment extends SaasCommonFragment {
 
   public String mUrl;
   ImageView imgQrCode;
   TextView tvGymName;
   TextView btnSaveQrcode;
-  @Inject GymWrapper gymWrapper;
+  @Inject
+  GymWrapper gymWrapper;
 
   private SoftReference<Bitmap> mBitmapSoftReference;
 
@@ -60,6 +62,9 @@ public class HomePageQrCodeFragment extends BaseFragment {
     imgQrCode = (ImageView) view.findViewById(R.id.img_qr_code);
     tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
     btnSaveQrcode = (TextView) view.findViewById(R.id.btn_save_qrcode);
+    if(getArguments()!=null){
+      mUrl=getArguments().getString("mUrl");
+    }
     view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         HomePageQrCodeFragment.this.onClick(v);
@@ -85,6 +90,8 @@ public class HomePageQrCodeFragment extends BaseFragment {
 
     return view;
   }
+
+
 
   @Override public String getFragmentName() {
     return HomePageQrCodeFragment.class.getName();

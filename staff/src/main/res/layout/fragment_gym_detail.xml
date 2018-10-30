@@ -13,9 +13,9 @@
       android:id="@+id/toolbar_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:background="@color/toolbar"
       android:visibility="gone"
       tools:visibility="visible"
-      android:background="@color/toolbar"
       >
 
     <android.support.v7.widget.Toolbar
@@ -37,9 +37,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/white"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
+        android:textColor="@color/white"
         android:textSize="16sp"
         tools:text="@string/site_usage"
         style="@style/Qc.TextCommonBlack"
@@ -104,8 +104,8 @@
           android:textColor="@color/white"
           android:textSize="11sp"
           android:visibility="gone"
-          tools:visibility="visible"
           tools:text="99"
+          tools:visibility="visible"
           />
 
     </RelativeLayout>
@@ -116,8 +116,8 @@
       android:id="@+id/root_scroll"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:fillViewport="true"
       android:layout_below="@id/toolbar_layout"
+      android:fillViewport="true"
       >
 
     <android.support.design.widget.AppBarLayout
@@ -131,37 +131,37 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:gravity="center_vertical"
           android:minHeight="266.5dp"
           android:orientation="vertical"
-          android:gravity="center_vertical"
           app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"
           >
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layout_to_charge"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@drawable/primary_horizon_to_dark"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/primary_horizon_to_dark"
+            android:visibility="gone"
             >
           <cn.qingchengfit.support.widgets.CompatTextView
               android:id="@+id/tv_price"
               android:layout_width="0dp"
-              android:layout_weight="1"
-              android:textSize="@dimen/txt_15sp"
               android:layout_height="match_parent"
-              android:textColor="#00a5ac"
+              android:layout_weight="1"
               android:text="@string/underline_pro_update_now"
+              android:textColor="#00a5ac"
+              android:textSize="@dimen/txt_15sp"
               app:drawableStart="@drawable/vd_upgrade_arrow"
               />
           <ImageView
               android:id="@+id/btn_close"
               android:layout_width="50dp"
+              android:layout_height="match_parent"
               android:padding="15dp"
               android:translationX="15dp"
-              android:layout_height="match_parent"
               app:srcCompat="@drawable/vd_close_primary_24dp"
               />
         </LinearLayout>
@@ -183,7 +183,6 @@
 
 
       </LinearLayout>
-      <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
       <TextView
           android:layout_width="match_parent"
@@ -211,32 +210,6 @@
           android:background="@color/bg_grey"
           />
 
-      <!--<TextView-->
-          <!--android:id="@+id/student_preview"-->
-          <!--android:layout_width="wrap_content"-->
-          <!--android:layout_height="wrap_content"-->
-          <!--android:layout_gravity="center_horizontal"-->
-          <!--android:layout_marginBottom="15dp"-->
-          <!--android:background="@drawable/bg_rect_prime"-->
-          <!--android:paddingBottom="5dp"-->
-          <!--android:paddingLeft="15dp"-->
-          <!--android:paddingRight="15dp"-->
-          <!--android:paddingTop="5dp"-->
-          <!--android:text="@string/student_page_preview"-->
-          <!--android:textColor="@color/colorPrimary"-->
-          <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-          <!--/>-->
-
-      <!--<TextView-->
-          <!--android:id="@+id/btn_how_to_use"-->
-          <!--android:layout_width="wrap_content"-->
-          <!--android:layout_height="wrap_content"-->
-          <!--android:layout_gravity="center_horizontal"-->
-          <!--android:drawablePadding="@dimen/little"-->
-          <!--android:text="@string/how_to_use"-->
-          <!--android:textColor="@color/text_grey"-->
-          <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-          <!--/>-->
     </LinearLayout>
 
 
@@ -341,4 +314,11 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
+  <include layout="@layout/wx_view_bottom_short_action"/>
+  <FrameLayout
+      android:id="@+id/other_frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
 </RelativeLayout>

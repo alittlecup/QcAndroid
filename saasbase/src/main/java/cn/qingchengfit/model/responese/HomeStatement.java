@@ -28,6 +28,7 @@ public class HomeStatement {
     public FollowUpDataStatistic.NewCreateUsersBean new_checkin;
     public FollowUpDataStatistic.NewCreateUsersBean new_users;
 
+
     @SerializedName("new_orders") public FollowUpDataStatistic.NewCreateUsersBean new_orders;
     public FollowUpDataStatistic.NewCreateUsersBean new_sells;
 }

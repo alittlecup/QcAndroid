@@ -43,154 +43,166 @@ import timber.log.Timber;
  * Created by Paper on 16/2/1 2016.
  */
 public class GymDetailPresenter extends BasePresenter {
-    GymDetailView gymDetailView;
-    GymUseCase gymUseCase;
-    @Inject GymWrapper gymWrapper;
-    @Inject LoginStatus loginStatus;
-    @Inject QcDbManager qcDbManager;
-    @Inject SerPermisAction serPermisAction;
-    private Subscription sp;
-    private Subscription spWelcome;
-    private RestRepository restRepository;
-    private Subscription spUnreadCount;
+  GymDetailView gymDetailView;
+  GymUseCase gymUseCase;
+  @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
+  @Inject QcDbManager qcDbManager;
+  @Inject SerPermisAction serPermisAction;
+  private Subscription sp;
+  private Subscription spWelcome;
+  private RestRepository restRepository;
+  private Subscription spUnreadCount;
 
-    @Inject public GymDetailPresenter(GymUseCase gymUseCase, RestRepository restRepository) {
-        this.gymUseCase = gymUseCase;
-        this.restRepository = restRepository;
+  @Inject public GymDetailPresenter(GymUseCase gymUseCase, RestRepository restRepository) {
+    this.gymUseCase = gymUseCase;
+    this.restRepository = restRepository;
+  }
+
+  @Override public void onStart() {
+
+  }
+
+  @Override public void onStop() {
+
+  }
+
+  @Override public void onPause() {
+
+  }
+
+  @Override public void attachView(PView v) {
+    gymDetailView = (GymDetailView) v;
+    RxRegiste(qcDbManager.queryAllFunctions()
+        .onBackpressureBuffer()
+        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+        .subscribe(strings -> gymDetailView.onModule(strings),
+            throwable -> Timber.d(throwable.getMessage())));
+  }
+
+  @Override public void attachIncomingIntent(Intent intent) {
+
+  }
+
+  @Override public void onCreate() {
+
+  }
+
+  @Override public void unattachView() {
+    super.unattachView();
+    gymDetailView = null;
+    if (sp != null) sp.unsubscribe();
+    if (spWelcome != null) spWelcome.unsubscribe();
+    if (spUnreadCount != null && spUnreadCount.isUnsubscribed()) {
+      spUnreadCount.unsubscribe();
     }
+  }
 
-    @Override public void onStart() {
-
-    }
-
-    @Override public void onStop() {
-
-    }
-
-    @Override public void onPause() {
-
-    }
-
-    @Override public void attachView(PView v) {
-        gymDetailView = (GymDetailView) v;
-        RxRegiste(qcDbManager.queryAllFunctions()
-            .onBackpressureBuffer()
-            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-            .subscribe(strings -> gymDetailView.onModule(strings), throwable -> Timber.d(throwable.getMessage())));
-    }
-
-    @Override public void attachIncomingIntent(Intent intent) {
-
-    }
-
-    @Override public void onCreate() {
-
-    }
-
-    @Override public void unattachView() {
-        super.unattachView();
-        gymDetailView = null;
-        if (sp != null) sp.unsubscribe();
-        if (spWelcome != null) spWelcome.unsubscribe();
-        if (spUnreadCount != null && spUnreadCount.isUnsubscribed()) {
-            spUnreadCount.unsubscribe();
-        }
-    }
-
-    void manageBrand() {
-        RxRegiste(restRepository.getGet_api()
-            .qcGetBrands(loginStatus.staff_id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
-                @Override public void call(QcDataResponse<BrandsResponse> brandsResponse) {
-                    if (brandsResponse.getData().brands != null) {
-                        for (Brand brand : brandsResponse.getData().brands) {
-                            if (brand.id.equals(gymWrapper.brand_id())) {
-                                gymWrapper.setBrand(brand);
-                                gymDetailView.onManageBrand();
-                            }
-                        }
-                    }
+  void manageBrand() {
+    RxRegiste(restRepository.getGet_api()
+        .qcGetBrands(loginStatus.staff_id())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+          @Override public void call(QcDataResponse<BrandsResponse> brandsResponse) {
+            if (brandsResponse.getData().brands != null) {
+              for (Brand brand : brandsResponse.getData().brands) {
+                if (brand.id.equals(gymWrapper.brand_id())) {
+                  gymWrapper.setBrand(brand);
+                  gymDetailView.onManageBrand();
                 }
-            }, new NetWorkThrowable()));
-    }
-
-    void updatePermission() {
-
-        RxRegiste(restRepository.getGet_api()
-            .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new NetSubscribe<QcResponsePermission>() {
-                @Override public void onNext(QcResponsePermission qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
-                        serPermisAction.writePermiss(qcResponse.data.permissions);
-                        getGymWelcome();
-                    }
-                }
-            }));
-    }
-
-    public void getGymWelcome() {
-        spWelcome = gymUseCase.getGymWelcom(gymWrapper.id(), gymWrapper.model(), new Action1<QcDataResponse<GymDetail>>() {
-            @Override public void call(QcDataResponse<GymDetail> qcResponseGymDetail) {
-                if (ResponseConstant.checkSuccess(qcResponseGymDetail)) {
-                    gymDetailView.onGymInfo(qcResponseGymDetail.data.gym);
-                    gymDetailView.onSuperUser(qcResponseGymDetail.data.superuser);
-                    if (qcResponseGymDetail.data.banners != null) gymDetailView.setBanner(qcResponseGymDetail.data.banners);
-                    gymDetailView.setInfo(qcResponseGymDetail.data.stat);
-
-                    gymDetailView.studentPreview(qcResponseGymDetail.data.welcome_url, qcResponseGymDetail.data.hint_url);
-                    String price = "";
-                    if (qcResponseGymDetail.data.gym.first_month_favorable_info != null){
-                        price = qcResponseGymDetail.data.gym.first_month_favorable_info.favorable_price;
-                    }
-                    gymWrapper.setHasFirst(qcResponseGymDetail.data.gym.has_first_month_favorable);
-                    gymWrapper.setFirstPrice(price);
-                    gymDetailView.setRecharge(qcResponseGymDetail.data.recharge,qcResponseGymDetail.data.gym.has_first_month_favorable,price);
-                    gymDetailView.onSpecialPoint(qcResponseGymDetail.data.qingcheng_activity_count);
-
-                    if (qcResponseGymDetail.data.gym.module_custom != null) {
-                        try {
-                            qcDbManager.insertFunction((List<String>) qcResponseGymDetail.data.gym.module_custom);
-                        } catch (Exception e) {
-                            qcDbManager.insertFunction(null);
-                            Timber.d(e.getMessage());
-                            CrashUtils.sendCrash(e);
-                        }
-                    }
-                    App.gCanReload = true;
-                } else {
-                    gymDetailView.onFailed();
-                }
+              }
             }
+          }
+        }, new NetWorkThrowable()));
+  }
+
+  void updatePermission() {
+
+    RxRegiste(restRepository.getGet_api()
+        .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcResponsePermission>() {
+          @Override public void onNext(QcResponsePermission qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
+              serPermisAction.writePermiss(qcResponse.data.permissions);
+              getGymWelcome();
+            }
+          }
+        }));
+  }
+
+  public void getGymWelcome() {
+    spWelcome = gymUseCase.getGymWelcom(gymWrapper.id(), gymWrapper.model(),
+        new Action1<QcDataResponse<GymDetail>>() {
+          @Override public void call(QcDataResponse<GymDetail> qcResponseGymDetail) {
+            if (ResponseConstant.checkSuccess(qcResponseGymDetail)) {
+              gymDetailView.onGymInfo(qcResponseGymDetail.data.gym);
+              gymDetailView.onSuperUser(qcResponseGymDetail.data.superuser);
+              if (qcResponseGymDetail.data.banners != null) {
+                gymDetailView.setBanner(qcResponseGymDetail.data.banners);
+              }
+              gymDetailView.setInfo(qcResponseGymDetail.data.stat);
+
+              gymDetailView.studentPreview(qcResponseGymDetail.data.welcome_url,
+                  qcResponseGymDetail.data.hint_url);
+              String price = "";
+              if (qcResponseGymDetail.data.gym.first_month_favorable_info != null) {
+                price = qcResponseGymDetail.data.gym.first_month_favorable_info.favorable_price;
+              }
+              if (qcResponseGymDetail.getData().gym.miniProgram!= null) {
+                gymDetailView.onMiniProgram(qcResponseGymDetail.getData().gym.miniProgram);
+              }
+              gymWrapper.setHasFirst(qcResponseGymDetail.data.gym.has_first_month_favorable);
+              gymWrapper.setFirstPrice(price);
+              gymDetailView.setRecharge(qcResponseGymDetail.data.recharge,
+                  qcResponseGymDetail.data.gym.has_first_month_favorable, price);
+              gymDetailView.onSpecialPoint(qcResponseGymDetail.data.qingcheng_activity_count);
+
+              if (qcResponseGymDetail.data.gym.module_custom != null) {
+                try {
+                  qcDbManager.insertFunction(
+                      (List<String>) qcResponseGymDetail.data.gym.module_custom);
+                } catch (Exception e) {
+                  qcDbManager.insertFunction(null);
+                  Timber.d(e.getMessage());
+                  CrashUtils.sendCrash(e);
+                }
+              }
+              App.gCanReload = true;
+            } else {
+              gymDetailView.onFailed();
+            }
+          }
         });
-    }
+  }
 
-    public void quitGym() {
-        RxRegiste(restRepository.getPost_api()
-            .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponse>() {
-                @Override public void call(QcResponse qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        gymDetailView.onQuitGym();
-                    } else {
-                        ToastUtils.show(qcResponse.getMsg());
-                        gymDetailView.onFailed();
-                    }
-                    ;
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    gymDetailView.onFailed();
-                }
-            })
+  public void quitGym() {
+    RxRegiste(restRepository.getPost_api()
+        .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              gymDetailView.onQuitGym();
+            } else {
+              ToastUtils.show(qcResponse.getMsg());
+              gymDetailView.onFailed();
+            }
+            ;
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            gymDetailView.onFailed();
+          }
+        })
 
-        );
-    }
+    );
+  }
 }

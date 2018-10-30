@@ -51,11 +51,7 @@ import rx.functions.Action1;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
-      if (TextUtils.isEmpty(staff.getId())) {
-        listView.getListView().setAdapterTag("choose", -1);
-      } else {
-        listView.getListView().setAdapterTag("choose", type);
-      }
+      listView.getListView().setAdapterTag("showBase",true);
       listView.setDatas(items);
     });
   }

@@ -13,14 +13,12 @@ public class MiniProgramUtil {
   private MiniProgramUtil() {
   }
 
-  public static void saveMiniProgream(Context context, MiniProgram program) {
-    String curAppName = AppUtils.getCurAppName(context);
-    PreferenceUtils.setPrefString(context, MINIPROGRAM_KEY+curAppName, new Gson().toJson(program));
+  public static void saveMiniProgream(Context context,String gymId,MiniProgram program) {
+    PreferenceUtils.setPrefString(context, MINIPROGRAM_KEY+gymId, new Gson().toJson(program));
   }
 
-  public static MiniProgram getMiniProgream(Context context) {
-    String curAppName = AppUtils.getCurAppName(context);
-    String prefString = PreferenceUtils.getPrefString(context, MINIPROGRAM_KEY+curAppName, "");
+  public static MiniProgram getMiniProgream(Context context,String gymId) {
+    String prefString = PreferenceUtils.getPrefString(context, MINIPROGRAM_KEY+gymId, "");
     if (TextUtils.isEmpty(prefString)) {
       return null;
     } else {

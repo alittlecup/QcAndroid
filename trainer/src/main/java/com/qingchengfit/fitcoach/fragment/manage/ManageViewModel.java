@@ -7,6 +7,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.MiniProgram;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -32,6 +33,9 @@ public class ManageViewModel extends BaseViewModel {
   public MutableLiveData<Boolean> hasPrivate =new MutableLiveData<>();
   public MutableLiveData<Boolean> hasGroup =new MutableLiveData<>();
   public final ActionLiveEvent quitAction = new ActionLiveEvent();
+  public MutableLiveData<MiniProgram> miniProgramMutableLiveData=new MutableLiveData<>();
+  public MutableLiveData<String> copyUrl=new MutableLiveData<>();
+  public MutableLiveData<String> previewUrl=new MutableLiveData<>();
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
@@ -105,6 +109,9 @@ public class ManageViewModel extends BaseViewModel {
         chartData.setValue(response.data.stat);
         hasPrivate.setValue(response.data.has_private);
         hasGroup.setValue(response.data.has_team);
+        copyUrl.setValue(response.data.hint_url);
+        previewUrl.setValue(response.data.welcome_url);
+        miniProgramMutableLiveData.setValue(response.data.gym.miniProgram);
       } else {
         ToastUtils.show(response.getMsg());
       }

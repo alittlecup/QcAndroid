@@ -74,8 +74,11 @@ public class CoachService implements Parcelable{
   public boolean can_trial;
   public double gd_lng;
   public double gd_lat;
+  @Ignore
   public int gym_type;
+  @Ignore
   public String description;
+  @Ignore
   public int area;
 
   private CoachService(Builder builder) {

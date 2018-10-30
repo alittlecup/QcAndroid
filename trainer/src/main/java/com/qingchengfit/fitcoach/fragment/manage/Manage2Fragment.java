@@ -29,6 +29,7 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
+import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -82,6 +83,11 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     });
     mViewModel.hasGroup.observe(this, aBoolean -> {
       upDateItem(aBoolean, 1);
+    });
+    mViewModel.miniProgramMutableLiveData.observe(this, miniProgram -> {
+      if (miniProgram != null) {
+        MiniProgramUtil.saveMiniProgream(getContext(), gymWrapper.getGymId(), miniProgram);
+      }
     });
   }
 
@@ -139,10 +145,11 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
       dialogList.show();
     });
     mBinding.showGym.setOnClickListener(v -> {
-        //guideToStudentPreview();
+      guideToStudentPreview(mViewModel.previewUrl.getValue(),mViewModel.copyUrl.getValue());
     });
   }
-  private void guideToStudentPreview(String preViewUrl,String copyUrl) {
+
+  private void guideToStudentPreview(String preViewUrl, String copyUrl) {
     Intent toWebForGuide = new Intent(getActivity(), WebActivityForGuide.class);
     toWebForGuide.putExtra("url", preViewUrl);
     toWebForGuide.putExtra("copyurl", copyUrl);

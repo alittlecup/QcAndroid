@@ -1,6 +1,8 @@
 package cn.qingchengfit.model.responese;
 
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.MiniProgram;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * power by
@@ -27,4 +29,6 @@ public class HomeDetailGym extends CoachService {
     public Object module_custom;
     public boolean has_first_month_favorable;
     public RenewalPay first_month_favorable_info;
+    @SerializedName("mini_program") public MiniProgram miniProgram;
+
 }

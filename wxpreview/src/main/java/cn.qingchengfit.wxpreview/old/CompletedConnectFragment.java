@@ -102,8 +102,7 @@ public class CompletedConnectFragment extends BaseFragment {
           .subscribe(qcResponse -> {
             hideLoading();
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              getFragmentManager().popBackStackImmediate("wechat",
-                  FragmentManager.POP_BACK_STACK_INCLUSIVE);
+             getActivity().finish();
             } else {
               ToastUtils.show(qcResponse.getMsg());
             }

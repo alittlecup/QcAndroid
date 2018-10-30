@@ -16,6 +16,10 @@ public interface WxPreviewApi {
   @GET("/api/staffs/{id}/shops/detail") Observable<QcDataResponse<ShopWrapper>> qcGetShopDetail(
       @Path("id") String id, @QueryMap HashMap<String, Object> params);
 
+  @GET("/api/coaches/{id}/shops/detail") Observable<QcDataResponse<ShopWrapper>> qcGetTrainerShopDetail(
+      @Path("id") String id, @QueryMap HashMap<String, Object> params);
+
+
   @PUT("/api/staffs/{staff_id}/shops/detail/") Observable<QcDataResponse> qcEditShop(
       @Path("staff_id") String staffId, @Body ArrayMap<String, Object> body);
 }

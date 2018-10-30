@@ -1,5 +1,6 @@
 package cn.qingchengfit.wxpreview.old;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
@@ -24,6 +25,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.wxpreview.R;
+import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
 import cn.qingchengfit.wxpreview.old.newa.network.WxPreviewApi;
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
@@ -109,8 +111,10 @@ public class ConnectWechatFragment extends BaseFragment {
             .subscribe(qcResponse -> {
               hideLoading();
               if (ResponseConstant.checkSuccess(qcResponse)) {
-                if (getActivity() instanceof WebActivityForGuide) {
-                  ((WebActivityForGuide) getActivity()).doneConnectWechat();
+                if(getActivity() instanceof WxPreviewEmptyActivity){
+                  Bundle bundle=new Bundle();
+                  bundle.putString("mCopyUrl",getArguments().getString("mCopyUrl"));
+                  ((WxPreviewEmptyActivity) getActivity()).toCompleteWxChat(bundle);
                 }
               } else {
                 ToastUtils.show(qcResponse.getMsg());

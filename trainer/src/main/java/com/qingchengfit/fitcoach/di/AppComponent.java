@@ -27,6 +27,7 @@ import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.di.BindStudentActivity;
 import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
+import cn.qingchengfit.wxpreview.old.newa.WxPreviewModule;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
@@ -51,6 +52,7 @@ import com.qingchengfit.fitcoach.fragment.unlogin.HomeBannerFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginHomeFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginScheduleAdFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnloginManageFragment;
+import com.taobao.weex.ui.module.WXWebViewModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -88,7 +90,7 @@ import dagger.multibindings.IntoMap;
     BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
     BindStudentActivity.class, StudentViewModel.class, BindCheckoutCounterActivity.class,
     CheckViewModule.class, BindLoginActivity.class, BindSaasCommActivity.class,BindStaffCardActivity.class,
-    ViewModelModule.class,BindStaffActivity.class,
+    ViewModelModule.class,BindStaffActivity.class,WxPreviewModule.class,
 
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class, AppComponent.ArticleCommentsListFragmentModule.class,
@@ -111,7 +113,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
-    AppComponent.RecruitMessageListFragmentModule.class,AppComponent.SimpleCardListFragmentModule.class
+    AppComponent.RecruitMessageListFragmentModule.class,AppComponent.SimpleCardListFragmentModule.class,
     AppComponent.Manage2FragmentModule.class
 }) public interface AppComponent {
   void inject(App app);

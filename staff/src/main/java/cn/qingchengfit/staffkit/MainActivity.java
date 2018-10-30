@@ -32,6 +32,8 @@ import android.widget.Toast;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.model.AdvertiseInfo;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.utils.AdvertiseUtils;
@@ -112,7 +114,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
-public class MainActivity extends BaseActivity implements FragCallBack {
+public class MainActivity extends SaasCommonActivity implements FragCallBack {
   public static final String IS_SIGNLE = "is_signle";
   public static final String OPEN_URL = "open_url";
   public static final String MAIN_ACTION = "main.action";
@@ -433,9 +435,9 @@ public class MainActivity extends BaseActivity implements FragCallBack {
 
   private void showCRMDialog() {
     boolean isFirst = PreferenceUtils.getPrefBoolean(MainActivity.this, "crm_dialog", true);
-    if(isFirst == true) {
+    if(isFirst) {
       CommonDialog dialog = new CommonDialog(MainActivity.this);
-//      dialog.setImageView();
+      dialog.setImageView(R.drawable.crm_export_ad);
       dialog.setClickListener(new CommonDialog.DialogClickListener() {
         @Override
         public void onCloseClickListener(Dialog dialog) {

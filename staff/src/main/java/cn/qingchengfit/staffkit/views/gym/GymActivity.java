@@ -23,6 +23,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.AddBrandActivity;
@@ -36,7 +37,7 @@ import javax.inject.Inject;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class GymActivity extends BaseActivity implements ISetGymView, FragCallBack {
+public class GymActivity extends SaasCommonActivity implements ISetGymView, FragCallBack {
 
     public static final int GYM_DETAIL = 1;
     public static final int GYM_ADD = 2;

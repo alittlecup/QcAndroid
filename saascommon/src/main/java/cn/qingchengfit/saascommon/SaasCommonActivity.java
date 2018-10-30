@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 public class SaasCommonActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  FrameLayout webFragLayout;
+  public  FrameLayout webFragLayout;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

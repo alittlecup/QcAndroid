@@ -31,5 +31,6 @@
             />
       </intent-filter>
     </activity>
+    <activity android:name=".old.newa.WxPreviewEmptyActivity"/>
   </application>
 </manifest>
