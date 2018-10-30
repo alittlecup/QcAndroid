@@ -18,7 +18,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -32,6 +34,7 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import javax.inject.Inject;
+import rx.Observable;
 import rx.functions.Action1;
 
 /**
@@ -105,8 +108,17 @@ public class ConnectWechatFragment extends BaseFragment {
         body.put("weixin", civWechatName.getContent());
         body.put("weixin_image", mUpImg);
         showLoading();
-        RxRegiste(qcRestRepository.createGetApi(WxPreviewApi.class)
-            .qcEditShop(loginStatus.staff_id(), body)
+        Observable<QcDataResponse> qcDataResponseObservable=null;
+        if(AppUtils.getCurApp(getContext())==0){
+          qcDataResponseObservable =
+              qcRestRepository.createGetApi(WxPreviewApi.class)
+                  .qcTrainEditShop(loginStatus.staff_id(), body);
+        }else{
+          qcDataResponseObservable =
+              qcRestRepository.createGetApi(WxPreviewApi.class)
+                  .qcEditShop(loginStatus.staff_id(), body);
+        }
+        RxRegiste(qcDataResponseObservable
             .compose(RxHelper.schedulersTransformer())
             .subscribe(qcResponse -> {
               hideLoading();

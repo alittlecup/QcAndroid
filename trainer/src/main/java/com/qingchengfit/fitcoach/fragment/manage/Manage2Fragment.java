@@ -121,7 +121,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     checkPermission();
     initListener();
     getServer();
-    showGuide();
     isInit = true;
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return mBinding;
@@ -204,6 +203,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     PhotoUtils.smallCircle(mBinding.imgGymPhoto, coachService.getPhoto());
     mViewModel.loadPremission(App.coachid + "");
     mViewModel.loadGymWelcomeDeta();
+    showGuide();
   }
 
   private void upDatePremission(QcResponsePermission.Data data) {

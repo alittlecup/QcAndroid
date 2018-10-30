@@ -54,7 +54,7 @@ public class WebActivityForGuideViewModel extends BaseViewModel {
   public void loadTrainerShopDetail() {
 
     qcRestRepository.createGetApi(WxPreviewApi.class)
-        .qcGetShopDetail(loginStatus.staff_id(), gymWrapper.getParams())
+        .qcGetTrainerShopDetail(loginStatus.staff_id(), gymWrapper.getParams())
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
