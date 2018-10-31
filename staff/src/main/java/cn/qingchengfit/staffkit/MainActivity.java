@@ -346,7 +346,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   public Fragment generateFragment(int pos) {
     switch (pos) {
       case 1:
-        showCRMDialog();
         return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
       case 2:
         return QcVipFragment.newInstance(
@@ -433,31 +432,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     loginStatus.setSession(session);
   }
 
-  private void showCRMDialog() {
-    boolean isFirst = PreferenceUtils.getPrefBoolean(MainActivity.this, "crm_dialog", true);
-    if(isFirst) {
-      CommonDialog dialog = new CommonDialog(MainActivity.this);
-      dialog.setImageView(R.drawable.crm_export_ad);
-      dialog.setClickListener(new CommonDialog.DialogClickListener() {
-        @Override
-        public void onCloseClickListener(Dialog dialog) {
-          dialog.dismiss();
-        }
-
-        @Override
-        public void onItemClickListener(Dialog dialog) {
-          if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
-            QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
-                    .call();
-          } else {
-            DialogUtils.showAlert(MainActivity.this, R.string.alert_permission_forbid);
-          }
-        }
-      });
-      dialog.showDialog();
-      PreferenceUtils.setPrefBoolean(MainActivity.this, "crm_dialog", false);
-    }
-  }
 
   private void registeGlobleEvent() {
     IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);

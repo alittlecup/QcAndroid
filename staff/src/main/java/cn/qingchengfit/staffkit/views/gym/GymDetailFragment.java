@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,14 +40,18 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.MiniProgram;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Banner;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
+import cn.qingchengfit.saascommon.views.CommonDialog;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -79,6 +84,7 @@ import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -154,6 +160,7 @@ public class GymDetailFragment extends BaseFragment
   @Inject GymWrapper gymWrapper;
   //@Inject GymMoreFragment gymMoreFragment;
   @Inject SerPermisAction serPermisAction;
+  @Inject IPermissionModel permissionModel;
   @Inject GymFunctionFactory gymFunctionFactory;
   private String mCopyUrl;
   private Observable<RxCompleteGuideEvent> mObGuideComplete;
@@ -583,6 +590,32 @@ public class GymDetailFragment extends BaseFragment
       toCharge();
     });
   }
+  private void showCRMDialog() {
+    boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "crm_dialog", true);
+    if(isFirst) {
+      CommonDialog dialog = new CommonDialog(getContext());
+      dialog.setImageView(R.drawable.crm_export_ad);
+      dialog.setClickListener(new CommonDialog.DialogClickListener() {
+        @Override
+        public void onCloseClickListener(Dialog dialog) {
+          dialog.dismiss();
+        }
+
+        @Override
+        public void onItemClickListener(Dialog dialog) {
+          if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
+            QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
+                .call();
+          } else {
+            DialogUtils.showAlert(getContext(), R.string.alert_permission_forbid);
+          }
+        }
+      });
+      dialog.showDialog();
+      PreferenceUtils.setPrefBoolean(getContext(), "crm_dialog", false);
+    }
+  }
+
 
   private void toCharge() {
     Intent toRenewal = new Intent(getActivity(), PopFromBottomActivity.class);
@@ -601,6 +634,7 @@ public class GymDetailFragment extends BaseFragment
   @Override public void onGymInfo(final CoachService coachService) {
     hideLoading();
     //swipeToRefresh.setRefreshing(false);
+    showCRMDialog();
     if (coachService == null) return;
     gymWrapper.setCoachService(coachService);
     CoachService gym = coachService;
