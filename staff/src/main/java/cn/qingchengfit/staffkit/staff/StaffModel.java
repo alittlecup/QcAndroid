@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.staff;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.staff.beans.body.InvitationBody;
@@ -53,6 +54,7 @@ public class StaffModel implements IStaffModel {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
     staffApi = repository.createGetApi(StaffApi.class);
+    ComponentModuleManager.register(IStaffModel.class,this);
   }
 
   @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {

@@ -1,23 +1,20 @@
 package cn.qingchengfit.saasbase.coach.views;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
+import cn.qingchengfit.saascommon.events.EventStaffWrap;
 import cn.qingchengfit.saasbase.staff.items.StaffSelectSingleItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.List;
-import org.w3c.dom.Text;
 
 /**
  * power by

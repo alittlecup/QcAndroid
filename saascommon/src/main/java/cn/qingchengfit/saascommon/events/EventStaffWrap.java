@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.coach.event;
+package cn.qingchengfit.saascommon.events;
 
 import cn.qingchengfit.model.base.Staff;
 

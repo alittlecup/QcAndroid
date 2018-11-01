@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.respository;
+package cn.qingchengfit.saascommon.mvvm;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;

@@ -6,6 +6,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.mvvm.LiveDataTransfer;
 import cn.qingchengfit.saascommon.network.BindLiveData;
 import cn.qingchengfit.saascommon.network.HttpException;
 import cn.qingchengfit.saascommon.network.Resource;

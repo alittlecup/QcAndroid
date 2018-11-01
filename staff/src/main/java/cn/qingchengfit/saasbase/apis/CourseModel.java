@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.apis;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -64,6 +65,7 @@ public class CourseModel implements ICourseModel {
     api = restRepository.createGetApi(CourseApi.class);
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
+    ComponentModuleManager.register(ICourseModel.class,this);
   }
 
   /**

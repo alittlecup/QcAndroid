@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.course.course.event;
+package cn.qingchengfit.saascommon.events;
 
 import cn.qingchengfit.model.base.Course;
 

@@ -41,4 +41,18 @@ public class BaseViewModel extends ViewModel {
     return null;
   }
 
+  public <T> void dealResource(Resource<T> resource,ViewModelAction<T> action) {
+    switch (resource.status) {
+      case SUCCESS:
+        action.dealWithData(resource.data);
+      case ERROR:
+        errormsg.setValue(resource.message);
+        break;
+      case LOADING:
+        break;
+    }
+  }
+  public interface ViewModelAction<T> {
+    void dealWithData(T t);
+  }
 }

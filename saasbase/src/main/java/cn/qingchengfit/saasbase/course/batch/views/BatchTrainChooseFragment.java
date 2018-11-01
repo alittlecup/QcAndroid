@@ -59,36 +59,6 @@ import javax.inject.Inject;
       setDatas(staffItems, 1);
     }
 
-    //RxRegiste(staffModel.getTrainers()
-    //    .onBackpressureLatest()
-    //    .subscribeOn(Schedulers.io())
-    //    .observeOn(AndroidSchedulers.mainThread())
-    //    .map( qcResponse -> {
-    //      List<CommonUserItem> staffItems = new ArrayList<>();
-    //      if (ResponseConstant.checkSuccess(qcResponse)) {
-    //        if (qcResponse.data.staffships != null && qcResponse.data.staffships.size() > 0) {
-    //          qcResponse.data.staffships.add(0, createAllShip());
-    //          for (StaffShip coach : qcResponse.data.staffships) {
-    //            try {
-    //              coach.id = coach.user.id;
-    //              staffItems.add(generateItem(coach));
-    //            } catch (Exception e) {
-    //              CrashUtils.sendCrash(e);
-    //            }
-    //          }
-    //        }else if (qcResponse.data.staffships != null && qcResponse.data.staffships.size() == 0){
-    //          datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无可选教练"));
-    //        }
-    //      } else {
-    //        onShowError(qcResponse.getMsg());
-    //      }
-    //      return staffItems;
-    //    })
-    //    .subscribe(new NetSubscribe<List<CommonUserItem>>() {
-    //      @Override public void onNext(List<CommonUserItem> commonUserItems) {
-    //        setDatas(commonUserItems, 1);
-    //      }
-    //    }));
   }
 
   @Override public boolean onItemClick(int position) {

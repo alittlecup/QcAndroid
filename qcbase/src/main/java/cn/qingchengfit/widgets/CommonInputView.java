@@ -364,6 +364,9 @@ public class CommonInputView extends RelativeLayout {
         } else {
           cursor.setVisibility(GONE);
         }
+        if(focusChangeListener!=null){
+          focusChangeListener.onFocusChange(v, hasFocus);
+        }
       }
     });
     cursor.setTag(cursor.getVisibility());
@@ -578,49 +581,9 @@ public class CommonInputView extends RelativeLayout {
     void onTextChanged();
   }
 
-  //public class SavedState extends BaseSavedState {
-  //    public final Creator<CommonInputView.SavedState> CREATOR = new Creator<CommonInputView.SavedState>() {
-  //        @Override public CommonInputView.SavedState createFromParcel(Parcel in) {
-  //            return new CommonInputView.SavedState(in);
-  //        }
-  //
-  //        @Override public CommonInputView.SavedState[] newArray(int size) {
-  //            return new CommonInputView.SavedState[size];
-  //        }
-  //    };
-  //    String content;
-  //    String label;
-  //
-  //    public String getContent() {
-  //        return content;
-  //    }
-  //
-  //    public void setContent(String content) {
-  //        this.content = content;
-  //    }
-  //
-  //    public String getLabel() {
-  //        return label;
-  //    }
-  //
-  //    public void setLabel(String label) {
-  //        this.label = label;
-  //    }
-  //
-  //    public SavedState(Parcelable superState) {
-  //        super(superState);
-  //    }
-  //
-  //    private SavedState(Parcel in) {
-  //        super(in);
-  //        content = in.readString();
-  //        label = in.readString();
-  //    }
-  //
-  //    @Override public void writeToParcel(@NonNull Parcel dest, int flags) {
-  //        super.writeToParcel(dest, flags);
-  //        dest.writeString(content);
-  //        dest.writeString(label);
-  //    }
-  //}
+  public void setOnFocusChangeListener(OnFocusChangeListener focusChangeListener) {
+    this.focusChangeListener = focusChangeListener;
+  }
+
+  private OnFocusChangeListener focusChangeListener;
 }

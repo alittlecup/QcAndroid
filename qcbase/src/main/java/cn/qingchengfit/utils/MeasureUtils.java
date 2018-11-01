@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.DimenRes;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewConfiguration;
 import cn.qingchengfit.widgets.R;
 import java.lang.reflect.Method;
@@ -151,5 +152,20 @@ public class MeasureUtils {
     }
     return actionBarHeight;
     }
-
+  public static boolean isTouchPointInView(View view, float x, float y) {
+    if (view == null) {
+      return false;
+    }
+    int[] location = new int[2];
+    view.getLocationOnScreen(location);
+    int left = location[0];
+    int top = location[1];
+    int right = left + view.getMeasuredWidth();
+    int bottom = top + view.getMeasuredHeight();
+    if (y >= top && y <= bottom && x >= left
+        && x <= right) {
+      return true;
+    }
+    return false;
+  }
 }

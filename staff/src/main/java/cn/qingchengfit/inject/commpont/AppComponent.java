@@ -273,6 +273,7 @@ import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import cn.qingchengfit.views.fragments.WebFragment;
 import cn.qingchengfit.views.fragments.WebFragmentNoFresh;
 import cn.qingchengfit.weex.di.WeexModule;
+import cn.qingchengfit.writeoff.di.WriteOffViewModule;
 import cn.qingchengfit.wxpreview.old.newa.WxPreviewModule;
 import dagger.Binds;
 import dagger.Component;
@@ -314,7 +315,7 @@ import javax.inject.Singleton;
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,
-    WxPreviewModule.class,
+    WxPreviewModule.class,WriteOffViewModule.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,

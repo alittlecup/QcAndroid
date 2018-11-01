@@ -44,7 +44,7 @@ import retrofit2.http.QueryMap;
 public interface StaffApi {
 
   //获取某个健身房的教练列表
-  @GET("/api/v2/staffs/{id}/coaches/") rx.Observable<QcDataResponse<StaffShipsListWrap>> qcGetGymCoaches(@Path("id") String id,
+  @GET("/api/v2/staffs/{id}/coaches/?show_all=1") rx.Observable<QcDataResponse<StaffShipsListWrap>> qcGetGymCoaches(@Path("id") String id,
     @QueryMap HashMap<String, Object> params);
 
   //获取某个健身房的离职教练列表
