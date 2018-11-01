@@ -381,6 +381,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         });
         toolbarTitile.setText("在电脑中使用该功能");
         //        qrdecoderview.setOnQRCodeReadListener(this);
+
     }
 
  public void onClickNext() {

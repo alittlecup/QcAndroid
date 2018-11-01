@@ -479,7 +479,10 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         civRemark.setContent(remarks);
       } else if (requestCode == RESULT_COACH) {
         coaches = data.getParcelableArrayListExtra("result");
-        if (coaches != null) civCoaches.setContent(StringUtils.coachesNames(coaches));
+        if (coaches != null) {
+          civCoaches.setContent(StringUtils.coachesNames(coaches));
+          user.setCoaches(coaches);
+        }
       }
     }
   }
@@ -515,7 +518,10 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
 
   public void onRemarkClick() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("填写备注信息").hint("").content(TextUtils.isEmpty(remarks)?user.getRemarks():remarks).build());
+        new CommonInputParams().title("填写备注信息")
+            .hint("")
+            .content(TextUtils.isEmpty(remarks) ? user.getRemarks() : remarks)
+            .build());
   }
 
   /**

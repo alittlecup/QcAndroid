@@ -603,6 +603,7 @@ public class GymDetailFragment extends BaseFragment
 
         @Override
         public void onItemClickListener(Dialog dialog) {
+          dialog.dismiss();
           if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
             QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
                 .call();

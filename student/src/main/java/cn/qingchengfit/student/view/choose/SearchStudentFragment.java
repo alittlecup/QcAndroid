@@ -31,6 +31,7 @@ import junit.framework.Test;
       root = super.onCreateView(inflater, container, savedInstanceState);
       srl.setRefreshing(false);
       llSearchAll.setVisibility(View.VISIBLE);
+      etSearch.setHint("手机号");
     }
     return root;
   }
@@ -43,8 +44,8 @@ import junit.framework.Test;
       } else {
         llSearchAll.setVisibility(View.VISIBLE);
       }
+      super.onStudentList(stus);
     }
-    super.onStudentList(stus);
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,

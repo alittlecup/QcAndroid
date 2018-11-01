@@ -224,6 +224,8 @@ public class MutiChooseCoachActivity extends BaseActivity
           }
         }
       }
+      mFlexAdapter.clear();
+      mFlexAdapter.updateDataSet(mDatas);
       if (position >= 0) {
         mFlexAdapter.toggleSelection(position);
         mFlexAdapter.notifyItemChanged(position);
@@ -233,8 +235,7 @@ public class MutiChooseCoachActivity extends BaseActivity
         mFlexAdapter.notifyItemChanged(chose.get(j));
       }
     }
-    mFlexAdapter.clear();
-    mFlexAdapter.updateDataSet(mDatas);
+
   }
 
   @Override public void onAllotSuccess() {
