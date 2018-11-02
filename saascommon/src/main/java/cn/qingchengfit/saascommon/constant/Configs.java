@@ -155,7 +155,7 @@ public class Configs {
           : Constants.ServerMirror) : Constants.Server;
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
-
+  public static String QR_POINT_URL=BuildConfig.DEBUG ? "saotest.qingcheng.cn": "";
   public static final String WEB_HOW_TO_USE_BATCH_GROUP =
       "http://cloud.qingchengfit.cn/mobile/urls/e382d87968dd4f54a89bb5e5a933f779/";
   //团课

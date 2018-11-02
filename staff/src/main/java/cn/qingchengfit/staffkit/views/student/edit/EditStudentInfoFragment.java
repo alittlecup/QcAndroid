@@ -193,7 +193,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     });
     view.findViewById(R.id.civ_salers).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        EditStudentInfoFragment.this.onClick();
+        onSalerClick();
       }
     });
     view.findViewById(R.id.civ_coaches).setOnClickListener(new View.OnClickListener() {
@@ -496,7 +496,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     ToastUtils.show(s);
   }
 
-  public void onClick() {
+  public void onSalerClick() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
       Intent toChooseSaler = new Intent(getActivity(), MutiChooseSalersActivity.class);
       toChooseSaler.putExtra("hasReturn", true);

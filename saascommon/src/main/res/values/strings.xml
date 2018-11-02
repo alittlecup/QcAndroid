@@ -12,5 +12,6 @@
   <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
   <string name="markview_count_unit">%s%s</string>
   <string name="bottom_view_select_count">已选%d人</string>
+  <string name="qr_point_text">请在电脑打开网址%s\n讲二维码放入框内,即可自动扫描</string>
 
 </resources>
