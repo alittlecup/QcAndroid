@@ -225,7 +225,7 @@ public class GymDetailFragment extends BaseFragment
     });
     view.findViewById(R.id.btn_wx_pm).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (MiniProgramUtil.getMiniProgream(getContext(),gymWrapper.getGymId()) != null) {
+        if (MiniProgramUtil.getMiniProgream(getContext(), gymWrapper.getGymId()) != null) {
           RouteUtil.routeTo(getContext(), "wxmini", "/show/mini", null);
         } else {
           RouteUtil.routeTo(getContext(), "wxmini", "/mini/page", null);
@@ -304,10 +304,14 @@ public class GymDetailFragment extends BaseFragment
     RxBusAdd(GoToGuideEvent.class).subscribe(goToGuideEvent -> onHowtoUse());
     RxBusAdd(EventLoginChange.class).delay(600, TimeUnit.MILLISECONDS)
         .subscribe(eventLoginChange -> setGymInfo());
-    if(getParentFragment() instanceof MainFirstFragment){
+    if (isSingleBrand()) {
       view.findViewById(R.id.gym_bottom_export).setVisibility(View.GONE);
     }
     return view;
+  }
+
+  private boolean isSingleBrand() {
+    return getParentFragment() instanceof MainFirstFragment;
   }
 
   /**
@@ -327,9 +331,9 @@ public class GymDetailFragment extends BaseFragment
         Bundle bundle = new Bundle();
         bundle.putString("wxQr", "");
         bundle.putString("wxName", "");
-        Intent intent=new Intent(getContext(), WxPreviewEmptyActivity.class);
+        Intent intent = new Intent(getContext(), WxPreviewEmptyActivity.class);
         intent.putExtras(bundle);
-        intent.putExtra("to",1);
+        intent.putExtra("to", 1);
         startActivity(intent);
       }
 
@@ -337,9 +341,9 @@ public class GymDetailFragment extends BaseFragment
         dialog.dismiss();
         Bundle bundle = new Bundle();
         bundle.putString("mUrl", mCopyUrl);
-        Intent intent=new Intent(getContext(), WxPreviewEmptyActivity.class);
+        Intent intent = new Intent(getContext(), WxPreviewEmptyActivity.class);
         intent.putExtras(bundle);
-        intent.putExtra("to",2);
+        intent.putExtra("to", 2);
         startActivity(intent);
       }
 
@@ -351,7 +355,7 @@ public class GymDetailFragment extends BaseFragment
       }
 
       @Override public void onBtnMiniProgramClicked(GymPoplularize dialog) {
-        if (MiniProgramUtil.getMiniProgream(getContext(),gymWrapper.getGymId()) != null) {
+        if (MiniProgramUtil.getMiniProgream(getContext(), gymWrapper.getGymId()) != null) {
           RouteUtil.routeTo(getContext(), "wxmini", "/show/mini", null);
         } else {
           RouteUtil.routeTo(getContext(), "wxmini", "/mini/page", null);
@@ -496,6 +500,10 @@ public class GymDetailFragment extends BaseFragment
     for (int i = 0; i < addcount; i++) {
       datas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE)));
     }
+    if (isSingleBrand()) {
+      datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
+    }
+    datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
     datas.add(SimpleTextItemItem.newBuilder()
         .bg(R.color.transparent)
         .gravity(Gravity.CENTER)
@@ -590,19 +598,18 @@ public class GymDetailFragment extends BaseFragment
       toCharge();
     });
   }
+
   private void showCRMDialog() {
     boolean isFirst = PreferenceUtils.getPrefBoolean(getContext(), "crm_dialog", true);
-    if(isFirst) {
+    if (isFirst) {
       CommonDialog dialog = new CommonDialog(getContext());
       dialog.setImageView(R.drawable.crm_export_ad);
       dialog.setClickListener(new CommonDialog.DialogClickListener() {
-        @Override
-        public void onCloseClickListener(Dialog dialog) {
+        @Override public void onCloseClickListener(Dialog dialog) {
           dialog.dismiss();
         }
 
-        @Override
-        public void onItemClickListener(Dialog dialog) {
+        @Override public void onItemClickListener(Dialog dialog) {
           dialog.dismiss();
           if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
             QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
@@ -616,7 +623,6 @@ public class GymDetailFragment extends BaseFragment
       PreferenceUtils.setPrefBoolean(getContext(), "crm_dialog", false);
     }
   }
-
 
   private void toCharge() {
     Intent toRenewal = new Intent(getActivity(), PopFromBottomActivity.class);
@@ -726,7 +732,7 @@ public class GymDetailFragment extends BaseFragment
   }
 
   @Override public void onMiniProgram(MiniProgram miniProgram) {
-    MiniProgramUtil.saveMiniProgream(getContext(),gymWrapper.getGymId(),miniProgram);
+    MiniProgramUtil.saveMiniProgream(getContext(), gymWrapper.getGymId(), miniProgram);
   }
 
   /**
