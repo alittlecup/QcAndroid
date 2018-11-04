@@ -195,7 +195,6 @@ public class CommonInputView extends RelativeLayout {
       image1.setVisibility(VISIBLE);
     }
   }
-
   public void setLabelDrawable(@DrawableRes int firstDrawable, @DrawableRes int secondDrawable) {
     View image1 = findViewById(R.id.im_icon1);
     View image2 = findViewById(R.id.im_icon2);

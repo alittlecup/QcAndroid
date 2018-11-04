@@ -9,6 +9,7 @@ import cn.qingchengfit.writeoff.vo.impl.SimpleSuccessResponse;
 import cn.qingchengfit.writeoff.vo.impl.Ticket;
 import cn.qingchengfit.writeoff.vo.impl.TicketListWrapper;
 import cn.qingchengfit.writeoff.vo.impl.TicketPostBody;
+import cn.qingchengfit.writeoff.vo.impl.TicketWrapper;
 import io.reactivex.Flowable;
 import javax.inject.Inject;
 
@@ -22,7 +23,7 @@ public class WriteOffRepository implements IWriteOffRepository {
     return LiveDataTransfer.fromPublisher(observable.compose(RxHelper.schedulersTransformerFlow()));
   }
 
-  @Override public LiveData<Resource<Ticket>> qcQueryTicket(String code) {
+  @Override public LiveData<Resource<TicketWrapper>> qcQueryTicket(String code) {
     return toLiveData(remoteService.qcQueryTicket(code));
   }
 
@@ -34,7 +35,7 @@ public class WriteOffRepository implements IWriteOffRepository {
     return toLiveData(remoteService.qcGetVerifyTickets());
   }
 
-  @Override public LiveData<Resource<Ticket>> qcGetTicketDetail(String ticket_id) {
+  @Override public LiveData<Resource<TicketWrapper>> qcGetTicketDetail(String ticket_id) {
     return toLiveData(remoteService.qcGetTicketDetail(ticket_id));
   }
 }

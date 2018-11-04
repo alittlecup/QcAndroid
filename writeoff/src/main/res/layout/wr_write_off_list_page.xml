@@ -40,6 +40,8 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="10dp"
           android:layout_weight="1"
+          android:singleLine="true"
+          android:ellipsize="end"
           android:textColor="@color/text_black"
           tools:text="引力工厂-798店"
           />

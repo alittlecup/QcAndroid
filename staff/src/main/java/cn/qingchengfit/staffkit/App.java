@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
+import lib_zxing.activity.ZXingLibrary;
 import org.json.JSONException;
 import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
@@ -123,6 +124,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     } catch (Exception e) {
 
     }
+    ZXingLibrary.initDisplayOpinion(this);
     if (MsfSdkUtils.isMainProcess(this)) {
       LogUtil.d("MyApplication", "main process");
 

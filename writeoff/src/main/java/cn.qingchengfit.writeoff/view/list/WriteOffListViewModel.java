@@ -25,15 +25,23 @@ public class WriteOffListViewModel
     extends FlexibleViewModel<List<? extends IWriteOffItemData>, WriteOffItem, String> {
   @Inject IWriteOffRepository repository;
   private MutableLiveData<List<? extends IWriteOffItemData>> datas = new MutableLiveData<>();
+  MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
 
   @Inject public WriteOffListViewModel() {
   }
 
   @NonNull @Override
   protected LiveData<List<? extends IWriteOffItemData>> getSource(@NonNull String s) {
-    return Transformations.switchMap(repository.qcGetVerifyTickets(), input -> {
-      dealResource(input, ticketListWrapper -> datas.setValue(ticketListWrapper.etickets));
-      return datas;
+    showLoading.setValue(true);
+    LiveData<Resource<TicketListWrapper>> resourceLiveData = repository.qcGetVerifyTickets();
+    return Transformations.map(resourceLiveData, input -> {
+      TicketListWrapper ticketListWrapper = dealResource(input);
+      showLoading.setValue(false);
+      if(ticketListWrapper!=null){
+        return ticketListWrapper.etickets;
+      }
+
+      return new ArrayList<>();
     });
   }
 

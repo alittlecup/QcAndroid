@@ -8,7 +8,7 @@ import cn.qingchengfit.writeoff.vo.ITicketDetailData;
 public class Ticket implements Parcelable, ITicketDetailData {
   private String id;
   private String title;//电子券标题(名称)
-  private int price;//电子券金额，单位(元)，
+  private float price;//电子券金额，单位(元)，
   private int status;//1-已核销 2- 未核销
   private String e_code;//核销码
   private String start;//生效时间
@@ -19,15 +19,20 @@ public class Ticket implements Parcelable, ITicketDetailData {
   private String used_at;//上课时间
   private String people_num;//上课人数
   private String verify_at;//核销时间
+  private String shop_name;
   private TicketInnerTempObject shop;
   private TicketInnerTempObject course;
   private TicketInnerTempObject teacher;
+  private String username;
+  private String phone;
+  private int gender;
+  private String area_code;
 
   public void setTitle(String title) {
     this.title = title;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(float price) {
     this.price = price;
   }
 
@@ -91,15 +96,20 @@ public class Ticket implements Parcelable, ITicketDetailData {
   }
 
   @Override public String getTicketStartEnd() {
-    return DateUtils.getYYYYMMDDfromServer(start) + "-" + DateUtils.getYYYYMMDDfromServer(end);
+    return DateUtils.getYYYYMMDDfromServer(start).replace("-", ".")
+        + "-"
+        + (DateUtils.formatDateToServer(DateUtils.getYYYYMMDDfromServer(end)).replace("-", "."));
   }
 
   @Override public String getTicketBuyTime() {
-    return created_at;
+    return DateUtils.Date2YYYYMMDDHHmmss(DateUtils.formatDateFromServer(created_at));
   }
 
   @Override public String getTicketGymName() {
-    return shop.name;
+    if (shop != null) {
+      return shop.name;
+    }
+    return shop_name;
   }
 
   @Override public String getTicketBatchType() {
@@ -114,10 +124,12 @@ public class Ticket implements Parcelable, ITicketDetailData {
   }
 
   @Override public String getTicketBatch() {
+    if (course == null) return "";
     return course.name;
   }
 
   @Override public String getTicketBatchTrainer() {
+    if (teacher == null) return "";
     return teacher.name;
   }
 
@@ -126,7 +138,23 @@ public class Ticket implements Parcelable, ITicketDetailData {
   }
 
   @Override public String getTicketBatchTime() {
-    return used_at;
+    return DateUtils.Date2YYYYMMDDHHmmss(DateUtils.formatDateFromServer(used_at));
+  }
+
+  @Override public String getTickerUserNanme() {
+    return username;
+  }
+
+  @Override public String getTickerUserGender() {
+    return gender == 1 ? "女" : "男";
+  }
+
+  @Override public String getTickerUserPhone() {
+    return phone;
+  }
+
+  @Override public String getTickerUserPhoneArea() {
+    return area_code;
   }
 
   @Override public boolean isTicketChecked() {
@@ -156,7 +184,7 @@ public class Ticket implements Parcelable, ITicketDetailData {
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.id);
     dest.writeString(this.title);
-    dest.writeInt(this.price);
+    dest.writeFloat(this.price);
     dest.writeInt(this.status);
     dest.writeString(this.e_code);
     dest.writeString(this.start);
@@ -167,15 +195,20 @@ public class Ticket implements Parcelable, ITicketDetailData {
     dest.writeString(this.used_at);
     dest.writeString(this.people_num);
     dest.writeString(this.verify_at);
+    dest.writeString(this.shop_name);
     dest.writeParcelable(this.shop, flags);
     dest.writeParcelable(this.course, flags);
     dest.writeParcelable(this.teacher, flags);
+    dest.writeString(this.username);
+    dest.writeString(this.phone);
+    dest.writeInt(this.gender);
+    dest.writeString(this.area_code);
   }
 
   protected Ticket(Parcel in) {
     this.id = in.readString();
     this.title = in.readString();
-    this.price = in.readInt();
+    this.price = in.readFloat();
     this.status = in.readInt();
     this.e_code = in.readString();
     this.start = in.readString();
@@ -186,9 +219,14 @@ public class Ticket implements Parcelable, ITicketDetailData {
     this.used_at = in.readString();
     this.people_num = in.readString();
     this.verify_at = in.readString();
+    this.shop_name = in.readString();
     this.shop = in.readParcelable(TicketInnerTempObject.class.getClassLoader());
     this.course = in.readParcelable(TicketInnerTempObject.class.getClassLoader());
     this.teacher = in.readParcelable(TicketInnerTempObject.class.getClassLoader());
+    this.username = in.readString();
+    this.phone = in.readString();
+    this.gender = in.readInt();
+    this.area_code = in.readString();
   }
 
   public static final Creator<Ticket> CREATOR = new Creator<Ticket>() {

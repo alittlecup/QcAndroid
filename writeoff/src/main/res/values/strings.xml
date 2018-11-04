@@ -1,6 +1,7 @@
 <resources>
   <string name="wr_write_off_ticker_money">电子券金额：¥ %s</string>
   <string name="wr_write_off_ticker_time">核销时间：%s</string>
+  <string name="wr_has_ticket_verify">已核销电子券(%s)</string>
 
 </resources>
 

@@ -57,6 +57,9 @@ public class WriteOffCheckView extends SaasCommonFragment {
     }
     if (data != null) {
       mBinding.setTicketData(data);
+      mBinding.phoneNum.setdistrictInt(data.getTickerUserPhoneArea());
+      mBinding.phoneNum.setPhoneNum(data.getTickerUserPhone());
+      mBinding.phoneNum.setEditble(false);
     }
     return mBinding.getRoot();
   }
@@ -66,10 +69,10 @@ public class WriteOffCheckView extends SaasCommonFragment {
     for (int i = 0; i < childCount; i++) {
       View childAt = mBinding.llContainer.getChildAt(i);
       if (childAt instanceof CommonInputView) {
-        ((CommonInputView) childAt).setEnable(false);
         ((CommonInputView) childAt).setShowRight(false);
       }
     }
+    mBinding.flMark.setVisibility(View.VISIBLE);
   }
 
   private ITicketDetailData data;
@@ -77,14 +80,16 @@ public class WriteOffCheckView extends SaasCommonFragment {
   public void setTicket(ITicketDetailData data) {
     if (mBinding != null) {
       mBinding.setTicketData(data);
+      mBinding.phoneNum.setdistrictInt(data.getTickerUserPhoneArea());
+      mBinding.phoneNum.setPhoneNum(data.getTickerUserPhone());
+      mBinding.phoneNum.setEditble(false);
     } else {
       this.data = data;
     }
   }
 
   private void initRxbus() {
-   RxBusAdd(EventCourse.class)
-        .observeOn(AndroidSchedulers.mainThread())
+    RxBusAdd(EventCourse.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new BusSubscribe<EventCourse>() {
           @Override public void onNext(EventCourse course) {
             setCourse(course.getCourse());
@@ -102,11 +107,13 @@ public class WriteOffCheckView extends SaasCommonFragment {
   private void setCourse(Course course) {
     mBinding.cmChooseBatch.setContent(course.getName());
     mViewModel.ticketPostBody.getValue().setCourse_id(course.getId());
+    mViewModel.ticketPostBody.getValue().setCourse_name(course.getName());
   }
 
   private void setTrainer(Staff staff) {
     mBinding.cmChooseTrainer.setContent(staff.getUsername());
     mViewModel.ticketPostBody.getValue().setTeacher_id(staff.getId());
+    mViewModel.ticketPostBody.getValue().setTeacher_name(staff.getUsername());
   }
 
   private boolean isPrivate() {
@@ -132,15 +139,7 @@ public class WriteOffCheckView extends SaasCommonFragment {
       routeTo("staff", "/trainer/choose/", bundle);
     });
     mBinding.cmChooseTime.setOnClickListener(v -> chooseOpenTime());
-    mBinding.cmInputCount.addTextWatcher(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-      }
-
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-      }
-
+    mBinding.cmInputCount.addTextWatcher(new SimpleTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         String s1 = s.toString();
         if (!TextUtils.isEmpty(s1)) {
@@ -154,6 +153,47 @@ public class WriteOffCheckView extends SaasCommonFragment {
         }
       }
     });
+    mBinding.cmUserName.addTextWatcher(new SimpleTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        mViewModel.ticketPostBody.getValue().setUsername(s.toString());
+      }
+    });
+    mBinding.cmUserGender.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showGenderDialog();
+      }
+    });
+    mBinding.phoneNum.addTextChangedListener(new SimpleTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        mViewModel.ticketPostBody.getValue().setArea_code(mBinding.phoneNum.getDistrictInt());
+        mViewModel.ticketPostBody.getValue().setPhone(mBinding.phoneNum.getPhoneNum());
+      }
+    });
+  }
+
+  private abstract class SimpleTextWatcher implements TextWatcher {
+    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+  }
+
+  private void showGenderDialog() {
+    List<BottomChooseData> datas = new ArrayList<>();
+    datas.add(new BottomChooseData("男"));
+    datas.add(new BottomChooseData("女"));
+    BottomChooseDialog dialog = new BottomChooseDialog(getContext(), "选择性别", datas);
+    dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
+      @Override public boolean onItemClick(int position) {
+        mBinding.cmUserGender.setContent(datas.get(position).getContent().toString());
+        mViewModel.ticketPostBody.getValue().setGender(position);
+        return false;
+      }
+    });
+    dialog.show();
   }
 
   public void chooseOpenTime() {
@@ -163,7 +203,7 @@ public class WriteOffCheckView extends SaasCommonFragment {
         @Override public void onTimeSelect(Date date) {
           String s = DateUtils.Date2YYYYMMDDHHmm(date);
           mBinding.cmChooseTime.setContent(s);
-          mViewModel.ticketPostBody.getValue().setUsed_at(s);
+          mViewModel.ticketPostBody.getValue().setUsed_at(DateUtils.DateToServer(date).replace(" ","T"));
         }
       });
     }

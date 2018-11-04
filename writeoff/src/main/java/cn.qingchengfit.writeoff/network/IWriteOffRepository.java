@@ -6,13 +6,14 @@ import cn.qingchengfit.writeoff.vo.impl.SimpleSuccessResponse;
 import cn.qingchengfit.writeoff.vo.impl.Ticket;
 import cn.qingchengfit.writeoff.vo.impl.TicketListWrapper;
 import cn.qingchengfit.writeoff.vo.impl.TicketPostBody;
+import cn.qingchengfit.writeoff.vo.impl.TicketWrapper;
 
 public interface IWriteOffRepository {
-  LiveData<Resource<Ticket>> qcQueryTicket(String code);
+  LiveData<Resource<TicketWrapper>> qcQueryTicket(String code);
 
   LiveData<Resource<SimpleSuccessResponse>> qcVerifyTicket(TicketPostBody ticket);
 
   LiveData<Resource<TicketListWrapper>> qcGetVerifyTickets();
 
-  LiveData<Resource<Ticket>> qcGetTicketDetail(String ticket_id);
+  LiveData<Resource<TicketWrapper>> qcGetTicketDetail(String ticket_id);
 }

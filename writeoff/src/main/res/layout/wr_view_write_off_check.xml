@@ -6,9 +6,14 @@
         type="cn.qingchengfit.writeoff.vo.ITicketDetailData"
         />
   </data>
-  <LinearLayout
+  <FrameLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+  <LinearLayout
+
       android:id="@+id/ll_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -23,9 +28,9 @@
         app:civ_edit_able="false"
         app:civ_hint="请选择"
         app:civ_lable="课程类型"
-        app:civ_showright="true"
         app:civ_nonnull="true"
         app:civ_showdivier="true"
+        app:civ_showright="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/cm_choose_batch"
@@ -36,9 +41,9 @@
         app:civ_edit_able="false"
         app:civ_hint="请选择"
         app:civ_lable="课程种类"
-        app:civ_showright="true"
         app:civ_nonnull="true"
         app:civ_showdivier="true"
+        app:civ_showright="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/cm_choose_trainer"
@@ -49,9 +54,9 @@
         app:civ_edit_able="false"
         app:civ_hint="请选择"
         app:civ_lable="教练"
-        app:civ_showright="true"
         app:civ_nonnull="true"
         app:civ_showdivier="true"
+        app:civ_showright="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/cm_input_count"
@@ -60,7 +65,7 @@
         app:civ_clickable="false"
         app:civ_content="@{ticketData.ticketBatchMemberCount}"
         app:civ_edit_able="true"
-        app:civ_hint="请输入"
+        app:civ_hint="请填写"
         app:civ_inputnum="true"
         app:civ_lable="约课人数"
         app:civ_nonnull="true"
@@ -74,12 +79,81 @@
         app:civ_clickable="true"
         app:civ_content="@{ticketData.ticketBatchTime}"
         app:civ_edit_able="false"
-        app:civ_showright="true"
         app:civ_hint="请选择"
         app:civ_lable="上课时间"
         app:civ_nonnull="true"
         app:civ_showdivier="true"
+        app:civ_showright="true"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/bg_grey"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/cm_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="false"
+        app:civ_content="@{ticketData.tickerUserNanme}"
+        app:civ_edit_able="true"
+        app:civ_hint="请填写"
+        app:civ_inputnum="true"
+        app:civ_lable="体验者姓名"
+        app:civ_nonnull="true"
+        app:civ_showdivier="true"
+        app:civ_showright="false"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/cm_user_gender"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_clickable="true"
+        app:civ_content="@{ticketData.tickerUserGender}"
+        app:civ_edit_able="false"
+        app:civ_hint="请选择"
+        app:civ_lable="体验者性别"
+        app:civ_nonnull="true"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg_white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="体验者手机号"
+          android:paddingLeft="15dp"
+          android:textSize="14sp"
+          android:textColor="@color/text_black"
+          />
+      <cn.qingchengfit.widgets.PhoneEditText
+          android:id="@+id/phone_num"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          app:phone_nonull="true"
+          app:phone_show_icon="false"
+          />
+    </LinearLayout>
+
+
   </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fl_mark"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+  </FrameLayout>
 </layout>

@@ -9,6 +9,7 @@ import cn.qingchengfit.writeoff.vo.impl.SimpleSuccessResponse;
 import cn.qingchengfit.writeoff.vo.impl.Ticket;
 import cn.qingchengfit.writeoff.vo.impl.TicketListWrapper;
 import cn.qingchengfit.writeoff.vo.impl.TicketPostBody;
+import cn.qingchengfit.writeoff.vo.impl.TicketWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -39,11 +40,14 @@ public class TicketModel implements ITicketModel {
     ticketApi = retrofit.create(TicketApi.class);
   }
 
-  @Override public Flowable<QcDataResponse<Ticket>> qcQueryTicket(String code) {
+  @Override public Flowable<QcDataResponse<TicketWrapper>> qcQueryTicket(String code) {
     return ticketApi.qcQueryTicket(loginStatus.staff_id(), code, gymWrapper.getParams());
   }
 
   @Override public Flowable<QcDataResponse<SimpleSuccessResponse>> qcVerifyTicket(TicketPostBody ticket) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    ticket.setId((String) params.get("id"));
+    ticket.setModel((String) params.get("model"));
     return ticketApi.qcVerifyTicket(loginStatus.staff_id(), ticket, gymWrapper.getParams());
   }
 
@@ -51,7 +55,7 @@ public class TicketModel implements ITicketModel {
     return ticketApi.qcGetVerifyTickets(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
-  @Override public Flowable<QcDataResponse<Ticket>> qcGetTicketDetail(String ticket_id) {
+  @Override public Flowable<QcDataResponse<TicketWrapper>> qcGetTicketDetail(String ticket_id) {
     return ticketApi.qcGetTicketDetail(loginStatus.staff_id(), ticket_id, gymWrapper.getParams());
   }
 }

@@ -2,7 +2,9 @@ package cn.qingchengfit.writeoff.view.detail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.writeoff.R;
 import cn.qingchengfit.writeoff.WriteOffBaseFragment;
 import cn.qingchengfit.writeoff.databinding.WrWriteOffDetailPageBinding;
@@ -26,14 +28,32 @@ public class WriteOffTicketPage
         checkView.setTicket(ticket);
       }
     });
+    mViewModel.showLoading.observe(this, aBoolean -> {
+      if (aBoolean) {
+        showLoading();
+      } else {
+        hideLoading();
+      }
+    });
   }
 
   @Override
   public WrWriteOffDetailPageBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = WrWriteOffDetailPageBinding.inflate(inflater, container, false);
+    initToolbar();
     initFragment();
+    mViewModel.loadTicketDetail(ticketId);
+    mBinding.btnTicketBack.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        getActivity().onBackPressed();
+      }
+    });
     return mBinding;
+  }
+  private void initToolbar(){
+    mBinding.setToolbarModel(new ToolbarModel("已核销课程体验券详情"));
+    initToolbar(mBinding.includeToolbar.toolbar);
   }
 
   private void initFragment() {
