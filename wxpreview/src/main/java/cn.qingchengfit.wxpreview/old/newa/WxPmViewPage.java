@@ -15,6 +15,7 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.utils.BitmapUtils;
 import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.wxpreview.databinding.WxWxpmViewPageBinding;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
@@ -32,7 +33,8 @@ public class WxPmViewPage extends SaasCommonFragment {
     mBinding.btnStartMini.setOnClickListener(v -> goQrScan());
     mBinding.imgPic.setOnLongClickListener(v -> {
       final Bitmap drawingCache = ((BitmapDrawable)mBinding.imgPic.getDrawable()).getBitmap();
-      FileUtils.savePicture(drawingCache, "simple_temp_qrcode.jpg");
+      BitmapUtils.saveImageToGallery(getContext(),drawingCache);
+      ToastUtils.showDefaultStyle("已保存到相册");
       return false;
     });
 
