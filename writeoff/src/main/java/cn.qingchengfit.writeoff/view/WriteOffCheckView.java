@@ -204,8 +204,7 @@ public class WriteOffCheckView extends SaasCommonFragment {
     Date d = new Date();
     if (!TextUtils.isEmpty(mBinding.cmChooseTime.getContent())) {
       try {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm", Locale.CHINA);
-        d = formatter.parse(mBinding.cmChooseTime.getContent());
+        d = DateUtils.formatDateFromServer(mBinding.cmChooseTime.getContent());
       } catch (Exception e) {
         LogUtil.e(e.getMessage());
       }

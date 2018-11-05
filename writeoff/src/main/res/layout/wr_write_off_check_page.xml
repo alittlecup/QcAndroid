@@ -35,7 +35,6 @@
             android:background="@color/bg_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingRight="15dp"
             >
          <cn.qingchengfit.widgets.CommonInputView
              android:id="@+id/cm_ticket_number"
@@ -50,9 +49,10 @@
              />
           <ImageView
               android:id="@+id/img_scan"
-              android:layout_width="30dp"
-              android:layout_height="30dp"
-              android:padding="4dp"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:paddingLeft="5dp"
+              android:paddingRight="20dp"
               android:focusable="true"
               android:focusableInTouchMode="true"
               android:tint="@color/text_grey"

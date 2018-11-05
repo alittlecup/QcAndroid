@@ -66,6 +66,22 @@ import timber.log.Timber;
       if (bitmap != null && !bitmap.isRecycled()) {
         BitmapUtils.saveImageToGallery(getContext(), bitmap);
         ToastUtils.showDefaultStyle("已保存到相册");
+      }else{
+        QRGEncoder qrgEncoder =
+            new QRGEncoder(url, null, QRGContents.Type.TEXT, MeasureUtils.dpToPx(180f, getResources()));
+        try {
+          // Getting QR-Code as Bitmap
+          bitmap = qrgEncoder.encodeAsBitmap();
+          // Setting Bitmap to ImageView
+          db.img.setAdjustViewBounds(true);
+          db.img.setPadding(0, 0, 0, 0);
+          db.img.setImageBitmap(bitmap);
+          BitmapUtils.saveImageToGallery(getContext(), bitmap);
+          ToastUtils.showDefaultStyle("已保存到相册");
+        } catch (WriterException e) {
+          Timber.e(e, " qr gen");
+        }
+
       }
     });
     RxView.clicks(db.btnShare)

@@ -1,7 +1,7 @@
 <resources>
-  <string name="wr_write_off_ticker_money">已核销课程券金额：¥ %s</string>
+  <string name="wr_write_off_ticker_money">课程券体验金额：¥ %s</string>
   <string name="wr_write_off_ticker_time">核销时间：%s</string>
-  <string name="wr_has_ticket_verify">已核销电子券(%s)</string>
+  <string name="wr_has_ticket_verify">已核销课程体验券(%s)</string>
 
 </resources>
 
