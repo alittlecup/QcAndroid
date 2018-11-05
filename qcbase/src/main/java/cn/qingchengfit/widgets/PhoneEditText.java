@@ -210,6 +210,7 @@ public class PhoneEditText extends LinearLayout
     } else {
       mDistrict.setOnClickListener(view -> {
       });
+      mPhoneNum.setHint("");
     }
     mPhoneNum.setAlpha(editble ? 1f : 0.5f);
     findViewById(R.id.img_down).setVisibility(editble?View.VISIBLE:View.GONE);

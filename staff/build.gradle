@@ -144,22 +144,22 @@ android {
 
 
 //完成编译后
-afterEvaluate {
-  android.applicationVariants.all { variant ->
-    variant.assemble.doLast {
-      if (variant.buildType.name.contains('release')) {
-        variant.outputs.all { output ->
-          //加固 签名apk后输出到./output 下
-          def apkpath = output.outputFile as File
-          exec {
-            ignoreExitValue true
-            commandLine "sh", rootProject.file('reinforce.sh').absolutePath, apkpath, rootProject.file('reinforce.sh').getParentFile().absolutePath,"staff"
-          }
-        }
-      }
-    }
-  }
-}
+//afterEvaluate {
+//  android.applicationVariants.all { variant ->
+//    variant.assemble.doLast {
+//      if (variant.buildType.name.contains('release')) {
+//        variant.outputs.all { output ->
+//          //加固 签名apk后输出到./output 下
+//          def apkpath = output.outputFile as File
+//          exec {
+//            ignoreExitValue true
+//            commandLine "sh", rootProject.file('reinforce.sh').absolutePath, apkpath, rootProject.file('reinforce.sh').getParentFile().absolutePath,"staff"
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
 
 tasks.withType(Test) {
   systemProperty "robolectric.logging", "stdout"

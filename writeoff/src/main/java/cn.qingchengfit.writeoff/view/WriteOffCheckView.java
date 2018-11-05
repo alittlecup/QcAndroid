@@ -71,6 +71,7 @@ public class WriteOffCheckView extends SaasCommonFragment {
       View childAt = mBinding.llContainer.getChildAt(i);
       if (childAt instanceof CommonInputView) {
         ((CommonInputView) childAt).setShowRight(false);
+        ((CommonInputView) childAt).setHint("");
       }
     }
     mBinding.flMark.setVisibility(View.VISIBLE);
