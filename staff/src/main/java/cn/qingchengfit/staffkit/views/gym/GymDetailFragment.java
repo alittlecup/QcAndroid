@@ -503,7 +503,6 @@ public class GymDetailFragment extends BaseFragment
     if (isSingleBrand()) {
       datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
     }
-    datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
     datas.add(SimpleTextItemItem.newBuilder()
         .bg(R.color.transparent)
         .gravity(Gravity.CENTER)

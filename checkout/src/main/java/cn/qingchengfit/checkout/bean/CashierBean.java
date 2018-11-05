@@ -7,7 +7,16 @@ public class CashierBean implements Parcelable {
   private String pay_trade_no="";
   private String out_trade_no="";
   private String url="";
+  private String result_code;
+  private String result_msg;
 
+  public String getResult_code() {
+    return result_code;
+  }
+
+  public String getResult_msg() {
+    return result_msg;
+  }
 
   public String getPay_trade_no() {
     return pay_trade_no;
@@ -36,32 +45,6 @@ public class CashierBean implements Parcelable {
   public CashierBean() {
   }
 
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.pay_trade_no);
-    dest.writeString(this.out_trade_no);
-    dest.writeString(this.url);
-  }
-
-  protected CashierBean(Parcel in) {
-    this.pay_trade_no = in.readString();
-    this.out_trade_no = in.readString();
-    this.url = in.readString();
-  }
-
-  public static final Creator<CashierBean> CREATOR = new Creator<CashierBean>() {
-    @Override public CashierBean createFromParcel(Parcel source) {
-      return new CashierBean(source);
-    }
-
-    @Override public CashierBean[] newArray(int size) {
-      return new CashierBean[size];
-    }
-  };
-
   @Override public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -85,4 +68,34 @@ public class CashierBean implements Parcelable {
     result = 31 * result + (url != null ? url.hashCode() : 0);
     return result;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.pay_trade_no);
+    dest.writeString(this.out_trade_no);
+    dest.writeString(this.url);
+    dest.writeString(this.result_code);
+    dest.writeString(this.result_msg);
+  }
+
+  protected CashierBean(Parcel in) {
+    this.pay_trade_no = in.readString();
+    this.out_trade_no = in.readString();
+    this.url = in.readString();
+    this.result_code = in.readString();
+    this.result_msg = in.readString();
+  }
+
+  public static final Creator<CashierBean> CREATOR = new Creator<CashierBean>() {
+    @Override public CashierBean createFromParcel(Parcel source) {
+      return new CashierBean(source);
+    }
+
+    @Override public CashierBean[] newArray(int size) {
+      return new CashierBean[size];
+    }
+  };
 }

@@ -42,6 +42,10 @@ import com.google.gson.JsonObject;
     });
     mViewModel.cashierBean.observe(this, cashierBean -> {
       hideLoading();
+      if(cashierBean!=null&&"10FC".equals(cashierBean.getResult_code())){
+        ToastUtils.show("收款金额超过您的额度上限，请您重新输入");
+        return;
+      }
       if (cashierBean != null && !cashierBean.equals(preCashierBean)) {
         preCashierBean = cashierBean;
         dealCashierBean(cashierBean);
@@ -183,8 +187,8 @@ import com.google.gson.JsonObject;
     try {
       if (TextUtils.isEmpty(s)) return false;
       float money = Float.valueOf(s);
-      if (money > 20000) {
-        DialogUtils.showAlert(getContext(), "单笔收款最多支持20000");
+      if (money > 100000) {
+        DialogUtils.showAlert(getContext(), "单笔收款最多支持100000");
         return false;
       }
     } catch (Exception e) {

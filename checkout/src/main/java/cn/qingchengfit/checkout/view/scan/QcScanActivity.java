@@ -101,12 +101,18 @@ public class QcScanActivity extends SaasCommonActivity
             ToastUtils.show("网络连接异常");
             return;
           }
+          if("10FC".equals(cashierBean.getResult_code())){
+            ToastUtils.show("收款金额超过您的额度上限，请您重新输入");
+            return;
+          }
           mViewModel.scanPay(barCode, cashierBean.getOut_trade_no(), cashierBean.getPay_trade_no());
         } else {
           Object out_trade_no = dataMap.get("out_trade_no");
           Object pay_trade_no = dataMap.get("pay_trade_no");
           if (out_trade_no != null && pay_trade_no != null) {
             mViewModel.scanPay(barCode, (String) out_trade_no, (String) pay_trade_no);
+          }else{
+            ToastUtils.show("网络连接异常");
           }
         }
       } else {

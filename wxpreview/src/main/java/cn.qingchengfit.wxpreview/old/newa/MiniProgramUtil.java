@@ -23,7 +23,11 @@ public class MiniProgramUtil {
       return null;
     } else {
       try {
-        return new Gson().fromJson(prefString, MiniProgram.class);
+        MiniProgram miniProgram = new Gson().fromJson(prefString, MiniProgram.class);
+        if(TextUtils.isEmpty(miniProgram.logo_url)||TextUtils.isEmpty(miniProgram.qrcode_url)){
+          return null;
+        }
+        return miniProgram;
       } catch (Exception e) {
         return null;
       }

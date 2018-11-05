@@ -21,6 +21,7 @@ import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import java.math.BigDecimal;
 import javax.inject.Inject;
 
 /**
@@ -170,18 +171,17 @@ public class ScoreModifyFragment extends BaseFragment
         if (TextUtils.isEmpty(editable.toString())) {
           tvScoreAfterValue.setText(curScore);
         } else {
-          double current = Double.valueOf(curScore);
-          double x = Double.valueOf(editable.toString());
-          double result = 0;
+          BigDecimal current=new BigDecimal(curScore);
+          BigDecimal result=new BigDecimal("0");
           switch (type) {
             case TYPE_PLUS:
-              result = (current + x);
+              result = current.add(new BigDecimal(editable.toString()));
               break;
             case TYPE_SUB:
-              result = (current - x);
+              result = current.subtract(new BigDecimal(editable.toString()));
               break;
           }
-          tvScoreAfterValue.setText(String.valueOf(result));
+          tvScoreAfterValue.setText(result.toString());
         }
       }
     });
