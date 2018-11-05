@@ -40,7 +40,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="请输入收款金额,最高¥20000"
+          android:text="请输入收款金额,最高¥100000"
           style="@style/QcTextStyleStandardGrey"
           />
       <LinearLayout
