@@ -213,5 +213,6 @@ public class PhoneEditText extends LinearLayout
     }
     mPhoneNum.setAlpha(editble ? 1f : 0.5f);
     findViewById(R.id.img_down).setVisibility(editble?View.VISIBLE:View.GONE);
+    findViewById(R.id.img_divier).setVisibility(editble?View.VISIBLE:View.GONE);
   }
 }
