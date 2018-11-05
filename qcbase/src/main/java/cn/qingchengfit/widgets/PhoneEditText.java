@@ -127,6 +127,9 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
         try {
             mDistrict.setText(getResources().getStringArray(R.array.country_and_districion_list)[position]);
             mDistrictInt = position;
+            if(onDistrictIntChangeListener!=null){
+                onDistrictIntChangeListener.onDistrictIntChange(getDistrictInt());
+            }
         } catch (Exception e) {
             CrashUtils.sendCrash(e);
         }
@@ -186,6 +189,16 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
             } else mDistrictInt = 0;
         }
         mDistrict.setText(getResources().getStringArray(R.array.country_and_districion_list)[mDistrictInt]);
+    }
+    private onDistrictIntChangeListener onDistrictIntChangeListener;
+
+    public void setOnDistrictIntChangeListener(
+        PhoneEditText.onDistrictIntChangeListener onDistrictIntChangeListener) {
+        this.onDistrictIntChangeListener = onDistrictIntChangeListener;
+    }
+
+    public interface onDistrictIntChangeListener{
+        void onDistrictIntChange(String type);
     }
 
     public interface OnEditFocusListener {

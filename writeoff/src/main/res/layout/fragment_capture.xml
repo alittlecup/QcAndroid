@@ -3,9 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-  <include layout="@layout/common_simple_toolbar"/>
+  <include
+      android:id="@+id/include_toolbar"
+      layout="@layout/common_simple_toolbar"/>
   <SurfaceView
       android:id="@+id/preview_view"
+      android:layout_below="@+id/include_toolbar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
@@ -14,14 +17,8 @@
   <lib_zxing.view.ViewfinderView
       android:id="@+id/viewfinder_view"
       android:layout_width="wrap_content"
+      android:layout_below="@+id/include_toolbar"
       android:layout_height="wrap_content"
-      />
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/viewfinder_view"
-      android:layout_centerHorizontal="true"
-      android:text="将条形码/二维码放于框内，即可自动扫描"
       />
 
 </RelativeLayout>

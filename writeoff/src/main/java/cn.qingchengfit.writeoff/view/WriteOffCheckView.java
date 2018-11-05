@@ -23,6 +23,7 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.PhoneEditText;
 import cn.qingchengfit.writeoff.databinding.WrViewWriteOffCheckBinding;
 import cn.qingchengfit.writeoff.view.verify.WriteOffCheckPage;
 import cn.qingchengfit.writeoff.view.verify.WriteOffCheckViewModel;
@@ -139,20 +140,7 @@ public class WriteOffCheckView extends SaasCommonFragment {
       routeTo("staff", "/trainer/choose/", bundle);
     });
     mBinding.cmChooseTime.setOnClickListener(v -> chooseOpenTime());
-    mBinding.cmInputCount.addTextWatcher(new SimpleTextWatcher() {
-      @Override public void afterTextChanged(Editable s) {
-        String s1 = s.toString();
-        if (!TextUtils.isEmpty(s1)) {
-          try {
-            mViewModel.ticketPostBody.getValue().setPeople_num(Integer.valueOf(s1));
-          } catch (Exception e) {
-            ToastUtils.show("请输入正确的数字");
-          }
-        } else {
-          mViewModel.ticketPostBody.getValue().setPeople_num(0);
-        }
-      }
-    });
+
     mBinding.cmUserName.addTextWatcher(new SimpleTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         mViewModel.ticketPostBody.getValue().setUsername(s.toString());
@@ -168,6 +156,10 @@ public class WriteOffCheckView extends SaasCommonFragment {
         mViewModel.ticketPostBody.getValue().setArea_code(mBinding.phoneNum.getDistrictInt());
         mViewModel.ticketPostBody.getValue().setPhone(mBinding.phoneNum.getPhoneNum());
       }
+    });
+    mBinding.phoneNum.setOnDistrictIntChangeListener(type -> {
+      mViewModel.ticketPostBody.getValue().setArea_code(mBinding.phoneNum.getDistrictInt());
+      mViewModel.ticketPostBody.getValue().setPhone(mBinding.phoneNum.getPhoneNum());
     });
   }
 

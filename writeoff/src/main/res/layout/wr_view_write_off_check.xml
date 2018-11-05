@@ -58,20 +58,7 @@
         app:civ_showdivier="true"
         app:civ_showright="true"
         />
-    <cn.qingchengfit.widgets.CommonInputView
-        android:id="@+id/cm_input_count"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:civ_clickable="false"
-        app:civ_content="@{ticketData.ticketBatchMemberCount}"
-        app:civ_edit_able="true"
-        app:civ_hint="请填写"
-        app:civ_inputnum="true"
-        app:civ_lable="约课人数"
-        app:civ_nonnull="true"
-        app:civ_showdivier="true"
-        app:civ_showright="false"
-        />
+
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/cm_choose_time"
         android:layout_width="match_parent"

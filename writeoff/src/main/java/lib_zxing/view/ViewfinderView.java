@@ -44,6 +44,7 @@ public final class ViewfinderView extends View {
     private static final int OPAQUE = 0xFF;
 
     private final Paint paint;
+    private final Paint textPaint;
     private Bitmap resultBitmap;
     private final int maskColor;
     private final int resultColor;
@@ -71,7 +72,9 @@ public final class ViewfinderView extends View {
 
         scanLight = BitmapFactory.decodeResource(resources,
                 R.drawable.scan_light);
-
+        textPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(resources.getColor(R.color.text_grey));
+        textPaint.setTextSize(dip2px(context,14));
         initInnerRect(context, attrs);
     }
 
@@ -133,6 +136,10 @@ public final class ViewfinderView extends View {
         canvas.drawRect(0, frame.top, frame.left, frame.bottom + 1, paint);
         canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1, paint);
         canvas.drawRect(0, frame.bottom + 1, width, height, paint);
+        String text="将条形码/二维码放于框内，即可自动扫描";
+        Rect rect=new Rect();
+        textPaint.getTextBounds(text,0,text.length(),rect);
+        canvas.drawText(text,frame.left-((rect.width()-frame.width())/2),frame.bottom+dip2px(getContext(),20),textPaint);
 
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle

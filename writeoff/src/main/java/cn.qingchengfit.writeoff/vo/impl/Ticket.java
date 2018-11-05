@@ -17,7 +17,6 @@ public class Ticket implements Parcelable, ITicketDetailData {
   private String out_trade_no;//订单编号
   private int used_type;//0-未知  1-团课 2- 私教
   private String used_at;//上课时间
-  private String people_num;//上课人数
   private String verify_at;//核销时间
   private String shop_name;
   private TicketInnerTempObject shop;
@@ -68,9 +67,6 @@ public class Ticket implements Parcelable, ITicketDetailData {
     this.used_at = used_at;
   }
 
-  public void setPeople_num(String people_num) {
-    this.people_num = people_num;
-  }
 
   public void setShop(TicketInnerTempObject shop) {
     this.shop = shop;
@@ -133,9 +129,7 @@ public class Ticket implements Parcelable, ITicketDetailData {
     return teacher.name;
   }
 
-  @Override public String getTicketBatchMemberCount() {
-    return people_num;
-  }
+
 
   @Override public String getTicketBatchTime() {
     return DateUtils.Date2YYYYMMDDHHmmss(DateUtils.formatDateFromServer(used_at));
@@ -166,7 +160,7 @@ public class Ticket implements Parcelable, ITicketDetailData {
   }
 
   @Override public String getTicketCheckTime() {
-    return DateUtils.getYYYYMMDDfromServer(verify_at);
+    return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(verify_at));
   }
 
   @Override public String getTicketMoney() {
@@ -193,7 +187,6 @@ public class Ticket implements Parcelable, ITicketDetailData {
     dest.writeString(this.out_trade_no);
     dest.writeInt(this.used_type);
     dest.writeString(this.used_at);
-    dest.writeString(this.people_num);
     dest.writeString(this.verify_at);
     dest.writeString(this.shop_name);
     dest.writeParcelable(this.shop, flags);
@@ -217,7 +210,6 @@ public class Ticket implements Parcelable, ITicketDetailData {
     this.out_trade_no = in.readString();
     this.used_type = in.readInt();
     this.used_at = in.readString();
-    this.people_num = in.readString();
     this.verify_at = in.readString();
     this.shop_name = in.readString();
     this.shop = in.readParcelable(TicketInnerTempObject.class.getClassLoader());

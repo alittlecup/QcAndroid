@@ -38,13 +38,10 @@ import lib_zxing.activity.CodeUtils;
         hideLoading();
       }
     });
-    mViewModel.ticketVerifyResult.observe(this,aBoolean -> {
+    mViewModel.ticketVerifyResult.observe(this, aBoolean -> {
       if (aBoolean) {
         ToastUtils.show("核销成功");
         getActivity().onBackPressed();
-      } else {
-        ToastUtils.show("核销失败，请重试");
-
       }
     });
   }
@@ -87,7 +84,7 @@ import lib_zxing.activity.CodeUtils;
         });
     mBinding.btnTicketCheck.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if(mViewModel.ticketPostBody.getValue().checkBody()){
+        if (mViewModel.ticketPostBody.getValue().checkBody()) {
           mViewModel.postTicketBody();
         }
       }
@@ -110,7 +107,7 @@ import lib_zxing.activity.CodeUtils;
           mViewModel.ticketPostBody.getValue().setE_code(result);
           mBinding.btnTicketCheck.setEnabled(true);
         } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-          Toast.makeText(getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
+          Toast.makeText(getContext(), "解析失败", Toast.LENGTH_LONG).show();
         }
       }
     }
@@ -129,9 +126,8 @@ import lib_zxing.activity.CodeUtils;
       }
       mBinding.flTicketSimpleView.setVisibility(View.VISIBLE);
       simpleInfoView.setTicket(ticket);
-    }else{
+    } else {
       mBinding.flTicketSimpleView.setVisibility(View.GONE);
-
     }
   }
 
@@ -148,12 +144,10 @@ import lib_zxing.activity.CodeUtils;
         new MaterialDialog.SingleButtonCallback() {
           @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
             materialDialog.dismiss();
+            mBinding.cmTicketNumber.setContent("");
             switch (dialogAction) {
               case POSITIVE:
                 routeTo("/ticket/detail", new WriteOffTicketPageParams().ticketId(id).build());
-                break;
-              default:
-                mBinding.cmTicketNumber.setContent("");
                 break;
             }
           }

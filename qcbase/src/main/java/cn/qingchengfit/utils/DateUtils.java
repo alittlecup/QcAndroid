@@ -403,6 +403,9 @@ public class DateUtils {
       return i - 2;
     }
   }
+  public static boolean isOverCurrent(Date date){
+    return date.getTime()>new Date().getTime();
+  }
 
   public static long getToadayMidnight() {
     Calendar c = Calendar.getInstance();

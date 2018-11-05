@@ -6,7 +6,9 @@ import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.TextureView;
 import cn.qingchengfit.saascommon.utils.StringUtils;
+import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import java.util.Date;
 
 public class TicketPostBody implements Parcelable {
   private String e_code;
@@ -21,7 +23,6 @@ public class TicketPostBody implements Parcelable {
   private String teacher_id;
   private String teacher_name;
   private String used_at;
-  private int people_num;
   private String phone;
   private String area_code;
   private int gender = -1;
@@ -131,13 +132,7 @@ public class TicketPostBody implements Parcelable {
     this.used_at = used_at;
   }
 
-  public int getPeople_num() {
-    return people_num;
-  }
 
-  public void setPeople_num(int people_num) {
-    this.people_num = people_num;
-  }
 
   public void setBatchType(boolean isPrivate) {
     used_type = (isPrivate ? 2 : 1);
@@ -162,8 +157,8 @@ public class TicketPostBody implements Parcelable {
     } else if (TextUtils.isEmpty(used_at)) {
       showToast("请选择上课时间");
       return false;
-    } else if (people_num == 0) {
-      showToast("请填写约课人数");
+    } else if(!DateUtils.isOverCurrent(DateUtils.formatDateFromServer(used_at))){
+      showToast("上课时间不能小于当前时间");
       return false;
     } else if (TextUtils.isEmpty(username)) {
       showToast("请填写体验者姓名");
@@ -171,7 +166,7 @@ public class TicketPostBody implements Parcelable {
     } else if (gender == -1) {
       showToast("请选择体验者性别");
       return false;
-    } else if (!StringUtils.checkPhoneNumber(phone, "+866".equals(area_code))) {
+    } else if (!StringUtils.checkPhoneNumber(phone, "+886".equals(area_code))) {
       return false;
     }
     return true;
@@ -193,7 +188,6 @@ public class TicketPostBody implements Parcelable {
     dest.writeString(this.teacher_id);
     dest.writeString(this.teacher_name);
     dest.writeString(this.used_at);
-    dest.writeInt(this.people_num);
     dest.writeString(this.phone);
     dest.writeString(this.area_code);
     dest.writeInt(this.gender);
@@ -210,7 +204,6 @@ public class TicketPostBody implements Parcelable {
     this.teacher_id = in.readString();
     this.teacher_name = in.readString();
     this.used_at = in.readString();
-    this.people_num = in.readInt();
     this.phone = in.readString();
     this.area_code = in.readString();
     this.gender = in.readInt();

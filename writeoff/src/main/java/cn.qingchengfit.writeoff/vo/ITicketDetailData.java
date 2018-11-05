@@ -9,7 +9,6 @@ public interface ITicketDetailData  extends IWriteOffItemData{
   String getTicketBatchType();
   String getTicketBatch();
   String getTicketBatchTrainer();
-  String getTicketBatchMemberCount();
   String getTicketBatchTime();
   String getTickerUserNanme();
   String getTickerUserGender();
