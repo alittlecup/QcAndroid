@@ -2,6 +2,7 @@ package cn.qingchengfit.wxpreview.old.newa;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.utils.BitmapUtils;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.wxpreview.databinding.WxWxpmViewPageBinding;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -29,9 +31,8 @@ public class WxPmViewPage extends SaasCommonFragment {
     initToolbar();
     mBinding.btnStartMini.setOnClickListener(v -> goQrScan());
     mBinding.imgPic.setOnLongClickListener(v -> {
-      final Bitmap drawingCache = mBinding.imgPic.getDrawingCache();
+      final Bitmap drawingCache = ((BitmapDrawable)mBinding.imgPic.getDrawable()).getBitmap();
       FileUtils.savePicture(drawingCache, "simple_temp_qrcode.jpg");
-      mBinding.imgPic.destroyDrawingCache();
       return false;
     });
 
