@@ -84,7 +84,7 @@ public class Ticket implements Parcelable, ITicketDetailData {
   }
 
   @Override public String getTicketNumber() {
-    return out_trade_no;
+    return e_code;
   }
 
   @Override public String getTicketStatus() {
