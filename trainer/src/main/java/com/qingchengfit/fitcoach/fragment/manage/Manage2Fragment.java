@@ -17,17 +17,23 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.network.HttpThrowable;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.events.EventChartTitle;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.saascommon.widget.GuideView;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import com.google.gson.Gson;
@@ -218,6 +224,33 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     mBinding.vpCharts.setAdapter(
         mPageAdapter = new GymDetailChartAdapter(getChildFragmentManager()));
     mBinding.indicator.setViewPager(mBinding.vpCharts);
+    RxBusAdd(EventChartTitle.class).subscribe(eventChartTitle -> {
+      switch (eventChartTitle.getChartType()) {
+        case 1:
+          if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.COST_REPORT)) {
+            showAlert(R.string.alert_permission_forbid);
+            return ;
+          }
+          Intent toCourseStatement = new Intent(getActivity(), FragActivity.class);
+          toCourseStatement.putExtra("type", 0);
+          toCourseStatement.putExtra("service", gymWrapper.getCoachService());
+          startActivity(toCourseStatement);
+          break;
+
+        case 0:
+          if (!CurentPermissions.newInstance()
+              .queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
+            showAlert(R.string.alert_permission_forbid);
+            return ;
+          }
+          Intent tosale = new Intent(getActivity(), FragActivity.class);
+          tosale.putExtra("type", 1);
+          tosale.putExtra("service", gymWrapper.getCoachService());
+          startActivity(tosale);
+
+          break;
+      }
+    });
   }
 
   private void initRecyclerData() {
