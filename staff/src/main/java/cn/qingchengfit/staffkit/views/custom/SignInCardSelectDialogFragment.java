@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.model.responese.SigninValidCard;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import java.util.ArrayList;

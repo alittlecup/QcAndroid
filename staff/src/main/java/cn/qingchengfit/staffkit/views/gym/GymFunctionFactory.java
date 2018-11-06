@@ -18,7 +18,7 @@ import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;

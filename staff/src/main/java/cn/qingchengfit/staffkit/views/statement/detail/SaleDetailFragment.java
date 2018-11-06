@@ -34,7 +34,7 @@ import cn.qingchengfit.model.responese.SaleCardForm;
 import cn.qingchengfit.model.responese.SaleFilter;
 import cn.qingchengfit.model.responese.SaleTradeForm;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.RxNetWorkEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;

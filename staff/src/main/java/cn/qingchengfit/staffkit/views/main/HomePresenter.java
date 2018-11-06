@@ -11,7 +11,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.custom.QcResponseOperator;
 import cn.qingchengfit.utils.PreferenceUtils;

@@ -14,7 +14,7 @@ import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.utils.RouterUtils;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.reciever.PushBean;
 import cn.qingchengfit.staffkit.rest.RestRepository;

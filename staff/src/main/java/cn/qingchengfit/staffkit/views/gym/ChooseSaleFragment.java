@@ -23,7 +23,7 @@
 //import butterknife.OnClick;
 //import cn.qingchengfit.staffkit.App;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import cn.qingchengfit.staffkit.rest.RestRepository;
 //import Sellers;
 //import cn.qingchengfit.utils.IntentUtils;

@@ -10,7 +10,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
@@ -51,7 +51,7 @@ import timber.log.Timber;
  * <p/>
  * Created by Paper on 15/12/2 2015.
  */
-public class RestRepository implements Repository {
+public class RestRepository  {
 
     private final Get_Api get_api;
     private final Post_Api post_api;
@@ -62,7 +62,6 @@ public class RestRepository implements Repository {
     public RestRepository() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-
             @Override public void log(String message) {
               LogUtil.d(message);
             }
@@ -109,20 +108,7 @@ public class RestRepository implements Repository {
                 }
             }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
 
-        Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization()
-
-            //                .setExclusionStrategies(new ExclusionStrategy() {
-            //                    @Override
-            //                    public boolean shouldSkipField(FieldAttributes f) {
-            //                        return f.getDeclaringClass().equals(RealmObject.class);
-            //                    }
-            //
-            //                    @Override
-            //                    public boolean shouldSkipClass(Class<?> clazz) {
-            //                        return false;
-            //                    }
-            //                })
-            .create();
+        Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
         Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
@@ -139,46 +125,6 @@ public class RestRepository implements Repository {
         post_api = postApiAdapter.create(Post_Api.class);
     }
 
-    public RestRepository(final String session) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
-            @Override public Response intercept(Chain chain) throws IOException {
-
-                Request request = chain.request();
-                if (!request.method().equalsIgnoreCase("GET")) {
-                    String token = get_api.qcGetToken().execute().body().data.token;
-
-                    request = request.newBuilder()
-                        .addHeader("X-CSRFToken", token)
-                        .addHeader("Cookie", "csrftoken=" + token + ";"+ QcRestRepository.getSessionCookie(App.context))
-                        .addHeader("User-Agent", "Android Staff")
-                        .build();
-                } else {
-                    request =
-                        request.newBuilder().addHeader("Cookie", QcRestRepository.getSessionCookie(App.context)).addHeader("User-Agent", "Android Staff").build();
-                }
-                return chain.proceed(request);
-            }
-        }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
-        Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization()
-
-            .create();
-        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build();
-
-        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
-            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .client(client)
-            .build();
-
-        get_api = getApiAdapter.create(Get_Api.class);
-        post_api = postApiAdapter.create(Post_Api.class);
-    }
 
     public Get_Api getGet_api() {
         return get_api;
@@ -219,15 +165,7 @@ public class RestRepository implements Repository {
             @Override public Boolean call(Integer integer, Throwable throwable) {
                 return integer < 3 && throwable instanceof SocketTimeoutException;
             }
-        })
-            //                .retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
-            //                    @Override
-            //                    public Observable<?> call(Observable<? extends Throwable> observable) {
-            //                        return null;
-            //                    }
-            //                })
-            //                .doOnError(doOnError)
-            ;
+        });
     }
 
     public Observable<QcResponseSystenInit> qcSystemInit(SystemInitBody bean) {

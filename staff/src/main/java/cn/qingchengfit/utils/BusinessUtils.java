@@ -16,7 +16,7 @@ import cn.qingchengfit.model.responese.TeacherImpression;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.model.common.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;

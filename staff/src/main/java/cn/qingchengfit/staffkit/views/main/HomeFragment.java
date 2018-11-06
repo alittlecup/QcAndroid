@@ -36,7 +36,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.saascommon.events.EventChartTitle;

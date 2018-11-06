@@ -34,7 +34,7 @@ import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;

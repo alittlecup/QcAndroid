@@ -32,7 +32,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
 import cn.qingchengfit.staffkit.views.setting.FixNotifySettingFragment;

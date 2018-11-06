@@ -13,7 +13,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.SignInEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignOutManualEvent;
 import cn.qingchengfit.utils.PreferenceUtils;

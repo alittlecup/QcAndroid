@@ -56,7 +56,7 @@ import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;

@@ -27,7 +27,7 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.EventFreshCoachService;
 import com.google.gson.JsonObject;
@@ -82,7 +82,7 @@ public class LoginModel implements ILoginModel {
   }
 
   @Override public boolean isDebug() {
-    return BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("dev");
+    return BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev");
   }
 
   @Override public void doOnLogin(Context ctx, Login login,LoginView mvpView) {

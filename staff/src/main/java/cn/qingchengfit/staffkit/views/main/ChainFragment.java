@@ -31,7 +31,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventGoNotification;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;

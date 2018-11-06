@@ -20,7 +20,7 @@ import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;

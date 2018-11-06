@@ -35,7 +35,7 @@ import cn.qingchengfit.saascommon.utils.SpanUtils;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.staffkit.views.ChooseActivity;

@@ -18,6 +18,7 @@ import cn.qingchengfit.saascommon.BuildConfig;
  */
 public class Configs {
   //public static final String URL_DEBUG = "http://cloudmirror.qingchengfit.cn/";
+  public static final String URL_DEBUG = "http://cloudtest01.qingchengfit.cn/";
   //    public static final String URL_DEBUG = "http://c1.qingchengfit.cn/";
   //    public static final String URL_DEBUG = "http://192.168.1.11:8000/";
   //    public static final String URL_DEBUG = "http://192.168.1.96:7777/";
@@ -96,7 +97,7 @@ public class Configs {
   //    public static final String  = "/mobile/weixin/guide/";
   public static final int CHARGE_MODE_CARD = 2; //卡
   public static final int CHARGE_MODE_TRANSFER = 3; //转账
-  public static final int CHARGE_MODE_OTHER = 4; //其他
+  public static final int CHARGE_MODE_OTHER = 4; //人工
   public static final int CHARGE_MODE_AUTO = 5; //赠送
   public static final int CHARGE_MODE_WEIXIN = 6; //微信
   public static final int CHARGE_MODE_WEIXIN_QRCODE = 7; //二维码
@@ -154,11 +155,22 @@ public class Configs {
       BuildConfig.DEBUG ? (BuildConfig.FLAVOR.contains("dev") ? Constants.ServerDebug
           : Constants.ServerMirror) : Constants.Server;
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
+  public static String URL_ALI_Eleven =  "mobile/activity/enter-ali/?utm_source=staffapp&utm_medium=module&utm_campaign=enterali";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
   public static String QR_POINT_URL=BuildConfig.DEBUG ? "saotest.qingchengfit.cn": "sao.qingchengfit.cn";
+
+  //用户协议
+  public static final String USER_PROTOCOL_URL = "";
+
+  public static final String WEEX_TEST_PATH =
+      "https://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+  public static final String WEEX_RELEASE_PATH =
+      "https://qcfile.b0.upaiyun.com/qc-commodity-weex/0.0.39/version.json";
+  public static final String WEEX_PAGE_INDEX = "proxy_commodity.js";
   public static final String WEB_HOW_TO_USE_BATCH_GROUP =
       "http://cloud.qingchengfit.cn/mobile/urls/e382d87968dd4f54a89bb5e5a933f779/";
   //团课
   public static final String WEB_HOW_TO_USE_BATCH_PRIVATE =
       "http://cloud.qingchengfit.cn/mobile/urls/34890304d8bc40ba9677ca8d99bcd02a/";
+
 }

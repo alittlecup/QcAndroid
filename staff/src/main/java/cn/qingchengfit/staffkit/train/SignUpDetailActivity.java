@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.train.fragment.SignUpFormHomeFragment;
 import cn.qingchengfit.staffkit.train.fragment.TrainChooseGymFragment;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;

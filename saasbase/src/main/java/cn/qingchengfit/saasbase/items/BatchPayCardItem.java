@@ -10,7 +10,7 @@
 //import butterknife.ButterKnife;
 //import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import cn.qingchengfit.utils.MeasureUtils;
 //import cn.qingchengfit.utils.StringUtils;
 //import eu.davidea.flexibleadapter.FlexibleAdapter;

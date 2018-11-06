@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.adapter.SigleModeMainPagerAdapter;
 import cn.qingchengfit.staffkit.views.custom.TabView;
 import cn.qingchengfit.views.activity.WebActivity;

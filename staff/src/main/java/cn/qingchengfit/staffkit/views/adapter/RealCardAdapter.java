@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.model.common.RealCard;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.ColorUtils;
 import cn.qingchengfit.utils.CompatUtils;

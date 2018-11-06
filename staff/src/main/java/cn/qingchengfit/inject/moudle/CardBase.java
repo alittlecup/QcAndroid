@@ -1,6 +1,6 @@
 package cn.qingchengfit.inject.moudle;
 
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 
 /**
  * power by

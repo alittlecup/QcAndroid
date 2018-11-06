@@ -24,7 +24,7 @@ import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.IntervalCancelEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInManualEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInStudentItemClickEvent;

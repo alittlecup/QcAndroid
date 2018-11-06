@@ -27,7 +27,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.utils.AppUtils;

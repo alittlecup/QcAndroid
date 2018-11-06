@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.PopupWindow;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

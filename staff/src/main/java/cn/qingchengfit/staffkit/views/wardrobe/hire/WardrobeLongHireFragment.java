@@ -22,7 +22,7 @@ import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.student.MutiChooseStudentActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobePayBottomFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;

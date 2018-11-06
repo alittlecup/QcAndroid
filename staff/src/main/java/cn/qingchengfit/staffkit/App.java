@@ -25,7 +25,7 @@ import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.gymconfig.GymConfigAcitivty;
 import cn.qingchengfit.sass.course.StaffCourseActivity;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.debug.LogView;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
@@ -61,7 +61,7 @@ import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
-import static cn.qingchengfit.staffkit.constant.Configs.Server;
+import static cn.qingchengfit.saascommon.constant.Configs.Server;
 
 /**
  * power by

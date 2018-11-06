@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.rest;
 import cn.qingchengfit.network.RestRepository;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import javax.inject.Inject;

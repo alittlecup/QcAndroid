@@ -18,7 +18,7 @@ import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInCancelEvent;

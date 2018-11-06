@@ -3,17 +3,15 @@ package cn.qingchengfit.network;
 import android.content.Context;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventUnitNetError;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.ComponentModuleManager;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.GZipper;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.phrase.Phrase;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -52,17 +50,15 @@ import retrofit2.http.GET;
 public class QcRestRepository {
 
   private final OkHttpClient client;
-  private Retrofit getApiAdapter;
-  private Retrofit postApiAdapter;
+  private Retrofit retrofitRxJava1;
+  private Retrofit retrofitRxJava2;
   private String host = "";
-  private Gson gson = new Gson();
 
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
     this.host = host;
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    final OkHttpClient tokenClient = new OkHttpClient();
     client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
       @Override public Response intercept(Chain chain) throws IOException {
         String token = "";
@@ -106,52 +102,23 @@ public class QcRestRepository {
         }
         return chain.proceed(request);
       }
-    })
-        //.addNetworkInterceptor(errorInterceptor)
-        .addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
+    }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
 
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
-    getApiAdapter = new Retrofit.Builder().baseUrl(host)
+    retrofitRxJava1 = new Retrofit.Builder().baseUrl(host)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
 
-    postApiAdapter = new Retrofit.Builder().baseUrl(host)
+    retrofitRxJava2 = new Retrofit.Builder().baseUrl(host)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(client)
         .build();
-    ComponentModuleManager.register(Retrofit.class, getApiAdapter);
+    ComponentModuleManager.register(Retrofit.class, retrofitRxJava1);
   }
-
-  private Interceptor errorInterceptor = new Interceptor() {
-    @Override public Response intercept(Chain chain) throws IOException {
-      Request request = chain.request();
-      Response response = null;
-      try {
-        response = chain.proceed(request);
-      } catch (Exception e) {
-        LogUtil.e("<-- HTTP FAILED: " + e);
-      }
-      try {
-        if (response != null
-            && request.headers().get("Content-Encoding") != null
-            && response.headers().get("Content-Encoding").equalsIgnoreCase("Gzip")) {
-          String responebody = GZipper.doUnZipToString(response.body().bytes());
-          QcDataResponse qcr = gson.fromJson(responebody, QcDataResponse.class);
-          if (qcr.status != 200) {
-            RxBus.getBus().post(new EventUnitNetError(qcr.error_code, qcr.getMsg(), qcr.status));
-          }
-        }
-      } catch (Exception e) {
-
-      }
-
-      return response;
-    }
-  };
 
   public OkHttpClient getClient() {
     return client;
@@ -161,13 +128,13 @@ public class QcRestRepository {
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
     this.host = host;
 
-    getApiAdapter = new Retrofit.Builder().baseUrl(host)
+    retrofitRxJava1 = new Retrofit.Builder().baseUrl(host)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
 
-    postApiAdapter = new Retrofit.Builder().baseUrl(host)
+    retrofitRxJava2 = new Retrofit.Builder().baseUrl(host)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .client(client)
@@ -227,11 +194,11 @@ public class QcRestRepository {
   }
 
   public <T> T createGetApi(final Class<T> service) {
-    return getApiAdapter.create(service);
+    return retrofitRxJava1.create(service);
   }
 
   public <T> T createPostApi(final Class<T> service) {
-    return postApiAdapter.create(service);
+    return retrofitRxJava2.create(service);
   }
 
   public interface GetCsrfToken {

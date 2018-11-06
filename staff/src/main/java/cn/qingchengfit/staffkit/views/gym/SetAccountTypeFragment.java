@@ -16,7 +16,7 @@ import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.DoneAccountEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.custom.ClubCardView;

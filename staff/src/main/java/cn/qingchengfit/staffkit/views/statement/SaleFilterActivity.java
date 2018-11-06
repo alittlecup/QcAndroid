@@ -17,7 +17,7 @@ import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.model.responese.SaleFilter;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.CardTypeEvent;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.statement.filter.CardTypeChooseDialogFragment;

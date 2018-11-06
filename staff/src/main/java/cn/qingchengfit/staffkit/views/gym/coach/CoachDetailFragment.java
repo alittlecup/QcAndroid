@@ -30,7 +30,7 @@ import android.widget.TextView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;

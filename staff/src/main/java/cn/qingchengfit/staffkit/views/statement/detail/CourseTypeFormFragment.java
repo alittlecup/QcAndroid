@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.model.responese.CourseTypeform;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;

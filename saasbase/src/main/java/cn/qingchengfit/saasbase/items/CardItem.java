@@ -9,7 +9,7 @@
 //import butterknife.ButterKnife;
 //import cn.qingchengfit.saasbase.cards.bean.Card;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import cn.qingchengfit.utils.ColorUtils;
 //import cn.qingchengfit.utils.CompatUtils;
 //import cn.qingchengfit.utils.RealCardUtils;

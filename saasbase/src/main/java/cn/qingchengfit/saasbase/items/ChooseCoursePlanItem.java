@@ -7,7 +7,7 @@
 //import butterknife.ButterKnife;
 //import cn.qingchengfit.model.responese.CoursePlan;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import eu.davidea.flexibleadapter.FlexibleAdapter;
 //import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 //import eu.davidea.viewholders.FlexibleViewHolder;

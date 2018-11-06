@@ -51,7 +51,7 @@ import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.CourseTypeform;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.RxNetWorkEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;

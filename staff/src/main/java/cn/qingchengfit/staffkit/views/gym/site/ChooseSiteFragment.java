@@ -17,7 +17,7 @@ import android.widget.TextView;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ChooseSiteAdapter;

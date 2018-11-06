@@ -8,7 +8,7 @@ import android.widget.CompoundButton;
 
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
 import cn.qingchengfit.widgets.CommonInputView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

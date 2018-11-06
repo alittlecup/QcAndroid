@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import cn.qingchengfit.model.responese.CmBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.List;

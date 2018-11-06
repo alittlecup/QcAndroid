@@ -13,7 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.widgets.CommonInputView;

@@ -8,7 +8,7 @@
 //import android.view.ViewGroup;
 //import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.Configs;
+//import cn.qingchengfit.saascommon.constant.Configs;
 //import cn.qingchengfit.student.view.export.ImportExportFragment;
 //
 ///**

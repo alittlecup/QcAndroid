@@ -16,7 +16,7 @@ import android.widget.TextView;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandDetailFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandManageFragment;
 import cn.qingchengfit.utils.CompatUtils;
