@@ -157,12 +157,16 @@ import rx.android.schedulers.AndroidSchedulers;
     toolbar.getMenu().add("确定").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        RxBus.getBus()
-            .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent(), source));
-        popBack();
+        postBackSelectedStudent();
         return false;
       }
     });
+  }
+
+  public void postBackSelectedStudent() {
+    RxBus.getBus()
+        .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent(), source));
+    popBack();
   }
 
   @Override public String getFragmentName() {

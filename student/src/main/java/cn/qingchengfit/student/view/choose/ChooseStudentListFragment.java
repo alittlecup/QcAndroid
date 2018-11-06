@@ -80,11 +80,27 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
           studentIdList.add(item.getId());
         }
       }
+      if(qcStudentBeans!=null&&commonFlexAdapter.isSelected(i)){
+        QcStudentBean qcStudentBean =
+            ((StudentItem) commonFlexAdapter.getItem(i)).getQcStudentBean();
+        if(qcStudentBeans.contains(qcStudentBean)){
+          qcStudentBeans.remove(qcStudentBean);
+        }
+      }
       commonFlexAdapter.toggleSelection(i);
       commonFlexAdapter.notifyItemChanged(i);
       commonFlexAdapter.notifyItemChanged(lastChoose);
     }
     return true;
+  }
+
+  public List<QcStudentBean> getQcStudentBeans() {
+    return qcStudentBeans;
+  }
+
+  private List<QcStudentBean >qcStudentBeans=new ArrayList<>();
+  public void setSelctedStudents(List<QcStudentBean> list){
+    qcStudentBeans=list;
   }
 
   public StudentItem getItem(int position) {

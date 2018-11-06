@@ -9,19 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.view.detail.StudentDetailWithCardPage;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Test;
 
 @Leaf(module = "student", path = "/search/student/") public class SearchStudentFragment
     extends ChooseAndSearchStudentFragment {
   @Need public Boolean addAble = true;
+  @Need public ArrayList<QcStudentBean> selectedStudent;
   View root;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +37,7 @@ import junit.framework.Test;
       llSearchAll.setVisibility(View.VISIBLE);
       etSearch.setHint("手机号");
     }
+    chooseStudentListFragment.setSelctedStudents(selectedStudent);
     return root;
   }
 
@@ -44,8 +49,35 @@ import junit.framework.Test;
       } else {
         llSearchAll.setVisibility(View.VISIBLE);
       }
+      if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
+        List<QcStudentBean> selectedStudent = chooseStudentListFragment.getSelectedStudent();
+        if(selectedStudent!=null&&!selectedStudent.isEmpty()){
+          List<QcStudentBean> qcStudentBeans = chooseStudentListFragment.getQcStudentBeans();
+          for(QcStudentBean qcStudentBean:selectedStudent){
+            if(!qcStudentBeans.contains(qcStudentBean)){
+              qcStudentBeans.add(qcStudentBean);
+            }
+          }
+          chooseStudentListFragment.setSelctedStudents(qcStudentBeans);
+        }
+      }
       super.onStudentList(stus);
+
     }
+  }
+
+  @Override public void postBackSelectedStudent() {
+    List<QcStudentBean> selectedStudent = chooseStudentListFragment.getSelectedStudent();
+    List<QcStudentBean> qcStudentBeans = chooseStudentListFragment.getQcStudentBeans();
+    if (qcStudentBeans != null && !qcStudentBeans.isEmpty()) {
+      for (QcStudentBean studentBean : qcStudentBeans) {
+        if (!selectedStudent.contains(studentBean)) {
+          selectedStudent.add(studentBean);
+        }
+      }
+    }
+    RxBus.getBus().post(new EventSelectedStudent(selectedStudent, source));
+    popBack();
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
@@ -71,8 +103,8 @@ import junit.framework.Test;
             Bundle bundle = new Bundle();
             bundle.putParcelable("qcStudentBean", qcStudentBean);
             String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
-            if(!TextUtils.isEmpty(qcCallId)){
-              bundle.putString("qcCallId",qcCallId);
+            if (!TextUtils.isEmpty(qcCallId)) {
+              bundle.putString("qcCallId", qcCallId);
             }
             routeTo("/student/card/list", bundle);
           }

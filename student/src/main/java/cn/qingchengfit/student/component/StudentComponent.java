@@ -2,6 +2,7 @@ package cn.qingchengfit.student.component;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
@@ -11,6 +12,7 @@ import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentParams;
 import cn.qingchengfit.student.view.choose.SearchStudentParams;
 import com.upyun.library.common.Params;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class StudentComponent implements IComponent {
@@ -38,6 +40,7 @@ public class StudentComponent implements IComponent {
             new SearchStudentParams()
                 .chooseType(qc.getParams().get("chooseType")==null?null:(int)qc.getParams().get("chooseType"))
                 .source(qc.getParams().get("source")==null?null:(String) qc.getParams().get("source"))
+                .selectedStudent(qc.getParams().get("selectedStudent")==null?null: (ArrayList<QcStudentBean>) qc.getParams().get("selectedStudent"))
                 .studentIdList(qc.getParams().get("studentIdList")==null?null:((ArrayList<String>)qc.getParams().get("studentIdList")))
                 .build();
         if(qc.getParams().get("addAble")!=null){
