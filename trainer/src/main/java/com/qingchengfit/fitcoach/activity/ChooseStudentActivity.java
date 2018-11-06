@@ -253,7 +253,7 @@ public class ChooseStudentActivity extends BaseActivity {
                         setResult(400);
                         ChooseStudentActivity.this.finish();
                     } else {
-                        Toast.makeText(App.AppContex, "添加失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(App.AppContex, qcResponse.getMsg(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

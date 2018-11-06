@@ -182,6 +182,8 @@ public class AddStudentManulkFragment extends BaseFragment {
                   getActivity().setResult(1001);
                 }
                 getActivity().finish();
+              }else{
+                ToastUtils.show(qcResponse.getMsg());
               }
             }
           });

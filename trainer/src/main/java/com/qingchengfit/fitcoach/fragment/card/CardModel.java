@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.card;
 
 import android.support.v4.util.ArrayMap;
-import cn.qingchengfit.card.network.CardApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
@@ -32,7 +31,6 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
-import cn.qingchengfit.saasbase.report.bean.QcResponseSaleDetail;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import com.google.gson.JsonObject;
@@ -50,15 +48,10 @@ public class CardModel implements ICardModel {
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
 
-  public static CardModel getInstance() {
-    return INSTANCE;
-  }
 
-  private static CardModel INSTANCE;
 
   @Inject public CardModel(QcRestRepository repository) {
     posApi = repository.createGetApi(CardTrainerApi.class);
-    INSTANCE = this;
     ComponentModuleManager.register(ICardModel.class, this);
   }
 
@@ -109,6 +102,7 @@ public class CardModel implements ICardModel {
                 copy.url = remote.url;
                 copy.setCheck_valid(remote.check_valid);
                 copy.setStart(remote.start);
+                copy.setName(remote.name);
                 copy.setEnd(remote.end);
                 copy.setValid_from(remote.valid_from);
                 copy.setValid_to(remote.valid_to);
