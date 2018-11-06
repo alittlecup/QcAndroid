@@ -98,10 +98,10 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   }
 
   private void upDateItem(Boolean hasSetted, int pos) {
-    if (hasSetted != null && !hasSetted) {
+    if (hasSetted != null) {
       IFlexible item = adapter.getItem(pos);
       if (item instanceof DailyWorkItem) {
-        ((DailyWorkItem) item).setRightTopText("未设置");
+        ((DailyWorkItem) item).setRightTopText(hasSetted?"":"未设置");
       }
       adapter.notifyItemChanged(pos);
     }
