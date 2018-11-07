@@ -59,7 +59,7 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.QcAppTheme);
     }
 
     @Nullable @Override
