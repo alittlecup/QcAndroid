@@ -61,41 +61,48 @@ import rx.schedulers.Schedulers;
  */
 
 public class CommonUserSearchFragment extends SaasBaseFragment
-  implements FlexibleAdapter.OnItemClickListener,FlexibleAdapter.OnUpdateListener {
+    implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.OnUpdateListener {
 
   @Inject IStaffModel iStaffModel;
 
   private List<CommonUserItem> items = new ArrayList<>();
+  private boolean isCoach = false;
 
   FragmentCommonUserSearchBinding db;
   CommonNoDataItem commonNoDataItem;
   CommonNoDataItem commonFirstItem;
   CommonFlexAdapter commonFlexAdapter;
 
-  public static void start(BaseFragment fragment, List<? extends ICommonUser> d){
+  public static void start(BaseFragment fragment, List<? extends ICommonUser> d, boolean isCoach) {
     CommonUserSearchFragment f = new CommonUserSearchFragment();
     f.initItems(d);
-    fragment.routeTo(f,"search");
+    Bundle bundle = new Bundle();
+    bundle.putBoolean("isCoach", isCoach);
+    f.setArguments(bundle);
+    fragment.routeTo(f, "search");
   }
-
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     commonFirstItem = new CommonNoDataItem(R.drawable.vd_search_grey_14dp, "输入手机号或姓名搜索");
     commonNoDataItem = new CommonNoDataItem(R.drawable.vd_img_empty_universe, "抱歉，没有找到");
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    Bundle arguments = getArguments();
+    if (arguments != null) {
+      isCoach = arguments.getBoolean("isCoach");
+    }
   }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-    @Nullable Bundle savedInstanceState) {
+      @Nullable Bundle savedInstanceState) {
     db = FragmentCommonUserSearchBinding.inflate(inflater);
     initRv();
     initSearch();
     try {
       ViewGroup v = (ViewGroup) db.layoutEarchView.getParent().getParent();
-      v.setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),0,0);
-    }catch (Exception e){
+      v.setPadding(0, MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    } catch (Exception e) {
 
     }
     return db.getRoot();
@@ -104,34 +111,34 @@ public class CommonUserSearchFragment extends SaasBaseFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     db.etSearch.requestFocus();
-    AppUtils.showKeyboard(getContext(),db.etSearch);
+    AppUtils.showKeyboard(getContext(), db.etSearch);
   }
 
   void initRv() {
     db.rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     db.rv.setItemAnimator(new SlideInDownItemAnimator());
     db.rv.addItemDecoration(
-      new FlexibleItemDecoration(getContext()).withDefaultDivider(R.layout.item_common_user)
-        .withOffset(1)
-        .withBottomEdge(true));
+        new FlexibleItemDecoration(getContext()).withDefaultDivider(R.layout.item_common_user)
+            .withOffset(1)
+            .withBottomEdge(true));
     db.rv.setAdapter(commonFlexAdapter);
   }
 
   void initSearch() {
     db.btnClose.setOnClickListener(view -> db.etSearch.setText(""));
     RxTextView.afterTextChangeEvents(db.etSearch)
-      .throttleLast(500, TimeUnit.MILLISECONDS)
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<TextViewAfterTextChangeEvent>() {
-        @Override public void onNext(TextViewAfterTextChangeEvent t) {
-          commonFlexAdapter.setSearchText(t.editable().toString());
-          if (TextUtils.isEmpty(t.editable().toString())) {
-            commonFlexAdapter.clear();
-          } else {
-            commonFlexAdapter.filterItems(items,500);
+        .throttleLast(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<TextViewAfterTextChangeEvent>() {
+          @Override public void onNext(TextViewAfterTextChangeEvent t) {
+            commonFlexAdapter.setSearchText(t.editable().toString());
+            if (TextUtils.isEmpty(t.editable().toString())) {
+              commonFlexAdapter.clear();
+            } else {
+              commonFlexAdapter.filterItems(items, 500);
+            }
           }
-        }
-      });
+        });
     commonFlexAdapter.addItem(commonFirstItem);
   }
 
@@ -148,31 +155,32 @@ public class CommonUserSearchFragment extends SaasBaseFragment
     if (item instanceof CommonUserItem) {
       Object data = ((CommonUserItem) item).getUser();
       if (data instanceof StaffShip) {//工作人员
-        routeTo("/detail/", StaffDetailParams.builder().staffShip(((StaffShip) data)).build());
-      } else if (data instanceof Staff) {//教练
-        //routeTo("/trainer/detail/", StaffDetailParams.builder().staffShip((Staff) data).build());
+        if(isCoach){//教练
+          routeTo("/trainer/detail/", TrainerDetailParams.builder().staffShip((StaffShip) data).build());
+        }else{
+          routeTo("/detail/", StaffDetailParams.builder().staffShip(((StaffShip) data)).build());
+        }
       } else if (data instanceof Invitation) {//邀请函
         Invitation invitation = (Invitation) ((CommonUserItem) item).getUser();
-        if (invitation.getStatus() ==2 || invitation.getStatus() == 3)
-          return true;
+        if (invitation.getStatus() == 2 || invitation.getStatus() == 3) return true;
         DialogSheet.builder(getContext()).addButton("撤销邀请", R.color.red, view -> {
           RxRegiste(iStaffModel.cancelInvite(invitation.getId())
-            .onBackpressureLatest()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new NetSubscribe<QcDataResponse>() {
-              @Override public void onNext(QcDataResponse qcResponse) {
-                if (ResponseConstant.checkSuccess(qcResponse)) {
-                  invitation.setStatus(3);
-                  ((CommonUserItem) item).setUser(invitation);
-                  commonFlexAdapter.notifyItemChanged(position);
-                } else {
-                  onShowError(qcResponse.getMsg());
+              .onBackpressureLatest()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new NetSubscribe<QcDataResponse>() {
+                @Override public void onNext(QcDataResponse qcResponse) {
+                  if (ResponseConstant.checkSuccess(qcResponse)) {
+                    invitation.setStatus(3);
+                    ((CommonUserItem) item).setUser(invitation);
+                    commonFlexAdapter.notifyItemChanged(position);
+                  } else {
+                    onShowError(qcResponse.getMsg());
+                  }
                 }
-              }
-            }));
-        }).addButton("重新发送邀请",R.color.text_dark, view -> {
-          routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
+              }));
+        }).addButton("重新发送邀请", R.color.text_dark, view -> {
+          routeTo("/reinvite/", StaffReInviteParams.builder().invitation(invitation).build());
         }).show();
       }
     }
@@ -180,11 +188,15 @@ public class CommonUserSearchFragment extends SaasBaseFragment
   }
 
   @Override public void onUpdateEmptyView(int size) {
-    if (size == 0 && commonNoDataItem != null && commonFirstItem != null && commonFlexAdapter != null){
-      if (TextUtils.isEmpty(commonFlexAdapter.getSearchText())){
+    if (size == 0
+        && commonNoDataItem != null
+        && commonFirstItem != null
+        && commonFlexAdapter != null) {
+      if (TextUtils.isEmpty(commonFlexAdapter.getSearchText())) {
         commonFlexAdapter.addItem(commonFirstItem);
-      }else
+      } else {
         commonFlexAdapter.addItem(commonNoDataItem);
+      }
     }
   }
 }

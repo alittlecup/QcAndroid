@@ -6,6 +6,7 @@ import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.repository.CheckoutRepository;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
@@ -30,8 +31,8 @@ public class CheckoutMoneyViewModel extends BaseViewModel {
     if (TextUtils.isEmpty(count)) {
       return false;
     }
-    Double price = Double.valueOf(count);
-    if (price > 20000) {
+    BigDecimal money = new BigDecimal(count);
+    if (money.floatValue()> 100000) {
       return true;
     } else {
       return false;

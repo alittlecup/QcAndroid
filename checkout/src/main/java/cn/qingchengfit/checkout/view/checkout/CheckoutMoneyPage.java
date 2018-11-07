@@ -23,6 +23,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.math.BigDecimal;
 
 @Leaf(module = "checkout", path = "/checkout/money") public class CheckoutMoneyPage
     extends CheckoutCounterFragment<CkPageCheckoutMoneyBinding, CheckoutMoneyViewModel>
@@ -33,8 +34,8 @@ import com.google.gson.JsonObject;
         mViewModel.enable.setValue(false);
         return;
       }
-      double v = Double.parseDouble(prices);
-      if (v > 20000 | v == 0) {
+      BigDecimal money = new BigDecimal(prices);
+      if (money.floatValue()> 100000||money.floatValue()==0) {
         mViewModel.enable.setValue(false);
       } else {
         mViewModel.enable.setValue(true);
@@ -186,8 +187,8 @@ import com.google.gson.JsonObject;
     }
     try {
       if (TextUtils.isEmpty(s)) return false;
-      float money = Float.valueOf(s);
-      if (money > 100000) {
+      BigDecimal money = new BigDecimal(s);
+      if (money.floatValue()> 100000) {
         DialogUtils.showAlert(getContext(), "单笔收款最多支持100000");
         return false;
       }

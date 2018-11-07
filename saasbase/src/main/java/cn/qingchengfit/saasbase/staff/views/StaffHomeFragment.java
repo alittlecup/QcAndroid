@@ -102,7 +102,7 @@ public class StaffHomeFragment extends BaseFragment implements StaffHomePresente
       .menu(R.menu.menu_search_flow)
       .listener(item -> {
         if (item.getItemId() == R.id.action_search){
-          CommonUserSearchFragment.start(this,presenter.getAllCommonUser());
+          CommonUserSearchFragment.start(this,presenter.getAllCommonUser(),false);
         }else if (item.getItemId() == R.id.action_flow){
           DialogSheet.builder(getContext())
             .addButton("工作人员职位与权限设置", view -> {

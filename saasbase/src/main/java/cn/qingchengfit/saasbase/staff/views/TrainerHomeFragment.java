@@ -66,7 +66,7 @@ public class TrainerHomeFragment extends StaffHomeFragment implements TrainerHom
       .menu(R.menu.menu_search_flow)
       .listener(item -> {
         if (item.getItemId() == R.id.action_search){
-          CommonUserSearchFragment.start(this,presenter.getAllCommonUser());
+          CommonUserSearchFragment.start(this,presenter.getAllCommonUser(),true);
         }else if (item.getItemId() == R.id.action_flow){
           bubbleViewUtil.closeBubble();
           DialogSheet.builder(getContext())
