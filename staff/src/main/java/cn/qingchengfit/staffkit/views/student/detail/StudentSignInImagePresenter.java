@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcResponseSignInImg;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.model.responese.SignInImg;
 import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ public class StudentSignInImagePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrap studentWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     MVPView view;
 
     @Inject public StudentSignInImagePresenter() {
@@ -54,7 +54,7 @@ public class StudentSignInImagePresenter extends BasePresenter {
     }
 
     public void querySignInList(String staffid) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSignInImages(staffid, studentWrapper.id(), gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -80,7 +80,7 @@ public class StudentSignInImagePresenter extends BasePresenter {
         HashMap<String, Object> body = new HashMap<>();
         body.put("user_id", studentWrapper.id());
         body.put("photo", img);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcUploadStuImg(staffid, gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

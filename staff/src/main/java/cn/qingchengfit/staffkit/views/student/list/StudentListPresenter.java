@@ -14,7 +14,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import timber.log.Timber;
  */
 public class StudentListPresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentAction studentAction;
@@ -97,7 +97,7 @@ public class StudentListPresenter extends BasePresenter {
         HashMap<String, Object> params = GymUtils.getParams(gymWrapper.getCoachService(), gymWrapper.getBrand(), shopid);
         params.put("key", PermissionServerUtils.MANAGE_COSTS);
         params.put("method", "post");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCardBundldStudents(staffid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -160,7 +160,7 @@ public class StudentListPresenter extends BasePresenter {
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllStudents(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .flatMap(qcResponseAllStudent -> {

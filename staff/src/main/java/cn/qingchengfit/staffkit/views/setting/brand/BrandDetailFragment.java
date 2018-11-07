@@ -28,7 +28,7 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.BrandGymsAdapter;
@@ -85,7 +85,7 @@ public class BrandDetailFragment extends BaseFragment {
   AppBarLayout myhomeAppBar;
   RecyclerView recyclerview;
   BrandGymsAdapter adapter;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject QcDbManager qcDbManager;
   LinearLayout noBrandShop;
   private List<Shop> datas = new ArrayList<>();
@@ -194,7 +194,7 @@ public class BrandDetailFragment extends BaseFragment {
 
   private void deleteGym(int pos) {
     if (pos - 1 < datas.size()) {
-      RxRegiste(restRepository.getPost_api()
+      RxRegiste(restRepository.getStaffAllApi()
           .qcDelGym(datas.get(pos - 1).id)
           .observeOn(Schedulers.io())
           .onBackpressureBuffer()
@@ -231,7 +231,7 @@ public class BrandDetailFragment extends BaseFragment {
 
   public void freshData() {
     if (mBrandId == null || TextUtils.isEmpty(mBrandId)) return;
-    sp = restRepository.getGet_api()
+    sp = restRepository.getStaffAllApi()
         .qcGetBrandAllShops(App.staffId, mBrandId)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

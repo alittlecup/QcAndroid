@@ -9,7 +9,7 @@ import cn.qingchengfit.model.responese.SigninNoticeConfigs;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.SignInNoticeConfigEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +25,9 @@ import rx.schedulers.Schedulers;
 public class FixCheckinPresenter extends BasePresenter {
 
     public PresenterView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public FixCheckinPresenter(RestRepository restRepository) {
+    @Inject public FixCheckinPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -63,7 +63,7 @@ public class FixCheckinPresenter extends BasePresenter {
     public void getConfigs() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("keys", "app_checkin_notification");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCheckinNotiConfigs(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -93,7 +93,7 @@ public class FixCheckinPresenter extends BasePresenter {
         configs.add(config);
         body.setConfigs(configs);
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPutCheckinNoticeCOnfig(App.staffId, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

@@ -28,7 +28,7 @@ import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -67,7 +67,7 @@ public class OutExcelFragment extends BaseFragment {
 	CommonInputView email;
 	Button comfirm;
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject GymBaseInfoAction gymBaseInfoAction;
@@ -166,7 +166,7 @@ public class OutExcelFragment extends BaseFragment {
 
         checkBtn();
 
-        restRepository.getGet_api()
+        restRepository.getStaffAllApi()
             .qcGetBrand(loginStatus.staff_id(), gymWrapper.brand_id())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -318,7 +318,7 @@ public class OutExcelFragment extends BaseFragment {
                     body.query = jsonObject;
                 }
                 showLoading();
-                RxRegiste(restRepository.getPost_api()
+                RxRegiste(restRepository.getStaffAllApi()
                     .qcOutExcel(loginStatus.staff_id(), body)
                     .observeOn(AndroidSchedulers.mainThread())
                     .onBackpressureBuffer()

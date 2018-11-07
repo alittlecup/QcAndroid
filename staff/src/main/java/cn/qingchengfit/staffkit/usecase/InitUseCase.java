@@ -7,15 +7,18 @@ import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.utils.CrashUtils;
+import java.net.SocketTimeoutException;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * power by
@@ -31,51 +34,71 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/2/23 2016.
  */
 public class InitUseCase {
-    RestRepository restRepository;
+  StaffRespository restRepository;
 
-    @Inject public InitUseCase(RestRepository restRepository) {
-        this.restRepository = restRepository;
-    }
+  @Inject public InitUseCase(StaffRespository restRepository) {
+    this.restRepository = restRepository;
+  }
 
-    public Subscription createBrand(CreatBrandBody body, Action1<QcDataResponse<CreatBrand>> action1, Action1<Throwable> error) {
-        return restRepository.qcCreateBrand(body)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, error);
-    }
+  public Subscription createBrand(CreatBrandBody body, Action1<QcDataResponse<CreatBrand>> action1,
+      Action1<Throwable> error) {
+    return restRepository.getStaffAllApi()
+        .qcCreatBrand(body)
+        .retry(new Func2<Integer, Throwable, Boolean>() {
+          @Override public Boolean call(Integer integer, Throwable throwable) {
+            return integer < 3 && throwable instanceof SocketTimeoutException;
+          }
+        })
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, error);
+  }
 
-    public Subscription systemInit(SystemInitBody body, Action1<QcResponseSystenInit> action1) {
-        return restRepository.qcSystemInit(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    CrashUtils.sendCrash(throwable);
-                }
-            });
-    }
+  public Subscription systemInit(SystemInitBody body, Action1<QcResponseSystenInit> action1) {
+    return restRepository.getStaffAllApi()
+        .qcSystemInit(body)
+        .retry(new Func2<Integer, Throwable, Boolean>() {
+          @Override public Boolean call(Integer integer, Throwable throwable) {
+            return integer < 3 && throwable instanceof SocketTimeoutException;
+          }
+        })
+        .doOnError(throwable -> {
+          if (throwable != null) Timber.e("retrofit:" + throwable.getMessage());
+        })
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            CrashUtils.sendCrash(throwable);
+          }
+        });
+  }
 
-    public Subscription getBrandList(Action1<QcDataResponse<BrandsResponse>> action1) {
-        return restRepository.getGet_api()
-            .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    CrashUtils.sendCrash(throwable);
-                }
-            });
-    }
+  public Subscription getBrandList(Action1<QcDataResponse<BrandsResponse>> action1) {
+    return restRepository.getStaffAllApi()
+        .qcGetBrands(App.staffId)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            CrashUtils.sendCrash(throwable);
+          }
+        });
+  }
 
-    public Subscription createGym(GymBody body, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
-            .qcCreateGym(App.staffId, body.brand_id, body)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    CrashUtils.sendCrash(throwable);
-                }
-            });
-    }
+  public Subscription createGym(GymBody body, Action1<QcResponse> action1) {
+    return restRepository.getStaffAllApi()
+        .qcCreateGym(App.staffId, body.brand_id, body)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            CrashUtils.sendCrash(throwable);
+          }
+        });
+  }
 }

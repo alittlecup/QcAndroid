@@ -13,7 +13,7 @@ import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.List;
 import javax.inject.Inject;
@@ -45,9 +45,9 @@ public class ScoreHomePresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ScoreHomePresenter(RestRepositoryV2 restRepository) {
+    @Inject public ScoreHomePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -86,7 +86,7 @@ public class ScoreHomePresenter extends BasePresenter {
      */
     public void getScoreStatus() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoreStatus(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoreStatus(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreStatus>() {
             @Override protected void _onNext(ScoreStatus scoreStatus) {
                 view.onScoreStatus(scoreStatus.getModule().isScore());
@@ -103,7 +103,7 @@ public class ScoreHomePresenter extends BasePresenter {
      */
     public void getScoreRanks() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoresRank(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoresRank(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreRankResponse>() {
             @Override protected void _onNext(ScoreRankResponse scoreRankResponse) {
                 view.onScoreRanks(scoreRankResponse.ranks);

@@ -17,7 +17,7 @@ import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +32,9 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
     private MVPView view;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SigninConfigWradrobePresenter(RestRepositoryV2 restRepository) {
+    @Inject public SigninConfigWradrobePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -44,7 +44,7 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
         //        params.put("keys", "user_checkin_with_locker");
 
         Observable observable =
-            restRepository.getApi(Get_Api.class).qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
+            restRepository.getStaffAllApi().qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
 
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInConfig.Data>() {
             @Override protected void _onNext(SignInConfig.Data signInConfig) {
@@ -61,7 +61,7 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
 
         HashMap<String, Object> params = gymWrapper.getParams();
         Observable observable =
-            ((Get_Api) restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, ShopConfigs.CHECK_OUT_WITH_RETURN_LOCKER, params);
+            restRepository.getStaffAllApi().qcGetShopConfig(App.staffId, ShopConfigs.CHECK_OUT_WITH_RETURN_LOCKER, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInConfig.Data>() {
             @Override protected void _onNext(SignInConfig.Data signInConfig) {
                 view.onGetSignOutConfig(signInConfig.configs);
@@ -87,7 +87,7 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
     //    configs.add(config);
     //    ShopConfigBody body = new ShopConfigBody();
     //    body.setConfigs(configs);
-    //    Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
+    //    Observable observable = restRepository.getStaffAllApi().qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
     //    RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
     //        @Override protected void _onNext(Object o) {
     //            view.onCheckInConfigComplete();
@@ -112,7 +112,7 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
         }
         ShopConfigBody body = new ShopConfigBody();
         body.setConfigs(configs);
-        Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
+        Observable observable = restRepository.getStaffAllApi().qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onCheckOutConfigComplete();

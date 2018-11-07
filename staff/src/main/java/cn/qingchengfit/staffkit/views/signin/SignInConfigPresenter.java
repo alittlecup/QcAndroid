@@ -16,7 +16,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,9 +34,9 @@ public class SignInConfigPresenter extends BasePresenter {
     PublishSubject<ActivityLifeCycleEvent> lifecycleSubject = PublishSubject.create();
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SignInConfigPresenter(RestRepositoryV2 restRepository) {
+    @Inject public SignInConfigPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -74,7 +74,7 @@ public class SignInConfigPresenter extends BasePresenter {
         SignInCostBody body = new SignInCostBody();
         body.setShop_id(gymWrapper.shop_id());
         body.setCard_costs(card_costs);
-        Observable observable = restRepository.postApi(Post_Api.class).qcPutSignInCostConfig(App.staffId, params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPutSignInCostConfig(App.staffId, params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onCostConfigSuccess();
@@ -96,7 +96,7 @@ public class SignInConfigPresenter extends BasePresenter {
         configs.add(config);
         ShopConfigBody body = new ShopConfigBody();
         body.setConfigs(configs);
-        Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
+        Observable observable = restRepository.getStaffAllApi().qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onCheckInConfigComplete();
@@ -107,7 +107,7 @@ public class SignInConfigPresenter extends BasePresenter {
                 view.onFail();
             }
         }, ActivityLifeCycleEvent.PAUSE, lifecycleSubject));
-        //        RxRegiste(restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, coachService.getId(), coachService.getModel(), body)
+        //        RxRegiste(restRepository.getStaffAllApi().qcShopConfigs(App.staffId, coachService.getId(), coachService.getModel(), body)
       //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<QcResponse>() {
@@ -135,7 +135,7 @@ public class SignInConfigPresenter extends BasePresenter {
         ShopConfigBody body = new ShopConfigBody();
         body.setConfigs(configs);
 
-        Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
+        Observable observable = restRepository.getStaffAllApi().qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onCheckOutConfigComplete();
@@ -147,7 +147,7 @@ public class SignInConfigPresenter extends BasePresenter {
             }
         }, ActivityLifeCycleEvent.PAUSE, lifecycleSubject));
 
-        //                RxRegiste(restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, coachService.getId(), coachService.getModel(), body)
+        //                RxRegiste(restRepository.getStaffAllApi().qcShopConfigs(App.staffId, coachService.getId(), coachService.getModel(), body)
       //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<QcResponse>() {
@@ -171,8 +171,7 @@ public class SignInConfigPresenter extends BasePresenter {
         //        params.put("keys", "user_checkin_with_locker");
 
         Observable observable =
-            restRepository.getApi(Get_Api.class).qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
-        //        Observable observable = ((Get_Api)restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, params);
+            restRepository.getStaffAllApi().qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
 
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInConfig.Data>() {
             @Override protected void _onNext(SignInConfig.Data signInConfig) {
@@ -185,30 +184,15 @@ public class SignInConfigPresenter extends BasePresenter {
             }
         }));
 
-        //        RxRegiste(((Get_Api)restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, params)
-      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(new Action1<SignInConfig>() {
-        //                    @Override
-        //                    public void call(SignInConfig signInConfig) {
-        //                        view.onGetSignInConfig(signInConfig);
-        //                    }
-        //                }, new Action1<Throwable>() {
-        //                    @Override
-        //                    public void call(Throwable throwable) {
-        //                        Timber.e(throwable.getMessage());
-        //                        view.onFail();
-        //                    }
-        //                }));
+
     }
 
     public void getSignOutConfig() {
 
         HashMap<String, Object> params = gymWrapper.getParams();
-        //        params.put("keys", "check_out_with_return_locker");
 
         Observable observable =
-            ((Get_Api) restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, ShopConfigs.CHECK_OUT_WITH_RETURN_LOCKER, params);
+            restRepository.getStaffAllApi().qcGetShopConfig(App.staffId, ShopConfigs.CHECK_OUT_WITH_RETURN_LOCKER, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInConfig.Data>() {
             @Override protected void _onNext(SignInConfig.Data signInConfig) {
                 view.onGetSignOutConfig(signInConfig.configs);
@@ -220,27 +204,13 @@ public class SignInConfigPresenter extends BasePresenter {
             }
         }));
 
-        //        RxRegiste(((Get_Api)restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, params)
-      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(new Action1<SignInConfig>() {
-        //                    @Override
-        //                    public void call(SignInConfig signInConfig) {
-        //                        view.onGetSignOutConfig(signInConfig);
-        //                    }
-        //                }, new Action1<Throwable>() {
-        //                    @Override
-        //                    public void call(Throwable throwable) {
-        //                        Timber.e(throwable.getMessage());
-        //                        view.onFail();
-        //                    }
-        //                }));
+
     }
 
     public void getCardCostList() {
         HashMap<String, Object> params = gymWrapper.getParams();
 
-        Observable observable = ((Get_Api) restRepository.getApi(Get_Api.class)).qcGetSignInCostConfig(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {
             @Override protected void _onNext(SignInCardCostBean.Data signInCardCostBean) {
                 view.onGetCostList(signInCardCostBean.card_costs);
@@ -252,21 +222,6 @@ public class SignInConfigPresenter extends BasePresenter {
             }
         }));
 
-        //        RxRegiste(((Get_Api)restRepository.getApi(Get_Api.class)).qcGetSignInCostConfig(App.staffId, params)
-      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(new Action1<SignInCardCostBean>() {
-        //                    @Override
-        //                    public void call(SignInCardCostBean signInCardCostBean) {
-        //                        view.onGetCostList(signInCardCostBean);
-        //                    }
-        //                }, new Action1<Throwable>() {
-        //                    @Override
-        //                    public void call(Throwable throwable) {
-        //                        Timber.e(throwable.getMessage());
-        //                        view.onFail();
-        //                    }
-        //                }));
     }
 
     public interface SignInConfigView extends PView {

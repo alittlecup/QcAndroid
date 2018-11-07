@@ -11,7 +11,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.GymUtils;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class ModuleConfigsPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private MVPView view;
 
     @Inject public ModuleConfigsPresenter() {
@@ -33,7 +33,7 @@ public class ModuleConfigsPresenter extends BasePresenter {
 
     public void getModuleConfigs() {
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetStudentScoreStatus(App.staffId, GymUtils.getParamsV2(gymWrapper.getCoachService(), null))
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -48,7 +48,7 @@ public class ModuleConfigsPresenter extends BasePresenter {
     public void putModuleConfigs(boolean open) {
         ArrayMap<String, Object> body = new ArrayMap<>();
         body.put("checkin", open);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPutScoreStatus(App.staffId, GymUtils.getParamsV2(gymWrapper.getCoachService(), null), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

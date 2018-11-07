@@ -12,7 +12,7 @@ import cn.qingchengfit.model.responese.TrackFilterOrigins;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,12 +47,12 @@ import timber.log.Timber;
 public class SourcePresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private int type;
 
-    @Inject public SourcePresenter(RestRepository restRepository) {
+    @Inject public SourcePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -98,7 +98,7 @@ public class SourcePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         HashMap<String, Object> body = new HashMap<>();
         body.put("name", name);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAddOrigin(loginStatus.staff_id(), params, body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -119,7 +119,7 @@ public class SourcePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
 
         if (type == 3) {
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetUsersStudentsOrigins(App.staffId, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -153,7 +153,7 @@ public class SourcePresenter extends BasePresenter {
                     params.put("seller_id", 0);
                 }
             }
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetTrackStudentsOrigins(App.staffId, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

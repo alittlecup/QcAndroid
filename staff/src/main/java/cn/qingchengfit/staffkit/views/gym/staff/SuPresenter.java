@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -32,9 +32,9 @@ public class SuPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private StaffDetailView view;
-    private RestRepository mRestRepository;
+    private StaffRespository mRestRepository;
 
-    @Inject public SuPresenter(RestRepository useCase) {
+    @Inject public SuPresenter(StaffRespository useCase) {
         this.mRestRepository = useCase;
     }
 
@@ -68,7 +68,7 @@ public class SuPresenter extends BasePresenter {
     }
 
     public void onFixStaff(ManagerBody body, String staffid, String userid) {
-        RxRegiste(mRestRepository.getPost_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcUpdateManager(staffid, userid, gymWrapper.id(), gymWrapper.model(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -28,7 +28,7 @@ import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Router;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
 import cn.qingchengfit.staffkit.views.signin.zq.presenter.ZqAccessPresenter;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
@@ -67,7 +67,7 @@ public class SigninConfigListFragment extends BaseFragment
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-  @Inject RestRepositoryV2 restRepository;
+  @Inject StaffRespository restRepository;
   @Inject ModuleConfigsPresenter presenter;
   @Inject IPermissionModel permissionModel;
 	TextView tvSigninTypeSetted;
@@ -247,7 +247,7 @@ public class SigninConfigListFragment extends BaseFragment
     swOpen.setExpanded(moduleBean.isCheckin());
 
     Observable observable =
-        ((Get_Api) restRepository.getApi(Get_Api.class)).qcGetSignInCostConfig(App.staffId,
+        restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId,
             gymWrapper.getParams());
     RxRegiste(HttpUtil.getInstance()
         .toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {

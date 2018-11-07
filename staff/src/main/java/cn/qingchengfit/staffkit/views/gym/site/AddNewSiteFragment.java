@@ -24,7 +24,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.AddSiteEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
@@ -61,7 +61,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
   CommonInputView usage;
   Button btn;
   TextView toolbarTitile;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject GymWrapper gymWrapper;
   private DialogSheet sheet;
   private boolean isSupportPrivate = true;
@@ -172,7 +172,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     } else if (getArguments().getInt("type") == Configs.INIT_TYPE_ADD) {
       Space space =
           new Space(name.getContent(), count.getContent(), isSupportPrivate, isSupportTeam);
-      restRepository.getPost_api()
+      restRepository.getStaffAllApi()
           .qcCreateSpace(App.staffId, gymWrapper.id(), gymWrapper.model(), "", space)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -194,7 +194,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     } else if (getArguments().getInt("type") == Configs.INIT_TYPE_CHOOSE) {
       Space space =
           new Space(name.getContent(), count.getContent(), isSupportPrivate, isSupportTeam);
-      restRepository.getPost_api()
+      restRepository.getStaffAllApi()
           .qcCreateSpace(App.staffId, gymWrapper.id(), gymWrapper.model(), null, space)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())

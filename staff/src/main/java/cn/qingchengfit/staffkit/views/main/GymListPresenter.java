@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
@@ -37,11 +37,11 @@ public class GymListPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
     @Inject GymBaseInfoAction gymBaseInfoAction;
-    private RestRepository mRestRepository;
+    private StaffRespository mRestRepository;
     private GymListView mView;
     private Disposable dispose;
 
-    @Inject public GymListPresenter(RestRepository restRepository) {
+    @Inject public GymListPresenter(StaffRespository restRepository) {
         this.mRestRepository = restRepository;
     }
 
@@ -93,7 +93,7 @@ public class GymListPresenter extends BasePresenter {
     }
 
     void loadData() {
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetCoachService(loginStatus.staff_id(), null)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -29,7 +29,7 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.debug.LogView;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.staff.StaffStaffActivity;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
 import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
@@ -220,11 +220,10 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     QCDbManagerImpl qcDbManager = new QCDbManagerImpl(this);
     appCompoent = DaggerAppComponent.builder()
         .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
-            new GymWrapper.Builder().build(), new RestRepository(), new BaseRouter(),
+            new GymWrapper.Builder().build(), new BaseRouter(),
             new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),
             new QCDbManagerImpl(this)))
         .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
-        //.studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
         .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))
         .realcardModule(new RealcardModule(new RealcardWrapper(null)))
         .trainMoudle(new TrainMoudle(new TrainIds.Builder().build()))

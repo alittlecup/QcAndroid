@@ -21,7 +21,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -65,7 +65,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
 	PhoneEditText phoneNum;
 	PasswordView checkcode;
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject ILoginModel loginModel;
     private Brand brand;
 
@@ -105,7 +105,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                     }
                     if (phoneNum.checkPhoneNum() && checkcode.checkValid()) {
                         showLoading();
-                        RxRegiste(restRepository.getPost_api()
+                        RxRegiste(restRepository.getStaffAllApi()
                             .qcChangeBrandUser(brand.getId(), new ChangeBrandCreatorBody.Builder().username(name.getContent())
                                 .code(checkcode.getCode())
                                 .gender(courseTypeRg.getCheckedRadioButtonId() == R.id.gender_female ? 1 : 0)

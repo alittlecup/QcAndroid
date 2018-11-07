@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.TrackStudents;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -43,13 +43,13 @@ import timber.log.Timber;
 public class FollowUpStatusPresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     HashMap<String, Object> params;
     int curPage = 1, totalPages = 1;
 
-    @Inject public FollowUpStatusPresenter(RestRepository restRepository) {
+    @Inject public FollowUpStatusPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -110,13 +110,13 @@ public class FollowUpStatusPresenter extends BasePresenter {
             Observable<QcDataResponse<TrackStudents>> observable;
             switch (changeStautsType) {
                 case 1:
-                    observable = restRepository.getGet_api().qcGetTrackStudentFollow(App.staffId, params);
+                    observable = restRepository.getStaffAllApi().qcGetTrackStudentFollow(App.staffId, params);
                     break;
                 case 2:
-                    observable = restRepository.getGet_api().qcGetTrackStudentMember(App.staffId, params);
+                    observable = restRepository.getStaffAllApi().qcGetTrackStudentMember(App.staffId, params);
                     break;
                 default:
-                    observable = restRepository.getGet_api().qcGetTrackStudentCreate(App.staffId, params);
+                    observable = restRepository.getStaffAllApi().qcGetTrackStudentCreate(App.staffId, params);
                     break;
             }
 

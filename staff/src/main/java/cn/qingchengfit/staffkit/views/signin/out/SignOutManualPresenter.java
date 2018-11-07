@@ -12,7 +12,7 @@ import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +32,9 @@ public class SignOutManualPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrap studentWrapper;
     private SignOutManualView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SignOutManualPresenter(RestRepository restRepository) {
+    @Inject public SignOutManualPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -72,7 +72,7 @@ public class SignOutManualPresenter extends BasePresenter {
         params.put("status", "0");
         params.put("user_id", studentWrapper.id());
         params.put("show_all", "1");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCheckInList(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -93,7 +93,7 @@ public class SignOutManualPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         SignOutBody body = new SignOutBody();
         body.setCheckin_id(checkInId);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPutCheckOutMaual(App.staffId, params, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -118,7 +118,7 @@ public class SignOutManualPresenter extends BasePresenter {
         HashMap<String, Object> body = new HashMap<>();
         body.put("user_id", studentWrapper.id());
         body.put("photo", img);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcUploadStuImg(loginStatus.staff_id(), gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -37,7 +37,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
@@ -101,7 +101,7 @@ public class UpgrateGymFragment extends BaseFragment {
 	TextView tvFirstDiscountHide;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
-  @Inject QcRestRepository qcRestRepository;
+  @Inject StaffRespository staffRespository;
   boolean mIsPro;
   private CommonFlexAdapter mFunAdapter;
   private List<AbstractFlexibleItem> mFunDatas = new ArrayList<>();
@@ -238,7 +238,7 @@ public class UpgrateGymFragment extends BaseFragment {
     rvFunction.setAdapter(mFunAdapter);
 
     tvBrandName.setText(gymWrapper.brand_name() + gymWrapper.name());
-    RxRegiste(new RestRepository().getGet_api()
+    RxRegiste(staffRespository.getStaffAllApi()
       .qcGetGymPay(App.staffId, GymUtils.getParams(gymWrapper.getCoachService(), null))
       .onBackpressureBuffer()
       .subscribeOn(Schedulers.io())
@@ -336,7 +336,7 @@ public class UpgrateGymFragment extends BaseFragment {
       .commit(getContext());
 
     showLoading();
-    RxRegiste(new RestRepository().getPost_api()
+    RxRegiste(staffRespository.getStaffAllApi()
       .qcCharge(new RenewBody.Builder().app_id(getString(R.string.wechat_code))
         .type("gym_time")
         .channel(12)
@@ -429,7 +429,7 @@ public class UpgrateGymFragment extends BaseFragment {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
       if (requestCode == 404) {
-        RxRegiste(new RestRepository().getGet_api()
+        RxRegiste(staffRespository.getStaffAllApi()
           .qcGetGymDetail(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model())
           .onBackpressureLatest()
           .subscribeOn(Schedulers.io())

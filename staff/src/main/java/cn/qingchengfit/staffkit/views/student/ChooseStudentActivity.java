@@ -213,32 +213,6 @@ public class ChooseStudentActivity extends BaseActivity {
         }
 
         ShowLoading("正在导入,请稍后...");
-        //        QcCloudClient.getApi().postApi
-        //                .qcAddStudents(App.coachid, new PostStudents(choosenstudentBeans))
-      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(new Subscriber<QcResponse>() {
-        //                    @Override
-        //                    public void onCompleted() {
-        //                        loadingDialog.dismiss();
-        //                    }
-        //
-        //                    @Override
-        //                    public void onError(Throwable e) {
-        //                        loadingDialog.dismiss();
-        //                    }
-        //
-        //                    @Override
-        //                    public void onNext(QcResponse qcResponse) {
-        //                        if (qcResponse.status == ResponseResult.SUCCESS) {
-        //                            Toast.makeText(App.AppContex, "添加成功", Toast.LENGTH_SHORT).show();
-        //                            setResult(400);
-        //                            ChooseStudentActivity.this.finish();
-        //                        } else {
-        //                            Toast.makeText(App.AppContex, "添加失败", Toast.LENGTH_SHORT).show();
-        //                        }
-        //                    }
-        //                });
 
     }
 

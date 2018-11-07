@@ -16,7 +16,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CrashUtils;
@@ -51,10 +51,10 @@ public class GymDetailPresenter extends BasePresenter {
   @Inject SerPermisAction serPermisAction;
   private Subscription sp;
   private Subscription spWelcome;
-  private RestRepository restRepository;
+  private StaffRespository restRepository;
   private Subscription spUnreadCount;
 
-  @Inject public GymDetailPresenter(GymUseCase gymUseCase, RestRepository restRepository) {
+  @Inject public GymDetailPresenter(GymUseCase gymUseCase, StaffRespository restRepository) {
     this.gymUseCase = gymUseCase;
     this.restRepository = restRepository;
   }
@@ -100,7 +100,7 @@ public class GymDetailPresenter extends BasePresenter {
   }
 
   void manageBrand() {
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetBrands(loginStatus.staff_id())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -121,7 +121,7 @@ public class GymDetailPresenter extends BasePresenter {
 
   void updatePermission() {
 
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -182,7 +182,7 @@ public class GymDetailPresenter extends BasePresenter {
   }
 
   public void quitGym() {
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

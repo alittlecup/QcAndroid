@@ -14,7 +14,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.widgets.AlphabetView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +30,9 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     @Inject StudentAction studentAction;
     private MVPView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public MutiChooseStudentPresenterPresenter(RestRepository restRepository) {
+    @Inject public MutiChooseStudentPresenterPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -84,7 +84,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", PermissionServerUtils.LOCKER_SETTING);
         params.put("method", method);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCardBundldStudents(staffid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

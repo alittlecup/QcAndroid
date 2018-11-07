@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.AddLockerBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.StringUtils;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,10 +39,10 @@ public class WardrobeAddPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
     private MVPView view;
 
-    @Inject public WardrobeAddPresenter(RestRepository restRepository) {
+    @Inject public WardrobeAddPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -52,7 +52,7 @@ public class WardrobeAddPresenter extends BasePresenter {
             return;
         }
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAddLocker(staffid, gymWrapper.getParams(), addLockerBody)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

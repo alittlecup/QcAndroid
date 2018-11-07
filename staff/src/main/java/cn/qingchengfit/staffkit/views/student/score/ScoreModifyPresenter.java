@@ -11,7 +11,7 @@ import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.GymUtils;
 import javax.inject.Inject;
@@ -44,9 +44,9 @@ public class ScoreModifyPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrap studentBean;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ScoreModifyPresenter(RestRepositoryV2 restRepository) {
+    @Inject public ScoreModifyPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -85,7 +85,7 @@ public class ScoreModifyPresenter extends BasePresenter {
         ArrayMap<String, Object> body = new ArrayMap<>();
         body.put("change_score", Double.valueOf(scoreChange));
         body.put("remarks", remarks);
-        Observable observable = restRepository.getApi(Post_Api.class).qcPostScoreHistory(App.staffId, studentBean.id(), params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPostScoreHistory(App.staffId, studentBean.id(), params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onSuccess();

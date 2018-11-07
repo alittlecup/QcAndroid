@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.SettingUsecase;
 import cn.qingchengfit.model.responese.StudentTrackPreview;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,10 +47,10 @@ public class FollowUpPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
     private SettingUsecase usecase;
 
-    @Inject public FollowUpPresenter(RestRepository restRepository, SettingUsecase usecase) {
+    @Inject public FollowUpPresenter(StaffRespository restRepository, SettingUsecase usecase) {
         this.restRepository = restRepository;
         this.usecase = usecase;
     }
@@ -87,7 +87,7 @@ public class FollowUpPresenter extends BasePresenter {
 
     public void getStudentTrackPreview() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetTrackStudentPreview(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -108,7 +108,7 @@ public class FollowUpPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("start", DateUtils.minusDay(new Date(), 29));
         params.put("end", DateUtils.getStringToday());
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetTrackStudentsStatistics(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.LockerWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -21,9 +21,9 @@ public class WardrobeEditPresenter extends BasePresenter {
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   private MVPView view;
-  private RestRepository restRepository;
+  private StaffRespository restRepository;
 
-  @Inject public WardrobeEditPresenter(RestRepository restRepository) {
+  @Inject public WardrobeEditPresenter(StaffRespository restRepository) {
     this.restRepository = restRepository;
   }
 
@@ -32,7 +32,7 @@ public class WardrobeEditPresenter extends BasePresenter {
   }
 
   public void completeWardrobe(String staffid, Long lockerid, EditWardrobeBody body) {
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcEditLocker(staffid, lockerid + "", gymWrapper.getParams(), body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -53,7 +53,7 @@ public class WardrobeEditPresenter extends BasePresenter {
   }
 
   public void delWardrobe(String staffid, Long lockerid) {
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcDelLocker(staffid, lockerid + "", gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

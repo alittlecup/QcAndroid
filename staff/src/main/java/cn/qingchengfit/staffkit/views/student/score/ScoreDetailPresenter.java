@@ -14,7 +14,7 @@ import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.List;
@@ -48,9 +48,9 @@ public class ScoreDetailPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrap studentBean;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ScoreDetailPresenter(RestRepositoryV2 restRepository) {
+    @Inject public ScoreDetailPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -86,7 +86,7 @@ public class ScoreDetailPresenter extends BasePresenter {
 
     public void getScoreHistory() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoreHistory(App.staffId, studentBean.id(), params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoreHistory(App.staffId, studentBean.id(), params);
         HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreHistoryResponse>() {
             @Override protected void _onNext(ScoreHistoryResponse rule) {
                 if (view != null) view.onHsitory(rule.histories);
@@ -103,7 +103,7 @@ public class ScoreDetailPresenter extends BasePresenter {
 
         ArrayMap<String, Object> body = new ArrayMap<>();
         body.put("score", true);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScore(App.staffId, studentBean.id(), params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScore(App.staffId, studentBean.id(), params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<Score>() {
             @Override protected void _onNext(Score score) {
                 view.onStudentScore(score.shopbrand.score);

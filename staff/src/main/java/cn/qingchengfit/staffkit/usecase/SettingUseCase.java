@@ -5,13 +5,16 @@ import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
+import java.net.SocketTimeoutException;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * power by
@@ -28,47 +31,52 @@ import rx.schedulers.Schedulers;
  */
 public class SettingUseCase {
 
-    private RestRepository restRepository;
+  private StaffRespository restRepository;
 
-    @Inject public SettingUseCase(RestRepository restRepository) {
-        this.restRepository = restRepository;
-    }
+  @Inject public SettingUseCase(StaffRespository restRepository) {
+    this.restRepository = restRepository;
+  }
 
+  public Subscription report(FeedBackBody body, Action1<QcResponse> action1) {
+    return restRepository.getStaffAllApi()
+        .qcFeedBack(body)
+        .retry(new Func2<Integer, Throwable, Boolean>() {
+          @Override public Boolean call(Integer integer, Throwable throwable) {
+            return integer < 3 && throwable instanceof SocketTimeoutException;
+          }
+        })
+        .doOnError(throwable -> {
+          if (throwable != null) Timber.e("retrofit:" + throwable.getMessage());
+        })
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1);
+  }
 
+  public Subscription getSelfInfo(Action1<QcDataResponse<StaffResponse>> action1) {
+    return restRepository.getStaffAllApi()
+        .qcGetSelfInfo(App.staffId)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
 
+          }
+        });
+  }
 
+  public Subscription fixSelfInfo(Staff staffbean, Action1<QcResponse> action1) {
+    return restRepository.getStaffAllApi()
+        .qcModifyStaffs(App.staffId, staffbean)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
 
-    public Subscription report(FeedBackBody body, Action1<QcResponse> action1) {
-      return restRepository.qcReport(body)
-          .onBackpressureBuffer()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(action1);
-    }
-
-
-
-    public Subscription getSelfInfo(Action1<QcDataResponse<StaffResponse>> action1) {
-        return restRepository.getGet_api()
-            .qcGetSelfInfo(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            });
-    }
-
-    public Subscription fixSelfInfo(Staff staffbean, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
-            .qcModifyStaffs(App.staffId, staffbean)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            });
-    }
+          }
+        });
+  }
 }

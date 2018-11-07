@@ -13,7 +13,7 @@ import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +31,9 @@ public class SignOutListPresenter extends BasePresenter {
     public SignOutListView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SignOutListPresenter(RestRepository restRepository) {
+    @Inject public SignOutListPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -78,7 +78,7 @@ public class SignOutListPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("status", "3");
         params.put("show_all", "1");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSignInTasks(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -102,7 +102,7 @@ public class SignOutListPresenter extends BasePresenter {
         if (!TextUtils.isEmpty(modifyAt)) {
             params.put("modify_at__gt", modifyAt);
         }
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSignInTasks(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -122,7 +122,7 @@ public class SignOutListPresenter extends BasePresenter {
     public void ignor(final int position, int checkInId) {
         HashMap<String, Object> params = gymWrapper.getParams();
         SignInIgnorBody body = new SignInIgnorBody(checkInId, true);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPostIgnore(App.staffId, params, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -146,7 +146,7 @@ public class SignOutListPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         SignOutBody body = new SignOutBody();
         body.setCheckin_id(checkInId);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPutDoubleCheckout(App.staffId, params, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -173,7 +173,7 @@ public class SignOutListPresenter extends BasePresenter {
         HashMap<String, Object> body = new HashMap<>();
         body.put("user_id", studentid);
         body.put("photo", img);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcUploadStuImg(staffid, gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

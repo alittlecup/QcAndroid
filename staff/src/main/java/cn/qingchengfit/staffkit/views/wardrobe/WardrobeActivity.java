@@ -19,7 +19,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventBackPress;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.rxbus.event.EventOpenSearch;
@@ -49,7 +49,7 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
 	Button searchviewCancle;
 	LinearLayout searchview;
 	RelativeLayout toolbarLayout;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private Subscription spSearch;
@@ -118,33 +118,6 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
         getSupportFragmentManager().beginTransaction().replace(getFragId(), new WardrobeMainFragment()).commit();
     }
 
-    //public void onSearch(List<Locker> regions) {
-    //    getSupportFragmentManager().beginTransaction()
-    //        .replace(R.id.frag, SearchResultFragment.newInstance(regions))
-    //        .commitAllowingStateLoss();
-    //}
-
-    //public void searchLocker(String staffid, String key) {
-    //    HashMap<String, Object> params = gymWrapper.getParams();
-    //    params.put("q", key);
-    //
-    //    sp = restRepository.getGet_api()
-    //        .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
-    //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribe(new Action1<QcDataResponse<AllLockers>>() {
-    //            @Override public void call(QcDataResponse<AllLockers> qcResponse) {
-    //                if (ResponseConstant.checkSuccess(qcResponse)) {
-    //                    onSearch(qcResponse.data.lockers);
-    //                } else {
-    //                    ToastUtils.show(qcResponse.getMsg());
-    //                }
-    //            }
-    //        }, new Action1<Throwable>() {
-    //            @Override public void call(Throwable throwable) {
-    //                ToastUtils.show(throwable.getMessage());
-    //            }
-    //        });
-    //}
 
     @Override protected void onDestroy() {
         RxBus.getBus().unregister(EventOpenSearch.class.getName(), mOb);

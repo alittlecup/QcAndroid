@@ -9,7 +9,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.TrackSellers;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -42,11 +42,11 @@ import timber.log.Timber;
 public class TopFilterSalePresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
-    @Inject public TopFilterSalePresenter(RestRepository restRepository) {
+    @Inject public TopFilterSalePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -82,7 +82,7 @@ public class TopFilterSalePresenter extends BasePresenter {
 
     public void getFilterSelers() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetTrackStudentsFilterSalers(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

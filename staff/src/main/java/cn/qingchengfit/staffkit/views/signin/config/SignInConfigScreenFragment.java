@@ -23,7 +23,7 @@ import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -54,7 +54,7 @@ import rx.schedulers.Schedulers;
  */
 public class SignInConfigScreenFragment extends BaseFragment {
 
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
     @Inject GymFunctionFactory gymFunctionFactory;
 	TextView tvScreenUrl;
 
@@ -85,7 +85,7 @@ public class SignInConfigScreenFragment extends BaseFragment {
       });
 
       initToolbar(toolbar);
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetGymExtra(App.staffId, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

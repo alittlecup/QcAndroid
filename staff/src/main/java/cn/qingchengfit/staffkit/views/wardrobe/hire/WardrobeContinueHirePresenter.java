@@ -7,7 +7,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,9 +20,9 @@ public class WardrobeContinueHirePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public WardrobeContinueHirePresenter(RestRepository restRepository) {
+    @Inject public WardrobeContinueHirePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -36,7 +36,7 @@ public class WardrobeContinueHirePresenter extends BasePresenter {
     }
 
     public void comfirContinue(String staffid, HashMap<String, Object> body) {
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcContinueLocker(staffid, gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

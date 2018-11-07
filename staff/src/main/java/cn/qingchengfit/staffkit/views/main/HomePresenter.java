@@ -12,7 +12,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.custom.QcResponseOperator;
 import cn.qingchengfit.utils.PreferenceUtils;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ import timber.log.Timber;
  */
 public class HomePresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject SerPermisAction serPermisAction;
 
@@ -46,7 +46,7 @@ public class HomePresenter extends BasePresenter {
     private Subscription sp;
     private Subscription spBrand;
 
-    @Inject public HomePresenter(RestRepository restRepository) {
+    @Inject public HomePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -82,7 +82,7 @@ public class HomePresenter extends BasePresenter {
     }
 
     public void queryBrands() {
-        spBrand = restRepository.getGet_api()
+        spBrand = restRepository.getStaffAllApi()
             .qcGetBrands(loginStatus.staff_id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .lift(new QcResponseOperator<QcDataResponse<BrandsResponse>>())
@@ -104,7 +104,7 @@ public class HomePresenter extends BasePresenter {
     public void updatePermission() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("brand_id", PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID, ""));
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPermission(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponse -> {
@@ -120,7 +120,7 @@ public class HomePresenter extends BasePresenter {
     }
 
     public void queryHomeInfo() {
-        sp = restRepository.getGet_api()
+        sp = restRepository.getStaffAllApi()
             .qcWelcomeHome(App.staffId, PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID, ""))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

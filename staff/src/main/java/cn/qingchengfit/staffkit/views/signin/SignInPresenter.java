@@ -12,7 +12,7 @@ import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,7 +28,7 @@ import timber.log.Timber;
 public class SignInPresenter extends BasePresenter {
 
     public SignInView view;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
@@ -70,7 +70,7 @@ public class SignInPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("keys", "user_checkin_with_locker");
 
-        Observable observable = restRepository.getGet_api().qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
         HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInConfig.Data>() {
             @Override protected void _onNext(SignInConfig.Data signInConfig) {
                 if (view != null)
@@ -87,7 +87,7 @@ public class SignInPresenter extends BasePresenter {
 
     public void getSigninUrl() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCheckinUrl(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

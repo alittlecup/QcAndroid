@@ -21,7 +21,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.wardrobe.add.DistrictAddFragment;
@@ -61,7 +61,7 @@ public class ChooseRegionFragment extends BaseFragment implements FlexibleAdapte
 
 	RecyclerView rv;
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 	Toolbar toolbar;
@@ -86,7 +86,7 @@ public class ChooseRegionFragment extends BaseFragment implements FlexibleAdapte
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllRegion(App.staffId, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

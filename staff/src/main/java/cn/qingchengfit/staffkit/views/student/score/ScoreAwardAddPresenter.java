@@ -11,7 +11,7 @@ import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.GymUtils;
 import javax.inject.Inject;
 import rx.Observable;
@@ -42,9 +42,9 @@ public class ScoreAwardAddPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ScoreAwardAddPresenter(RestRepositoryV2 restRepository) {
+    @Inject public ScoreAwardAddPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -96,7 +96,7 @@ public class ScoreAwardAddPresenter extends BasePresenter {
         body.put("chargecard_enable", awardRuleBean.chargeTimes_enable);
         body.put("chargecard", awardRuleBean.chargeTimes);
 
-        Observable observable = restRepository.getApi(Post_Api.class).qcPostScoreRulesAward(App.staffId, params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPostScoreRulesAward(App.staffId, params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onSuccess();
@@ -127,7 +127,7 @@ public class ScoreAwardAddPresenter extends BasePresenter {
         body.put("chargecard_enable", awardRuleBean.chargeTimes_enable);
         body.put("chargecard", awardRuleBean.chargeTimes);
 
-        Observable observable = restRepository.getApi(Post_Api.class).qcPutScoreRulesAward(App.staffId, award_id, params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPutScoreRulesAward(App.staffId, award_id, params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onSuccess();

@@ -7,7 +7,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,11 +39,11 @@ import timber.log.Timber;
 public class ChooseOriginPresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
-    @Inject public ChooseOriginPresenter(RestRepository restRepository) {
+    @Inject public ChooseOriginPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -81,7 +81,7 @@ public class ChooseOriginPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         HashMap<String, Object> body = new HashMap<>();
         body.put("name", name);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAddOrigin(loginStatus.staff_id(), params, body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

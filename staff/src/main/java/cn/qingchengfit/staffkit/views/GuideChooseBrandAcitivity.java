@@ -20,7 +20,7 @@ public class GuideChooseBrandAcitivity extends ChooseBrandActivity {
     public void queryData() {
         if (sp != null) sp.unsubscribe();
         showLoadingTransparent();
-        sp = restRepository.getGet_api()
+        sp = restRepository.getStaffAllApi()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {

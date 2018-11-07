@@ -30,7 +30,7 @@ import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.AppUtils;
@@ -68,7 +68,7 @@ public class MutiChooseStudentActivity extends BaseActivity implements MutiChoos
 	ImageView addStudent;
 	RecyclerView recyclerView;
 	AlphabetView alphabetview;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject MutiChooseStudentPresenterPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;

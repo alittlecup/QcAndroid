@@ -22,7 +22,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.wardrobe.item.NoStudentCardItemItem;
@@ -68,7 +68,7 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment
     implements FlexibleAdapter.OnItemClickListener {
 
   RecyclerView rv;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
@@ -130,7 +130,7 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment
     mDatas.add(new PayWardrobeItem(5, null));
     mDatas.add(new PayWardrobeItem(6, null));
     mDatas.add(new SimpleTextItemItem("会员卡支付"));
-    sp = restRepository.getGet_api()
+    sp = restRepository.getStaffAllApi()
         .qcGetStudentCardsWithShopId(App.staffId, getArguments().getString("s"),
             gymWrapper.getShopParams())
         .onBackpressureBuffer()

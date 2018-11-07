@@ -8,7 +8,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.train.model.TeamDetailResponse;
@@ -25,7 +25,7 @@ import rx.schedulers.Schedulers;
 
 public class SignUpGroupDetailPresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private SignUpView signUpView;
 
     @Inject public SignUpGroupDetailPresenter() {
@@ -41,7 +41,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
     }
 
     public void queryGroupDetail(final String teamId) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetGroupDetail(teamId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<TeamDetailResponse>>() {
@@ -60,7 +60,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
     //删除分组
     public void deleteGroup(String teamId) {
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcDeleteGroup(teamId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -83,7 +83,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
         createGroupBody.setName(name);
         createGroupBody.setUser_ids(handleData(userIds));
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPostCreateGroup(createGroupBody).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -119,7 +119,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
             operationMemberBody.setUseridList(users);
         }
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPostMemberOperation(teamId, operationMemberBody)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

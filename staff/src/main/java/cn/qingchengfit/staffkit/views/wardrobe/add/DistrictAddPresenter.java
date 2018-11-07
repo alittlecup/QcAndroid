@@ -7,7 +7,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.StringUtils;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -16,7 +16,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class DistrictAddPresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -36,7 +36,7 @@ public class DistrictAddPresenter extends BasePresenter {
         HashMap<String, Object> body = new HashMap<>();
         body.put("name", name);
         body.put("region_id", region_id);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcEditLockerRegion(staffid, gymWrapper.getParams(), body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -60,7 +60,7 @@ public class DistrictAddPresenter extends BasePresenter {
 
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("region_id", id);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcDelLockerRegion(staffid, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -87,7 +87,7 @@ public class DistrictAddPresenter extends BasePresenter {
         }
         HashMap<String, Object> body = new HashMap<>();
         body.put("name", name);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAddLockerRegion(staffid, gymWrapper.getParams(), body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

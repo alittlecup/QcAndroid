@@ -32,7 +32,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.custom.DatePicker;
@@ -84,7 +84,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
 	LinearLayout scheduleFloatbg;
 	FloatingActionsMenu webFloatbtn;
 	View halfBg;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
@@ -222,7 +222,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
 
         final boolean finalP = isPrivate;
         final String finalAction = action;
-        restRepository.getGet_api()
+        restRepository.getStaffAllApi()
             .qcGetScheduleAciton(App.staffId, action, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -9,7 +9,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +25,9 @@ import rx.schedulers.Schedulers;
 public class FixNotifyPresenter extends BasePresenter {
 
     private OnGetBalanceNotifyListener onGetBalanceNotifyListener;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public FixNotifyPresenter(RestRepository restRepository) {
+    @Inject public FixNotifyPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -40,7 +40,7 @@ public class FixNotifyPresenter extends BasePresenter {
         HashMap<String, Object> params = new HashMap<>();
 
         params.put("keys", "notify_balance_cards");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetBalanceNotify(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -75,7 +75,7 @@ public class FixNotifyPresenter extends BasePresenter {
         configs.add(configsBean);
         body.setConfigs(configs);
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPostBalanceNotify(staffid, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

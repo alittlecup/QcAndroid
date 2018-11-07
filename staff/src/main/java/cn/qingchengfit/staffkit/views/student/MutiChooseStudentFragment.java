@@ -28,7 +28,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.BuyCardNextEvent;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.views.student.choose.ChooseStudentListFragment;
@@ -69,7 +69,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
 	TextView tvSelectCount;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     EditStudentInfoFragment editStudentInfoFragment;
 	Toolbar toolbar;
 	TextView toolbarTitile;
@@ -164,7 +164,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", PermissionServerUtils.MANAGE_COSTS);
         params.put("method", "post");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCardBundldStudents(loginStatus.staff_id(), params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

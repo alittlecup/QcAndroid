@@ -12,7 +12,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.chat.model.Record;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,7 +20,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SystemMsgPresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -29,7 +29,7 @@ public class SystemMsgPresenter extends BasePresenter {
     }
 
     public void querySimpleList(String json) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetNotificationIndex(json)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -46,7 +46,7 @@ public class SystemMsgPresenter extends BasePresenter {
     }
 
     public void clearNoti(String type) {
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcClearTypeNoti(new ClearNotiBody(type))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -63,7 +63,7 @@ public class SystemMsgPresenter extends BasePresenter {
     }
 
     //public void queryRecruitMsgList(){
-    //    RxRegiste(restRepository.getGet_api()
+    //    RxRegiste(restRepository.getStaffAllApi()
     //        .qcGetRecruitMessageList()
     //        .observeOn(AndroidSchedulers.mainThread())
     //        .onBackpressureBuffer()

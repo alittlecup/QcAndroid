@@ -12,7 +12,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +41,13 @@ public class CourseChoosePresenter extends BasePresenter {
     CourseChooseView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
     private List<CourseTypeSample> mAllCourse = new ArrayList<>();
     private List<CourseTypeSample> mPrivateCourse = new ArrayList<>();
     private List<CourseTypeSample> mGroupCourse = new ArrayList<>();
     private int mType = -1;
 
-    @Inject public CourseChoosePresenter(StatementUsecase usecase, RestRepository restRepository) {
+    @Inject public CourseChoosePresenter(StatementUsecase usecase, StaffRespository restRepository) {
         this.usecase = usecase;
         this.restRepository = restRepository;
     }
@@ -139,7 +139,7 @@ public class CourseChoosePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", "course_all");
         params.put("method", "get");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllCoursesPermission(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -12,7 +12,7 @@ import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
 
 public class AttendanceRankPresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -79,7 +79,7 @@ public class AttendanceRankPresenter extends BasePresenter {
         params.put("end", end);
         params.put("show_all", 1);
         if (curpage <= pages) {
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetUsersAttendances(App.staffId, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

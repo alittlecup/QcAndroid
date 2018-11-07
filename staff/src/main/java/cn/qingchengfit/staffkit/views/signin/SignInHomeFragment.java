@@ -33,7 +33,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInQrCodeEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInStudentItemClickEvent;
@@ -69,7 +69,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepositoryV2 restRepository;
+    @Inject StaffRespository restRepository;
     @Inject SerPermisAction serPermisAction;
     @Inject SignInConfigPresenter presenter;
     @Inject ModuleConfigsPresenter moduleConfigsPresenter;
@@ -281,7 +281,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
             getFragmentManager().beginTransaction().replace(R.id.student_frag, new SignInCloseFragment()).commitAllowingStateLoss();
         } else {
             HashMap<String, Object> params = gymWrapper.getParams();
-            Observable observable = ((Get_Api) restRepository.getApi(Get_Api.class)).qcGetSignInCostConfig(App.staffId, params);
+            Observable observable = restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId, params);
             RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {
                 @Override protected void _onNext(SignInCardCostBean.Data signInCardCostBean) {
                     boolean setted = false;

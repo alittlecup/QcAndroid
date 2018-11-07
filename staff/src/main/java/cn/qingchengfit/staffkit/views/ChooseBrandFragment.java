@@ -19,7 +19,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -60,7 +60,7 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
     public CommonFlexAdapter mCommonFlexAdapter;
     public List<AbstractFlexibleItem> mDatas = new ArrayList<>();
 
-    @Inject public RestRepository mRestRepository;
+    @Inject public StaffRespository mRestRepository;
     @Inject public GymWrapper gymWrapper;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -151,7 +151,7 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
     }
 
     public void queryData() {
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {

@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.AttendanceCharDataBean;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class AttendanceChartPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private AttendanceView view;
     private int pages;
     private int curpage;
@@ -64,7 +64,7 @@ public class AttendanceChartPresenter extends BasePresenter {
         params.put("start", start);
         params.put("end", end);
         if (curpage <= pages) {
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetAttendanceChart(App.staffId, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

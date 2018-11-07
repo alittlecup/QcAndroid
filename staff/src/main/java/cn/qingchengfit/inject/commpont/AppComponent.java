@@ -59,8 +59,6 @@ import cn.qingchengfit.staffkit.allocate.coach.fragment.AddStudentFragment;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.AllocateCoachListFragment;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.CoachStudentDetailFragment;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.OperationStudentFragment;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.train.SignUpChooseActivity;
 import cn.qingchengfit.staffkit.train.SignUpDetailActivity;
 import cn.qingchengfit.staffkit.train.fragment.CreateGroupFragment;
@@ -531,9 +529,6 @@ public interface AppComponent {
 
   App app();
 
-  RestRepository getRestRepository();
-
-  RestRepositoryV2 getTestRepository();
 
   @Subcomponent() public interface ChooseGymSubcomponent
       extends AndroidInjector<ChooseGymActivity> {

@@ -25,7 +25,7 @@ import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.signin.SignInCloseFragment;
@@ -74,7 +74,7 @@ import javax.inject.Inject;
 	Toolbar toolbar;
 	TextView toolbarTitile;
 
-    @Inject RestRepositoryV2 restRepository;
+    @Inject StaffRespository restRepository;
     @Inject SigninConfigCardtypePresenter presenter;
     @Inject ModuleConfigsPresenter moduleConfigsPresenter;
     private ArrayList<SignInCardCostBean.CardCost> cardCosts;

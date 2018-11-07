@@ -22,7 +22,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.adapter.BrandManageAdapterAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -54,7 +54,7 @@ public class ChooseBrandActivity extends BaseActivity {
 	public RelativeLayout toolbarLayout;
 	public RecyclerView recycleview;
 
-    @Inject public RestRepository restRepository;
+    @Inject public StaffRespository restRepository;
     public List<Brand> datas = new ArrayList<>();
     public Subscription sp;
     public BrandManageAdapterAdapter adapter;
@@ -96,7 +96,7 @@ public class ChooseBrandActivity extends BaseActivity {
     public void queryData() {
         if (sp != null) sp.unsubscribe();
 
-        sp = restRepository.getGet_api()
+        sp = restRepository.getStaffAllApi()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {

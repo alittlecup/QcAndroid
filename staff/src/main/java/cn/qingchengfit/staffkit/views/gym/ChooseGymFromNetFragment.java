@@ -23,7 +23,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.adapter.MutiImageTwoTextAdapter;
@@ -57,7 +57,7 @@ public class ChooseGymFromNetFragment extends BaseDialogFragment {
 	Toolbar toolbar;
 	TextView toolbarTitile;
 	RecyclerView recycleview;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
     private MutiImageTwoTextAdapter mGymsAdapter;
     private List<Shop> mShops;
@@ -153,7 +153,7 @@ public class ChooseGymFromNetFragment extends BaseDialogFragment {
                 }
             }
         });
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetBrandShops(App.staffId, PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

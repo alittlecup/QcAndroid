@@ -11,7 +11,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.StringUtils;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ import timber.log.Timber;
 
 public class MutiChooseCoachPresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private CoachAllView view;
@@ -37,7 +37,7 @@ public class MutiChooseCoachPresenter extends BasePresenter {
 
     public void getCoachPreviewList() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllAllocateCoaches(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -62,7 +62,7 @@ public class MutiChooseCoachPresenter extends BasePresenter {
         HashMap<String, Object> body = gymWrapper.getParams();
         body.put("user_ids", StringUtils.List2Str(students));
         body.put("coach_ids", StringUtils.List2Str(coaches));
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAllocateCoach(staffid, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

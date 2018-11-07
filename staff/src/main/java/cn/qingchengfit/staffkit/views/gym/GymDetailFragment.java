@@ -60,7 +60,7 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.saascommon.events.EventChartTitle;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
@@ -156,7 +156,7 @@ public class GymDetailFragment extends BaseFragment
   CompatTextView tvPrice;
 
   @Inject GymDetailPresenter gymDetailPresenter;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject GymWrapper gymWrapper;
   //@Inject GymMoreFragment gymMoreFragment;
   @Inject SerPermisAction serPermisAction;

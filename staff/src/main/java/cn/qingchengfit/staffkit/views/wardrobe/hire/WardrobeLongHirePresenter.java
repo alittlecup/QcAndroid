@@ -10,7 +10,7 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,9 +21,9 @@ public class WardrobeLongHirePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public WardrobeLongHirePresenter(RestRepository restRepository) {
+    @Inject public WardrobeLongHirePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -38,7 +38,7 @@ public class WardrobeLongHirePresenter extends BasePresenter {
                 return;
             }
 
-            RxRegiste(restRepository.getPost_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcHireLocker(staffid, gymWrapper.getParams(), body)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -60,7 +60,7 @@ public class WardrobeLongHirePresenter extends BasePresenter {
     }
 
     public void queryStuCard(String stuId) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetStudentCards(loginStatus.staff_id(), stuId, gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

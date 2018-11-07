@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.HireWardrobeBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.StringUtils;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -16,7 +16,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class WardrobeShortHirePresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -34,7 +34,7 @@ public class WardrobeShortHirePresenter extends BasePresenter {
             return;
         }
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcHireLocker(staffid, gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

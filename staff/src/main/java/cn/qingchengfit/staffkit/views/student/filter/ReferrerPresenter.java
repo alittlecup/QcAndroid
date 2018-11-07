@@ -10,7 +10,7 @@ import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.Referrers;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,11 +45,11 @@ import timber.log.Timber;
 public class ReferrerPresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
-    @Inject public ReferrerPresenter(RestRepository restRepository) {
+    @Inject public ReferrerPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -85,7 +85,7 @@ public class ReferrerPresenter extends BasePresenter {
 
     public void getFilterSelers() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetTrackStudentsRecommends(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -117,7 +117,7 @@ public class ReferrerPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("q", query);
         params.put("show_all", "1");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetTrackStudentsRecommendsSelect(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

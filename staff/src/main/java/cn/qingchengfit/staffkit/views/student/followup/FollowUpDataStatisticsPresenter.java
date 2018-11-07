@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -42,11 +42,11 @@ import timber.log.Timber;
 public class FollowUpDataStatisticsPresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
-    @Inject public FollowUpDataStatisticsPresenter(RestRepository restRepository) {
+    @Inject public FollowUpDataStatisticsPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -89,7 +89,7 @@ public class FollowUpDataStatisticsPresenter extends BasePresenter {
         if (filter.sale != null && !"-1".equals(filter.sale.id)) {// -1是全部
             params.put("seller_id", filter.sale.id);//无销售seller_id=0
         }
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetTrackStudentsStatistics(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

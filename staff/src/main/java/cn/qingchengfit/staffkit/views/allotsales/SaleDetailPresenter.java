@@ -15,7 +15,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.widgets.AlphabetView;
@@ -36,9 +36,9 @@ public class SaleDetailPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SaleDetailPresenter(RestRepository restRepository) {
+    @Inject public SaleDetailPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -74,7 +74,7 @@ public class SaleDetailPresenter extends BasePresenter {
     public void getSellerUsers(String salerId) {
         HashMap<String, Object> params = gymWrapper.getParams();
         if (!TextUtils.isEmpty(salerId)) params.put("seller_id", salerId);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllotSaleOwenUsers(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -99,7 +99,7 @@ public class SaleDetailPresenter extends BasePresenter {
         HashMap<String, Object> params = GymUtils.getParams(coachService, null);
         params.put("user_id", studId);
         params.put("seller_id", salerId);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcDeleteStudent(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -140,7 +140,7 @@ public class SaleDetailPresenter extends BasePresenter {
         if (filter.referrerBean != null) params.put("recommend_user_id", filter.referrerBean.id);
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllotSaleOwenUsers(staffid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

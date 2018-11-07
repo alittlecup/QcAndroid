@@ -77,7 +77,7 @@ import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.reciever.PushReciever;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.EventGoNotification;
@@ -124,7 +124,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   FrameLayout layoutBrands;
   TextView tvNotiCount;
   TextView tvAdText;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject QcRestRepository qcRestRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -265,7 +265,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
      * 全局监听刷新 场馆
      */
     mFreshCoachService = RxBus.getBus().register(EventFreshCoachService.class);
-    mFreshCoachService.subscribe(eventFreshCoachService -> sp = restRepository.getGet_api()
+    mFreshCoachService.subscribe(eventFreshCoachService -> sp = restRepository.getStaffAllApi()
         .qcGetCoachService(loginStatus.staff_id(), null)
         .delay(2, TimeUnit.SECONDS)
         .onBackpressureBuffer()
@@ -392,7 +392,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
       pushBody.push_id = userid;
       pushBody.device_type = "android";
       pushBody.distribute = getString(R.string.oem);
-      restRepository.getPost_api()
+      restRepository.getStaffAllApi()
           .qcPostPushId(loginStatus.staff_id(), pushBody)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())

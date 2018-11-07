@@ -4,7 +4,7 @@ import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.StudentReferrerBean;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -32,9 +32,9 @@ import javax.inject.Inject;
 public class ChooseReferrerPresenter extends BasePresenter {
 
     public PresenterView view;
-    public RestRepository restRepository;
+    public StaffRespository restRepository;
 
-    @Inject public ChooseReferrerPresenter(RestRepository restRepository) {
+    @Inject public ChooseReferrerPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 

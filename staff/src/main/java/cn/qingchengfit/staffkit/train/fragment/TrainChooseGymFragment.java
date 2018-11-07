@@ -27,7 +27,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.QuerySuPresenter;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.train.item.ChooseGymItem;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -80,6 +80,7 @@ public class TrainChooseGymFragment extends BaseFragment
   LinearLayout layoutHint;
   @Inject QuerySuPresenter presenter;
   @Inject GymWrapper gymWrapper;
+  @Inject StaffRespository respository;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
   private CommonFlexAdapter adapter;
   private CoachService tmpCoachService;
@@ -147,7 +148,7 @@ public class TrainChooseGymFragment extends BaseFragment
   }
 
   public void freshData() {
-    RxRegiste(new RestRepository().getGet_api()
+    RxRegiste(respository.getStaffAllApi()
         .qcGetCoachService(App.staffId, null)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

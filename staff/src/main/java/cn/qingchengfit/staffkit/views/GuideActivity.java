@@ -29,7 +29,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
@@ -80,7 +80,7 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
     private Observable<SaveEvent> saveObservabl;
     private Subscription spSearch;
     private Subscription spQueryBrand;
@@ -111,11 +111,9 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
         }
       });
 
-      //        ((App) getApplication()).getAppCompoent().inject(this);
-        mRestRepository = new RestRepository();
         if (getIntent().getParcelableExtra(Configs.EXTRA_BRAND) == null) {
 
-          spQueryBrand = mRestRepository.getGet_api()
+          spQueryBrand = mRestRepository.getStaffAllApi()
                 .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {

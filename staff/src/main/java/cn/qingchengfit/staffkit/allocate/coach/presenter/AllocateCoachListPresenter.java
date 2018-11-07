@@ -8,7 +8,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,7 +25,7 @@ public class AllocateCoachListPresenter extends BasePresenter {
 
     public CoachListView view;
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject GymWrapper gymWrapper;
 
     @Inject public AllocateCoachListPresenter() {
@@ -63,7 +63,7 @@ public class AllocateCoachListPresenter extends BasePresenter {
 
     public void getCoachPreviewList() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCoachList(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<CoachResponseList>>() {

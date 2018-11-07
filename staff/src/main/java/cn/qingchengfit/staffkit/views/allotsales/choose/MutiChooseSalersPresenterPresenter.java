@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.Sellers;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.StringUtils;
 import java.util.HashMap;
 import java.util.List;
@@ -23,14 +23,14 @@ public class MutiChooseSalersPresenterPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public MutiChooseSalersPresenterPresenter(RestRepository restRepository) {
+    @Inject public MutiChooseSalersPresenterPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     void querySalers(String staffid) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSalers(staffid, null, null, gymWrapper.id(), gymWrapper.model())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -55,7 +55,7 @@ public class MutiChooseSalersPresenterPresenter extends BasePresenter {
         body.put("user_ids", StringUtils.List2Str(students));
         body.put("seller_ids", StringUtils.List2Str(salers));
         body.put("seller_id", curentid);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcModifySellers(staffid, gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

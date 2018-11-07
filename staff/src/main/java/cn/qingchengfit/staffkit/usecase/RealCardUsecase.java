@@ -8,7 +8,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -30,15 +30,15 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/3/17 2016.
  */
 public class RealCardUsecase {
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
 
-    @Inject public RealCardUsecase(RestRepository restRepository) {
+    @Inject public RealCardUsecase(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     public Subscription getAllCards(String brand_id, String gymid, String gymmoel, int page, String keyword, HashMap<String, Object> filter,
         Action1<QcDataResponse<Cards>> action1) {
-        return restRepository.getGet_api()
+        return restRepository.getStaffAllApi()
             .qcGetBrandCard(App.staffId, brand_id, gymid, gymmoel, page, keyword, filter)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -52,7 +52,7 @@ public class RealCardUsecase {
 
     public Subscription getBalanceCard(String brand_id, String gymid, String gymmoel, int page, String keyword,
         HashMap<String, Object> filter, Action1<QcDataResponse<Cards>> action1) {
-        return restRepository.getGet_api()
+        return restRepository.getStaffAllApi()
             .qcGetBalanceCard(App.staffId, brand_id, gymid, gymmoel, page, keyword, filter)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -66,7 +66,7 @@ public class RealCardUsecase {
 
     public Subscription getDayOffList(String card_id, String brandid, String gymid, String gymModel,
         Action1<QcDataResponse<DayOffs>> action1) {
-        return restRepository.getGet_api()
+        return restRepository.getStaffAllApi()
             .qcGetDayOff(App.staffId, brandid, card_id, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -79,7 +79,7 @@ public class RealCardUsecase {
     }
 
     public Subscription unRegisteRealCard(String cardid, String brandid, String gymid, String gymmodel, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcUnregisteCard(App.staffId, cardid, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -92,7 +92,7 @@ public class RealCardUsecase {
     }
 
     public Subscription createDayOff(String brandid, String gymid, String gymmodel, AddDayOffBody body, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcAddDayOff(App.staffId, brandid, gymid, gymmodel, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -105,7 +105,7 @@ public class RealCardUsecase {
     }
 
     public Subscription cancelDayOff(String leave_id, String brandid, String gymid, String gymmodel, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcDelDayOff(App.staffId, leave_id, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -119,7 +119,7 @@ public class RealCardUsecase {
 
     public Subscription getRealCardHistory(String cardid, String brand_id, String gymid, String gymmodel, String start, String end,
         int page, Action1<QcResponseRealcardHistory> action1) {
-        return restRepository.getGet_api()
+        return restRepository.getStaffAllApi()
             .qcGetCardhistory(App.staffId, cardid, brand_id, gymid, gymmodel, start, end, page)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -131,7 +131,7 @@ public class RealCardUsecase {
     }
 
     public Subscription resumeCard(String cardid, String brandid, String gymid, String gymmodel, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcResumeCard(App.staffId, cardid, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -144,7 +144,7 @@ public class RealCardUsecase {
 
     public Subscription updateCard(String cardid, String brandid, String gymid, String gymmodel, FixCard card,
         Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcUndateCard(App.staffId, cardid, brandid, gymid, gymmodel, card)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

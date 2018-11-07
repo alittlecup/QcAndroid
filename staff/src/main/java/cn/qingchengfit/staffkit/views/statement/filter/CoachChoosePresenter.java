@@ -9,7 +9,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -34,11 +34,11 @@ public class CoachChoosePresenter extends BasePresenter {
 
     StatementUsecase usecase;
     CoachChooseView view;
-    RestRepository restRepository;
+    StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
-    @Inject public CoachChoosePresenter(StatementUsecase usecase, RestRepository restRepository) {
+    @Inject public CoachChoosePresenter(StatementUsecase usecase, StaffRespository restRepository) {
         this.usecase = usecase;
         this.restRepository = restRepository;
     }
@@ -56,7 +56,7 @@ public class CoachChoosePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", PermissionServerUtils.COACHSETTING);
         params.put("method", "get");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetGymCoachesPermission(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

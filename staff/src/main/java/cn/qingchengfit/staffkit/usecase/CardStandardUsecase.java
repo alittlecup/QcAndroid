@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.usecase;
 import cn.qingchengfit.model.body.OptionBody;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,15 +24,15 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/4/25 2016.
  */
 public class CardStandardUsecase {
-    RestRepository restRepository;
+    StaffRespository restRepository;
 
-    @Inject public CardStandardUsecase(RestRepository restRepository) {
+    @Inject public CardStandardUsecase(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     public Subscription createCardstandard(String cardtplid, String gymid, String gymmodel, String brand_id, OptionBody body,
         Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcCreateStandard(App.staffId, cardtplid, gymid, gymmodel, brand_id, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -42,7 +42,7 @@ public class CardStandardUsecase {
 
     public Subscription updateCardstandard(String gymid, String gymmodel, String brand_id, String cardtpl_id, OptionBody body,
         Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcUpdateCardStandard(App.staffId, cardtpl_id, gymid, gymmodel, brand_id, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -51,7 +51,7 @@ public class CardStandardUsecase {
     }
 
     public Subscription DelCardstandard(String gymid, String gymmodel, String brand_id, String option_id, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcDelCardStandard(App.staffId, option_id, gymid, gymmodel, brand_id)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

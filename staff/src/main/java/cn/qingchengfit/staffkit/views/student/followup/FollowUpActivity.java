@@ -18,7 +18,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventRouter;
 import cn.qingchengfit.staffkit.rxbus.event.FollowUpStatisticsToDetail;
 import cn.qingchengfit.views.FragCallBack;
@@ -66,7 +66,7 @@ public class FollowUpActivity extends BaseActivity implements FragCallBack {
 	DrawerLayout drawerLayout;
 	FrameLayout frag;
 
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
 
     private Action1<CharSequence> searchAction;
     private TextWatcher textWatcher = new TextWatcher() {

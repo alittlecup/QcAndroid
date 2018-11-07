@@ -1,25 +1,16 @@
 package cn.qingchengfit.writeoff.network;
 
-import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.writeoff.vo.impl.SimpleSuccessResponse;
-import cn.qingchengfit.writeoff.vo.impl.Ticket;
 import cn.qingchengfit.writeoff.vo.impl.TicketListWrapper;
 import cn.qingchengfit.writeoff.vo.impl.TicketPostBody;
 import cn.qingchengfit.writeoff.vo.impl.TicketWrapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import javax.inject.Inject;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TicketModel implements ITicketModel {
   TicketApi ticketApi;

@@ -11,7 +11,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ public class OperationPresenter extends BasePresenter {
     public static final int OPERATION_TYPE = 105;
 
     public OperationView view;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 
@@ -95,7 +95,7 @@ public class OperationPresenter extends BasePresenter {
         }
 
         body.put("user_ids", ret);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAllocateCoach(App.staffId, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -135,7 +135,7 @@ public class OperationPresenter extends BasePresenter {
         }
 
         params.put("user_ids", ret);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcRemoveStudent(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -183,7 +183,7 @@ public class OperationPresenter extends BasePresenter {
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
         if (type == OPERATION_TYPE) {
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetCoachStudentDetail(loginStatus.staff_id(), params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -195,7 +195,7 @@ public class OperationPresenter extends BasePresenter {
                     }
                 }));
         } else if (type == ADD_TYPE) {
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetAllocateCoachStudents(loginStatus.staff_id(), params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

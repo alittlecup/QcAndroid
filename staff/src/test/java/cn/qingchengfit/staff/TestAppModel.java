@@ -2,7 +2,7 @@ package cn.qingchengfit.staff;
 
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import dagger.Module;
 import dagger.Provides;
 
@@ -28,7 +28,7 @@ import dagger.Provides;
  */
 @Module public class TestAppModel {
     App testApp;
-    RestRepository restRepository;
+    StaffRespository restRepository;
     Brand brand;
     CoachService coachService;
 
@@ -51,13 +51,13 @@ import dagger.Provides;
         return this.coachService;
     }
 
-    @Provides RestRepository provideRest() {
+    @Provides StaffRespository provideRest() {
         return this.restRepository;
     }
 
     public static final class Builder {
         private App testApp;
-        private RestRepository restRepository;
+        private StaffRespository restRepository;
         private Brand brand;
         private CoachService coachService;
 
@@ -69,7 +69,7 @@ import dagger.Provides;
             return this;
         }
 
-        public Builder restRepository(RestRepository val) {
+        public Builder restRepository(StaffRespository val) {
             restRepository = val;
             return this;
         }

@@ -33,7 +33,7 @@ import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
 import cn.qingchengfit.staffkit.views.setting.FixNotifySettingFragment;
 import cn.qingchengfit.staffkit.views.setting.ReportFragment;
@@ -83,7 +83,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
 	Toolbar toolbar;
 
   @Inject GymWrapper gymWrapper;
-  @Inject RestRepository mRestRepository;
+  @Inject StaffRespository mRestRepository;
   @Inject SettingPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject BusEventThrowable busEventThrowable;

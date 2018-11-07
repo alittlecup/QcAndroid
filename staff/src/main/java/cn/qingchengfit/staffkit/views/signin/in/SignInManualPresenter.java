@@ -16,7 +16,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
 import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.ArrayList;
@@ -38,10 +38,10 @@ public class SignInManualPresenter extends BasePresenter {
   @Inject GymWrapper gymWrapper;
   StudentUsecase usecase;
 
-  private RestRepository restRepository;
+  private StaffRespository restRepository;
   private SignInManualView view;
 
-  @Inject public SignInManualPresenter(StudentUsecase usecase, RestRepository restRepository) {
+  @Inject public SignInManualPresenter(StudentUsecase usecase, StaffRespository restRepository) {
     this.usecase = usecase;
     this.restRepository = restRepository;
   }
@@ -78,7 +78,7 @@ public class SignInManualPresenter extends BasePresenter {
   public void queryCard() {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("user_id", studentBase.id());
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetStudentCards(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -102,7 +102,7 @@ public class SignInManualPresenter extends BasePresenter {
 
   public void getCardCostList() {
     HashMap<String, Object> params = gymWrapper.getParams();
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetSignInCostConfig(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -121,7 +121,7 @@ public class SignInManualPresenter extends BasePresenter {
   public void queryCourse() {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("user_id", studentBase.id());
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetStudentCourse(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -146,7 +146,7 @@ public class SignInManualPresenter extends BasePresenter {
     body.setUser_id(Integer.valueOf(studentBase.id()));
     body.setLocker_id(lockerId);
     body.setCard_id(cardId);
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcPostCheckInMaual(App.staffId, gymWrapper.getParams(), body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -170,7 +170,7 @@ public class SignInManualPresenter extends BasePresenter {
     HashMap<String, Object> body = new HashMap<>();
     body.put("user_id", studentid);
     body.put("photo", img);
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcUploadStuImg(staffid, gymWrapper.getParams(), body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

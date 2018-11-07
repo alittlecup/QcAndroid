@@ -5,7 +5,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import rx.schedulers.Schedulers;
 
 public class SignUpGroupListPresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private SignUpView signUpView;
     private int page, totalpage;
 
@@ -50,7 +50,7 @@ public class SignUpGroupListPresenter extends BasePresenter {
         HashMap<String, Object> params = new HashMap<>();
         params.put("gym_id", gym_id);
         params.put("competition_id", competitionId);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetGroupList(params, keyword).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<GroupListResponse>>() {

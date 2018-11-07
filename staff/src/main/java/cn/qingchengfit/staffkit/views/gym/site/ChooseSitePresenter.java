@@ -13,7 +13,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import java.util.ArrayList;
@@ -44,9 +44,9 @@ public class ChooseSitePresenter extends BasePresenter {
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   private List<Space> spaces;
-  private RestRepository restRepository;
+  private StaffRespository restRepository;
 
-  @Inject public ChooseSitePresenter(GymUseCase gymUseCase, RestRepository restRepository) {
+  @Inject public ChooseSitePresenter(GymUseCase gymUseCase, StaffRespository restRepository) {
     this.useCase = gymUseCase;
     this.restRepository = restRepository;
   }
@@ -92,7 +92,7 @@ public class ChooseSitePresenter extends BasePresenter {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("key", PermissionServerUtils.STUDIO_LIST);
     params.put("method", "get");
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetGymSitesPermisson(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

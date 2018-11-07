@@ -9,7 +9,7 @@ import cn.qingchengfit.model.responese.AllotSalePreView;
 import cn.qingchengfit.model.responese.AllotSalePreViews;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ public class SalesListPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
 
     @Inject public SalesListPresenter() {
     }
@@ -63,7 +63,7 @@ public class SalesListPresenter extends BasePresenter {
 
     public void getSalesPreviewList() {
         HashMap<String, Object> params = gymWrapper.getParams();
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllotSalesPreView(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

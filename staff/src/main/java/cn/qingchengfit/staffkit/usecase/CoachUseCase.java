@@ -7,7 +7,7 @@ import cn.qingchengfit.model.responese.StaffShipResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,14 +28,14 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/1/29 2016.
  */
 public class CoachUseCase {
-    RestRepository restRepository;
+    StaffRespository restRepository;
 
-    @Inject public CoachUseCase(RestRepository restRepository) {
+    @Inject public CoachUseCase(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     //public Subscription getAllCoach(String gymid, String gymModel, String keyword, Action1<QcDataResponse<Staffs>> action1) {
-    //    return restRepository.getGet_api()
+    //    return restRepository.getStaffAllApi()
     //        .qcGetGymCoaches(App.staffId, gymid, gymModel, keyword)
     //        .observeOn(AndroidSchedulers.mainThread())
     //        .onBackpressureBuffer()
@@ -48,7 +48,7 @@ public class CoachUseCase {
     //}
 
     public Subscription getAllStaffs(String gymid, String gymModel, String keyword, Action1<QcDataResponse<StaffShipResponse>> action1) {
-        return restRepository.getGet_api()
+        return restRepository.getStaffAllApi()
             .qcGetStaffs(App.staffId, gymid, gymModel, null, keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -61,7 +61,7 @@ public class CoachUseCase {
     }
 
     public Subscription fixCoach(String gymid, String gymModel, String coachid, Staff coach, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcFixCoach(App.staffId, coachid, gymid, gymModel, coach)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -74,7 +74,7 @@ public class CoachUseCase {
     }
 
     public Subscription delCoach(String gymid, String gymModel, String coachid, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcDelCoach(App.staffId, coachid, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -87,7 +87,7 @@ public class CoachUseCase {
     }
 
     public Subscription createManager(String gymid, String gymModel, ManagerBody body, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcCreateManager(App.staffId, gymid, gymModel, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -108,7 +108,7 @@ public class CoachUseCase {
         b.setAvatar(body.getAvatar());
         b.setGender(body.getGender());
         b.setArea_code(body.getArea_code());
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcUpdateManager(App.staffId, id, gymid, gymmodel, b)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -121,7 +121,7 @@ public class CoachUseCase {
     }
 
     public Subscription delManager(String gymid, String gymmodel, String id, Action1<QcResponse> action1) {
-        return restRepository.getPost_api()
+        return restRepository.getStaffAllApi()
             .qcDelManager(App.staffId, id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -134,7 +134,7 @@ public class CoachUseCase {
     }
 
     public Subscription queryPostions(String gymid, String gymmodel, Action1<QcResponsePostions> action1) {
-        return restRepository.getGet_api()
+        return restRepository.getStaffAllApi()
             .qcGetPostions(App.staffId, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

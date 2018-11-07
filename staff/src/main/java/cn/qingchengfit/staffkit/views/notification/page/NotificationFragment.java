@@ -52,7 +52,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -102,7 +102,7 @@ public class NotificationFragment extends BaseFragment
 
   RecycleViewWithNoImg rv;
   @Inject NotificationPresenter presenter;
-  @Inject RestRepository mRestRepository;
+  @Inject StaffRespository mRestRepository;
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject GymWrapper gymWrapper;
@@ -216,7 +216,7 @@ public class NotificationFragment extends BaseFragment
               HashMap<String, Object> p = new HashMap<>();
               p.put("id", coachService1.getId());
               p.put("model", coachService1.getModel());
-              mRestRepository.getGet_api()
+              mRestRepository.getStaffAllApi()
                   .qcPermission(App.staffId, p)
                   .onBackpressureBuffer()
                   .subscribeOn(Schedulers.io())

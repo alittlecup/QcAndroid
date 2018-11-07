@@ -23,7 +23,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DateUtils;
@@ -71,7 +71,7 @@ public class BrandEditFragment extends BaseFragment {
   Toolbar toolbar;
   TextView toolbarTitle;
 
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
 
   BrandBody postBrand = new BrandBody();
   CommonInputView brandId;
@@ -133,7 +133,7 @@ public class BrandEditFragment extends BaseFragment {
                 }
                 showLoading();
 
-                RxRegiste(restRepository.getPost_api()
+                RxRegiste(restRepository.getStaffAllApi()
                     .qcEditBrand(brand.getId(), postBrand)
                     .observeOn(AndroidSchedulers.mainThread())
                     .onBackpressureBuffer()
@@ -172,7 +172,7 @@ public class BrandEditFragment extends BaseFragment {
             .into(new CircleImgWrapper(headerImg, getContext()));
       }
 
-      RxRegiste(restRepository.getGet_api()
+      RxRegiste(restRepository.getStaffAllApi()
           .qcGetBrand(App.staffId, brand.getId())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -261,7 +261,7 @@ public class BrandEditFragment extends BaseFragment {
 
   private void deleteBrand() {
     showLoading();
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcDelbrand(brand.getId())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()

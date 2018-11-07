@@ -13,7 +13,7 @@ import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,16 +26,16 @@ public class SigninConfigCardtypePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SigninConfigCardtypePresenter(RestRepositoryV2 restRepository) {
+    @Inject public SigninConfigCardtypePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     public void getCardCostList() {
         HashMap<String, Object> params = gymWrapper.getParams();
 
-        Observable observable = ((Get_Api) restRepository.getApi(Get_Api.class)).qcGetSignInCostConfig(App.staffId, params);
+        Observable observable =  restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {
             @Override protected void _onNext(SignInCardCostBean.Data signInCardCostBean) {
                 view.onGetCostList(signInCardCostBean.card_costs);
@@ -53,7 +53,7 @@ public class SigninConfigCardtypePresenter extends BasePresenter {
         SignInCostBody body = new SignInCostBody();
         body.setShop_id(gymWrapper.shop_id());
         body.setCard_costs(card_costs);
-        Observable observable = restRepository.postApi(Post_Api.class).qcPutSignInCostConfig(App.staffId, params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPutSignInCostConfig(App.staffId, params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onCostConfigSuccess();

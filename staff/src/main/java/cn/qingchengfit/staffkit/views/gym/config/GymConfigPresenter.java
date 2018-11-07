@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,14 +21,14 @@ public class GymConfigPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public GymConfigPresenter(RestRepository restRepository) {
+    @Inject public GymConfigPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     void queryShopConfig(String staffid, String key) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetShopConfig(staffid, key, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -49,7 +49,7 @@ public class GymConfigPresenter extends BasePresenter {
     }
 
     void editShopConfig(String staffid, ShopConfigBody body) {
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcShopConfigs(staffid, gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

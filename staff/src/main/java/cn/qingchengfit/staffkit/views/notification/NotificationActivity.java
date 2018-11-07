@@ -8,7 +8,7 @@ import android.view.View;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.notification.page.NotificationFragment;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -25,7 +25,7 @@ public class NotificationActivity extends BaseActivity implements FragCallBack {
     //TextView toolbarTitile;
     //@BindView(R.id.activity_notification)
     //LinearLayout activityNotification;
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
     @Inject GymWrapper gymWrapper;
     private Subscription mSpClearNoti;
 
@@ -56,7 +56,7 @@ public class NotificationActivity extends BaseActivity implements FragCallBack {
         //                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
         //                            HashMap<String,Object> params = new HashMap<String, Object>();
         //                            params.put("tab","STAFF_0");
-        //                            mSpClearNoti = mRestRepository.getPost_api().qcClearAllNoti(App.staffId,params)
+        //                            mSpClearNoti = mRestRepository.getStaffAllApi().qcClearAllNoti(App.staffId,params)
       //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         //                                    .subscribe(new Action1<QcResponse>() {
         //                                        @Override

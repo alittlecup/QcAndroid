@@ -13,7 +13,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -36,7 +36,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     ModifyBodyTestView view;
 
     @Inject public ModifyBodyTestPresenter() {
@@ -73,7 +73,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
     }
 
     void queryInfo(String measureId) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetBodyTest(App.staffId, measureId, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -93,7 +93,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
             bodyTestBean.extra = "";
             bodyTestBean.photos = null;
         }
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcUpdateBodyTest(loginStatus.staff_id(), measureId, gymWrapper.getParams(), bodyTestBean)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -114,7 +114,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
             bodyTestBean.extra = "";
             bodyTestBean.photos = null;
         }
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAddBodyTest(loginStatus.staff_id(), gymWrapper.getParams(), bodyTestBean)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -131,7 +131,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
     }
 
     void delBodyTest(String measureid) {
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcDelBodyTest(loginStatus.staff_id(), measureid, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -148,7 +148,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
     }
 
     void queryBodyModel() {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetBodyTestModel(gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

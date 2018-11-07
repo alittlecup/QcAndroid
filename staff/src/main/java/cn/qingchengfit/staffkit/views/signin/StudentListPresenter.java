@@ -14,7 +14,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +31,10 @@ public class StudentListPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     @Inject StudentAction studentAction;
     private Subscription spFilter;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
     private StudentListView view;
 
-    @Inject public StudentListPresenter(RestRepository restRepository) {
+    @Inject public StudentListPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -72,7 +72,7 @@ public class StudentListPresenter extends BasePresenter {
       if (keyword != null) {
         params.put("q", keyword);
       }
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllStudents(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .map(new Func1<QcDataResponse<Students>, List<QcStudentBean>>() {
               @Override

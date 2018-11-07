@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.BodyTestPreview;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.student.bean.StudentWrap;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class BodyTestListPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrap studentBase;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private Subscription sp;
 
     @Inject public BodyTestListPresenter() {
@@ -76,7 +76,7 @@ public class BodyTestListPresenter extends BasePresenter {
     }
 
     public void queryBodyTestList() {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetStuedntBodyTest(loginStatus.staff_id(), studentBase.id(), gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.computation())

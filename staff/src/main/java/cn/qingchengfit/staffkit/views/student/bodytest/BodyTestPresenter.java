@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.student.bean.StudentWrap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,7 +35,7 @@ public class BodyTestPresenter extends BasePresenter {
     @Inject StudentWrap studentBean;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
 
     BodyTestView bodyTestView;
 
@@ -72,7 +72,7 @@ public class BodyTestPresenter extends BasePresenter {
     }
 
     public void queryBodyTest(String measure_id) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetBodyTest(App.staffId, measure_id, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

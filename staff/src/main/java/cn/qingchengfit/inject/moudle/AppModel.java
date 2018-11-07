@@ -37,13 +37,10 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.staff.StaffModel;
 import cn.qingchengfit.staffkit.student.network.StudentModel;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
 import cn.qingchengfit.student.routers.studentImpl;
-import cn.qingchengfit.wxpreview.routers.wxminiImpl;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
@@ -69,7 +66,6 @@ import java.util.List;
   private SerPermissionImpl serPermission;
   private LoginStatus loginStatus;
   private GymWrapper gymWrapper;
-  private RestRepository restRepository;
   private BaseRouter router;
   private QcRestRepository qcrestRepository;
   private QcDbManager qcDbManager;
@@ -85,13 +81,12 @@ import java.util.List;
   }
 
   public AppModel(App app, SerPermissionImpl serPermission, LoginStatus loginStatus,
-      GymWrapper gymWrapper, RestRepository restRepository, BaseRouter router,
+      GymWrapper gymWrapper, BaseRouter router,
       QcRestRepository qcrestRepository, QcDbManager qcDbManager) {
     this.app = app;
     this.serPermission = serPermission;
     this.loginStatus = loginStatus;
     this.gymWrapper = gymWrapper;
-    this.restRepository = restRepository;
     this.router = router;
     this.qcrestRepository = qcrestRepository;
     this.qcDbManager = qcDbManager;
@@ -137,13 +132,6 @@ import java.util.List;
     return app;
   }
 
-  @Provides RestRepository provoideRepository() {
-    return restRepository;
-  }
-
-  @Provides RestRepositoryV2 provoideRepositoryT() {
-    return new RestRepositoryV2();
-  }
 
   @Provides QCDbManagerImpl provoideQcDbManager() {
     return new QCDbManagerImpl(app);

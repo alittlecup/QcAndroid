@@ -18,7 +18,7 @@ import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.BalanceNotify;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
 import cn.qingchengfit.utils.ToastUtils;
@@ -40,7 +40,7 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
 	TextView textCheckSignal;
 	TextView textOpenNotifyTips;
     @Inject FixNotifyPresenter fixNotifyPresenter;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private HashMap<String, Object> balanceMap = new HashMap<>();
     private List<HashMap<String, Object>> balanceList = new ArrayList<>();
 

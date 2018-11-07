@@ -20,7 +20,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.gym.AddBrandView;
 import cn.qingchengfit.staffkit.views.gym.CreateBrandPresenter;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
@@ -51,7 +51,7 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
 	ImageView brandPhoto;
     @Inject CreateBrandPresenter presenter;
 	CommonInputView content;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
 	ImageView guideStep1;
     private Subscription sp;
     private String uploadImg;
@@ -141,7 +141,7 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
           .commit(this);
 
 
-        restRepository.getGet_api()
+        restRepository.getStaffAllApi()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {

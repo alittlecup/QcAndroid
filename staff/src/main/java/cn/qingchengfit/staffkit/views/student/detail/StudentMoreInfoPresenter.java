@@ -19,7 +19,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
@@ -56,9 +56,9 @@ public class StudentMoreInfoPresenter extends BasePresenter {
     private Subscription delSp;
     private Subscription edSp;
     private StudentMoreInfoView view;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public StudentMoreInfoPresenter(StudentUsecase usecase, RestRepositoryV2 restRepository) {
+    @Inject public StudentMoreInfoPresenter(StudentUsecase usecase, StaffRespository restRepository) {
         this.usecase = usecase;
         this.restRepository = restRepository;
     }
@@ -175,7 +175,7 @@ public class StudentMoreInfoPresenter extends BasePresenter {
      */
     public void getScoreStatus() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoreStatus(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoreStatus(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreStatus>() {
             @Override protected void _onNext(ScoreStatus scoreStatus) {
                 view.onScoreStatus(scoreStatus.getModule().isScore());
@@ -192,7 +192,7 @@ public class StudentMoreInfoPresenter extends BasePresenter {
 
         ArrayMap<String, Object> body = new ArrayMap<>();
         body.put("score", true);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScore(App.staffId, studentId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScore(App.staffId, studentId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<Score>() {
             @Override protected void _onNext(Score score) {
                 view.onStudentScore(score.shopbrand.score);

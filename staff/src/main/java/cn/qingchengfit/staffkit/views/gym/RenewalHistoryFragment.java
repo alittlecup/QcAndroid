@@ -15,7 +15,7 @@ import cn.qingchengfit.model.responese.QcResponseRenewalHistory;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.gym.items.RenewalsHistoryItem;
@@ -60,7 +60,7 @@ public class RenewalHistoryFragment extends BaseFragment
     public int mCurPage = 1;
     public int mMaxPage = 1;
 	RecycleViewWithNoImg recycleview;
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
 	Toolbar toolbar;
@@ -113,7 +113,7 @@ public class RenewalHistoryFragment extends BaseFragment
     public void loadData(int page) {
         HashMap<String, Object> p = gymWrapper.getParams();
         p.put("page", page + "");
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetRenewalHistorys(App.staffId, p)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

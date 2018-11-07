@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.NetError;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.utils.SaleCompare;
@@ -34,7 +34,7 @@ import rx.schedulers.Schedulers;
  */
 public class SaleDetailPresenter extends BasePresenter {
 
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
     @Inject StatementUsecase usecase;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -79,7 +79,7 @@ public class SaleDetailPresenter extends BasePresenter {
         if (!gymWrapper.inBrand()) {
             shopid = null;
         }
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetSaleDatail(App.staffId, start, end, shopid, card_id, cards_extra, seller_id, type == 0 ? null : Integer.toString(type),
                 chargetype == 0 ? null : Integer.toString(chargetype), gymWrapper.getParams())
             .onBackpressureBuffer()

@@ -14,9 +14,7 @@ import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.List;
 import javax.inject.Inject;
@@ -48,9 +46,9 @@ public class ConfigPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepositoryV2 restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ConfigPresenter(RestRepositoryV2 restRepository) {
+    @Inject public ConfigPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -89,7 +87,7 @@ public class ConfigPresenter extends BasePresenter {
      */
     public void getScoreStatus() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoreStatus(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoreStatus(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreStatus>() {
             @Override protected void _onNext(ScoreStatus scoreStatus) {
                 view.onScoreStatus(scoreStatus.getModule().isScore());
@@ -106,7 +104,7 @@ public class ConfigPresenter extends BasePresenter {
      */
     public void getScoreRuls() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoreRules(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoreRules(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreRuleResponse>() {
             @Override protected void _onNext(ScoreRuleResponse rule) {
                 view.onScoreRules(rule.rule);
@@ -123,7 +121,7 @@ public class ConfigPresenter extends BasePresenter {
      */
     public void getScoreAward() {
         ArrayMap<String, String> params = GymUtils.getParamsV2(gymWrapper.getCoachService(), null);
-        Observable observable = restRepository.getApi(Get_Api.class).qcGetStudentScoreAward(App.staffId, params);
+        Observable observable = restRepository.getStaffAllApi().qcGetStudentScoreAward(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<ScoreRuleAwardResponse>() {
             @Override protected void _onNext(ScoreRuleAwardResponse awards) {
                 view.onScoreAward(awards.favors);
@@ -140,7 +138,7 @@ public class ConfigPresenter extends BasePresenter {
 
         ArrayMap<String, Object> body = new ArrayMap<>();
         body.put("score", false);
-        Observable observable = restRepository.getApi(Post_Api.class).qcPutScoreStatus(App.staffId, params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPutScoreStatus(App.staffId, params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 view.onCloseSuccess();
@@ -157,7 +155,7 @@ public class ConfigPresenter extends BasePresenter {
 
         ArrayMap<String, Object> body = new ArrayMap<>();
         body.put("score", true);
-        Observable observable = restRepository.getApi(Post_Api.class).qcPutScoreStatus(App.staffId, params, body);
+        Observable observable = restRepository.getStaffAllApi().qcPutScoreStatus(App.staffId, params, body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {
                 //                view.onCloseSuccess();

@@ -9,7 +9,7 @@ import cn.qingchengfit.model.responese.SignInDetail;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,9 +25,9 @@ public class SignInDetailPresenter extends BasePresenter {
     SignInDetailView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SignInDetailPresenter(RestRepository restRepository) {
+    @Inject public SignInDetailPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -63,7 +63,7 @@ public class SignInDetailPresenter extends BasePresenter {
     public void queryData(String checkin_id) {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("checkin_id", checkin_id);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetCheckInDetail(loginStatus.staff_id(), params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -83,7 +83,7 @@ public class SignInDetailPresenter extends BasePresenter {
         HashMap<String, Object> body = new HashMap<>();
         body.put("user_id", studentid);
         body.put("photo", img);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcUploadStuImg(loginStatus.staff_id(), gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -109,7 +109,7 @@ public class SignInDetailPresenter extends BasePresenter {
     public void cancelSignIn(String checkin_id) {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("checkin_id", checkin_id);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcDeleteCheckin(loginStatus.staff_id(), params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

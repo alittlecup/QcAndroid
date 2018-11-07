@@ -13,7 +13,7 @@ import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,7 +29,7 @@ public class AbsenceListPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private AbsenceView view;
     private int pages;
     private int curpage;
@@ -59,7 +59,7 @@ public class AbsenceListPresenter extends BasePresenter {
         params = handleData(params, start, end);
         params.put("show_all", 1);
         if (curpage <= pages) {
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetUsersAbsences(App.staffId, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

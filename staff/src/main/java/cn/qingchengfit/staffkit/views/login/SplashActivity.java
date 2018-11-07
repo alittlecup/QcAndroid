@@ -26,7 +26,7 @@ import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -60,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
 	CircleIndicator splashIndicator;
 	RelativeLayout mainLoading;
 	ImageView imgGif;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject QCDbManagerImpl manager;
     @Inject LoginStatus loginStatus;
   @Inject GymBaseInfoAction gymBaseInfoAction;
@@ -116,7 +116,7 @@ public class SplashActivity extends AppCompatActivity {
         String staffid = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
         if (QcRestRepository.getSession(this) != null && !TextUtils.isEmpty(staffid)) {
             App.staffId = staffid;
-            sp = restRepository.getGet_api()
+            sp = restRepository.getStaffAllApi()
                 .qcGetSelfInfo(staffid).delay(2500, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -139,7 +139,7 @@ public class SplashActivity extends AppCompatActivity {
                     } else {
                         ToastUtils.show("服务器错误");
                     }
-                    return restRepository.getGet_api()
+                    return restRepository.getStaffAllApi()
                         .qcGetCoachService(App.staffId, null)
                         .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())

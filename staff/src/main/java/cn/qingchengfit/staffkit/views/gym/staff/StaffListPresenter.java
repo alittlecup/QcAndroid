@@ -9,7 +9,7 @@ import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.model.responese.StaffShipResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.CoachUseCase;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -34,7 +34,7 @@ public class StaffListPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
     private StaffListView view;
     private CoachUseCase useCase;
     private Subscription spQuery;
@@ -87,7 +87,7 @@ public class StaffListPresenter extends BasePresenter {
     }
 
     public void querSelfInfo(String id) {
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetSelfInfo(id).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<StaffResponse>>() {

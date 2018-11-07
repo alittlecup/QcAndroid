@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,14 +25,14 @@ public class ChooseWardrobePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ChooseWardrobePresenter(RestRepository restRepository) {
+    @Inject public ChooseWardrobePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
     public void queryAllLocker(String staffid) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllLockers(staffid, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -56,7 +56,7 @@ public class ChooseWardrobePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("q", key);
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllLockers(staffid, params)
             .onBackpressureLatest()
             .subscribeOn(Schedulers.io())

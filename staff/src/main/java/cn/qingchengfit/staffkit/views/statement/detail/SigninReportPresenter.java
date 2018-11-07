@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.SigninReportDetail;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,9 +26,9 @@ public class SigninReportPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SigninReportPresenter(RestRepository restRepository) {
+    @Inject public SigninReportPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -69,7 +69,7 @@ public class SigninReportPresenter extends BasePresenter {
         params.put("start", start);
         params.put("end", end);
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSigninReportDetail(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

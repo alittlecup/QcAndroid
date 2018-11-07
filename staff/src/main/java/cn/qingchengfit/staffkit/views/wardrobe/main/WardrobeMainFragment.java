@@ -29,7 +29,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventContinueHire;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -83,7 +83,7 @@ public class WardrobeMainFragment extends BaseFragment
   RecyclerView allRegionRv;
   LinearLayout allRegion;
   AnimatedButton btnShowAll;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
@@ -159,7 +159,7 @@ public class WardrobeMainFragment extends BaseFragment
 
     initToolbar(toolbar);
     showLoadingTrans();
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetAllRegion(App.staffId, gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -169,7 +169,7 @@ public class WardrobeMainFragment extends BaseFragment
             if (ResponseConstant.checkSuccess(qcResponse)) {
               regions.clear();
               regions.addAll(qcResponse.data.locker_regions);
-              RxRegiste(restRepository.getGet_api()
+              RxRegiste(restRepository.getStaffAllApi()
                   .qcGetAllLockers(App.staffId, gymWrapper.getParams())
                   .observeOn(AndroidSchedulers.mainThread())
                   .onBackpressureBuffer()
@@ -214,7 +214,7 @@ public class WardrobeMainFragment extends BaseFragment
     });
     RxBusAdd(EventFresh.class).subscribe(new Action1<EventFresh>() {
       @Override public void call(EventFresh eventFresh) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllLockers(App.staffId, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -352,7 +352,7 @@ public class WardrobeMainFragment extends BaseFragment
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("q", key);
 
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetAllLockers(loginStatus.staff_id(), params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

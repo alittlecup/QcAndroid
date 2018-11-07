@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.CoachUseCase;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
@@ -41,9 +41,9 @@ public class ChooseCoachPresenter extends BasePresenter {
 
     @Inject GymWrapper gymWrapper;
     private CoachUseCase coachUseCase;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ChooseCoachPresenter(CoachUseCase coachUseCase, RestRepository restRepository) {
+    @Inject public ChooseCoachPresenter(CoachUseCase coachUseCase, StaffRespository restRepository) {
         this.coachUseCase = coachUseCase;
         this.restRepository = restRepository;
     }
@@ -81,7 +81,7 @@ public class ChooseCoachPresenter extends BasePresenter {
         params.put("key", PermissionServerUtils.COACHSETTING);
         params.put("method", "get");
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetGymCoachesPermission(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

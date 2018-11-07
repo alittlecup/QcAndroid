@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.model.common.QcScheduleBean;
 import cn.qingchengfit.staffkit.usecase.bean.ScheduleBean;
 import cn.qingchengfit.utils.DateUtils;
@@ -41,9 +41,9 @@ public class ScheduleListPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     private ScheduleListView view;
     private Subscription sp;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public ScheduleListPresenter(RestRepository restRepository) {
+    @Inject public ScheduleListPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -78,7 +78,7 @@ public class ScheduleListPresenter extends BasePresenter {
     }
 
     public void queryOneSchedule(final String id, String date) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSchedules(id, date, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

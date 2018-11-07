@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.Students;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
 public class StudentListPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private MVPView view;
 
     @Inject public StudentListPresenter() {
@@ -52,7 +52,7 @@ public class StudentListPresenter extends BasePresenter {
         if (filter.referrerBean != null) params.put("recommend_user_id", filter.referrerBean.id);
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllStudents(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

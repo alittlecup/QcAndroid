@@ -7,7 +7,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -24,9 +24,9 @@ public class SignInLogPresenter extends BasePresenter {
     SignInLogView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public SignInLogPresenter(RestRepository restRepository) {
+    @Inject public SignInLogPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -63,7 +63,7 @@ public class SignInLogPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("order_by", "-modify_at");
         params.put("show_all", "1");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSignInLog(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

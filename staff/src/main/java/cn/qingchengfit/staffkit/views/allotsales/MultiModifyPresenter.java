@@ -14,7 +14,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.widgets.AlphabetView;
 import java.util.ArrayList;
@@ -36,9 +36,9 @@ public class MultiModifyPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private Subscription spFilter;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public MultiModifyPresenter(RestRepository restRepository) {
+    @Inject public MultiModifyPresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -80,7 +80,7 @@ public class MultiModifyPresenter extends BasePresenter {
     public void getSellerUsers(String salerId) {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("show_all", "1");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllotSaleUsersOfAddStudents(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -117,7 +117,7 @@ public class MultiModifyPresenter extends BasePresenter {
         if (filter.referrerBean != null) params.put("recommend_user_id", filter.referrerBean.id);
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllotSaleOwenUsers(loginStatus.staff_id(), params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -219,7 +219,7 @@ public class MultiModifyPresenter extends BasePresenter {
         }
 
         body.put("user_ids", ret);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcAddStudents(App.staffId, params, body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -262,7 +262,7 @@ public class MultiModifyPresenter extends BasePresenter {
         }
 
         params.put("user_ids", ret);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcDeleteStudents(App.staffId, params, body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -9,7 +9,7 @@ import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.model.responese.LockerRegions;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/8/29.
  */
 public class DistrictListPresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -50,7 +50,7 @@ public class DistrictListPresenter extends BasePresenter {
     }
 
     public void queryList(String staffid) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetAllRegion(staffid, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

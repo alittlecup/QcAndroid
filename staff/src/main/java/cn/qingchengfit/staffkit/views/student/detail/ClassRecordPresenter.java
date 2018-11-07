@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.ClassRecords;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.StringUtils;
@@ -39,7 +39,7 @@ public class ClassRecordPresenter extends BasePresenter {
     @Inject StudentWrap studentBase;
 
     @Inject StudentUsecase usecase;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private ClassRecordView view;
@@ -108,7 +108,7 @@ public class ClassRecordPresenter extends BasePresenter {
             params.put("shop_ids", 0);
         }
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetStudentClassRecords(App.staffId, studentBase.id(), params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

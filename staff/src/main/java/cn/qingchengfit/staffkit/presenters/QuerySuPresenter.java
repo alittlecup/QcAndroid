@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -19,14 +19,14 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class QuerySuPresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private MVPView view;
 
     @Inject public QuerySuPresenter() {
     }
 
     public void getPermission(final CoachService coachService) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcPermission(App.staffId, GymUtils.getParams(coachService, null))
             .throttleFirst(1000, TimeUnit.MILLISECONDS)
             .onBackpressureBuffer()

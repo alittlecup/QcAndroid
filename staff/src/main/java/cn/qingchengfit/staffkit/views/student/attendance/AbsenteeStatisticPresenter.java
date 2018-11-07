@@ -10,7 +10,7 @@ import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +25,9 @@ public class AbsenteeStatisticPresenter extends BasePresenter {
     private MVPView view;
     private Brand brand;
     private CoachService coachService;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
 
-    @Inject public AbsenteeStatisticPresenter(Brand brand, CoachService coachService, RestRepository restRepository) {
+    @Inject public AbsenteeStatisticPresenter(Brand brand, CoachService coachService, StaffRespository restRepository) {
         this.brand = brand;
         this.coachService = coachService;
         this.restRepository = restRepository;
@@ -74,7 +74,7 @@ public class AbsenteeStatisticPresenter extends BasePresenter {
         if (curPage <= pages) {
 
             params.put("page", curPage);
-            RxRegiste(restRepository.getGet_api()
+            RxRegiste(restRepository.getStaffAllApi()
                 .qcGetUsersAbsences(App.staffId, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

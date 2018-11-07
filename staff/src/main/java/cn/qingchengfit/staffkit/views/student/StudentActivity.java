@@ -22,7 +22,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.list.StudentListFragment;
 import cn.qingchengfit.views.FragCallBack;
@@ -57,7 +57,7 @@ public class StudentActivity extends BaseActivity
 
   FrameLayout studentFrag;
 
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
@@ -88,7 +88,7 @@ public class StudentActivity extends BaseActivity
       if (getIntent().getExtras().containsKey(Configs.EXTRA_GYM_SERVICE)) {
         CoachService c = getIntent().getExtras().getParcelable(Configs.EXTRA_GYM_SERVICE);
         gymWrapper.setCoachService(c);
-        restRepository.getGet_api()
+        restRepository.getStaffAllApi()
             .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

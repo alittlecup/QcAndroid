@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.StatementGlance;
 import cn.qingchengfit.model.responese.StatementGlanceResp;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -42,7 +42,7 @@ public class GlancePresenter extends BasePresenter {
     private StatementGlanceView view;
     private Subscription saleSp;
     private Subscription classSp;
-    private RestRepository restRepository;
+    private StaffRespository restRepository;
     private Action1<QcDataResponse<StatementGlanceResp>> actionSaleGlance = new Action1<QcDataResponse<StatementGlanceResp>>() {
         @Override public void call(QcDataResponse<StatementGlanceResp> qcResponseSaleGlance) {
             if (qcResponseSaleGlance.getStatus() == ResponseConstant.SUCCESS) {
@@ -74,7 +74,7 @@ public class GlancePresenter extends BasePresenter {
         }
     };
 
-    @Inject public GlancePresenter(StatementUsecase usecase, RestRepository restRepository) {
+    @Inject public GlancePresenter(StatementUsecase usecase, StaffRespository restRepository) {
         this.restRepository = restRepository;
         this.usecase = usecase;
     }
@@ -159,7 +159,7 @@ public class GlancePresenter extends BasePresenter {
             params = gymWrapper.getParams();
         }
 
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSigninGlance(loginStatus.staff_id(), params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

@@ -5,7 +5,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.train.model.SignUpDetailResponse;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,7 +18,7 @@ import rx.schedulers.Schedulers;
 
 public class SignUpDetailPresenter extends BasePresenter {
 
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     private SignUpView signUpView;
 
     @Inject public SignUpDetailPresenter() {
@@ -34,7 +34,7 @@ public class SignUpDetailPresenter extends BasePresenter {
     }
 
     public void querySignDetail(String orderId) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getStaffAllApi()
             .qcGetSignDetail(orderId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<SignUpDetailResponse>>() {

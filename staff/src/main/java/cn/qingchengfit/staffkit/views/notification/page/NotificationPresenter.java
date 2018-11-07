@@ -17,7 +17,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,13 +27,13 @@ import rx.schedulers.Schedulers;
 public class NotificationPresenter extends BasePresenter {
   private MVPView view;
 
-  private RestRepository restRepository;
+  private StaffRespository restRepository;
   private int page = 1;
   private int totalpage = 1;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
 
-  @Inject public NotificationPresenter(RestRepository restRepository) {
+  @Inject public NotificationPresenter(StaffRespository restRepository) {
     this.restRepository = restRepository;
   }
 
@@ -42,7 +42,7 @@ public class NotificationPresenter extends BasePresenter {
     HashMap<String, Object> params = new HashMap<>();
     params.put("page", page + "");
     params.put("type__in", type);
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetNotification(params)
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -74,7 +74,7 @@ public class NotificationPresenter extends BasePresenter {
     //        params.put("staff_id",staffid);
     params.put("page", page + "");
     params.put("type__in", type);
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcGetNotification(params)
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -93,7 +93,7 @@ public class NotificationPresenter extends BasePresenter {
     HashMap<String, Object> params = new HashMap<>();
     params.put("id", notiId);
     //        params.put("type",notiType);
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcClearAllNoti(staffid, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -115,7 +115,7 @@ public class NotificationPresenter extends BasePresenter {
   }
 
   public void clearNoti(String type) {
-    RxRegiste(restRepository.getPost_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcClearTypeNoti(new ClearNotiBody(type))
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -132,7 +132,7 @@ public class NotificationPresenter extends BasePresenter {
   }
 
   public void checkoutSellerStudentPermission(String user_id) {
-    RxRegiste(restRepository.getGet_api()
+    RxRegiste(restRepository.getStaffAllApi()
         .qcCheckSellerStudentPermission(loginStatus.staff_id(), user_id,gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

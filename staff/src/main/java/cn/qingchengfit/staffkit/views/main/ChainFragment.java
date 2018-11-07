@@ -32,7 +32,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventGoNotification;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.adapter.MainPagerAdapter;
@@ -86,7 +86,7 @@ public class ChainFragment extends BaseFragment {
 	LinearLayout searchview;
 	FrameLayout mChooseBrandLayout;
 
-    @Inject RestRepository mRestRepository;
+    @Inject StaffRespository mRestRepository;
 	TextView scheduleNotificationCount;
 	TextView brandManage;
 	FrameLayout layoutBrands;
@@ -254,7 +254,7 @@ public class ChainFragment extends BaseFragment {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", "1");
         params.put("tab", "STAFF_0");
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getStaffAllApi()
             .qcGetMessages(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<Notification>>() {

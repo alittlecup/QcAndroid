@@ -36,7 +36,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EditStudentEvent;
 import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
@@ -96,7 +96,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   ImageView tvStudentMsg;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-  @Inject RestRepository restRepository;
+  @Inject StaffRespository restRepository;
   @Inject StudentWrap studentBean;
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;

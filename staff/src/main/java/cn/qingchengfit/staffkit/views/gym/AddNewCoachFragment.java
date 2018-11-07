@@ -36,7 +36,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
@@ -90,7 +90,7 @@ public class AddNewCoachFragment extends BaseDialogFragment {
     //    RelativeLayout genderLayout;
 	Button btn;
 	PhoneEditText phoneNum;
-    @Inject RestRepository restRepository;
+    @Inject StaffRespository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private String uploadImageUrl = "";
@@ -238,7 +238,7 @@ public class AddNewCoachFragment extends BaseDialogFragment {
             courseTypeRg.getCheckedRadioButtonId() == R.id.gender_male ? 0 : 1);
         coach.area_code = phoneNum.getDistrictInt();
         showLoading();
-        restRepository.getPost_api()
+        restRepository.getStaffAllApi()
             .qcAddCoach(App.staffId, gymWrapper.id(), gymWrapper.model(), coach)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
