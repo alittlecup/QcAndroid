@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
@@ -58,301 +57,342 @@ import rx.schedulers.Schedulers;
  * <p/>
  * Created by Paper on 16/4/28 2016.
  */
-@Leaf(module = "card", path = "/cardtpl/add/gyms")
-public class MutiChooseGymFragment extends BaseDialogFragment {
+@Leaf(module = "card", path = "/cardtpl/add/gyms") public class MutiChooseGymFragment
+    extends BaseDialogFragment {
 
-    public static final int FEATURE_ALLOTSALE = 1;
+  public static final int FEATURE_ALLOTSALE = 1;
 
-	Toolbar toolbar;
-	TextView toolbarTitile;
-	RecyclerView recycleview;
-    @Inject QcRestRepository restRepository;
-    @Inject IPermissionModel serPermisAction;
-    @Inject ICardModel cardModel;
-    @Inject LoginStatus loginStatus;
-    private List<ImageTwoTextBean> mDatas = new ArrayList<>();
-    private MutiImageTwoTextAdapter mGymsAdapter;
-    private List<Shop> mShops;
-    //    public static AdapterView.OnItemClickListener listener;
-    private List<String> mIds;
-    private String permission;
-    private boolean isSimple;
-    private int feature = 0;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  RecyclerView recycleview;
+  @Inject QcRestRepository restRepository;
+  @Inject IPermissionModel serPermisAction;
+  @Inject ICardModel cardModel;
+  @Inject LoginStatus loginStatus;
+  private List<ImageTwoTextBean> mDatas = new ArrayList<>();
+  private MutiImageTwoTextAdapter mGymsAdapter;
+  private List<Shop> mShops;
+  //    public static AdapterView.OnItemClickListener listener;
+  private List<String> mIds;
+  private String permission;
+  private boolean isSimple;
+  private int feature = 0;
 
-    public static void start(Fragment fragment, boolean simple, ArrayList<String> chooseIds, int requestcode) {
-        MutiChooseGymFragment f = newInstance(simple, chooseIds);
-        f.setTargetFragment(fragment, requestcode);
-        f.show(fragment.getFragmentManager(), "");
+  public static void start(Fragment fragment, boolean simple, ArrayList<String> chooseIds,
+      int requestcode) {
+    MutiChooseGymFragment f = newInstance(simple, chooseIds);
+    f.setTargetFragment(fragment, requestcode);
+    f.show(fragment.getFragmentManager(), "");
+  }
+
+  public static void start(Fragment fragment, boolean simple, ArrayList<String> chooseIds,
+      String permis, int requestcode) {
+    MutiChooseGymFragment f = newInstance(simple, chooseIds, permis);
+    f.setTargetFragment(fragment, requestcode);
+    f.show(fragment.getFragmentManager(), "");
+  }
+
+  public static void start(Fragment fragment, boolean simple, ArrayList<String> chooseIds,
+      String permis, int feature, int requestcode) {
+    MutiChooseGymFragment f = newInstance(simple, chooseIds, permis, feature);
+    f.setTargetFragment(fragment, requestcode);
+    f.show(fragment.getFragmentManager(), "");
+  }
+
+  public static MutiChooseGymFragment newInstance(boolean simple, ArrayList<String> chooseIds) {
+
+    Bundle args = new Bundle();
+    args.putBoolean("is", simple);
+    args.putStringArrayList("ids", chooseIds);
+    MutiChooseGymFragment fragment = new MutiChooseGymFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static MutiChooseGymFragment newInstance(boolean simple, ArrayList<String> chooseIds,
+      String permis) {
+
+    Bundle args = new Bundle();
+    args.putBoolean("is", simple);
+    args.putStringArrayList("ids", chooseIds);
+    args.putString("p", permis);
+    MutiChooseGymFragment fragment = new MutiChooseGymFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static MutiChooseGymFragment newInstance(boolean simple, ArrayList<String> chooseIds,
+      String permis, int feature) {
+
+    Bundle args = new Bundle();
+    args.putBoolean("is", simple);
+    args.putStringArrayList("ids", chooseIds);
+    args.putString("p", permis);
+    args.putInt("feature", feature);
+    MutiChooseGymFragment fragment = new MutiChooseGymFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+
+    if (getArguments() != null) {
+      isSimple = getArguments().getBoolean("is");
+      mIds = getArguments().getStringArrayList("ids");
+      permission = getArguments().getString("p");
+      feature = getArguments().getInt("feature");
     }
+  }
 
-    public static void start(Fragment fragment, boolean simple, ArrayList<String> chooseIds, String permis, int requestcode) {
-        MutiChooseGymFragment f = newInstance(simple, chooseIds, permis);
-        f.setTargetFragment(fragment, requestcode);
-        f.show(fragment.getFragmentManager(), "");
-    }
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+  }
 
-    public static void start(Fragment fragment, boolean simple, ArrayList<String> chooseIds, String permis, int feature, int requestcode) {
-        MutiChooseGymFragment f = newInstance(simple, chooseIds, permis, feature);
-        f.setTargetFragment(fragment, requestcode);
-        f.show(fragment.getFragmentManager(), "");
-    }
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
+    toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
 
-    public static MutiChooseGymFragment newInstance(boolean simple, ArrayList<String> chooseIds) {
-
-        Bundle args = new Bundle();
-        args.putBoolean("is", simple);
-        args.putStringArrayList("ids", chooseIds);
-        MutiChooseGymFragment fragment = new MutiChooseGymFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static MutiChooseGymFragment newInstance(boolean simple, ArrayList<String> chooseIds, String permis) {
-
-        Bundle args = new Bundle();
-        args.putBoolean("is", simple);
-        args.putStringArrayList("ids", chooseIds);
-        args.putString("p", permis);
-        MutiChooseGymFragment fragment = new MutiChooseGymFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static MutiChooseGymFragment newInstance(boolean simple, ArrayList<String> chooseIds, String permis, int feature) {
-
-        Bundle args = new Bundle();
-        args.putBoolean("is", simple);
-        args.putStringArrayList("ids", chooseIds);
-        args.putString("p", permis);
-        args.putInt("feature", feature);
-        MutiChooseGymFragment fragment = new MutiChooseGymFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
-
-        if (getArguments() != null) {
-            isSimple = getArguments().getBoolean("is");
-            mIds = getArguments().getStringArrayList("ids");
-            permission = getArguments().getString("p");
-            feature = getArguments().getInt("feature");
-        }
-    }
-
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-    }
-
-    @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
-      toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-      toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
-      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
-
-      toolbarTitile.setText("选择场馆");
-        toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                dismiss();
+    toolbarTitile.setText("选择场馆");
+    toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
+      }
+    });
+    if (!isSimple) {
+      toolbar.inflateMenu(R.menu.menu_save);
+      toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+          ArrayList<Shop> pos = new ArrayList<>();
+          for (int i = 0; i < mDatas.size(); i++) {
+            ImageTwoTextBean b = mDatas.get(i);
+            if (b.showRight) {
+              pos.add(mShops.get(i));
             }
-        });
-        if (!isSimple) {
-            toolbar.inflateMenu(R.menu.menu_save);
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override public boolean onMenuItemClick(MenuItem item) {
-                    ArrayList<Shop> pos = new ArrayList<>();
-                    for (int i = 0; i < mDatas.size(); i++) {
-                        ImageTwoTextBean b = mDatas.get(i);
-                        if (b.showRight) {
-                            pos.add(mShops.get(i));
-                        }
-                    }
-                    if (pos.size() <= 0){
-                        showAlert(getResources().getString(R.string.card_not_select_gym));
-                        return false;
-                    }
-                    Intent result = new Intent();
-                    result.putParcelableArrayListExtra(IntentUtils.RESULT, pos);
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, result);
-                    dismiss();
-                    return true;
-                }
-            });
+          }
+          if (pos.size() <= 0) {
+            showAlert(getResources().getString(R.string.card_not_select_gym));
+            return false;
+          }
+          Intent result = new Intent();
+          result.putParcelableArrayListExtra(IntentUtils.RESULT, pos);
+          getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, result);
+          dismiss();
+          return true;
         }
-        mGymsAdapter = new MutiImageTwoTextAdapter(mDatas);
-        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        recycleview.setAdapter(mGymsAdapter);
-        mGymsAdapter.setListener(new MutiImageTwoTextAdapter.OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                if (!mDatas.get(pos).hiden) {
-                    if (isSimple) {
+      });
+    }
+    mGymsAdapter = new MutiImageTwoTextAdapter(mDatas);
+    recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+    recycleview.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    recycleview.setAdapter(mGymsAdapter);
+    mGymsAdapter.setListener(new MutiImageTwoTextAdapter.OnRecycleItemClickListener() {
+      @Override public void onItemClick(View v, int pos) {
+        if (!mDatas.get(pos).hiden) {
+          if (isSimple) {
 
-                        if (mShops != null && mShops.size() > pos) {
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
-                                IntentUtils.instancePacecle(mShops.get(Integer.parseInt(mDatas.get(pos).tags.get("pos")))));
-                            dismiss();
-                            //                            RxRegiste(rx.Observable.just("")
-                          //                                .onBackpressureBuffer().subscribeOn(Schedulers.newThread())
-                            //                                    .observeOn(Schedulers.newThread())
-                            //                                    .delay(500, TimeUnit.MILLISECONDS)
-                            //                                    .subscribe(new Action1<String>() {
-                            //                                        @Override
-                            //                                        public void call(String s) {
-                            //
-                            //                                        }
-                            //                                    })
-                            //                            );
-                        }
-                    } else {
-                        mDatas.get(pos).showRight = !mDatas.get(pos).showRight;
-                        mGymsAdapter.notifyItemChanged(pos);
-                    }
-                } else {
-                    ToastUtils.show("抱歉!您没有该场馆的权限");
-                }
+            if (mShops != null && mShops.size() > pos) {
+              getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
+                  IntentUtils.instancePacecle(
+                      mShops.get(Integer.parseInt(mDatas.get(pos).tags.get("pos")))));
+              dismiss();
+              //                            RxRegiste(rx.Observable.just("")
+              //                                .onBackpressureBuffer().subscribeOn(Schedulers.newThread())
+              //                                    .observeOn(Schedulers.newThread())
+              //                                    .delay(500, TimeUnit.MILLISECONDS)
+              //                                    .subscribe(new Action1<String>() {
+              //                                        @Override
+              //                                        public void call(String s) {
+              //
+              //                                        }
+              //                                    })
+              //                            );
             }
-        });
-        RxRegiste(cardModel.qcGetBrandShops(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""))
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<Shops>>() {
-                           @Override public void call(QcDataResponse<Shops> qcResponseBrandShops) {
-                               if (ResponseConstant.checkSuccess(qcResponseBrandShops)) {
-                                   mShops = qcResponseBrandShops.data.shops;
-                                   mDatas.clear();
-                                   int i = 0;
-                                   for (Shop service : mShops) {
-                                       ImageTwoTextBean baen =
-                                           new ImageTwoTextBean(service.photo, service.name + " | " + qcResponseBrandShops.data.brand.getName(), "");
-                                       baen.tags.put("pos", i + "");
-                                       List<String> shoid = new ArrayList<>();
-                                       shoid.add(service.id);
-                                       if (isSimple) {
-                                           baen.rightIcon = 0;
-                                           baen.hiden = !service.has_permission;
+          } else {
+            mDatas.get(pos).showRight = !mDatas.get(pos).showRight;
+            mGymsAdapter.notifyItemChanged(pos);
+          }
+        } else {
+          ToastUtils.show("抱歉!您没有该场馆的权限");
+        }
+      }
+    });
+    RxRegiste(cardModel.qcGetBrandShops(
+        PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""))
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<Shops>>() {
+                     @Override public void call(QcDataResponse<Shops> qcResponseBrandShops) {
+                       if (ResponseConstant.checkSuccess(qcResponseBrandShops)) {
+                         mShops = qcResponseBrandShops.data.shops;
+                         mDatas.clear();
+                         int i = 0;
+                         for (Shop service : mShops) {
+                           ImageTwoTextBean baen = new ImageTwoTextBean(service.photo,
+                               service.name + " | " + qcResponseBrandShops.data.brand.getName(), "");
+                           baen.tags.put("pos", i + "");
+                           List<String> shoid = new ArrayList<>();
+                           shoid.add(service.id);
+                           if (isSimple) {
+                             baen.rightIcon = 0;
+                             baen.hiden = !service.has_permission;
 
-                                           if (!StringUtils.isEmpty(permission)) {
-                                               if (permission.equalsIgnoreCase(
-                                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                             if (!StringUtils.isEmpty(permission)) {
+                               if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
 
-                                                   if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
-                                                   && feature != FEATURE_ALLOTSALE) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_COSTS_CAN_WRITE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
-                                                   && feature == FEATURE_ALLOTSALE) {
-                                                   baen.hiden = !serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid);
-                                               } else {
-                                                   baen.hiden = !serPermisAction.check( permission,shoid);
-                                               }
-                                           }
-
-                                           if (mIds != null && mIds.size() > 0) {
-                                               if (mIds.contains(service.id)) mDatas.add(baen);
-                                           } else {
-                                               mDatas.add(baen);
-                                           }
-                                       } else {
-                                           if (mIds != null && mIds.contains(service.id)) baen.showRight = true;
-                                           baen.rightIcon = R.drawable.ic_checkbox_unchecked;
-                                           baen.hiden = !service.has_permission;
-                                           if (!StringUtils.isEmpty(permission)) {
-                                               if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
-                                                   && feature != FEATURE_ALLOTSALE) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
-                                                   && feature == FEATURE_ALLOTSALE) {
-                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid)) {
-                                                       baen.hiden = true;
-                                                   } else {
-                                                       baen.hiden = false;
-                                                   }
-                                               } else {
-                                                   baen.hiden = !serPermisAction.check( permission,shoid);
-                                               }
-                                           }
-
-                                           mDatas.add(baen);
-                                       }
-                                       i++;
-                                   }
-                                   if (mDatas.size() == 1) {
-                                       getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
-                                           IntentUtils.instancePacecle(mShops.get(Integer.parseInt(mDatas.get(0).tags.get("pos")))));
-                                   }
-                                   mGymsAdapter.notifyDataSetChanged();
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
+                                   && feature != FEATURE_ALLOTSALE) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
+                                   && feature == FEATURE_ALLOTSALE) {
+                                 baen.hiden =
+                                     !serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,
+                                         shoid);
                                } else {
-
+                                 baen.hiden = !serPermisAction.check(permission, shoid);
                                }
+                             }
+
+                             if (mIds != null && mIds.size() > 0) {
+                               if (mIds.contains(service.id)) {
+                                 if (!baen.hiden) {
+                                   mDatas.add(baen);
+                                 }
+                               }
+                             } else {
+                               if (!baen.hiden) {
+                                 mDatas.add(baen);
+                               }
+                             }
+                           } else {
+                             if (mIds != null && mIds.contains(service.id)) baen.showRight = true;
+                             baen.rightIcon = R.drawable.ic_checkbox_unchecked;
+                             baen.hiden = !service.has_permission;
+                             if (!StringUtils.isEmpty(permission)) {
+                               if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
+                                   && feature != FEATURE_ALLOTSALE) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else if (permission.equalsIgnoreCase(
+                                   PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
+                                   && feature == FEATURE_ALLOTSALE) {
+                                 if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,
+                                     shoid)) {
+                                   baen.hiden = true;
+                                 } else {
+                                   baen.hiden = false;
+                                 }
+                               } else {
+                                 baen.hiden = !serPermisAction.check(permission, shoid);
+                               }
+                             }
+                             if (!baen.hiden) {
+                               mDatas.add(baen);
+                             }
                            }
+                           i++;
+                         }
+                         if (mDatas.size() == 1) {
+                           getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
+                               IntentUtils.instancePacecle(
+                                   mShops.get(Integer.parseInt(mDatas.get(0).tags.get("pos")))));
+                         }
+                         mGymsAdapter.notifyDataSetChanged();
+                       } else {
+
                        }
+                     }
+                   }
 
-                , new NetWorkThrowable()));
-        return view;
-    }
+            , new NetWorkThrowable()));
+    return view;
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }
