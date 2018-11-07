@@ -99,7 +99,7 @@ android {
       if (variant.buildType.name == "release") {
         println(rootProject.ext.today)
         variant.outputs.all { output ->
-          output.setVersionNameOverride("1." + rootProject.ext.today+".1")
+          output.setVersionNameOverride("1." + rootProject.ext.today)
           output.setVersionCodeOverride(rootProject.ext.today)
         }
       }
