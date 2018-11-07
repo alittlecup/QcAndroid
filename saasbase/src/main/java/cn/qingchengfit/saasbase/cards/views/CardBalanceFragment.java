@@ -95,6 +95,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     cardListFragment = new CardListFragment();
+    cardListFragment.setFabVisible(false);
     cardListFragment.initListener(this);
     filterFragment = CardListFilterFragment.newFragmentWithOutStopCardFilter();
     RxBus.getBus()
@@ -143,6 +144,7 @@ import rx.android.schedulers.AndroidSchedulers;
     loadBalanceCondition();
     initToolbar(toolbar);
     initPopView();
+
     return view;
   }
   public void loadBalanceCondition(){
