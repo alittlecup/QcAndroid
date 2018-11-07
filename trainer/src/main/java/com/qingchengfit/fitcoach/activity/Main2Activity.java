@@ -461,7 +461,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
               super.onSuccess(s);
               UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
 
-              if (BuildConfig.DEBUG && BuildConfig.FLAVOR.startsWith("internal")) {
+              if (BuildConfig.DEBUG && BuildConfig.FLAVOR.startsWith("UAT")) {
                 long oldupdate = PreferenceUtils.getPrefLong(Main2Activity.this, "update", 0);
                 if (updateVersion.updated_at <= oldupdate) {
                   return;

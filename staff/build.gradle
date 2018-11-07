@@ -68,7 +68,7 @@ android {
 
   flavorDimensions "qc"
   productFlavors {
-    dev {
+    SIT {//测试环境 可以更换测试地址，默认地址为cloudtest
       applicationId "cn.qingchengfit.staffkit.internaltest"
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               APP_SCHAME        : "qcstaff",
@@ -80,7 +80,18 @@ android {
       }
       dimension "qc"
     }
-    product {
+    UAT {//灰度环境，不可以更换测试地址，默认地址为cloudmirror
+      applicationId "cn.qingchengfit.staffkit"
+      manifestPlaceholders = [APP_NAME          : "青橙健身管理",
+                              APP_SCHAME        : "qcstaff",
+                              bdpush_authorities: "cn.qingchengfit.staffkit.bdpush",
+                              APP_PACKAGE       : "cn.qingchengfit.staffkit", file_provider: "cn.qingchengfit.staffkit.provider"]
+      ndk {
+        abiFilter "armeabi"
+      }
+      dimension "qc"
+    }
+    product {//正式环境，不可以更换测试地址，默认地址为cloud
       applicationId "cn.qingchengfit.staffkit"
       manifestPlaceholders = [APP_NAME          : "青橙健身管理",
                               APP_SCHAME        : "qcstaff",

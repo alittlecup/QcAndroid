@@ -80,7 +80,7 @@ public class LoginModel implements ILoginModel {
   }
 
   @Override public boolean isDebug() {
-    return BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev");
+    return BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("SIT");
   }
 
   @Override public void doOnLogin(Context ctx, Login login,LoginView mvpView) {

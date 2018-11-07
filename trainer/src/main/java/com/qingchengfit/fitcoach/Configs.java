@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach;
 
 import android.os.Environment;
 import cn.qingchengfit.Constants;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * power by
@@ -81,9 +82,7 @@ public class Configs {
    */
   //    public static boolean isDebug = true;
   public static boolean isDebug = false;
-  public static String Server =
-      BuildConfig.DEBUG ? (BuildConfig.FLAVOR.contains("dev") ? Constants.ServerDebug
-          : Constants.ServerMirror) : Constants.Server;
+  public static String Server =getServerByBuildFLAVOR();
   public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
   public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
   public static String PRIVATE_PRIVEIW = Configs.Server + "fitness/redirect/user/private/";
@@ -104,4 +103,17 @@ public class Configs {
 
   //用户协议
   public static final String USER_PROTOCOL_URL = "protocol/staff/";
+
+
+  private static String getServerByBuildFLAVOR(){
+    switch (BuildConfig.FLAVOR){
+      case "SIT":
+        return PreferenceUtils.getPrefString(App.AppContex, "debug_ip", Constants.ServerDebug);
+      case "UAT":
+        return Constants.ServerMirror;
+      case "product":
+        return Constants.Server;
+    }
+    return Constants.Server;
+  }
 }

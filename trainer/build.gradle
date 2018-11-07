@@ -54,7 +54,7 @@ android {
 
   flavorDimensions "qc"
   productFlavors {
-    dev {
+    SIT {
       minSdkVersion 21
       applicationId "com.qingchengfit.fitcoach.dev"
       manifestPlaceholders = [APP_NAME            : "内部测试"
@@ -67,6 +67,20 @@ android {
       ndk {
         abiFilter "armeabi-v7a"
       }
+      dimension 'qc'
+    }
+    UAT {
+      minSdkVersion 16
+      applicationId "com.qingchengfit.fitcoach"
+      manifestPlaceholders = [APP_NAME            : "青橙健身教练"
+                              , APP_SCHAME        : "qccoach"
+                              , bdpush_authorities: "com.qingchengfit.fitcoach.bdpush"
+                              , APP_PACKAGE       : "com.qingchengfit.fitcoach"
+                              , file_provider     : "com.qingchengfit.fitcoach.provider"]
+      ndk {
+        abiFilter "armeabi-v7a"
+      }
+
       dimension 'qc'
     }
     product {
@@ -122,34 +136,15 @@ android {
     resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
     resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
   }
-
 }
 
-//自动加固
-afterEvaluate {
-  android.applicationVariants.all { variant ->
-    variant.assemble.doLast {
-      if (variant.buildType.name.contains('release')) {
-        variant.outputs.all {
-          output ->
-            def apkpath = output.outputFile as File
-            exec {
-              ignoreExitValue true
-              commandLine "sh", rootProject.file('reinforce.sh').absolutePath, apkpath, rootProject.file('reinforce.sh').getParentFile().absolutePath,"trainer"
-            }
-        }
-
-      }
-    }
-  }
-}
 
 dependencies {
-  addComponent('saasbase',false)
-  addComponent('login',false)
-  addComponent('card',false)
-  addComponent('student',false)
-  addComponent('checkout',false)
+  addComponent('saasbase', false)
+  addComponent('login', false)
+  addComponent('card', false)
+  addComponent('student', false)
+  addComponent('checkout', false)
   addComponent("wxpreview", false)
 
 
@@ -179,7 +174,6 @@ dependencies {
   annotationProcessor annotations["fragmentargs"]
 
   annotationProcessor annotations["room"]
-
 }
 apply plugin: 'auto-register'
 autoregister {

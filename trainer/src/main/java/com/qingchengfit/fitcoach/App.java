@@ -33,7 +33,6 @@ import javax.inject.Inject;
 import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
-import timber.log.Timber;
 
 /**
  * power by
@@ -128,11 +127,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
    */
   void initDebug(){
     ToastUtils.init(this);
-    if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
-      Timber.plant(new Timber.DebugTree());
-      String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Configs.Server);
-      Configs.Server = ip;
-    }
   }
 
   /**

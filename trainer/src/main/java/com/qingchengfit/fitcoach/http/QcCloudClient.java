@@ -48,6 +48,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.protocol.CheckProtocolModel;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
@@ -187,9 +188,6 @@ public class QcCloudClient {
   private OkHttpClient okHttpClient;
 
   public QcCloudClient() {
-    String host = "http://cloudtest.qingchengfit.cn/";
-    host = PreferenceUtils.getPrefString(App.AppContex, "debug_ip", host);
-
     HttpLoggingInterceptor interceptor =
         new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
           @Override public void log(String message) {
@@ -233,30 +231,14 @@ public class QcCloudClient {
             return chain.proceed(request);
           }
         }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
-    Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization()
-        //                .setExclusionStrategies(new ExclusionStrategy() {
-        //                    @Override
-        //                    public boolean shouldSkipField(FieldAttributes f) {
-        //                        return f.getDeclaringClass().equals(RealmObject.class);
-        //                    }
-        //
-        //                    @Override
-        //                    public boolean shouldSkipClass(Class<?> clazz) {
-        //                        return false;
-        //                    }
-        //                })
-        .create();
-    Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(
-        BuildConfig.DEBUG ? (BuildConfig.FLAVOR.contains("dev") ? host : Constants.ServerMirror)
-            : Constants.Server)
+    Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
+    Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
 
-    Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(
-        BuildConfig.DEBUG ? (BuildConfig.FLAVOR.contains("dev") ? host : Constants.ServerMirror)
-            : Constants.Server)
+    Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .client(client)
@@ -264,7 +246,6 @@ public class QcCloudClient {
 
     getApi = getApiAdapter.create(GetApi.class);
     postApi = postApiAdapter.create(PostApi.class);
-    //        downLoadApi = restAdapter3.create(DownLoadApi.class);
   }
 
   public static QcCloudClient getApi() {
@@ -275,27 +256,8 @@ public class QcCloudClient {
     }
   }
 
-  //public RestAdapter.Builder getRestAdapter() {
-  //    return new RestAdapter.Builder().setClient(new OkClient(okHttpClient))
-  //        .setEndpoint(Configs.Server)
-  //        .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-  //        .setRequestInterceptor(request -> {
-  //            QcResponToken responToken = null;
-  //            try {
-  //                responToken = getApi.qcGetToken();
-  //            } catch (Exception e) {
-  //                //TODO handle error
-  //            }
-  //            if (responToken != null) {
-  //                //                                request.addHeader("X-CSRFToken", responToken.data.token);
-  //                //                                request.addHeader("Cache-Control", "max-age=0");
-  //            }
-  //        });
-  //}
 
   public interface GetApi {
-    //获取token
-    //@GET("/api/csrftoken/") QcResponToken qcGetToken();
 
     @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
 

@@ -61,7 +61,6 @@ import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
-import static cn.qingchengfit.saascommon.constant.Configs.Server;
 
 /**
  * power by
@@ -140,11 +139,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
     context = this;
     ToastUtils.init(this);
-    if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
-      String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Server);
-      Server = ip;
-      Configs.URL_QC_FIND = Server + "mobile/staff/discover/";
-    }
 
     initInjcet();
     CrashHandler.getInstance().init(this);

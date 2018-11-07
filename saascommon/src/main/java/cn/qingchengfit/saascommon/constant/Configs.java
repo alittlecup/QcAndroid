@@ -17,12 +17,6 @@ import cn.qingchengfit.saascommon.BuildConfig;
  * Created by Paper on 15/12/1 2015.
  */
 public class Configs {
-  //public static final String URL_DEBUG = "http://cloudmirror.qingchengfit.cn/";
-  public static final String URL_DEBUG = "http://cloudtest01.qingchengfit.cn/";
-  //    public static final String URL_DEBUG = "http://c1.qingchengfit.cn/";
-  //    public static final String URL_DEBUG = "http://192.168.1.11:8000/";
-  //    public static final String URL_DEBUG = "http://192.168.1.96:7777/";
-  //public static final String URL_RELEASE = "http://cloud.qingchengfit.cn/";
   public static final String URL_QC_TRAIN = "mobile/staff/training/";
   public static final String SEPARATOR = "、";
   public static final String PREFER_SESSION = "qingcheng.session";
@@ -30,13 +24,11 @@ public class Configs {
   public static final String PREFER_PHONE = "qingcheng.phone";
   public static final String PREFER_WORK_NAME = "qingcheng.work.name";
   public static final String PREFER_WORK_NAME_MIRROR = "qingcheng.work.name.mirror";
-
   public static final String PREFER_WORK_ID = "qingcheng.work.id";
   public static final String PREFER_COACH_ID = "qingcheng.coach.id";
   public static final String PREFER_USER_ID = "qingcheng.user.id";
   public static final String CUR_BRAND_ID = "qingcheng.current.brandid";
   public static final String EXTRA_GYM_SERVICE = "qingcheng.gym.service";
-  //    public static final String EXTRA_GYM_MODEL = "qingcheng.gym.model";
   public static final String EXTRA_GYM_SINGLE = "qingcheng.gym.single";
   public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
   public static final String EXTRA_BRAND = "qingcheng.brand";
@@ -53,15 +45,13 @@ public class Configs {
   public static final String EXTRA_PERMISSION_KEY = "qingcheng.permission.key";
   public static final String EXTRA_PERMISSION_METHOD = "qingcheng.permission.method";
   public static final String EXTRA_STATEMENT_DATA_DAY_TYPE = "qingcheng.statement_data.daytype";
-  public static final int TYPE_PRIVATE = 1;  //私教
+
   public static final String ROUTER = "router";  //路由的key
-  //    public static final String EXTRA_STATEMENT_DATA_DAY = "qingcheng.statement_data.day";
-  //    public static final String EXTRA_STATEMENT_DATA_WEEK = "qingcheng.statement_data.week";
-  //    public static final String EXTRA_STATEMENT_DATA_MONTH = "qingcheng.statement_data.month";
-  //    public static final String EXTRA_STATEMENT_SALE_DAY = "qingcheng.statement_sale.day";
-  //    public static final String EXTRA_STATEMENT_SALE_WEEK = "qingcheng.statement_sale.week";
-  //    public static final String EXTRA_STATEMENT_SALE_MONTH = "qingcheng.statement_sale.month";
+
+
   public static final int TYPE_GROUP = 0;    //团课
+  public static final int TYPE_PRIVATE = 1;  //私教
+
   public static final int CATEGORY_VALUE = 1;    //储值卡
   public static final int CATEGORY_TIMES = 2;    //次卡
   public static final int CATEGORY_DATE = 3;    //期限卡
@@ -101,22 +91,12 @@ public class Configs {
   public static final int CHARGE_MODE_AUTO = 5; //赠送
   public static final int CHARGE_MODE_WEIXIN = 6; //微信
   public static final int CHARGE_MODE_WEIXIN_QRCODE = 7; //二维码
-  /**
-   * 积分方式
-   */
 
-  public static final String CACLU_SCORE_CHARGE = "chargecard"; //充卡算积分
-  public static final String CACLU_SCORE_BUY = "buycard"; //
   /**
-   * 续费状态
+   * 支付渠道
    */
-
-  public static final int RENEWAL_FAIL = 0; //已创建
-  public static final int RENEWAL_CREATE = 1; //已完成
-  public static final int RENEWAL_DONE = 2; //已取消
-  public static final int RENEWAL_CANCEL = 3; //已失败
-  public static final int RENEWAL_TBC = 4; //待处理
-  public static final int RENEWAL_EXPIRE = 5; //已过期
+  public static final String CHANNEL_CARD = "CARD";
+  public static final String CHANNEL_ONLINE = "ONLINE";
   /**
    * 服务端交易方式
    */
@@ -127,10 +107,13 @@ public class Configs {
   public static final int TRADE_PRESENT = 13;  //赠送
   public static final int TRADE_DEDUCTION = 23;  //扣费时填写扣费金额
   /**
-   * 支付渠道
+   * 积分方式
    */
-  public static final String CHANNEL_CARD = "CARD";
-  public static final String CHANNEL_ONLINE = "ONLINE";
+  public static final int RENEWAL_DONE = 2; //已取消
+  public static final int RENEWAL_CANCEL = 3; //已失败
+  public static final int RENEWAL_TBC = 4; //待处理
+  public static final int RENEWAL_EXPIRE = 5; //已过期
+
   /**
    * 服务端订单支付类型
    */
@@ -150,27 +133,34 @@ public class Configs {
   public static final String SCHEDULE_PRIVATE = "fitness/redirect/staff/private/";
   public static final String HOST_ORDERS = "mobile/trades/home/";
   public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
-  //public static String Server = !BuildConfig.FLAVOR.equals("product") ? Constants.Server:(BuildConfig.DEBUG?Constants.ServerMirror:Constants.Server);
-  public static String Server =
-      BuildConfig.DEBUG ? (BuildConfig.FLAVOR.contains("dev") ? Constants.ServerDebug
-          : Constants.ServerMirror) : Constants.Server;
+  public static String Server =getServerByBuildFLAVOR();
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
   public static String URL_ALI_Eleven =  "mobile/activity/enter-ali/?utm_source=staffapp&utm_medium=module&utm_campaign=enterali";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
-  public static String QR_POINT_URL=BuildConfig.DEBUG ? "saotest.qingchengfit.cn": "sao.qingchengfit.cn";
 
-  //用户协议
-  public static final String USER_PROTOCOL_URL = "";
+
 
   public static final String WEEX_TEST_PATH =
       "https://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
   public static final String WEEX_RELEASE_PATH =
       "https://qcfile.b0.upaiyun.com/qc-commodity-weex/0.0.39/version.json";
   public static final String WEEX_PAGE_INDEX = "proxy_commodity.js";
+  public static String QR_POINT_URL = BuildConfig.DEBUG ? "saotest.qingchengfit.cn" : "sao.qingcehgnfit.cn";
   public static final String WEB_HOW_TO_USE_BATCH_GROUP =
       "http://cloud.qingchengfit.cn/mobile/urls/e382d87968dd4f54a89bb5e5a933f779/";
   //团课
   public static final String WEB_HOW_TO_USE_BATCH_PRIVATE =
       "http://cloud.qingchengfit.cn/mobile/urls/34890304d8bc40ba9677ca8d99bcd02a/";
 
+  private static String getServerByBuildFLAVOR(){
+    switch (BuildConfig.FLAVOR){
+      case "SIT":
+        return Constants.ServerDebug;
+      case "UAT":
+        return Constants.ServerMirror;
+      case "product":
+        return Constants.Server;
+    }
+    return Constants.Server;
+  }
 }

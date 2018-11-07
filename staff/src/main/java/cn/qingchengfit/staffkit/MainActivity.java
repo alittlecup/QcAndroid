@@ -348,9 +348,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
       case 1:
         return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
       case 2:
-        return QcVipFragment.newInstance(
-            ((BuildConfig.DEBUG ? (PreferenceUtils.getPrefString(this, "debug_ip",
-                Constants.ServerDebug)) : Constants.Server) + Configs.URL_ALI_Eleven).replace(
+        return QcVipFragment.newInstance((Constants.Server + Configs.URL_ALI_Eleven).replace(
                 "http", "https"),true);
       case 3:
         return new MainMsgFragment();
@@ -532,7 +530,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
                 try {
                   final UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
                   if (BuildConfig.DEBUG) {
-                    if (BuildConfig.FLAVOR.equalsIgnoreCase("internaltest")) {
+                    if (BuildConfig.FLAVOR.equalsIgnoreCase("UAT")) {
                       long oldupdate = PreferenceUtils.getPrefLong(MainActivity.this, "update", 0);
                       if (oldupdate == 0) {
                         oldupdate = updateVersion.updated_at;
@@ -558,7 +556,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
                       }
                     }
                   } else {
-
                     if (updateVersion.version > AppUtils.getAppVerCode(App.context)) {
                       if (updateDialog == null) {
                         MaterialDialog.Builder builder =
