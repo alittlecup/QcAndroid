@@ -36,7 +36,7 @@ public class BuyCardUsecase {
     }
 
     public Subscription getSalers(String brandid, String shop, String gymid, String gymmodle, Action1<QcDataResponse<Sellers>> action1) {
-        return restRepository.createGetApi(CardApi.class)
+        return restRepository.createRxJava1Api(CardApi.class)
             .qcGetSalersAndCoach(loginStatus.staff_id(), brandid, shop, gymid, gymmodle)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -50,7 +50,7 @@ public class BuyCardUsecase {
 
     public Subscription chargeCard(String card_id, String brand_id, String shop_id, String modelid, String model, ChargeBody body,
         Action1<QcResponsePayWx> action1) {
-        return restRepository.createGetApi(CardApi.class)
+        return restRepository.createRxJava1Api(CardApi.class)
             .qcCardCharge(loginStatus.staff_id(), card_id, brand_id, shop_id, modelid, model, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -68,7 +68,7 @@ public class BuyCardUsecase {
         //        CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID,""),shop_id);
         //        body.setId(modelid);
         //        body.setModel(model);
-        return restRepository.createGetApi(CardApi.class)
+        return restRepository.createRxJava1Api(CardApi.class)
             .qcCardChargeWechat(loginStatus.staff_id()//, card_id
                 , brand_id, shop_id, modelid, model, body)
             .observeOn(AndroidSchedulers.mainThread())
@@ -83,7 +83,7 @@ public class BuyCardUsecase {
 
     public Subscription buyCard(CreateCardBody body, String brand_id, String shop_id, String gymid, String gymmodel,
         Action1<QcResponsePayWx> action1) {
-        return restRepository.createGetApi(CardApi.class)
+        return restRepository.createRxJava1Api(CardApi.class)
             .qcCreateRealcard(loginStatus.staff_id(), body, brand_id, shop_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

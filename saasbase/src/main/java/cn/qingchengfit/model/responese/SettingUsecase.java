@@ -32,7 +32,7 @@ public class SettingUsecase {
     }
 
     public Subscription getSelfInfo(Action1<QcDataResponse<StaffResponse>> action1) {
-        return restRepository.createGetApi(GetApi.class).qcGetSelfInfo(loginStatus.staff_id())
+        return restRepository.createRxJava1Api(GetApi.class).qcGetSelfInfo(loginStatus.staff_id())
             .onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {

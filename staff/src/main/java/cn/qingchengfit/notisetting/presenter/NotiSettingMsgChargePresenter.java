@@ -32,7 +32,7 @@ public class NotiSettingMsgChargePresenter extends BasePresenter {
   }
 
   public void chargeSMS(int pos, String wxCode) {
-    RxRegiste(qcRestRepository.createPostApi(Post_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Post_Api.class)
         .qcCharge(new RenewBody.Builder().app_id(wxCode)
             .model(gymWrapper.model())
             .id(gymWrapper.id())
@@ -53,7 +53,7 @@ public class NotiSettingMsgChargePresenter extends BasePresenter {
   }
 
   public void queryCurSMSleft() {
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetShopConfig(loginStatus.staff_id(), ShopConfigs.SMS_NUM, gymWrapper.getParams())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

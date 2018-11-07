@@ -56,18 +56,8 @@ public class StudentModel implements IStudentModel {
   @Inject LoginStatus loginStatus;
 
   @Inject public StudentModel(QcRestRepository qcRestRepository) {
-    OkHttpClient client = qcRestRepository.getClient();
-    OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
-      Log.d("HTTP", message);
-    }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
-    Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
 
-    Retrofit retrofit = new Retrofit.Builder().client(http)
-        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl(qcRestRepository.getHost())
-        .build();
-    studentApi = retrofit.create(StudentApi.class);
+    studentApi = qcRestRepository.createRxJava2Api(StudentApi.class);
   }
 
   //

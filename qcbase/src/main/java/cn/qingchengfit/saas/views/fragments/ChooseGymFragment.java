@@ -120,7 +120,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
   }
 
   protected void freshData() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryPermissionGyms().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymListWrap>>() {
@@ -204,7 +204,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
    * 修改为获取场馆编辑权限
    */
   protected void querySu(final Gym gym) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<SuWrap>>() {
@@ -223,7 +223,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
   }
 
   protected void queryPermiss(final Gym gym) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class).querySu(gym.id)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class).querySu(gym.id)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

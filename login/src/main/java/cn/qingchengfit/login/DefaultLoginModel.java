@@ -1,13 +1,8 @@
 package cn.qingchengfit.login;
 
 import android.content.Context;
-import android.net.Uri;
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.events.EventLoginChange;
-import cn.qingchengfit.login.ILoginModel;
-import cn.qingchengfit.login.LoginApi;
 import cn.qingchengfit.login.bean.CheckCodeBody;
 import cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.login.bean.Login;
@@ -15,20 +10,11 @@ import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.bean.RegisteBody;
 import cn.qingchengfit.login.views.CheckProtocolModel;
 import cn.qingchengfit.login.views.LoginView;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.views.fragments.EventFreshCoachService;
 import com.google.gson.JsonObject;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import java.util.HashMap;
-import java.util.List;
 import rx.Observable;
 
 /**
@@ -64,7 +50,7 @@ public class DefaultLoginModel implements ILoginModel {
     QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    api = qcRestRepository.createGetApi(LoginApi.class);
+    api = qcRestRepository.createRxJava1Api(LoginApi.class);
 
   }
 

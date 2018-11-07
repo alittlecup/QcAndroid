@@ -25,7 +25,7 @@ public class SuIdendifyPresenter extends BasePresenter {
     }
 
     public void sendMsg(GetCodeBody body) {
-        RxRegiste(restRepository.createPostApi(PostApi.class)
+        RxRegiste(restRepository.createRxJava1Api(PostApi.class)
             .qcGetCode(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -44,7 +44,7 @@ public class SuIdendifyPresenter extends BasePresenter {
     }
 
     public void checkIdendify(CheckCodeBody body) {
-        RxRegiste(restRepository.createPostApi(PostApi.class)
+        RxRegiste(restRepository.createRxJava1Api(PostApi.class)
             .qcCheckCode(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

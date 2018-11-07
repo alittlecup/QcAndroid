@@ -139,7 +139,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     //是用户新建 还是
 
     Space space = new Space(name.getContent(), count.getContent(), isSupportPrivate, isSupportTeam);
-    restRepository.createGetApi(PostApi.class)
+    restRepository.createRxJava1Api(PostApi.class)
         .qcCreateSpace(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model(), null, space)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

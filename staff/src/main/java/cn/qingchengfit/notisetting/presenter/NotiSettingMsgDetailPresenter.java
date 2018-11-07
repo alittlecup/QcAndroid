@@ -36,7 +36,7 @@ public class NotiSettingMsgDetailPresenter extends BasePresenter {
   }
 
   public void queryCurSMSleft() {
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetShopConfig(loginStatus.staff_id(), ShopConfigs.SMS_NUM, gymWrapper.getParams())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

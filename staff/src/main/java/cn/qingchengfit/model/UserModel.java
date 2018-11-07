@@ -1,6 +1,5 @@
 package cn.qingchengfit.model;
 
-import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.saasbase.apis.UserApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -13,7 +12,6 @@ import cn.qingchengfit.saasbase.user.bean.EditUserBody;
 import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
 import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
-import com.google.gson.JsonObject;
 import rx.Observable;
 
 /**
@@ -46,7 +44,7 @@ public class UserModel implements IUserModel {
     QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    api = qcRestRepository.createGetApi(UserApi.class);
+    api = qcRestRepository.createRxJava1Api(UserApi.class);
   }
 
   @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {

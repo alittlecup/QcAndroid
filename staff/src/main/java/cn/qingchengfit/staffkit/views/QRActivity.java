@@ -164,7 +164,7 @@
 //      url = getIntent().getStringExtra(LINK_URL);
 //    }
 //
-//    sp = restRepository.createPostApi(Post_Api.class)
+//    sp = restRepository.createRxJava1Api(Post_Api.class)
 //        .qcScans(text, new ScanBody.Builder().url(url).session_id(session)
 //            //                .module(getIntent().getStringExtra(LINK_MODULE))
 //            //                .brand_id(getIntent().getStringExtra("brand_id"))

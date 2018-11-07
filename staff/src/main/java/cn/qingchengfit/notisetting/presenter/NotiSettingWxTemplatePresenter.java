@@ -27,7 +27,7 @@ public class NotiSettingWxTemplatePresenter extends BasePresenter {
   }
 
   public void queryWxTemplate() {
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetWxAuthor(loginStatus.staff_id(), gymWrapper.getParams())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

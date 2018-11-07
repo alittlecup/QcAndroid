@@ -58,8 +58,8 @@ public class CardModel implements ICardModel {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    posApi = repository.createGetApi(CardApi.class);
-    cardApi = repository.createGetApi(cn.qingchengfit.card.network.CardApi.class);
+    posApi = repository.createRxJava1Api(CardApi.class);
+    cardApi = repository.createRxJava1Api(cn.qingchengfit.card.network.CardApi.class);
     INSTANCE = this;
     ComponentModuleManager.register(ICardModel.class,this);
   }

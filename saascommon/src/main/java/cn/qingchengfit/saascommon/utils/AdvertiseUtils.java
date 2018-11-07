@@ -5,7 +5,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
 import rx.android.schedulers.AndroidSchedulers;
-import java.util.Date;
 import java.util.List;
 
 import cn.qingchengfit.network.QcRestRepository;
@@ -32,7 +31,7 @@ public class AdvertiseUtils {
   }
 
   public void loadAdvertise(QcRestRepository qcRestRepository, String source, Context context) {
-    qcRestRepository.createGetApi(SaasCommonApi.class)
+    qcRestRepository.createRxJava1Api(SaasCommonApi.class)
         .qcGetAdvertise(source)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

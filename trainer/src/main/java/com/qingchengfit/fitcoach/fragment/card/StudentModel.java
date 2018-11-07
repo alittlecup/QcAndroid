@@ -46,7 +46,7 @@ public class StudentModel implements IStudentModel {
   @Inject GymWrapper gymWrapper;
 
   @Inject public StudentModel(QcRestRepository restRepository) {
-    api = restRepository.createGetApi(QcCloudClient.GetApi.class);
+    api = restRepository.createRxJava1Api(QcCloudClient.GetApi.class);
   }
 
   @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission() {

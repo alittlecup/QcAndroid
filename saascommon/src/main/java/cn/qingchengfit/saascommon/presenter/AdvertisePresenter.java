@@ -40,7 +40,7 @@ public class AdvertisePresenter extends BasePresenter {
     public AdvertisePresenter() {}
 
 //    public void queryAdvertise() {
-//        RxRegiste(qcRestRepository.createGetApi(SaasCommonApi.class)
+//        RxRegiste(qcRestRepository.createRxJava1Api(SaasCommonApi.class)
 //                .qcGetAdvertise("staff").onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Action1<QcDataResponse<AdvertiseWrap>>() {

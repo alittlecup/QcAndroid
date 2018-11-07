@@ -23,7 +23,7 @@ public class GymConfigModel implements IGymConfigModel {
     QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    api = qcRestRepository.createGetApi(GymConfigApi.class);
+    api = qcRestRepository.createRxJava1Api(GymConfigApi.class);
   }
 
   @Override public Observable<QcDataResponse<SpaceListWrap>> getSites() {

@@ -144,7 +144,7 @@ public class MyCoursePlanFragment extends BaseFragment {
             params.put("id", coachService.getId());
             params.put("model", coachService.getModel());
 
-            RxRegiste(restRepository.createGetApi(QcCloudClient.GetApi.class)
+            RxRegiste(restRepository.createRxJava1Api(QcCloudClient.GetApi.class)
                 .qcGetGymAllPlans(App.coachid, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

@@ -29,15 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
   ShopApi shopApi;
 
   @Inject public ShopRemoteRepositoryImpl(QcRestRepository restRepository) {
-    OkHttpClient client = restRepository.getClient();
-    Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
-    Retrofit build = new Retrofit.Builder().baseUrl(restRepository.getHost())
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build();
-    shopApi = build.create(ShopApi.class);
+    shopApi = restRepository.createRxJava2Api(ShopApi.class);
   }
 
   @Override public Flowable<QcDataResponse<ProductListResponse>> qcLoadProducts(String staff_id,

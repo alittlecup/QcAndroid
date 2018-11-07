@@ -44,7 +44,7 @@ public class UserModel implements IUserModel {
     QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    api = qcRestRepository.createGetApi(UserApi.class);
+    api = qcRestRepository.createRxJava1Api(UserApi.class);
   }
 
   @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {

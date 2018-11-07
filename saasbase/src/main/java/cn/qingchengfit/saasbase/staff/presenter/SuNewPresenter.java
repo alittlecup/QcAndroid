@@ -27,7 +27,7 @@ public class SuNewPresenter extends BasePresenter {
     }
 
     public void sendMsg(GetCodeBody body) {
-        RxRegiste(restRepository.createPostApi(PostApi.class)
+        RxRegiste(restRepository.createRxJava1Api(PostApi.class)
             .qcGetCode(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -46,7 +46,7 @@ public class SuNewPresenter extends BasePresenter {
     }
 
     public void changeSu(ChangeSuBody body) {
-        RxRegiste(restRepository.createPostApi(PostApi.class)
+        RxRegiste(restRepository.createRxJava1Api(PostApi.class)
             .qcChangeSu(loginStatus.staff_id(), gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

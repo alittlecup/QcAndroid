@@ -47,7 +47,7 @@ public class ImportExportPresenter extends BasePresenter {
   }
 
   public void qcGetExportRecord(){
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetExportRecord(App.staffId, gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -73,7 +73,7 @@ public class ImportExportPresenter extends BasePresenter {
       params.put("mail", mail);
     }
 
-    RxRegiste(qcRestRepository.createPostApi(Post_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Post_Api.class)
         .qcSendMail(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -96,7 +96,7 @@ public class ImportExportPresenter extends BasePresenter {
     if (!TextUtils.isEmpty(type)) {
       params.put("type", type);
     }
-    RxRegiste(qcRestRepository.createPostApi(Post_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Post_Api.class)
         .qcDataImport(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

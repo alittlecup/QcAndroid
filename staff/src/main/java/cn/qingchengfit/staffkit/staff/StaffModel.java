@@ -53,7 +53,7 @@ public class StaffModel implements IStaffModel {
 
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    staffApi = repository.createGetApi(StaffApi.class);
+    staffApi = repository.createRxJava1Api(StaffApi.class);
     ComponentModuleManager.register(IStaffModel.class,this);
   }
 

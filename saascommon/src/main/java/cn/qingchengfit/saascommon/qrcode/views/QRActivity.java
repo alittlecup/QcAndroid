@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.qingchengfit.saascommon.BuildConfig;
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.saascommon.network.SaasCommonApi;
 import cn.qingchengfit.saascommon.qrcode.model.QrEvent;
@@ -419,7 +418,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     } else if (getIntent() != null && getIntent().hasExtra(LINK_URL)) {
       url = getIntent().getStringExtra(LINK_URL);
     }
-    sp = restRepository.createPostApi(SaasCommonApi.class)
+    sp = restRepository.createRxJava1Api(SaasCommonApi.class)
         .qcScans(text, new ScanBody.Builder().url(url).session_id(session).build())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

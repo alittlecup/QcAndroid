@@ -26,7 +26,7 @@ public class RecruitMsgPresenter extends BasePresenter {
 
 
     public void queryRecruitMsgList(){
-        RxRegiste(restRepository.createGetApi(ChatApis.class)
+        RxRegiste(restRepository.createRxJava1Api(ChatApis.class)
             .qcGetRecruitMessageList()
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

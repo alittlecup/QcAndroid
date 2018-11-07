@@ -47,7 +47,7 @@ public class NotSignPresenter extends BasePresenter {
     params.put("start", start);
     params.put("end", end);
     params.put("limit", limit);
-    RxRegiste(restRepository.createGetApi(Get_Api.class)
+    RxRegiste(restRepository.createRxJava1Api(Get_Api.class)
         .qcGetNotSignStudent(App.staffId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

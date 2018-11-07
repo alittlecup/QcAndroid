@@ -45,19 +45,19 @@ public class StudentModel implements IStudentModel {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    studentApi = repository.createGetApi(StudentApi.class);
+    studentApi = repository.createRxJava1Api(StudentApi.class);
   }
 
   @Override public Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission() {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("key", PermissionServerUtils.MANAGE_COSTS);
     params.put("method", "post");
-    return repository.createGetApi(Get_Api.class)
+    return repository.createRxJava1Api(Get_Api.class)
         .qcGetCardBundldStudents(loginStatus.staff_id(), params);
   }
 
   @Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
-    return repository.createPostApi(Post_Api.class)
+    return repository.createRxJava1Api(Post_Api.class)
         .qcAddStudent(loginStatus.staff_id(), gymWrapper.getParams(), body);
   }
 

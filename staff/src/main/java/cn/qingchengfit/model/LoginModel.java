@@ -32,8 +32,6 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.EventFreshCoachService;
 import com.google.gson.JsonObject;
 import com.tencent.qcloud.sdk.Constant;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import java.util.HashMap;
 import java.util.List;
 import rx.Observable;
@@ -71,8 +69,8 @@ public class LoginModel implements ILoginModel {
     QcRestRepository qcRestRepository,QcDbManager qcDbManager) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    api = qcRestRepository.createGetApi(LoginApi.class);
-    gymConfigApi = qcRestRepository.createGetApi(GymConfigApi.class);
+    api = qcRestRepository.createRxJava1Api(LoginApi.class);
+    gymConfigApi = qcRestRepository.createRxJava1Api(GymConfigApi.class);
     this.qcDbManager = qcDbManager;
   }
 

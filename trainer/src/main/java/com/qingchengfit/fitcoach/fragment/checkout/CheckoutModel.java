@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.checkout;
 
-import android.util.Log;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
@@ -12,17 +11,10 @@ import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.checkout.bean.CashierBean;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckoutModel implements ICheckoutModel {
   CheckoutTrainerApi checkoutApi;
@@ -32,19 +24,8 @@ public class CheckoutModel implements ICheckoutModel {
 
 
   @Inject CheckoutModel(QcRestRepository qcRestRepository) {
-    OkHttpClient client = qcRestRepository.getClient();
-    OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
-      Log.d("HTTP", message);
-    }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
-    Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
-
-    Retrofit retrofit = new Retrofit.Builder().client(http)
-        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl(qcRestRepository.getHost())
-        .build();
-    checkoutApi = retrofit.create(CheckoutTrainerApi.class);
-    payApi = retrofit.create(PayApi.class);
+    checkoutApi = qcRestRepository.createRxJava2Api(CheckoutTrainerApi.class);
+    payApi = qcRestRepository.createRxJava2Api(PayApi.class);
 
     ComponentModuleManager.register(ICheckoutModel.class,this);
 

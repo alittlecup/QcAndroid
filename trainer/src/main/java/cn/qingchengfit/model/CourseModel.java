@@ -61,7 +61,7 @@ public class CourseModel implements ICourseModel {
 
   public CourseModel(QcRestRepository restRepository, GymWrapper gymWrapper,
     LoginStatus loginStatus) {
-    api = restRepository.createGetApi(CourseApi.class);
+    api = restRepository.createRxJava1Api(CourseApi.class);
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
   }

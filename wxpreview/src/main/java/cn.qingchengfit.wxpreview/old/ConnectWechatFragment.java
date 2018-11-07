@@ -1,6 +1,5 @@
 package cn.qingchengfit.wxpreview.old;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
@@ -30,9 +29,6 @@ import cn.qingchengfit.wxpreview.R;
 import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
 import cn.qingchengfit.wxpreview.old.newa.network.WxPreviewApi;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
@@ -111,11 +107,11 @@ public class ConnectWechatFragment extends BaseFragment {
         Observable<QcDataResponse> qcDataResponseObservable=null;
         if(AppUtils.getCurApp(getContext())==0){
           qcDataResponseObservable =
-              qcRestRepository.createGetApi(WxPreviewApi.class)
+              qcRestRepository.createRxJava1Api(WxPreviewApi.class)
                   .qcTrainEditShop(loginStatus.staff_id(), body);
         }else{
           qcDataResponseObservable =
-              qcRestRepository.createGetApi(WxPreviewApi.class)
+              qcRestRepository.createRxJava1Api(WxPreviewApi.class)
                   .qcEditShop(loginStatus.staff_id(), body);
         }
         RxRegiste(qcDataResponseObservable

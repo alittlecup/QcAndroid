@@ -71,7 +71,7 @@ public class CoachDetailPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("user_id", studId);
         params.put("seller_id", salerId);
-        RxRegiste(restRepository.createPostApi(Post_Api.class)
+        RxRegiste(restRepository.createRxJava1Api(Post_Api.class)
             .qcDeleteStudent(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -114,7 +114,7 @@ public class CoachDetailPresenter extends BasePresenter {
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
         if (filter.sale != null) params.put("seller_id", filter.sale.getId());
-        RxRegiste(restRepository.createGetApi(Get_Api.class)
+        RxRegiste(restRepository.createRxJava1Api(Get_Api.class)
             .qcGetCoachStudentDetail(staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

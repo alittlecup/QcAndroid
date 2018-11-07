@@ -24,7 +24,7 @@ public class ChatFriendPresenter extends BasePresenter {
     }
 
     public void queryChatFriend() {
-        RxRegiste(restRepository.createGetApi(ChatApis.class)
+        RxRegiste(restRepository.createRxJava1Api(ChatApis.class)
             .qcQueryChatFriends().onBackpressureBuffer().subscribeOn(Schedulers.computation())
             .flatMap(chatFriendsDataQcResponseData -> {
                 List<ChatGym> chatGyms = chatFriendsDataQcResponseData.getData().gyms;

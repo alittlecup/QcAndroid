@@ -47,7 +47,7 @@ public class ZqAccessPresenter extends BasePresenter {
 
   public void getAccess() {
 
-    RxRegiste(restRepository.createGetApi(Get_Api.class)
+    RxRegiste(restRepository.createRxJava1Api(Get_Api.class)
         .qcGetAccess(App.staffId, gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -68,7 +68,7 @@ public class ZqAccessPresenter extends BasePresenter {
   public void changeZqStatus(String guardId, int status){
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("status", status);
-    RxRegiste(restRepository.createPostApi(Post_Api.class)
+    RxRegiste(restRepository.createRxJava1Api(Post_Api.class)
         .qcChangeAccessStatus(App.staffId, guardId, gymWrapper.getParams(), params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -88,7 +88,7 @@ public class ZqAccessPresenter extends BasePresenter {
   }
 
   public void deleteZqAccess(String guardId) {
-    RxRegiste(restRepository.createPostApi(Post_Api.class)
+    RxRegiste(restRepository.createRxJava1Api(Post_Api.class)
         .qcDeleteAccess(App.staffId, guardId, gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -107,7 +107,7 @@ public class ZqAccessPresenter extends BasePresenter {
   }
 
   public void addZqAccess(AccessBody body){
-    RxRegiste(restRepository.createPostApi(Post_Api.class)
+    RxRegiste(restRepository.createRxJava1Api(Post_Api.class)
         .qcAddAccess(App.staffId, body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -126,7 +126,7 @@ public class ZqAccessPresenter extends BasePresenter {
   }
 
   public void editZqAccess(String guardId, AccessBody body){
-    RxRegiste(restRepository.createPostApi(Post_Api.class)
+    RxRegiste(restRepository.createRxJava1Api(Post_Api.class)
         .qcEditAccess(App.staffId, guardId, gymWrapper.getParams(), body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

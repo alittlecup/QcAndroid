@@ -57,7 +57,7 @@ public class LoginModel implements ILoginModel {
     QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    api = qcRestRepository.createGetApi(LoginApi.class);
+    api = qcRestRepository.createRxJava1Api(LoginApi.class);
   }
 
 

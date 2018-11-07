@@ -35,7 +35,7 @@ public class CoachUseCase {
     }
 
     public Subscription getAllCoach(String staffId, String gymid, String gymModel, String keyword, Action1<QcResponseData<Staffs>> action1) {
-        return restRepository.createGetApi(GetApi.class)
+        return restRepository.createRxJava1Api(GetApi.class)
             .qcGetGymCoaches(staffId, gymid, gymModel, keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -48,7 +48,7 @@ public class CoachUseCase {
     }
 
     public Subscription getAllStaffs(String staffId, String gymid, String gymModel, String keyword, Action1<QcResponseData<StaffShipResponse>> action1) {
-        return restRepository.createGetApi(GetApi.class)
+        return restRepository.createRxJava1Api(GetApi.class)
             .qcGetStaffs(staffId, gymid, gymModel, null, keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -61,7 +61,7 @@ public class CoachUseCase {
     }
 
     public Subscription fixCoach(String staffId, String gymid, String gymModel, String coachid, Staff coach, Action1<QcResponse> action1) {
-        return restRepository.createPostApi(PostApi.class)
+        return restRepository.createRxJava1Api(PostApi.class)
             .qcFixCoach(staffId, coachid, gymid, gymModel, coach)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -74,7 +74,7 @@ public class CoachUseCase {
     }
 
     public Subscription delCoach(String staffId, String gymid, String gymModel, String coachid, Action1<QcResponse> action1) {
-        return restRepository.createPostApi(PostApi.class)
+        return restRepository.createRxJava1Api(PostApi.class)
             .qcDelCoach(staffId, coachid, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -87,7 +87,7 @@ public class CoachUseCase {
     }
 
     public Subscription createManager(String staffId, String gymid, String gymModel, ManagerBody body, Action1<QcResponse> action1) {
-        return restRepository.createPostApi(PostApi.class)
+        return restRepository.createRxJava1Api(PostApi.class)
             .qcCreateManager(staffId, gymid, gymModel, body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -108,7 +108,7 @@ public class CoachUseCase {
         b.setAvatar(body.getAvatar());
         b.setGender(body.getGender());
         b.setArea_code(body.getArea_code());
-        return restRepository.createPostApi(PostApi.class)
+        return restRepository.createRxJava1Api(PostApi.class)
             .qcUpdateManager(staffId, id, gymid, gymmodel, b)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -121,7 +121,7 @@ public class CoachUseCase {
     }
 
     public Subscription delManager(String staffId, String gymid, String gymmodel, String id, Action1<QcResponse> action1) {
-        return restRepository.createPostApi(PostApi.class)
+        return restRepository.createRxJava1Api(PostApi.class)
             .qcDelManager(staffId, id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -134,7 +134,7 @@ public class CoachUseCase {
     }
 
     //public Subscription queryPostions(String staffId, String gymid, String gymmodel, Action1<PostionListWrap> action1) {
-    //    return restRepository.createGetApi(GetApi.class)
+    //    return restRepository.createRxJava1Api(GetApi.class)
     //        .qcGetPostions(staffId, gymid, gymmodel)
     //        .observeOn(AndroidSchedulers.mainThread())
     //        .onBackpressureBuffer()

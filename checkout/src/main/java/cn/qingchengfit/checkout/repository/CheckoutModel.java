@@ -31,19 +31,8 @@ public class CheckoutModel implements ICheckoutModel {
 
 
   @Inject public CheckoutModel(QcRestRepository qcRestRepository) {
-    OkHttpClient client = qcRestRepository.getClient();
-    OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
-      Log.d("HTTP", message);
-    }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
-    Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
-
-    Retrofit retrofit = new Retrofit.Builder().client(http)
-        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl(qcRestRepository.getHost())
-        .build();
-    checkoutApi = retrofit.create(CheckoutApi.class);
-    payApi = retrofit.create(PayApi.class);
+    checkoutApi = qcRestRepository.createRxJava2Api(CheckoutApi.class);
+    payApi = qcRestRepository.createRxJava2Api(PayApi.class);
     ComponentModuleManager.register(ICheckoutModel.class,this);
   }
 

@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.coach.presenter;
 
-import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
@@ -9,18 +8,12 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saas.response.GymWrap;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.event.LoadingEvent;
 import cn.qingchengfit.saasbase.coach.model.CoachResponse;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.repository.PostApi;
-import cn.qingchengfit.saasbase.utils.IntentUtils;
-import cn.qingchengfit.utils.PhotoUtils;
-import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
-import com.bumptech.glide.Glide;
 import java.io.File;
 import javax.inject.Inject;
 import rx.Observable;
@@ -86,7 +79,7 @@ public class AddNewCoachPresenter extends BasePresenter {
 
     Staff coach = new Staff(name, phone, imgUrl, resourceId == R.id.gender_male ? 0 : 1);
     coach.area_code = area;
-    restRepository.createPostApi(PostApi.class)
+    restRepository.createRxJava1Api(PostApi.class)
         .qcAddCoach(staffId, gymWrapper.id(), gymWrapper.model(), coach)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

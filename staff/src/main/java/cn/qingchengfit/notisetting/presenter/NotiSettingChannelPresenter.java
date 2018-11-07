@@ -73,7 +73,7 @@ public class NotiSettingChannelPresenter extends BasePresenter {
     ShopConfigBody.Config cfg = new ShopConfigBody.Config(notiUserId + "", x + "");
     List<ShopConfigBody.Config> l = new ArrayList<>();
     l.add(cfg);
-    RxRegiste(qcRestRepository.createPostApi(Post_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Post_Api.class)
         .qcShopConfigs(loginStatus.staff_id(), gymWrapper.getParams(), new ShopConfigBody(l))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -92,7 +92,7 @@ public class NotiSettingChannelPresenter extends BasePresenter {
     ShopConfigBody.Config cfg = new ShopConfigBody.Config(notiStaffId + "", x + "");
     List<ShopConfigBody.Config> l = new ArrayList<>();
     l.add(cfg);
-    RxRegiste(qcRestRepository.createPostApi(Post_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Post_Api.class)
         .qcShopConfigs(loginStatus.staff_id(), gymWrapper.getParams(), new ShopConfigBody(l))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -108,7 +108,7 @@ public class NotiSettingChannelPresenter extends BasePresenter {
   }
 
   public void queryCurSMSleft() {
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetShopConfig(loginStatus.staff_id(), ShopConfigs.SMS_NUM, gymWrapper.getParams())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -126,7 +126,7 @@ public class NotiSettingChannelPresenter extends BasePresenter {
   }
 
   public void querySendChannel() {
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetShopConfig(loginStatus.staff_id(),
             ShopConfigs.NOTI_TO_STAFF + "," + ShopConfigs.NOTIFY_TO_MEMBER_METHOD,
             gymWrapper.getParams())

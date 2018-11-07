@@ -37,7 +37,7 @@ public class NotiSettingChargeHistoryPresenter extends BasePresenter {
       params.put("page", curPage);
       params.putAll(gymWrapper.getParams());
       params.put("type", "gym_sms");
-      RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+      RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
           .qcGetGymOrders(params)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())

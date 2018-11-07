@@ -51,7 +51,7 @@ public class CardModel implements ICardModel {
 
 
   @Inject public CardModel(QcRestRepository repository) {
-    posApi = repository.createGetApi(CardTrainerApi.class);
+    posApi = repository.createRxJava1Api(CardTrainerApi.class);
     ComponentModuleManager.register(ICardModel.class, this);
   }
 

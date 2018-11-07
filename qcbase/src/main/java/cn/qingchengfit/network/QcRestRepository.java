@@ -66,7 +66,7 @@ public class QcRestRepository {
         if (!request.method().equalsIgnoreCase("GET")) {
           RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
           try {
-            token = QcRestRepository.this.createGetApi(GetCsrfToken.class)
+            token = QcRestRepository.this.createRxJava1Api(GetCsrfToken.class)
                 .qcGetToken()
                 .execute()
                 .body().data.token;
@@ -118,10 +118,6 @@ public class QcRestRepository {
         .client(client)
         .build();
     ComponentModuleManager.register(Retrofit.class, retrofitRxJava1);
-  }
-
-  public OkHttpClient getClient() {
-    return client;
   }
 
   public void changeHost(String host) {
@@ -193,11 +189,11 @@ public class QcRestRepository {
     return host;
   }
 
-  public <T> T createGetApi(final Class<T> service) {
+  public <T> T createRxJava1Api(final Class<T> service) {
     return retrofitRxJava1.create(service);
   }
 
-  public <T> T createPostApi(final Class<T> service) {
+  public <T> T createRxJava2Api(final Class<T> service) {
     return retrofitRxJava2.create(service);
   }
 

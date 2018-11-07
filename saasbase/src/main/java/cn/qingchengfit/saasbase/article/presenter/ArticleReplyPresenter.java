@@ -32,7 +32,7 @@ public class ArticleReplyPresenter extends BasePresenter {
     public void queryReplies(int page) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", page);
-        RxRegiste(restRepository.createGetApi(ArticleApis.class)
+        RxRegiste(restRepository.createRxJava1Api(ArticleApis.class)
             .qcQueryReplies(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(articleCommentListDataQcResponseData -> {

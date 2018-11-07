@@ -48,7 +48,7 @@ public class NotiSettingSendListDetailPresenter extends BasePresenter {
   public void getList() {
     if (curPage <= totalPage) {
       params.put("page", curPage);
-      RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+      RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
           .qcGetNotiSMSs(loginStatus.staff_id(), params)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
@@ -65,7 +65,7 @@ public class NotiSettingSendListDetailPresenter extends BasePresenter {
           }, new NetWorkThrowable()));
 
       if (curPage == 1) {
-        RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+        RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
             .qcGetNotiSmsCount(loginStatus.staff_id(), params)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

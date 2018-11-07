@@ -37,7 +37,7 @@ public class ArticleCommentsPresenter extends BasePresenter {
     }
 
     public void addComment(String newsid, @Nullable String reply_id, String text) {
-        RxRegiste(restRepository.createGetApi(ArticleApis.class)
+        RxRegiste(restRepository.createRxJava1Api(ArticleApis.class)
             .qcAddComment(newsid, new PostCommentBody.Builder().text(text).reply_id(TextUtils.isEmpty(reply_id) ? null : reply_id).build())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -56,7 +56,7 @@ public class ArticleCommentsPresenter extends BasePresenter {
     public void queryCommenList(String newsid, int page) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", page);
-        RxRegiste(restRepository.createGetApi(ArticleApis.class)
+        RxRegiste(restRepository.createRxJava1Api(ArticleApis.class)
             .qcQueryComments(newsid, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()

@@ -25,7 +25,7 @@ public class ChooseCardtplPresenter extends BasePresenter {
     HashMap<String, Object> p = gymWrapper.getParams();
     p.put("key", PermissionServerUtils.CARDSETTING);
     p.put("method", "get");
-    //RxRegiste(qcRestRepository.createGetApi(CardApi.class)
+    //RxRegiste(qcRestRepository.createRxJava1Api(CardApi.class)
     //    .qcGetCardTplsPermission(loginStatus.staff_id(), p)
     //    .onBackpressureBuffer()
     //    .subscribeOn(Schedulers.io())

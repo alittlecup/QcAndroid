@@ -3,7 +3,6 @@ package cn.qingchengfit.wxpreview.old;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -96,7 +95,7 @@ public class CompletedConnectFragment extends BaseFragment {
       ArrayMap<String, Object> body = new ArrayMap<String, Object>();
       body.put("weixin_success", true);
       showLoading();
-      RxRegiste(restRepository.createGetApi(WxPreviewApi.class)
+      RxRegiste(restRepository.createRxJava1Api(WxPreviewApi.class)
           .qcEditShop(loginStatus.staff_id(), body)
           .compose(RxHelper.schedulersTransformer())
           .subscribe(qcResponse -> {

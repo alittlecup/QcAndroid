@@ -92,7 +92,7 @@ public class CustomSigninPresenter extends BasePresenter {
     public void queryCardTpl() {
 
         if (gymWrapper.inBrand()) {
-            RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+            RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
                 .qcGetBrandCardtpl(loginStatus.staff_id(), gymWrapper.brand_id())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -109,7 +109,7 @@ public class CustomSigninPresenter extends BasePresenter {
                 }, new NetWorkThrowable()));
         } else {
 
-            RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+            RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
                 .qcGetGymCardtpl(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model(),
                     null)
                 .onBackpressureBuffer()

@@ -93,7 +93,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
     toolbar.getMenu().clear();
     toolbar.inflateMenu(R.menu.menu_add_txt);
     toolbar.setOnMenuItemClickListener(item -> {
-      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+      RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
           .querySu(chatGym.id)
           .onBackpressureBuffer()
           .flatMap(suWrapQcDataResponse -> {
@@ -158,7 +158,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
         new Func1<EventAddStaffDone, Observable<QcDataResponse<ChatGymWrap>>>() {
           @Override
           public Observable<QcDataResponse<ChatGymWrap>> call(EventAddStaffDone eventAddStaffDone) {
-            return qcRestRepository.createGetApi(cn.qingchengfit.recruit.network.GetApi.class)
+            return qcRestRepository.createRxJava1Api(cn.qingchengfit.recruit.network.GetApi.class)
                 .queryCommonStaffs(chatGym.id)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

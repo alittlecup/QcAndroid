@@ -86,7 +86,7 @@ public class StaffListPresenter extends BasePresenter {
     }
 
     public void querSelfInfo(String id) {
-        RxRegiste(mRestRepository.createGetApi(GetApi.class)
+        RxRegiste(mRestRepository.createRxJava1Api(GetApi.class)
             .qcGetSelfInfo(id).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponse -> {

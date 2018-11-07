@@ -41,7 +41,7 @@ public class ExportModel implements IExportModel {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    posApi = repository.createGetApi(ExportApi.class);
+    posApi = repository.createRxJava1Api(ExportApi.class);
   }
 
   @Override public Observable<QcDataResponse<ExportRecordWrapper>> qcGetExportRecord() {

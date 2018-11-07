@@ -27,17 +27,7 @@ public class TicketModel implements ITicketModel {
   @Inject LoginStatus loginStatus;
 
   @Inject public TicketModel(QcRestRepository qcRestRepository) {
-    OkHttpClient client = qcRestRepository.getClient();
-    OkHttpClient http = client.newBuilder().addInterceptor(new HttpLoggingInterceptor(message -> {
-      Log.d("HTTP", message);
-    }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
-    Gson customGsonInstance = (new GsonBuilder()).enableComplexMapKeySerialization().create();
-    Retrofit retrofit = new Retrofit.Builder().client(http)
-        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl(qcRestRepository.getHost())
-        .build();
-    ticketApi = retrofit.create(TicketApi.class);
+    ticketApi = qcRestRepository.createRxJava2Api(TicketApi.class);
   }
 
   @Override public Flowable<QcDataResponse<TicketWrapper>> qcQueryTicket(String code) {

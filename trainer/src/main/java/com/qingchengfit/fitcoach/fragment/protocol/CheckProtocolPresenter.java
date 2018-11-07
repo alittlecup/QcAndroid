@@ -37,7 +37,7 @@ public class CheckProtocolPresenter extends BasePresenter {
   public void getIsAgree(String phone) {
     HashMap<String, Object> params = new HashMap<>();
     params.put("phone", phone);
-    RxRegiste(qcRestRepository.createGetApi(QcCloudClient.GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(QcCloudClient.GetApi.class)
         .qcCheckProtocol(params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

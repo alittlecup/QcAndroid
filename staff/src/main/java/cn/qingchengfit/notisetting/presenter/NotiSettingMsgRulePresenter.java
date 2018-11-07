@@ -60,7 +60,7 @@ public class NotiSettingMsgRulePresenter extends BasePresenter {
   }
 
   private void queryInfo() {
-    RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
         .qcGetShopConfig(loginStatus.staff_id(), StringUtils.array2str(keys),
             gymWrapper.getParams())
         .subscribeOn(Schedulers.io())
