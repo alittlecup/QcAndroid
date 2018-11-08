@@ -19,9 +19,6 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.EventLatestNoti;
 import cn.qingchengfit.bean.EventNotiFresh;
@@ -41,7 +38,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.GlideCircleTransform;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +103,7 @@ public class NotificationFragment extends BaseSettingFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new NotifiAdapter(list);
         adapter.setListener((v, pos) -> {
-            QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, adapter.datas.get(pos).getId() + "")
+            TrainerRepository.getStaticTrainerAllApi().qcClearOneNotification(App.coachid, adapter.datas.get(pos).getId() + "")
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe();
@@ -200,7 +197,7 @@ public class NotificationFragment extends BaseSettingFragment {
         toolbar.inflateMenu(R.menu.menu_clear_noti);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                RxRegiste(QcCloudClient.getApi().postApi.qcClearTypeNoti(new ClearNotiBody(ConstantNotification.getCategloreStr(getContext(),type)))
+                RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcClearTypeNoti(new ClearNotiBody(ConstantNotification.getCategloreStr(getContext(),type)))
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -241,7 +238,7 @@ public class NotificationFragment extends BaseSettingFragment {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", curpage + "");
         params.put("type__in", ConstantNotification.getCategloreStr(getContext(),type));
-        QcCloudClient.getApi().getApi.qcGetNotification(params)
+        TrainerRepository.getStaticTrainerAllApi().qcGetNotification(params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

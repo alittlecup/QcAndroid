@@ -18,7 +18,7 @@ import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.GymUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import java.util.List;
 import javax.inject.Inject;
@@ -39,6 +39,7 @@ public class ManageViewModel extends BaseViewModel {
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
+  @Inject TrainerRepository repository;
 
   @Inject public ManageViewModel() {
 
@@ -47,7 +48,7 @@ public class ManageViewModel extends BaseViewModel {
   public void loadPremission(String id) {
     if (loginStatus.isLogined()) {
       showLoading.setValue(true);
-      QcCloudClient.getApi().getApi.qcGetPermission(id, gymWrapper.getParams())
+     repository.getTrainerAllApi().qcGetPermission(id, gymWrapper.getParams())
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .doOnTerminate(() -> showLoading.setValue(false))
@@ -62,7 +63,7 @@ public class ManageViewModel extends BaseViewModel {
   }
 
   @SuppressLint("CheckResult") public void loadCoachService(String coachId) {
-    QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+    repository.getTrainerAllApi().qcGetCoachService(App.coachid)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(response -> {
@@ -87,7 +88,7 @@ public class ManageViewModel extends BaseViewModel {
 
   public void quitGym(String coachId) {
     showLoading.setValue(true);
-    QcCloudClient.getApi().postApi.qcQuitGym(coachId,
+    repository.getTrainerAllApi().qcQuitGym(coachId,
         GymUtils.getParams(gymWrapper.getCoachService()))
         .compose(RxHelper.schedulersTransformer())
         .doOnTerminate(() -> showLoading.setValue(false))
@@ -103,7 +104,7 @@ public class ManageViewModel extends BaseViewModel {
   }
 
   public void loadGymWelcomeDeta() {
-    QcCloudClient.getApi().getApi.qcGetGymWelcome(loginStatus.staff_id(), gymWrapper.id(),
+    repository.getTrainerAllApi().qcGetGymWelcome(loginStatus.staff_id(), gymWrapper.id(),
         gymWrapper.model()).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
       if (ResponseConstant.checkSuccess(response)) {
         chartData.setValue(response.data.stat);

@@ -14,10 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.LogUtil;
@@ -33,7 +29,7 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.component.LoadingDialog;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddCoourseResponse;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
@@ -175,7 +171,7 @@ public class AddCourseFrament extends Fragment {
             HashMap<String, String> params = new HashMap<>();
             params.put("model", mModel);
             params.put("id", mId + "");
-            QcCloudClient.getApi().getApi.qcGetOneCourse(App.coachid, mCourseId, params)
+            TrainerRepository.getStaticTrainerAllApi().qcGetOneCourse(App.coachid, mCourseId, params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -252,7 +248,7 @@ public class AddCourseFrament extends Fragment {
         upName = courseName.getContent().trim();
         addGymCourseBtn.setEnabled(false);
         if (mType == TYPE_ADD) {
-            addSp = QcCloudClient.getApi().postApi.qcAddCourse(App.coachid,
+            addSp = TrainerRepository.getStaticTrainerAllApi().qcAddCourse(App.coachid,
                 new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate, upIsPrivate ? null : mUpCapacity))
                 .observeOn(AndroidSchedulers.mainThread())
                 .onBackpressureBuffer()
@@ -287,7 +283,7 @@ public class AddCourseFrament extends Fragment {
         } else if (mType == TYPE_EDIT) {
             AddCourse addCourse = new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate, upIsPrivate ? null : mUpCapacity);
             addCourse.course_id = mCourseId;
-            addSp = QcCloudClient.getApi().postApi.qcEditCourse(App.coachid, addCourse)
+            addSp = TrainerRepository.getStaticTrainerAllApi().qcEditCourse(App.coachid, addCourse)
                 .observeOn(AndroidSchedulers.mainThread())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -399,7 +395,7 @@ public class AddCourseFrament extends Fragment {
     //                    params.put("course_id", mCourseId + "");
     //                    params.put("model", mModel);
     //
-    //                    //                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
+    //                    //                            TrainerRepository.getStaticTrainerAllApi().qcDelCourse(App.coachid, params)
     //                    //                                    .observeOn(AndroidSchedulers.mainThread())
     //                  //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                    //                                    .subscribe(new Subscriber<QcResponse>() {

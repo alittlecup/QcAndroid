@@ -30,7 +30,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -117,7 +117,7 @@ public class BrandEditFragment extends BaseFragment {
                             }
                             showLoading();
 
-                            RxRegiste(QcCloudClient.getApi().postApi.qcEditBrand(brand.getId(), postBrand)
+                            RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcEditBrand(brand.getId(), postBrand)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
@@ -153,7 +153,7 @@ public class BrandEditFragment extends BaseFragment {
                     .into(new CircleImgWrapper(headerImg, getContext()));
             }
 
-            //RxRegiste(restRepository.getGet_api().qcGetBrand(App.staffId, brand.getId())
+            //RxRegiste(restRepository.getTrainerAllApi().qcGetBrand(App.staffId, brand.getId())
           //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
             //        .observeOn(AndroidSchedulers.mainThread())
             //        .subscribe(new Action1<QcResponseData<BrandResponse>>() {

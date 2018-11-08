@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.router.QC;
@@ -28,11 +27,10 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.DialogList;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Subscriber;
@@ -111,35 +109,6 @@ public class AddStudentManulkFragment extends BaseFragment {
       }
     });
 
-    //获取用户拥有系统信息
-    //QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).onBackpressureBuffer().subscribeOn(Schedulers.newThread())
-    //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribe(qcCoachSystemResponse -> {
-    //            systems = qcCoachSystemResponse.data.services;
-    //            boolean hasPrivate = false;
-    //            int pos = 0;
-    //            for (int i = 0; i < systems.size(); i++) {
-    //                CoachService system = systems.get(i);
-    //                if (system.model.equalsIgnoreCase("service") && system.type ==1){
-    //                    hasPrivate = true;
-    //                    pos = i;
-    //                }
-    //                gymStrings.add(system.name);
-    //            }
-    //if (hasPrivate){
-    //    btn.setVisibility(View.VISIBLE);
-    //    hint.setVisibility(View.GONE);
-    //    chooseGym.setContent(systems.get(pos).name);
-    //}else {
-    //    btn.setVisibility(View.GONE);
-    //    hint.setVisibility(View.VISIBLE);
-    //}
-
-    //
-    //
-    //}, throwable -> {
-    //}, () -> {
-    //});
     SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
@@ -159,7 +128,7 @@ public class AddStudentManulkFragment extends BaseFragment {
         compleGenderMale.isChecked() ? 0 : 1, choosePhone.getDistrictInt()));
     PostStudents students = new PostStudents(sss);
     if (getActivity() instanceof FragActivity) {
-      QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, students,
+      TrainerRepository.getStaticTrainerAllApi().qcAddStudents(App.coachid, students,
           GymUtils.getParams(((FragActivity) getActivity()).getCoachService()))
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()

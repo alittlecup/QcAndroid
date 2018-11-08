@@ -34,7 +34,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
@@ -72,6 +72,7 @@ public class SplashActivity extends BaseActivity {
 	RelativeLayout mainLoading;
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
+  @Inject TrainerRepository repository;
   //@BindView(R.id.animation_view) LottieAnimationView animationView;
 	ImageView imgGif;
   private int[] mSplashImg = new int[] {
@@ -151,7 +152,7 @@ public class SplashActivity extends BaseActivity {
               if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
 
                 //获取用户拥有的系统
-                QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                repository.getTrainerAllApi().qcGetCoachService(App.coachid)
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

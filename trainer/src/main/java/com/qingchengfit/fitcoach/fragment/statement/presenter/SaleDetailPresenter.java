@@ -12,7 +12,7 @@ import com.qingchengfit.fitcoach.Utils.SaleCompare;
 import com.qingchengfit.fitcoach.fragment.statement.SaleCardTypeView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
-import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
  */
 public class SaleDetailPresenter extends BasePresenter {
 
-    @Inject RestRepository mRestRepository;
+    @Inject TrainerRepository mRestRepository;
     @Inject StatementUsecase usecase;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -75,7 +75,7 @@ public class SaleDetailPresenter extends BasePresenter {
     }
 
     public void querySaleDetail(final String start, final String end) {
-        RxRegiste(mRestRepository.getGet_api()
+        RxRegiste(mRestRepository.getTrainerAllApi()
             .qcGetSaleDatail(String.valueOf(App.coachid), start, end, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

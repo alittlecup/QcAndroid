@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -92,7 +92,7 @@ public class AddBrandActivity extends BaseActivity {
     }
 
  public void onComfirm() {
-        QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder().name(content.getContent()).photo(uploadImg).build())
+        TrainerRepository.getStaticTrainerAllApi().qcCreatBrand(new CreatBrandBody.Builder().name(content.getContent()).photo(uploadImg).build())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -130,7 +130,7 @@ public class AddBrandActivity extends BaseActivity {
     }
 
     public void onSucceed() {
-        //        restRepository.getGet_api().qcGetBrands(App.staffId)
+        //        restRepository.getTrainerAllApi().qcGetBrands(App.staffId)
       //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<QcResponseBrands>() {

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saascommon.widget.NumberInputFilter;
@@ -37,7 +36,7 @@ import com.qingchengfit.fitcoach.adapter.ImageGridAdapter;
 import com.qingchengfit.fitcoach.component.FullyGridLayoutManager;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.Measure;
 import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
@@ -268,7 +267,7 @@ public class ModifyBodyTestFragment extends BaseFragment {
   }
 
   public void getInfo() {
-    QcCloudClient.getApi().getApi.qcGetBodyTest(measureId, getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcGetBodyTest(measureId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -383,7 +382,7 @@ public class ModifyBodyTestFragment extends BaseFragment {
   }
 
   public void addTest() {
-    QcCloudClient.getApi().getApi.qcGetBodyTestModel(getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcGetBodyTestModel(getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -571,7 +570,7 @@ public class ModifyBodyTestFragment extends BaseFragment {
 
     addBodyTestBean.user_id = mStudentId;
     if (!TextUtils.isEmpty(measureId)) {//修改
-      QcCloudClient.getApi().postApi.qcUpdateBodyTest(measureId, addBodyTestBean)
+      TrainerRepository.getStaticTrainerAllApi().qcUpdateBodyTest(measureId, addBodyTestBean)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -593,7 +592,7 @@ public class ModifyBodyTestFragment extends BaseFragment {
             }
           });
     } else { //添加
-      QcCloudClient.getApi().postApi.qcAddBodyTest(addBodyTestBean)
+      TrainerRepository.getStaticTrainerAllApi().qcAddBodyTest(addBodyTestBean)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -621,7 +620,7 @@ public class ModifyBodyTestFragment extends BaseFragment {
     DialogUtils.showConfirm(getActivity(), "", "是否删除此条体测信息?", (dialog, action) -> {
       dialog.dismiss();
       if (action == DialogAction.POSITIVE) {
-        QcCloudClient.getApi().postApi.qcDelBodyTest(measureId, getParams())
+        TrainerRepository.getStaticTrainerAllApi().qcDelBodyTest(measureId, getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

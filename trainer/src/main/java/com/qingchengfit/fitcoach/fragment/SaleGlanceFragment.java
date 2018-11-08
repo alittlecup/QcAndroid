@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.SensorsUtils;
@@ -17,7 +16,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import java.util.Date;
 import java.util.HashMap;
@@ -166,7 +165,7 @@ public class SaleGlanceFragment extends BaseFragment {
         HashMap<String, Object> params = new HashMap<>();
         params.put("id", coachService.getId());
         params.put("model", coachService.getModel());
-        QcCloudClient.getApi().getApi.qcGetCoachSaleGlance(App.coachid, params)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCoachSaleGlance(App.coachid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.newThread())
             .subscribe(qcSaleGlanceResponse -> {

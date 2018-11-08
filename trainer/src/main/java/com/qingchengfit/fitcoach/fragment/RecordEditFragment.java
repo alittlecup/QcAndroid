@@ -16,7 +16,7 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -34,10 +34,9 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
-import cn.qingchengfit.events.EventChooseImage;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -149,7 +148,7 @@ public class RecordEditFragment extends BaseSettingFragment {
 
   private void deleteCer() {
     fragmentCallBack.ShowLoading("请稍后");
-    QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId())
+    TrainerRepository.getStaticTrainerAllApi().qcDelCertificate(certificatesEntity.getId())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -476,7 +475,7 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     fragmentCallBack.ShowLoading("请稍后");
     if (mTitle) {
-      QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
+      TrainerRepository.getStaticTrainerAllApi().qcEditCertificate(certificatesEntity.getId(), addCertificate)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
@@ -484,7 +483,7 @@ public class RecordEditFragment extends BaseSettingFragment {
           }, () -> {
           });
     } else {
-      QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate)
+      TrainerRepository.getStaticTrainerAllApi().qcAddCertificate(addCertificate)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())

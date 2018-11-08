@@ -13,10 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-
-
-
 import cn.qingchengfit.utils.ChoosePicUtils;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -26,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -84,7 +80,7 @@ public class AdviceFragment extends BaseSettingFragment {
         feedBackBean.setContent(content);
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(content)) {
             fragmentCallBack.ShowLoading("请稍后");
-            QcCloudClient.getApi().postApi.qcFeedBack(feedBackBean)
+            TrainerRepository.getStaticTrainerAllApi().qcFeedBack(feedBackBean)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

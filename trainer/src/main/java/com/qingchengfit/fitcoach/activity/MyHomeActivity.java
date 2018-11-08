@@ -14,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -28,7 +25,7 @@ import com.qingchengfit.fitcoach.component.DrawerImgItem;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.CoachHomeFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import java.util.HashMap;
 import rx.schedulers.Schedulers;
@@ -134,7 +131,7 @@ public class MyHomeActivity extends AppCompatActivity {
             @Override public void onDrawerOpened(View drawerView) {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("oem", getString(R.string.oem_tag));
-                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid, params)
+                TrainerRepository.getStaticTrainerAllApi().qcGetDrawerInfo(App.coachid, params)
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .subscribe(qcDrawerResponse -> {

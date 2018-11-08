@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.tencent.smtt.sdk.WebView;
 import rx.schedulers.Schedulers;
 
@@ -62,12 +59,12 @@ public class NotiDetailFragment extends Fragment {
       notidetailContentWebview = (WebView) view.findViewById(R.id.notidetail_content_webview);
 
       if (id != 0) {
-        QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, id + "")
+        TrainerRepository.getStaticTrainerAllApi().qcClearOneNotification(App.coachid, id + "")
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe();
       }
-        QcCloudClient.getApi().getApi.qcGetMsgDetails(id).subscribe(qcNotiDetailResponse -> {
+        TrainerRepository.getStaticTrainerAllApi().qcGetMsgDetails(id).subscribe(qcNotiDetailResponse -> {
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     notidetailTime.setText(qcNotiDetailResponse.getData().getCreated_at().replace("T", " "));

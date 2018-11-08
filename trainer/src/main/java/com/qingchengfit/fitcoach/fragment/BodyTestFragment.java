@@ -14,9 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -30,12 +28,11 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.adapter.ImageGridAdapter;
-import cn.qingchengfit.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.component.FullyGridLayoutManager;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.InterupteLinearLayout;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.Measure;
 import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
@@ -228,7 +225,7 @@ public class BodyTestFragment extends BaseFragment {
     }
 
     public void initInfo() {
-        QcCloudClient.getApi().getApi.qcGetBodyTest(mMeasureId, ((BodyTestActivity) getActivity()).getParams())
+        TrainerRepository.getStaticTrainerAllApi().qcGetBodyTest(mMeasureId, ((BodyTestActivity) getActivity()).getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

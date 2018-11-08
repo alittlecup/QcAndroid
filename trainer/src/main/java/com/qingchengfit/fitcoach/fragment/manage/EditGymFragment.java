@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,17 +15,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.gymconfig.bean.GymTypeData;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -35,9 +31,8 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.HashMap;
-
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -180,7 +175,7 @@ import rx.schedulers.Schedulers;
                                 .area(gymSizeInt)
                                 .address(gymAddress.getContent())
                                 .build();
-                        RxRegiste(QcCloudClient.getApi().postApi.qcEditGym(id, params, shop)
+                        RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcEditGym(id, params, shop)
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -217,33 +212,6 @@ import rx.schedulers.Schedulers;
       return view;
     }
 
-//    @Override public void initData() {
-//        HashMap<String, Object> params = new HashMap<>();
-//        params.put("id", id);
-//        params.put("model", model);
-//        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachServer(App.coachid + "", params)
-//            .onBackpressureBuffer()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(new Action1<QcResponseServiceDetail>() {
-//                @Override public void call(QcResponseServiceDetail qcResponse) {
-//                    if (ResponseConstant.checkSuccess(qcResponse)) {
-//                        Glide.with(getContext())
-//                            .load(qcResponse.data.gym.getPhoto())
-//                            .asBitmap()
-//                            .into(new CircleImgWrapper(gymImg, getContext()));
-//                        gymName.setContent(qcResponse.data.gym.getName());
-//                        gymAddress.setContent(qcResponse.data.gym.getDistrictStr());
-//                        lat = qcResponse.data.gym.gd_lat;
-//                        lng = qcResponse.data.gym.gd_lng;
-//                        city_code = Integer.valueOf(qcResponse.data.gym.getGd_district().city.id);
-//                    } else {
-//                        ToastUtils.show(qcResponse.getMsg());
-//                    }
-//                }
-//            }, new NetWorkThrowable()));
-//    }
-
 
     @Override
         public void initData() {
@@ -265,7 +233,7 @@ import rx.schedulers.Schedulers;
             @Override
             public void onClick(MaterialDialog dialog, DialogAction which) {
                 if(which == DialogAction.POSITIVE) {
-                    RxRegiste((Subscription) QcCloudClient.getApi().postApi.qcDelGym(id)
+                    RxRegiste((Subscription) TrainerRepository.getStaticTrainerAllApi().qcDelGym(id)
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())

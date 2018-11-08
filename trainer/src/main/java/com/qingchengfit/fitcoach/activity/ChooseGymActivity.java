@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import com.qingchengfit.fitcoach.App;
@@ -22,7 +19,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImageTwoTextAdapter;
 import com.qingchengfit.fitcoach.adapter.ImageTwoTextBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +128,7 @@ public class ChooseGymActivity extends AppCompatActivity {
     }
 
     public void refresh() {
-        mHttpsub = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+        mHttpsub = TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

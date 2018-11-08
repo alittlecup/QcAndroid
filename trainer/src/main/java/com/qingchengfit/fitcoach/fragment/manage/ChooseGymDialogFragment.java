@@ -10,10 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -26,7 +22,7 @@ import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.GymItem;
@@ -110,7 +106,7 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
     }
 
     public void refresh() {
-        sp = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+        sp = TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

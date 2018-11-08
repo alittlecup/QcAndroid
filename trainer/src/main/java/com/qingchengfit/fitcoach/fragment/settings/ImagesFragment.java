@@ -22,7 +22,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.items.ImageItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
@@ -109,7 +109,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
 
                 HashMap<String, Object> p = new HashMap<String, Object>();
                 p.put("photo", s);
-                return QcCloudClient.getApi().postApi.qcUploadWallImage(p);
+                return TrainerRepository.getStaticTrainerAllApi().qcUploadWallImage(p);
             })
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -137,7 +137,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
 
     private void freshData() {
         fragmentCallBack.ShowLoading("请稍后");
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetImageWalls()
+        RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetImageWalls()
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -194,7 +194,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
             }
         }
         if (!TextUtils.isEmpty(ids)) {
-            RxRegiste(QcCloudClient.getApi().postApi.qcDeleteWallImage(ids)
+            RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcDeleteWallImage(ids)
                 .observeOn(AndroidSchedulers.mainThread())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

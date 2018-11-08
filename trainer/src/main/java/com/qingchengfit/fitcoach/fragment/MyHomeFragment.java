@@ -19,10 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
@@ -36,7 +32,7 @@ import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -176,7 +172,7 @@ public class MyHomeFragment extends Fragment {
     @Override public void onResume() {
         super.onResume();
         if (isFresh) {
-            QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+            TrainerRepository.getStaticTrainerAllApi().qcGetDetail(Integer.toString(App.coachid))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcMyhomeResponseObserver);
             isFresh = false;
@@ -269,7 +265,7 @@ public class MyHomeFragment extends Fragment {
             if (qcMyhomeResponse != null) handleResponse(qcMyhomeResponse);
         }
         qcMyhomeResponseObservable =
-            QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid)).observeOn(AndroidSchedulers.mainThread());
+            TrainerRepository.getStaticTrainerAllApi().qcGetDetail(Integer.toString(App.coachid)).observeOn(AndroidSchedulers.mainThread());
         qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
     }
 

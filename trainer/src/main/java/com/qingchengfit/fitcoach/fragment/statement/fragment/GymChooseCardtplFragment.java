@@ -12,8 +12,8 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.event.EventChooseCardtpl;
 import com.qingchengfit.fitcoach.fragment.statement.item.ChooseCardtplItem;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.QcResponseCardTpls;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +55,7 @@ import rx.schedulers.Schedulers;
         HashMap<String, String> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid + "", id, model)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCardTpls(App.coachid + "", id, model)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

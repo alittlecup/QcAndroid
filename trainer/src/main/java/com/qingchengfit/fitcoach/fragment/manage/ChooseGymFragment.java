@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +26,7 @@ import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.event.EventClickManageBrand;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.items.AddCardStyleItem;
@@ -124,14 +123,14 @@ import rx.schedulers.Schedulers;
 
   public void refresh() {
     showLoading();
-    RxRegiste(QcCloudClient.getApi().getApi.qcGetTrainerBrands(App.coachid + "")
+    RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetTrainerBrands(App.coachid + "")
         .flatMap(new Func1<QcResponseBrands, Observable<QcCoachServiceResponse>>() {
           @Override
           public Observable<QcCoachServiceResponse> call(QcResponseBrands qcResponseBrands) {
             hideLoading();
             brands.clear();
             brands.addAll(qcResponseBrands.data.brands);
-            return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+            return TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

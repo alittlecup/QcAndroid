@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.di;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,7 +31,7 @@ import dagger.Provides;
 
     CoachService coachService;
     Brand brand;
-    RestRepository restRepository;
+  TrainerRepository restRepository;
 
   private CourseModule(Builder builder) {
         coachService = builder.coachService;
@@ -55,14 +55,14 @@ import dagger.Provides;
         return brand;
     }
 
-    @Provides public RestRepository getRestRepository() {
+    @Provides public TrainerRepository getRestRepository() {
         return restRepository;
     }
 
     public static final class Builder {
         private CoachService coachService;
         private Brand brand;
-        private RestRepository restRepository;
+        private TrainerRepository restRepository;
 
         public Builder() {
         }
@@ -77,7 +77,7 @@ import dagger.Provides;
             return this;
         }
 
-        public Builder restRepository(RestRepository val) {
+        public Builder restRepository(TrainerRepository val) {
             restRepository = val;
             return this;
         }

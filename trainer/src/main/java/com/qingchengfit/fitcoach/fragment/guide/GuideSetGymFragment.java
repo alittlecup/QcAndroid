@@ -14,10 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CoachInitBean;
 import cn.qingchengfit.bean.EventStep;
@@ -37,9 +33,7 @@ import cn.qingchengfit.saasbase.gymconfig.bean.GymTypeData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.UpYunClient;
-import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.views.fragments.CommonInputTextFragment;
@@ -57,24 +51,15 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.tbruyelle.rxpermissions.RxPermissions;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
-
-import io.reactivex.disposables.Disposable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
-import static com.tencent.qcloud.timchat.MyApplication.getContext;
 
 /**
  * power by
@@ -358,7 +343,7 @@ import static com.tencent.qcloud.timchat.MyApplication.getContext;
             gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
             showLoading();
-            RxRegiste(QcCloudClient.getApi().postApi.qcInit(((GuideFragment) getParentFragment()).getInitBean())
+            RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcInit(((GuideFragment) getParentFragment()).getInitBean())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -421,7 +406,7 @@ import static com.tencent.qcloud.timchat.MyApplication.getContext;
     }
 
     private void getGymType() {
-        RxRegiste((Subscription) QcCloudClient.getApi().getApi.qcGetGymType()
+        RxRegiste((Subscription) TrainerRepository.getStaticTrainerAllApi().qcGetGymType()
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

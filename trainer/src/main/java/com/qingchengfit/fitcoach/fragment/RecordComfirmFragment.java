@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.UpYunUtils;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,7 +66,7 @@ public class RecordComfirmFragment extends VpFragment {
         recyclerview.setNestedScrollingEnabled(true);
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCertificates(App.coachid)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(qcCertificatesReponse -> {

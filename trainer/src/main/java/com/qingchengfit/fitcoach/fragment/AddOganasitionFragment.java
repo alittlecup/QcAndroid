@@ -12,15 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-
-
-
 import cn.qingchengfit.recruit.views.organization.OrganizationBean;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.SearchInterface;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.util.ArrayList;
 import rx.android.schedulers.AndroidSchedulers;
@@ -106,7 +102,7 @@ public class AddOganasitionFragment extends Fragment {
             return;
         }
 
-        QcCloudClient.getApi().postApi.qcAddOrganization(
+        TrainerRepository.getStaticTrainerAllApi().qcAddOrganization(
             new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), workexpeditDescripe.getText().toString()))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

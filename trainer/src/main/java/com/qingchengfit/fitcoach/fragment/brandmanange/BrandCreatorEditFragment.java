@@ -24,7 +24,7 @@ import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import java.util.concurrent.TimeUnit;
 import rx.Observable;
@@ -103,7 +103,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                         }
                         if (phoneNum.checkPhoneNum() && checkcode.checkValid()) {
                             showLoading();
-                            RxRegiste(QcCloudClient.getApi().postApi.qcChangeBrandUser(brand.getId(),
+                            RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcChangeBrandUser(brand.getId(),
                                 new ChangeBrandCreatorBody.Builder().username(name.getContent())
                                     .code(checkcode.getCode())
                                     .gender(courseTypeRg.getCheckedRadioButtonId() == R.id.gender_female ? 1 : 0)
@@ -135,7 +135,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
         checkcode.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (phoneNum.checkPhoneNum()) {
-                    RxRegiste(QcCloudClient.getApi().postApi.qcGetCode(
+                    RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetCode(
                         new GetCodeBean.Builder().area_code(phoneNum.getDistrictInt()).phone(phoneNum.getPhoneNum()).build())
                         .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())

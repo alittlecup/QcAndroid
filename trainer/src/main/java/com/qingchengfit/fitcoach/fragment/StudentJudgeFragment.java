@@ -10,14 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.TagGroup;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import java.text.DecimalFormat;
 import rx.android.schedulers.AndroidSchedulers;
@@ -113,7 +110,7 @@ public class StudentJudgeFragment extends BaseFragment {
             }
         } else {
             if (!isPrepared || !isVisible) return;
-            QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid)
+            TrainerRepository.getStaticTrainerAllApi().qcGetEvaluate(App.coachid)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

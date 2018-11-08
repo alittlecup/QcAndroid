@@ -22,7 +22,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.HidenBean;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
@@ -118,7 +118,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     if (entity.is_hidden()) {
                         //隐藏
-                        QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(false))
+                        TrainerRepository.getStaticTrainerAllApi().qcHidenCertificates(id, new HidenBean(false))
                             .observeOn(AndroidSchedulers.mainThread())
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
@@ -132,7 +132,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                 }
                             },new HttpThrowable());
                     } else {
-                        QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(true))
+                        TrainerRepository.getStaticTrainerAllApi().qcHidenCertificates(id, new HidenBean(true))
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -220,7 +220,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
     }
 
     private void freshData() {
-        QcCloudClient.getApi().getApi.qcGetCertificateDetail(id)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCertificateDetail(id)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(qcCertificateDetailResponse -> {
@@ -247,7 +247,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                             @Override public boolean onMenuItemClick(MenuItem item) {
                                 if (certificateEntity.is_hidden()) {
                                     //隐藏
-                                    QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(false))
+                                    TrainerRepository.getStaticTrainerAllApi().qcHidenCertificates(id, new HidenBean(false))
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
@@ -259,7 +259,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                             }
                                         },new HttpThrowable());
                                 } else {
-                                    QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(true))
+                                    TrainerRepository.getStaticTrainerAllApi().qcHidenCertificates(id, new HidenBean(true))
                                         .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -374,7 +374,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override public void onClick(MaterialDialog dialog, DialogAction which) {
                         fragmentCallBack.ShowLoading("请稍后");
-                        QcCloudClient.getApi().postApi.qcDelCertificate(id)
+                        TrainerRepository.getStaticTrainerAllApi().qcDelCertificate(id)
 
                             .observeOn(AndroidSchedulers.mainThread())
                             .onBackpressureBuffer()

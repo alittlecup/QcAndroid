@@ -1,11 +1,9 @@
 package com.qingchengfit.fitcoach.fragment.brandmanange;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.util.CircularArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,17 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -38,7 +31,7 @@ import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.BrandGymsAdapter;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcReponseBrandDetailShops;
 import java.util.ArrayList;
 import java.util.List;
@@ -209,7 +202,7 @@ public class BrandDetailFragment extends BaseFragment {
 
   public void freshData() {
     if (mBrandId == null || TextUtils.isEmpty(mBrandId)) return;
-    RxRegiste(QcCloudClient.getApi().getApi.qcGetBrandShops(App.coachid + "", brand.getId())
+    RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetBrandShops(App.coachid + "", brand.getId())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

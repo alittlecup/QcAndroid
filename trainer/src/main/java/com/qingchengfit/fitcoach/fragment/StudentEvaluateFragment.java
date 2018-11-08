@@ -7,14 +7,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-
-
 import cn.qingchengfit.views.VpFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.TagGroup;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +42,7 @@ public class StudentEvaluateFragment extends VpFragment {
                 return true;
             }
         });
-        QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid)
+        TrainerRepository.getStaticTrainerAllApi().qcGetEvaluate(App.coachid)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

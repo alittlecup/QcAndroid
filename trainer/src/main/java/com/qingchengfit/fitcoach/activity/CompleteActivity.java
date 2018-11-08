@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import rx.android.schedulers.AndroidSchedulers;
@@ -84,7 +84,7 @@ public class CompleteActivity extends AppCompatActivity {
             bean.setGender(0);//男
         }
 
-        QcCloudClient.getApi().postApi.qcRegister(bean)
+        TrainerRepository.getStaticTrainerAllApi().qcRegister(bean)
 
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.newThread())

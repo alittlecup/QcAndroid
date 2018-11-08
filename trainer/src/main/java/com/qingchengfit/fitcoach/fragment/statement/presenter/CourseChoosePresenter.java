@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
-import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,13 +42,13 @@ public class CourseChoosePresenter extends BasePresenter {
     CourseChooseView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    private TrainerRepository restRepository;
     private List<CourseTypeSample> mAllCourse = new ArrayList<>();
     private List<CourseTypeSample> mPrivateCourse = new ArrayList<>();
     private List<CourseTypeSample> mGroupCourse = new ArrayList<>();
     private int mType = -1;
 
-    @Inject public CourseChoosePresenter(StatementUsecase usecase, RestRepository restRepository) {
+    @Inject public CourseChoosePresenter(StatementUsecase usecase, TrainerRepository restRepository) {
         this.usecase = usecase;
         this.restRepository = restRepository;
     }
@@ -140,7 +140,7 @@ public class CourseChoosePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", "course_all");
         params.put("method", "get");
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getTrainerAllApi()
             .qcGetAllCourses(App.coachid+"", gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

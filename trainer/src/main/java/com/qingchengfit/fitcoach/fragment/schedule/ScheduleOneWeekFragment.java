@@ -28,7 +28,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CalenderPopWindow;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.text.SimpleDateFormat;
@@ -206,7 +206,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         params.put("from_date", dates.first);
         params.put("to_date", dates.second);
 
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
+        RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetCoachScheduleV1(App.coachid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

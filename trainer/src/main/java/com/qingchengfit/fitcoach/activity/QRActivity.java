@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
@@ -21,7 +18,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -113,7 +110,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   @Override public void onQRCodeRead(final String text, PointF[] points) {
     if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
     final String session = PreferenceUtils.getPrefString(this, "session_id", "");
-    sp = QcCloudClient.getApi().postApi.qcScans(text,
+    sp = TrainerRepository.getStaticTrainerAllApi().qcScans(text,
         new ScanBody.Builder().url(getIntent().getStringExtra(LINK_URL)).session_id(session)
             //                .module(getIntent().getStringExtra(LINK_MODULE))
             //                .brand_id(getIntent().getStringExtra("brand_id"))

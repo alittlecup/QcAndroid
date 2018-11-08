@@ -26,10 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.SpinnerBean;
 import cn.qingchengfit.bean.StudentBean;
@@ -53,7 +49,7 @@ import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import java.util.ArrayList;
@@ -259,7 +255,7 @@ public class MyStudentFragment extends BaseFragment {
             HashMap<String, Object> prams = new HashMap<>();
             prams.put("id", coachService.getId() + "");
             prams.put("model", coachService.getModel());
-            QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid, prams)
+            TrainerRepository.getStaticTrainerAllApi().qcGetAllStudent(App.coachid, prams)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<QcAllStudentResponse>() {

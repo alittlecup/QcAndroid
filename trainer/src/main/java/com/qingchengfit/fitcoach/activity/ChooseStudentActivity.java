@@ -19,11 +19,9 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Contact;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -32,7 +30,7 @@ import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -234,7 +232,7 @@ public class ChooseStudentActivity extends BaseActivity {
         if (mCoachService == null) {
             return;
         }
-        QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, new PostStudents(choosenstudentBeans), GymUtils.getParams(mCoachService))
+        TrainerRepository.getStaticTrainerAllApi().qcAddStudents(App.coachid, new PostStudents(choosenstudentBeans), GymUtils.getParams(mCoachService))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

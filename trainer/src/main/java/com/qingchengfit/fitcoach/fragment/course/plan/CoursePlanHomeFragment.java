@@ -13,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -24,7 +22,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.FlexableListFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.EmptyFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCoursePlan;
 import com.qingchengfit.fitcoach.items.CoursePlanItem;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -111,7 +109,7 @@ public class CoursePlanHomeFragment extends BaseFragment {
     @Override public void onResume() {
         super.onResume();
         showLoading();
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoursePlanAll(App.coachid + "")
+        RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetCoursePlanAll(App.coachid + "")
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -14,7 +14,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class ArticleCommentsPresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject TrainerRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -36,7 +36,7 @@ public class ArticleCommentsPresenter extends BasePresenter {
     }
 
     public void addComment(String newsid, @Nullable String reply_id, String text) {
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.getTrainerAllApi()
             .qcAddComment(newsid, new PostCommentBody.Builder().text(text).reply_id(TextUtils.isEmpty(reply_id) ? null : reply_id).build())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -55,7 +55,7 @@ public class ArticleCommentsPresenter extends BasePresenter {
     public void queryCommenList(String newsid, int page) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", page);
-        RxRegiste(restRepository.getGet_api().qcQueryComments(newsid, params)
+        RxRegiste(restRepository.getTrainerAllApi().qcQueryComments(newsid, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

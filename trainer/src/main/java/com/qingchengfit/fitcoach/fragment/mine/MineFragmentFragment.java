@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.ResponseConstant;
@@ -32,7 +31,7 @@ import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.schedule.SpecialWebActivity;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import javax.inject.Inject;
 import rx.Observer;
@@ -71,6 +70,7 @@ public class MineFragmentFragment extends BaseFragment {
   LinearLayout layoutLogin;
   @Inject LoginStatus loginStatus;
   @Inject BaseRouter baseRouter;
+  @Inject TrainerRepository trainerRepository;
 
   private QcCoachRespone.DataEntity.CoachEntity user;
   private Subscription sp1;
@@ -194,7 +194,7 @@ public class MineFragmentFragment extends BaseFragment {
 
   public void queryData() {
     if (sp1 != null && !sp1.isUnsubscribed()) sp1.unsubscribe();
-    sp1 = QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+    sp1 = trainerRepository.getTrainerAllApi().qcGetCoach(App.coachid)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

@@ -15,10 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.FragmentAdapter;
@@ -32,7 +28,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import java.util.ArrayList;
 import rx.Observable;
@@ -157,7 +153,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
             this.qcMyhomeResponse = gson.fromJson(cache, QcMyhomeResponse.class);
             if (qcMyhomeResponse != null) handleResponse(qcMyhomeResponse);
         }
-        qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+        qcMyhomeResponseObservable = TrainerRepository.getStaticTrainerAllApi().qcGetDetail(Integer.toString(App.coachid))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
@@ -179,7 +175,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
     @Override public void onResume() {
         super.onResume();
         //        if (isFresh) {
-        QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+        TrainerRepository.getStaticTrainerAllApi().qcGetDetail(Integer.toString(App.coachid))
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -16,10 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.bean.CoursePlan;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.QcRestRepository;
@@ -34,7 +30,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerAllApi;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,20 +108,7 @@ public class MyCoursePlanFragment extends BaseFragment {
             startActivityForResult(toWeb, pos);
         });
         recyclerview.setAdapter(mGymAdapter);
-      //        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(qcAllCoursePlanResponse -> {
-        //                    adapterData.clear();
-        //                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-        //                    if (adapterData.size() == 0) {
-        //                        noData.setVisibility(View.VISIBLE);
-        //                    } else {
-        //                        noData.setVisibility(View.GONE);
-        //                        mGymAdapter.notifyDataSetChanged();
-        //                    }
-        //
-        //
-        //                });
+
         freshData();
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(() -> freshData());
@@ -144,7 +127,7 @@ public class MyCoursePlanFragment extends BaseFragment {
             params.put("id", coachService.getId());
             params.put("model", coachService.getModel());
 
-            RxRegiste(restRepository.createRxJava1Api(QcCloudClient.GetApi.class)
+            RxRegiste(restRepository.createRxJava1Api(TrainerAllApi.class)
                 .qcGetGymAllPlans(App.coachid, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -173,40 +156,7 @@ public class MyCoursePlanFragment extends BaseFragment {
         startActivityForResult(toWeb, 10001);
     }
 
-    //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //    super.onActivityResult(requestCode, resultCode, data);
-    //    //        if (resultCode == Activity.RESULT_OK){
-    //    if (getActivity() instanceof FragActivity) {
-    //        CoachService coachService = ((FragActivity) getActivity()).getCoachService();
-    //        HashMap<String, Object> params = new HashMap<>();
-    //        params.put("id", coachService.getId());
-    //        params.put("model", coachService.getModel());
-    //        if (resultCode > 1000) {
-    //            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
-  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-    //                .observeOn(AndroidSchedulers.mainThread())
-    //                .subscribe(qcAllCoursePlanResponse -> {
-    //                    adapterData.clear();
-    //                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-    //                    mGymAdapter.notifyDataSetChanged();
-    //                    recyclerview.scrollToPosition(adapterData.size() - 1);
-    //                }, throwable -> {
-    //                }, () -> {
-    //                });
-    //        } else if (requestCode >= 0 && requestCode < 10000) {
-    //            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
-  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-    //                .observeOn(AndroidSchedulers.mainThread())
-    //                .subscribe(qcAllCoursePlanResponse -> {
-    //                    adapterData.clear();
-    //                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-    //                    mGymAdapter.notifyItemChanged(requestCode);
-    //                }, throwable -> {
-    //                }, () -> {
-    //                });
-    //        }
-    //    }
-    //}
+
 
     @Override public void onDestroyView() {
         super.onDestroyView();

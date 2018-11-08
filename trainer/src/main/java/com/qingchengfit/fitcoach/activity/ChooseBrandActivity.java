@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
-
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -21,7 +19,7 @@ import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +76,7 @@ public class ChooseBrandActivity extends AppCompatActivity {
         if (curUser != null && !curUser.isEmpty()) {
             User u = new Gson().fromJson(curUser, User.class);
 
-            sp = QcCloudClient.getApi().getApi.qcGetBrands(u.id)
+            sp = TrainerRepository.getStaticTrainerAllApi().qcGetBrands(u.id)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

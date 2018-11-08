@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.event.EventSyncDone;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.items.SyncGymItem;
 import com.qingchengfit.fitcoach.items.SyncWaitingItemItem;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -85,7 +85,7 @@ public class SyncGymFragment extends BaseFragment {
             }
         });
 
-      RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+      RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
 

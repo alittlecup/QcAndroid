@@ -12,14 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.VpFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +65,7 @@ public class WorkExperienceFragment extends VpFragment {
     recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
     recyclerview.setHasFixedSize(true);
     recyclerview.setNestedScrollingEnabled(true);
-    QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
+    TrainerRepository.getStaticTrainerAllApi().qcGetExperiences(App.coachid)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

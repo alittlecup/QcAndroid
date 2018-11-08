@@ -29,7 +29,7 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChangeTimeActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.LoadingDialog;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
@@ -101,14 +101,14 @@ public class AddSelfGymFragment extends Fragment {
 
     private void deleteGym(){
         ShowLoading("正在删除,请稍后...");
-        QcCloudClient.getApi().postApi.qcDelPrivateGym(App.coachid)
+        TrainerRepository.getStaticTrainerAllApi().qcDelPrivateGym(App.coachid)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap(
                 (Func1<QcResponse, Observable<QcCoachSystemResponse>>) qcResponse -> {
                     if (qcResponse.status == ResponseResult.SUCCESS || getActivity() != null) {
-                        return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+                        return TrainerRepository.getStaticTrainerAllApi().qcGetCoachSystem(App.coachid)
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread());
@@ -198,7 +198,7 @@ public class AddSelfGymFragment extends Fragment {
             toolbar.setTitle("设置健身房");
         }
 
-        QcCloudClient.getApi().getApi.qcGetPrivateGym(App.coachid)
+        TrainerRepository.getStaticTrainerAllApi().qcGetPrivateGym(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -243,7 +243,7 @@ public class AddSelfGymFragment extends Fragment {
 
         postPrivateGym.name = addselfgymName.getContent();
         if (id > 0) {
-            QcCloudClient.getApi().postApi.qcPostPrivateGym(App.coachid, postPrivateGym)
+            TrainerRepository.getStaticTrainerAllApi().qcPostPrivateGym(App.coachid, postPrivateGym)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -251,7 +251,7 @@ public class AddSelfGymFragment extends Fragment {
                     @Override public Observable<QcCoachServiceResponse> call(QcResponse qcResponse) {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                            return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                            return TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
                                 .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread());
@@ -298,7 +298,7 @@ public class AddSelfGymFragment extends Fragment {
                     }
                 });
         } else {
-            QcCloudClient.getApi().postApi.qcCreatePrivateGym(App.coachid, postPrivateGym)
+            TrainerRepository.getStaticTrainerAllApi().qcCreatePrivateGym(App.coachid, postPrivateGym)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -306,7 +306,7 @@ public class AddSelfGymFragment extends Fragment {
                     @Override public Observable<QcCoachServiceResponse> call(QcResponse qcResponse) {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                            return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                            return TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
                                 .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread());

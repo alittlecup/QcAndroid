@@ -8,7 +8,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -21,10 +21,10 @@ import rx.schedulers.Schedulers;
 public class CourseReversePresenter extends BasePresenter {
 
     public CourseView view;
-    @Inject RestRepository restRepository;
+    @Inject TrainerRepository restRepository;
     @Inject GymWrapper gymWrapper;
 
-    @Inject public CourseReversePresenter(RestRepository restRepository) {
+    @Inject public CourseReversePresenter(TrainerRepository restRepository) {
         this.restRepository = restRepository;
     }
 
@@ -59,7 +59,7 @@ public class CourseReversePresenter extends BasePresenter {
     }
 
     public void qcGetCourseReverse(String scheduleId) {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.getTrainerAllApi()
             .qcGetCourseReportDetail(String.valueOf(App.coachid), scheduleId, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

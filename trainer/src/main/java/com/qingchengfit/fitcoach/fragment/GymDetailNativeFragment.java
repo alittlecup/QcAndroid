@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.RxAddCourse;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.VpFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -26,9 +24,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.adapter.FragmentAdater;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
-import cn.qingchengfit.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.ShopCourse;
 import java.util.ArrayList;
@@ -191,30 +188,10 @@ public class GymDetailNativeFragment extends Fragment {
 
             @Override public void onNext(String o) {
                 LogUtil.e("tag:" + o);
-                //                        if (o.equalsIgnoreCase(RxBus.BUS_REFRESH))
                 init();
             }
         });
-        //        mObservableDefault = RxBus.getBus().register(RxBus.BUS_DEFAUT);
-        //        mObservableDefault.observeOn(AndroidSchedulers.mainThread())
-      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .subscribe(new Subscriber<String>() {
-        //                    @Override
-        //                    public void onCompleted() {
-        //
-        //                    }
-        //
-        //                    @Override
-        //                    public void onError(Throwable e) {
-        //
-        //                    }
-        //
-        //                    @Override
-        //                    public void onNext(String o) {
-        //                        toolbar.setTitle(o);
-        //
-        //                    }
-        //                });
+
         return view;
     }
 
@@ -242,7 +219,7 @@ public class GymDetailNativeFragment extends Fragment {
         params.put("model", mModel);
         params.put("id", Long.toString(mId));
 
-        mHttpSc = QcCloudClient.getApi().getApi.qcGetGymDetail(App.coachid, params)
+        mHttpSc = TrainerRepository.getStaticTrainerAllApi().qcGetGymDetail(App.coachid, params)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

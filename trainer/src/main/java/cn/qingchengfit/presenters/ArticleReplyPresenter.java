@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class ArticleReplyPresenter extends BasePresenter {
-    @Inject RestRepository restRepository;
+    @Inject TrainerRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private MVPView view;
@@ -34,7 +34,7 @@ public class ArticleReplyPresenter extends BasePresenter {
     public void queryReplies(int page) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("page", page);
-      RxRegiste(restRepository.getGet_api()
+      RxRegiste(restRepository.getTrainerAllApi()
           .qcQueryReplies(params)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())

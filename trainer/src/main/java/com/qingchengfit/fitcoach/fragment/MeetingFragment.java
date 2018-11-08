@@ -12,15 +12,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.qingchengfit.bean.MeetingBean;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivityWithShare;
-import cn.qingchengfit.bean.MeetingBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class MeetingFragment extends BaseFragment {
     private void freshData() {
         HashMap<String, String> params = new HashMap<>();
         params.put("oem", getString(R.string.oem_tag));
-        QcCloudClient.getApi().getApi.qcGetMeetingList(params)
+        TrainerRepository.getStaticTrainerAllApi().qcGetMeetingList(params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

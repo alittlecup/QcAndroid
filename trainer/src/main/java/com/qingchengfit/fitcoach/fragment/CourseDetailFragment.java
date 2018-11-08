@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DialogUtils;
@@ -29,7 +28,7 @@ import com.qingchengfit.fitcoach.adapter.ImageIconBean;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.adapter.SimpleTextIconAdapter;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.GetBatchesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -168,7 +167,7 @@ public class CourseDetailFragment extends Fragment {
             HashMap<String, String> params = new HashMap<>();
             params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
             params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
-            QcCloudClient.getApi().getApi.qcGetOneCourse(App.coachid,
+            TrainerRepository.getStaticTrainerAllApi().qcGetOneCourse(App.coachid,
                 mBean.tags.get(ImageThreeTextBean.TAG_COURSE), params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .onBackpressureBuffer()
@@ -242,31 +241,6 @@ public class CourseDetailFragment extends Fragment {
     params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
     params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
 
-    //                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
-    //                                    .observeOn(AndroidSchedulers.mainThread())
-    //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
-    //                                    .subscribe(new Subscriber<QcResponse>() {
-    //                                        @Override
-    //                                        public void onCompleted() {
-    //
-    //                                        }
-    //
-    //                                        @Override
-    //                                        public void onError(Throwable e) {
-    //
-    //                                        }
-    //
-    //                                        @Override
-    //                                        public void onNext(QcResponse qcResponse) {
-    //                                            if (qcResponse.status == ResponseResult.SUCCESS) {
-    //                                                ToastUtils.show("删除成功");
-    //                                                getActivity().onBackPressed();
-    //                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
-    //                                            } else {
-    //
-    //                                            }
-    //                                        }
-    //                                    });
 
   }
 
@@ -298,7 +272,7 @@ public class CourseDetailFragment extends Fragment {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
     params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
-    QcCloudClient.getApi().postApi.qcDelBatch(App.coachid + "", datas.get(pos).id, params)
+    TrainerRepository.getStaticTrainerAllApi().qcDelBatch(App.coachid + "", datas.get(pos).id, params)
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -338,7 +312,7 @@ public class CourseDetailFragment extends Fragment {
     HashMap<String, String> params = new HashMap<>();
     params.put("model", mBean.tags.get("model"));
     params.put("id", mBean.tags.get("gymid"));
-    QcCloudClient.getApi().getApi.qcGetGroupManage(App.coachid, mBean.tags.get("courseid"), params)
+    TrainerRepository.getStaticTrainerAllApi().qcGetGroupManage(App.coachid, mBean.tags.get("courseid"), params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

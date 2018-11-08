@@ -9,6 +9,7 @@ import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -57,7 +58,8 @@ public class QcRestRepository {
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
     this.host = host;
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
-    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    interceptor.setLevel(
+        BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
     client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
       @Override public Response intercept(Chain chain) throws IOException {

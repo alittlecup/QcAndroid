@@ -14,8 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-
+import cn.qingchengfit.bean.SyncExpBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.CompatUtils;
@@ -26,10 +25,9 @@ import cn.qingchengfit.widgets.ExpandedLayout;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import cn.qingchengfit.bean.SyncExpBody;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import java.util.Calendar;
 import java.util.Date;
@@ -162,7 +160,7 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
 
     void putWorkExp() {
         fragmentCallBack.ShowLoading("正在保存");
-        RxRegiste(QcCloudClient.getApi().postApi.qcEditSyncExperience(experiencesEntity.getId(),
+        RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcEditSyncExperience(experiencesEntity.getId(),
             new SyncExpBody.Builder().description(workexpeditDescripe.getText().toString().trim())
                 .group_is_hidden(!swGroup.isExpanded())
                 .private_is_hidden(!swPrivate.isExpanded())

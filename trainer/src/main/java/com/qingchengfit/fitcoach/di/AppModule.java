@@ -12,8 +12,6 @@ import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.bill.BillActivity;
-import cn.qingchengfit.saasbase.di.BindBillActivity;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
@@ -30,17 +28,13 @@ import cn.qingchengfit.student.routers.StudentRouterCenter;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.fragment.card.TrainerStudentImpl;
-import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.routers.CourseRouter;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
 import dagger.Provides;
-import dagger.android.ContributesAndroidInjector;
 import java.util.List;
-import javax.inject.Singleton;
 
 /**
  * power by
@@ -69,7 +63,6 @@ import javax.inject.Singleton;
   private GymWrapper gymWrapper;
   private App app;
   private BaseRouter router;
-  private RestRepository restRepository;
   private QcRestRepository qcRestRepository;
   private ICourseModel courseModel;
   private IGymConfigModel gymConfigModel;
@@ -110,7 +103,6 @@ import javax.inject.Singleton;
     app = builder.app;
     router = builder.router;
     db = builder.db;
-    restRepository = builder.restRepository;
     qcRestRepository = new QcRestRepository(app, Configs.Server, app.getString(R.string.oem_tag));
     courseModel = new CourseModel(qcRestRepository, gymWrapper, loginStatus);
     gymConfigModel = new GymConfigModel(gymWrapper, loginStatus, qcRestRepository);
@@ -167,9 +159,6 @@ import javax.inject.Singleton;
     return router;
   }
 
-  @Provides public RestRepository provideRepository() {
-    return restRepository;
-  }
 
   @Provides public QcRestRepository provideQcRepository() {
     return qcRestRepository;
@@ -190,7 +179,6 @@ import javax.inject.Singleton;
     private GymWrapper gymWrapper;
     private App app;
     private BaseRouter router;
-    private RestRepository restRepository;
     private QcDbManager db;
 
     public Builder() {
@@ -221,10 +209,6 @@ import javax.inject.Singleton;
       return this;
     }
 
-    public Builder restRepository(RestRepository val) {
-      restRepository = val;
-      return this;
-    }
 
     public AppModule build() {
       return new AppModule(this);

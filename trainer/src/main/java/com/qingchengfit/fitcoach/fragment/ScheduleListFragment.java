@@ -18,10 +18,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.RxRefreshList;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
@@ -37,11 +35,10 @@ import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
-import cn.qingchengfit.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
@@ -220,7 +217,7 @@ public class ScheduleListFragment extends BaseFragment {
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.Date2YYYYMMDD(date));
-        QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCoachScheduleV1(App.coachid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

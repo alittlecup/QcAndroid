@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.BaseInfoBean;
 import cn.qingchengfit.bean.CurentPermissions;
@@ -28,7 +27,6 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -39,7 +37,7 @@ import com.qingchengfit.fitcoach.fragment.StudentBaseInfoFragment;
 import com.qingchengfit.fitcoach.fragment.StudentBodyTestListFragment;
 import com.qingchengfit.fitcoach.fragment.StudentCardFragment;
 import com.qingchengfit.fitcoach.fragment.StudentClassRecordFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
@@ -192,7 +190,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   private void deleteStudent() {
-    QcCloudClient.getApi().postApi.qcDelStudent(App.coachid + "", mStudentShipId, getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcDelStudent(App.coachid + "", mStudentShipId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -218,7 +216,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void initBaseInfo() {
-    QcCloudClient.getApi().getApi.qcGetStudentInfo(App.coachid + "", mStudentShipId, getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcGetStudentInfo(App.coachid + "", mStudentShipId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -276,7 +274,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void getCourseRecords() {
-    QcCloudClient.getApi().getApi.qcGetStuedntCourse(mStudentId, getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcGetStuedntCourse(mStudentId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -313,7 +311,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void getStudentCards() {
-    QcCloudClient.getApi().getApi.qcGetStuedntCard(mStudentId, getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcGetStuedntCard(mStudentId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -363,7 +361,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void getStudentBodyTest() {
-    QcCloudClient.getApi().getApi.qcGetStuedntBodyTest(mStudentId, getParams())
+    TrainerRepository.getStaticTrainerAllApi().qcGetStuedntBodyTest(mStudentId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

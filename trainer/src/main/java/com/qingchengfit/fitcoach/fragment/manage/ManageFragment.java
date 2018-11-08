@@ -46,7 +46,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
@@ -98,6 +98,7 @@ public class ManageFragment extends BaseFragment
   @Inject GymWrapper gymWrapper;
   @Inject RepoCoachServiceImpl repoCoachService;
   @Inject LoginStatus loginStatus;
+  @Inject TrainerRepository repository;
 	TextView showGym;
 	TextView dataoff;
 	TextView renewal;
@@ -281,7 +282,7 @@ public class ManageFragment extends BaseFragment
     HashMap<String, Object> params = gymWrapper.getParams();
     showLoading();
     if (loginStatus.isLogined()) {
-      RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+      RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetPermission(App.coachid + "", params)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
@@ -450,7 +451,7 @@ public class ManageFragment extends BaseFragment
 
  public void onClick() {
     if (gymWrapper.getCoachService() != null) {
-      RxRegiste(QcCloudClient.getApi().getApi.qcStaffPmission(App.coachid + "",
+      RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcStaffPmission(App.coachid + "",
           GymUtils.getParams(gymWrapper.getCoachService()))
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -508,7 +509,7 @@ public class ManageFragment extends BaseFragment
         quiteGym.setOnClickListener(new View.OnClickListener() {
           @Override public void onClick(View v) {
             showLoading();
-            RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid + "",
+            RxRegiste(repository.getTrainerAllApi().qcQuitGym(App.coachid + "",
                 GymUtils.getParams(gymWrapper.getCoachService()))
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())

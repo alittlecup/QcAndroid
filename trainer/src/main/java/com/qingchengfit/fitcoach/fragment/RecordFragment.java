@@ -72,50 +72,11 @@ public class RecordFragment extends BaseSettingFragment {
         WebFragmentNoToolbar web = WebFragmentNoToolbar.newInstance(Configs.Server + Configs.HOST_EDUCATION);
         web.setTouchBig(true);
         getChildFragmentManager().beginTransaction().replace(R.id.frag_record, web).commit();
-        //recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        //freshData();
-        //refresh.setColorSchemeResources(R.color.primary);
-        //refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-        //    @Override
-        //    public void onRefresh() {
-        //        freshData();
-        //    }
-        //});
-        //refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-        //    @Override
-        //    public void onGlobalLayout() {
-        //        CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
-        //        refresh.setRefreshing(false);
-        //    }
-        //});
         return view;
     }
 
     public void freshData() {
-        //
-        //QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
-        //    getActivity().runOnUiThread(() -> {
-        //        if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
-        //            recyclerview.setVisibility(View.VISIBLE);
-        //            recordConfirmNone.setVisibility(View.GONE);
-        //            adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
-        //            adapter.setListener((v, pos) -> {
-        //                int type = qcCertificatesReponse.getData().getCertificates().get(pos).getType();
-        //                fragmentCallBack.onFragmentChange(ComfirmDetailFragment.newInstance(adapter.datas.get(pos)));
-        //            });
-        //            recyclerview.setAdapter(adapter);
-        //        } else {
-        //            recyclerview.setVisibility(View.GONE);
-        //            recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
-        //            recordComfirmNoTxt.setText("您还没有添加任何认证信息请点击添加按钮");
-        //            recordConfirmNone.setVisibility(View.VISIBLE);
-        //        }
-        //        refresh.setRefreshing(false);
-        //    });
-        //}, throwable -> {
-        //}, () -> {
-        //});
+
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

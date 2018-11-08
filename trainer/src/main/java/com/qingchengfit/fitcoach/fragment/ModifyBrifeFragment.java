@@ -14,10 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-
-
 import cn.qingchengfit.model.common.BriefInfo;
 import cn.qingchengfit.utils.ChoosePicUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -29,7 +25,7 @@ import com.qingchengfit.fitcoach.Utils.HTMLUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.util.ArrayList;
@@ -127,7 +123,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
       }
     });
     recyclerview.setAdapter(adapter);
-    RxRegiste(QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+    RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetCoach(App.coachid)
       .onBackpressureBuffer()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
@@ -146,7 +142,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
   }
 
   public void onSave() {
-    QcCloudClient.getApi().postApi.qcModifyDes(App.coachid,
+    TrainerRepository.getStaticTrainerAllApi().qcModifyDes(App.coachid,
       new ModifyDes(HTMLUtils.toHTML(mListData)))
       .onBackpressureBuffer()
       .subscribeOn(Schedulers.newThread())

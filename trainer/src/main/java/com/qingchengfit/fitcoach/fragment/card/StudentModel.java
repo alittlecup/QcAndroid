@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.card;
 
-import cn.qingchengfit.bean.StudentBean;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -31,7 +30,7 @@ import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
 import cn.qingchengfit.student.respository.IStudentModel;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerAllApi;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
@@ -41,12 +40,12 @@ import java.util.Map;
 import javax.inject.Inject;
 
 public class StudentModel implements IStudentModel {
-  QcCloudClient.GetApi api;
+  TrainerAllApi api;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
 
   @Inject public StudentModel(QcRestRepository restRepository) {
-    api = restRepository.createRxJava1Api(QcCloudClient.GetApi.class);
+    api = restRepository.createRxJava1Api(TrainerAllApi.class);
   }
 
   @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission() {

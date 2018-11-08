@@ -15,7 +15,7 @@ import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import com.google.gson.JsonObject;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerAllApi;
 import java.util.HashMap;
 import javax.inject.Inject;
 import rx.Observable;
@@ -33,7 +33,7 @@ public class StaffModel implements IStaffModel {
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
 
-    return restRepository.createRxJava1Api(QcCloudClient.GetApi.class).qcGetSalers(loginStatus.staff_id(),gymWrapper.getParams());
+    return restRepository.createRxJava1Api(TrainerAllApi.class).qcGetSalers(loginStatus.staff_id(),gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<StaffShipsListWrap>> getStaffList() {

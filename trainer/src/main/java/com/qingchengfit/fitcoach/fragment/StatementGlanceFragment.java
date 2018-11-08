@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -21,7 +20,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 import java.util.Date;
 import java.util.HashMap;
@@ -121,7 +120,7 @@ public class StatementGlanceFragment extends BaseFragment {
     HashMap<String, Object> prams = new HashMap<>();
     prams.put("id", curSystemId + "");
     prams.put("model", curModel);
-    QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid, prams)
+    TrainerRepository.getStaticTrainerAllApi().qcGetCoachReportGlance(App.coachid, prams)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.newThread())
         .subscribe(qcReportGlanceResponse -> {

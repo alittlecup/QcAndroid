@@ -8,30 +8,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
-
-
+import cn.qingchengfit.bean.CoachInitBean;
+import cn.qingchengfit.bean.EventStep;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
-
-import cn.qingchengfit.bean.CoachInitBean;
-import cn.qingchengfit.bean.EventStep;
-
 import com.qingchengfit.fitcoach.event.EventToolbar;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -98,7 +91,7 @@ public class GuideFragment extends BaseFragment {
         }
         if (TextUtils.isEmpty(initBean.brand_id)) {
             if (App.gUser != null && App.gUser.id != null) {
-                RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetBrands(App.gUser.id + "")
                         .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -126,7 +119,7 @@ public class GuideFragment extends BaseFragment {
             }
         } else {
             if (App.gUser != null && App.gUser.id != null) {
-                RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                RxRegiste(TrainerRepository.getStaticTrainerAllApi().qcGetBrands(App.gUser.id + "")
                         .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

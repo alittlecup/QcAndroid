@@ -12,7 +12,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.event.EventChooseCourse;
 import com.qingchengfit.fitcoach.fragment.statement.item.ChooseCourseItem;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
@@ -55,7 +55,7 @@ import rx.schedulers.Schedulers;
       HashMap<String, Object> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid + "", prams)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCoursesAll(App.coachid + "", prams)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

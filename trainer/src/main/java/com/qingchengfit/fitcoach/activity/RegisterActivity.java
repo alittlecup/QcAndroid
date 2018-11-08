@@ -42,9 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
  public void onRegisge() {
         Gson gson = new Gson();
         RegisteBean bean = new RegisteBean("123456778", "papap", "123123");
-        //        QcCloudClient.getApi().postApi
-        //                .subscribe(qcResponse -> LogUtil.e(qcResponse.msg))
-        ;
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {

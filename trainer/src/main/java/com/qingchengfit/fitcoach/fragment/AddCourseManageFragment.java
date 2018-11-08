@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
@@ -31,7 +30,7 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.FullyLinearLayoutManager;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -260,7 +259,7 @@ public class AddCourseManageFragment extends Fragment {
       addBatchCourse.id = mId;
       addBatchCourse.model = mModel;
       addBatchCourse.time_repeats = weekTimes;
-      QcCloudClient.getApi().postApi.qcAddCourseManage(App.coachid, addBatchCourse)
+      TrainerRepository.getStaticTrainerAllApi().qcAddCourseManage(App.coachid, addBatchCourse)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())

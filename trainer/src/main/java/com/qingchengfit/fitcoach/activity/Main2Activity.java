@@ -56,7 +56,7 @@ import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginHomeFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnloginManageFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
@@ -90,7 +90,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tencent.tls.platform.TLSErrInfo;
 
-import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
 
 public class Main2Activity extends BaseActivity implements WebActivityInterface {
 
@@ -382,7 +381,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     loginIM();
     if (loginStatus.isLogined()) {
       if (spOrders != null && !spOrders.isUnsubscribed()) spOrders.unsubscribe();
-      spOrders = QcCloudClient.getApi().getApi.qcGetOrderList()
+      spOrders = TrainerRepository.getStaticTrainerAllApi().qcGetOrderList()
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -423,7 +422,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       pushBody.push_id = userid;
       pushBody.device_type = "android";
       pushBody.distribute = getString(R.string.oem_tag);
-      getApi().postApi.qcPostPushId(App.coachid, pushBody)
+      TrainerRepository.getStaticTrainerAllApi().qcPostPushId(App.coachid, pushBody)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .subscribe(new Subscriber<QcResponse>() {

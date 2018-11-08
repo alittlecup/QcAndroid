@@ -22,8 +22,6 @@ import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.di.AppComponent;
 import com.qingchengfit.fitcoach.di.AppModule;
 import com.qingchengfit.fitcoach.di.DaggerAppComponent;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.RestRepository;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -169,7 +167,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       .appModule(new AppModule.Builder().app(this)
         .gymWrapper(new GymWrapper.Builder().build())
         .db(new QCDbManagerImpl(this))
-        .restRepository(new RestRepository(new QcCloudClient()))
         .router(new BaseRouter())
         .loginStatus(new LoginStatus.Builder().loginUser(
           gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))

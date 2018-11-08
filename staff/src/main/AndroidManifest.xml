@@ -601,11 +601,6 @@
         android:windowSoftInputMode="adjustNothing"
         />
 
-    <service
-        android:name=".service.DownloadIntentService"
-        android:exported="false"
-        />
-
     <activity android:name=".views.notification.NotificationActivity"
         android:screenOrientation="portrait"
         />

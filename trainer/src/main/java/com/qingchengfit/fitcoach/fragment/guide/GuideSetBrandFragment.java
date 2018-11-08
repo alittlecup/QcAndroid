@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -90,24 +90,7 @@ public class GuideSetBrandFragment extends BaseFragment {
                     },new HttpThrowable());
             }
         });
-        //if (App.gUser != null && App.gUser.id != null) {
-        //    RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
-      //        .onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-        //        .subscribe(new Action1<QcResponseBrands>() {
-        //            @Override public void call(QcResponseBrands qcResponse) {
-        //                if (ResponseConstant.checkSuccess(qcResponse)) {
-        //                    if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
-        //                        Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-        //                        startActivity(toChooseBrand);
-        //                        getActivity().finish();
-        //                    }
-        //                }
-        //            }
-        //        }, new Action1<Throwable>() {
-        //            @Override public void call(Throwable throwable) {
-        //            }
-        //        }));
-        //}
+
 
         return view;
     }
@@ -144,7 +127,7 @@ public class GuideSetBrandFragment extends BaseFragment {
                     return;
                 }
                 showLoading();
-                QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder().name(brandName.getContent()).photo(imgUrl).build())
+                TrainerRepository.getStaticTrainerAllApi().qcCreatBrand(new CreatBrandBody.Builder().name(brandName.getContent()).photo(imgUrl).build())
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -10,7 +10,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import java.util.Locale;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,7 +45,7 @@ public class ExpChooseBrandActivity extends ChooseBrandActivity {
         if (curUser != null && !curUser.isEmpty()) {
             User u = new Gson().fromJson(curUser, User.class);
 
-            sp = QcCloudClient.getApi().getApi.qcGetBrands(u.id)
+            sp = TrainerRepository.getStaticTrainerAllApi().qcGetBrands(u.id)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

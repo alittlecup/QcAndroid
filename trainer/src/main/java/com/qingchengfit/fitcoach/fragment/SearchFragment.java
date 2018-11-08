@@ -37,7 +37,7 @@ import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.activity.ExpChooseBrandActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.SearchInterface;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -181,7 +181,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         LogUtil.e("initRv");
         if (type == TYPE_GYM) {
             searchHottable.setText("热门健身房");
-            QcCloudClient.getApi().getApi.qcHotGym(params)
+            TrainerRepository.getStaticTrainerAllApi().qcHotGym(params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(qcSerachGymRepsonse -> {
@@ -218,7 +218,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             });
         } else if (type == TYPE_ORGANASITON) {
             searchHottable.setText("热门机构");
-            QcCloudClient.getApi().getApi.qcHotOrganization(params)
+            TrainerRepository.getStaticTrainerAllApi().qcHotOrganization(params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -295,7 +295,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         params.put("q", keyword);
         if (type == TYPE_GYM) {
 
-          QcCloudClient.getApi().getApi.qcSearchGym(params)
+          TrainerRepository.getStaticTrainerAllApi().qcSearchGym(params)
               .onBackpressureBuffer()
               .subscribeOn(Schedulers.io())
 
@@ -343,7 +343,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             }, new HttpThrowable(), () -> {
             });
         } else if (type == TYPE_ORGANASITON) {
-          QcCloudClient.getApi().getApi.qcSearchOrganization(params)
+          TrainerRepository.getStaticTrainerAllApi().qcSearchOrganization(params)
               .onBackpressureBuffer()
               .subscribeOn(Schedulers.io())
 

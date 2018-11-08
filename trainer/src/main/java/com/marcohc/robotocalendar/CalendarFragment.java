@@ -4,15 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.DatePicker;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,7 +82,7 @@ public class CalendarFragment extends BaseFragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("from_date", DateUtils.getStartDayOfMonth(mCurCalendar.getTime()));
         params.put("to_date", DateUtils.getEndDayOfMonth(mCurCalendar.getTime()));
-        QcCloudClient.getApi().getApi.qcGetScheduleGlance(App.coachid, params)
+        TrainerRepository.getStaticTrainerAllApi().qcGetScheduleGlance(App.coachid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(qcScheduleGlanceResponse -> {

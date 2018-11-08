@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.TrainerRepository;
 import java.util.ArrayList;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
@@ -86,12 +86,6 @@ public class MyGymsFragment extends BaseFragment {
         recyclerview.setAdapter(mGymAdapter);
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {
-                //                Intent toWeb = new Intent(getActivity(), FragActivity.class);
-                //                toWeb.putExtra("host", adapterData.get(pos).url);
-                //                toWeb.putExtra("id", adapterData.get(pos).id);
-                //                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
-                //                toWeb.putExtra("type", 5);
-                //                startActivityForResult(toWeb, 404);
                 Intent intent = new Intent(getActivity(), FragActivity.class);
                 intent.putExtra("id", adapterData.get(pos).id);
                 //                intent.putExtra("isPrivate", adapterData.get(pos).);
@@ -100,22 +94,7 @@ public class MyGymsFragment extends BaseFragment {
                 startActivityForResult(intent, 11);
             }
         });
-        //        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
-        //                .observeOn(AndroidSchedulers.mainThread())
-      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
-        //                .map(qcCoachSystemDetailResponse -> {
-        //                    adapterData.clear();
-        //                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
-        //                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
-        //                        if (systemDetail.is_personal_system) {
-        //                            mHasPrivate = true;
-        //                            break;
-        //                        } else mHasPrivate = false;
-        //
-        //                    }
-        //                    return true;
-        //                })
-        //                .subscribe(aBoolean -> mGymAdapter.notifyDataSetChanged());
+
         freshData();
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -155,7 +134,7 @@ public class MyGymsFragment extends BaseFragment {
 
     public void freshData() {
 
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+        TrainerRepository.getStaticTrainerAllApi().qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
