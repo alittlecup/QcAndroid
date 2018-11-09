@@ -91,7 +91,12 @@ public class Configs {
   public static final int CHARGE_MODE_AUTO = 5; //赠送
   public static final int CHARGE_MODE_WEIXIN = 6; //微信
   public static final int CHARGE_MODE_WEIXIN_QRCODE = 7; //二维码
+  /**
+   * 积分方式
+   */
 
+  public static final String CACLU_SCORE_CHARGE = "chargecard"; //充卡算积分
+  public static final String CACLU_SCORE_BUY = "buycard"; //
   /**
    * 支付渠道
    */
