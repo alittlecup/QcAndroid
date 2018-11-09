@@ -32,7 +32,6 @@ import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -142,7 +141,7 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
       Integer integer = adapter.getSelectedPositions().get(0);
       CategoryChooseItem item = (CategoryChooseItem) adapter.getItem(integer);
       if (dataConsumer != null) {
-        dataConsumer.accept(item.getData());
+        dataConsumer.call(item.getData());
       }
     });
     mViewModel.addCategoryEvent.observe(this, aVoid -> {
@@ -164,9 +163,9 @@ public class ShopBottomCategoryFragment extends BottomSheetDialogFragment
     adapter.addListener(this);
   }
 
-  private Consumer<ICategotyItemData> dataConsumer;
+  private Action1<ICategotyItemData> dataConsumer;
 
-  public void setConfimAction(Consumer<ICategotyItemData> dataConsumer) {
+  public void setConfimAction(Action1<ICategotyItemData> dataConsumer) {
     this.dataConsumer = dataConsumer;
   }
 

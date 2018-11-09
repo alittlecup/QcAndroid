@@ -40,16 +40,14 @@ import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
-
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
-import cn.qingchengfit.utils.PermissionUtils;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -70,9 +68,7 @@ import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
@@ -371,7 +367,7 @@ import rx.functions.Action1;
   }
 
   public void onConfirmPay() {
-    if (optionList.size() == 0) {
+    if (optionList.size() == 0||cardOptionCustom==null) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
@@ -649,7 +645,7 @@ import rx.functions.Action1;
   }
 
   @Override public int payMethod() {
-    return patType == 0 ? 7 : patType;
+    return patType == 0 ? 12 : patType;
   }
 
   @Override public boolean checkCardBuyBody(CardBuyBody cardBuyBody) {
