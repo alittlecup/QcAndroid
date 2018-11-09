@@ -53,12 +53,18 @@ public class ItemPayMethod extends AbstractFlexibleItem<ItemPayMethod.PayMethodV
     holder.textPayName.setAlpha(payMethod.isPro ? 1 : 0.4f);
     holder.imgPro.setVisibility(payMethod.isPro ? View.GONE : View.VISIBLE);
     holder.itemView.setClickable(payMethod.isPro);
+    if(payMethod.payType==12){//支付宝付款的话
+      holder.tvAd.setVisibility(View.VISIBLE);
+    }else{
+      holder.tvAd.setVisibility(View.GONE);
+    }
   }
 
   class PayMethodVH extends FlexibleViewHolder {
 
     ImageView imgPayMethod;
     TextView textPayName;
+    TextView tvAd;
     ImageView imgHook;
     ImageView imgPro;
 
@@ -68,6 +74,7 @@ public class ItemPayMethod extends AbstractFlexibleItem<ItemPayMethod.PayMethodV
       textPayName = (TextView) view.findViewById(R.id.text_pay_name);
       imgHook = (ImageView) view.findViewById(R.id.img_hook);
       imgPro = (ImageView) view.findViewById(R.id.img_pro);
+      tvAd=view.findViewById(R.id.tv_ad);
     }
   }
 }

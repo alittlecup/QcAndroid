@@ -25,6 +25,18 @@
       tools:text="刷卡支付"
       style="@style/Qc.TextCommonBlack"
       />
+  <TextView
+      android:id="@+id/tv_ad"
+      android:layout_marginLeft="10dp"
+      android:text="天猫双11"
+      android:textSize="9sp"
+      android:visibility="gone"
+      android:gravity="center"
+      android:background="@drawable/bg_fill_red_slide_white"
+      android:textColor="@color/bg_white"
+      android:layout_width="48dp"
+      android:layout_height="16dp"
+      />
   <ImageView
       android:id="@+id/img_pro"
       android:layout_width="wrap_content"
