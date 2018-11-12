@@ -2,3 +2,4 @@ env.PROJECT_NAME="staff"
 env.PROJECT_TYPE="SIT"
 env.BUILD_TYPE="Debug"
 env.UPLOAD_FIR=true
+env.NOTIFY_TOWER=true
