@@ -26,10 +26,8 @@ import cn.qingchengfit.router.QC;
 import cn.qingchengfit.saasbase.gymconfig.GymConfigAcitivty;
 import cn.qingchengfit.sass.course.StaffCourseActivity;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.debug.LogView;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
-import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.staff.StaffStaffActivity;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
 import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
@@ -67,7 +65,7 @@ import rx.plugins.RxJavaPlugins;
  * <p/>
  * d8888b.  .d8b.  d8888b. d88888b d8888b.
  * 88  `8D d8' `8b 88  `8D 88'     88  `8D
- * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'
+ * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'l
  * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
  * 88      88   88 88      88.     88 `88.
  * 88      YP   YP 88      Y88888P 88   YD
@@ -91,7 +89,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
   // 注意！请不要在正式发布的 App 中使用 Debug 模式！
   final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_OFF;
-  public LogView logView;
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
   private AppComponent appCompoent;
@@ -156,7 +153,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     caches.put("cityData", citiesData);
 
     App.staffId = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
-    logView = new LogView(this);
     //if (!BuildConfig.DEBUG) {
     //初始化神策
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
