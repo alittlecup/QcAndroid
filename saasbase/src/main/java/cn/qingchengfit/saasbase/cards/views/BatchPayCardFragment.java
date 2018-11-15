@@ -363,7 +363,16 @@ import javax.inject.Inject;
   }
 
   @Override public void onDoneCardtplList() {
-    onGetData(presenter.getCardTplByType(0));
+    List<CardTpl> cardTplByType = presenter.getCardTplByType(0);
+    if(!cardTplByType.isEmpty()){
+      List<CardTpl> filterCardTplEnable=new ArrayList<>();
+      for(CardTpl tpl:cardTplByType){
+        if(tpl.is_enable){
+          filterCardTplEnable.add(tpl);
+        }
+      }
+      onGetData(filterCardTplEnable);
+    }
   }
 
   @Override public void onRefresh() {
