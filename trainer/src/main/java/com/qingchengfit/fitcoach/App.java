@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
+import timber.log.Timber;
 
 /**
  * power by
@@ -55,17 +56,17 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   public static DiskLruCache diskLruCache;
   // 数据接收的 URL
   final String SA_SERVER_URL =
-    "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
+      "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
   // 配置分发的 URL
   final String SA_CONFIGURE_URL =
-    "http://qingchengfit.cloud.sensorsdata.cn:8006/config?project=default";
+      "http://qingchengfit.cloud.sensorsdata.cn:8006/config?project=default";
   // Debug 模式选项
   //   SensorsDataAPI.DebugMode.DEBUG_OFF - 关闭 Debug 模式
   //   SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
   //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
   // 注意！请不要在正式发布的 App 中使用 Debug 模式！
-  final SensorsDataAPI.DebugMode SA_DEBUG_MODE =BuildConfig.DEBUG?SensorsDataAPI.DebugMode.DEBUG_ONLY:
-  SensorsDataAPI.DebugMode.DEBUG_OFF;
+  final SensorsDataAPI.DebugMode SA_DEBUG_MODE =
+      BuildConfig.DEBUG ? SensorsDataAPI.DebugMode.DEBUG_ONLY : SensorsDataAPI.DebugMode.DEBUG_OFF;
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
   private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";
@@ -79,7 +80,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     try {
       int pid = android.os.Process.myPid();
       ActivityManager mActivityManager =
-        (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+          (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
       for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager.getRunningAppProcesses()) {
         if (appProcess.pid == pid) {
           return appProcess.processName;
@@ -102,6 +103,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
     AppContex = getApplicationContext();
     Configs.APP_ID = getString(R.string.wechat_code);
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree());
+    }
     initDebug();
     initBaseUser();
     initSensor();
@@ -121,16 +125,16 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   }
 
   /**
-   *  初始化Debug环境
+   * 初始化Debug环境
    */
-  void initDebug(){
+  void initDebug() {
     ToastUtils.init(this);
   }
 
   /**
    * 初始化gUser
    */
-  private void initBaseUser(){
+  private void initBaseUser() {
     String u = PreferenceUtils.getPrefString(this, "user_info", "");
     if (!TextUtils.isEmpty(u)) {
       gUser = new Gson().fromJson(u, User.class);
@@ -140,11 +144,11 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   /**
    * 初始化神策
    */
-  private void initSensor(){
+  private void initSensor() {
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
-      SA_SERVER_URL,                      // 数据接收的 URL
-      SA_CONFIGURE_URL,                   // 配置分发的 URL
-      SA_DEBUG_MODE);
+        SA_SERVER_URL,                      // 数据接收的 URL
+        SA_CONFIGURE_URL,                   // 配置分发的 URL
+        SA_DEBUG_MODE);
     try {
       SensorsDataAPI.sharedInstance(this).enableAutoTrack();
       SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
@@ -162,23 +166,21 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
   }
 
-  void initInject(){
+  void initInject() {
     AppComponent appComponent = DaggerAppComponent.builder()
-      .appModule(new AppModule.Builder().app(this)
-        .gymWrapper(new GymWrapper.Builder().build())
-        .db(new QCDbManagerImpl(this))
-        .router(new BaseRouter())
-        .loginStatus(new LoginStatus.Builder().loginUser(
-          gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))
-          .session(QcRestRepository.getSession(this))
-          .userId(gUser == null ? "" : gUser.getId())
-          .build())
-        .build())
-      .build();
+        .appModule(new AppModule.Builder().app(this)
+            .gymWrapper(new GymWrapper.Builder().build())
+            .db(new QCDbManagerImpl(this))
+            .router(new BaseRouter())
+            .loginStatus(new LoginStatus.Builder().loginUser(
+                gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))
+                .session(QcRestRepository.getSession(this))
+                .userId(gUser == null ? "" : gUser.getId())
+                .build())
+            .build())
+        .build();
     appComponent.inject(this);
   }
-
-
 
   private void setupWebView() {
     try {
@@ -188,7 +190,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       canXwalk = false;
     }
   }
-
 
   public static void finishActivity() {
     //杀死该应用进程

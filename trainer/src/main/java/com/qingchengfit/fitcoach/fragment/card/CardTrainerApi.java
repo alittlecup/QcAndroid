@@ -80,7 +80,7 @@ public interface CardTrainerApi {
       ArrayMap<String, String> params);
 
   //获取卡种类列表（排课）
-  @GET("/api/v2/coaches/{id}/cardtpls/")
+  @GET("/api/v2/coaches/{id}/cardtpls/?show_all=1")
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsNoPermission(@Path("id") String id,
       @QueryMap HashMap<String, Object> params);
 

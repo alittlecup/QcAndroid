@@ -58,6 +58,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
+import timber.log.Timber;
 
 /**
  * power by
@@ -118,6 +119,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       FIR.init(this);
     } catch (Exception e) {
 
+    }
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree());
     }
     ZXingLibrary.initDisplayOpinion(this);
     if (MsfSdkUtils.isMainProcess(this)) {
