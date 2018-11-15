@@ -3,6 +3,7 @@ package cn.qingchengfit.saascommon.constant;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.saascommon.BuildConfig;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * power by
@@ -158,7 +159,7 @@ public class Configs {
       "http://cloud.qingchengfit.cn/mobile/urls/34890304d8bc40ba9677ca8d99bcd02a/";
 
   public static String getServerByBuildFLAVOR(String flavor) {
-    String host = "";
+    String host ="";
     switch (flavor) {
       case "SIT":
         host = Constants.ServerDebug;

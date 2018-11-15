@@ -2,6 +2,7 @@ package cn.qingchengfit.network;
 
 import android.content.Context;
 import android.text.TextUtils;
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.ComponentModuleManager;
@@ -57,6 +58,10 @@ public class QcRestRepository {
 
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
     this.host = host;
+    String debug_ip = PreferenceUtils.getPrefString(context, "debug_ip", Constants.ServerDebug);
+    if (!host.equals(debug_ip)) {
+      this.host = debug_ip;
+    }
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
     interceptor.setLevel(
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
@@ -108,13 +113,13 @@ public class QcRestRepository {
 
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
-    retrofitRxJava1 = new Retrofit.Builder().baseUrl(host)
+    retrofitRxJava1 = new Retrofit.Builder().baseUrl(this.host)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
 
-    retrofitRxJava2 = new Retrofit.Builder().baseUrl(host)
+    retrofitRxJava2 = new Retrofit.Builder().baseUrl(this.host)
         .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(client)
