@@ -2,6 +2,7 @@ package cn.qingchengfit.saascommon.constant;
 
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.saascommon.BuildConfig;
+import cn.qingchengfit.utils.AppUtils;
 
 /**
  * power by
@@ -47,7 +48,6 @@ public class Configs {
   public static final String EXTRA_STATEMENT_DATA_DAY_TYPE = "qingcheng.statement_data.daytype";
 
   public static final String ROUTER = "router";  //路由的key
-
 
   public static final int TYPE_GROUP = 0;    //团课
   public static final int TYPE_PRIVATE = 1;  //私教
@@ -138,34 +138,41 @@ public class Configs {
   public static final String SCHEDULE_PRIVATE = "fitness/redirect/staff/private/";
   public static final String HOST_ORDERS = "mobile/trades/home/";
   public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
-  public static String Server =getServerByBuildFLAVOR();
+  public static String Server = Constants.Server;
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
-  public static String URL_ALI_Eleven =  "mobile/activity/enter-ali/?utm_source=staffapp&utm_medium=module&utm_campaign=enterali";
+  public static String URL_ALI_Eleven =
+      "mobile/activity/enter-ali/?utm_source=staffapp&utm_medium=module&utm_campaign=enterali";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
-
-
 
   public static final String WEEX_TEST_PATH =
       "https://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
   public static final String WEEX_RELEASE_PATH =
       "https://qcfile.b0.upaiyun.com/qc-commodity-weex/0.0.39/version.json";
   public static final String WEEX_PAGE_INDEX = "proxy_commodity.js";
-  public static String QR_POINT_URL = BuildConfig.DEBUG ? "saotest.qingchengfit.cn" : "sao.qingcehgnfit.cn";
+  public static String QR_POINT_URL =
+      BuildConfig.DEBUG ? "saotest.qingchengfit.cn" : "sao.qingcehgnfit.cn";
   public static final String WEB_HOW_TO_USE_BATCH_GROUP =
       "http://cloud.qingchengfit.cn/mobile/urls/e382d87968dd4f54a89bb5e5a933f779/";
   //团课
   public static final String WEB_HOW_TO_USE_BATCH_PRIVATE =
       "http://cloud.qingchengfit.cn/mobile/urls/34890304d8bc40ba9677ca8d99bcd02a/";
 
-  private static String getServerByBuildFLAVOR(){
-    switch (BuildConfig.FLAVOR){
+  public static String getServerByBuildFLAVOR(String flavor) {
+    String host = "";
+    switch (flavor) {
       case "SIT":
-        return Constants.ServerDebug;
+        host = Constants.ServerDebug;
+        break;
       case "UAT":
-        return Constants.ServerMirror;
+        host = Constants.ServerMirror;
+        break;
+
       case "product":
-        return Constants.Server;
+      default:
+        host = Constants.Server;
+        break;
     }
-    return Constants.Server;
+    Server = host;
+    return host;
   }
 }

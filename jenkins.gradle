@@ -2,5 +2,5 @@ env.PROJECT_NAME="staff"
 env.PROJECT_TYPE="SIT"
 env.BUILD_TYPE="Debug"
 env.UPLOAD_FIR=true
-env.NOTIFY_TOWER=true
+env.NOTIFY_TOWER=false
 //测试修改 bug 通知是否正常

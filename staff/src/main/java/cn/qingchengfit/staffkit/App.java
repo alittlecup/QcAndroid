@@ -59,7 +59,6 @@ import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
-
 /**
  * power by
  * <p/>
@@ -217,8 +216,8 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     appCompoent = DaggerAppComponent.builder()
         .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
             new GymWrapper.Builder().build(), new BaseRouter(),
-            new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),
-            new QCDbManagerImpl(this)))
+            new QcRestRepository(this, Configs.getServerByBuildFLAVOR(BuildConfig.FLAVOR),
+                getString(R.string.oem_tag)), new QCDbManagerImpl(this)))
         .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
         .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))
         .realcardModule(new RealcardModule(new RealcardWrapper(null)))
