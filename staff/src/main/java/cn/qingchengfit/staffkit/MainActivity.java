@@ -135,12 +135,12 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   String[] tags = new String[] { "gyms", "find", "msg", "setting", "ali" };
   private int[] mIconSelect = {
       R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active,
-      R.drawable.vd_tabbar_none, R.drawable.vd_tabbar_message_active,
+       R.drawable.vd_tabbar_message_active,
       R.drawable.vd_tabbar_mine_active
   };
   private int[] mIconNormal = {
       R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal,
-      R.drawable.vd_tabbar_none, R.drawable.vd_tabbar_message_normal,
+      R.drawable.vd_tabbar_message_normal,
       R.drawable.vd_tabbar_mine_normal
   };
   private boolean isDownloading = false;
@@ -156,7 +156,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   private Subscription sp;
   private Observable<EventBrandChange> brandChangeOb;
   private Observable<EventInitApp> mBackMainOb;
-  private ImageView aliBtn;
   /**
    * 更新下载进度
    */
@@ -187,7 +186,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     layoutBrands = (FrameLayout) findViewById(R.id.layout_brands);
     tvNotiCount = (TextView) findViewById(R.id.tv_noti_count);
     tvAdText = findViewById(R.id.tv_ad_text);
-    aliBtn = findViewById(R.id.btn_ali);
     findViewById(R.id.layout_brands).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onBgClick();
@@ -202,11 +200,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     askPermission();
     update(false);
     onNewIntent(getIntent());
-    aliBtn.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        tabview.setCurrentItem(2);
-      }
-    });
     tabview.setupTabView(mIconSelect, mIconNormal);
     tabview.setPoint(1);
     String discover_text = PreferenceUtils.getPrefString(this, "discover_text", "");
@@ -348,11 +341,8 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
       case 1:
         return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
       case 2:
-        return QcVipFragment.newInstance((Constants.Server + Configs.URL_ALI_Eleven).replace(
-                "http", "https"),true);
-      case 3:
         return new MainMsgFragment();
-      case 4:
+      case 3:
         return new SettingFragment();
       default:
         return new MainFirstFragment();

@@ -141,8 +141,6 @@ public class Configs {
   public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
   public static String Server = Constants.Server;
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
-  public static String URL_ALI_Eleven =
-      "mobile/activity/enter-ali/?utm_source=staffapp&utm_medium=module&utm_campaign=enterali";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
 
   public static final String WEEX_TEST_PATH =

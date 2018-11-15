@@ -33,15 +33,6 @@
       app:tvn_txt="@array/home_tab"
       />
 
-  <ImageView
-      android:id="@+id/btn_ali"
-      android:layout_width="60dp"
-      android:layout_height="60dp"
-      android:layout_alignParentBottom="true"
-      android:layout_centerInParent="true"
-      android:layout_marginBottom="15dp"
-      android:src="@drawable/btn_ali" />
-
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="50dp"
@@ -77,11 +68,6 @@
           android:textSize="9sp"
           />
     </FrameLayout>
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -114,7 +100,6 @@
       android:id="@+id/layout_brands"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginBottom="@dimen/qc_item_height"
       android:layout_marginTop="?attr/actionBarSize"
       android:alpha="0"
       android:background="@color/halftransparent_grey"

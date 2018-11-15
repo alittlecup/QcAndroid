@@ -61,9 +61,6 @@ public class QcVipFragment extends WebFragment {
       View view = super.onCreateView(inflater, container, savedInstanceState);
       commonToolbar.setVisibility(View.VISIBLE);
       mTitle.setText(getString(R.string.home_tab_special));
-      if (isSingle == true) {
-        mTitle.setText("天猫双11");
-      }
       mToolbar.setNavigationIcon(null);
       if (BuildConfig.DEBUG) {
         mToolbar.getMenu().add("刷新").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
