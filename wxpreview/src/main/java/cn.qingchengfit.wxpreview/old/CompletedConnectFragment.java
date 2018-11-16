@@ -52,8 +52,6 @@ public class CompletedConnectFragment extends BaseFragment {
   Toolbar toolbar;
   TextView toolbarTitile;
 
-  @Inject public CompletedConnectFragment() {
-  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {

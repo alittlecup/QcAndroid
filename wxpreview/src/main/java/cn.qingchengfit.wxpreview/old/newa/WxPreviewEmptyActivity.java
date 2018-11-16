@@ -1,10 +1,8 @@
 package cn.qingchengfit.wxpreview.old.newa;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.wxpreview.R;
 import cn.qingchengfit.wxpreview.old.CompletedConnectFragment;
@@ -13,7 +11,7 @@ import cn.qingchengfit.wxpreview.old.HomePageQrCodeFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 @Trunk(fragments = {
-    ConnectWechatFragment.class, HomePageQrCodeFragment.class
+    ConnectWechatFragment.class, HomePageQrCodeFragment.class,CompletedConnectFragment.class
 }) public class WxPreviewEmptyActivity extends SaasCommonActivity {
   /**
    * to 1-ConnectWechatFragment 2- HomePageQrCodeFragment

@@ -4,25 +4,14 @@ import android.Manifest;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarBean;
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
-import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
@@ -31,34 +20,17 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
-import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.views.fragments.WebFragment;
-import cn.qingchengfit.widgets.CustomSwipeRefreshLayout;
 import cn.qingchengfit.wxpreview.R;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import cn.qingchengfit.wxpreview.old.newa.WebActivityForGuideViewModel;
 import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Trunk;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.smtt.sdk.CookieManager;
-import com.tencent.smtt.sdk.ValueCallback;
-import com.tencent.smtt.sdk.WebView;
-import dagger.android.AndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -79,7 +51,6 @@ import rx.schedulers.Schedulers;
   @Inject IPermissionModel permissionModel;
   @Inject GymWrapper gymWrapper;
   @Inject ViewModelProvider.Factory factory;
-  CompletedConnectFragment completedConnectFragment;
   private String mUrl;
   private String mCopyUrl;
   private boolean mWXSuccess;
@@ -93,7 +64,6 @@ import rx.schedulers.Schedulers;
     findViewById(R.id.btn_config_homepage).setOnClickListener(this::onTabClick);
     findViewById(R.id.btn_poplularize).setOnClickListener(this::onTabClick);
     findViewById(R.id.btn_wx_pm).setOnClickListener(this::onTabClick);
-    initFragment();
     mCopyUrl = getIntent().getStringExtra("copyurl");
     mUrl = getIntent().getStringExtra("url");
     getSupportFragmentManager().beginTransaction()
@@ -110,9 +80,6 @@ import rx.schedulers.Schedulers;
     }
   }
 
-  private void initFragment() {
-    completedConnectFragment = new CompletedConnectFragment();
-  }
 
   private WebActivityForGuideViewModel mViewModel;
 
