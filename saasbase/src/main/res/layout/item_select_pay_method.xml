@@ -27,23 +27,26 @@
       />
   <TextView
       android:id="@+id/tv_ad"
+      android:layout_width="wrap_content"
+      android:layout_height="16dp"
       android:layout_marginLeft="10dp"
-      android:text="天猫双11"
+      android:background="@drawable/bg_fill_red_slide_white"
+      android:gravity="center"
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
+      android:text="推荐"
+      android:textColor="@color/bg_white"
       android:textSize="9sp"
       android:visibility="gone"
-      android:gravity="center"
-      android:background="@drawable/bg_fill_red_slide_white"
-      android:textColor="@color/bg_white"
-      android:layout_width="48dp"
-      android:layout_height="16dp"
+      tools:visibility="visible"
       />
   <ImageView
       android:id="@+id/img_pro"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="5dp"
-      android:visibility="gone"
       android:src="@drawable/ic_pro_green"
+      android:visibility="gone"
       />
 
   <android.support.v4.widget.Space
