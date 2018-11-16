@@ -69,7 +69,7 @@ import rx.schedulers.Schedulers;
     private String phone;
     private String address;
     private String description;
-    private int area;
+    private float area;
     private int gym_type;
 
     public static EditGymFragment newInstance(String id, String model, String name) {
@@ -90,7 +90,7 @@ import rx.schedulers.Schedulers;
         args.putString("phone", coachService.phone);
         args.putString("address", coachService.address);
         args.putInt("gym_type", coachService.gym_type);
-        args.putInt("area", coachService.area);
+        args.putFloat("area", coachService.area);
         args.putString("description",coachService.description);
         EditGymFragment fragment = new EditGymFragment();
         fragment.setArguments(args);
@@ -111,7 +111,7 @@ import rx.schedulers.Schedulers;
             phone = getArguments().getString("phone");
             address = getArguments().getString("address");
             gym_type = getArguments().getInt("gym_type");
-            area = getArguments().getInt("area");
+            area = getArguments().getFloat("area");
             description = getArguments().getString("description");
         }
     }

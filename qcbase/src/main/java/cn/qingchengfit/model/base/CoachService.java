@@ -70,7 +70,7 @@ public class CoachService implements Parcelable{
   @Ignore
   public String description;
   @Ignore
-  public int area;
+  public float area;
 
   private CoachService(Builder builder) {
     setModel(builder.model);
@@ -370,11 +370,11 @@ public class CoachService implements Parcelable{
     this.users_count = users_count;
   }
 
-  public void setArea(int area) {
+  public void setArea(float area) {
     this.area = area;
   }
 
-  public int getArea() {
+  public float getArea() {
     return area;
   }
 
@@ -415,7 +415,7 @@ public class CoachService implements Parcelable{
     private String shop_id;
     private String position;
     private boolean can_trial;
-    private int area;
+    private float area;
     private String description;
     private int gym_type;
 
@@ -522,7 +522,7 @@ public class CoachService implements Parcelable{
       return this;
     }
 
-    public Builder area(int val) {
+    public Builder area(float val) {
       area = val;
       return this;
     }
@@ -572,7 +572,7 @@ public class CoachService implements Parcelable{
     dest.writeDouble(this.gd_lat);
     dest.writeInt(this.gym_type);
     dest.writeString(this.description);
-    dest.writeInt(this.area);
+    dest.writeFloat(this.area);
   }
 
   protected CoachService(Parcel in) {
@@ -601,7 +601,7 @@ public class CoachService implements Parcelable{
     this.gd_lat = in.readDouble();
     this.gym_type = in.readInt();
     this.description = in.readString();
-    this.area = in.readInt();
+    this.area = in.readFloat();
   }
 
   public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {
