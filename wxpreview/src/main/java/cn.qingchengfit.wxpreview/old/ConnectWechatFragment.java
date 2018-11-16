@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.network.QcRestRepository;
@@ -60,6 +60,7 @@ public class ConnectWechatFragment extends BaseFragment {
   Toolbar toolbar;
   TextView toolbarTitile;
   @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
 
   String mWxName;
   @Inject QcRestRepository qcRestRepository;
@@ -108,11 +109,11 @@ public class ConnectWechatFragment extends BaseFragment {
         if(AppUtils.getCurApp(getContext())==0){
           qcDataResponseObservable =
               qcRestRepository.createRxJava1Api(WxPreviewApi.class)
-                  .qcTrainEditShop(loginStatus.staff_id(), body);
+                  .qcTrainEditShop(loginStatus.staff_id(), body,gymWrapper.getParams());
         }else{
           qcDataResponseObservable =
               qcRestRepository.createRxJava1Api(WxPreviewApi.class)
-                  .qcEditShop(loginStatus.staff_id(), body);
+                  .qcEditShop(loginStatus.staff_id(), body,gymWrapper.getParams());
         }
         RxRegiste(qcDataResponseObservable
             .compose(RxHelper.schedulersTransformer())

@@ -21,8 +21,8 @@ public interface WxPreviewApi {
 
 
   @PUT("/api/staffs/{staff_id}/shops/detail/") Observable<QcDataResponse> qcEditShop(
-      @Path("staff_id") String staffId, @Body ArrayMap<String, Object> body);
+      @Path("staff_id") String staffId, @Body ArrayMap<String, Object> body, @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/coaches/{staff_id}/shops/detail/") Observable<QcDataResponse> qcTrainEditShop(
-      @Path("staff_id") String staffId, @Body ArrayMap<String, Object> body);
+      @Path("staff_id") String staffId, @Body ArrayMap<String, Object> body, @QueryMap HashMap<String, Object> params);
 }
