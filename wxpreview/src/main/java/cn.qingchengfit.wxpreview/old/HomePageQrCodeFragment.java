@@ -3,17 +3,16 @@ package cn.qingchengfit.wxpreview.old;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.wxpreview.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -51,8 +50,7 @@ public class HomePageQrCodeFragment extends SaasCommonFragment {
   ImageView imgQrCode;
   TextView tvGymName;
   TextView btnSaveQrcode;
-  @Inject
-  GymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
 
   private SoftReference<Bitmap> mBitmapSoftReference;
 
@@ -62,8 +60,8 @@ public class HomePageQrCodeFragment extends SaasCommonFragment {
     imgQrCode = (ImageView) view.findViewById(R.id.img_qr_code);
     tvGymName = (TextView) view.findViewById(R.id.tv_gym_name);
     btnSaveQrcode = (TextView) view.findViewById(R.id.btn_save_qrcode);
-    if(getArguments()!=null){
-      mUrl=getArguments().getString("mUrl");
+    if (getArguments() != null) {
+      mUrl = getArguments().getString("mUrl");
     }
     view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -91,8 +89,6 @@ public class HomePageQrCodeFragment extends SaasCommonFragment {
     return view;
   }
 
-
-
   @Override public String getFragmentName() {
     return HomePageQrCodeFragment.class.getName();
   }
@@ -102,9 +98,11 @@ public class HomePageQrCodeFragment extends SaasCommonFragment {
     if (i == R.id.btn_close) {
       getActivity().onBackPressed();
     } else if (i == R.id.btn_save_qrcode) {
-      MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
+      String imgPath = MediaStore.Images.Media.insertImage(getContext().getContentResolver(),
           mBitmapSoftReference.get(), gymWrapper.name(), "微信二维码");
-
+      if (!TextUtils.isEmpty(imgPath)) {
+        ToastUtils.show("保存成功");
+      }
     } else if (i == R.id.root_view) {
       getActivity().onBackPressed();
     }
