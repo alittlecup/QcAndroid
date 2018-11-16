@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.qingcheng.fit.gym">
+
+  <application>
+    <activity android:name="cn.qingcheng.gym.GymActivity">
+    </activity>
+  </application>
+
+</manifest>
