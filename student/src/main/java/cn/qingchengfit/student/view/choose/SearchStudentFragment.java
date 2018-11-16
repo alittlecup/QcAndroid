@@ -8,19 +8,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saascommon.item.StudentItem;
-import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.view.detail.StudentDetailWithCardPage;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Test;
 
 @Leaf(module = "student", path = "/search/student/") public class SearchStudentFragment
     extends ChooseAndSearchStudentFragment {
@@ -84,6 +80,13 @@ import junit.framework.Test;
       Bundle savedInstanceState) {
     chooseStudentListFragment.changeOrderType(1);
     chooseStudentListFragment.setAlphabetViewVisible(false);
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    if(chooseStudentListFragment!=null){
+      chooseStudentListFragment.setAlphabetViewVisible(false);
+    }
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
