@@ -483,6 +483,9 @@
         public <init>(android.content.Context, android.util.AttributeSet, int);
         public void set*(...);
     }
+     -keep public class * extends android.widget.ScrollView {
+            *;
+        }
 
     #保持 native 方法不被混淆
     -keepclasseswithmembernames class * {
