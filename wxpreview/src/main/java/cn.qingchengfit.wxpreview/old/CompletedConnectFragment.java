@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
@@ -46,6 +46,7 @@ public class CompletedConnectFragment extends BaseFragment {
 
   public String mCopyUrl;
   @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
   @Inject QcRestRepository restRepository;
 
   Toolbar toolbar;
@@ -96,7 +97,7 @@ public class CompletedConnectFragment extends BaseFragment {
       body.put("weixin_success", true);
       showLoading();
       RxRegiste(restRepository.createRxJava1Api(WxPreviewApi.class)
-          .qcEditShop(loginStatus.staff_id(), body)
+          .qcEditShop(loginStatus.staff_id(), body,gymWrapper.getParams())
           .compose(RxHelper.schedulersTransformer())
           .subscribe(qcResponse -> {
             hideLoading();
