@@ -30,5 +30,7 @@ public class HomeDetailGym extends CoachService {
     public boolean has_first_month_favorable;
     public RenewalPay first_month_favorable_info;
     @SerializedName("mini_program") public MiniProgram miniProgram;
-
+    public String weixin_image;
+    public boolean weixin_success;
+    public String weixin;
 }

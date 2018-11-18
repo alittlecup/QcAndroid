@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
@@ -40,18 +39,21 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.MiniProgram;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Banner;
-import cn.qingchengfit.router.qc.QcRouteUtil;
-import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.GymFuntion;
+import cn.qingchengfit.model.responese.HomeDetailGym;
 import cn.qingchengfit.model.responese.HomeStatement;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.events.EventChartTitle;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.saascommon.views.CommonDialog;
+import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -71,7 +73,6 @@ import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
 import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
-import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
@@ -92,9 +93,7 @@ import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.wxpreview.old.ConnectWechatFragment;
 import cn.qingchengfit.wxpreview.old.GymPoplularize;
-import cn.qingchengfit.wxpreview.old.HomePageQrCodeFragment;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
@@ -322,15 +321,20 @@ public class GymDetailFragment extends BaseFragment
     gymDetailPresenter.updatePermission();
   }
 
+  public String weixin_image = "";
+  public boolean weixin_success = false;
+  public String weixin = "";
+
   private void onExportClick() {
     GymPoplularize gymPoplularize =
-        GymPoplularize.newInstance(gymWrapper.name(), "", gymWrapper.photo(), mCopyUrl, false);
+        GymPoplularize.newInstance(gymWrapper.name(), "", gymWrapper.photo(), mCopyUrl,
+            weixin_success);
     gymPoplularize.setOnListItemClickListener(new GymPoplularize.GymPoplularizeListener() {
       @Override public void onBtnToWechatPublicClicked(GymPoplularize dialog) {
         dialog.dismiss();
         Bundle bundle = new Bundle();
-        bundle.putString("wxQr", "");
-        bundle.putString("wxName", "");
+        bundle.putString("wxQr", weixin_image);
+        bundle.putString("wxName", weixin);
         Intent intent = new Intent(getContext(), WxPreviewEmptyActivity.class);
         intent.putExtras(bundle);
         intent.putExtra("to", 1);
@@ -654,7 +658,11 @@ public class GymDetailFragment extends BaseFragment
             DateUtils.Date2YYYYMMDD(new Date()));
       }
     }
-
+    if (coachService instanceof HomeDetailGym) {
+      weixin = ((HomeDetailGym) coachService).weixin;
+      weixin_image = ((HomeDetailGym) coachService).weixin_image;
+      weixin_success = ((HomeDetailGym) coachService).weixin_success;
+    }
     gymName.setText(gym.getName());
     Glide.with(getContext())
         .load(PhotoUtils.getSmall(gym.getPhoto()))

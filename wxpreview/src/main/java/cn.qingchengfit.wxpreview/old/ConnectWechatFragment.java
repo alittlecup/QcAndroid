@@ -136,6 +136,9 @@ public class ConnectWechatFragment extends BaseFragment {
       }
     });
     civWechatName.setContent(mWxName);
+    if(!TextUtils.isEmpty(mWxQr)){
+      mUpImg=mWxQr;
+    }
     Glide.with(getContext())
         .load(mWxQr)
         .placeholder(R.drawable.ic_photo_camera_white_24dp)
