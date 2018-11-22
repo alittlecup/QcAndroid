@@ -100,7 +100,8 @@ public class QRScanActivity extends SaasCommonActivity
     if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
     Intent intent = new Intent();
     intent.putExtra("content", text);
-    setResult(Activity.RESULT_OK,intent );
+    setResult(Activity.RESULT_OK,intent);
+    finish();
   }
 
   @Override public void cameraNotFound() {

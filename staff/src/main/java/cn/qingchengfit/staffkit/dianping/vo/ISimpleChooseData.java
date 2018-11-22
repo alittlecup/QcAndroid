@@ -1,6 +1,8 @@
 package cn.qingchengfit.staffkit.dianping.vo;
 
-public interface ISimpleChooseData {
+import android.os.Parcelable;
+
+public interface ISimpleChooseData extends Parcelable {
   String getSign();
 
   String getText();

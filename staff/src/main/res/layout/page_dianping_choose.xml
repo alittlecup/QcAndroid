@@ -17,33 +17,36 @@
         android:id="@+id/include_toolbar"
         bind:toolbarModel="@{toolbarModel}"
         />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_white"
-        />
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/bg_white"
+        android:layout_height="match_parent"
         >
-      <Button
-          android:id="@+id/btn_confirm"
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_view"
           android:layout_width="match_parent"
-          android:layout_height="45dp"
-          android:layout_marginLeft="20dp"
-          android:layout_marginRight="20dp"
-          android:layout_marginTop="7dp"
-          android:text="确定"
-          android:textSize="17sp"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="60dp"
+          android:background="@color/bg_white"
           />
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:layout_gravity="bottom"
+          android:background="@color/bg_white"
+          >
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="7dp"
+            android:text="确定"
+            android:textSize="17sp"
+            />
+      </FrameLayout>
     </FrameLayout>
 
   </LinearLayout>

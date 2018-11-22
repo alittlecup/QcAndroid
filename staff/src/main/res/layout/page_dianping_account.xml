@@ -57,6 +57,7 @@
         android:background="@color/bg_white"
         app:civ_clickable="false"
         app:civ_edit_able="true"
+        app:civ_inputnum="true"
         app:civ_lable="联系方式"
         app:civ_showdivier="true"
         app:civ_showright="false"

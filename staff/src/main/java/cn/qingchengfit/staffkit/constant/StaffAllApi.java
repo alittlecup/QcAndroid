@@ -164,6 +164,7 @@ import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
 import cn.qingchengfit.staffkit.dianping.vo.DianPingShop;
 import cn.qingchengfit.staffkit.dianping.vo.DianPingShopContainer;
 import cn.qingchengfit.staffkit.dianping.vo.GymFacilitiesList;
+import cn.qingchengfit.staffkit.dianping.vo.GymTags;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
@@ -179,7 +180,6 @@ import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
 import cn.qingchengfit.writeoff.vo.impl.SimpleSuccessResponse;
-import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1775,21 +1775,20 @@ public interface StaffAllApi {
   //------------------------新增场馆相关接口------------------//
 
   @GET("/api/v2/staffs/{staff_id}/gym/")
-  Flowable<QcDataResponse<DianPingShopContainer>> qcGetGymInfo(@Path("staff_id") String id,
+  rx.Observable<QcDataResponse<DianPingShopContainer>> qcGetGymInfo(@Path("staff_id") String id,
       @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/v2/staffs/{staff_id}/gym/")
-  Flowable<QcDataResponse<DianPingShopContainer>> qcPutGymInfo(@Path("staff_id") String id,
+  rx.Observable<QcDataResponse<DianPingShopContainer>> qcPutGymInfo(@Path("staff_id") String id,
       @Body DianPingShop body, @QueryMap HashMap<String, Object> params);
 
   @GET("/api/v2/staffs/{staff_id}/gym/all/services/?show_all=1")
-  Flowable<QcDataResponse<GymFacilitiesList>> qcGetGymFacilities(@Path("staff_id") String id,
+  rx.Observable<QcDataResponse<GymFacilitiesList>> qcGetGymFacilities(@Path("staff_id") String id,
       @QueryMap HashMap<String, Object> params);
 
-  @GET("/api/tags/?is_gym=1") Flowable<QcDataResponse<GymFacilitiesList>> qcGetGymTags(
-      @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
+  @GET("/api/tags/?is_gym=1") rx.Observable<QcDataResponse<GymTags>> qcGetGymTags();
 
   @POST("/api/partner/meituan/gyms/{gym_id}/link/")
-  Flowable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(@Path("gym_id") String id,
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(@Path("gym_id") String id,
       @Body Map<String, Object> params);
 }

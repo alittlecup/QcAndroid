@@ -31,6 +31,8 @@ import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.staff.routers.StaffRouterCenter;
+import cn.qingchengfit.staff.routers.dianpingImpl;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.R;
@@ -81,8 +83,8 @@ import java.util.List;
   }
 
   public AppModel(App app, SerPermissionImpl serPermission, LoginStatus loginStatus,
-      GymWrapper gymWrapper, BaseRouter router,
-      QcRestRepository qcrestRepository, QcDbManager qcDbManager) {
+      GymWrapper gymWrapper, BaseRouter router, QcRestRepository qcrestRepository,
+      QcDbManager qcDbManager) {
     this.app = app;
     this.serPermission = serPermission;
     this.loginStatus = loginStatus;
@@ -94,7 +96,7 @@ import java.util.List;
     exportModel = new ExportModel(qcrestRepository, gymWrapper, loginStatus);
     courseModel = new CourseModel(qcrestRepository, gymWrapper, loginStatus);
     gymConfigModel = new GymConfigModel(gymWrapper, loginStatus, qcrestRepository);
-    loginModel = new LoginModel(gymWrapper, loginStatus, qcrestRepository,qcDbManager);
+    loginModel = new LoginModel(gymWrapper, loginStatus, qcrestRepository, qcDbManager);
     userModel = new UserModel(gymWrapper, loginStatus, qcrestRepository);
     api = WXAPIFactory.createWXAPI(app, app.getString(R.string.wechat_code));
     this.saasbaseRouterCenter = new SaasbaseRouterCenter().registe(new exportImpl())
@@ -131,7 +133,6 @@ import java.util.List;
   @Provides Application provideApplication() {
     return app;
   }
-
 
   @Provides QCDbManagerImpl provoideQcDbManager() {
     return new QCDbManagerImpl(app);
@@ -177,12 +178,13 @@ import java.util.List;
     return courseModel;
   }
 
-
   @Provides static StudentRouterCenter provideStudentRouterCenter() {
     return new StudentRouterCenter().registe(new studentImpl());
   }
 
-
+  @Provides static StaffRouterCenter provideStaffRouterCenter() {
+    return new StaffRouterCenter().registe(new dianpingImpl());
+  }
 
   @Provides public IPermissionModel providePermissModel() {
     return new IPermissionModel() {
@@ -207,11 +209,12 @@ import java.util.List;
   @Provides IStudentModel provideStudent() {
     return new StudentModel(qcrestRepository, gymWrapper, loginStatus);
   }
-  @Provides IExportModel provideExportModel(){
+
+  @Provides IExportModel provideExportModel() {
     return exportModel;
   }
 
-  @Provides ICardModel provideCardmodel(){
+  @Provides ICardModel provideCardmodel() {
     return cardModel;
   }
 }

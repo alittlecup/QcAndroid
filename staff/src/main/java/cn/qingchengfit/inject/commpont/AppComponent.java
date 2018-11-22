@@ -59,6 +59,7 @@ import cn.qingchengfit.staffkit.allocate.coach.fragment.AddStudentFragment;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.AllocateCoachListFragment;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.CoachStudentDetailFragment;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.OperationStudentFragment;
+import cn.qingchengfit.staffkit.dianping.DianPingModule;
 import cn.qingchengfit.staffkit.train.SignUpChooseActivity;
 import cn.qingchengfit.staffkit.train.SignUpDetailActivity;
 import cn.qingchengfit.staffkit.train.fragment.CreateGroupFragment;
@@ -313,7 +314,7 @@ import javax.inject.Singleton;
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,
-    WxPreviewModule.class,WriteOffViewModule.class,
+    WxPreviewModule.class,WriteOffViewModule.class, DianPingModule.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,

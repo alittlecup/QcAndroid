@@ -27,7 +27,7 @@ import javax.inject.Inject;
   public void loadGymInfo() {
     staffRespository.getStaffAllApi()
         .qcGetGymInfo(loginStatus.staff_id(), gymWrapper.getParams())
-        .compose(RxHelper.schedulersTransformerFlow())
+        .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (response.status == 200) {
             gymInfo.setValue(response.getData().shop);
@@ -41,10 +41,10 @@ import javax.inject.Inject;
     if (checkGymInfo(gym)) {
       staffRespository.getStaffAllApi()
           .qcPutGymInfo(loginStatus.staff_id(), gym, gymWrapper.getParams())
-          .compose(RxHelper.schedulersTransformerFlow())
+          .compose(RxHelper.schedulersTransformer())
           .subscribe(response -> {
             if (response.status == 200) {
-              postDianPingAccount(gym.getId(), barCode);
+              postDianPingAccount(String.valueOf(gym.getId()), barCode);
             } else {
               ToastUtils.show(response.getMsg());
               dianPingAccountResult.setValue(false);
@@ -56,13 +56,13 @@ import javax.inject.Inject;
     }
   }
 
-  private void postDianPingAccount(String gymId, String barCode) {
+  public void postDianPingAccount(String gymId, String barCode) {
     Map<String, Object> params = new HashMap<>(2);
     params.put("gym_id", gymId);
     params.put("qrcode", barCode);
     staffRespository.getStaffAllApi()
         .qcPostDianPingAccount(gymId, params)
-        .compose(RxHelper.schedulersTransformerFlow())
+        .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (response.status == 200) {
             dianPingAccountResult.setValue(true);

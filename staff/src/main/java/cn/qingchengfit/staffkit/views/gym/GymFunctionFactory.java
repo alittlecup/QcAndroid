@@ -10,21 +10,19 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymFuntion;
-import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
-import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -579,9 +577,10 @@ public class GymFunctionFactory {
 
         return;
       case MODULE_MARKET_DIANPING:
-        WebActivity.startWeb(Configs.Server
-                + "activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
-            fragment.getContext());
+        //WebActivity.startWeb(Configs.Server
+        //        + "activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
+        //    fragment.getContext());
+        fragment.routeTo("dianping", "/dianping/scan", null);
         return;
       case MODULE_OPERATE_SCORE:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),

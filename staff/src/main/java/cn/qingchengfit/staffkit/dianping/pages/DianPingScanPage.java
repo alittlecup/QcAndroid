@@ -15,10 +15,12 @@ import cn.qingchengfit.saascommon.qrcode.views.QRScanActivity;
 import cn.qingchengfit.staffkit.databinding.PageDianpingAccountBinding;
 import cn.qingchengfit.staffkit.databinding.PageDianpingScanBinding;
 import cn.qingchengfit.utils.ToastUtils;
+import com.anbillon.flabellum.annotations.Leaf;
 import lib_zxing.activity.CaptureActivity;
 import lib_zxing.activity.CodeUtils;
 
-public class DianPingScanPage extends SaasCommonFragment {
+@Leaf(module = "dianping", path = "/dianping/scan") public class DianPingScanPage
+    extends SaasCommonFragment {
   PageDianpingScanBinding mBinding;
 
   @Nullable @Override
@@ -45,7 +47,7 @@ public class DianPingScanPage extends SaasCommonFragment {
   }
 
   private void routeToEditGymInfoPage(String code) {
-    routeTo("/dianping/account", );
+    routeTo("/dianping/account", new DianPingAccountPageParams().barCode(code).build());
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

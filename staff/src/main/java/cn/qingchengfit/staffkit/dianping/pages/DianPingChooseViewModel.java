@@ -25,7 +25,7 @@ import javax.inject.Inject;
   public void loadGymFacilities() {
     respository.getStaffAllApi()
         .qcGetGymFacilities(loginStatus.staff_id(), gymWrapper.getParams())
-        .compose(RxHelper.schedulersTransformerFlow())
+        .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (response.status == 200) {
             chooseDatas.setValue(new ArrayList<>(response.getData().shop_services));
@@ -35,11 +35,11 @@ import javax.inject.Inject;
 
   public void loadGymTags() {
     respository.getStaffAllApi()
-        .qcGetGymTags(loginStatus.staff_id(), gymWrapper.getParams())
-        .compose(RxHelper.schedulersTransformerFlow())
+        .qcGetGymTags()
+        .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (response.status == 200) {
-            //chooseDatas.setValue();
+            chooseDatas.setValue(new ArrayList<>(response.getData().tags));
           } else {
             ToastUtils.show(response.getMsg());
           }

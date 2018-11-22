@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.dianping.pages;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.staff.routers.StaffParamsInjector;
 import cn.qingchengfit.staffkit.databinding.PageDianpingChooseBinding;
 import cn.qingchengfit.staffkit.dianping.item.SimpleChooseDataItem;
 import cn.qingchengfit.staffkit.dianping.vo.DianPingChooseDataEvent;
@@ -16,13 +18,14 @@ import cn.qingchengfit.staffkit.dianping.vo.DianPingChooseType;
 import cn.qingchengfit.staffkit.dianping.vo.ISimpleChooseData;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.utils.ToastUtils;
+import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.google.android.flexbox.FlexboxItemDecoration;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DianPingChoosePage
+@Leaf(module = "dianping", path = "/dianping/choose") public class DianPingChoosePage
     extends SaasBindingFragment<PageDianpingChooseBinding, DianPingChooseViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
@@ -45,6 +48,11 @@ public class DianPingChoosePage
         adapter.updateDataSet(items);
       }
     });
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    StaffParamsInjector.inject(this);
+    super.onCreate(savedInstanceState);
   }
 
   @Override
@@ -77,6 +85,11 @@ public class DianPingChoosePage
     mBinding.setToolbarModel(
         new ToolbarModel(type == DianPingChooseType.CHOOSE_TAGS ? "选择场馆标签" : "选择场馆设施"));
     initToolbar(mBinding.includeToolbar.toolbar);
+    if (type == DianPingChooseType.CHOOSE_TAGS) {
+      mViewModel.loadGymTags();
+    } else {
+      mViewModel.loadGymFacilities();
+    }
   }
 
   private void initRecyclerView() {
@@ -85,7 +98,9 @@ public class DianPingChoosePage
   }
 
   @Override public boolean onItemClick(int position) {
-    if (type == DianPingChooseType.CHOOSE_TAGS && adapter.getSelectedItemCount() >= 5&&!adapter.isSelected(position)) {
+    if (type == DianPingChooseType.CHOOSE_TAGS
+        && adapter.getSelectedItemCount() >= 5
+        && !adapter.isSelected(position)) {
       ToastUtils.show("最多可选五项");
       return false;
     }
