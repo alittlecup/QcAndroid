@@ -1,5 +1,6 @@
 package cn.qingchengfit.writeoff.view.verify;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -93,7 +94,7 @@ import lib_zxing.activity.CodeUtils;
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == 1001) {
+    if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
       //处理扫描结果（在界面上显示）
       if (null != data) {
         Bundle bundle = data.getExtras();

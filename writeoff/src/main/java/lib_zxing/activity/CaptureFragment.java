@@ -1,15 +1,11 @@
 package lib_zxing.activity;
 
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,11 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.writeoff.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import java.io.IOException;
 import java.util.Vector;
 import lib_zxing.camera.CameraManager;
 import lib_zxing.decoding.CaptureActivityHandler;
@@ -96,13 +90,6 @@ public class CaptureFragment extends SaasCommonFragment implements SurfaceHolder
     }
     decodeFormats = null;
     characterSet = null;
-
-    //playBeep = true;
-    //AudioManager audioService = (AudioManager) getActivity().getSystemService(getActivity().AUDIO_SERVICE);
-    //if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
-    //    playBeep = false;
-    //}
-    //initBeepSound();
     vibrate = true;
   }
 

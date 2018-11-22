@@ -1,20 +1,18 @@
 package cn.qingchengfit.saascommon.qrcode.views;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
-import cn.qingchengfit.saascommon.filter.model.Content;
 import cn.qingchengfit.utils.ToastUtils;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -100,7 +98,9 @@ public class QRScanActivity extends SaasCommonActivity
 
   @Override public void onQRCodeRead(String text, PointF[] points) {
     if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
-    Log.d("TAG", "onQRCodeRead: " + text);
+    Intent intent = new Intent();
+    intent.putExtra("content", text);
+    setResult(Activity.RESULT_OK,intent );
   }
 
   @Override public void cameraNotFound() {
