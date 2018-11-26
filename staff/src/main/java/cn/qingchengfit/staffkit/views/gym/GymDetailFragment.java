@@ -54,6 +54,7 @@ import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.qrcode.views.QRScanActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.saascommon.views.CommonDialog;
+import cn.qingchengfit.saascommon.views.CommonSimpleTextActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
@@ -63,6 +64,7 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
+import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountPageParams;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
@@ -505,9 +507,16 @@ public class GymDetailFragment extends BaseFragment
         if (null != data) {
           String content = data.getStringExtra("content");
           if (!TextUtils.isEmpty(content)) {
-
-          } else {
-
+            if (content.startsWith("DIANPING-QINGCHENG-SHOPMAPPING")) {
+              routeTo("dianping", "/dianping/account",
+                  new DianPingAccountPageParams().barCode(content).build());
+            } else if (content.startsWith("http")) {
+              WebActivity.startWeb(content, getContext());
+            } else {
+              Intent intent = new Intent(getActivity(), CommonSimpleTextActivity.class);
+              intent.putExtra("content", content);
+              startActivity(intent);
+            }
           }
         }
       }

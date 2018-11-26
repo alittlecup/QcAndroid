@@ -580,7 +580,11 @@ public class GymFunctionFactory {
         //WebActivity.startWeb(Configs.Server
         //        + "activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
         //    fragment.getContext());
-        fragment.routeTo("dianping", "/dianping/scan", null);
+        if(coachService.meituan_status==0){
+          fragment.routeTo("dianping", "/dianping/scan", null);
+        }else{
+          fragment.routeTo("dianping","/dianping/success",null);
+        }
         return;
       case MODULE_OPERATE_SCORE:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),

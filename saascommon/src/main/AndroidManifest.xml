@@ -6,6 +6,7 @@
     <activity android:name=".qrcode.views.QRActivity">
     </activity>
     <activity android:name=".qrcode.views.QRScanActivity"/>
+    <activity android:name=".views.CommonSimpleTextActivity"/>
   </application>
 
 </manifest>

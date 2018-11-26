@@ -71,6 +71,10 @@ public class CoachService implements Parcelable{
   public String description;
   @Ignore
   public float area;
+  @Ignore
+  public int meituan_status;
+
+
 
   private CoachService(Builder builder) {
     setModel(builder.model);

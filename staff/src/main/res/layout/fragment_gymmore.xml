@@ -44,6 +44,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="15dp"
           android:text="离职退出该场馆"
+          android:layout_marginBottom="40dp"
           style="@style/QcBtnPrimaryDanger"
           />
     </LinearLayout>

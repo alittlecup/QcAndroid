@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="已扫描到一下内容"
+        android:textColor="@color/text_black"
+        android:textSize="15sp"
+        />
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_grey_slide"
+        android:padding="10dp"
+        android:textColor="@color/text_black"
+        android:textSize="17sp"
+        android:textIsSelectable="true"
+        tools:text="这里是扫码显示的内容区域"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="扫描所得内容并非青橙提供，请请谨慎使用\n\n如需使用，可通过复制操作获取内容"
+        android:textColor="@color/text_grey"
+        android:textSize="14sp"
+        />
+
+  </LinearLayout>
+</layout>

@@ -59,10 +59,10 @@ import lib_zxing.activity.CodeUtils;
           if (content.startsWith("DIANPING-QINGCHENG-SHOPMAPPING")) {
             routeToEditGymInfoPage(content);
           } else {
-            ToastUtils.show("不是点评管家授权二维码");
+            routeTo("/dianping/error", null);
           }
         } else {
-          ToastUtils.show("不是点评管家授权二维码");
+          routeTo("/dianping/error", null);
         }
       }
     }
