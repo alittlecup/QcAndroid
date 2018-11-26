@@ -4,6 +4,8 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,23 +50,30 @@ import rx.functions.Action1;
         routeTo("/dianping/success", null);
       }
     });
+    mViewModel.tags.observe(this, this::updateGymTags);
+    mViewModel.facilities.observe(this, this::updateGymFacilities);
+    mViewModel.address.observe(this, address -> {
+      mBinding.civGymLocation.setContent(address);
+    });
   }
 
   @Override
   public PageDianpingAccountBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    mBinding = PageDianpingAccountBinding.inflate(inflater, container, false);
-    mBinding.setToolbarModel(new ToolbarModel("完善信息"));
-    initToolbar(mBinding.includeToolbar.toolbar);
-    mViewModel.loadGymInfo();
-    initRxbus();
-    initListener();
-    initView();
+    if (mBinding == null) {
+      mBinding = PageDianpingAccountBinding.inflate(inflater, container, false);
+      mBinding.setToolbarModel(new ToolbarModel("完善信息"));
+      initToolbar(mBinding.includeToolbar.toolbar);
+      mViewModel.loadGymInfo();
+      initView();
+      initListener();
+      initRxbus();
+    }
     return mBinding;
   }
 
   private void initView() {
-    if (permissionModel.check(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)) {
+    if (!permissionModel.check(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)) {
       mBinding.civGymName.setEnable(false);
       mBinding.civGymLocation.setEnable(false);
       mBinding.civGymPhone.setEnable(false);
@@ -106,6 +115,21 @@ import rx.functions.Action1;
         btnConfirm();
       }
     });
+    mBinding.civGymName.addTextWatcher(new SimpleTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        mViewModel.gymInfo.getValue().setName(s.toString());
+      }
+    });
+    mBinding.civGymPhone.addTextWatcher(new SimpleTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        mViewModel.gymInfo.getValue().setPhone(s.toString());
+      }
+    });
+    mBinding.civGymArea.addTextWatcher(new SimpleTextWatcher() {
+      @Override public void afterTextChanged(Editable s) {
+        mViewModel.gymInfo.getValue().setArea(Float.valueOf(s.toString()));
+      }
+    });
   }
 
   public void onAddressClicked() {
@@ -128,14 +152,14 @@ import rx.functions.Action1;
   }
 
   private void initRxbus() {
-    RxRegiste(RxBus.getBus().register(DianPingChooseDataEvent.class).subscribe(event -> {
+    RxBus.getBus().register(DianPingChooseDataEvent.class).subscribe(event -> {
       if (event.getType() == DianPingChooseType.CHOOSE_TAGS) {
-        updateGymTags(event.getDatas());
+        mViewModel.tags.setValue(event.getDatas());
       } else if (event.getType() == DianPingChooseType.CHOOSE_FACILITY) {
-        updateGymFacilities(event.getDatas());
+        mViewModel.facilities.setValue(event.getDatas());
       }
-    }));
-    RxBusAdd(EventAddress.class).subscribe(new Action1<EventAddress>() {
+    });
+    RxBus.getBus().register(EventAddress.class).subscribe(new Action1<EventAddress>() {
       @Override public void call(EventAddress eventAddress) {
         mViewModel.gymInfo.getValue().setAddress(eventAddress.address);
         mViewModel.gymInfo.getValue().setGd_lat(eventAddress.lat);
@@ -144,7 +168,7 @@ import rx.functions.Action1;
         gdCityBean.setCode(String.valueOf(eventAddress.city_code));
         gdCityBean.setCode(eventAddress.city);
         mViewModel.gymInfo.getValue().setGd_city(gdCityBean);
-        mBinding.civGymLocation.setContent(eventAddress.address);
+        mViewModel.address.setValue(eventAddress.address);
       }
     });
   }
@@ -195,10 +219,25 @@ import rx.functions.Action1;
                 mViewModel.putGymInfo(mViewModel.gymInfo.getValue(), barCode);
               } else {
                 mViewModel.postDianPingAccount(
-                    String.valueOf(mViewModel.gymInfo.getValue().getId()), barCode);
+                    String.valueOf(mViewModel.gymInfo.getValue().getGym_id()), barCode);
               }
             }
           }
         });
+  }
+
+  class SimpleTextWatcher implements TextWatcher {
+
+    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override public void afterTextChanged(Editable s) {
+
+    }
   }
 }

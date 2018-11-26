@@ -83,7 +83,7 @@
         app:civ_hint="最多可选5项"
         app:civ_lable="营业面积（平方米）"
         app:civ_showdivier="true"
-        app:civ_showright="true"
+        app:civ_showright="false"
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/civ_gym_facility"

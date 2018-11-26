@@ -161,7 +161,6 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
-import cn.qingchengfit.staffkit.dianping.vo.DianPingShop;
 import cn.qingchengfit.staffkit.dianping.vo.DianPingShopContainer;
 import cn.qingchengfit.staffkit.dianping.vo.GymFacilitiesList;
 import cn.qingchengfit.staffkit.dianping.vo.GymTags;
@@ -1780,7 +1779,7 @@ public interface StaffAllApi {
 
   @PUT("/api/v2/staffs/{staff_id}/gym/")
   rx.Observable<QcDataResponse<DianPingShopContainer>> qcPutGymInfo(@Path("staff_id") String id,
-      @Body DianPingShop body, @QueryMap HashMap<String, Object> params);
+      @Body Map<String,Object> body, @QueryMap HashMap<String, Object> params);
 
   @GET("/api/v2/staffs/{staff_id}/gym/all/services/?show_all=1")
   rx.Observable<QcDataResponse<GymFacilitiesList>> qcGetGymFacilities(@Path("staff_id") String id,

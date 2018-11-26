@@ -10,9 +10,9 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
-import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.ToastUtils;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -59,8 +59,27 @@ public class GymMorePresenter extends BasePresenter {
             .subscribe(strings -> view.onModule(strings),
               throwable -> LogUtil.e(throwable.getMessage())));
     }
+    public void queiteGym(){
+        RxRegiste(restRepository.getStaffAllApi()
+            .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcResponse>() {
+                @Override public void call(QcResponse qcResponse) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        view.onQuiteGym();
+                    } else {
+                        ToastUtils.show(qcResponse.getMsg());
+                    }
+                }
+            }, throwable -> ToastUtils.show(throwable.getMessage()))
+
+        );
+    }
 
     public interface MVPView extends CView {
         void onModule(List<String> modules);
+        void onQuiteGym();
     }
 }

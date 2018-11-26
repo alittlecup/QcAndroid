@@ -303,7 +303,7 @@ public class DianPingShop {
   }
 
   public String getTagsString() {
-    if (shop_services == null || shop_services.isEmpty()) {
+    if (tags == null || tags.isEmpty()) {
       return "";
     }
     StringBuilder stringBuilder = new StringBuilder();
