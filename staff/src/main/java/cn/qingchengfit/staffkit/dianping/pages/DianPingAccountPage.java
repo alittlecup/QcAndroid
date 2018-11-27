@@ -66,7 +66,6 @@ import rx.functions.Action1;
       initToolbar(mBinding.includeToolbar.toolbar);
       mViewModel.loadGymInfo();
       initView();
-      initListener();
       initRxbus();
     }
     return mBinding;
@@ -80,6 +79,9 @@ import rx.functions.Action1;
       mBinding.civGymTags.setEnable(false);
       mBinding.civGymArea.setEnable(false);
       mBinding.civGymFacility.setEnable(false);
+    }else{
+      initListener();
+
     }
   }
 
@@ -176,7 +178,7 @@ import rx.functions.Action1;
         mViewModel.gymInfo.getValue().setGd_lng(eventAddress.log);
         DianPingShop.GdCityBean gdCityBean = new DianPingShop.GdCityBean();
         gdCityBean.setCode(String.valueOf(eventAddress.city_code));
-        gdCityBean.setCode(eventAddress.city);
+        gdCityBean.setName(eventAddress.city);
         mViewModel.gymInfo.getValue().setGd_city(gdCityBean);
         mViewModel.address.setValue(eventAddress.address);
       }
