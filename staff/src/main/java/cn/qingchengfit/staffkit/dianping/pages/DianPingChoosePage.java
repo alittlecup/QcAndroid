@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.dianping.pages;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,12 +41,16 @@ import java.util.List;
         List<SimpleChooseDataItem> items = new ArrayList<>();
         for (ISimpleChooseData data : datas) {
           items.add(new SimpleChooseDataItem(data));
-          if (selectedDatas != null && selectedDatas.contains(data)) {
-            adapter.addSelection(items.size() - 1);
+        }
+        adapter.updateDataSet(items);
+        if (selectedDatas != null) {
+          for (int i = 0; i < datas.size(); i++) {
+            if (selectedDatas.contains(datas.get(i))) {
+              adapter.toggleSelection(i);
+            }
           }
         }
-
-        adapter.updateDataSet(items);
+        adapter.notifyDataSetChanged();
       }
     });
   }

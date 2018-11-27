@@ -182,6 +182,7 @@ public class CommonInputView extends RelativeLayout {
     edit.setFocusable(enable);
     edit.setFocusableInTouchMode(enable);
     disableView.setVisibility(enable ? GONE : VISIBLE);
+
   }
 
   public void setLabelColor(@ColorRes int labelColor) {

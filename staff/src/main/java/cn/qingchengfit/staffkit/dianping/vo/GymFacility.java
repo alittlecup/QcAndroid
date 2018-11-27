@@ -36,7 +36,7 @@ public class GymFacility implements ISimpleChooseData, Parcelable {
     if (!(obj instanceof GymFacility)) {
       return false;
     }
-    return ((GymFacility) obj).getSign().equals(getSign());
+    return ((GymFacility) obj).getId() == id;
   }
 
   @Override public int describeContents() {

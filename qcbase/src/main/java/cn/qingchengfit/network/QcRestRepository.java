@@ -57,9 +57,11 @@ public class QcRestRepository {
 
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
     this.host = host;
-    String debug_ip = PreferenceUtils.getPrefString(context, "debug_ip", Constants.ServerDebug);
-    if (!host.equals(debug_ip)) {
-      this.host = debug_ip;
+    if (BuildConfig.DEBUG) {
+      String debug_ip = PreferenceUtils.getPrefString(context, "debug_ip", Constants.ServerDebug);
+      if (!host.equals(debug_ip)) {
+        this.host = debug_ip;
+      }
     }
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
     interceptor.setLevel(

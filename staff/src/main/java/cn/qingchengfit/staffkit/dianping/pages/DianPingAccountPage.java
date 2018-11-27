@@ -96,17 +96,27 @@ import rx.functions.Action1;
     });
     mBinding.civGymFacility.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
+        List<GymFacility> facilities = mViewModel.gymInfo.getValue().getShop_services();
+        ArrayList<ISimpleChooseData> datas = new ArrayList<>();
+        if (facilities != null) {
+          datas.addAll(facilities);
+        }
         routeTo("/dianping/choose",
             new DianPingChoosePageParams().type(DianPingChooseType.CHOOSE_FACILITY)
-                .selectedDatas(new ArrayList<>(mViewModel.gymInfo.getValue().getShop_services()))
+                .selectedDatas(datas)
                 .build());
       }
     });
     mBinding.civGymTags.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
+        List<GymTag> tags = mViewModel.gymInfo.getValue().getTags();
+        ArrayList<ISimpleChooseData> datas = new ArrayList<>();
+        if (tags != null) {
+          datas.addAll(tags);
+        }
         routeTo("/dianping/choose",
             new DianPingChoosePageParams().type(DianPingChooseType.CHOOSE_TAGS)
-                .selectedDatas(new ArrayList<>(mViewModel.gymInfo.getValue().getTags()))
+                .selectedDatas(datas)
                 .build());
       }
     });
@@ -216,10 +226,7 @@ import rx.functions.Action1;
             materialDialog.dismiss();
             if (dialogAction == DialogAction.POSITIVE) {
               if (permissionModel.check(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)) {
-                mViewModel.putGymInfo(mViewModel.gymInfo.getValue(), barCode);
-              } else {
-                mViewModel.postDianPingAccount(
-                    String.valueOf(mViewModel.gymInfo.getValue().getGym_id()), barCode);
+                mViewModel.postDianPingAccount(String.valueOf(mViewModel.gymInfo.getValue().getGym_id()), barCode);
               }
             }
           }

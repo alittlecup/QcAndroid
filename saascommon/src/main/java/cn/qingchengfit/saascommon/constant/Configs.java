@@ -2,8 +2,6 @@ package cn.qingchengfit.saascommon.constant;
 
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.saascommon.BuildConfig;
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * power by
@@ -165,7 +163,6 @@ public class Configs {
       case "UAT":
         host = Constants.ServerMirror;
         break;
-
       case "product":
       default:
         host = Constants.Server;

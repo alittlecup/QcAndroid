@@ -41,6 +41,10 @@ public class GymTag implements Parcelable, ISimpleChooseData {
   public GymTag() {
   }
 
+  @Override public boolean equals(Object obj) {
+    return (obj instanceof GymTag) && ((GymTag) obj).getId() == id;
+  }
+
   protected GymTag(Parcel in) {
     this.id = in.readInt();
     this.name = in.readString();

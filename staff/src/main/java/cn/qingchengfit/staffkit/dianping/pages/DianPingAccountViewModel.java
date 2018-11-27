@@ -46,7 +46,7 @@ import javax.inject.Inject;
         }, throwable -> ToastUtils.show(throwable.getMessage()));
   }
 
-  public void putGymInfo(DianPingShop gym, String barCode) {
+  public void putGymInfo(DianPingShop gym) {
     if (checkGymInfo(gym)) {
       Map<String, Object> bodys = new HashMap<>();
       bodys.putAll(gymWrapper.getParams());
@@ -78,7 +78,30 @@ import javax.inject.Inject;
           .compose(RxHelper.schedulersTransformer())
           .subscribe(response -> {
             if (response.status == 200) {
-              postDianPingAccount(String.valueOf(gym.getGym_id()), barCode);
+              //postDianPingAccount(String.valueOf(gym.getGym_id()), barCode);
+            } else {
+              //ToastUtils.show(response.getMsg());
+              //dianPingAccountResult.setValue(false);
+            }
+          }, throwable -> {
+            //ToastUtils.show(throwable.getMessage());
+            //dianPingAccountResult.setValue(false);
+          });
+    }
+  }
+
+  public void postDianPingAccount(String gymId, String barCode) {
+    if (checkGymInfo(gymInfo.getValue())) {
+      Map<String, Object> params = new HashMap<>();
+      params.put("qrcode", barCode);
+      params.putAll(gymWrapper.getParams());
+      staffRespository.getStaffAllApi()
+          .qcPostDianPingAccount(gymId, params)
+          .compose(RxHelper.schedulersTransformer())
+          .subscribe(response -> {
+            if (response.status == 200) {
+              dianPingAccountResult.setValue(true);
+              putGymInfo(gymInfo.getValue());
             } else {
               ToastUtils.show(response.getMsg());
               dianPingAccountResult.setValue(false);
@@ -90,26 +113,6 @@ import javax.inject.Inject;
     }
   }
 
-  public void postDianPingAccount(String gymId, String barCode) {
-    Map<String, Object> params = new HashMap<>(2);
-    params.put("qrcode", barCode);
-    params.putAll(gymWrapper.getParams());
-    staffRespository.getStaffAllApi()
-        .qcPostDianPingAccount(gymId, params)
-        .compose(RxHelper.schedulersTransformer())
-        .subscribe(response -> {
-          if (response.status == 200) {
-            dianPingAccountResult.setValue(true);
-          } else {
-            ToastUtils.show(response.getMsg());
-            dianPingAccountResult.setValue(false);
-          }
-        }, throwable -> {
-          ToastUtils.show(throwable.getMessage());
-          dianPingAccountResult.setValue(false);
-        });
-  }
-
   private boolean checkGymInfo(DianPingShop gym) {
     if (TextUtils.isEmpty(gym.getName())) {
       ToastUtils.show("请填写场馆名称");
@@ -117,6 +120,10 @@ import javax.inject.Inject;
     }
     if (TextUtils.isEmpty(gym.getPhone())) {
       ToastUtils.show("请填写场馆联系方式");
+      return false;
+    }
+    if (TextUtils.isEmpty(gym.getAddress())) {
+      ToastUtils.show("请填写场馆地址");
       return false;
     }
     return true;
