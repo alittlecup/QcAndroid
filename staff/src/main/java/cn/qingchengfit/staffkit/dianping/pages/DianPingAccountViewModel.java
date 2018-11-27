@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.dianping.pages;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.MutableLiveData;
+import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
@@ -21,9 +22,9 @@ import javax.inject.Inject;
 @SuppressLint("CheckResult") public class DianPingAccountViewModel extends BaseViewModel {
   public final MutableLiveData<DianPingShop> gymInfo = new MutableLiveData<>();
   public final MutableLiveData<Boolean> dianPingAccountResult = new MutableLiveData<>();
-  public final MutableLiveData<List<ISimpleChooseData>> tags=new MutableLiveData<>();
-  public final MutableLiveData<List<ISimpleChooseData>> facilities=new MutableLiveData<>();
-  public final MutableLiveData<String> address=new MutableLiveData<>();
+  public final MutableLiveData<List<ISimpleChooseData>> tags = new MutableLiveData<>();
+  public final MutableLiveData<List<ISimpleChooseData>> facilities = new MutableLiveData<>();
+  public final MutableLiveData<String> address = new MutableLiveData<>();
   @Inject StaffRespository staffRespository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -110,6 +111,14 @@ import javax.inject.Inject;
   }
 
   private boolean checkGymInfo(DianPingShop gym) {
+    if (TextUtils.isEmpty(gym.getName())) {
+      ToastUtils.show("请填写场馆名称");
+      return false;
+    }
+    if (TextUtils.isEmpty(gym.getPhone())) {
+      ToastUtils.show("请填写场馆联系方式");
+      return false;
+    }
     return true;
   }
 }
