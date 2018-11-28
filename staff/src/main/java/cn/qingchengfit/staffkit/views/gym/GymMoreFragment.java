@@ -449,6 +449,9 @@ public class GymMoreFragment extends BaseFragment
   }
 
   @Override public void onDestroyView() {
+    if (bubbleViewUtil != null) {
+      bubbleViewUtil.closeBubble();
+    }
     super.onDestroyView();
   }
 
