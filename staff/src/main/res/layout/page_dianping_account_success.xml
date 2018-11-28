@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
   <data>
     <variable
         name="toolbarModel"
@@ -48,7 +50,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="20dp"
           android:gravity="center"
-          android:text="@string/dianping_account_success"
+          tools:text="@string/dianping_account_success"
           />
 
     </LinearLayout>

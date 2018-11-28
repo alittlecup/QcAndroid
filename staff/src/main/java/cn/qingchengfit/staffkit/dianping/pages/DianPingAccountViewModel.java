@@ -12,6 +12,7 @@ import cn.qingchengfit.staffkit.dianping.vo.DianPingShop;
 import cn.qingchengfit.staffkit.dianping.vo.GymFacility;
 import cn.qingchengfit.staffkit.dianping.vo.GymTag;
 import cn.qingchengfit.staffkit.dianping.vo.ISimpleChooseData;
+import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,29 +92,27 @@ import javax.inject.Inject;
   }
 
   public void postDianPingAccount(String gymId, String barCode) {
-    if (checkGymInfo(gymInfo.getValue())) {
-      Map<String, Object> params = new HashMap<>();
-      params.put("qrcode", barCode);
-      params.putAll(gymWrapper.getParams());
-      staffRespository.getStaffAllApi()
-          .qcPostDianPingAccount(gymId, params)
-          .compose(RxHelper.schedulersTransformer())
-          .subscribe(response -> {
-            if (response.status == 200) {
-              dianPingAccountResult.setValue(true);
-              putGymInfo(gymInfo.getValue());
-            } else {
-              ToastUtils.show(response.getMsg());
-              dianPingAccountResult.setValue(false);
-            }
-          }, throwable -> {
-            ToastUtils.show(throwable.getMessage());
+    Map<String, Object> params = new HashMap<>();
+    params.put("qrcode", barCode);
+    params.putAll(gymWrapper.getParams());
+    staffRespository.getStaffAllApi()
+        .qcPostDianPingAccount(gymId, params)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (response.status == 200) {
+            dianPingAccountResult.setValue(true);
+            putGymInfo(gymInfo.getValue());
+          } else {
+            ToastUtils.show(response.getMsg());
             dianPingAccountResult.setValue(false);
-          });
-    }
+          }
+        }, throwable -> {
+          ToastUtils.show(throwable.getMessage());
+          dianPingAccountResult.setValue(false);
+        });
   }
 
-  private boolean checkGymInfo(DianPingShop gym) {
+  public boolean checkGymInfo(DianPingShop gym) {
     if (TextUtils.isEmpty(gym.getName())) {
       ToastUtils.show("请填写场馆名称");
       return false;
@@ -122,8 +121,16 @@ import javax.inject.Inject;
       ToastUtils.show("请填写场馆联系方式");
       return false;
     }
+    if(!PhoneFuncUtils.isPhoneNum(gym.getPhone())){
+      ToastUtils.show("请填写正确的联系方式");
+      return false;
+    }
     if (TextUtils.isEmpty(gym.getAddress())) {
       ToastUtils.show("请填写场馆地址");
+      return false;
+    }
+    if (gym.getArea() <= 0) {
+      ToastUtils.show("请填写场馆面积");
       return false;
     }
     return true;

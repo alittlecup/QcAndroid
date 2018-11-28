@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,6 @@ import cn.qingchengfit.staffkit.dianping.vo.GymFacility;
 import cn.qingchengfit.staffkit.dianping.vo.GymTag;
 import cn.qingchengfit.staffkit.dianping.vo.ISimpleChooseData;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.PermissionUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import com.afollestad.materialdialogs.DialogAction;
@@ -47,7 +47,9 @@ import rx.functions.Action1;
     mViewModel.gymInfo.observe(this, this::updateGymInfo);
     mViewModel.dianPingAccountResult.observe(this, aBoolean -> {
       if (aBoolean) {
-        routeTo("/dianping/success", null);
+        routeTo("/dianping/success",
+            new DianPingAccountSuccessPageParams().gymName(mViewModel.gymInfo.getValue().getName())
+                .build());
       }
     });
     mViewModel.tags.observe(this, this::updateGymTags);
@@ -79,10 +81,14 @@ import rx.functions.Action1;
       mBinding.civGymTags.setEnable(false);
       mBinding.civGymArea.setEnable(false);
       mBinding.civGymFacility.setEnable(false);
-    }else{
+    } else {
       initListener();
-
     }
+    mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        btnConfirm();
+      }
+    });
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,11 +128,7 @@ import rx.functions.Action1;
                 .build());
       }
     });
-    mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        btnConfirm();
-      }
-    });
+
     mBinding.civGymName.addTextWatcher(new SimpleTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
         mViewModel.gymInfo.getValue().setName(s.toString());
@@ -139,7 +141,8 @@ import rx.functions.Action1;
     });
     mBinding.civGymArea.addTextWatcher(new SimpleTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
-        mViewModel.gymInfo.getValue().setArea(Float.valueOf(s.toString()));
+        mViewModel.gymInfo.getValue()
+            .setArea(Float.valueOf(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
       }
     });
   }
@@ -221,15 +224,23 @@ import rx.functions.Action1;
   }
 
   private void btnConfirm() {
+    if (permissionModel.check(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)) {
+      if (mViewModel.checkGymInfo(mViewModel.gymInfo.getValue())) {
+        showDialog();
+      }
+    } else {
+      showDialog();
+    }
+  }
+
+  private void showDialog() {
     DialogUtils.shwoConfirm(getContext(),
         "确认场馆【" + mViewModel.gymInfo.getValue().getName() + "】成为美团点评认证商家吗？",
         new MaterialDialog.SingleButtonCallback() {
           @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
             materialDialog.dismiss();
             if (dialogAction == DialogAction.POSITIVE) {
-              if (permissionModel.check(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)) {
-                mViewModel.postDianPingAccount(String.valueOf(mViewModel.gymInfo.getValue().getGym_id()), barCode);
-              }
+              mViewModel.postDianPingAccount(String.valueOf(mViewModel.gymInfo.getValue().getGym_id()), barCode);
             }
           }
         });
