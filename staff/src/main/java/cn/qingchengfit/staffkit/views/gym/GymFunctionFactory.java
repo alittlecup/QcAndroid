@@ -19,6 +19,7 @@ import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
+import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountSuccessPageParams;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
@@ -580,10 +581,11 @@ public class GymFunctionFactory {
         //WebActivity.startWeb(Configs.Server
         //        + "activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
         //    fragment.getContext());
-        if(coachService.meituan_status==0){
+        if (coachService.meituan_status == 0) {
           fragment.routeTo("dianping", "/dianping/scan", null);
-        }else{
-          fragment.routeTo("dianping","/dianping/success",null);
+        } else {
+          fragment.routeTo("dianping", "/dianping/success",
+              new DianPingAccountSuccessPageParams().gymName(coachService.getName()).build());
         }
         return;
       case MODULE_OPERATE_SCORE:

@@ -3,8 +3,10 @@ package cn.qingchengfit.staffkit.dianping.pages;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.MutableLiveData;
 import android.text.TextUtils;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
@@ -79,14 +81,9 @@ import javax.inject.Inject;
           .compose(RxHelper.schedulersTransformer())
           .subscribe(response -> {
             if (response.status == 200) {
-              //postDianPingAccount(String.valueOf(gym.getGym_id()), barCode);
-            } else {
-              //ToastUtils.show(response.getMsg());
-              //dianPingAccountResult.setValue(false);
+              RxBus.getBus().post(new EventFreshGyms());
             }
           }, throwable -> {
-            //ToastUtils.show(throwable.getMessage());
-            //dianPingAccountResult.setValue(false);
           });
     }
   }
@@ -121,7 +118,7 @@ import javax.inject.Inject;
       ToastUtils.show("请填写场馆联系方式");
       return false;
     }
-    if(!PhoneFuncUtils.isPhoneNum(gym.getPhone())){
+    if (!PhoneFuncUtils.isPhoneNum(gym.getPhone())) {
       ToastUtils.show("请填写正确的联系方式");
       return false;
     }
