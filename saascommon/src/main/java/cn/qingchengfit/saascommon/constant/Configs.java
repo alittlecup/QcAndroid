@@ -155,7 +155,7 @@ public class Configs {
       "http://cloud.qingchengfit.cn/mobile/urls/34890304d8bc40ba9677ca8d99bcd02a/";
 
   public static String getServerByBuildFLAVOR(String flavor) {
-    String host ="";
+    String host = "";
     switch (flavor) {
       case "SIT":
         host = Constants.ServerDebug;
@@ -169,6 +169,7 @@ public class Configs {
         break;
     }
     Server = host;
+    URL_QC_FIND = Server + "mobile/staff/discover/";
     return host;
   }
 }
