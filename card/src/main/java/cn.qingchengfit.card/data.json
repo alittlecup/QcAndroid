@@ -1,0 +1,41 @@
+{
+  "user_coupons": [
+    {
+      "user": {
+        "id": "",
+        "username": ""
+      },
+      "coupons": [
+        {
+          "shop": {
+            "id": 1,
+            "name": "安徒生Feature22"
+          },
+          "end": "2019-03-07T16:42:08",
+          "description": "满100.0抵11.0元",
+          "discount": 11,
+          "real_price": 89,
+          "start": "2018-02-08T10:48:27",
+          "coupon_tpl": {
+            "account": 11,
+            "reach_money": 100,
+            "id": 12,
+            "use_condition": {
+              "id": 12,
+              "course_pay_on_line": true,
+              "charge_cards": true,
+              "description": "全店通用",
+              "new_cards": true
+            },
+            "coupon_type": 1
+          },
+          "id": 165,
+          "user": {
+            "username": "邹英杰",
+            "id": 545
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+  </data>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:orientation="horizontal"
+      android:paddingLeft="20dp"
+      >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        >
+      <TextView
+          android:id="@+id/tv_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="20sp"
+          tools:text="满5000减100"
+          />
+      <TextView
+          android:id="@+id/tv_dates"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:textSize="11sp"
+          tools:text="2018-08-05-2018-11-11"
+          />
+      <TextView
+          android:id="@+id/tv_desc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:textSize="11sp"
+          tools:text="限在线支付／约课 使用"
+          />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="立即使用"
+          android:textSize="16dp"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="right"
+          android:layout_marginTop="10dp"
+          android:textSize="@dimen/txt_14sp"
+          tools:text="满减"
+          />
+
+    </FrameLayout>
+
+  </LinearLayout>
+
+</layout>
