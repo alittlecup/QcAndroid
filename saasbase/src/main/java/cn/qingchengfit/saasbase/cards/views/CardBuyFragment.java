@@ -245,7 +245,7 @@ import rx.functions.Action1;
       List<QcStudentBean> studentBeans = new ArrayList<>();
       studentBeans.add(qcStudentBean);
       presenter.setQcStudentBeans(studentBeans);
-      ArrayList<String> ids=new ArrayList<>();
+      ArrayList<String> ids = new ArrayList<>();
       ids.add(qcStudentBean.getId());
       presenter.setChoseStuIds(ids);
     }
@@ -254,7 +254,7 @@ import rx.functions.Action1;
     civEndTime.setNoSaved();
 
     civEndTime.setClickable(false);
-    if (cardTpl.has_service_term&&cardTpl.is_open_service_term) {
+    if (cardTpl.has_service_term && cardTpl.is_open_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
       cardProtocol.setContent("未签名");
     } else {
@@ -316,7 +316,7 @@ import rx.functions.Action1;
         });
   }
 
-  private void initBus() {
+  public void initBus() {
     ob = RxBus.getBus().register(PayEvent.class);
     ob.compose(this.<PayEvent>bindToLifecycle()).subscribe(new Action1<PayEvent>() {
       @Override public void call(PayEvent payEvent) {
@@ -355,7 +355,7 @@ import rx.functions.Action1;
   }
 
   public void onConfirmPay() {
-    if (optionList.size() == 0||cardOptionCustom==null) {
+    if (optionList.size() == 0 || cardOptionCustom == null) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
@@ -394,7 +394,7 @@ import rx.functions.Action1;
 
     CardTplOption cardTplOption = presenter.getmChosenOption();
     int selectedItemCount = commonFlexAdapter.getSelectedItemCount();
-    if (selectedItemCount < 1||cardOptionCustom==null) {
+    if (selectedItemCount < 1 || cardOptionCustom == null) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
@@ -430,16 +430,16 @@ import rx.functions.Action1;
       stringBuilder.append("&card_no=").append(presenter.getRealCardNo());
     }
     if (!TextUtils.isEmpty(startDay())) {
-      if(cardTpl.getType()==3||cardTplOption.limit_days){
+      if (cardTpl.getType() == 3 || cardTplOption.limit_days) {
         stringBuilder.append("&start=").append(startDay());
-      }else{
+      } else {
         stringBuilder.append("&start=");
       }
     }
     if (!TextUtils.isEmpty(endDay())) {
-      if(cardTpl.getType()==3||cardTplOption.limit_days){
+      if (cardTpl.getType() == 3 || cardTplOption.limit_days) {
         stringBuilder.append("&end=").append(endDay());
-      }else{
+      } else {
         stringBuilder.append("&end=");
       }
     }
@@ -508,10 +508,10 @@ import rx.functions.Action1;
   }
 
   public void onCivBindMenbersClicked() {
-//    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
-//        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
-    QcRouteUtil.setRouteOptions(
-        new RouteOptions("student").setActionName("/choose/student/").addParam("studentIdList", presenter.getChoseStuIds())).call();
+    //    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
+    //        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
+    QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
+        .addParam("studentIdList", presenter.getChoseStuIds())).call();
   }
 
   public void onCivSalerClicked() {
@@ -557,7 +557,8 @@ import rx.functions.Action1;
 
   public void onSelectPayMethod() {
     BottomPayDialog f = BottomPayDialog.newInstance(
-        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,gymWrapper.isPro());
+        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,
+        gymWrapper.isPro());
     f.show(getFragmentManager(), "");
   }
 

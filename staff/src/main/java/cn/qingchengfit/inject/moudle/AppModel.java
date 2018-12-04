@@ -2,6 +2,7 @@ package cn.qingchengfit.inject.moudle;
 
 import android.app.Application;
 import cn.qingchengfit.card.StaffCardRouters;
+import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.login.ILoginModel;
@@ -71,7 +72,7 @@ import java.util.List;
   private BaseRouter router;
   private QcRestRepository qcrestRepository;
   private QcDbManager qcDbManager;
-  private ICardModel cardModel;
+  private CardRealModel cardModel;
   private IExportModel exportModel;
   private ICourseModel courseModel;
   private SaasbaseRouterCenter saasbaseRouterCenter;
@@ -164,6 +165,10 @@ import java.util.List;
 
   @Provides SaasModel providerSaasModel() {
     return new SaasModelImpl(qcrestRepository);
+  }
+
+  @Provides CardRealModel provideCardRealModel() {
+    return cardModel;
   }
 
   @Provides IStaffModel providerStaffModel() {

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.di;
 
 import android.arch.lifecycle.ViewModel;
+import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.repository.RepoCoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
@@ -8,7 +9,6 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.student.respository.IStudentModel;
-import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.fragment.card.CardModel;
 import com.qingchengfit.fitcoach.fragment.card.StaffModel;
@@ -19,10 +19,10 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
-import javax.inject.Singleton;
 
 @Module public abstract class AppAbstractModule {
   @Binds abstract ICardModel bindCardModel(CardModel cardModel);
+  @Binds abstract CardRealModel bindCardRealModel(CardModel cardModel);
 
   @Binds abstract ICheckoutModel bindCheckoutModel(CheckoutModel cardModel);
 

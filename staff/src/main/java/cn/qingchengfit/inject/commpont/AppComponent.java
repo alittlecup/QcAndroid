@@ -2,7 +2,7 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.card.di.BindStaffCardActivity;
+import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
@@ -11,7 +11,6 @@ import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
-
 import cn.qingchengfit.login.di.BindLoginActivity;
 import cn.qingchengfit.notisetting.view.NotiSettingChargeHistoryFragment;
 import cn.qingchengfit.notisetting.view.NotiSettingChargeResultFragment;
@@ -47,6 +46,8 @@ import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
+import cn.qingchengfit.saascommon.widget.FlexableListFragment;
 import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -80,7 +81,6 @@ import cn.qingchengfit.staffkit.views.ChooseBrandActivity;
 import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.EditTextActivity;
-import cn.qingchengfit.saascommon.widget.FlexableListFragment;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.GuideChooseBrandAcitivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
@@ -90,7 +90,6 @@ import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
 import cn.qingchengfit.staffkit.views.allotsales.SalesListFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.course.CourseReverseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
@@ -308,8 +307,8 @@ import javax.inject.Singleton;
     AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindImportExportActivity.class,
 
-    BindStaffCourseActivity.class, BindStaffCardActivity.class,
-    BindStaffStaffActivity.class,
+    BindStaffCourseActivity.class,
+    BindStaffStaffActivity.class, CardModule.class,
     BindGymConfigAcitivty.class, BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 public class StaffCardBuyPresenter extends CompletedBuyPresenter {
 
+
   @Inject
   public StaffCardBuyPresenter(BuyCardUsecase usecase) {
     super(usecase);

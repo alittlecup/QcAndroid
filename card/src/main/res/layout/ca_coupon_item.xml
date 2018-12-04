@@ -6,41 +6,77 @@
   </data>
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="100dp"
+      android:layout_height="90dp"
+      android:background="@color/bg_white"
       android:orientation="horizontal"
-      android:paddingLeft="20dp"
       >
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/ca_coupon_background"
+        >
+      <TextView
+          android:id="@+id/tv_tips"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left"
+          android:background="@drawable/ca_coupon_left_tips"
+          android:gravity="center_vertical"
+          android:paddingLeft="3dp"
+          android:textColor="@color/bg_white"
+          android:textSize="12sp"
+          tools:text="满减"
+          />
+      <TextView
+          android:id="@+id/tv_total"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textColor="@color/bg_white"
+          android:textSize="20sp"
+          tools:text="200元"
+          />
+
+    </FrameLayout>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_weight="2"
+        android:layout_marginTop="10dp"
+        android:layout_weight="6"
         android:orientation="vertical"
+        android:paddingLeft="20dp"
         >
       <TextView
           android:id="@+id/tv_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textSize="20sp"
+          android:textSize="15sp"
           tools:text="满5000减100"
           />
       <TextView
           android:id="@+id/tv_dates"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:textSize="11sp"
+          android:layout_marginTop="5dp"
+          android:textSize="12sp"
           tools:text="2018-08-05-2018-11-11"
           />
       <TextView
           android:id="@+id/tv_desc"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
-          android:textSize="11sp"
+          android:layout_marginTop="10dp"
+          android:textSize="12sp"
           tools:text="限在线支付／约课 使用"
           />
     </LinearLayout>
+    <view
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@drawable/dotted_line"
+        />
 
     <FrameLayout
         android:layout_width="0dp"
@@ -48,20 +84,15 @@
         android:layout_weight="1"
         >
       <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_width="20dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
           android:gravity="center"
           android:text="立即使用"
-          android:textSize="16dp"
+          android:textColor="@color/ca_coupons_background"
+          android:textSize="12dp"
           />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="right"
-          android:layout_marginTop="10dp"
-          android:textSize="@dimen/txt_14sp"
-          tools:text="满减"
-          />
+
 
     </FrameLayout>
 

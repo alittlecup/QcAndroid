@@ -171,6 +171,15 @@
             style="@style/QcCivClickStyle"
             />
         <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/civ_bind_coupons"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_hint="请选择优惠券"
+            app:civ_lable="绑定优惠券"
+            android:visibility="gone"
+            style="@style/QcCivClickStyle"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_real_card_num"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"

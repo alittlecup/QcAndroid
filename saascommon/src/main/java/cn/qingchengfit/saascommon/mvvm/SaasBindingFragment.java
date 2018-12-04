@@ -43,14 +43,8 @@ public abstract class SaasBindingFragment<DB extends ViewDataBinding, VM extends
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    //if (mBinding == null) {
-      mBinding = initDataBinding(inflater, container, savedInstanceState);
-    //}
-    //ViewGroup parent = (ViewGroup) mBinding.getRoot().getParent();
-    //if (parent != null) {
-    //  parent.removeView(mBinding.getRoot());
-    //  parent.removeAllViews();
-    //}
+    super.onCreateView(inflater, container, savedInstanceState);
+    mBinding = initDataBinding(inflater, container, savedInstanceState);
     return mBinding.getRoot();
   }
 

@@ -1,6 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.card;
 
 import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.card.bean.CouponResponse;
+import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
@@ -35,6 +37,7 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
+import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,13 +45,11 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Func1;
 
-public class CardModel implements ICardModel {
+public class CardModel implements CardRealModel {
 
   CardTrainerApi posApi;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
-
-
 
   @Inject public CardModel(QcRestRepository repository) {
     posApi = repository.createRxJava1Api(CardTrainerApi.class);
@@ -116,15 +117,15 @@ public class CardModel implements ICardModel {
                 cards.add(copy);
               }
             }
-            QcResponseStudentCards qcResponseStudentCards=new QcResponseStudentCards();
+            QcResponseStudentCards qcResponseStudentCards = new QcResponseStudentCards();
             QcResponseStudentCards.Data data = new QcResponseStudentCards.Data();
-            data.cards=cards;
-            qcResponseStudentCards.data=data;
-            qcResponseStudentCards.status=studentCarsResponse.status;
-            qcResponseStudentCards.msg=studentCarsResponse.msg;
-            qcResponseStudentCards.error_code=studentCarsResponse.error_code;
-            qcResponseStudentCards.info=studentCarsResponse.info;
-            qcResponseStudentCards.level=studentCarsResponse.level;
+            data.cards = cards;
+            qcResponseStudentCards.data = data;
+            qcResponseStudentCards.status = studentCarsResponse.status;
+            qcResponseStudentCards.msg = studentCarsResponse.msg;
+            qcResponseStudentCards.error_code = studentCarsResponse.error_code;
+            qcResponseStudentCards.info = studentCarsResponse.info;
+            qcResponseStudentCards.level = studentCarsResponse.level;
             return qcResponseStudentCards;
           }
         });
@@ -294,5 +295,10 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount() {
     return null;
+  }
+
+  @Override public Flowable<QcDataResponse<CouponResponse>> qcLoadCoupons(String staff_id,
+      HashMap<String, Object> params) {
+    return posApi.qcLoadCoupons(staff_id, params);
   }
 }

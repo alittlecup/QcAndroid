@@ -12,6 +12,10 @@ import java.util.List;
 
 public class ChooseCouponsItem
     extends AbstractFlexibleItem<DataBindingViewHolder<CaChooseCouponsItemBinding>> {
+  public UserWithCoupons getData() {
+    return data;
+  }
+
   private UserWithCoupons data;
 
   public ChooseCouponsItem(UserWithCoupons user) {

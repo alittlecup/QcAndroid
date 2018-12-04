@@ -6,9 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.card.R;
 import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.card.bean.UserWithCoupons;
 import cn.qingchengfit.card.databinding.CaChooseCouponsFragmentBinding;
+import cn.qingchengfit.card.event.ChooseCouponsEvent;
+import cn.qingchengfit.card.item.ChooseCouponsItem;
 import cn.qingchengfit.card.view.BottomChooseCouponDialog;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
@@ -29,15 +33,17 @@ import java.util.List;
   @Need Coupon chooseCoupon;
   @Need ArrayList<String> user_ids;
 
-  @Nullable @Override
-
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    return super.onCreateView(inflater, container, savedInstanceState);
-  }
 
   @Override protected void subscribeUI() {
-
+    mViewModel.getDatas().observe(this, userWithCoupons -> {
+      if (userWithCoupons != null && !userWithCoupons.isEmpty()) {
+        List<ChooseCouponsItem> datas = new ArrayList<>();
+        for (UserWithCoupons coupons : userWithCoupons) {
+          datas.add(new ChooseCouponsItem(coupons));
+        }
+        adapter.updateDataSet(datas);
+      }
+    });
   }
 
   @Override public CaChooseCouponsFragmentBinding initDataBinding(LayoutInflater inflater,
@@ -60,6 +66,17 @@ import java.util.List;
       mBinding.tvChooseCouponName.setText(
           String.format(getResources().getString(R.string.choose_coupon_text),
               chooseCoupon.getDescription()));
+      mBinding.tvClearSelected.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          RxBus.getBus().post(new ChooseCouponsEvent(null));
+          mBinding.llBottomSelected.setVisibility(View.GONE);
+
+        }
+      });
+      mBinding.llBottomSelected.setVisibility(View.VISIBLE);
+    }else{
+      mBinding.llBottomSelected.setVisibility(View.GONE);
+
     }
   }
 
@@ -74,6 +91,8 @@ import java.util.List;
   }
 
   @Override public boolean onItemClick(int position) {
+    UserWithCoupons data = ((ChooseCouponsItem) adapter.getItem(position)).getData();
+    showChooseCouponDialog(data.getCoupons());
     return false;
   }
 
@@ -83,7 +102,7 @@ import java.util.List;
       @Override public boolean onItemClick(int position) {
         dialog.dismiss();
         Coupon coupon = coupons.get(position);
-        // TODO: 2018/12/3  send data back
+        RxBus.getBus().post(new ChooseCouponsEvent(coupon));
         return false;
       }
     });

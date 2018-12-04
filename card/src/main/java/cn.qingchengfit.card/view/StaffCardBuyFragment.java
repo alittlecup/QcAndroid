@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.card.R;
+import cn.qingchengfit.card.bean.Coupon;
 import cn.qingchengfit.card.buy.CompletedBuyView;
+import cn.qingchengfit.card.event.ChooseCouponsEvent;
+import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
@@ -17,19 +21,19 @@ import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
-import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * Created by fb on 2017/12/20.
@@ -38,13 +42,73 @@ import javax.inject.Inject;
 public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBuyView {
 
   @Inject StaffCardBuyPresenter buyPresenter;
+  CommonInputView mBindCoupons;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
 
     View view = super.onCreateView(inflater, container, savedInstanceState);
+    mBindCoupons = view.findViewById(R.id.civ_bind_coupons);
+    mBindCoupons.setVisibility(View.VISIBLE);
+    mBindCoupons.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        routeToChooseCoupons();
+      }
+    });
     delegatePresenter(buyPresenter, this);
     return view;
+  }
+
+  private void routeToChooseCoupons() {
+    if (canRouteToChooseCoupons()) {
+      float price = presenter.getmChosenOption().getPrice();
+      ArrayList<String> choseStuIds = presenter.getChoseStuIds();
+      Bundle bundle = new Bundle();
+      bundle.putFloat("price", price);
+      bundle.putStringArrayList("user_ids", choseStuIds);
+      if (coupon != null) {
+        bundle.putParcelable("chooseCoupon", coupon);
+      }
+      routeTo("/choose/coupons", bundle);
+    }
+  }
+
+  @Override public void initBus() {
+    super.initBus();
+    RxBusAdd(ChooseCouponsEvent.class).subscribe(new Action1<ChooseCouponsEvent>() {
+      @Override public void call(ChooseCouponsEvent chooseCouponsEvent) {
+        updateCoupons(chooseCouponsEvent.getCoupon());
+      }
+    });
+  }
+
+  private Coupon coupon;
+
+  private void updateCoupons(Coupon coupon) {
+    this.coupon = coupon;
+    if (coupon == null) {
+      mBindCoupons.setContent("");
+      setPayMoney(presenter.getmChosenOption().getPrice());
+    } else {
+      mBindCoupons.setContent(coupon.getDescription());
+      //setPayMoney();
+    }
+  }
+
+  private boolean canRouteToChooseCoupons() {
+    ArrayList<String> choseStuIds = presenter.getChoseStuIds();
+    CardTplOption cardTplOption = presenter.getmChosenOption();
+    boolean canRoute = false;
+    if (cardTplOption == null) {
+      ToastUtils.show("请至少选择一种会员卡规格");
+    } else if (payMethod() != 12 && payMethod() != 7) {
+      ToastUtils.show("优惠券功能只支持线上支付");
+    } else if (choseStuIds == null || choseStuIds.isEmpty()) {
+      ToastUtils.show("请选择会员");
+    } else {
+      canRoute = true;
+    }
+    return canRoute;
   }
 
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {
@@ -85,8 +149,8 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       super.onCivBindMenbersClicked();
     } else {
       QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
-          .addParam("addAble",true)
-          .addParam("selectedStudent",presenter.getQcStudentBeans())
+          .addParam("addAble", true)
+          .addParam("selectedStudent", presenter.getQcStudentBeans())
           .addParam("studentIdList", presenter.getChoseStuIds())).call();
     }
   }

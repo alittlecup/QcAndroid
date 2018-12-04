@@ -2,6 +2,8 @@ package cn.qingchengfit.model;
 
 import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.card.bean.CouponResponse;
+import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
@@ -35,12 +37,13 @@ import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import com.google.gson.JsonObject;
+import io.reactivex.Flowable;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
 import rx.Observable;
 
-public class CardModel implements ICardModel {
+public class CardModel implements CardRealModel {
 
   QcRestRepository repository;
   GymWrapper gymWrapper;
@@ -61,9 +64,8 @@ public class CardModel implements ICardModel {
     posApi = repository.createRxJava1Api(CardApi.class);
     cardApi = repository.createRxJava1Api(cn.qingchengfit.card.network.CardApi.class);
     INSTANCE = this;
-    ComponentModuleManager.register(ICardModel.class,this);
+    ComponentModuleManager.register(ICardModel.class, this);
   }
-
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
@@ -95,7 +97,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcResponseStudentCards> qcGetStudentCards(String studentID) {
-    return cardApi.qcGetStudentCards(loginStatus.staff_id(),studentID,gymWrapper.getParams());
+    return cardApi.qcGetStudentCards(loginStatus.staff_id(), studentID, gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SellerWrapper>> qcGetDefineSeller(String card_id) {
@@ -155,7 +157,7 @@ public class CardModel implements ICardModel {
     if (chargeBody.getSeller_id() != null && chargeBody.getSeller_id().equalsIgnoreCase("0")) {
       chargeBody.setSeller_id(null);
     }
-    chargeBody.version="new";//这里就是为了给后端标识，完全没有任何意义
+    chargeBody.version = "new";//这里就是为了给后端标识，完全没有任何意义
     return posApi.qcCardCharge(loginStatus.staff_id(), cardId, gymWrapper.getParams(), chargeBody);
   }
 
@@ -166,8 +168,8 @@ public class CardModel implements ICardModel {
     if (chargeBody.getSeller_id() != null && chargeBody.getSeller_id().equalsIgnoreCase("0")) {
       chargeBody.setSeller_id(null);
     }
-    return posApi.qcCardChargeFromCheckout(loginStatus.staff_id(), cardId, gymWrapper.getParams(), chargeBody);
-
+    return posApi.qcCardChargeFromCheckout(loginStatus.staff_id(), cardId, gymWrapper.getParams(),
+        chargeBody);
   }
 
   @Override public Observable<QcDataResponse<JsonObject>> buyCard(@Body CardBuyBody obody) {
@@ -176,7 +178,7 @@ public class CardModel implements ICardModel {
     if (body.getSeller_id() != null && body.seller_id.equalsIgnoreCase("0")) {
       body.setSeller_id(null);
     }
-    body.version="new";//这里就是为了给后端标识，完全没有任何意义
+    body.version = "new";//这里就是为了给后端标识，完全没有任何意义
     return posApi.qcCreateRealcard(loginStatus.staff_id(), body, gymWrapper.getParams());
   }
 
@@ -186,8 +188,10 @@ public class CardModel implements ICardModel {
     if (body.getSeller_id() != null && body.seller_id.equalsIgnoreCase("0")) {
       body.setSeller_id(null);
     }
-    return posApi.qcCreateRealcardFromCheckout(loginStatus.staff_id(), body, gymWrapper.getParams());
+    return posApi.qcCreateRealcardFromCheckout(loginStatus.staff_id(), body,
+        gymWrapper.getParams());
   }
+
   @Override
   public Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
@@ -311,5 +315,10 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount() {
     return posApi.qcGetCardCount(loginStatus.staff_id(), gymWrapper.getParams());
+  }
+
+  @Override public Flowable<QcDataResponse<CouponResponse>> qcLoadCoupons(String staff_id,
+      HashMap<String, Object> params) {
+    return cardApi.qcLoadCoupons(staff_id, params);
   }
 }

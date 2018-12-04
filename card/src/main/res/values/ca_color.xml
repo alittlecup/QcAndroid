@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="ca_coupons_background">#ff7851</color>
+  <color name="ca_coupons_background_start">#f17048</color>
+  <color name="ca_coupons_background_end">#f65b7e</color>
+</resources>
