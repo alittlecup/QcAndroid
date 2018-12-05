@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:background="@color/bg_white"
+      >
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="支"
+        android:textColor="@color/bg_white"
+        android:textSize="20sp"
+        tools:background="@drawable/ch_order_list_item_circle"
+        />
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_type"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/tv_type"
+        android:textColor="@color/text_black"
+        android:textSize="16sp"
+        tools:text="10000元"
+        />
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_money"
+        android:layout_below="@+id/tv_money"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/text_grey"
+        android:textSize="14sp"
+        tools:text="2018-10-22"
+        />
+    <Button
+        android:id="@+id/btn_confirm_order"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:text="确认收款"
+        android:textSize="14sp"
+        style="@style/QcBtnPrimary"
+        />
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/tv_money"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_medium"
+        />
+
+
+  </RelativeLayout>
+</layout>

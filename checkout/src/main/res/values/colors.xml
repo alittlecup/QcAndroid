@@ -13,5 +13,10 @@
   <color name="ck_wx_start">#78E2A9</color>
   <color name="ck_wx_end">#5DCB86</color>
 
+  <color name="ck_checkout_qrcode_bg_start">#12d1c7</color>
+  <color name="ck_checkout_qrcode_bg_end">#13ccc1</color>
+  <color name="ck_alpha_white">#2fff</color>
+
+
 
 </resources>
