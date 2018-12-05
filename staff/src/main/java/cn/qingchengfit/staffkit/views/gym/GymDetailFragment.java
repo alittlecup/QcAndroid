@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -140,7 +139,6 @@ public class GymDetailFragment extends BaseFragment
   Toolbar toolbar;
   TextView toolbarTitile;
   ImageView down;
-  RelativeLayout toolbarLayout;
   LinearLayout gymLayout;
   TextView toolbarLeft;
   AppBarLayout layoutCollapsed;
@@ -189,7 +187,6 @@ public class GymDetailFragment extends BaseFragment
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
     down = (ImageView) view.findViewById(R.id.down);
-    toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
     gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
     toolbarLeft = (TextView) view.findViewById(R.id.toolbar_left);
     layoutCollapsed = (AppBarLayout) view.findViewById(R.id.layout_collapsed);
@@ -403,7 +400,6 @@ public class GymDetailFragment extends BaseFragment
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    toolbarLayout.setVisibility(View.VISIBLE);
     if (getActivity() instanceof MainActivity) {
       toolbarLeft.setVisibility(View.VISIBLE);
     } else {
@@ -435,9 +431,9 @@ public class GymDetailFragment extends BaseFragment
         return true;
       }
     });
-
-    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
-      toolbarLayout.setPadding(0, MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
     }
   }
 
