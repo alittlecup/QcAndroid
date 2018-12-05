@@ -1,4 +1,5 @@
 <resources>
   <string name="ck_app_name">Checkout</string>
   <string name="ck_home_count">笔</string>
+  <string name="ck_order_input_count">%s/%s</string>
 </resources>

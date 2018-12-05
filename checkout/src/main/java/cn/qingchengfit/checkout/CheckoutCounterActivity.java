@@ -6,13 +6,17 @@ import android.util.Log;
 import cn.qingchengfit.checkout.routers.CheckoutRouterCenter;
 import cn.qingchengfit.checkout.view.checkout.CheckoutMoneyPage;
 import cn.qingchengfit.checkout.view.home.CheckoutHomePage;
+import cn.qingchengfit.checkout.view.order.CheckoutOrderListPage;
+import cn.qingchengfit.checkout.view.order.OrderConfirmPage;
 import cn.qingchengfit.checkout.view.pay.CheckoutPayPage;
+import cn.qingchengfit.checkout.view.qrcode.CheckoutQrCodePage;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
 @Trunk(fragments = {
-    CheckoutHomePage.class, CheckoutMoneyPage.class, CheckoutPayPage.class
+    CheckoutHomePage.class, CheckoutMoneyPage.class, CheckoutPayPage.class,
+    CheckoutQrCodePage.class, CheckoutOrderListPage.class, OrderConfirmPage.class
 }) public class CheckoutCounterActivity extends SaasCommonActivity {
   @Inject CheckoutRouterCenter routerCenter;
 
@@ -26,6 +30,6 @@ import javax.inject.Inject;
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    Log.d("TAG", "onDestroy: CheckoutCounterActivity"+this);
+    Log.d("TAG", "onDestroy: CheckoutCounterActivity" + this);
   }
 }

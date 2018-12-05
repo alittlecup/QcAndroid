@@ -15,6 +15,10 @@ public class OrderListItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ChOrderListItemBinding>> {
   OrderListItemData data;
 
+  public OrderListItemData getData() {
+    return data;
+  }
+
   public OrderListItem(OrderListItemData data) {
     this.data = data;
   }
