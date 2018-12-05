@@ -7,8 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGContents;
 import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGEncoder;
@@ -108,6 +110,13 @@ import timber.log.Timber;
     return mBinding;
   }
 
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if (type.equals("ALIPAY_QRCODE")) {
+      openScan();
+    }
+  }
+
   private void rePay() {
     showLoading();
     ScanRepayInfo scanRePayInfo = mViewModel.IOrderData.getValue().getScanRePayInfo();
@@ -147,25 +156,27 @@ import timber.log.Timber;
   }
 
   private void initListener() {
-
     mBinding.flScan.setOnClickListener(v -> {
-      new RxPermissions(getActivity()).request(Manifest.permission.CAMERA).subscribe(aBoolean -> {
-        if (aBoolean) {
-          if (mViewModel.IOrderData.getValue() != null) {
-            Intent intent = new Intent(getContext(), QcScanActivity.class);
-            intent.putExtra("title", "扫码收款");
-            intent.putExtra("type", type);
-            intent.putExtra("repay", mViewModel.IOrderData.getValue().getScanRePayInfo());
-            startActivityForResult(intent, PAY_SUCCESS);
-          }
-        } else {
-          DialogUtils.showAlert(getContext(), "请打开摄像头权限");
-        }
-      });
+      openScan();
     });
   }
 
   Disposable subscribe;
+  private void openScan(){
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA).subscribe(aBoolean -> {
+      if (aBoolean) {
+        if (mViewModel.IOrderData.getValue() != null) {
+          Intent intent = new Intent(getContext(), QcScanActivity.class);
+          intent.putExtra("title", "扫码收款");
+          intent.putExtra("type", type);
+          intent.putExtra("repay", mViewModel.IOrderData.getValue().getScanRePayInfo());
+          startActivityForResult(intent, PAY_SUCCESS);
+        }
+      } else {
+        DialogUtils.showAlert(getContext(), "请打开摄像头权限");
+      }
+    });
+  }
 
   @Override public void onResume() {
     super.onResume();
