@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -36,6 +37,7 @@ import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
+import com.bigkoo.pickerview.lib.DensityUtil;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -61,6 +63,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   GymDetailChartAdapter mPageAdapter;
   private GuideView guideView;
   @Inject GymWrapper gymWrapper;
+  private float offSetMaxSize = 0f;
 
   @Override protected void subscribeUI() {
     mViewModel.showLoading.observe(this, aBoolean -> {
@@ -101,9 +104,56 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     if (hasSetted != null) {
       IFlexible item = adapter.getItem(pos);
       if (item instanceof DailyWorkItem) {
-        ((DailyWorkItem) item).setRightTopText(hasSetted?"":"未设置");
+        ((DailyWorkItem) item).setRightTopText(hasSetted ? "" : "未设置");
       }
       adapter.notifyItemChanged(pos);
+    }
+  }
+
+  private void initListener(View root) {
+    mBinding.layoutCollapsed.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+      int offset = Math.abs(verticalOffset);
+      updateToolbarUI(offset / offSetMaxSize);
+    });
+    root.findViewById(R.id.img_cash).setOnClickListener(v -> routeToCheckoutMoney());
+    root.findViewById(R.id.img_charge_card).setOnClickListener(v -> routeToChargeCard());
+    root.findViewById(R.id.img_new_card).setOnClickListener(v -> routeToBuyCard());
+    root.findViewById(R.id.img_cash_scan).setOnClickListener(v -> routeToShowQrCode());
+
+    root.findViewById(R.id.fl_cash).setOnClickListener(v -> routeToCheckoutMoney());
+    root.findViewById(R.id.fl_charge_card).setOnClickListener(v -> routeToChargeCard());
+    root.findViewById(R.id.fl_new_card).setOnClickListener(v -> routeToBuyCard());
+    root.findViewById(R.id.fl_scan).setOnClickListener(v -> routeToShowQrCode());
+  }
+
+  private void routeToCheckoutMoney() {
+    QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/money"))
+        .call();
+  }
+
+  private void routeToChargeCard() {
+    QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
+        .addParam("addAble", false)
+        .addParam("chooseType", 1)).call();
+  }
+
+  private void routeToBuyCard() {
+    QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
+  }
+
+  private void routeToShowQrCode() {
+
+  }
+
+  private void updateToolbarUI(float present) {
+    if (present <= 0) {
+      mBinding.llTitleAbove.setVisibility(View.GONE);
+      mBinding.llTitleBelow.setVisibility(View.VISIBLE);
+    } else if (present <= 1) {
+      mBinding.llTitleBelow.setVisibility(View.GONE);
+      mBinding.llTitleAbove.setVisibility(View.VISIBLE);
+      mBinding.llTitleAbove.setAlpha(present);
+      mBinding.llCheckout.setAlpha(Math.abs(1 - present));
     }
   }
 
@@ -120,6 +170,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   public ManageFragmentBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = ManageFragmentBinding.inflate(inflater, container, false);
+    offSetMaxSize = DensityUtil.dip2px(getContext(), 110);
     initRecyclerView();
     initRecyclerData();
     initViewPager();
@@ -150,8 +201,9 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
       dialogList.show();
     });
     mBinding.showGym.setOnClickListener(v -> {
-      guideToStudentPreview(mViewModel.previewUrl.getValue(),mViewModel.copyUrl.getValue());
+      guideToStudentPreview(mViewModel.previewUrl.getValue(), mViewModel.copyUrl.getValue());
     });
+    initListener(mBinding.getRoot());
   }
 
   private void guideToStudentPreview(String preViewUrl, String copyUrl) {
@@ -229,7 +281,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
         case 1:
           if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.COST_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
-            return ;
+            return;
           }
           Intent toCourseStatement = new Intent(getActivity(), FragActivity.class);
           toCourseStatement.putExtra("type", 0);
@@ -241,7 +293,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
           if (!CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
-            return ;
+            return;
           }
           Intent tosale = new Intent(getActivity(), FragActivity.class);
           tosale.putExtra("type", 1);

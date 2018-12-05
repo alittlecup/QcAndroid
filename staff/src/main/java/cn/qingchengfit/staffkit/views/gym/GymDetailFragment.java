@@ -323,7 +323,7 @@ public class GymDetailFragment extends BaseFragment
     root.findViewById(R.id.img_cash).setOnClickListener(v -> routeToCheckoutMoney());
     root.findViewById(R.id.img_charge_card).setOnClickListener(v -> routeToChargeCard());
     root.findViewById(R.id.img_new_card).setOnClickListener(v -> routeToBuyCard());
-    root.findViewById(R.id.img_scan).setOnClickListener(v -> routeToShowQrCode());
+    root.findViewById(R.id.img_cash_scan).setOnClickListener(v -> routeToShowQrCode());
 
     root.findViewById(R.id.fl_cash).setOnClickListener(v -> routeToCheckoutMoney());
     root.findViewById(R.id.fl_charge_card).setOnClickListener(v -> routeToChargeCard());
