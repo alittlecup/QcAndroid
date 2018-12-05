@@ -96,6 +96,7 @@ import cn.qingchengfit.wxpreview.old.GymPoplularize;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
+import com.bigkoo.pickerview.lib.DensityUtil;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
@@ -167,16 +168,19 @@ public class GymDetailFragment extends BaseFragment
   private DialogList dialogList;
   private QuitGymFragment quitDialog;
   private GymDetailChartAdapter mChartAdapter;
+  private LinearLayout llTitleBelow, llTitleAbove, llCheckout;
   /**
    * 即将到期提醒
    */
   private GymExpireFragment mGymExpireDialog;
   private String mPreViewUrl;
   private boolean firstMonthClose;
+  private static float offSetMaxSize;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mChartAdapter = new GymDetailChartAdapter(getChildFragmentManager());
+    offSetMaxSize = DensityUtil.dip2px(getContext(), 110);
   }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -190,6 +194,9 @@ public class GymDetailFragment extends BaseFragment
     gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
     toolbarLeft = (TextView) view.findViewById(R.id.toolbar_left);
     layoutCollapsed = (AppBarLayout) view.findViewById(R.id.layout_collapsed);
+    llTitleBelow = view.findViewById(R.id.ll_title_below);
+    llTitleAbove = view.findViewById(R.id.ll_title_above);
+    llCheckout = view.findViewById(R.id.ll_checkout);
     scheduleNotificationCount = (TextView) view.findViewById(R.id.schedule_notification_count);
     vpCharts = (ViewPager) view.findViewById(R.id.vp_charts);
     indicator = (CircleIndicator) view.findViewById(R.id.indicator);
@@ -238,6 +245,7 @@ public class GymDetailFragment extends BaseFragment
     initToolbar(toolbar);
     initView();
     registeSensors();
+    initListener(view);
     view.setOnTouchListener((v, event) -> true);
     view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {
       if (showTime > 0) {
@@ -303,7 +311,55 @@ public class GymDetailFragment extends BaseFragment
     if (isSingleBrand()) {
       view.findViewById(R.id.include_bottom).setVisibility(View.GONE);
     }
+
     return view;
+  }
+
+  private void initListener(View root) {
+    layoutCollapsed.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+      int offset = Math.abs(verticalOffset);
+      updateToolbarUI(offset / offSetMaxSize);
+    });
+    root.findViewById(R.id.img_cash).setOnClickListener(v -> routeToCheckoutMoney());
+    root.findViewById(R.id.img_charge_card).setOnClickListener(v -> routeToChargeCard());
+    root.findViewById(R.id.img_new_card).setOnClickListener(v -> routeToBuyCard());
+    root.findViewById(R.id.img_scan).setOnClickListener(v -> routeToShowQrCode());
+
+    root.findViewById(R.id.fl_cash).setOnClickListener(v -> routeToCheckoutMoney());
+    root.findViewById(R.id.fl_charge_card).setOnClickListener(v -> routeToChargeCard());
+    root.findViewById(R.id.fl_new_card).setOnClickListener(v -> routeToBuyCard());
+    root.findViewById(R.id.fl_scan).setOnClickListener(v -> routeToShowQrCode());
+  }
+
+  private void routeToCheckoutMoney() {
+    QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/money"))
+        .call();
+  }
+
+  private void routeToChargeCard() {
+    QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
+        .addParam("addAble", false)
+        .addParam("chooseType", 1)).call();
+  }
+
+  private void routeToBuyCard() {
+    QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
+  }
+
+  private void routeToShowQrCode() {
+
+  }
+
+  private void updateToolbarUI(float present) {
+    if (present <= 0) {
+      llTitleAbove.setVisibility(View.GONE);
+      llTitleBelow.setVisibility(View.VISIBLE);
+    } else if (present <= 1) {
+      llTitleBelow.setVisibility(View.GONE);
+      llTitleAbove.setVisibility(View.VISIBLE);
+      llTitleAbove.setAlpha(present);
+      llCheckout.setAlpha(Math.abs(1 - present));
+    }
   }
 
   private boolean isSingleBrand() {
@@ -389,12 +445,10 @@ public class GymDetailFragment extends BaseFragment
             }
           })
           .start();
-      down.setRotation(0);
     } else {
       gymLayout.setScaleY(0);
       gymLayout.setVisibility(View.VISIBLE);
       ViewCompat.animate(gymLayout).scaleY(1).setDuration(200L).start();
-      down.setRotation(180);
     }
     ViewCompat.animate(down).rotationBy(180).setDuration(200).start();
   }
@@ -431,9 +485,9 @@ public class GymDetailFragment extends BaseFragment
         return true;
       }
     });
-    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
-      ((ViewGroup) toolbar.getParent()).setPadding(0,
-          MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
+          0, 0);
     }
   }
 
