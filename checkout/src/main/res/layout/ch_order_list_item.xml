@@ -16,7 +16,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="支"
+        tools:text="支"
         android:textColor="@color/bg_white"
         android:textSize="20sp"
         tools:background="@drawable/ch_order_list_item_circle"

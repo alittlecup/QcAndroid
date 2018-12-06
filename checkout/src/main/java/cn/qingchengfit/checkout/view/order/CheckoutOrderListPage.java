@@ -60,7 +60,7 @@ import java.util.List;
 
   private void initRecyclerView() {
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
+    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
   }
 
   private void initToolbar() {

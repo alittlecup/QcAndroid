@@ -7,14 +7,19 @@ import android.os.Bundle;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.views.activity.BaseActivity;
 
 public final class RouteUtil {
   public static void routeTo(Context context, String model, String path, Bundle bd) {
     String uri = model + path;
     try {
       uri = AppUtils.getCurAppSchema(context) + "://" + model + path;
-      Intent to = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-      to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      Intent to = new Intent(context.getPackageName(), Uri.parse(uri));
+      if(context instanceof BaseActivity&&((BaseActivity) context).getModuleName().equalsIgnoreCase(model)){
+        to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+      }else{
+        to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      }
       if (bd != null) {
         to.putExtras(bd);
       }

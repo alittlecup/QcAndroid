@@ -1,11 +1,13 @@
 package cn.qingchengfit.checkout.item;
 
+import android.os.Bundle;
 import android.view.View;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.bean.OrderListItemData;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.ChOrderListItemBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.utils.DrawableUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -34,10 +36,12 @@ public class OrderListItem
   @Override public DataBindingViewHolder<ChOrderListItemBinding> createViewHolder(View view,
       FlexibleAdapter adapter) {
     DataBindingViewHolder<ChOrderListItemBinding> holder =
-        new DataBindingViewHolder<>(view, adapter);
+        new DataBindingViewHolder<ChOrderListItemBinding>(view, adapter);
     holder.getDataBinding().btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("order", data);
+        RouteUtil.routeTo(view.getContext(),"checkout","/order/confirm", bundle);
       }
     });
     return holder;

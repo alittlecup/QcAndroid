@@ -13,6 +13,7 @@ import cn.qingchengfit.checkout.bean.OrderListItemData;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.ChOrderConfirmPageBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.utils.AppUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -46,6 +47,8 @@ import com.anbillon.flabellum.annotations.Need;
     } else if (order.getType() == PayChannel.WEIXIN_QRCODE) {
       mBinding.civPayType.setContent("微信");
     }
+    mBinding.editInput.requestFocus();
+    AppUtils.showKeyboard(getContext(),mBinding.editInput);
   }
 
   private void initListener() {
