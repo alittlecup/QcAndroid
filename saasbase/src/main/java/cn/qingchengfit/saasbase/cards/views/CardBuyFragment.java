@@ -138,7 +138,7 @@ import rx.functions.Action1;
   protected CardTplOption cardOptionCustom = new CardTplOption();
   private List<CardTplOption> optionList = new ArrayList<>();
   public int patType;
-  private int selectPos = 0;
+  private int selectPos = 1;
   private Observable<PayEvent> ob;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -236,7 +236,7 @@ import rx.functions.Action1;
       }
     });
     elAutoOpen.setVisibility(View.GONE);
-    //civSaler.setContent(loginStatus.staff_name());
+    civSaler.setContent(loginStatus.staff_name());
 
     if (qcStudentBean != null) {
       civBindMenbers.setContent(qcStudentBean.username());

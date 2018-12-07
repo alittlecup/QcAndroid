@@ -1,35 +1,24 @@
 package cn.qingchengfit.login.views;
 
-import android.net.Uri;
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.bean.RegisteBody;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-
 import cn.qingchengfit.saascommon.constant.Configs;
-
 import cn.qingchengfit.saascommon.utils.StringUtils;
-
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.fragments.EventFreshCoachService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -124,7 +113,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         qcResponLogin.data.coach.getId());
     loginModel.setStaffId(AppUtils.getCurApp(mvpContext)==0?qcResponLogin.data.coach.getId():qcResponLogin.data.staff.getId());
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_NAME,
-      qcResponLogin.data.staff.getUsername());
+      qcResponLogin.data.user.getUsername());
     PreferenceUtils.setPrefString(mvpContext,Configs.PREFER_WORK_NAME_MIRROR,qcResponLogin.data.user.username);
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
       qcResponLogin.getData().user.getId());

@@ -12,8 +12,8 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -25,7 +25,6 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.inject.Inject;
-import org.w3c.dom.Text;
 
 /**
  * Created by fb on 2017/12/18.
@@ -64,7 +63,6 @@ public class NewCardChargeFragment extends CardBuyFragment {
     //TODO 支付方式
     //civPayMethod.setContent(getResources().getStringArray(R.array.pay_method)[]);
     //civBindMenbers.setContent(card.getUsers().size() + "  人");
-    civSaler.setContent(loginStatus.staff_name());
     civBindMenbers.setVisibility(View.GONE);
     civMark.setContentColor(getResources().getColor(R.color.text_warm));
     if (card.isCheck_valid() && card.getType() != Configs.CATEGORY_DATE) {
