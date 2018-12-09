@@ -99,7 +99,7 @@ public class SplashActivity extends BaseActivity {
         @Override public Observable<QcDataResponse<GymResponse>> call(String s) {
           HashMap<String, Object> params = new HashMap<>();
           params.put("imei", s);
-          return restRepository.createPostApi(PosApi.class)
+          return restRepository.createRxJava1Api(PosApi.class)
             .qcGetGym(params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io());

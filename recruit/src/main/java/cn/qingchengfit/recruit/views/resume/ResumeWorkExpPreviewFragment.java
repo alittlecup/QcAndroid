@@ -184,7 +184,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
   }
 
   private void freshData() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryWorkExp(mExpId)
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -269,7 +269,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
           .negativeText("取消")
           .onPositive((materialDialog, dialogAction) -> {
             showLoading();
-            RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+            RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
                 .delWorkExp(mExpId)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -297,7 +297,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
 
   private void showExp() {
 
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .updateWorkExp(mExpId, new WorkExp.Builder().is_hidden(false).build())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -317,7 +317,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
   }
 
   private void hideExp() {
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .updateWorkExp(mExpId, new WorkExp.Builder().is_hidden(true).build())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()

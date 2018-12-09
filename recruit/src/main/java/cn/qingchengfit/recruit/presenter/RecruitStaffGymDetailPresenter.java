@@ -39,7 +39,7 @@ public class RecruitStaffGymDetailPresenter extends RecruitGymDetailPresenter {
   }
 
   @Override public void queryGymDetail(String gymid) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryStaffGymInfo(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymWrap>>() {
@@ -50,7 +50,7 @@ public class RecruitStaffGymDetailPresenter extends RecruitGymDetailPresenter {
   }
 
   @Override public void queryPositionOfGym(String gymid, int init) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryStaffGymJobsAll(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {

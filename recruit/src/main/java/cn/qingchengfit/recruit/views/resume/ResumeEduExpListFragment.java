@@ -94,7 +94,7 @@ public class ResumeEduExpListFragment extends BaseFragment
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryEducations().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<EduExpListWrap>>() {

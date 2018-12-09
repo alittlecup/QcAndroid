@@ -58,7 +58,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
     if (key != null) params.put("key", key);
     if (gymid != null) params.put("gym_id", gymid);
 
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryRecruitPermission(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<PermisionnListWrap>>() {
@@ -73,7 +73,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
   }
 
   public void editPermssionUsers(EditPermissionBody body) {
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .editpermsiion(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -88,7 +88,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
   }
 
   public void queryPermissionUsers(String gymid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryPermissionUser(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<PermissionUserWrap>>() {
@@ -107,7 +107,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
    * 获取工作人员
    */
   public void queryCommonstaff(String gymid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryCommonStaffs(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<ChatGymWrap>>() {

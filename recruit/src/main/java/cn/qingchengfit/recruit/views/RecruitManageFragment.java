@@ -140,7 +140,7 @@ public class RecruitManageFragment extends BaseFragment
   }
 
   protected void refreshData() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryManageGyms()
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())

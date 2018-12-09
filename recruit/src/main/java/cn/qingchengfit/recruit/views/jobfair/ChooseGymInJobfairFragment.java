@@ -48,7 +48,7 @@ public class ChooseGymInJobfairFragment extends ChooseGymFragment {
   }
 
   @Override protected void queryPermiss(final Gym gym) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryOnepermission(gym.id, "fair").onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {

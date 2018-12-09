@@ -381,7 +381,7 @@ import rx.schedulers.Schedulers;
    * 场馆介绍
    */
   public void onCivGymDescClicked() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .querySu(gymId)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

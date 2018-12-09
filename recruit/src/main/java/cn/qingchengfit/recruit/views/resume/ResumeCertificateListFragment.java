@@ -108,7 +108,7 @@ public class ResumeCertificateListFragment extends BaseFragment implements Flexi
   }
 
   public void refresh(){
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryCertifications().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<CertificateListWrap>>() {

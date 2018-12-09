@@ -44,7 +44,7 @@ public class ResumePresenter extends BasePresenter {
    * 简历详情
    */
   public void queryResumeHome() {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryMyResumeHome()
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -70,7 +70,7 @@ public class ResumePresenter extends BasePresenter {
     if (!TextUtils.isEmpty(fair_id)){
       params.put("fair_id", fair_id);
     }
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .qcGetOtherResumeDetail(resumeId, params)
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -87,7 +87,7 @@ public class ResumePresenter extends BasePresenter {
   }
 
   public void queryEducations() {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryEducations().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<EduExpListWrap>>() {
@@ -125,7 +125,7 @@ public class ResumePresenter extends BasePresenter {
   }
 
   public void queryWorkExps() {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryWorkExps().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<WorkExpListWrap>>() {
@@ -144,7 +144,7 @@ public class ResumePresenter extends BasePresenter {
   }
 
   public void queryExps() {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
+    RxRegiste(restRepository.createRxJava1Api(GetApi.class)
         .queryCertifications().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<CertificateListWrap>>() {
@@ -165,7 +165,7 @@ public class ResumePresenter extends BasePresenter {
   public void starResume(String resumeId) {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("resume_id", resumeId);
-    RxRegiste(restRepository.createPostApi(PostApi.class)
+    RxRegiste(restRepository.createRxJava1Api(PostApi.class)
         .favoriteResume(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -180,7 +180,7 @@ public class ResumePresenter extends BasePresenter {
   }
 
   public void unStarResume(String resumeId) {
-    RxRegiste(restRepository.createPostApi(PostApi.class)
+    RxRegiste(restRepository.createRxJava1Api(PostApi.class)
         .cancelStarResume(resumeId).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

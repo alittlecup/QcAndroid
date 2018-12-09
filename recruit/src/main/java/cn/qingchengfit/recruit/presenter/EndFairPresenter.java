@@ -41,7 +41,7 @@ public class EndFairPresenter extends BasePresenter {
 
   public void queryEndFairList() {
     if (!loginStatus.isLogined()) return;
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .qcGetEndFair().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<EndFairTopsWrap>>() {

@@ -60,12 +60,12 @@ public class StudentModel implements IStudentModel {
 
 
   @Override public Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission() {
-    return repository.createGetApi(PosApi.class)
+    return repository.createRxJava1Api(PosApi.class)
         .qcGetCardBundldStudents(gymWrapper.getGymId(),gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
-    return repository.createGetApi(PosApi.class)
+    return repository.createRxJava1Api(PosApi.class)
         .qcCreateStudent(gymWrapper.getGymId(),gymWrapper.getParams(),body);
   }
 

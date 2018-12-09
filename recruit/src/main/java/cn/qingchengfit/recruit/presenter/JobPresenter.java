@@ -49,7 +49,7 @@ public class JobPresenter extends BasePresenter {
    * 发布职位
    */
   public void publishJob(JobBody body) {
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class).qcPublishPosition(body)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class).qcPublishPosition(body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -68,7 +68,7 @@ public class JobPresenter extends BasePresenter {
    * 修改
    */
   public void editJob(String jobid, JobBody body) {
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .qcEditPosition(jobid, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -83,7 +83,7 @@ public class JobPresenter extends BasePresenter {
   }
 
   public void modifyJob(String jobId, JobBody body) {
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class).editPosition(jobId, body)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class).editPosition(jobId, body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -99,7 +99,7 @@ public class JobPresenter extends BasePresenter {
   }
 
   public void queryJob(String jobid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryJobDetail(jobid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobDetailWrap>>() {
@@ -116,7 +116,7 @@ public class JobPresenter extends BasePresenter {
   }
 
   public void queryStaffJob(String jobid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .querystaffJobDetail(jobid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobDetailWrap>>() {
@@ -137,7 +137,7 @@ public class JobPresenter extends BasePresenter {
    * 获取可邀约的职位列表
    */
   public void getInviteJobs(String fairid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class).qcGetInviteJobs(fairid)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class).qcGetInviteJobs(fairid)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -154,7 +154,7 @@ public class JobPresenter extends BasePresenter {
   }
 
   public void queryEditPermiss(String gymid, String key) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class).queryOnepermission(gymid, key)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class).queryOnepermission(gymid, key)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -198,7 +198,7 @@ public class JobPresenter extends BasePresenter {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("job_id", jobid);
     params.put("published", true);
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .sendResume(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -222,7 +222,7 @@ public class JobPresenter extends BasePresenter {
   public void starPosition(Object jobid) {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("id", jobid);
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .starJob(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -238,7 +238,7 @@ public class JobPresenter extends BasePresenter {
    * 取消收藏职位
    */
   public void unstarPosition(String jobid) {
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .cancelStarJob(jobid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -254,7 +254,7 @@ public class JobPresenter extends BasePresenter {
 
   public void invitePosition(List<String> jobs, String resumeId) {
     InviteBody body = InviteBody.build(jobs, resumeId);
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .qcInvitePosition(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -269,7 +269,7 @@ public class JobPresenter extends BasePresenter {
   }
 
   public void queryGymDetail(String gymId){
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryGymsDetail(gymId).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymWrap>>() {

@@ -158,7 +158,7 @@ public class JobfairSignUpFragment extends BaseFragment {
     HashMap<String, Object> p = new HashMap<>();
     p.put("fair_id", jobfair.id);
     p.put("gym_id", gym.getId());
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .joinFair(p).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

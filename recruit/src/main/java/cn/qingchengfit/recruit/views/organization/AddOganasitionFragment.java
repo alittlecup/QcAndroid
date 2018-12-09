@@ -110,7 +110,7 @@ public class AddOganasitionFragment extends BaseFragment {
       Toast.makeText(getActivity(), "请填写正确的联系方式", Toast.LENGTH_SHORT).show();
       return;
     }
-    RxRegiste(restRepository.createGetApi(PostApi.class)
+    RxRegiste(restRepository.createRxJava1Api(PostApi.class)
         .qcAddOrganization(
             new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), workexpeditDescripe.getText().toString()))
         .onBackpressureBuffer()

@@ -30,7 +30,7 @@ public class RecruitGymPresenter extends BasePresenter {
   }
 
   public void saveInfo(String gymid, RecruitGymBody gymBody) {
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class).editGymIntro(gymid, gymBody)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class).editGymIntro(gymid, gymBody)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -46,7 +46,7 @@ public class RecruitGymPresenter extends BasePresenter {
   }
 
   public void queryGymInfo(String gymid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryGymInfo(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymWrap>>() {

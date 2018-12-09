@@ -396,7 +396,7 @@ import rx.schedulers.Schedulers;
     }
     showLoading();
     if (mTitle) {
-      RxRegiste(restRepository.createGetApi(PostApi.class)
+      RxRegiste(restRepository.createRxJava1Api(PostApi.class)
           .updateCertificate(certificatesEntity.getId(), addCertificate)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -407,7 +407,7 @@ import rx.schedulers.Schedulers;
             }
           }, new NetWorkThrowable()));
     } else {
-      RxRegiste(restRepository.createGetApi(PostApi.class)
+      RxRegiste(restRepository.createRxJava1Api(PostApi.class)
           .addCertificate(addCertificate).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcResponse>() {

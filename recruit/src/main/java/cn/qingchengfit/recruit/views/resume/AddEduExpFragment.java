@@ -149,7 +149,7 @@ import rx.schedulers.Schedulers;
         }
         showLoading();
         if (education == null) {
-          RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+          RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
               .addEducation(new Education.Builder().education(curDegree)
                   .name(civSchoolName.getContent())
                   .major(civSpeciality.getContent())
@@ -171,7 +171,7 @@ import rx.schedulers.Schedulers;
                 }
               }));
         } else {
-          RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+          RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
               .updateEducation(education.id, new Education.Builder().education(curDegree)
                   .name(civSchoolName.getContent())
                   .major(civSpeciality.getContent())

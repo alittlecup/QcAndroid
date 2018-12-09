@@ -24,7 +24,7 @@ public class ResumePostPresenter extends BasePresenter {
   }
 
   public void editResume(ResumeBody body) {
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .updateResume(body)
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()

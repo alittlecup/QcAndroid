@@ -178,7 +178,7 @@ import rx.schedulers.Schedulers;
 
   void putWorkExp() {
     showLoading();
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class)
         .updateWorkExp(experiencesEntity.id, new WorkExp.Builder().group_is_hidden(!swGroup.isExpanded())
             .private_is_hidden(!swPrivate.isExpanded())
             .sale_is_hidden(!swSale.isExpanded())

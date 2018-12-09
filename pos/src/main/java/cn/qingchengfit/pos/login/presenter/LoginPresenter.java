@@ -46,7 +46,7 @@ public class LoginPresenter extends BasePresenter {
     params.put("phone", phone);
     params.put("gym_id", gymWrapper.id());
     params.put("area_code", "+86");
-    RxRegiste(qcRestRepository.createPostApi(PosApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PosApi.class)
         .qcGetCode(
             new GetCodeBody.Builder().phone(phone).gym_id(gymWrapper.id()).area_code("+86").build())
         .onBackpressureBuffer()
@@ -66,7 +66,7 @@ public class LoginPresenter extends BasePresenter {
   }
 
   public void qcLogin(LoginBody loginBody) {
-    RxRegiste(qcRestRepository.createPostApi(PosApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PosApi.class)
         .qcLogin(loginBody)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

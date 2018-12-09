@@ -50,7 +50,7 @@ public class BillModel implements IBillModel {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    billApi = repository.createGetApi(BillApi.class);
+    billApi = repository.createRxJava1Api(BillApi.class);
   }
 
   @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> directPay(long amount) {

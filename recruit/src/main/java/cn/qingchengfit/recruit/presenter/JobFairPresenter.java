@@ -51,7 +51,7 @@ public class JobFairPresenter extends BasePresenter {
     } else {
       params.put("end__lt", DateUtils.getStringToday());
     }
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryJobFairs(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobFariListWrap>>() {
@@ -69,7 +69,7 @@ public class JobFairPresenter extends BasePresenter {
    * 我的招聘会（工作人员）
    */
   public void queryStaffMyJobFairs(String gymid) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryStaffJobFairs(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobFairOrderlistWrap>>() {
@@ -94,7 +94,7 @@ public class JobFairPresenter extends BasePresenter {
    * 我的招聘会（应聘人员）
    */
   public void queryUserMyJobFairs() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryUserMyJobFairs().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobFariListWrap>>() {

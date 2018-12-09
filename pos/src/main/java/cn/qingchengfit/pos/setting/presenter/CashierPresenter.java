@@ -44,7 +44,7 @@ public class CashierPresenter extends BasePresenter {
   }
 
   public void qcGetCashier() {
-    RxRegiste(qcRestRepository.createGetApi(PosApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PosApi.class)
         .qcGetCashier(gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -68,7 +68,7 @@ public class CashierPresenter extends BasePresenter {
     params.put("phone", phone);
     params.put("gender", gender);
     params.put("gym_id", gymWrapper.id());
-    RxRegiste(qcRestRepository.createPostApi(PosApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PosApi.class)
         .qcAddCashier(new CashierBody.Builder().username(username)
             .phone(phone)
             .gender(gender)
@@ -91,7 +91,7 @@ public class CashierPresenter extends BasePresenter {
   public void onDelete(String cashierId, String gym_id) {
     HashMap<String, Object> params = new HashMap<>();
     params.put("gym_id", gymWrapper.id());
-    RxRegiste(qcRestRepository.createPostApi(PosApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PosApi.class)
         .qcDeleteCashier(cashierId, params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -108,7 +108,7 @@ public class CashierPresenter extends BasePresenter {
   }
 
   public void onModifyCashier(String cashierId, String username, String phone, int gender) {
-    RxRegiste(qcRestRepository.createPostApi(PosApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(PosApi.class)
         .qcModifyCashier(cashierId,
             new CashierBody.Builder().username(username).phone(phone).gender(gender).build())
         .onBackpressureBuffer()

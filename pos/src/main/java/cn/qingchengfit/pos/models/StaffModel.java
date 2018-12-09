@@ -48,7 +48,7 @@ public class StaffModel implements IStaffModel {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    staffApi = repository.createGetApi(StaffApi.class);
+    staffApi = repository.createRxJava1Api(StaffApi.class);
   }
 
   @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {

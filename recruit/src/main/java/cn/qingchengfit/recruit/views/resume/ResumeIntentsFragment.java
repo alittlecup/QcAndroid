@@ -164,7 +164,7 @@ import rx.schedulers.Schedulers;
   }
 
   public void freshData() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryMyResumeIntents()
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
@@ -197,7 +197,7 @@ import rx.schedulers.Schedulers;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         showLoading();
-        RxRegiste(qcRestRepository.createGetApi(PostApi.class).updateResume(body)
+        RxRegiste(qcRestRepository.createRxJava1Api(PostApi.class).updateResume(body)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

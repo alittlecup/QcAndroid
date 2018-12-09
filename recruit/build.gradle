@@ -9,15 +9,12 @@ def annotations = rootProject.ext.annotations
 dependencies {
 
   addApiComponent("qcim",true)
-  addComponent("qcbase",true)
-  implementation dependens["fragmentargs"]
+  addComponent("qcbase",false)
   implementation dependens["gravitysnaphelper"]
 
   annotationProcessor annotations["dagger-compiler"]
   annotationProcessor annotations["dagger-android-processor"]
   annotationProcessor annotations["fragmentargs"]
 
-  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:3.0.2"
-  implementation "com.hannesdorfmann.fragmentargs:annotation:3.0.2"
 }
 

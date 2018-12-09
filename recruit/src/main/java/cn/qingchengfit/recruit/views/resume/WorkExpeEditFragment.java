@@ -294,10 +294,10 @@ import static android.text.TextUtils.isEmpty;
     }
 
     if (workExp != null) {
-      ob = restRepository.createGetApi(PostApi.class).updateWorkExp(workExp.id, body.build());
+      ob = restRepository.createRxJava1Api(PostApi.class).updateWorkExp(workExp.id, body.build());
     } else {
       body.gym_id(curGym.id);
-      ob = restRepository.createGetApi(PostApi.class).addWorkExp(body.build());
+      ob = restRepository.createRxJava1Api(PostApi.class).addWorkExp(body.build());
     }
     showLoading();
     RxRegiste(ob.observeOn(AndroidSchedulers.mainThread())

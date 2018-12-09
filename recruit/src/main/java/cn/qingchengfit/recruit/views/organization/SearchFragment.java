@@ -206,7 +206,7 @@ public class SearchFragment extends BaseFragment {
     params.put("is_hot", "1");
     if (type == TYPE_GYM) {
       searchHottable.setText("热门健身房");
-      RxRegiste(restRepository.createGetApi(GetApi.class)
+      RxRegiste(restRepository.createRxJava1Api(GetApi.class)
           .qcHotGym(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcSerachGymRepsonse>() {
@@ -253,7 +253,7 @@ public class SearchFragment extends BaseFragment {
           }));
     } else if (type == TYPE_ORGANASITON) {
       searchHottable.setText("热门机构");
-      RxRegiste(restRepository.createGetApi(GetApi.class)
+      RxRegiste(restRepository.createRxJava1Api(GetApi.class)
           .qcHotOrganization(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcSearchOrganResponse>() {
@@ -356,7 +356,7 @@ public class SearchFragment extends BaseFragment {
     params.put("q", keyword);
     if (type == TYPE_GYM) {
 
-      RxRegiste(restRepository.createGetApi(GetApi.class)
+      RxRegiste(restRepository.createRxJava1Api(GetApi.class)
           .qcSearchGym(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcSerachGymRepsonse>() {
@@ -409,7 +409,7 @@ public class SearchFragment extends BaseFragment {
             }
           }));
     } else if (type == TYPE_ORGANASITON) {
-      RxRegiste(restRepository.createGetApi(GetApi.class)
+      RxRegiste(restRepository.createRxJava1Api(GetApi.class)
           .qcSearchOrganization(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcSearchOrganResponse>() {

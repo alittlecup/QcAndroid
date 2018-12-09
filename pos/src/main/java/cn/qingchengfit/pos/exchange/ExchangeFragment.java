@@ -84,7 +84,7 @@ public class ExchangeFragment extends BaseFragment {
     tvExchangeName.setText(getResources().getString(R.string.exchange_staff_info,
         loginStatus.getLoginUser().getUsername(), loginStatus.getLoginUser().phone));
 
-    sb = restRepository.createPostApi(PosApi.class)
+    sb = restRepository.createRxJava1Api(PosApi.class)
         .qcGetExchange(gymWrapper.id())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())

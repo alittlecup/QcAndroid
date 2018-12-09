@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,14 +11,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-
-
-
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -52,7 +46,8 @@ public class RecruitPublishShareDialog extends DialogFragment {
 
   private String wechat_code;
 
-  public static RecruitPublishShareDialog newInstance(String title, String text, String img, String url) {
+  public static RecruitPublishShareDialog newInstance(String title, String text, String img,
+      String url) {
     Bundle args = new Bundle();
     args.putString("title", title);
     args.putString("text", text);
@@ -63,7 +58,8 @@ public class RecruitPublishShareDialog extends DialogFragment {
     return fragment;
   }
 
-  public static RecruitPublishShareDialog newInstance(String title, String text, Bitmap img, String url) {
+  public static RecruitPublishShareDialog newInstance(String title, String text, Bitmap img,
+      String url) {
     Bundle args = new Bundle();
     args.putString("title", title);
     args.putString("text", text);
@@ -87,11 +83,8 @@ public class RecruitPublishShareDialog extends DialogFragment {
       } else {
         mUrl = mUrl + "?app=" + (AppUtils.getCurApp(getContext()) == 0 ? "coach" : "staff");
       }
-      try {
-        wechat_code = AppUtils.getManifestData(getActivity(), "WX_ID");
-      } catch (PackageManager.NameNotFoundException e) {
-        //e.printStackTrace();
-      }
+      wechat_code = AppUtils.getManifestData(getActivity(), "WX_ID");
+
       mBitmap = getArguments().getParcelable("bitmap");
     }
   }
@@ -150,14 +143,13 @@ public class RecruitPublishShareDialog extends DialogFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-
   }
 
   public int getLayoutRes() {
     return cn.qingchengfit.widgets.R.layout.fragment_share;
   }
 
- public void clickFriend() {
+  public void clickFriend() {
     Observable.create(new Observable.OnSubscribe<Boolean>() {
       @Override public void call(Subscriber<? super Boolean> subscriber) {
         sendToWx(true);
@@ -167,7 +159,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
     dismiss();
   }
 
- public void clickCircle() {
+  public void clickCircle() {
     Observable.create(new Observable.OnSubscribe<Boolean>() {
       @Override public void call(Subscriber<? super Boolean> subscriber) {
         sendToWx(false);
@@ -177,7 +169,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
     dismiss();
   }
 
- public void clickCopy() {
+  public void clickCopy() {
     ClipboardManager cmb =
         (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
     cmb.setPrimaryClip(ClipData.newPlainText("qingcheng", mUrl));
@@ -187,7 +179,7 @@ public class RecruitPublishShareDialog extends DialogFragment {
     dismiss();
   }
 
- public void close(){
+  public void close() {
     dismiss();
   }
 
@@ -237,5 +229,4 @@ public class RecruitPublishShareDialog extends DialogFragment {
 
     }
   }
-
 }

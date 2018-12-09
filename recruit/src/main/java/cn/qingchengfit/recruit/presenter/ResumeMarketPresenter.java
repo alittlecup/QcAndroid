@@ -32,7 +32,7 @@ public class ResumeMarketPresenter extends BasePresenter {
     if (refresh) page = pageTotal = 1;
     if (page <= pageTotal) {
       p.put("page", page);
-      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+      RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
           .queryResumeMarkets(p).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
@@ -55,7 +55,7 @@ public class ResumeMarketPresenter extends BasePresenter {
     if (refresh) page = pageTotal = 1;
     if (page <= pageTotal) {
       p.put("page", page);
-      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+      RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
           .queryStarredResume(p).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
@@ -87,7 +87,7 @@ public class ResumeMarketPresenter extends BasePresenter {
       p.put("page", page);
       p.put("job_id", jobid);
       p.put("status", status);
-      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+      RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
           .queryRecieveResume(p).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
@@ -119,7 +119,7 @@ public class ResumeMarketPresenter extends BasePresenter {
       p.put("page", page);
       p.put("job_id", jobid);
       p.put("status", status);
-      RxRegiste(qcRestRepository.createGetApi(GetApi.class).queryInvitedResume(p)
+      RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class).queryInvitedResume(p)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
@@ -143,7 +143,7 @@ public class ResumeMarketPresenter extends BasePresenter {
    * 某场招聘会下的简历列表
    */
   //public void queryJobFairResumes(String fairid) {
-  //  RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+  //  RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
   //      .queryJobFairResumes(fairid)
   //      .onBackpressureBuffer().subscribeOn(Schedulers.io())
   //      .observeOn(AndroidSchedulers.mainThread())
@@ -161,7 +161,7 @@ public class ResumeMarketPresenter extends BasePresenter {
   //}
 
   public void queryMyJobFairList() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+    RxRegiste(qcRestRepository.createRxJava1Api(GetApi.class)
         .queryMyJobFairs().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobFariListWrap>>() {
