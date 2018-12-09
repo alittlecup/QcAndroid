@@ -175,6 +175,7 @@ public class GymDetailFragment extends BaseFragment
   private GymExpireFragment mGymExpireDialog;
   private String mPreViewUrl;
   private boolean firstMonthClose;
+  private View view;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -183,7 +184,7 @@ public class GymDetailFragment extends BaseFragment
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
+    view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
     recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
     shopImg = (ImageView) view.findViewById(R.id.shop_img);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -305,7 +306,7 @@ public class GymDetailFragment extends BaseFragment
     RxBusAdd(EventLoginChange.class).delay(600, TimeUnit.MILLISECONDS)
         .subscribe(eventLoginChange -> setGymInfo());
     if (isSingleBrand()) {
-      view.findViewById(R.id.gym_bottom_export).setVisibility(View.GONE);
+      view.findViewById(R.id.include_bottom).setVisibility(View.GONE);
     }
     return view;
   }
@@ -315,6 +316,7 @@ public class GymDetailFragment extends BaseFragment
   }
 
   /**
+   * m
    * 刷新健身房的权限和数据
    */
   @Override public void onResume() {
