@@ -237,6 +237,7 @@ import rx.functions.Action1;
     });
     elAutoOpen.setVisibility(View.GONE);
     civSaler.setContent(loginStatus.staff_name());
+    presenter.setStaffId(loginStatus.staff_id());
 
     if (qcStudentBean != null) {
       civBindMenbers.setContent(qcStudentBean.username());
@@ -268,19 +269,6 @@ import rx.functions.Action1;
     rv.setLayoutManager(layoutManager);
     rv.setAdapter(commonFlexAdapter);
     presenter.getCardTplDetail();
-    //civRealMoney.addTextWatcher(new TextWatcher() {
-    //  @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    //
-    //  }
-    //
-    //  @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-    //    setPayMoney(s.toString());
-    //  }
-    //
-    //  @Override public void afterTextChanged(Editable s) {
-    //
-    //  }
-    //});
 
     return view;
   }

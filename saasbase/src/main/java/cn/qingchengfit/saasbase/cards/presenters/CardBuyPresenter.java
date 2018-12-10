@@ -91,11 +91,13 @@ public class CardBuyPresenter extends BasePresenter {
     cardBuyBody.setType(cate);
     cardCate = cate;
   }
-  public void setSignaturePath(String path){
-    cardBuyBody.signature=path;
+
+  public void setSignaturePath(String path) {
+    cardBuyBody.signature = path;
   }
-  public String getSignaturePath(){
-    return  cardBuyBody.signature;
+
+  public String getSignaturePath() {
+    return cardBuyBody.signature;
   }
 
   public void setOtherOption(boolean isOther) {
@@ -150,6 +152,11 @@ public class CardBuyPresenter extends BasePresenter {
   //}
   public void setSaler(String id) {
     cardBuyBody.setSeller_id(id);
+    cardBuyBody.staff_id=null;
+
+  }
+  public void setStaffId(String id){
+    cardBuyBody.staff_id=id;
   }
 
   /**
@@ -184,7 +191,7 @@ public class CardBuyPresenter extends BasePresenter {
     RxBusAdd(EventSelectedStudent.class).onBackpressureLatest()
         .subscribe(new BusSubscribe<EventSelectedStudent>() {
           @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
-            qcStudentBeans=eventSelectedStudent.getStudents();
+            qcStudentBeans = eventSelectedStudent.getStudents();
             view.bindStudent(eventSelectedStudent.getNameStr());
             cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
             choseStuIds = eventSelectedStudent.getIDlist();
@@ -201,7 +208,6 @@ public class CardBuyPresenter extends BasePresenter {
   }
 
   private List<QcStudentBean> qcStudentBeans;
-
 
   /**
    * 获取卡种类详情
