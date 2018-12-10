@@ -30,7 +30,7 @@ public class Leave {
     private Staff created_by;
     private Staff cancel_by;
     private int status;
-    private int price;
+    private float price;
 
     public OffDay toOffDay() {
         OffDay offDay = new OffDay();
@@ -38,7 +38,7 @@ public class Leave {
         offDay.cancel = status == Configs.OFFDAY_OFF;
         offDay.controler = offDay.cancel ? cancel_by.getUsername() : created_by.getUsername();
         offDay.time = offDay.cancel ? DateUtils.formatToMMFromServer(cancel_at) : DateUtils.formatToMMFromServer(created_at);
-        offDay.price = Integer.toString(price);
+        offDay.price = Float.toString(price);
         offDay.marks = remarks;
         offDay.start = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(start));
         offDay.end = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(end));
@@ -135,11 +135,11 @@ public class Leave {
         this.status = status;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }
