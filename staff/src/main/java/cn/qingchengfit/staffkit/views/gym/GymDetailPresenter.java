@@ -12,6 +12,7 @@ import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
@@ -19,6 +20,7 @@ import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -179,4 +181,28 @@ public class GymDetailPresenter extends BasePresenter {
         });
   }
 
+  public void quitGym() {
+    RxRegiste(restRepository.getStaffAllApi()
+        .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              gymDetailView.onQuitGym();
+            } else {
+              ToastUtils.show(qcResponse.getMsg());
+              gymDetailView.onFailed();
+            }
+            ;
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            gymDetailView.onFailed();
+          }
+        })
+
+    );
+  }
 }

@@ -56,6 +56,7 @@ public interface GymDetailView extends PView {
     void onSpecialPoint(int count);
     void onMiniProgram(MiniProgram miniProgram);
 
+    void onQuitGym();
 
     void onSuperUser(Staff su);
 }

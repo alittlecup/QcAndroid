@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -46,25 +47,23 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.events.EventChartTitle;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
-import cn.qingchengfit.saascommon.qrcode.views.QRScanActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.saascommon.views.CommonDialog;
-import cn.qingchengfit.saascommon.views.CommonSimpleTextActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
-import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountPageParams;
+import cn.qingchengfit.saascommon.events.EventChartTitle;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
@@ -78,6 +77,8 @@ import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
+import cn.qingchengfit.staffkit.views.login.SplashActivity;
+import cn.qingchengfit.staffkit.views.main.SettingFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
@@ -151,7 +152,6 @@ public class GymDetailFragment extends BaseFragment
   Button mRechargeBtn;
   ImageView tagPro;
   LinearLayout layoutCharge;
-  LinearLayout llScan;
   CompatTextView tvPrice;
 
   @Inject GymDetailPresenter gymDetailPresenter;
@@ -175,7 +175,6 @@ public class GymDetailFragment extends BaseFragment
   private GymExpireFragment mGymExpireDialog;
   private String mPreViewUrl;
   private boolean firstMonthClose;
-  private View view;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -184,7 +183,7 @@ public class GymDetailFragment extends BaseFragment
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
+    View view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
     recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
     shopImg = (ImageView) view.findViewById(R.id.shop_img);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -193,7 +192,6 @@ public class GymDetailFragment extends BaseFragment
     toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
     gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
     toolbarLeft = (TextView) view.findViewById(R.id.toolbar_left);
-    llScan = view.findViewById(R.id.ll_scan);
     layoutCollapsed = (AppBarLayout) view.findViewById(R.id.layout_collapsed);
     scheduleNotificationCount = (TextView) view.findViewById(R.id.schedule_notification_count);
     vpCharts = (ViewPager) view.findViewById(R.id.vp_charts);
@@ -316,7 +314,6 @@ public class GymDetailFragment extends BaseFragment
   }
 
   /**
-   * m
    * 刷新健身房的权限和数据
    */
   @Override public void onResume() {
@@ -414,12 +411,28 @@ public class GymDetailFragment extends BaseFragment
       super.initToolbar(toolbar);
     }
     toolbar.getMenu().clear();
-    llScan.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intent = new Intent(getContext(), QRScanActivity.class);
-        intent.putExtra("title", "扫描二维码");
-        intent.putExtra("point_text", "将取景框对准二维码，即可自动扫描");
-        startActivityForResult(intent, 1001);
+    toolbar.inflateMenu(R.menu.menu_flow);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+          getFragmentManager().beginTransaction()
+              .replace(mCallbackActivity.getFragId(), new SettingFragment())
+              .addToBackStack(null)
+              .commit();
+        } else if (item.getItemId() == R.id.action_notifi) {
+
+        } else if (item.getItemId() == R.id.action_flow) {
+          if (dialogList == null) {
+            dialogList = new DialogList(getContext());
+            List<String> actions = new ArrayList<String>();
+            if (getActivity() instanceof MainActivity) actions.add("品牌管理");
+            actions.add("离职退出该场馆");
+            actions.add("取消");
+            dialogList.list(actions, GymDetailFragment.this);
+          }
+          dialogList.show();
+        }
+        return true;
       }
     });
 
@@ -505,23 +518,9 @@ public class GymDetailFragment extends BaseFragment
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == 1001) {
-        if (null != data) {
-          String content = data.getStringExtra("content");
-          if (!TextUtils.isEmpty(content)) {
-            if (content.startsWith("DIANPING-QINGCHENG-SHOPMAPPING")) {
-              routeTo("dianping", "/dianping/account",
-                  new DianPingAccountPageParams().barCode(content).build());
-            } else if (content.startsWith("http")) {
-              WebActivity.startWeb(content, getContext());
-            } else {
-              Intent intent = new Intent(getActivity(), CommonSimpleTextActivity.class);
-              intent.putExtra("content", content);
-              startActivity(intent);
-            }
-          }
-        }
-      }
+    }
+    if (requestCode == RESULT_STAFF_MANAGE && resultCode == 111) {
+      onQuitGym();
     }
   }
 
@@ -778,12 +777,36 @@ public class GymDetailFragment extends BaseFragment
       //品牌管理
       if (getActivity() instanceof MainActivity && position == 0) {
         gymDetailPresenter.manageBrand();
+      } else if ((getActivity() instanceof MainActivity && position == 1) || (position
+          == 0)) {//离职退出场馆
+        if (quitDialog == null) {
+          quitDialog = new QuitGymFragment();
+          quitDialog.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              gymDetailPresenter.quitGym();
+            }
+          });
+        }
+        quitDialog.show(getFragmentManager(), "");
+      } else {
+
       }
     }
   }
 
   void onHowtoUse() {
     WebActivity.startWeb(Router.WEB_HOW_TO_USE, getContext());
+  }
+
+  /**
+   * 退出健身房
+   */
+
+  @Override public void onQuitGym() {
+    if (getActivity() instanceof MainActivity) {
+      startActivity(new Intent(getActivity(), SplashActivity.class));
+      getActivity().finish();
+    }
   }
 
   /**
