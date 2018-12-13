@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <RadioButton
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/item_text"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:background="@drawable/turnovers_choose_bg"
+      android:button="@null"
+      >
+
+  </RadioButton>
+</layout>

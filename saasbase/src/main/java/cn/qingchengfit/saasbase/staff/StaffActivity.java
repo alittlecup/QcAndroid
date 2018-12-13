@@ -5,6 +5,8 @@ import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.staff.views.NewSalersListFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
+import cn.qingchengfit.saasbase.turnovers.TurnoverOrderDetailFragment;
+import cn.qingchengfit.saasbase.turnovers.TurnoversHomePage;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -28,13 +30,10 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/9/29.
  */
 @Trunk(fragments = {
-    ChooseSalerFragment.class, NewSalersListFragment.class,
-  TrainerChooseFragment.class, StaffAddFragment.class
-})
-public class StaffActivity extends SaasContainerActivity  {
+    ChooseSalerFragment.class, NewSalersListFragment.class, TrainerChooseFragment.class,
+    StaffAddFragment.class, TurnoversHomePage.class, TurnoverOrderDetailFragment.class
+}) public class StaffActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "staff";
   }
-
-
 }

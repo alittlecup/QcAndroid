@@ -55,7 +55,7 @@
               android:textSize="14sp"
               style="@style/QcTextStyleMediumGrey"
               />
-          <cn.qingchengfit.student.widget.QcPieChart
+          <cn.qingchengfit.saascommon.widget.QcPieChart
               android:id="@+id/pie_chart"
               android:layout_marginTop="20dp"
               android:layout_width="170dp"

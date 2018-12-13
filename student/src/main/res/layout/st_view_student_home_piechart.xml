@@ -21,7 +21,7 @@
         android:layout_height="170dp"
         >
 
-      <cn.qingchengfit.student.widget.QcPieChart
+      <cn.qingchengfit.saascommon.widget.QcPieChart
           android:id="@+id/pie_chart"
           android:layout_width="170dp"
           android:layout_height="170dp"

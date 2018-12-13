@@ -283,6 +283,8 @@ public class GymMoreFragment extends BaseFragment
 
             FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
             mDatas.add(new GymFuntionItem(
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SHOP_TURNOVERS), runFuntion));
+            mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_ALI11), runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_ALI), runFuntion));
@@ -325,9 +327,7 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     runFuntion));
-            mDatas.add(
-                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
-                    runFuntion));
+
 
             FunHeaderItem financialFuntion = new FunHeaderItem("财务与报表");
             mDatas.add(new GymFuntionItem(

@@ -131,6 +131,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   /**
    * 运营推广
    */
+  public static final String MODULE_SHOP_TURNOVERS = "/shop-turnovers";
   public static final String MODULE_OPERATE_SCORE = "/score/rank";
   public static final String MODULE_OPERATE_ACTIVITY = "/activity/setting";
   public static final String MODULE_OPERATE_AD = "/shop/home/setting";

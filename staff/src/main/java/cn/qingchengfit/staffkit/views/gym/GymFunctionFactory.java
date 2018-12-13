@@ -71,6 +71,7 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_GROUP;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_PRIVATE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_SHOP;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SHOP_TURNOVERS;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SMARTGYM_SMART;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_STUDENT;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_STUDENT_BODY_TEST;
@@ -171,8 +172,11 @@ public class GymFunctionFactory {
         return R.drawable.moudule_op_registe;
       case MODULE_OPERTAT_KOUBEI:
         return R.drawable.moudule_op_koubei;
+      case MODULE_SHOP_TURNOVERS:
+        return R.drawable.ic_icon_turnover;
       case MODULE_OPERATE_SCORE:
         return R.drawable.moudule_op_score;
+
       case MODULE_OPERATE_COMPETITION:
         return R.drawable.moudule_op_competition;
 
@@ -260,6 +264,7 @@ public class GymFunctionFactory {
       case MODULE_OPERATE_REGIST:
       case MODULE_OPERTAT_KOUBEI:
       case MODULE_OPERATE_SCORE:
+      case MODULE_SHOP_TURNOVERS:
       case MODULE_WECHAT:
       case MODULE_OPERATE_COUPON:
       case MODULE_OPERATE_RED_EVELOP_TPL:
@@ -337,6 +342,8 @@ public class GymFunctionFactory {
         return R.string.module_op_registe;
       case MODULE_OPERTAT_KOUBEI:
         return R.string.module_op_koubei;
+      case MODULE_SHOP_TURNOVERS:
+        return R.string.module_shop_turnovers;
       case MODULE_OPERATE_SCORE:
         return R.string.module_op_score;
       case MODULE_OPERATE_COMPETITION:
@@ -586,6 +593,9 @@ public class GymFunctionFactory {
         //  fragment.routeTo("dianping", "/dianping/success",
         //      new DianPingAccountSuccessPageParams().gymName(coachService.getName()).build());
         //}
+        return;
+      case MODULE_SHOP_TURNOVERS:
+        fragment.routeTo("staff", "/turnover/home", null);
         return;
       case MODULE_OPERATE_SCORE:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
