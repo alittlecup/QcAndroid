@@ -89,7 +89,6 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
   }
 
   private void showTipDialog(final TextView editText) {
-
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }

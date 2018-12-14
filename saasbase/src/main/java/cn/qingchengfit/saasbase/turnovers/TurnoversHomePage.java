@@ -12,8 +12,10 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
+import java.util.List;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
     extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM> {
@@ -22,13 +24,25 @@ import java.util.ArrayList;
   TurnoverChartFragment chartFragment;
 
   @Override protected void subscribeUI() {
-
+    mViewModel.getOrderDatas().observe(this, orderDatas -> {
+      if (orderDatas != null && !orderDatas.isEmpty()) {
+        List<TurnoverOrderItem> items = new ArrayList<>();
+        for (ITurnoverOrderItemData data : orderDatas) {
+          items.add(new TurnoverOrderItem(data));
+        }
+        adapter.updateDataSet(items);
+      } else {
+        //adapter.updateDataSet();
+      }
+    });
   }
 
   @Override
   public TurnoversHomePageBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return TurnoversHomePageBinding.inflate(inflater, container, false);
+    mBinding = TurnoversHomePageBinding.inflate(inflater, container, false);
+    mBinding.setPage(this);
+    return mBinding;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -40,6 +54,16 @@ import java.util.ArrayList;
     stuff(R.id.fl_chart, chartFragment);
     initToolbar();
     initRecyclerView();
+  }
+
+  public void onQcRadioGroupButtonClick(View view, int index) {
+    if (((QcFilterToggle) view).isChecked()) {
+      filterFragement.dismiss();
+      mBinding.flFilter.setVisibility(View.GONE);
+    } else {
+      filterFragement.showPage(index);
+      mBinding.flFilter.setVisibility(View.VISIBLE);
+    }
   }
 
   private void initToolbar() {

@@ -213,7 +213,7 @@ ext {
                   "flabellum"                   : "com.anbillon.flabellum:flabellum:${libraries.flabellum}",
 
                   //MPAndroidChart 图表库
-                  "MPAndroidChart"              : "com.github.PhilJay:MPAndroidChart:v3.0.1",
+                  "MPAndroidChart"              : "com.github.PhilJay:MPAndroidChart:v3.1.0-alpha",
 
                   //pinyin4j
                   "pinyin"                      : 'libs/pinyin4j-2.5.0.jar',

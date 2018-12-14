@@ -2,7 +2,7 @@ package cn.qingchengfit.saasbase.turnovers;
 
 import android.os.Parcel;
 
-public class TestData implements ITurnoverFilterItemData {
+public class TestData implements ITurnoverFilterItemData ,ITurnoverOrderItemData{
   private String desc;
   private String sign;
 
@@ -41,4 +41,32 @@ public class TestData implements ITurnoverFilterItemData {
       return new TestData[size];
     }
   };
+
+  @Override public String getPayType() {
+    return "支";
+  }
+
+  @Override public String getFeatureName() {
+    return "购卡";
+  }
+
+  @Override public String getMoney() {
+    return "35";
+  }
+
+  @Override public String getSellerName() {
+    return desc;
+  }
+
+  @Override public String getCheckoutName() {
+    return "田野";
+  }
+
+  @Override public String getDate() {
+    return "2019-08-99";
+  }
+
+  @Override public String getID() {
+    return "12";
+  }
 }

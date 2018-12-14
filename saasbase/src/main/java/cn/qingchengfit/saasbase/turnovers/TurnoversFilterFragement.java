@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.List;
 
 public class TurnoversFilterFragement extends BaseFilterFragment {
   private TurnoversVM mViewModel;
@@ -22,22 +23,23 @@ public class TurnoversFilterFragement extends BaseFilterFragment {
   }
 
   private void initFragment() {
+    List<ITurnoverFilterItemData> payments = mViewModel.getPayments().getValue();
+    paymentChooseFramgnet = TurnoverFilterSimpleChooseFragment.newInstance(payments,
+        new FlexibleAdapter.OnItemClickListener() {
+          @Override public boolean onItemClick(int position) {
+            mViewModel.filterPayment.setValue(payments.get(position).getText());
+            return false;
+          }
+        });
+    List<ITurnoverFilterItemData> features = mViewModel.getFeature().getValue();
+    featureChooseFramgnet = TurnoverFilterSimpleChooseFragment.newInstance(features,
+        new FlexibleAdapter.OnItemClickListener() {
+          @Override public boolean onItemClick(int position) {
+            mViewModel.filterFeature.setValue(features.get(position).getText());
 
-    paymentChooseFramgnet =
-        TurnoverFilterSimpleChooseFragment.newInstance(mViewModel.getPayments().getValue(),
-            new FlexibleAdapter.OnItemClickListener() {
-              @Override public boolean onItemClick(int position) {
-
-                return false;
-              }
-            });
-    featureChooseFramgnet =
-        TurnoverFilterSimpleChooseFragment.newInstance(mViewModel.getFeature().getValue(),
-            new FlexibleAdapter.OnItemClickListener() {
-              @Override public boolean onItemClick(int position) {
-                return false;
-              }
-            });
+            return false;
+          }
+        });
     timeFilterFragment = new TurnoversTimeFilterFragment();
     sellerFilterFragment = new TurnoverGirdSellerFilterFragment();
   }

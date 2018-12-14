@@ -20,7 +20,6 @@ public class QcPieChart extends PieChart {
   }
 
 
-
   private void initStyle() {
     setUsePercentValues(true);
     getDescription().setEnabled(false);
