@@ -13,9 +13,11 @@ import cn.qingchengfit.card.bean.UserWithCoupons;
 import cn.qingchengfit.card.databinding.CaChooseCouponsFragmentBinding;
 import cn.qingchengfit.card.event.ChooseCouponsEvent;
 import cn.qingchengfit.card.item.ChooseCouponsItem;
+import cn.qingchengfit.card.routers.CardParamsInjector;
 import cn.qingchengfit.card.view.BottomChooseCouponDialog;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -29,10 +31,14 @@ import java.util.List;
     implements FlexibleAdapter.OnItemClickListener {
 
   CommonFlexAdapter adapter;
-  @Need float prices;
+  @Need Float prices;
   @Need Coupon chooseCoupon;
   @Need ArrayList<String> user_ids;
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    CardParamsInjector.inject(this);
+  }
 
   @Override protected void subscribeUI() {
     mViewModel.getDatas().observe(this, userWithCoupons -> {
@@ -70,19 +76,19 @@ import java.util.List;
         @Override public void onClick(View v) {
           RxBus.getBus().post(new ChooseCouponsEvent(null));
           mBinding.llBottomSelected.setVisibility(View.GONE);
-
         }
       });
       mBinding.llBottomSelected.setVisibility(View.VISIBLE);
-    }else{
+    } else {
       mBinding.llBottomSelected.setVisibility(View.GONE);
-
     }
   }
 
   private void initRecyclerView() {
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
+    mBinding.recyclerView.addItemDecoration(
+        new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
   }
 
   private void initToolbar() {

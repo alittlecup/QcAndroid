@@ -21,8 +21,8 @@ public class Coupon implements Parcelable {
   private ShopBean shop;
   private String end;
   private String description;
-  private int discount;
-  private int real_price;
+  private float discount;
+  private float real_price;
   private String start;
   private CouponTplBean coupon_tpl;
   private int id;
@@ -52,19 +52,19 @@ public class Coupon implements Parcelable {
     this.description = description;
   }
 
-  public int getDiscount() {
+  public float getDiscount() {
     return discount;
   }
 
-  public void setDiscount(int discount) {
+  public void setDiscount(float discount) {
     this.discount = discount;
   }
 
-  public int getReal_price() {
+  public float getReal_price() {
     return real_price;
   }
 
-  public void setReal_price(int real_price) {
+  public void setReal_price(float real_price) {
     this.real_price = real_price;
   }
 
@@ -162,25 +162,25 @@ public class Coupon implements Parcelable {
      * coupon_type : 1
      */
 
-    private int account;
-    private int reach_money;
+    private float account;
+    private float reach_money;
     private int id;
     private UseConditionBean use_condition;
     private int coupon_type;
 
-    public int getAccount() {
+    public float getAccount() {
       return account;
     }
 
-    public void setAccount(int account) {
+    public void setAccount(float account) {
       this.account = account;
     }
 
-    public int getReach_money() {
+    public float getReach_money() {
       return reach_money;
     }
 
-    public void setReach_money(int reach_money) {
+    public void setReach_money(float reach_money) {
       this.reach_money = reach_money;
     }
 
@@ -302,8 +302,8 @@ public class Coupon implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-      dest.writeInt(this.account);
-      dest.writeInt(this.reach_money);
+      dest.writeFloat(this.account);
+      dest.writeFloat(this.reach_money);
       dest.writeInt(this.id);
       dest.writeParcelable(this.use_condition, flags);
       dest.writeInt(this.coupon_type);
@@ -313,8 +313,8 @@ public class Coupon implements Parcelable {
     }
 
     protected CouponTplBean(Parcel in) {
-      this.account = in.readInt();
-      this.reach_money = in.readInt();
+      this.account = in.readFloat();
+      this.reach_money = in.readFloat();
       this.id = in.readInt();
       this.use_condition = in.readParcelable(UseConditionBean.class.getClassLoader());
       this.coupon_type = in.readInt();
@@ -342,8 +342,8 @@ public class Coupon implements Parcelable {
     dest.writeParcelable(this.shop, flags);
     dest.writeString(this.end);
     dest.writeString(this.description);
-    dest.writeInt(this.discount);
-    dest.writeInt(this.real_price);
+    dest.writeFloat(this.discount);
+    dest.writeFloat(this.real_price);
     dest.writeString(this.start);
     dest.writeParcelable(this.coupon_tpl, flags);
     dest.writeInt(this.id);
@@ -354,8 +354,8 @@ public class Coupon implements Parcelable {
     this.shop = in.readParcelable(ShopBean.class.getClassLoader());
     this.end = in.readString();
     this.description = in.readString();
-    this.discount = in.readInt();
-    this.real_price = in.readInt();
+    this.discount = in.readFloat();
+    this.real_price = in.readFloat();
     this.start = in.readString();
     this.coupon_tpl = in.readParcelable(CouponTplBean.class.getClassLoader());
     this.id = in.readInt();

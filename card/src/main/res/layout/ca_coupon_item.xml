@@ -9,11 +9,12 @@
       android:layout_height="90dp"
       android:background="@color/bg_white"
       android:orientation="horizontal"
+      android:layerType="software"
+      android:layout_marginBottom="10dp"
       >
     <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_width="80dp"
+        android:layout_height="90dp"
         android:background="@drawable/ca_coupon_background"
         >
       <TextView
@@ -71,9 +72,11 @@
           tools:text="限在线支付／约课 使用"
           />
     </LinearLayout>
-    <view
-        android:layout_width="1dp"
+    <TextView
+        android:layout_width="100dp"
         android:layout_height="match_parent"
+        android:layout_marginLeft="-49dp"
+        android:layout_marginRight="-49dp"
         android:alpha="0.5"
         android:background="@drawable/dotted_line"
         />

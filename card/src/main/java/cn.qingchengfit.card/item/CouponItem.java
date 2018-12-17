@@ -5,6 +5,7 @@ import cn.qingchengfit.card.R;
 import cn.qingchengfit.card.bean.Coupon;
 import cn.qingchengfit.card.databinding.CaCouponItemBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -33,6 +34,26 @@ public class CouponItem extends AbstractFlexibleItem<DataBindingViewHolder<CaCou
       DataBindingViewHolder<CaCouponItemBinding> holder, int position, List payloads) {
     CaCouponItemBinding mBinding = holder.getDataBinding();
     mBinding.tvName.setText(data.getDescription());
-    //mBinding.tvDesc.setText();
+    switch (data.getCoupon_tpl().getCoupon_type()) {
+      case 1:
+        mBinding.tvTips.setText("代金");
+        mBinding.tvTotal.setText(data.getCoupon_tpl().getAccount() + "元");
+        break;
+      case 2:
+        mBinding.tvTips.setText("满减");
+        mBinding.tvTotal.setText(data.getCoupon_tpl().getAccount() + "元");
+        break;
+      case 3:
+        mBinding.tvTips.setText("折扣");
+        mBinding.tvTotal.setText(data.getCoupon_tpl().getAccount() + "折");
+
+        break;
+    }
+
+    mBinding.tvDates.setText(
+        new StringBuilder().append(DateUtils.getYYYYMMDDfromServer(data.getStart()))
+            .append("-")
+            .append(DateUtils.getYYYYMMDDfromServer(data.getEnd())));
+    mBinding.tvDesc.setText(data.getCoupon_tpl().getUse_condition().getDescription());
   }
 }

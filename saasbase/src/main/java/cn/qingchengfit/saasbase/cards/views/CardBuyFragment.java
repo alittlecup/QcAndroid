@@ -310,6 +310,7 @@ import rx.functions.Action1;
               }
               commonFlexAdapter.addSelection(commonFlexAdapter.getItemCount() - 1);
               commonFlexAdapter.notifyDataSetChanged();
+              presenter.setmChosenOption(cardOptionCustom);
               showInputMoney(false, cardOptionCustom, cardOptionCustom.isLimit_days());
             }
           }
@@ -320,13 +321,16 @@ import rx.functions.Action1;
     ob = RxBus.getBus().register(PayEvent.class);
     ob.compose(this.<PayEvent>bindToLifecycle()).subscribe(new Action1<PayEvent>() {
       @Override public void call(PayEvent payEvent) {
-        if (payEvent != null && payEvent.getPayMethod() != null) {
-          patType = payEvent.getPayMethod().payType;
-          civPayMethod.setContent(payEvent.getPayMethod().name);
-          selectPos = payEvent.getPosition();
-        }
+        updatePayEvent(payEvent);
       }
     });
+  }
+  protected void updatePayEvent(PayEvent payEvent){
+    if (payEvent != null && payEvent.getPayMethod() != null) {
+      patType = payEvent.getPayMethod().payType;
+      civPayMethod.setContent(payEvent.getPayMethod().name);
+      selectPos = payEvent.getPosition();
+    }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

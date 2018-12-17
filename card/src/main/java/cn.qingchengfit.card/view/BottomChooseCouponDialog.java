@@ -3,7 +3,6 @@ package cn.qingchengfit.card.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import cn.qingchengfit.card.bean.Coupon;
@@ -22,7 +21,6 @@ public class BottomChooseCouponDialog extends BottomSheetDialog implements Flexi
   BottomChooseCouponDialogBinding mBinding;
   CommonFlexAdapter adapter;
 
-  private int type = SelectableAdapter.Mode.SINGLE;
 
   public BottomChooseCouponDialog(@NonNull Context context,
       List<Coupon> contents) {
@@ -48,9 +46,6 @@ public class BottomChooseCouponDialog extends BottomSheetDialog implements Flexi
     mBinding = BottomChooseCouponDialogBinding.inflate(LayoutInflater.from(context));
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(context));
     mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
-    mBinding.recyclerview.addItemDecoration(
-        new cn.qingchengfit.utils.DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-
     mBinding.imgClose.setOnClickListener(v -> cancel());
   }
 
@@ -80,10 +75,6 @@ public class BottomChooseCouponDialog extends BottomSheetDialog implements Flexi
      * @return true-表示可以修改选择，false-表示不可以选中新的点击
      */
     boolean onItemClick(int position);
-  }
-
-  public interface onConfirmClickListener {
-    void onItemClick(List<Integer> positions);
   }
 
   @Override public boolean onItemClick(int position) {

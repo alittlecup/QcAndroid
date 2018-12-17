@@ -20,6 +20,7 @@ import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.saasbase.cards.event.PayEvent;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.AppUtils;
@@ -64,7 +65,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       float price = presenter.getmChosenOption().getPrice();
       ArrayList<String> choseStuIds = presenter.getChoseStuIds();
       Bundle bundle = new Bundle();
-      bundle.putFloat("price", price);
+      bundle.putFloat("prices", price);
       bundle.putStringArrayList("user_ids", choseStuIds);
       if (coupon != null) {
         bundle.putParcelable("chooseCoupon", coupon);
@@ -91,7 +92,21 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       setPayMoney(presenter.getmChosenOption().getPrice());
     } else {
       mBindCoupons.setContent(coupon.getDescription());
-      //setPayMoney();
+    }
+  }
+
+  @Override protected void updatePayEvent(PayEvent payEvent) {
+    super.updatePayEvent(payEvent);
+    int payType = payEvent.getPayMethod().payType;
+    if (payType != 12 || payType != 7) {
+      mBindCoupons.setEnable(false);
+      mBindCoupons.setHint("优惠券仅支持在线支付使用");
+      mBindCoupons.setShowRight(false);
+    } else {
+      mBindCoupons.setEnable(true);
+      mBindCoupons.setHint("选择优惠券");
+      mBindCoupons.setShowRight(true);
+      updateCoupons(null);
     }
   }
 
@@ -101,8 +116,6 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     boolean canRoute = false;
     if (cardTplOption == null) {
       ToastUtils.show("请至少选择一种会员卡规格");
-    } else if (payMethod() != 12 && payMethod() != 7) {
-      ToastUtils.show("优惠券功能只支持线上支付");
     } else if (choseStuIds == null || choseStuIds.isEmpty()) {
       ToastUtils.show("请选择会员");
     } else {

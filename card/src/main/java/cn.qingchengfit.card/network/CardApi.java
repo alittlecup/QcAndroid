@@ -10,7 +10,6 @@ import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.model.responese.Sellers;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
-import io.reactivex.Flowable;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -67,6 +66,6 @@ public interface CardApi {
       @Path("id") String studentid, @QueryMap HashMap<String, Object> params);
 
   @GET("/api/v2/staffs/{staff_id}/cashier/useable/coupons/?show_all=1")
-  Flowable<QcDataResponse<CouponResponse>> qcLoadCoupons(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse<CouponResponse>> qcLoadCoupons(@Path("staff_id") String staffid,
       @QueryMap HashMap<String, Object> params);
 }
