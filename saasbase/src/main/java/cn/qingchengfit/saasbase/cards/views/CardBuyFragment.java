@@ -649,6 +649,10 @@ import rx.functions.Action1;
     return false;
   }
 
+  @Override public String getCouponId() {
+    return null;
+  }
+
   @Override public boolean openValidDay() {
     return cardOptionCustom.isLimit_days();
   }

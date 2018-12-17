@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:padding="15dp"
+      >
+    <EditText
+        android:id="@+id/edit_model"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:hint="model eg staff"
+        style="@style/Qc.EditTextStyle"
+        />
+    <EditText
+        android:id="@+id/edit_path"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:hint="path     eg /student/home"
+        style="@style/Qc.EditTextStyle"
+        />
+    <EditText
+        android:id="@+id/edit_bundle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="bundle info json"
+        style="@style/Qc.EditTextStyle"
+        />
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Start"
+        style="@style/QcBtnPrimary"
+        />
+  </LinearLayout>
+</layout>

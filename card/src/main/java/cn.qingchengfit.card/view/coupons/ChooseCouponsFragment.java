@@ -3,6 +3,7 @@ package cn.qingchengfit.card.view.coupons;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
   @Need Float prices;
   @Need Coupon chooseCoupon;
   @Need ArrayList<String> user_ids;
+  @Need String cardId;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -62,8 +64,13 @@ import java.util.List;
     initToolbar();
     initRecyclerView();
     initChooseCoupon();
+    setBackPress();
     if (user_ids != null && !user_ids.isEmpty()) {
-      mViewModel.loadCoupons(prices, user_ids);
+      if(TextUtils.isEmpty(cardId)){
+        mViewModel.loadCoupons(prices, user_ids);
+      }else{
+        mViewModel.loadCouponsCharge(prices,user_ids,cardId);
+      }
     }
   }
 
@@ -74,7 +81,7 @@ import java.util.List;
               chooseCoupon.getDescription()));
       mBinding.tvClearSelected.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          RxBus.getBus().post(new ChooseCouponsEvent(null));
+          event=new ChooseCouponsEvent(null);
           mBinding.llBottomSelected.setVisibility(View.GONE);
         }
       });
@@ -108,10 +115,19 @@ import java.util.List;
       @Override public boolean onItemClick(int position) {
         dialog.dismiss();
         Coupon coupon = coupons.get(position);
-        RxBus.getBus().post(new ChooseCouponsEvent(coupon));
+        event=new ChooseCouponsEvent(coupon);
+        getActivity().onBackPressed();
         return false;
       }
     });
     dialog.show();
+  }
+
+  private ChooseCouponsEvent event;
+
+  @Override public boolean onFragmentBackPress() {
+    RxBus.getBus().post(event);
+    setBackPressNull();
+    return super.onFragmentBackPress();
   }
 }

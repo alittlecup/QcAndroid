@@ -52,6 +52,7 @@ public class CardBuyBody implements Parcelable, Cloneable {
   public String staff_id;
   public String version;
   public String signature;
+  public String coupon_id;
 
   public int origin;
   public boolean customize_option;
@@ -487,6 +488,7 @@ public class CardBuyBody implements Parcelable, Cloneable {
     dest.writeString(this.staff_id);
     dest.writeString(this.version);
     dest.writeString(this.signature);
+    dest.writeString(this.coupon_id);
     dest.writeInt(this.origin);
     dest.writeByte(this.customize_option ? (byte) 1 : (byte) 0);
   }
@@ -514,6 +516,7 @@ public class CardBuyBody implements Parcelable, Cloneable {
     this.staff_id = in.readString();
     this.version = in.readString();
     this.signature = in.readString();
+    this.coupon_id = in.readString();
     this.origin = in.readInt();
     this.customize_option = in.readByte() != 0;
   }

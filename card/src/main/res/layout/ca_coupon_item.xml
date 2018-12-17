@@ -72,12 +72,13 @@
           tools:text="限在线支付／约课 使用"
           />
     </LinearLayout>
-    <TextView
+    <View
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="-49dp"
         android:layout_marginRight="-49dp"
         android:alpha="0.5"
+        android:rotation="90"
         android:background="@drawable/dotted_line"
         />
 

@@ -498,11 +498,16 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   @Override public boolean checkCardBuyBody(CardBuyBody cardBuyBody) {
-    if(cardBuyBody.checkData()>0){
+    if (cardBuyBody.checkData() > 0) {
       showAlert(cardBuyBody.checkData());
       return true;
     }
     return false;
+  }
+
+  @Override public String getCouponId() {
+
+    return null;
   }
 
   @Override public boolean openValidDay() {

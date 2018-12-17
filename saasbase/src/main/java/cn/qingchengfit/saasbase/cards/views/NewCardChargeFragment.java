@@ -235,6 +235,8 @@ public class NewCardChargeFragment extends CardBuyFragment {
       presenter.chargeCard();
   }
 
+
+
   @Override public void setCardInfo() {
     presenter.setmCard(card);
     presenter.setmCardTplId(card.getCard_tpl_id());

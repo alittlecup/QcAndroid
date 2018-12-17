@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.card.R;
 import cn.qingchengfit.card.bean.Coupon;
 import cn.qingchengfit.card.buy.CompletedBuyView;
@@ -31,6 +33,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -74,13 +77,21 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     }
   }
 
-  @Override public void initBus() {
-    super.initBus();
-    RxBusAdd(ChooseCouponsEvent.class).subscribe(new Action1<ChooseCouponsEvent>() {
-      @Override public void call(ChooseCouponsEvent chooseCouponsEvent) {
-        updateCoupons(chooseCouponsEvent.getCoupon());
-      }
-    });
+  @Override public String getCouponId() {
+    return coupon == null ? "" : String.valueOf(coupon.getId());
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RxBus.getBus()
+        .register(ChooseCouponsEvent.class)
+        .compose(this.<ChooseCouponsEvent>bindToLifecycle())
+        .compose(this.<ChooseCouponsEvent>doWhen(FragmentEvent.START))
+        .subscribe(new Action1<ChooseCouponsEvent>() {
+          @Override public void call(ChooseCouponsEvent chooseCouponsEvent) {
+            updateCoupons(chooseCouponsEvent.getCoupon());
+          }
+        });
   }
 
   private Coupon coupon;
@@ -92,21 +103,24 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       setPayMoney(presenter.getmChosenOption().getPrice());
     } else {
       mBindCoupons.setContent(coupon.getDescription());
+      setPayMoney(coupon.getReal_price());
     }
   }
 
   @Override protected void updatePayEvent(PayEvent payEvent) {
     super.updatePayEvent(payEvent);
     int payType = payEvent.getPayMethod().payType;
-    if (payType != 12 || payType != 7) {
+
+    if (payType != 12 && payType != 7) {
       mBindCoupons.setEnable(false);
       mBindCoupons.setHint("优惠券仅支持在线支付使用");
       mBindCoupons.setShowRight(false);
+      updateCoupons(null);
     } else {
+      updateCoupons(coupon);
       mBindCoupons.setEnable(true);
       mBindCoupons.setHint("选择优惠券");
       mBindCoupons.setShowRight(true);
-      updateCoupons(null);
     }
   }
 
@@ -124,12 +138,16 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     return canRoute;
   }
 
+  private String getRealPrices(JsonObject response) {
+    float total_fee = response.get("total_fee").getAsFloat();
+    return String.valueOf(total_fee / 100);
+  }
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
       JsonObject wrapper = new JsonObject();
-      wrapper.addProperty("price", realMoney());
+      wrapper.addProperty("price", getRealPrices(payBusinessResponse));
       wrapper.add("bean", payBusinessResponse);
       JsonObject info = new JsonObject();
       info.addProperty("moduleName", "card");

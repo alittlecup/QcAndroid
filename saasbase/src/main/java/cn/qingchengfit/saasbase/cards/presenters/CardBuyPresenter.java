@@ -152,11 +152,11 @@ public class CardBuyPresenter extends BasePresenter {
   //}
   public void setSaler(String id) {
     cardBuyBody.setSeller_id(id);
-    cardBuyBody.staff_id=null;
-
+    cardBuyBody.staff_id = null;
   }
-  public void setStaffId(String id){
-    cardBuyBody.staff_id=id;
+
+  public void setStaffId(String id) {
+    cardBuyBody.staff_id = id;
   }
 
   /**
@@ -302,6 +302,7 @@ public class CardBuyPresenter extends BasePresenter {
     }
 
     cardBuyBody.is_auto_start = view.autoOpen();
+    cardBuyBody.coupon_id = view.getCouponId();
     cardBuyBody.origin = 2;
     if ((cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
         .equals(loginStatus.staff_id())) || TextUtils.isEmpty(cardBuyBody.getSeller_id())) {
@@ -382,6 +383,7 @@ public class CardBuyPresenter extends BasePresenter {
     if (view.checkCardBuyBody(cardBuyBody)) {
       return;
     }
+    cardBuyBody.coupon_id = view.getCouponId();
     cardBuyBody.setCharge_type(view.payMethod());
     cardBuyBody.is_auto_start = view.autoOpen();
     buyCardRequest();
@@ -458,6 +460,8 @@ public class CardBuyPresenter extends BasePresenter {
     int payMethod();
 
     boolean checkCardBuyBody(CardBuyBody cardBuyBody);
+
+    String getCouponId();
 
     /**
      * 是否设置有效期
