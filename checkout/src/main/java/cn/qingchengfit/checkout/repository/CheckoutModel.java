@@ -1,6 +1,8 @@
 package cn.qingchengfit.checkout.repository;
 
 import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CheckoutBillWrapper;
+import cn.qingchengfit.checkout.bean.CheckoutBills;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
@@ -9,6 +11,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import com.google.gson.JsonObject;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,12 +23,10 @@ public class CheckoutModel implements ICheckoutModel {
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
 
-
-
   @Inject public CheckoutModel(QcRestRepository qcRestRepository) {
     checkoutApi = qcRestRepository.createRxJava2Api(CheckoutApi.class);
     payApi = qcRestRepository.createRxJava2Api(PayApi.class);
-    ComponentModuleManager.register(ICheckoutModel.class,this);
+    ComponentModuleManager.register(ICheckoutModel.class, this);
   }
 
   @Override public Flowable<QcDataResponse<HomePageBean>> qcGetHomePageInfo() {
@@ -49,5 +50,20 @@ public class CheckoutModel implements ICheckoutModel {
   @Override
   public Flowable<QcDataResponse<OrderStatusBeanWrapper>> qcGetOrderStatus(String orderNum) {
     return payApi.qcGetOrderStatus(orderNum, gymWrapper.getParams());
+  }
+
+  @Override public Flowable<QcDataResponse<CheckoutBills>> qcLoadCheckoutQrOrders() {
+    return checkoutApi.qcLoadCheckoutBills(loginStatus.staff_id(), gymWrapper.getParams());
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CheckoutBillWrapper>> qcLoadCheckoutQrOrderDetail(String id) {
+    return checkoutApi.qcLoadCheckoutBillDetail(loginStatus.staff_id(), id, gymWrapper.getParams());
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CheckoutBillWrapper>> qcPutCheckoutQrOrderDetail(String id,
+      JsonObject body) {
+    return checkoutApi.qcPutBillDetail(loginStatus.staff_id(), id, body,gymWrapper.getParams());
   }
 }

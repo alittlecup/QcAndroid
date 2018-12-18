@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.checkout.CheckoutCounterFragment;
+import cn.qingchengfit.checkout.bean.CheckoutBill;
 import cn.qingchengfit.checkout.bean.OrderListItemData;
 import cn.qingchengfit.checkout.databinding.ChCheckoutOrderListBinding;
 import cn.qingchengfit.checkout.item.OrderListItem;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Leaf(module = "checkout", path = "/order/list") public class CheckoutOrderListPage
     extends CheckoutCounterFragment<ChCheckoutOrderListBinding, CheckoutOrderListVM>
-    implements FlexibleAdapter.OnItemClickListener {
+     {
   CommonFlexAdapter adapter;
 
   @Override protected void subscribeUI() {
@@ -47,7 +48,6 @@ import java.util.List;
     initRecyclerView();
     initRefreshLayout();
 
-    mViewModel.test();
   }
 
   private void initRefreshLayout() {
@@ -55,7 +55,7 @@ import java.util.List;
   }
 
   private void onRefresh() {
-    mViewModel.loadOrderList();
+    mViewModel.onRefresh();
   }
 
   private void initRecyclerView() {
@@ -66,13 +66,5 @@ import java.util.List;
   private void initToolbar() {
     mBinding.setToolbarModel(new ToolbarModel("二维码收款记录"));
     initToolbar(mBinding.includeToolbar.toolbar);
-  }
-
-  @Override public boolean onItemClick(int position) {
-    OrderListItemData data = ((OrderListItem) adapter.getItem(position)).getData();
-    Bundle bundle = new Bundle();
-    bundle.putParcelable("order", data);
-    routeTo("/order/confirm", bundle);
-    return false;
   }
 }

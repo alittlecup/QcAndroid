@@ -3,6 +3,7 @@ package cn.qingchengfit.checkout.item;
 import android.os.Bundle;
 import android.view.View;
 import cn.qingchengfit.checkout.R;
+import cn.qingchengfit.checkout.bean.CheckoutBill;
 import cn.qingchengfit.checkout.bean.OrderListItemData;
 import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.ChOrderListItemBinding;
@@ -40,7 +41,7 @@ public class OrderListItem
     holder.getDataBinding().btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("order", data);
+        bundle.putString("orderId", ((CheckoutBill)data).getId());
         RouteUtil.routeTo(view.getContext(),"checkout","/order/confirm", bundle);
       }
     });

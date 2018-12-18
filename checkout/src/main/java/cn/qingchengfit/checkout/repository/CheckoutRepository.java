@@ -1,11 +1,15 @@
 package cn.qingchengfit.checkout.repository;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CheckoutBillWrapper;
+import cn.qingchengfit.checkout.bean.CheckoutBills;
 import cn.qingchengfit.checkout.bean.HomePageBean;
+import cn.qingchengfit.checkout.bean.OrderStatusBeanWrapper;
 import cn.qingchengfit.checkout.bean.ScanResultBean;
 import cn.qingchengfit.saascommon.network.Resource;
+import com.google.gson.JsonObject;
 import java.util.Map;
 
 public interface CheckoutRepository {
@@ -21,4 +25,8 @@ public interface CheckoutRepository {
 
   void qcGetOrderStatus(MutableLiveData<OrderStatusBeanWrapper> result,
       MutableLiveData<Resource<Object>> defaultRes, String orderNum);
+
+  LiveData<Resource<CheckoutBills>> qcLoadCheckouQrOrders();
+  LiveData<Resource<CheckoutBillWrapper>> qcLoadCheckoutQrOrderDetail(String id);
+  LiveData<Resource<CheckoutBillWrapper>> qcPutCheckoutQrOrderDetail(String id, JsonObject body);
 }

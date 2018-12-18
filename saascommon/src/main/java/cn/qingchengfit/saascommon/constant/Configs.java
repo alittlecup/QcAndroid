@@ -147,7 +147,7 @@ public class Configs {
       "https://qcfile.b0.upaiyun.com/qc-commodity-weex/0.0.39/version.json";
   public static final String WEEX_PAGE_INDEX = "proxy_commodity.js";
   public static String QR_POINT_URL =
-      BuildConfig.DEBUG ? "saotest.qingchengfit.cn" : "sao.qingcehgnfit.cn";
+      BuildConfig.DEBUG ? "saotest.qingchengfit.cn" : "sao.qingchengfit.cn";
   public static final String WEB_HOW_TO_USE_BATCH_GROUP =
       "http://cloud.qingchengfit.cn/mobile/urls/e382d87968dd4f54a89bb5e5a933f779/";
   //团课
