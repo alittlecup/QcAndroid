@@ -8,6 +8,7 @@ import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
+import cn.qingchengfit.saasbase.turnovers.TurnoversTimeFilterFragment.TimeType;
 
 public class TurnoversFilterFragement extends BaseFilterFragment {
   private TurnoversVM mViewModel;
@@ -41,11 +42,31 @@ public class TurnoversFilterFragement extends BaseFilterFragment {
           }
         });
     timeFilterFragment = new TurnoversTimeFilterFragment();
+    timeFilterFragment.setListener((start, end, type) -> {
+      switch (type) {
+        case TimeType.DAY:
+          mViewModel.filterDate.setValue("今日");
+          break;
+        case TimeType.WEEK:
+          mViewModel.filterDate.setValue("本周");
+          break;
+        case TimeType. MONTH:
+          mViewModel.filterDate.setValue("本月");
+          break;
+        case TimeType.CUSTOMIZE:
+          mViewModel.filterDate.setValue("自定义");
+          break;
+      }
+    });
     sellerFilterFragment = new TurnoverGirdSellerFilterFragment();
   }
 
   @Override protected String[] getTags() {
     return new String[] { "date", "feature", "seller", "payment" };
+  }
+
+  @Override public void dismiss() {
+    mViewModel.filterVisible.setValue(false);
   }
 
   @Override protected Fragment getFragmentByTag(String tag) {

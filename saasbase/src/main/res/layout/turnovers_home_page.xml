@@ -13,6 +13,9 @@
         name="page"
         type="cn.qingchengfit.saasbase.turnovers.TurnoversHomePage"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.saasbase.turnovers.TurnoversVM"/>
   </data>
   <LinearLayout
       android:layout_width="match_parent"
@@ -35,6 +38,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:showDividers="middle"
+        app:clearCheck="@{!viewModel.filterVisible}"
         >
       <cn.qingchengfit.widgets.QcFilterToggle
           android:id="@+id/qft_date"
@@ -42,7 +46,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
-          android:onClick="@{(view)->page.onQcRadioGroupButtonClick(view,0)}"
+          android:onClick="@{(view)->page.onDateFilter(view)}"
           app:ft_text_off="今天"
           app:ft_text_on="今天"
           style="@style/QcFilterStyle"
@@ -53,7 +57,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
-          android:onClick="@{(view)->page.onQcRadioGroupButtonClick(view,1)}"
+          android:onClick="@{(view)->page.onFeatureFilter(view)}"
           app:ft_text_off="项目"
           app:ft_text_on="项目"
           style="@style/QcFilterStyle"
@@ -64,7 +68,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
-          android:onClick="@{(view)->page.onQcRadioGroupButtonClick(view,2)}"
+          android:onClick="@{(view)->page.onSellerFilter(view)}"
           app:ft_text_off="业绩归属"
           app:ft_text_on="业绩归属"
 
@@ -76,7 +80,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
-          android:onClick="@{(view)->page.onQcRadioGroupButtonClick(view,3)}"
+          android:onClick="@{(view)->page.onPaymentFilter(view)}"
           app:ft_text_off="支付方式"
           app:ft_text_on="支付方式"
 
@@ -101,6 +105,7 @@
             android:paddingRight="50dp"
             >
           <ImageView
+              android:id="@+id/btn_arrow_left"
               android:layout_width="25dp"
               android:layout_height="25dp"
               bind:srcCompat="@drawable/vd_arrow_left_black"
@@ -111,8 +116,10 @@
               android:layout_weight="1"
               android:gravity="center"
               tools:text="2018/11/11"
+              android:textColor="@color/text_black"
               />
           <ImageView
+              android:id="@+id/btn_arrow_right"
               android:layout_width="25dp"
               android:layout_height="25dp"
               bind:srcCompat="@drawable/vd_arrow_right_black"

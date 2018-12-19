@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.turnovers;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -15,6 +16,8 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -24,11 +27,22 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
   TurnoversTiemFilterFragmentBinding mBinding;
   private TimeDialogWindow pwTime;
 
+  @IntDef(value = {
+      TimeType.DAY, TimeType.MONTH, TimeType.YEAR, TimeType.WEEK, TimeType.CUSTOMIZE
+  }) @Retention(RetentionPolicy.SOURCE) public @interface TimeType {
+    int YEAR = 1;
+    int MONTH = 2;
+    int WEEK = 3;
+    int DAY = 6;
+    int CUSTOMIZE = -1;
+  }
+
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = TurnoversTiemFilterFragmentBinding.inflate(inflater, container, false);
+    mBinding.btnDay.setSelected(true);
     return mBinding.getRoot();
   }
 
@@ -46,9 +60,30 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
     });
     mBinding.btnSureSelf.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if(authDataCorrect()){
-
+        if (authDataCorrect()) {
+          if (listener != null) {
+            listener.onDateConfirm(mBinding.etDateStart.getText().toString(),
+                mBinding.etDateEnd.getText().toString(), TimeType.CUSTOMIZE);
+          }
         }
+      }
+    });
+    mBinding.btnDay.setOnClickListener(v -> {
+      if (listener != null) {
+        listener.onDateConfirm(DateUtils.getStringToday(), DateUtils.getStringToday(),
+            TimeType.DAY);
+      }
+    });
+    mBinding.btnWeek.setOnClickListener(v -> {
+      if (listener != null) {
+        listener.onDateConfirm(DateUtils.getMondayOfThisWeek(new Date()),
+            DateUtils.getSundayOfThisWeek(new Date()), TimeType.WEEK);
+      }
+    });
+    mBinding.btnMonth.setOnClickListener(v -> {
+      if (listener != null) {
+        listener.onDateConfirm(DateUtils.getStartDayOfMonth(new Date()),
+            DateUtils.getEndDayOfMonthNew(new Date()), TimeType.MONTH);
       }
     });
   }
@@ -84,7 +119,6 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
         return false;
       }
     }
-
     return true;
   }
 
@@ -101,5 +135,15 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
       }
     });
     pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+  }
+
+  public void setListener(onDateConfirmListener listener) {
+    this.listener = listener;
+  }
+
+  private onDateConfirmListener listener;
+
+  interface onDateConfirmListener {
+    void onDateConfirm(String start, String end, @TimeType int type);
   }
 }

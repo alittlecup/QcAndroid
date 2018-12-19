@@ -14,7 +14,8 @@ import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TurnoverFilterSimpleChooseFragment extends SaasCommonFragment {
+public class TurnoverFilterSimpleChooseFragment extends SaasCommonFragment
+    implements FlexibleAdapter.OnItemClickListener {
   TurnoversFilterSelectFragmentBinding mBinding;
   CommonFlexAdapter adapter;
   List<ITurnoverFilterItemData> datas;
@@ -50,8 +51,14 @@ public class TurnoverFilterSimpleChooseFragment extends SaasCommonFragment {
     for (ITurnoverFilterItemData data : datas) {
       items.add(new TurnoversFilterItem(data));
     }
-
-    mBinding.turnoversFilterRecycler.setAdapter(adapter = new CommonFlexAdapter(items, this));
+    adapter = new CommonFlexAdapter(items, this);
     adapter.setMode(SelectableAdapter.Mode.SINGLE);
+    mBinding.turnoversFilterRecycler.setAdapter(adapter);
+  }
+
+  @Override public boolean onItemClick(int position) {
+    adapter.toggleSelection(position);
+    adapter.notifyDataSetChanged();
+    return false;
   }
 }

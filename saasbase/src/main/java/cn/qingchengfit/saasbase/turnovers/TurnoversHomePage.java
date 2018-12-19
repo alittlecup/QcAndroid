@@ -3,7 +3,6 @@ package cn.qingchengfit.saasbase.turnovers;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,19 @@ import java.util.List;
         //adapter.updateDataSet();
       }
     });
+    mViewModel.filterVisible.observe(this, aBoolean -> {
+      if (aBoolean) {
+        mBinding.flFilter.setVisibility(View.VISIBLE);
+        mBinding.flFilter.setAlpha(0f);
+        mBinding.flFilter.animate().alpha(1).setDuration(20).start();
+      } else {
+        mBinding.flFilter.animate().alpha(0).setDuration(20).withEndAction(new Runnable() {
+          @Override public void run() {
+            mBinding.flFilter.setVisibility(View.GONE);
+          }
+        }).start();
+      }
+    });
   }
 
   @Override
@@ -42,12 +54,13 @@ import java.util.List;
       Bundle savedInstanceState) {
     mBinding = TurnoversHomePageBinding.inflate(inflater, container, false);
     mBinding.setPage(this);
+    mBinding.setViewModel(mViewModel);
+    mBinding.setLifecycleOwner(this);
     return mBinding;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    Log.d("TAG", "onViewCreated: " + view);
     filterFragement = new TurnoversFilterFragement();
     chartFragment = new TurnoverChartFragment();
     stuff(filterFragement);
@@ -56,13 +69,34 @@ import java.util.List;
     initRecyclerView();
   }
 
-  public void onQcRadioGroupButtonClick(View view, int index) {
-    if (((QcFilterToggle) view).isChecked()) {
-      filterFragement.dismiss();
-      mBinding.flFilter.setVisibility(View.GONE);
-    } else {
+  public void onDateFilter(View view) {
+    showFilterView(((QcFilterToggle) view).isChecked(), 0);
+  }
+
+  public void onFeatureFilter(View view) {
+    showFilterView(((QcFilterToggle) view).isChecked(), 1);
+  }
+
+  public void onSellerFilter(View view) {
+    showFilterView(((QcFilterToggle) view).isChecked(), 2);
+  }
+
+  public void onPaymentFilter(View view) {
+    showFilterView(((QcFilterToggle) view).isChecked(), 3);
+  }
+  public void onDateArrowLeft(View view){
+    mViewModel.
+  }
+  public void onDateArrowRight(View view){
+
+  }
+
+  public void showFilterView(boolean show, int index) {
+    if (show) {
       filterFragement.showPage(index);
-      mBinding.flFilter.setVisibility(View.VISIBLE);
+      mViewModel.filterVisible.setValue(true);
+    } else {
+      mViewModel.filterVisible.setValue(false);
     }
   }
 

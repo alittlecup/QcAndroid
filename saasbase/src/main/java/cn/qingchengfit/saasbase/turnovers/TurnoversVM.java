@@ -22,6 +22,9 @@ public class TurnoversVM extends BaseViewModel {
   public MutableLiveData<String> filterSeller = new MutableLiveData<>();
   public MutableLiveData<String> filterPayment = new MutableLiveData<>();
 
+  public final MutableLiveData<Boolean> filterVisible = new MutableLiveData<>();
+
+
   public MutableLiveData<List<ITurnoverOrderItemData>> getOrderDatas() {
     return orderDatas;
   }

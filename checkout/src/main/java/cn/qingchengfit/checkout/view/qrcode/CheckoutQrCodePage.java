@@ -49,7 +49,6 @@ import timber.log.Timber;
     try {
       Bitmap bitmap = qrgEncoder.encodeAsBitmap();
       mBinding.imgQrcode.setAdjustViewBounds(true);
-      mBinding.imgQrcode.setPadding(0, 0, 0, 0);
       mBinding.imgQrcode.setImageBitmap(bitmap);
     } catch (WriterException e) {
       Timber.e(e, " qrgen");
