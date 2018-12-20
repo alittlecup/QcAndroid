@@ -33,6 +33,6 @@ public class TurnoversFilterItem
       DataBindingViewHolder<TurnoversChooseItemBinding> holder, int position, List payloads) {
     TurnoversChooseItemBinding dataBinding = holder.getDataBinding();
     dataBinding.itemText.setText(data.getText());
-    dataBinding.itemText.setSelected(adapter.isSelected(position));
+    dataBinding.itemText.setChecked(adapter.isSelected(position));
   }
 }

@@ -6,7 +6,7 @@
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
-      android:layout_height="135dp"
+      android:layout_height="wrap_content"
       android:background="@color/bg_white"
       android:paddingLeft="15dp"
       android:paddingTop="15dp"
@@ -20,10 +20,12 @@
         tools:text="支"
         android:textColor="@color/bg_white"
         android:textSize="20sp"
+        android:background="@drawable/circle_green"
+
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/tv_type"
         android:orientation="vertical"
@@ -37,9 +39,11 @@
           tools:text="[ 购卡 ] 356元"
           />
       <LinearLayout
+          android:id="@+id/ll_seller"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="11dp"
+          tools:visibility="gone"
           >
         <TextView
             android:layout_width="wrap_content"

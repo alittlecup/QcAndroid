@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.staff;
 
+import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
-import cn.qingchengfit.saasbase.staff.StaffActivity;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteLinkFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteQrCodeFragment;
@@ -26,6 +26,8 @@ import cn.qingchengfit.saasbase.staff.views.TrainerLeaveDetailFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabInviteListFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabLeaveListFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabListFragment;
+import cn.qingchengfit.saasbase.turnovers.TurnoverOrderDetailFragment;
+import cn.qingchengfit.saasbase.turnovers.TurnoversHomePage;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -57,8 +59,12 @@ import com.anbillon.flabellum.annotations.Trunk;
   InviteLinkFragment.class, TrainerHomeFragment.class, TrainerTabInviteListFragment.class,
   TrainerTabLeaveListFragment.class, TrainerTabListFragment.class, TrainerAddFragment.class,
   SuFragment.class, SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
-  StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class,
+  StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class, TurnoversHomePage.class, TurnoverOrderDetailFragment.class
 
 })
-public class StaffStaffActivity extends StaffActivity  {
+
+public class StaffStaffActivity extends SaasContainerActivity {
+  @Override public String getModuleName() {
+    return "staff";
+  }
 }

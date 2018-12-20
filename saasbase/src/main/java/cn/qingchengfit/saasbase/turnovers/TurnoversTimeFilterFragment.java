@@ -33,7 +33,7 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
     int YEAR = 1;
     int MONTH = 2;
     int WEEK = 3;
-    int DAY = 6;
+    int DAY = 5;
     int CUSTOMIZE = -1;
   }
 
@@ -100,7 +100,7 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
     }
     if (TextUtils.isEmpty(mBinding.etDateEnd.getText()) || mBinding.etDateEnd.getText()
         .toString()
-        .equals("j结束日期")) {
+        .equals("结束日期")) {
       DialogUtils.showAlert(getContext(), "请正确输入天数");
       return false;
     }

@@ -158,6 +158,8 @@ import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
@@ -1779,7 +1781,7 @@ public interface StaffAllApi {
 
   @PUT("/api/v2/staffs/{staff_id}/gym/")
   rx.Observable<QcDataResponse<DianPingShopContainer>> qcPutGymInfo(@Path("staff_id") String id,
-      @Body Map<String,Object> body, @QueryMap HashMap<String, Object> params);
+      @Body Map<String, Object> body, @QueryMap HashMap<String, Object> params);
 
   @GET("/api/v2/staffs/{staff_id}/gym/all/services/?show_all=1")
   rx.Observable<QcDataResponse<GymFacilitiesList>> qcGetGymFacilities(@Path("staff_id") String id,
@@ -1788,6 +1790,16 @@ public interface StaffAllApi {
   @GET("/api/tags/?is_gym=1") rx.Observable<QcDataResponse<GymTags>> qcGetGymTags();
 
   @POST("/api/partner/meituan/gyms/{gym_id}/link/")
-  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(@Path("gym_id") String id,
-      @Body Map<String, Object> params);
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(
+      @Path("gym_id") String id, @Body Map<String, Object> params);
+
+  //------------------------营业流水相关接口------------------//
+
+  @GET("api/v2/staffs/{staff_id}/turnovers/query/items/")
+  rx.Observable<QcDataResponse<TurFilterResponse>> qcGetTurnoversFilterItems(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+
+  @GET("api/v2/staffs/{staff_id}/turnovers/?show_all=1")
+  rx.Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoversOrderList(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
 }

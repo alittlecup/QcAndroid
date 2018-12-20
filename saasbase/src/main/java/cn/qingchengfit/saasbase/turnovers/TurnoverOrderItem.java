@@ -5,6 +5,7 @@ import android.view.View;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversOrderItemBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.utils.DrawableUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -34,14 +35,32 @@ public class TurnoverOrderItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<TurnoversOrderItemBinding> holder, int position, List payloads) {
     TurnoversOrderItemBinding dataBinding = holder.getDataBinding();
-    dataBinding.tvCheckoutName.setText(data.getCheckoutName());
-    dataBinding.tvFeatureMoney.setText("[" + data.getFeatureName() + "] " + data.getMoney() + "元");
     dataBinding.tvDate.setText(data.getDate());
     boolean hasName = !TextUtils.isEmpty(data.getSellerName());
     dataBinding.tvSellerChange.setVisibility(hasName ? View.VISIBLE : View.GONE);
     dataBinding.tvSellerName.setVisibility(hasName ? View.VISIBLE : View.GONE);
     dataBinding.btnAllot.setVisibility(hasName ? View.GONE : View.VISIBLE);
     dataBinding.tvSellerName.setText(data.getSellerName());
-    dataBinding.tvType.setText(data.getPayType());
+
+    if (!TurnoversHomePage.trade_types.isEmpty()) {
+      TurnoverTradeType turnoverTradeType =
+          TurnoversHomePage.trade_types.get(Integer.parseInt(data.getFeatureName()));
+      dataBinding.tvFeatureMoney.setText(
+          "[" + turnoverTradeType.getDesc() + "] " + data.getMoney() + "元");
+      int trade_type = turnoverTradeType.getTrade_type();
+      if (trade_type == 1 || trade_type == 2 || trade_type == 17 || trade_type == 16) {
+        dataBinding.llSeller.setVisibility(View.VISIBLE);
+      } else {
+        dataBinding.llSeller.setVisibility(View.GONE);
+      }
+    }
+    if (!TurnoversHomePage.paymentChannels.isEmpty()) {
+      TurFilterData turFilterData = TurnoversHomePage.paymentChannels.get(data.getPayType());
+      dataBinding.tvType.setText(turFilterData.getShort_text());
+      dataBinding.tvType.setBackground(
+          DrawableUtils.tintDrawable(dataBinding.tvType.getContext(), R.drawable.circle_green,
+              "#" + turFilterData.getColor()));
+    }
+    dataBinding.tvCheckoutName.setText("收款人："+data.getCheckoutName());
   }
 }

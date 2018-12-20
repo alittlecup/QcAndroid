@@ -4,11 +4,14 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
+import android.view.View;
+import cn.qingchengfit.model.common.ICommonUser;
+import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
-import cn.qingchengfit.saasbase.turnovers.TurnoversTimeFilterFragment.TimeType;
 
 public class TurnoversFilterFragement extends BaseFilterFragment {
   private TurnoversVM mViewModel;
@@ -21,44 +24,52 @@ public class TurnoversFilterFragement extends BaseFilterFragment {
     super.onCreate(savedInstanceState);
     mViewModel = ViewModelProviders.of(getParentFragment()).get(TurnoversVM.class);
     initFragment();
+    mViewModel.getPayments()
+        .observe(paymentChooseFramgnet, datas -> paymentChooseFramgnet.setDatas(datas));
+    mViewModel.getFeature()
+        .observe(featureChooseFramgnet, datas -> featureChooseFramgnet.setDatas(datas));
+    mViewModel.getSellers()
+        .observe(sellerFilterFragment, datas -> sellerFilterFragment.setDatas(datas));
   }
 
   private void initFragment() {
-    List<ITurnoverFilterItemData> payments = mViewModel.getPayments().getValue();
+    List<? extends ITurnoverFilterItemData> payments = mViewModel.getPayments().getValue();
     paymentChooseFramgnet = TurnoverFilterSimpleChooseFragment.newInstance(payments,
         new FlexibleAdapter.OnItemClickListener() {
           @Override public boolean onItemClick(int position) {
-            mViewModel.filterPayment.setValue(payments.get(position).getText());
+            List<? extends ITurnoverFilterItemData> value = mViewModel.getPayments().getValue();
+            mViewModel.filterPayment.setValue(value.get(position).getText());
+            mViewModel.filterPaymentChannel.setValue(value.get(position).getSignature());
+            dismiss();
             return false;
           }
         });
-    List<ITurnoverFilterItemData> features = mViewModel.getFeature().getValue();
+    List<? extends ITurnoverFilterItemData> features = mViewModel.getFeature().getValue();
     featureChooseFramgnet = TurnoverFilterSimpleChooseFragment.newInstance(features,
         new FlexibleAdapter.OnItemClickListener() {
           @Override public boolean onItemClick(int position) {
-            mViewModel.filterFeature.setValue(features.get(position).getText());
-
+            List<? extends ITurnoverFilterItemData> value = mViewModel.getFeature().getValue();
+            mViewModel.filterFeature.setValue(value.get(position).getText());
+            mViewModel.filterFeatureType.setValue(value.get(position).getSignature());
+            dismiss();
             return false;
           }
         });
     timeFilterFragment = new TurnoversTimeFilterFragment();
     timeFilterFragment.setListener((start, end, type) -> {
-      switch (type) {
-        case TimeType.DAY:
-          mViewModel.filterDate.setValue("今日");
-          break;
-        case TimeType.WEEK:
-          mViewModel.filterDate.setValue("本周");
-          break;
-        case TimeType. MONTH:
-          mViewModel.filterDate.setValue("本月");
-          break;
-        case TimeType.CUSTOMIZE:
-          mViewModel.filterDate.setValue("自定义");
-          break;
-      }
+      mViewModel.dateType.setValue(type);
+      mViewModel.date.setValue(new Pair<>(start, end));
+      dismiss();
     });
     sellerFilterFragment = new TurnoverGirdSellerFilterFragment();
+    sellerFilterFragment.setRecycleItemClickListener(new OnRecycleItemClickListener() {
+      @Override public void onItemClick(View v, int pos) {
+        List<ICommonUser> value = mViewModel.getSellers().getValue();
+        mViewModel.filterSeller.setValue(value.get(pos).getTitle());
+        mViewModel.filterSellerId.setValue(value.get(pos).getId());
+        dismiss();
+      }
+    });
   }
 
   @Override protected String[] getTags() {

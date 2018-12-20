@@ -1,6 +1,7 @@
 package cn.qingchengfit.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.ColorRes;
@@ -46,6 +47,11 @@ public class DrawableUtils {
   public static Drawable tintDrawable(Context context,@DrawableRes int drawable,@ColorRes int color){
     Drawable mutate = ContextCompat.getDrawable(context, drawable).mutate();
     DrawableCompat.setTint(mutate,ContextCompat.getColor(context,color));
+    return mutate;
+  }
+  public static Drawable tintDrawable(Context context,@DrawableRes int drawable,String color){
+    Drawable mutate = ContextCompat.getDrawable(context, drawable).mutate();
+    DrawableCompat.setTint(mutate, Color.parseColor(color));
     return mutate;
   }
 }

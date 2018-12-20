@@ -573,4 +573,12 @@ public class DateUtils {
   public static String getFileNameFormServer(String str) {
     return str.replace("T", " ");
   }
+
+
+  public static String changeDate(String curDate,int count,int type){
+    Calendar c = Calendar.getInstance();
+    c.setTime(formatDateFromYYYYMMDD(curDate));
+    c.add(type,count);
+    return Date2YYYYMMDD(c.getTime());
+  }
 }

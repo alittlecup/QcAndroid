@@ -14,13 +14,18 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
     extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM> {
   TurnoversFilterFragement filterFragement;
   CommonFlexAdapter adapter;
   TurnoverChartFragment chartFragment;
+  // 这两个就是为了静态的存对象，保证能够在 item 里面使用到，因为接口返回数据的问题
+  public static Map<String, TurFilterData> paymentChannels = new HashMap<>();
+  public static Map<Integer, TurnoverTradeType> trade_types = new HashMap<>();
 
   @Override protected void subscribeUI() {
     mViewModel.getOrderDatas().observe(this, orderDatas -> {
@@ -47,6 +52,27 @@ import java.util.List;
         }).start();
       }
     });
+
+    mViewModel.getPayments().observe(this, datas -> {
+      if (datas != null && !datas.isEmpty()) {
+        paymentChannels.clear();
+        for (ITurnoverFilterItemData data : datas) {
+          if (data instanceof TurFilterData) {
+            paymentChannels.put(((TurFilterData) data).getChannel(), (TurFilterData) data);
+          }
+        }
+      }
+    });
+    mViewModel.getFeature().observe(this, datas -> {
+      if (datas != null && !datas.isEmpty()) {
+        trade_types.clear();
+        for (ITurnoverFilterItemData data : datas) {
+          if (data instanceof TurnoverTradeType) {
+            trade_types.put(((TurnoverTradeType) data).getTrade_type(), (TurnoverTradeType) data);
+          }
+        }
+      }
+    });
   }
 
   @Override
@@ -67,6 +93,8 @@ import java.util.List;
     stuff(R.id.fl_chart, chartFragment);
     initToolbar();
     initRecyclerView();
+    mViewModel.loadFilterOptions();
+    mViewModel.loadSellerItems();
   }
 
   public void onDateFilter(View view) {
@@ -84,11 +112,13 @@ import java.util.List;
   public void onPaymentFilter(View view) {
     showFilterView(((QcFilterToggle) view).isChecked(), 3);
   }
-  public void onDateArrowLeft(View view){
-    mViewModel.
-  }
-  public void onDateArrowRight(View view){
 
+  public void onDateArrowLeft() {
+    mViewModel.turnDatePre();
+  }
+
+  public void onDateArrowRight() {
+    mViewModel.turnDateNext();
   }
 
   public void showFilterView(boolean show, int index) {

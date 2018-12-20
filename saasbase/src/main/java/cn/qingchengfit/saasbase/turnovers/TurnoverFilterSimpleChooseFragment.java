@@ -18,15 +18,17 @@ public class TurnoverFilterSimpleChooseFragment extends SaasCommonFragment
     implements FlexibleAdapter.OnItemClickListener {
   TurnoversFilterSelectFragmentBinding mBinding;
   CommonFlexAdapter adapter;
-  List<ITurnoverFilterItemData> datas;
+  List<? extends ITurnoverFilterItemData> datas;
   FlexibleAdapter.OnItemClickListener listener;
 
-  public static TurnoverFilterSimpleChooseFragment newInstance(List<ITurnoverFilterItemData> datas,
-      FlexibleAdapter.OnItemClickListener listener) {
+  public static TurnoverFilterSimpleChooseFragment newInstance(
+      List<? extends ITurnoverFilterItemData> datas, FlexibleAdapter.OnItemClickListener listener) {
     TurnoverFilterSimpleChooseFragment fragment = new TurnoverFilterSimpleChooseFragment();
     fragment.listener = listener;
     Bundle bundle = new Bundle();
-    bundle.putParcelableArrayList("datas", new ArrayList<>(datas));
+    if (datas != null) {
+      bundle.putParcelableArrayList("datas", new ArrayList<>(datas));
+    }
     fragment.setArguments(bundle);
     return fragment;
   }
@@ -36,29 +38,39 @@ public class TurnoverFilterSimpleChooseFragment extends SaasCommonFragment
       @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = TurnoversFilterSelectFragmentBinding.inflate(inflater, container, false);
-    datas = getArguments().getParcelableArrayList("datas");
     return mBinding.getRoot();
+  }
+
+  public void setDatas(List<? extends ITurnoverFilterItemData> datas) {
+    if (datas == null) {
+      return;
+    }
+    this.datas = datas;
+    List<TurnoversFilterItem> items = new ArrayList<>();
+    for (ITurnoverFilterItemData data : datas) {
+      items.add(new TurnoversFilterItem(data));
+    }
+    if (adapter != null) {
+      adapter.updateDataSet(items);
+    }
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     mBinding.turnoversFilterRecycler.setLayoutManager(
         new SmoothScrollGridLayoutManager(getContext(), 3));
-    if (datas == null) {
-      return;
-    }
-    List<TurnoversFilterItem> items = new ArrayList<>();
-    for (ITurnoverFilterItemData data : datas) {
-      items.add(new TurnoversFilterItem(data));
-    }
-    adapter = new CommonFlexAdapter(items, this);
+    adapter = new CommonFlexAdapter(new ArrayList(), this);
     adapter.setMode(SelectableAdapter.Mode.SINGLE);
     mBinding.turnoversFilterRecycler.setAdapter(adapter);
+    setDatas(getArguments().getParcelableArrayList("datas"));
   }
 
   @Override public boolean onItemClick(int position) {
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();
+    if (listener != null) {
+      listener.onItemClick(position);
+    }
     return false;
   }
 }

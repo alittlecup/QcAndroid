@@ -9,8 +9,11 @@ import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
+import java.util.Map;
 import retrofit2.http.Body;
 
 /**
@@ -69,5 +72,12 @@ public interface IStaffModel {
 
   rx.Observable<QcDataResponse> inviteBySms(String uuid, @Body String area_code,@Body String phone,boolean isCoach);
   rx.Observable<QcDataResponse<JsonObject>> isSelfSu();
+
+
+
+  rx.Observable<QcDataResponse<TurFilterResponse>> qcGetTurnoversFilterItems();
+  rx.Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoverOrderItems(
+      Map<String,Object> params);
+
 
 }
