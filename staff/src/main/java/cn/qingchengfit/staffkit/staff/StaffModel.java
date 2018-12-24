@@ -19,6 +19,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
 import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import cn.qingchengfit.staffkit.constant.StaffAllApi;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
@@ -187,5 +188,13 @@ public class StaffModel implements IStaffModel {
     Map<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
     return staffAllApi.qcGetTurnoversOrderList(loginStatus.staff_id(),params1);
+  }
+
+  @Override
+  public Observable<QcDataResponse<TurnoversChartStatDataResponse>> qcGetTurnoverChartStat(
+      Map<String, Object> params) {
+    Map<String, Object> params1 = gymWrapper.getParams();
+    params1.putAll(params);
+    return staffAllApi.qcGetTurnoversChartStat(loginStatus.staff_id(),params1);
   }
 }

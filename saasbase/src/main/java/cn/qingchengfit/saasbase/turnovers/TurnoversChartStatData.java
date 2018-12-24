@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.turnovers;
 
+import com.google.gson.annotations.SerializedName;
+
 public class TurnoversChartStatData {
 
   /**
@@ -10,6 +12,7 @@ public class TurnoversChartStatData {
    */
 
   private float group_rate;
+  @SerializedName(value = "amount",alternate = {"total_amount"})
   private float amount;
   private int trade_type;
   private float group_value;

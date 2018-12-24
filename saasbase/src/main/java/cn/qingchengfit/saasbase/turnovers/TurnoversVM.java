@@ -63,15 +63,23 @@ public class TurnoversVM extends BaseViewModel {
     return orderDatas;
   }
 
-  public MutableLiveData<List<? extends TurnoversChartStatData>> chartDatas =
-      new MutableLiveData<>();
+  public LiveData<TurnoversChartStatDataResponse> getChartDatas() {
+    return chartDatas;
+  }
+
+  private LiveData<TurnoversChartStatDataResponse> chartDatas;
 
   private LiveData<List<? extends ITurnoverOrderItemData>> orderDatas;
   private MediatorLiveData<Map<String, Object>> params = new MediatorLiveData<>();
 
+  public MutableLiveData<Boolean> rightEnable = new MutableLiveData<>();
+  public MutableLiveData<Boolean> leftEnable = new MutableLiveData<>();
+
   @Inject public TurnoversVM() {
     filterDate = Transformations.map(dateType, input -> {
       String dateText = "";
+      rightEnable.setValue(false);
+      leftEnable.setValue(true);
       switch (input) {
         case TimeType.DAY:
           dateText = "今日";
@@ -84,6 +92,7 @@ public class TurnoversVM extends BaseViewModel {
           break;
         case TimeType.CUSTOMIZE:
           dateText = "自定义";
+          leftEnable.setValue(false);
           break;
       }
       return dateText;
@@ -102,16 +111,22 @@ public class TurnoversVM extends BaseViewModel {
     params.addSource(filterFeatureType, type -> updateLoadPramsData("trade_type", type));
     params.addSource(filterPaymentChannel, channel -> updateLoadPramsData("channel", channel));
 
-    dateType.setValue(TimeType.DAY);
-    date.setValue(new Pair<>(DateUtils.getStringToday(), DateUtils.getStringToday()));
-
-    filterFeature.setValue("项目");
-    filterSeller.setValue("业绩归属");
-    filterPayment.setValue("支付方式");
+    chartDatas = Transformations.switchMap(params,
+        input -> Transformations.map(loadTurnoverChartStat(input),
+            input12 -> dealResource(input12) == null ? null : dealResource(input12)));
 
     orderDatas = Transformations.switchMap(params,
         input -> Transformations.map(loadTurnoversOrderLists(input),
             input1 -> dealResource(input1) == null ? null : dealResource(input1).shop_turnovers));
+
+
+    dateType.setValue(TimeType.DAY);
+    date.setValue(new Pair<>(DateUtils.getStringToday(), DateUtils.getStringToday()));
+    rightEnable.setValue(false);
+    rightEnable.setValue(true);
+    filterFeature.setValue("项目");
+    filterSeller.setValue("业绩归属");
+    filterPayment.setValue("支付方式");
   }
 
   private void updateDate(Pair<String, String> date) {
@@ -149,6 +164,7 @@ public class TurnoversVM extends BaseViewModel {
         date.setValue(new Pair<>(DateUtils.changeDate(first, 1, dateType.getValue()),
             DateUtils.changeDate(second, 1, dateType.getValue())));
       }
+      rightEnable.setValue(canTurnDateNext());
     }
   }
 
@@ -177,6 +193,7 @@ public class TurnoversVM extends BaseViewModel {
         date.setValue(new Pair<>(DateUtils.changeDate(first, -1, dateType.getValue()),
             DateUtils.changeDate(second, -1, dateType.getValue())));
       }
+      rightEnable.setValue(true);
     }
   }
 
@@ -225,6 +242,13 @@ public class TurnoversVM extends BaseViewModel {
       Map<String, Object> params) {
     return LiveDataTransfer.fromPublisher(
         RxJavaInterop.toV2Flowable(staffModel.qcGetTurnoverOrderItems(params))
+            .compose(RxHelper.schedulersTransformerFlow()));
+  }
+
+  private LiveData<Resource<TurnoversChartStatDataResponse>> loadTurnoverChartStat(
+      Map<String, Object> params) {
+    return LiveDataTransfer.fromPublisher(
+        RxJavaInterop.toV2Flowable(staffModel.qcGetTurnoverChartStat(params))
             .compose(RxHelper.schedulersTransformerFlow()));
   }
 }

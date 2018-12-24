@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
 import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,6 +79,9 @@ public interface IStaffModel {
   rx.Observable<QcDataResponse<TurFilterResponse>> qcGetTurnoversFilterItems();
   rx.Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoverOrderItems(
       Map<String,Object> params);
+  rx.Observable<QcDataResponse<TurnoversChartStatDataResponse>> qcGetTurnoverChartStat(
+      Map<String,Object> params);
+
 
 
 }

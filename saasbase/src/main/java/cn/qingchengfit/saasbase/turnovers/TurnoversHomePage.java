@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
@@ -13,6 +14,7 @@ import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +38,9 @@ import java.util.Map;
         }
         adapter.updateDataSet(items);
       } else {
-        //adapter.updateDataSet();
+        List<AbstractFlexibleItem> items = new ArrayList<>();
+        items.add(new CommonNoDataItem(R.drawable.turnover_no_orders, "没有流水账单"));
+        adapter.updateDataSet(items);
       }
     });
     mViewModel.filterVisible.observe(this, aBoolean -> {
@@ -73,7 +77,10 @@ import java.util.Map;
         }
       }
     });
+
   }
+
+
 
   @Override
   public TurnoversHomePageBinding initDataBinding(LayoutInflater inflater, ViewGroup container,

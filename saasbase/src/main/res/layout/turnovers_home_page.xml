@@ -74,7 +74,6 @@
               android:layout_weight="1"
               android:background="@drawable/bg_click"
               android:onClick="@{(view)->page.onSellerFilter(view)}"
-
               android:text="@{viewModel.filterSeller}"
               app:ft_text_off="业绩归属"
               app:ft_text_on="业绩归属"
@@ -118,7 +117,8 @@
                   android:layout_width="25dp"
                   android:layout_height="25dp"
                   android:onClick="@{(view)->page.onDateArrowLeft()}"
-                  bind:srcCompat="@drawable/vd_arrow_left_black"
+                  app:srcCompat="@drawable/turnover_arrow_left"
+                  android:enabled="@{viewModel.leftEnable}"
                   />
               <TextView
                   android:layout_width="0dp"
@@ -134,7 +134,9 @@
                   android:layout_width="25dp"
                   android:layout_height="25dp"
                   android:onClick="@{(view)->page.onDateArrowRight()}"
-                  bind:srcCompat="@drawable/vd_arrow_right_black"
+                  app:srcCompat="@drawable/turnover_arrow_right"
+                  android:enabled="@{viewModel.rightEnable}"
+
                   />
             </LinearLayout>
             <android.support.design.widget.CoordinatorLayout
@@ -151,7 +153,7 @@
                 <FrameLayout
                     android:id="@+id/fl_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="360dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/bg_white"
                     android:layout_marginBottom="10dp"
                     app:layout_scrollFlags="scroll|enterAlwaysCollapsed"

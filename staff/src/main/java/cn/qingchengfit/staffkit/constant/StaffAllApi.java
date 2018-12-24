@@ -160,6 +160,7 @@ import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
 import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
@@ -1801,5 +1802,9 @@ public interface StaffAllApi {
 
   @GET("api/v2/staffs/{staff_id}/turnovers/?show_all=1")
   rx.Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoversOrderList(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+
+  @GET("api/v2/staffs/{staff_id}/turnovers/stat/")
+  rx.Observable<QcDataResponse<TurnoversChartStatDataResponse>> qcGetTurnoversChartStat(
       @Path("staff_id") String id, @QueryMap Map<String, Object> params);
 }

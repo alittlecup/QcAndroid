@@ -128,7 +128,7 @@ import rx.functions.Action1;
  * Created by Paper on 16/2/1 2016.
  */
 public class GymDetailFragment extends BaseFragment
-    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener {
+    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener ,FlexibleAdapter.OnItemLongClickListener{
 
   public static final int RESULT_STAFF_MANAGE = 12;
 
@@ -905,6 +905,13 @@ public class GymDetailFragment extends BaseFragment
       onHowtoUse();
     }
     return true;
+  }
+
+  @Override public void onItemLongClick(int position) {
+    IFlexible item = adapter.getItem(position);
+    if(item instanceof SimpleTextItemItem){
+      routeTo("staff","/turnover/home",null);
+    }
   }
 
   /**
