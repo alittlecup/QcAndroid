@@ -1,13 +1,11 @@
 package cn.qingchengfit.utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import cn.qingchengfit.widgets.R;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -138,6 +136,12 @@ public class DialogUtils {
 
   public static MaterialDialog initConfirmDialog(Context context, String title, String content,
       MaterialDialog.SingleButtonCallback callback) {
+
+    return initConfirmDialog(context, title, content, "确定", "取消", callback);
+  }
+
+  public static MaterialDialog initConfirmDialog(Context context, String title, String content,
+      String positiveText, String negativeText, MaterialDialog.SingleButtonCallback callback) {
     MaterialDialog.Builder builder = new MaterialDialog.Builder(context).content(content)
         .autoDismiss(false)
         .contentGravity(GravityEnum.CENTER)
@@ -145,9 +149,9 @@ public class DialogUtils {
         .buttonsGravity(GravityEnum.CENTER)
         .dividerColorRes(R.color.divider_medium)
         .positiveColorRes(R.color.colorPrimary)
-        .positiveText("确定")
+        .positiveText(positiveText)
         .onPositive(callback)
-        .negativeText("取消")
+        .negativeText(negativeText)
         .negativeColorRes(R.color.text_dark)
         .onNegative(callback);
     if (!TextUtils.isEmpty(title)) {
@@ -159,7 +163,7 @@ public class DialogUtils {
     return builder.build();
   }
 
-  public static void shwoConfirm(Context context, String content,
+  public static void showConfirm(Context context, String content,
       MaterialDialog.SingleButtonCallback callback) {
     showConfirm(context, null, content, callback);
   }

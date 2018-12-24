@@ -529,7 +529,6 @@ public interface AppComponent {
 
   App app();
 
-
   @Subcomponent() public interface ChooseGymSubcomponent
       extends AndroidInjector<ChooseGymActivity> {
     @Subcomponent.Builder public abstract class Builder

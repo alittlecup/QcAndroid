@@ -27,7 +27,6 @@ public class QRScanActivity extends SaasCommonActivity
   private QRCodeReaderView qrdecoderview;
   private RelativeLayout rootView;
   private TextView title;
-  public static final int REQUEST_CODE = 1093;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, QRScanActivity.class);

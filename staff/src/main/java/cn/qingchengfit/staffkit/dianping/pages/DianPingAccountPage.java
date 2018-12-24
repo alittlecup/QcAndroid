@@ -41,6 +41,7 @@ import rx.functions.Action1;
 @Leaf(module = "dianping", path = "/dianping/account") public class DianPingAccountPage
     extends SaasBindingFragment<PageDianpingAccountBinding, DianPingAccountViewModel> {
   @Need String barCode = "";
+  @Need String dianPingGymName = "";
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
@@ -141,8 +142,20 @@ import rx.functions.Action1;
     });
     mBinding.civGymArea.addTextWatcher(new SimpleTextWatcher() {
       @Override public void afterTextChanged(Editable s) {
-        mViewModel.gymInfo.getValue()
-            .setArea(Float.valueOf(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
+        String s1 = s.toString();
+        if (TextUtils.isEmpty(s1)) {
+          mBinding.civGymArea.setContent("0");
+          mViewModel.gymInfo.getValue().setArea(0);
+        } else {
+          String replace = s1.replace(" ", "");
+          try {
+            Float aFloat = Float.valueOf(replace);
+            mViewModel.gymInfo.getValue().setArea(aFloat);
+            mBinding.civGymArea.setContent(replace);
+          } catch (NumberFormatException e) {
+            mBinding.civGymArea.setContent(s.toString().substring(0, s.toString().length() - 1));
+          }
+        }
       }
     });
   }
@@ -234,16 +247,19 @@ import rx.functions.Action1;
   }
 
   private void showDialog() {
-    DialogUtils.shwoConfirm(getContext(),
-        "确认场馆【" + mViewModel.gymInfo.getValue().getName() + "】成为美团点评认证商家吗？",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-            materialDialog.dismiss();
-            if (dialogAction == DialogAction.POSITIVE) {
-              mViewModel.postDianPingAccount(String.valueOf(mViewModel.gymInfo.getValue().getGym_id()), barCode);
-            }
-          }
-        });
+    DialogUtils.showConfirm(getContext(), "确认授权将场馆【"
+        + mViewModel.gymInfo.getValue().getName()
+        + "】与美团点评门店【"
+        + dianPingGymName
+        + "】绑定吗？", new MaterialDialog.SingleButtonCallback() {
+      @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+        materialDialog.dismiss();
+        if (dialogAction == DialogAction.POSITIVE) {
+          mViewModel.postDianPingAccount(String.valueOf(mViewModel.gymInfo.getValue().getGym_id()),
+              barCode);
+        }
+      }
+    });
   }
 
   class SimpleTextWatcher implements TextWatcher {

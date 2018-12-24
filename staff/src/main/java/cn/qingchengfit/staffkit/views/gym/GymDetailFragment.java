@@ -62,6 +62,7 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
+import cn.qingchengfit.staffkit.dianping.pages.DianPingEmptyFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
@@ -463,28 +464,12 @@ public class GymDetailFragment extends BaseFragment
       super.initToolbar(toolbar);
     }
     toolbar.getMenu().clear();
-    toolbar.inflateMenu(R.menu.menu_flow);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-          getFragmentManager().beginTransaction()
-              .replace(mCallbackActivity.getFragId(), new SettingFragment())
-              .addToBackStack(null)
-              .commit();
-        } else if (item.getItemId() == R.id.action_notifi) {
-
-        } else if (item.getItemId() == R.id.action_flow) {
-          if (dialogList == null) {
-            dialogList = new DialogList(getContext());
-            List<String> actions = new ArrayList<String>();
-            if (getActivity() instanceof MainActivity) actions.add("品牌管理");
-            actions.add("离职退出该场馆");
-            actions.add("取消");
-            dialogList.list(actions, GymDetailFragment.this);
-          }
-          dialogList.show();
-        }
-        return true;
+    llScan.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(getContext(), QRScanActivity.class);
+        intent.putExtra("title", "扫描二维码");
+        intent.putExtra("point_text", "将取景框对准二维码，即可自动扫描");
+        startActivityForResult(intent, 1001);
       }
     });
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
@@ -570,9 +555,22 @@ public class GymDetailFragment extends BaseFragment
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
-    }
-    if (requestCode == RESULT_STAFF_MANAGE && resultCode == 111) {
-      onQuitGym();
+      if (requestCode == 1001) {
+        if (null != data) {
+          String content = data.getStringExtra("content");
+          if (!TextUtils.isEmpty(content)) {
+            if (content.startsWith("DIANPING-QINGCHENG-SHOPMAPPING")) {
+              DianPingEmptyFragment.addDianPingEmptyFragment(getFragmentManager(), content);
+            } else if (content.startsWith("http")) {
+              WebActivity.startWeb(content, getContext());
+            } else {
+              Intent intent = new Intent(getActivity(), CommonSimpleTextActivity.class);
+              intent.putExtra("content", content);
+              startActivity(intent);
+            }
+          }
+        }
+      }
     }
   }
 
@@ -829,36 +827,12 @@ public class GymDetailFragment extends BaseFragment
       //品牌管理
       if (getActivity() instanceof MainActivity && position == 0) {
         gymDetailPresenter.manageBrand();
-      } else if ((getActivity() instanceof MainActivity && position == 1) || (position
-          == 0)) {//离职退出场馆
-        if (quitDialog == null) {
-          quitDialog = new QuitGymFragment();
-          quitDialog.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-              gymDetailPresenter.quitGym();
-            }
-          });
-        }
-        quitDialog.show(getFragmentManager(), "");
-      } else {
-
       }
     }
   }
 
   void onHowtoUse() {
     WebActivity.startWeb(Router.WEB_HOW_TO_USE, getContext());
-  }
-
-  /**
-   * 退出健身房
-   */
-
-  @Override public void onQuitGym() {
-    if (getActivity() instanceof MainActivity) {
-      startActivity(new Intent(getActivity(), SplashActivity.class));
-      getActivity().finish();
-    }
   }
 
   /**

@@ -1,5 +1,6 @@
 package cn.qingchengfit.views.fragments;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,22 +24,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
-import com.bigkoo.pickerview.TimeDialogWindow;
-import com.bigkoo.pickerview.TimePopupWindow;
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
-import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
-import com.trello.rxlifecycle.android.FragmentEvent;
-import com.trello.rxlifecycle.components.support.RxFragment;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -56,9 +41,23 @@ import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.R;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
+import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
+import com.trello.rxlifecycle.android.FragmentEvent;
+import com.trello.rxlifecycle.components.support.RxFragment;
 import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.HasSupportFragmentInjector;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -79,9 +78,8 @@ import rx.functions.Func1;
  * <p>
  * Created by Paper on 15/9/22 2015.
  */
-@SensorsDataTrackFragmentAppViewScreen
-public abstract class BaseFragment extends RxFragment
-  implements BaseActivity.FragmentBackPress, CView {
+@SensorsDataTrackFragmentAppViewScreen public abstract class BaseFragment extends RxFragment
+    implements BaseActivity.FragmentBackPress, CView {
   @Deprecated public FragCallBack mCallbackActivity;
 
   // 标志位，标志已经初始化完成
@@ -99,17 +97,17 @@ public abstract class BaseFragment extends RxFragment
   private List<Pair<String, Observable>> observablesAllLife = new ArrayList<>();
 
   protected FragmentManager.FragmentLifecycleCallbacks childrenCB =
-    new FragmentManager.FragmentLifecycleCallbacks() {
+      new FragmentManager.FragmentLifecycleCallbacks() {
 
-      @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v,
-        Bundle savedInstanceState) {
-        super.onFragmentViewCreated(fm, f, v, savedInstanceState);
-        onChildViewCreated(fm, f, v, savedInstanceState);
-      }
-    };
+        @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v,
+            Bundle savedInstanceState) {
+          super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+          onChildViewCreated(fm, f, v, savedInstanceState);
+        }
+      };
 
   protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,18 +118,21 @@ public abstract class BaseFragment extends RxFragment
     super.onResume();
   }
 
-  protected void doEventOnCreatView(Class classz ,Action1 action1){
-    RxBus.getBus().register(classz)
-      .throttleFirst(500,TimeUnit.MILLISECONDS)
-      .compose(bindToLifecycle())
-      .compose(doWhen(FragmentEvent.CREATE_VIEW))
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(action1,throwable -> {LogUtil.e("doEventOnCreatView",throwable.toString());});
+  protected void doEventOnCreatView(Class classz, Action1 action1) {
+    RxBus.getBus()
+        .register(classz)
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .compose(bindToLifecycle())
+        .compose(doWhen(FragmentEvent.CREATE_VIEW))
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(action1, throwable -> {
+          LogUtil.e("doEventOnCreatView", throwable.toString());
+        });
   }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-    @Nullable Bundle savedInstanceState) {
+      @Nullable Bundle savedInstanceState) {
     getChildFragmentManager().registerFragmentLifecycleCallbacks(childrenCB, false);
     return super.onCreateView(inflater, container, savedInstanceState);
   }
@@ -141,17 +142,16 @@ public abstract class BaseFragment extends RxFragment
     super.onViewCreated(view, savedInstanceState);
     //使fitsystem生效
     ViewCompat.setOnApplyWindowInsetsListener(view,
-      (v, insets) -> insets.consumeSystemWindowInsets());
+        (v, insets) -> insets.consumeSystemWindowInsets());
     view.setOnTouchListener((v, event) -> isBlockTouch());
     try {
       TextView toolbar = view.findViewById(R.id.toolbar_title);
-      if (getActivity() != null && !TextUtils.isEmpty(toolbar.getText())){
+      if (getActivity() != null && !TextUtils.isEmpty(toolbar.getText())) {
         getActivity().setTitle(toolbar.getText());
       }
-    }catch (Exception e){
+    } catch (Exception e) {
 
     }
-
   }
 
   /**
@@ -165,7 +165,15 @@ public abstract class BaseFragment extends RxFragment
     try {
       AndroidSupportInjection.inject(this);
     } catch (Exception e) {
-      LogUtil.e("inject not find fragment:" + getFragmentName());
+      try {
+        LogUtil.e("inject not find fragment:" + this.getClass().getSimpleName());
+        Application application = getActivity().getApplication();
+        if (application instanceof HasSupportFragmentInjector) {
+          ((HasSupportFragmentInjector) application).supportFragmentInjector().inject(this);
+        }
+      } catch (Exception e1) {
+        LogUtil.e("inject not find fragment:" + this.getClass().getSimpleName() + "in application");
+      }
     }
     super.onAttach(context);
     if (context instanceof FragCallBack) {
@@ -208,9 +216,9 @@ public abstract class BaseFragment extends RxFragment
         getActivity().onBackPressed();
       }
     });
-    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
-      ((ViewGroup) toolbar.getParent()).setPadding(0,
-        MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
+          0, 0);
     }
   }
 
@@ -221,16 +229,17 @@ public abstract class BaseFragment extends RxFragment
   public void showLoading() {
     if (getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).showLoading();
-      }
+    }
   }
 
   public void hideLoading() {
     if (getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).hideLoading();
-      }
+    }
   }
-  protected void setStatusTextColor(boolean dark){
-    if (getActivity() != null && getActivity() instanceof BaseActivity){
+
+  protected void setStatusTextColor(boolean dark) {
+    if (getActivity() != null && getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).setStatusTextColor(dark);
     }
   }
@@ -402,21 +411,21 @@ public abstract class BaseFragment extends RxFragment
       getChildFragmentManager().beginTransaction().show(fragment1).commitAllowingStateLoss();
     } else {
       getChildFragmentManager().beginTransaction()
-        .setCustomAnimations(resIn, resOut)
-        .replace(res, fragment)
-        .commitAllowingStateLoss();
+          .setCustomAnimations(resIn, resOut)
+          .replace(res, fragment)
+          .commitAllowingStateLoss();
     }
   }
 
   public void routeTo(Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
       getActivity().getSupportFragmentManager()
-        .beginTransaction()
-        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
-          R.anim.slide_right_out)
-        .replace(((BaseActivity) getActivity()).getFragId(), fragment)
-        .addToBackStack(tag)
-        .commit();
+          .beginTransaction()
+          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+              R.anim.slide_right_out)
+          .replace(((BaseActivity) getActivity()).getFragId(), fragment)
+          .addToBackStack(tag)
+          .commit();
     }
   }
 
@@ -425,8 +434,8 @@ public abstract class BaseFragment extends RxFragment
   protected void showSearch(ViewGroup tvToolbarLayout) {
     if (searchRoot != null) {
       FrameLayout.LayoutParams lp =
-        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-          ViewGroup.LayoutParams.MATCH_PARENT);
+          new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+              ViewGroup.LayoutParams.MATCH_PARENT);
 
       lp.setMargins(15, 15, 15, 15);
       searchRoot.setOnTouchListener(new View.OnTouchListener() {
@@ -451,26 +460,26 @@ public abstract class BaseFragment extends RxFragment
     final EditText searchEt = ((EditText) searchRoot.findViewById(R.id.et_search));
     searchEt.setHint(hint);
     RxTextView.afterTextChangeEvents(searchEt)
-      .throttleLast(intervalD, TimeUnit.MILLISECONDS)
-      .skip(1)
-      .subscribe(new BusSubscribe<TextViewAfterTextChangeEvent>() {
-        @Override public void onNext(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-          onTextSearch(textViewAfterTextChangeEvent.editable().toString());
-        }
-      });
-    RxView.clicks(searchRoot.findViewById(R.id.btn_close))
-      .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          if (searchEt.getText().length() == 0) {
-            tvToolbarLayout.removeView(searchRoot);
-            tvToolbarLayout.clearFocus();
-            if (getActivity() != null) AppUtils.hideKeyboard(getActivity());
-          } else {
-            searchEt.setText("");
+        .throttleLast(intervalD, TimeUnit.MILLISECONDS)
+        .skip(1)
+        .subscribe(new BusSubscribe<TextViewAfterTextChangeEvent>() {
+          @Override public void onNext(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+            onTextSearch(textViewAfterTextChangeEvent.editable().toString());
           }
-        }
-      });
+        });
+    RxView.clicks(searchRoot.findViewById(R.id.btn_close))
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .subscribe(new BusSubscribe<Void>() {
+          @Override public void onNext(Void aVoid) {
+            if (searchEt.getText().length() == 0) {
+              tvToolbarLayout.removeView(searchRoot);
+              tvToolbarLayout.clearFocus();
+              if (getActivity() != null) AppUtils.hideKeyboard(getActivity());
+            } else {
+              searchEt.setText("");
+            }
+          }
+        });
     /*
     SearchManager searchManager =
       (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
@@ -532,7 +541,7 @@ public abstract class BaseFragment extends RxFragment
       if (getActivity() instanceof BaseActivity) {
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())
           //&& !uri.getPath().startsWith("/choose")
-          ) {
+        ) {
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else {
           to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -558,14 +567,14 @@ public abstract class BaseFragment extends RxFragment
    * @param civ 接受结果的civ
    */
   protected void choosTime(final TimePopupWindow.Type type, int start, int end, Date inputDate,
-    final CommonInputView civ) {
+      final CommonInputView civ) {
     if (getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).chooseTime(type, start, end, inputDate,
-        new TimeDialogWindow.OnTimeSelectListener() {
-          @Override public void onTimeSelect(Date date) {
-            civ.setContent(DateUtils.date2TimePicker(date, type));
-          }
-        });
+          new TimeDialogWindow.OnTimeSelectListener() {
+            @Override public void onTimeSelect(Date date) {
+              civ.setContent(DateUtils.date2TimePicker(date, type));
+            }
+          });
     }
   }
 
@@ -606,22 +615,22 @@ public abstract class BaseFragment extends RxFragment
     if (!uri.startsWith("/")) uri = "/" + uri;
     if (getActivity() instanceof BaseActivity) {
       routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())
-        + "://"
-        + ((BaseActivity) getActivity()).getModuleName()
-        + uri), bd, b);
+          + "://"
+          + ((BaseActivity) getActivity()).getModuleName()
+          + uri), bd, b);
     }
   }
 
   protected void rmAndTo(Fragment rm, Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
       getActivity().getSupportFragmentManager()
-        .beginTransaction()
-        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
-          R.anim.slide_right_out)
-        .remove(rm)
-        .replace(((BaseActivity) getActivity()).getFragId(), fragment)
-        .addToBackStack(tag)
-        .commitAllowingStateLoss();
+          .beginTransaction()
+          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+              R.anim.slide_right_out)
+          .remove(rm)
+          .replace(((BaseActivity) getActivity()).getFragId(), fragment)
+          .addToBackStack(tag)
+          .commitAllowingStateLoss();
     }
   }
 
@@ -691,7 +700,7 @@ public abstract class BaseFragment extends RxFragment
       int stackCount = getFragmentManager().getBackStackEntryCount();
       if (count <= stackCount) {
         getFragmentManager().popBackStackImmediate(
-          getFragmentManager().getBackStackEntryAt(stackCount - count).getId(), 1);
+            getFragmentManager().getBackStackEntryAt(stackCount - count).getId(), 1);
       } else {
         if (getActivity() != null) getActivity().finish();
       }
@@ -703,7 +712,7 @@ public abstract class BaseFragment extends RxFragment
   }
 
   @Override public void showSelectSheet(String title, List<String> strs,
-    AdapterView.OnItemClickListener listener) {
+      AdapterView.OnItemClickListener listener) {
     if (getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).showDialogList(title, strs, listener);
     }

@@ -13,12 +13,10 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.StudentListSelectEvent;
 import cn.qingchengfit.student.bean.InactiveBean;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.databinding.PageSalerStudentStateBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.listener.IncreaseType;
-import cn.qingchengfit.student.listener.onSecondBottomButtonListener;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -70,7 +68,7 @@ import javax.inject.Inject;
     filterView = new SalerStateFilterView();
     filterView.setInactiveBeans(beans);
     listView.setListener(
-        () -> DialogUtils.shwoConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
+        () -> DialogUtils.showConfirm(getContext(), "确定将选中的会员从" + staff.getUsername() + "的名下移除？",
             (materialDialog, dialogAction) -> {
               materialDialog.dismiss();
               if (dialogAction == DialogAction.POSITIVE) {

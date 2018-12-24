@@ -1,9 +1,6 @@
 package cn.qingchengfit.student.view.allot;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -25,7 +21,6 @@ import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentListView;
-import cn.qingchengfit.student.view.home.StudentListViewModel;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -34,11 +29,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 @Leaf(module = "student", path = "/student/seller/student") public class SalerStudentsPage
     extends StudentBaseFragment<StSalerStudentsPageBinding, SalerStudentsViewModel>
@@ -76,7 +69,7 @@ import rx.functions.Action1;
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     listView.getListView()
-        .setListener(() -> DialogUtils.shwoConfirm(getContext(),
+        .setListener(() -> DialogUtils.showConfirm(getContext(),
             "确定将选中的会员从" + staff.getUsername() + "的名下移除？", (materialDialog, dialogAction) -> {
               materialDialog.dismiss();
               if (dialogAction == DialogAction.POSITIVE) {

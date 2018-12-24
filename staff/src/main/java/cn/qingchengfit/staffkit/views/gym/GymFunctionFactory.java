@@ -584,30 +584,22 @@ public class GymFunctionFactory {
 
         return;
       case MODULE_MARKET_DIANPING:
-        WebActivity.startWeb(Configs.Server
-                + "activities/dianping-enter/?utm_source=staffapp&utm_medium=module&utm_campaign=dpenter",
-            fragment.getContext());
-        //if (coachService.meituan_status == 0) {
-        //  fragment.routeTo("dianping", "/dianping/scan", null);
-        //} else {
-        //  fragment.routeTo("dianping", "/dianping/success",
-        //      new DianPingAccountSuccessPageParams().gymName(coachService.getName()).build());
-        //}
+        if (coachService.meituan_status == 0) {
+          fragment.routeTo("dianping", "/dianping/home", null);
+        } else {
+          fragment.routeTo("dianping", "/dianping/success",
+              new DianPingAccountSuccessPageParams().gymName(coachService.getName()).build());
+        }
         return;
       case MODULE_SHOP_TURNOVERS:
         if(permissionModel.check(cn.qingchengfit.model.base.PermissionServerUtils.MODULE_SHOP_TURNOVER)){
           fragment.routeTo("staff", "/turnover/home", null);
-        }else{
+        }else {
           DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
         }
+
         return;
-      case MODULE_OPERATE_SCORE:
-        if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
-            PermissionServerUtils.SCORE_SETTING)) {
-          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
-          return;
-        }
-        break;
+
       case MODULE_OPERATE_ACTIVITY:
         goQrScan(fragment, module, PermissionServerUtils.ACTIVITY_SETTING, coachService);
         return;

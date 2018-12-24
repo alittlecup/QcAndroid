@@ -6,6 +6,7 @@ import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.staff.di.BindDianPingActivity;
 import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountViewModel;
 import cn.qingchengfit.staffkit.dianping.pages.DianPingChooseViewModel;
+import cn.qingchengfit.staffkit.dianping.pages.DianPingEmptyFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -17,6 +18,9 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(DianPingChooseViewModel.class)
   abstract ViewModel bindDianPingChooseViewModel(DianPingChooseViewModel viewModel);
+
+  @ContributesAndroidInjector()
+  abstract DianPingEmptyFragment contributesAndroidInjectorDianPingEmptyFragment();
 
   @ContributesAndroidInjector
   abstract TurnoverBarChartFragment contributesAndroidInjectorTurnoverBarChartFragment();

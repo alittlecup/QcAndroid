@@ -166,6 +166,7 @@ import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
+import cn.qingchengfit.staffkit.dianping.vo.DianPingGymInfo;
 import cn.qingchengfit.staffkit.dianping.vo.DianPingShopContainer;
 import cn.qingchengfit.staffkit.dianping.vo.GymFacilitiesList;
 import cn.qingchengfit.staffkit.dianping.vo.GymTags;
@@ -1793,8 +1794,12 @@ public interface StaffAllApi {
   @GET("/api/tags/?is_gym=1") rx.Observable<QcDataResponse<GymTags>> qcGetGymTags();
 
   @POST("/api/partner/meituan/gyms/{gym_id}/link/")
-  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(
-      @Path("gym_id") String id, @Body Map<String, Object> params);
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(@Path("gym_id") String id,
+      @Body Map<String, Object> params);
+
+  @GET("/api/partner/meituan/gyms/{gym_id}/link/")
+  rx.Observable<QcDataResponse<DianPingGymInfo>> qcGetDianPingGymInfo(@Path("gym_id") String id,
+      @QueryMap Map<String, Object> params);
 
   //------------------------营业流水相关接口------------------//
 
