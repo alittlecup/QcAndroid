@@ -21,12 +21,10 @@ import java.util.List;
 
 public class TurnoverPieChartRenderer extends PieChartRenderer {
 
-
   public TurnoverPieChartRenderer(PieChart chart, ChartAnimator animator,
       ViewPortHandler viewPortHandler) {
     super(chart, animator, viewPortHandler);
   }
-
 
   @Override public void drawValues(Canvas c) {
 
@@ -185,11 +183,12 @@ public class TurnoverPieChartRenderer extends PieChartRenderer {
             if (dataSet.isUsingSliceColorAsValueLineColor()) {
               mValueLinePaint.setColor(dataSet.getColor(j));
             }
-
-            c.drawLine(pt0x, pt0y, pt1x, pt1y, mValueLinePaint);
-            c.drawLine(pt1x, pt1y, pt2x, pt2y, mValueLinePaint);
-            mValueLinePaint.setStyle(Style.FILL);
-            c.drawCircle(pt0x, pt0y, Utils.convertDpToPixel(2), mValueLinePaint);
+            if (value >= 5 || dataSets.size() == 2) {
+              c.drawLine(pt0x, pt0y, pt1x, pt1y, mValueLinePaint);
+              c.drawLine(pt1x, pt1y, pt2x, pt2y, mValueLinePaint);
+              mValueLinePaint.setStyle(Style.FILL);
+              c.drawCircle(pt0x, pt0y, Utils.convertDpToPixel(2), mValueLinePaint);
+            }
           }
 
           // draw everything, depending on settings
@@ -207,8 +206,8 @@ public class TurnoverPieChartRenderer extends PieChartRenderer {
             }
           } else if (drawYOutside) {
 
-            drawValue(c, formatter, value, entry, 0, labelPtx, labelPty,
-                dataSet.getValueTextColor(j));
+            drawValueSelf(c, formatter, value, entry, 0, labelPtx, labelPty,
+                dataSet.getValueTextColor(j),value>=5||dataSets.size()==2);
           }
         }
 
@@ -263,13 +262,14 @@ public class TurnoverPieChartRenderer extends PieChartRenderer {
     //super.drawEntryLabel(c, label, x, y);
   }
 
-  @Override public void drawValue(Canvas c, IValueFormatter formatter, float value, Entry entry,
-      int dataSetIndex, float x, float y, int color) {
+  public void drawValueSelf(Canvas c, IValueFormatter formatter, float value, Entry entry,
+      int dataSetIndex, float x, float y, int color,boolean draw) {
     mValuePaint.setColor(color);
-    c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x,
-        y + Utils.convertDpToPixel(5), mValuePaint);
-    c.drawText(((PieEntry) entry).getLabel(), x, y + Utils.convertDpToPixel(15), mValuePaint);
+    if (draw) {
+      String label = ((PieEntry) entry).getLabel();
+      String[] split = label.split("/");
+      c.drawText(split[0], x, y - Utils.convertDpToPixel(5), mValuePaint);
+      c.drawText(split[1], x, y + Utils.convertDpToPixel(15), mValuePaint);
+    }
   }
-
-
 }

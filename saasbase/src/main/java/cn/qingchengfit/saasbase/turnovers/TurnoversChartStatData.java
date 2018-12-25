@@ -5,24 +5,24 @@ import com.google.gson.annotations.SerializedName;
 public class TurnoversChartStatData {
 
   /**
-   * group_rate : null
+   * growth_rate : null
    * amount : 0
    * trade_type : 1
-   * group_value : 0
+   * growth_value : 0
    */
 
-  private float group_rate;
+  private float growth_rate;
   @SerializedName(value = "amount",alternate = {"total_amount"})
   private float amount;
   private int trade_type;
-  private float group_value;
+  private float growth_value;
 
-  public float getGroup_rate() {
-    return group_rate;
+  public float getGrowth_rate() {
+    return growth_rate;
   }
 
-  public void setGroup_rate(float group_rate) {
-    this.group_rate = group_rate;
+  public void setGrowth_rate(float growth_rate) {
+    this.growth_rate = growth_rate;
   }
 
   public float getAmount() {
@@ -41,11 +41,11 @@ public class TurnoversChartStatData {
     this.trade_type = trade_type;
   }
 
-  public float getGroup_value() {
-    return group_value;
+  public float getGrowth_value() {
+    return growth_value;
   }
 
-  public void setGroup_value(float group_value) {
-    this.group_value = group_value;
+  public void setGrowth_value(float growth_value) {
+    this.growth_value = growth_value;
   }
 }

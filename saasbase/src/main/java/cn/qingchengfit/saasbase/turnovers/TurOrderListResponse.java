@@ -5,4 +5,5 @@ import java.util.List;
 
 public class TurOrderListResponse extends QcListData {
   public List<TurOrderListData> shop_turnovers;
+  public String update_time = "";
 }

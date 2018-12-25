@@ -18,6 +18,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,19 +59,28 @@ public class TurnoversVM extends BaseViewModel {
 
   public final MutableLiveData<Integer> dateType = new MutableLiveData<>();
   public final MutableLiveData<Pair<String, String>> date = new MutableLiveData<>();
+  public MutableLiveData<String> orderListUpdateTime = new MutableLiveData<>();
 
   public LiveData<List<? extends ITurnoverOrderItemData>> getOrderDatas() {
     return orderDatas;
   }
 
-  public LiveData<TurnoversChartStatDataResponse> getChartDatas() {
+  public LiveData<Pair<List<ITurnoverChartData>, Float>> getChartDatas() {
     return chartDatas;
   }
 
-  private LiveData<TurnoversChartStatDataResponse> chartDatas;
+  public LiveData<TurnoversChartStatDataResponse> getChartResponse() {
+    return chartResponse;
+  }
 
+  private LiveData<TurnoversChartStatDataResponse> chartResponse;
+  private MediatorLiveData<Pair<List<ITurnoverChartData>, Float>> chartDatas =
+      new MediatorLiveData<>();
+  public MutableLiveData<TurnoversChartStatData> totalRate = new MutableLiveData<>();
   private LiveData<List<? extends ITurnoverOrderItemData>> orderDatas;
   private MediatorLiveData<Map<String, Object>> params = new MediatorLiveData<>();
+  private MediatorLiveData<Map<String, Object>> chartParams = new MediatorLiveData<>();
+  public MutableLiveData<Boolean> chartVisible = new MutableLiveData<>();
 
   public MutableLiveData<Boolean> rightEnable = new MutableLiveData<>();
   public MutableLiveData<Boolean> leftEnable = new MutableLiveData<>();
@@ -106,30 +116,113 @@ public class TurnoversVM extends BaseViewModel {
         return start.replace("-", "/") + "-" + end.replace("-", "/");
       }
     });
-    params.addSource(date, this::updateDate);
-    params.addSource(filterSellerId, id -> updateLoadPramsData("seller_id", id));
-    params.addSource(filterFeatureType, type -> updateLoadPramsData("trade_type", type));
-    params.addSource(filterPaymentChannel, channel -> updateLoadPramsData("channel", channel));
+    params.addSource(date, input -> updateDate(input, params));
+    params.addSource(filterSellerId, id -> updateLoadPramsData("seller_id", id, params));
+    params.addSource(filterFeatureType, type -> updateLoadPramsData("trade_type", type, params));
+    params.addSource(filterPaymentChannel,
+        channel -> updateLoadPramsData("channel", channel, params));
 
-    chartDatas = Transformations.switchMap(params,
+    chartParams.addSource(date, date -> updateDate(date, chartParams));
+    chartParams.addSource(filterSellerId, id -> updateLoadPramsData("seller_id", id, chartParams));
+    chartParams.addSource(filterPaymentChannel,
+        channel -> updateLoadPramsData("channel", channel, chartParams));
+
+    chartResponse = Transformations.switchMap(chartParams,
         input -> Transformations.map(loadTurnoverChartStat(input),
             input12 -> dealResource(input12) == null ? null : dealResource(input12)));
 
-    orderDatas = Transformations.switchMap(params,
-        input -> Transformations.map(loadTurnoversOrderLists(input),
-            input1 -> dealResource(input1) == null ? null : dealResource(input1).shop_turnovers));
+    chartDatas.addSource(chartResponse, response -> {
+      totalRate.setValue(response.total);
+      upDateChartDatas(response, Integer.valueOf(
+          filterFeatureType.getValue() == null ? "-1" : filterFeatureType.getValue()));
+    });
+    chartDatas.addSource(filterFeatureType, type -> {
+      upDateChartDatas(chartResponse.getValue(), Integer.valueOf(
+          filterFeatureType.getValue() == null ? "-1" : filterFeatureType.getValue()));
+    });
 
+    orderDatas = Transformations.switchMap(params,
+        input -> Transformations.map(loadTurnoversOrderLists(input), input1 -> {
+          TurOrderListResponse turOrderListResponse = dealResource(input1);
+          if (turOrderListResponse != null) {
+            orderListUpdateTime.setValue(DateUtils.Date2HHmm(
+                DateUtils.formatDateFromServer(turOrderListResponse.update_time)));
+            return turOrderListResponse.shop_turnovers;
+          } else {
+            return null;
+          }
+        }));
 
     dateType.setValue(TimeType.DAY);
     date.setValue(new Pair<>(DateUtils.getStringToday(), DateUtils.getStringToday()));
+    chartVisible.setValue(false);
     rightEnable.setValue(false);
-    rightEnable.setValue(true);
+    leftEnable.setValue(true);
     filterFeature.setValue("项目");
     filterSeller.setValue("业绩归属");
     filterPayment.setValue("支付方式");
   }
 
-  private void updateDate(Pair<String, String> date) {
+  private void upDateChartDatas(TurnoversChartStatDataResponse response, int type) {
+    if (response != null && response.total != null && response.total.getAmount() > 0) {
+      List<ITurnoverChartData> iTurnoverChartData = null;
+      if (type != -1) {
+        iTurnoverChartData =
+            convertChartStats(filterWithTradeType(response.stat, type), response.total.getAmount());
+      } else {
+        iTurnoverChartData = convertChartStats(response.stat, response.total.getAmount());
+      }
+      chartDatas.setValue(new Pair<>(iTurnoverChartData, response.total.getAmount()));
+      chartVisible.setValue(true);
+    } else {
+      chartVisible.setValue(false);
+    }
+  }
+
+  private List<TurnoversChartStatData> filterWithTradeType(List<TurnoversChartStatData> statData,
+      int traderType) {
+    List<TurnoversChartStatData> data = new ArrayList<>();
+    if (statData != null && !statData.isEmpty()) {
+      float otherCount = 0f;
+      for (TurnoversChartStatData stat : statData) {
+        if (stat.getTrade_type() == traderType) {
+          data.add(stat);
+        } else {
+          otherCount += stat.getAmount();
+        }
+      }
+      TurnoversChartStatData other = new TurnoversChartStatData();
+      other.setTrade_type(-1);
+      other.setAmount(otherCount);
+      data.add(other);
+    }
+    return data.size() >= 2 ? data : new ArrayList<>();
+  }
+
+  private List<ITurnoverChartData> convertChartStats(List<TurnoversChartStatData> stat,
+      float total) {
+    List<ITurnoverChartData> datas = new ArrayList<>();
+
+    if (stat != null && !stat.isEmpty()) {
+      Collections.sort(stat, (o1, o2) -> (int) (o1.getAmount() * 100 - o2.getAmount() * 100));
+      for (TurnoversChartStatData data : stat) {
+        TurnoverTradeType turnoverTradeType =
+            TurnoversHomePage.trade_types.get(data.getTrade_type());
+
+        if (data.getAmount() > 0 && data.getAmount() * 100 / total <= 1) {
+          datas.add(new TurnoverChartStat(total / 100f, turnoverTradeType.getColor(),
+              "￥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
+        } else if (data.getAmount() * 100 / total > 1) {
+          datas.add(new TurnoverChartStat(data.getAmount(), turnoverTradeType.getColor(),
+              "￥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
+        }
+      }
+    }
+
+    return datas;
+  }
+
+  private void updateDate(Pair<String, String> date, MutableLiveData<Map<String, Object>> params) {
     Map<String, Object> value = params.getValue();
     if (value == null) {
       value = new HashMap<>();
@@ -139,7 +232,8 @@ public class TurnoversVM extends BaseViewModel {
     params.setValue(value);
   }
 
-  private void updateLoadPramsData(String key, String value) {
+  private void updateLoadPramsData(String key, String value,
+      MutableLiveData<Map<String, Object>> params) {
     Map<String, Object> data = params.getValue();
     if (data == null) {
       data = new HashMap<>();
@@ -247,6 +341,12 @@ public class TurnoversVM extends BaseViewModel {
 
   private LiveData<Resource<TurnoversChartStatDataResponse>> loadTurnoverChartStat(
       Map<String, Object> params) {
+    Integer value = dateType.getValue();
+    if (value != null && value != TimeType.CUSTOMIZE) {
+      params.put("need_growth_rate", 1);
+    } else {
+      params.put("need_growth_rate", 0);
+    }
     return LiveDataTransfer.fromPublisher(
         RxJavaInterop.toV2Flowable(staffModel.qcGetTurnoverChartStat(params))
             .compose(RxHelper.schedulersTransformerFlow()));

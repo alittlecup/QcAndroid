@@ -3,10 +3,10 @@ package cn.qingchengfit.saasbase.turnovers;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
@@ -39,7 +39,7 @@ import java.util.Map;
         adapter.updateDataSet(items);
       } else {
         List<AbstractFlexibleItem> items = new ArrayList<>();
-        items.add(new CommonNoDataItem(R.drawable.turnover_no_orders, "没有流水账单"));
+        items.add(new TurNoDataItem(R.drawable.turnover_no_orders, "没有流水账单"));
         adapter.updateDataSet(items);
       }
     });
@@ -75,12 +75,29 @@ import java.util.Map;
             trade_types.put(((TurnoverTradeType) data).getTrade_type(), (TurnoverTradeType) data);
           }
         }
+        TurnoverTradeType tradeType = new TurnoverTradeType();
+        tradeType.setTrade_type(-1);
+        tradeType.setColor("e4e4e4");
+        tradeType.setDesc("其他");
+        trade_types.put(-1, tradeType);
       }
     });
-
+    mViewModel.getChartResponse().observe(this, response -> {
+      if (response == null || response.total == null || response.total.getAmount() <= 0) {
+        mViewModel.chartVisible.setValue(false);
+      } else {
+        mViewModel.chartVisible.setValue(true);
+      }
+    });
+    mViewModel.orderListUpdateTime.observe(this, time -> {
+      if (TextUtils.isEmpty(time)) {
+        mBinding.tvUpdateTime.setVisibility(View.GONE);
+      } else {
+        mBinding.tvUpdateTime.setVisibility(View.VISIBLE);
+        mBinding.tvUpdateTime.setText("(上次更新时间为：" + time + ")");
+      }
+    });
   }
-
-
 
   @Override
   public TurnoversHomePageBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
