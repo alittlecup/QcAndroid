@@ -12,7 +12,6 @@ import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.views.TurnoverPieChartRenderer;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -75,45 +74,27 @@ public class TurnoverChartFragment extends SaasCommonFragment
             mBinding.pieChart.getViewPortHandler()));
     chart.setUsePercentValues(true);
     chart.getDescription().setEnabled(false);
-    chart.setExtraOffsets(5, 10, 5, 5);
 
     chart.setDragDecelerationFrictionCoef(0.95f);
-
-    chart.setCenterText("center text");
-
     chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
-
     chart.setDrawHoleEnabled(true);
     chart.setHoleColor(Color.WHITE);
 
     chart.setTransparentCircleColor(Color.WHITE);
     chart.setTransparentCircleAlpha(110);
 
-    chart.setHoleRadius(65f);
-    chart.setTransparentCircleRadius(70f);
+    chart.setHoleRadius(70f);
+    chart.setTransparentCircleRadius(75f);
 
     chart.setDrawCenterText(true);
 
-    chart.setRotationAngle(0);
-    // enable rotation of the chart by touch
+    chart.setRotationAngle(270);
     chart.setRotationEnabled(true);
     chart.setHighlightPerTapEnabled(true);
 
-    // chart.setUnit(" €");
-    // chart.setDrawUnitsInChart(true);
-
-    // add a selection listener
     chart.setOnChartValueSelectedListener(this);
 
-
     chart.animateY(1400, Easing.EaseInOutQuad);
-
-    Legend l = chart.getLegend();
-    l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-    l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-    l.setOrientation(Legend.LegendOrientation.VERTICAL);
-    l.setDrawInside(false);
-    l.setEnabled(false);
   }
 
   public void upDateChartStat(List<ITurnoverChartData> datas, float total) {
@@ -121,9 +102,13 @@ public class TurnoverChartFragment extends SaasCommonFragment
       List<PieEntry> entries = new ArrayList<>();
       List<Integer> colors = new ArrayList<>();
       for (ITurnoverChartData data : datas) {
-        entries.add(new PieEntry(data.getPresent(),
-            (data.getPresent() * 100 / total <= 5) ? "" : data.getLabel()));
-        colors.add(Color.parseColor(data.getColor()));
+        float present = data.getPresent();
+        entries.add(new PieEntry(present, data.getLabel()));
+        if (present * 100 / total <= 5) {
+          colors.add(Color.TRANSPARENT);
+        } else {
+          colors.add(Color.parseColor(data.getColor()));
+        }
       }
       PieDataSet dataSet = new PieDataSet(entries, "");
 

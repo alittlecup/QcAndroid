@@ -259,9 +259,9 @@ public class TurnoverPieChartRenderer extends PieChartRenderer {
     c.restore();
   }
 
-
-
-
+  @Override protected void drawEntryLabel(Canvas c, String label, float x, float y) {
+    //super.drawEntryLabel(c, label, x, y);
+  }
 
   @Override public void drawValue(Canvas c, IValueFormatter formatter, float value, Entry entry,
       int dataSetIndex, float x, float y, int color) {

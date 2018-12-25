@@ -16,7 +16,7 @@ public class QcPieChart extends PieChart {
 
   public QcPieChart(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
-    //initStyle();
+    initStyle();
   }
 
 

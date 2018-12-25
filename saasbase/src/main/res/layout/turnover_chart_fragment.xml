@@ -52,6 +52,7 @@
         >
       <cn.qingchengfit.saascommon.widget.QcPieChart
           android:id="@+id/pie_chart"
+          android:background="@color/red"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:padding="10dp"
