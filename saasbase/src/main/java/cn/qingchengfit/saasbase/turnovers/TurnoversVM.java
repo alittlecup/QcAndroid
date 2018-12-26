@@ -161,7 +161,15 @@ public class TurnoversVM extends BaseViewModel {
     filterFeature.setValue("项目");
     filterSeller.setValue("业绩归属");
     filterPayment.setValue("支付方式");
+
+
   }
+
+  public void setTurId(String turId) {
+    this.turId = turId;
+  }
+
+  public String turId = "";
 
   private void upDateChartDatas(TurnoversChartStatDataResponse response, int type) {
     if (response != null && response.total != null && response.total.getAmount() > 0) {
@@ -350,5 +358,24 @@ public class TurnoversVM extends BaseViewModel {
     return LiveDataTransfer.fromPublisher(
         RxJavaInterop.toV2Flowable(staffModel.qcGetTurnoverChartStat(params))
             .compose(RxHelper.schedulersTransformerFlow()));
+  }
+
+  public MutableLiveData<ITurnoverOrderItemData> getOrderItemDataMutableLiveData() {
+    return orderItemDataMutableLiveData;
+  }
+
+  private MutableLiveData<ITurnoverOrderItemData> orderItemDataMutableLiveData=new MutableLiveData<>();
+  public void putTurnoverSellerId(String turId, String sellerID) {
+    staffModel.qcPutTurnoverOrderDetail(turId, sellerID)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            orderItemDataMutableLiveData.setValue(response.getData().shop_turnover);
+          } else {
+            ToastUtils.show("修改业绩归属失败");
+          }
+        }, throwable -> {
+          ToastUtils.show("修改业绩归属失败");
+        });
   }
 }

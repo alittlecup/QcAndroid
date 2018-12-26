@@ -34,6 +34,7 @@
         tools:text="2018-10-10   15:40"
         />
     <TextView
+        android:id="@+id/tv_change_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="by田野"

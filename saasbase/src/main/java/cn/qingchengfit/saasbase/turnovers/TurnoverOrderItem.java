@@ -4,7 +4,10 @@ import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversOrderItemBinding;
+import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DrawableUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -14,6 +17,14 @@ public class TurnoverOrderItem
     extends AbstractFlexibleItem<DataBindingViewHolder<TurnoversOrderItemBinding>> {
 
   public TurnoverOrderItem(ITurnoverOrderItemData data) {
+    this.data = data;
+  }
+
+  public ITurnoverOrderItemData getData() {
+    return data;
+  }
+
+  public void setData(ITurnoverOrderItemData data) {
     this.data = data;
   }
 
@@ -29,7 +40,11 @@ public class TurnoverOrderItem
 
   @Override public DataBindingViewHolder<TurnoversOrderItemBinding> createViewHolder(View view,
       FlexibleAdapter adapter) {
-    return new DataBindingViewHolder<>(view, adapter);
+    DataBindingViewHolder<TurnoversOrderItemBinding> holder =
+        new DataBindingViewHolder<>(view, adapter);
+
+
+    return holder;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter,
@@ -47,12 +62,6 @@ public class TurnoverOrderItem
           TurnoversHomePage.trade_types.get(Integer.parseInt(data.getFeatureName()));
       dataBinding.tvFeatureMoney.setText(
           "[" + turnoverTradeType.getDesc() + "] " + data.getMoney() + "元");
-      int trade_type = turnoverTradeType.getTrade_type();
-      if (trade_type == 1 || trade_type == 2 || trade_type == 17 || trade_type == 16) {
-        dataBinding.llSeller.setVisibility(View.VISIBLE);
-      } else {
-        dataBinding.llSeller.setVisibility(View.GONE);
-      }
     }
     if (!TurnoversHomePage.paymentChannels.isEmpty()) {
       TurFilterData turFilterData = TurnoversHomePage.paymentChannels.get(data.getPayType());
@@ -61,6 +70,25 @@ public class TurnoverOrderItem
           DrawableUtils.tintDrawable(dataBinding.tvType.getContext(), R.drawable.circle_green,
               "#" + turFilterData.getColor()));
     }
-    dataBinding.tvCheckoutName.setText("收款人："+data.getCheckoutName());
+    dataBinding.tvCheckoutName.setText("收款人：" + data.getCheckoutName());
+    holder.getDataBinding().btnAllot.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (listener != null) {
+          listener.onItemClick(holder.getDataBinding().getRoot(), position);
+        }
+      }
+    });
+    holder.getDataBinding().tvSellerChange.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        RouteUtil.routeTo(dataBinding.getRoot().getContext(), "staff", "/turnover/order",
+            new BundleBuilder().withString("turId", data.getID()).build());
+      }
+    });
   }
+
+  public void setListener(OnRecycleItemClickListener listener) {
+    this.listener = listener;
+  }
+
+  private OnRecycleItemClickListener listener;
 }

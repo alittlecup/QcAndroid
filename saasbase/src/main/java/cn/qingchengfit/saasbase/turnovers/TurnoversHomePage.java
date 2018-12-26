@@ -7,21 +7,27 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
+import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import rx.android.schedulers.AndroidSchedulers;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
-    extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM> {
+    extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM>
+    implements OnRecycleItemClickListener {
   TurnoversFilterFragement filterFragement;
   CommonFlexAdapter adapter;
   TurnoverChartFragment chartFragment;
@@ -34,7 +40,9 @@ import java.util.Map;
       if (orderDatas != null && !orderDatas.isEmpty()) {
         List<TurnoverOrderItem> items = new ArrayList<>();
         for (ITurnoverOrderItemData data : orderDatas) {
-          items.add(new TurnoverOrderItem(data));
+          TurnoverOrderItem turnoverOrderItem = new TurnoverOrderItem(data);
+          turnoverOrderItem.setListener(this);
+          items.add(turnoverOrderItem);
         }
         adapter.updateDataSet(items);
       } else {
@@ -97,6 +105,15 @@ import java.util.Map;
         mBinding.tvUpdateTime.setText("(上次更新时间为：" + time + ")");
       }
     });
+    mViewModel.getOrderItemDataMutableLiveData().observe(this, data -> {
+      if (data != null) {
+        IFlexible item = adapter.getItem(pos);
+        if (item instanceof TurnoverOrderItem) {
+          ((TurnoverOrderItem) item).setData(data);
+          adapter.notifyItemChanged(pos);
+        }
+      }
+    });
   }
 
   @Override
@@ -119,6 +136,12 @@ import java.util.Map;
     initRecyclerView();
     mViewModel.loadFilterOptions();
     mViewModel.loadSellerItems();
+    RxBusAdd(Staff.class).observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<Staff>() {
+          @Override public void onNext(Staff staff) {
+            mViewModel.putTurnoverSellerId(mViewModel.turId, staff.getId());
+          }
+        });
   }
 
   public void onDateFilter(View view) {
@@ -166,5 +189,17 @@ import java.util.Map;
 
   @Override public int getLayoutRes() {
     return R.id.fl_filter;
+  }
+
+  private int pos = 0;
+
+  @Override public void onItemClick(View v, int pos) {
+    IFlexible item = adapter.getItem(pos);
+    if (item instanceof TurnoverOrderItem) {
+      String id = ((TurnoverOrderItem) item).getData().getID();
+      mViewModel.setTurId(id);
+      this.pos = pos;
+      routeTo("staff", "/choose/saler/", null);
+    }
   }
 }

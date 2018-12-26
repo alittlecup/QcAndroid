@@ -18,7 +18,9 @@ import cn.qingchengfit.saasbase.staff.model.body.SendSmsBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListDataWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderSellerHistoryWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import cn.qingchengfit.staffkit.constant.StaffAllApi;
 import com.google.gson.JsonObject;
@@ -184,10 +186,11 @@ public class StaffModel implements IStaffModel {
     return staffAllApi.qcGetTurnoversFilterItems(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
-  @Override public Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoverOrderItems(Map<String,Object> params) {
+  @Override public Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoverOrderItems(
+      Map<String, Object> params) {
     Map<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
-    return staffAllApi.qcGetTurnoversOrderList(loginStatus.staff_id(),params1);
+    return staffAllApi.qcGetTurnoversOrderList(loginStatus.staff_id(), params1);
   }
 
   @Override
@@ -195,6 +198,25 @@ public class StaffModel implements IStaffModel {
       Map<String, Object> params) {
     Map<String, Object> params1 = gymWrapper.getParams();
     params1.putAll(params);
-    return staffAllApi.qcGetTurnoversChartStat(loginStatus.staff_id(),params1);
+    return staffAllApi.qcGetTurnoversChartStat(loginStatus.staff_id(), params1);
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderListDataWrapper>> qcGetTurnoverOrderDetail(
+      String turnover_id) {
+    return staffAllApi.qcGetTurnoverOrderDetail(loginStatus.staff_id(), turnover_id,
+        gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderListDataWrapper>> qcPutTurnoverOrderDetail(
+      String turnover_id, String seller_id) {
+    Map<String, Object> sellerParams = new HashMap<>();
+    sellerParams.put("seller_id", seller_id);
+    return staffAllApi.qcPutTurnoverOrderDetail(loginStatus.staff_id(), turnover_id, sellerParams,
+        gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
+      String turnover_id) {
+    return staffAllApi.qcGetOrderHistorty(loginStatus.staff_id(),turnover_id,gymWrapper.getParams());
   }
 }

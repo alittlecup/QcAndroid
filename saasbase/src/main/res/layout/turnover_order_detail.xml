@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:background="@color/bg_white"
         >
       <LinearLayout
           android:layout_width="match_parent"
@@ -34,6 +33,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_white"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingLeft="15dp"
@@ -46,7 +46,22 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="30dp"
               android:gravity="center_horizontal"
-              android:text="金额\n￥680，000\n交易成功"
+              android:text="金额"
+              />
+          <TextView
+              android:id="@+id/tv_money"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:textColor="@color/text_black"
+              android:textSize="25sp"
+              tools:text="￥68000"
+              />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:text="交易成功"
               />
           <LinearLayout
               android:layout_width="match_parent"
@@ -186,6 +201,7 @@
                 tools:text="娜娜"
                 />
             <TextView
+                android:id="@+id/tv_seller_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -221,17 +237,15 @@
                 />
           </LinearLayout>
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/transparent"
-            />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_white"
             android:paddingLeft="15dp"
-            android:paddingTop="10dp"
             android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:layout_marginTop="10dp"
             android:text="操作历史"
             android:textColor="@color/text_black"
             android:textSize="14sp"
@@ -240,7 +254,9 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bg_white"
             android:paddingLeft="15dp"
+            android:paddingBottom="15dp"
             android:paddingRight="15dp"
             />
       </LinearLayout>

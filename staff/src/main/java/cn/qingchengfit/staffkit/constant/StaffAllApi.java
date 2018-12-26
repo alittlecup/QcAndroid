@@ -159,7 +159,9 @@ import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListDataWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderSellerHistoryWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
@@ -1807,4 +1809,19 @@ public interface StaffAllApi {
   @GET("api/v2/staffs/{staff_id}/turnovers/stat/")
   rx.Observable<QcDataResponse<TurnoversChartStatDataResponse>> qcGetTurnoversChartStat(
       @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+
+  @GET("api/v2/staffs/{staff_id}/turnovers/{turnover_id}/")
+  rx.Observable<QcDataResponse<TurOrderListDataWrapper>> qcGetTurnoverOrderDetail(
+      @Path("staff_id") String id, @Path("turnover_id") String tur_id,
+      @QueryMap Map<String, Object> params);
+
+  @PUT("api/v2/staffs/{staff_id}/turnovers/{turnover_id}/")
+  rx.Observable<QcDataResponse<TurOrderListDataWrapper>> qcPutTurnoverOrderDetail(
+      @Path("staff_id") String id, @Path("turnover_id") String tur_id,
+      @Body Map<String, Object> seller_id, @QueryMap Map<String, Object> params);
+
+  @GET("api/v2/staffs/{staff_id}/turnovers/{turnover_id}/seller/history/?show_all=1")
+  rx.Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
+      @Path("staff_id") String id, @Path("turnover_id") String tur_id,
+      @QueryMap Map<String, Object> params);
 }

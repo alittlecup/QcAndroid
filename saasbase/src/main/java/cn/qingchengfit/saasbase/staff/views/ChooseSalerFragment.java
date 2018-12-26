@@ -119,7 +119,7 @@ import rx.schedulers.Schedulers;
     if (item instanceof StaffItem){
       RxBus.getBus().post(((StaffItem) item).getStaff());
     }
-    getActivity().finish();
+    getActivity().onBackPressed();
     return true;
   }
 

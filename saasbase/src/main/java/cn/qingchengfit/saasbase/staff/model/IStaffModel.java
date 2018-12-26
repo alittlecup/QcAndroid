@@ -10,7 +10,9 @@ import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListDataWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderSellerHistoryWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
@@ -81,6 +83,15 @@ public interface IStaffModel {
       Map<String,Object> params);
   rx.Observable<QcDataResponse<TurnoversChartStatDataResponse>> qcGetTurnoverChartStat(
       Map<String,Object> params);
+
+  rx.Observable<QcDataResponse<TurOrderListDataWrapper>> qcGetTurnoverOrderDetail(
+     String turnover_id);
+
+  rx.Observable<QcDataResponse<TurOrderListDataWrapper>> qcPutTurnoverOrderDetail(
+      String turnover_id,String seller_id);
+
+  rx.Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
+      String turnover_id);
 
 
 
