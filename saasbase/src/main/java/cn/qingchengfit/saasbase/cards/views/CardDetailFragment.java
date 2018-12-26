@@ -233,10 +233,6 @@ import javax.inject.Inject;
     if (item instanceof ActionDescItem) {
       switch (((ActionDescItem) item).getAction()) {
         case 1://绑定会员
-          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-            showAlert(R.string.alert_permission_forbid);
-            return false;
-          }
           routeTo("/bind/students/", CardBindStudentsParams.builder().card(mCard).build());
           break;
         case 2://适用场馆

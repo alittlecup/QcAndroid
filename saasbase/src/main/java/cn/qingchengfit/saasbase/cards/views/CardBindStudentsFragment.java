@@ -13,30 +13,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saasbase.student.items.StudentNoStatusItem;
-import com.anbillon.flabellum.annotations.Leaf;
-import com.anbillon.flabellum.annotations.Need;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
-import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saasbase.student.items.StudentNoStatusItem;
+import cn.qingchengfit.saascommon.events.EventSelectedStudent;
 import cn.qingchengfit.saascommon.item.StudentItem;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -67,6 +67,7 @@ import rx.android.schedulers.AndroidSchedulers;
   TextView toolbarTitle;
 
   @Need public Card card;
+  @Inject IPermissionModel permissionModel;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -111,6 +112,10 @@ import rx.android.schedulers.AndroidSchedulers;
     toolbar.getMenu().clear();
     toolbar.getMenu().add("修改").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(item -> {
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+        showAlert(R.string.alert_permission_forbid);
+        return false;
+      }
       Map<String,Object> map=new HashMap<>();
       map.put("studentIdList",card.getUserIds());
       QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
