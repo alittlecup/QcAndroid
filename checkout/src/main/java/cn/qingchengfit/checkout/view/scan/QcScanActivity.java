@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import cn.qingchengfit.checkout.R;
 import cn.qingchengfit.checkout.bean.CashierBean;
 import cn.qingchengfit.checkout.bean.ScanRepayInfo;
@@ -19,6 +20,7 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
@@ -44,6 +46,11 @@ public class QcScanActivity extends SaasCommonActivity
     scanRepayInfo = getIntent().getParcelableExtra("repay");
     type = getIntent().getStringExtra("type");
     if (scanRepayInfo == null || TextUtils.isEmpty(type)) return;
+    if (type.equals("ALIPAY_QRCODE")) {
+      selectAliPayCode(true);
+    } else {
+      selectAliPayCode(false);
+    }
     mBinding.setToolbarModel(new ToolbarModel(title));
     initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.includeToolbar.getRoot().setBackgroundColor(Color.TRANSPARENT);
@@ -56,6 +63,17 @@ public class QcScanActivity extends SaasCommonActivity
         payError();
       }
     });
+    mBinding.llAli.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        selectAliPayCode(true);
+      }
+    });
+    mBinding.llWx.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        selectAliPayCode(false);
+      }
+    });
+
   }
 
   private boolean hasBarCodeFlag = false;
@@ -97,11 +115,11 @@ public class QcScanActivity extends SaasCommonActivity
           } else if (data instanceof CashierBean) {
             cashierBean = (CashierBean) data;
           }
-          if(cashierBean==null){
+          if (cashierBean == null) {
             ToastUtils.show("网络连接异常");
             return;
           }
-          if("10FC".equals(cashierBean.getResult_code())){
+          if ("10FC".equals(cashierBean.getResult_code())) {
             ToastUtils.show("收款金额超过您的额度上限，请您重新输入");
             return;
           }
@@ -111,7 +129,7 @@ public class QcScanActivity extends SaasCommonActivity
           Object pay_trade_no = dataMap.get("pay_trade_no");
           if (out_trade_no != null && pay_trade_no != null) {
             mViewModel.scanPay(barCode, (String) out_trade_no, (String) pay_trade_no);
-          }else{
+          } else {
             ToastUtils.show("网络连接异常");
           }
         }
@@ -155,5 +173,23 @@ public class QcScanActivity extends SaasCommonActivity
 
   @Override public void QRCodeNotFoundOnCamImage() {
 
+  }
+
+  public void selectAliPayCode(boolean selected) {
+    mBinding.tvAli.setTextColor(
+        getResources().getColor(selected ? R.color.colorPrimary : R.color.text_grey));
+    mBinding.tvWx.setTextColor(
+        getResources().getColor(selected ? R.color.text_grey : R.color.colorPrimary));
+    mBinding.imgAli.setImageDrawable(getResources().getDrawable(
+        selected ? R.drawable.ic_turnover_ali : R.drawable.ic_turnover_ali_disable));
+    mBinding.imgWx.setImageDrawable(getResources().getDrawable(
+        selected ? R.drawable.ic_turnover_wx_disable : R.drawable.ic_turnover_wx));
+    if (selected) {
+      type = "ALIPAY_QRCODE";
+      mBinding.tvPoint.setText("支付宝付款二维码");
+    } else {
+      type = "WEIXIN_QRCODE";
+      mBinding.tvPoint.setText("微信付款二维码");
+    }
   }
 }
