@@ -2,6 +2,7 @@ package cn.qingchengfit.checkout.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.utils.DateUtils;
 
 public class CheckoutBill implements Parcelable, OrderListItemData {
 
@@ -106,6 +107,6 @@ public class CheckoutBill implements Parcelable, OrderListItemData {
   }
 
   @Override public String getOrderCreateDate() {
-    return balance_at;
+    return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(balance_at));
   }
 }

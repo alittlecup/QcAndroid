@@ -77,7 +77,8 @@ import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
-import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
+import cn.qingchengfit.student.listener.IncreaseType;
+import cn.qingchengfit.student.view.followup.IncreaseStudentPageParams;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -128,7 +129,8 @@ import rx.functions.Action1;
  * Created by Paper on 16/2/1 2016.
  */
 public class GymDetailFragment extends BaseFragment
-    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener ,FlexibleAdapter.OnItemLongClickListener{
+    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener,
+    FlexibleAdapter.OnItemLongClickListener {
 
   public static final int RESULT_STAFF_MANAGE = 12;
 
@@ -280,8 +282,8 @@ public class GymDetailFragment extends BaseFragment
             showAlert(R.string.sorry_for_no_permission);
             return;
           }
-          Intent toFollow = new Intent(getActivity(), FollowUpActivity.class);
-          startActivity(toFollow);
+          routeTo("student", "student/increase",
+              new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
 
           break;
         default:
@@ -909,8 +911,8 @@ public class GymDetailFragment extends BaseFragment
 
   @Override public void onItemLongClick(int position) {
     IFlexible item = adapter.getItem(position);
-    if(item instanceof SimpleTextItemItem){
-      routeTo("staff","/turnover/home",null);
+    if (item instanceof SimpleTextItemItem) {
+      routeTo("staff", "/turnover/home", null);
     }
   }
 

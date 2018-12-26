@@ -35,15 +35,20 @@ import java.math.BigDecimal;
         return;
       }
       BigDecimal money = new BigDecimal(prices);
-      if (money.floatValue()> 100000||money.floatValue()==0) {
+      if (money.floatValue() > 100000 || money.floatValue() == 0) {
         mViewModel.enable.setValue(false);
       } else {
         mViewModel.enable.setValue(true);
       }
+      if (money.floatValue() > 3000) {
+        mBinding.tvAliHint.setText("大额支付");
+      } else {
+        mBinding.tvAliHint.setText("花呗分期");
+      }
     });
     mViewModel.cashierBean.observe(this, cashierBean -> {
       hideLoading();
-      if(cashierBean!=null&&"10FC".equals(cashierBean.getResult_code())){
+      if (cashierBean != null && "10FC".equals(cashierBean.getResult_code())) {
         ToastUtils.show("收款金额超过您的额度上限，请您重新输入");
         return;
       }
@@ -188,7 +193,7 @@ import java.math.BigDecimal;
     try {
       if (TextUtils.isEmpty(s)) return false;
       BigDecimal money = new BigDecimal(s);
-      if (money.floatValue()> 100000) {
+      if (money.floatValue() > 100000) {
         DialogUtils.showAlert(getContext(), "单笔收款最多支持100000");
         return false;
       }

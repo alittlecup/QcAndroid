@@ -595,7 +595,11 @@ public class GymFunctionFactory {
         //}
         return;
       case MODULE_SHOP_TURNOVERS:
-        fragment.routeTo("staff", "/turnover/home", null);
+        if(permissionModel.check(PermissionServerUtils.MODULE_SHOP_TURNOVER)){
+          fragment.routeTo("staff", "/turnover/home", null);
+        }else{
+          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+        }
         return;
       case MODULE_OPERATE_SCORE:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),

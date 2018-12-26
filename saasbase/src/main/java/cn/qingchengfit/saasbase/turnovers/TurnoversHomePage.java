@@ -7,13 +7,16 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
@@ -34,7 +38,7 @@ import rx.android.schedulers.AndroidSchedulers;
   // 这两个就是为了静态的存对象，保证能够在 item 里面使用到，因为接口返回数据的问题
   public static Map<String, TurFilterData> paymentChannels = new HashMap<>();
   public static Map<Integer, TurnoverTradeType> trade_types = new HashMap<>();
-
+  @Inject IPermissionModel permissionModel;
   @Override protected void subscribeUI() {
     mViewModel.getOrderDatas().observe(this, orderDatas -> {
       if (orderDatas != null && !orderDatas.isEmpty()) {
@@ -194,6 +198,10 @@ import rx.android.schedulers.AndroidSchedulers;
   private int pos = 0;
 
   @Override public void onItemClick(View v, int pos) {
+    if (!permissionModel.check(PermissionServerUtils.SHOP_TURNOVER_CHANGE)) {
+      DialogUtils.showAlert(getContext(), R.string.alert_permission_forbid);
+      return;
+    }
     IFlexible item = adapter.getItem(pos);
     if (item instanceof TurnoverOrderItem) {
       String id = ((TurnoverOrderItem) item).getData().getID();

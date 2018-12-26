@@ -16,6 +16,8 @@ import cn.qingchengfit.card.event.ChooseCouponsEvent;
 import cn.qingchengfit.card.item.ChooseCouponsItem;
 import cn.qingchengfit.card.routers.CardParamsInjector;
 import cn.qingchengfit.card.view.BottomChooseCouponDialog;
+import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -24,6 +26,7 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +53,10 @@ import java.util.List;
           datas.add(new ChooseCouponsItem(coupons));
         }
         adapter.updateDataSet(datas);
+      } else {
+        List<AbstractFlexibleItem> items = new ArrayList<>();
+        items.add(new CommonNoDataItem(0, "", "暂无可用优惠券"));
+        adapter.updateDataSet(items);
       }
     });
   }
@@ -66,10 +73,10 @@ import java.util.List;
     initChooseCoupon();
     setBackPress();
     if (user_ids != null && !user_ids.isEmpty()) {
-      if(TextUtils.isEmpty(cardId)){
+      if (TextUtils.isEmpty(cardId)) {
         mViewModel.loadCoupons(prices, user_ids);
-      }else{
-        mViewModel.loadCouponsCharge(prices,user_ids,cardId);
+      } else {
+        mViewModel.loadCouponsCharge(prices, user_ids, cardId);
       }
     }
   }
@@ -81,7 +88,7 @@ import java.util.List;
               chooseCoupon.getDescription()));
       mBinding.tvClearSelected.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          event=new ChooseCouponsEvent(null);
+          event = new ChooseCouponsEvent(null);
           mBinding.llBottomSelected.setVisibility(View.GONE);
         }
       });
@@ -115,7 +122,7 @@ import java.util.List;
       @Override public boolean onItemClick(int position) {
         dialog.dismiss();
         Coupon coupon = coupons.get(position);
-        event=new ChooseCouponsEvent(coupon);
+        event = new ChooseCouponsEvent(coupon);
         getActivity().onBackPressed();
         return false;
       }
@@ -126,7 +133,9 @@ import java.util.List;
   private ChooseCouponsEvent event;
 
   @Override public boolean onFragmentBackPress() {
-    RxBus.getBus().post(event);
+    if (event != null) {
+      RxBus.getBus().post(event);
+    }
     setBackPressNull();
     return super.onFragmentBackPress();
   }

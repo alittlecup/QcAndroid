@@ -6,20 +6,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoverOrderDetailBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 @Leaf(module = "staff", path = "/turnover/order") public class TurnoverOrderDetailFragment
     extends SaasBindingFragment<TurnoverOrderDetailBinding, TurnoverOrderDetailVM> {
   CommonFlexAdapter adapter;
   @Need String turId;
+  @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
     mViewModel.getTurDetail().observe(this, detail -> {
@@ -70,6 +76,12 @@ import java.util.List;
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
     mViewModel.loadTurDetail(turId);
-    mBinding.tvSellerChange.setOnClickListener(v -> routeTo("staff", "/choose/saler/", null));
+    mBinding.tvSellerChange.setOnClickListener(v -> {
+      if (permissionModel.check(PermissionServerUtils.SHOP_TURNOVER_CHANGE)) {
+        routeTo("staff", "/choose/saler/", null);
+      }else{
+        DialogUtils.showAlert(getContext(), R.string.alert_permission_forbid);
+      }
+    });
   }
 }
