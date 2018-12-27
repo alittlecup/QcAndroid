@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.saasbase.turnovers.TurBarWelcomeResponse;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,11 +25,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 2017/1/16.
  */
 
-public class HomeStatement {
-    public FollowUpDataStatistic.NewCreateUsersBean new_checkin;
-    public FollowUpDataStatistic.NewCreateUsersBean new_users;
+public class HomeStatement  {
+  public FollowUpDataStatistic.NewCreateUsersBean new_checkin;
+  public FollowUpDataStatistic.NewCreateUsersBean new_users;
 
-
-    @SerializedName("new_orders") public FollowUpDataStatistic.NewCreateUsersBean new_orders;
-    public FollowUpDataStatistic.NewCreateUsersBean new_sells;
+  @SerializedName("new_orders") public FollowUpDataStatistic.NewCreateUsersBean new_orders;
+  public FollowUpDataStatistic.NewCreateUsersBean new_sells;
+  public TurBarWelcomeResponse shop_turnovers;
 }

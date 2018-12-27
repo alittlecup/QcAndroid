@@ -45,9 +45,12 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.turnovers.TurBarWelcomeResponse;
+import cn.qingchengfit.saasbase.turnovers.TurnoverBarChartFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.events.EventChartTitle;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
+import cn.qingchengfit.saascommon.model.IChartData;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
@@ -175,10 +178,10 @@ public class GymDetailFragment extends BaseFragment
   private String mPreViewUrl;
   private boolean firstMonthClose;
   private static float offSetMaxSize;
+  List<Fragment> fragments = new ArrayList<>();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mChartAdapter = new GymDetailChartAdapter(getChildFragmentManager());
     offSetMaxSize = DensityUtil.dip2px(getContext(), 110);
   }
 
@@ -461,30 +464,7 @@ public class GymDetailFragment extends BaseFragment
       super.initToolbar(toolbar);
     }
     toolbar.getMenu().clear();
-    //toolbar.inflateMenu(R.menu.menu_flow);
-    //toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-    //  @Override public boolean onMenuItemClick(MenuItem item) {
-    //    if (item.getItemId() == R.id.action_settings) {
-    //      getFragmentManager().beginTransaction()
-    //          .replace(mCallbackActivity.getFragId(), new SettingFragment())
-    //          .addToBackStack(null)
-    //          .commit();
-    //    } else if (item.getItemId() == R.id.action_notifi) {
-    //
-    //    } else if (item.getItemId() == R.id.action_flow) {
-    //      if (dialogList == null) {
-    //        dialogList = new DialogList(getContext());
-    //        List<String> actions = new ArrayList<String>();
-    //        if (getActivity() instanceof MainActivity) actions.add("品牌管理");
-    //        actions.add("离职退出该场馆");
-    //        actions.add("取消");
-    //        dialogList.list(actions, GymDetailFragment.this);
-    //      }
-    //      dialogList.show();
-    //    }
-    //    return true;
-    //  }
-    //});
+
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
       ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
           0, 0);
@@ -492,8 +472,6 @@ public class GymDetailFragment extends BaseFragment
   }
 
   private void initView() {
-    //btnHowToUse.setCompoundDrawablesWithIntrinsicBounds(
-    //  ContextCompat.getDrawable(getContext(), R.drawable.ic_vector_info_grey), null, null, null);
     datas.clear();
     datas.add(new GymFuntionItem(
         new GymFuntion.Builder().img(R.drawable.ic_function_more).text(R.string.more).build()));
@@ -537,9 +515,6 @@ public class GymDetailFragment extends BaseFragment
                                           //rootScroll.fullScroll(View.FOCUS_UP);
                                           layoutCollapsed.setExpanded(true);
                                         }
-                                        vpCharts.setOffscreenPageLimit(3);
-                                        vpCharts.setAdapter(mChartAdapter);
-                                        indicator.setViewPager(vpCharts);
                                       }
                                     }
                                   }
@@ -547,6 +522,11 @@ public class GymDetailFragment extends BaseFragment
         );
 
     onGymInfo(gymWrapper.getCoachService());
+    mChartAdapter = new GymDetailChartAdapter(getChildFragmentManager(), null);
+
+    vpCharts.setOffscreenPageLimit(3);
+    vpCharts.setAdapter(mChartAdapter);
+    indicator.setViewPager(vpCharts);
   }
 
   void notifyMyFunctions() {
@@ -616,10 +596,10 @@ public class GymDetailFragment extends BaseFragment
   @Override public void setInfo(HomeStatement stats) {
     hideLoading();
     if (stats != null) {
-      if (stats.new_users != null) mChartAdapter.setData(3, stats.new_users.date_counts);
-      if (stats.new_sells != null) mChartAdapter.setData(0, stats.new_sells.date_counts);
-      if (stats.new_orders != null) mChartAdapter.setData(1, stats.new_orders.date_counts);
-      if (stats.new_checkin != null) mChartAdapter.setData(2, stats.new_checkin.date_counts);
+      fragments = getFragments(stats);
+      mChartAdapter.setHomeStatment(stats);
+      indicator.setViewPager(vpCharts);
+      mChartAdapter.notifyDataSetChanged();
     }
   }
 
@@ -916,38 +896,148 @@ public class GymDetailFragment extends BaseFragment
     }
   }
 
+  private List<Fragment> getFragments(HomeStatement statement) {
+    List<Fragment> fragments = new ArrayList<>();
+    pos.clear();
+    if (statement.shop_turnovers != null
+        && statement.shop_turnovers.date_counts != null
+        && !statement.shop_turnovers.date_counts.isEmpty()) {
+      TurnoverBarChartFragment turnoverBarChartFragment = new TurnoverBarChartFragment();
+      fragments.add(turnoverBarChartFragment);
+      pos.add(4);
+    }
+    if (statement.new_sells != null) {
+      BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(0).build();
+      fragments.add(fragment);
+      pos.add(0);
+    }
+    if (statement.new_orders != null) {
+      BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(1).build();
+      fragments.add(fragment);
+      pos.add(1);
+    }
+    if (statement.new_checkin != null) {
+      BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(2).build();
+      fragments.add(fragment);
+      pos.add(2);
+    }
+    if (statement.new_users != null) {
+      BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(3).build();
+      fragments.add(fragment);
+      pos.add(3);
+    }
+    return fragments;
+  }
+
+  private List<Integer> pos = new ArrayList<>();
+
   /**
    * 报表适配器
    */
   class GymDetailChartAdapter extends FragmentPagerAdapter {
     private FragmentManager mFm;
 
-    public GymDetailChartAdapter(FragmentManager fm) {
+    public GymDetailChartAdapter(FragmentManager fm, HomeStatement statement) {
       super(fm);
       this.mFm = fm;
+      this.statement = statement;
+      //fragments = new ArrayList<>();
+      //this.fragments = fragments;
+      //pos.clear();
+      //if (statement.shop_turnovers != null
+      //    && statement.shop_turnovers.date_counts != null
+      //    && !statement.shop_turnovers.date_counts.isEmpty()) {
+      //  TurnoverBarChartFragment turnoverBarChartFragment = new TurnoverBarChartFragment();
+      //  fragments.add(turnoverBarChartFragment);
+      //  pos.add(4);
+      //}
+      //if (statement.new_sells != null) {
+      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(0).build();
+      //  fragments.add(fragment);
+      //  pos.add(0);
+      //}
+      //if (statement.new_orders != null) {
+      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(1).build();
+      //  fragments.add(fragment);
+      //  pos.add(1);
+      //}
+      //if (statement.new_checkin != null) {
+      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(2).build();
+      //  fragments.add(fragment);
+      //  pos.add(2);
+      //}
+      //if (statement.new_users != null) {
+      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(3).build();
+      //  fragments.add(fragment);
+      //  pos.add(3);
+      //}
     }
 
     @Override public int getCount() {
-      return 4;
+      return fragments.size();
     }
 
     @Override public Fragment getItem(int position) {
-      return new BaseStatementChartFragmentBuilder(position).build();
+      //Integer integer = pos.get(position);
+      //Fragment fragment = fragments.get(position);
+      //if (statement.shop_turnovers != null
+      //    && statement.shop_turnovers.date_counts != null
+      //    && !statement.shop_turnovers.date_counts.isEmpty()) {
+      //  ((TurnoverBarChartFragment) fragment).setBarChartData(statement.shop_turnovers.getData());
+      //}
+      //if (statement.new_sells != null) {
+      //  ((BaseStatementChartFragment) fragment).doData(statement.new_sells.getData());
+      //} else if (statement.new_orders != null) {
+      //  ((BaseStatementChartFragment) fragment).doData(statement.new_orders.getData());
+      //} else if (statement.new_checkin != null) {
+      //  ((BaseStatementChartFragment) fragment).doData(statement.new_checkin.getData());
+      //} else if (statement.new_users != null) {
+      //  ((BaseStatementChartFragment) fragment).doData(statement.new_users.getData());
+      //}
+      Integer integer = pos.get(position);
+      Fragment fragment = fragments.get(position);
+      if (statement == null) return fragment;
+      switch (integer) {
+        case 4:
+          ((TurnoverBarChartFragment) fragment).setBarChartData(statement.shop_turnovers.getData());
+          break;
+        case 0:
+          ((BaseStatementChartFragment) fragment).doData(statement.new_sells.getData());
+          ;
+          break;
+        case 1:
+          ((BaseStatementChartFragment) fragment).doData(statement.new_orders.getData());
+          break;
+        case 2:
+          ((BaseStatementChartFragment) fragment).doData(statement.new_checkin.getData());
+          break;
+        case 3:
+          ((BaseStatementChartFragment) fragment).doData(statement.new_users.getData());
+          break;
+      }
+      return fragment;
+    }
+
+    public void setHomeStatment(HomeStatement statement) {
+      this.statement = statement;
+    }
+
+    private HomeStatement statement;
+
+    public void setData(int pos, IChartData datas) {
+      Fragment fragment = fragments.get(pos);
+      if (fragment instanceof TurnoverBarChartFragment && datas instanceof TurBarWelcomeResponse) {
+        ((TurnoverBarChartFragment) fragment).setBarChartData(
+            ((TurBarWelcomeResponse) datas).getData());
+      } else if (fragment instanceof BaseStatementChartFragment
+          && datas instanceof FollowUpDataStatistic.NewCreateUsersBean) {
+        ((BaseStatementChartFragment) fragment).doData(
+            ((FollowUpDataStatistic.NewCreateUsersBean) datas).getData());
+      }
     }
 
     @Override public long getItemId(int position) {
       return position;
-    }
-
-    public String getItemName(int position) {
-      return "android:switcher:" + R.id.vp_charts + ":" + position;
-    }
-
-    public void setData(int pos, List<FollowUpDataStatistic.DateCountsBean> datas) {
-      Fragment f = mFm.findFragmentByTag(getItemName(pos));
-      if (f != null && f instanceof BaseStatementChartFragment) {
-        ((BaseStatementChartFragment) f).doData(datas);
-      }
     }
   }
 

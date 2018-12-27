@@ -39,7 +39,7 @@ public class FollowUpDataStatistic {
     public NewCreateUsersBean new_following_users;
     public NewCreateUsersBean new_member_users;
 
-    public static class NewCreateUsersBean implements Parcelable {
+    public static class NewCreateUsersBean implements Parcelable,IChartData<List<DateCountsBean>> {
         public static final Parcelable.Creator<NewCreateUsersBean> CREATOR = new Parcelable.Creator<NewCreateUsersBean>() {
             @Override public NewCreateUsersBean createFromParcel(Parcel source) {
                 return new NewCreateUsersBean(source);
@@ -81,6 +81,10 @@ public class FollowUpDataStatistic {
             dest.writeInt(this.week_count);
             dest.writeInt(this.month_count);
             dest.writeTypedList(this.date_counts);
+        }
+
+        @Override public List<DateCountsBean> getData() {
+            return date_counts;
         }
     }
 

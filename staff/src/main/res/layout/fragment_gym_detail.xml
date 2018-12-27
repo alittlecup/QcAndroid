@@ -474,13 +474,15 @@
         />
 
   </LinearLayout>
-
+  <include
+      android:id="@+id/include_bottom"
+      layout="@layout/wx_view_bottom_short_action"/>
   <FrameLayout
       android:id="@+id/top_frag"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
-  <include layout="@layout/wx_view_bottom_short_action"/>
+
   <FrameLayout
       android:id="@+id/other_frag"
       android:layout_width="match_parent"

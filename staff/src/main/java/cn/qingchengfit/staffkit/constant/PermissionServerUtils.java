@@ -157,8 +157,6 @@ public class PermissionServerUtils {
     public static final String SCORE_SETTING_CAN_CHANGE = "score_setting_can_change";
     public static final String SCORE_RANK = "score_rank";
 
-    public static final String MODULE_SHOP_TURNOVER = "shop_turnover";
-    public static final String SHOP_TURNOVER_CHANGE = "shop_turnover_can_change";
     /**
      * 团课预约限制
      */

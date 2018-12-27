@@ -595,7 +595,7 @@ public class GymFunctionFactory {
         //}
         return;
       case MODULE_SHOP_TURNOVERS:
-        if(permissionModel.check(PermissionServerUtils.MODULE_SHOP_TURNOVER)){
+        if(permissionModel.check(cn.qingchengfit.model.base.PermissionServerUtils.MODULE_SHOP_TURNOVER)){
           fragment.routeTo("staff", "/turnover/home", null);
         }else{
           DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
