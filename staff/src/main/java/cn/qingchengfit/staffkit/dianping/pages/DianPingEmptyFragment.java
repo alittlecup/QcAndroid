@@ -79,7 +79,7 @@ public class DianPingEmptyFragment extends SaasCommonFragment {
   }
 
   private void routeToEditGymInfoPage(String code, String mtShopName) {
-    routeTo("/dianping/account",
+    routeTo("dianping","/dianping/account",
         new DianPingAccountPageParams().dianPingGymName(mtShopName).barCode(code).build());
   }
 
