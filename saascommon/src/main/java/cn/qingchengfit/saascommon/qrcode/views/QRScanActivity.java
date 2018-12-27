@@ -13,10 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.qingchengfit.saascommon.R;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import rx.functions.Action1;
 
 /**
  * 简单的扫码界面 用来扫码并获取码内信息返回
@@ -64,29 +65,40 @@ public class QRScanActivity extends SaasCommonActivity
     rootView = findViewById(R.id.root_view);
   }
 
-  private void startPreview() {
-    new RxPermissions(this).request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
-      @Override public void call(Boolean aBoolean) {
-        if (aBoolean) {
-          qrdecoderview = new QRCodeReaderView(QRScanActivity.this);
-          rootView.addView(qrdecoderview, 0,
-              new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                  ViewGroup.LayoutParams.MATCH_PARENT));
-          qrdecoderview.setOnQRCodeReadListener(QRScanActivity.this);
-          qrdecoderview.getCameraManager().startPreview();
-        } else {
-          ToastUtils.show("请打开摄像头权限");
-        }
+  private void checkPermission() {
+    new RxPermissions(this).requestEach(Manifest.permission.CAMERA).subscribe(permission -> {
+      if (permission.granted) {
+        startPreView();
+      } else if (permission.shouldShowRequestPermissionRationale) {
+        ToastUtils.show("请允许使用摄像头权限");
+      } else {
+        canCheck = false;
+        DialogUtils.showAlert(this, "应用需要开启摄像头权限，才能正常使用扫码等相机相关功能",
+            (materialDialog, dialogAction) -> {
+              materialDialog.dismiss();
+              AppUtils.doAppSettingPageTo(QRScanActivity.this);
+            });
       }
     });
   }
 
+  private boolean canCheck = true;
+
+  private void startPreView() {
+    if (qrdecoderview == null) {
+      qrdecoderview = new QRCodeReaderView(QRScanActivity.this);
+      rootView.addView(qrdecoderview, 0,
+          new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+              ViewGroup.LayoutParams.MATCH_PARENT));
+      qrdecoderview.setOnQRCodeReadListener(QRScanActivity.this);
+    }
+    qrdecoderview.getCameraManager().startPreview();
+  }
+
   @Override protected void onResume() {
     super.onResume();
-    if (qrdecoderview != null) {
-      qrdecoderview.getCameraManager().startPreview();
-    } else {
-      startPreview();
+    if (canCheck) {
+      checkPermission();
     }
   }
 
@@ -95,11 +107,16 @@ public class QRScanActivity extends SaasCommonActivity
     if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
   }
 
+  @Override protected void onStop() {
+    super.onStop();
+    canCheck = true;
+  }
+
   @Override public void onQRCodeRead(String text, PointF[] points) {
     if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
     Intent intent = new Intent();
     intent.putExtra("content", text);
-    setResult(Activity.RESULT_OK,intent);
+    setResult(Activity.RESULT_OK, intent);
     finish();
   }
 

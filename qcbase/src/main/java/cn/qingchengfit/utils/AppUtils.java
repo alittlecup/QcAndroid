@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
@@ -18,13 +17,11 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
+import cn.qingchengfit.widgets.R;
 import java.io.File;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.qingchengfit.widgets.R;
 
 /**
  * power by
@@ -112,6 +109,12 @@ public class AppUtils {
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       context.startActivity(intent);
     }
+  }
+
+  public static void doAppSettingPageTo(Context context) {
+    Uri packageURI = Uri.parse("package:" + context.getPackageName());
+    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+    context.startActivity(intent);
   }
 
   public static void doCallPhoneTo(Context context, String phoneNumber) {
