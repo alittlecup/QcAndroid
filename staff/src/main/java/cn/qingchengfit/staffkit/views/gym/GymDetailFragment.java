@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -45,12 +46,9 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.turnovers.TurBarWelcomeResponse;
 import cn.qingchengfit.saasbase.turnovers.TurnoverBarChartFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.events.EventChartTitle;
-import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
-import cn.qingchengfit.saascommon.model.IChartData;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
@@ -78,6 +76,7 @@ import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
+import cn.qingchengfit.staffkit.views.main.SettingFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.student.listener.IncreaseType;
@@ -464,7 +463,30 @@ public class GymDetailFragment extends BaseFragment
       super.initToolbar(toolbar);
     }
     toolbar.getMenu().clear();
+    toolbar.inflateMenu(R.menu.menu_flow);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+          getFragmentManager().beginTransaction()
+              .replace(mCallbackActivity.getFragId(), new SettingFragment())
+              .addToBackStack(null)
+              .commit();
+        } else if (item.getItemId() == R.id.action_notifi) {
 
+        } else if (item.getItemId() == R.id.action_flow) {
+          if (dialogList == null) {
+            dialogList = new DialogList(getContext());
+            List<String> actions = new ArrayList<String>();
+            if (getActivity() instanceof MainActivity) actions.add("品牌管理");
+            actions.add("离职退出该场馆");
+            actions.add("取消");
+            dialogList.list(actions, GymDetailFragment.this);
+          }
+          dialogList.show();
+        }
+        return true;
+      }
+    });
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
       ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
           0, 0);
@@ -941,36 +963,6 @@ public class GymDetailFragment extends BaseFragment
       super(fm);
       this.mFm = fm;
       this.statement = statement;
-      //fragments = new ArrayList<>();
-      //this.fragments = fragments;
-      //pos.clear();
-      //if (statement.shop_turnovers != null
-      //    && statement.shop_turnovers.date_counts != null
-      //    && !statement.shop_turnovers.date_counts.isEmpty()) {
-      //  TurnoverBarChartFragment turnoverBarChartFragment = new TurnoverBarChartFragment();
-      //  fragments.add(turnoverBarChartFragment);
-      //  pos.add(4);
-      //}
-      //if (statement.new_sells != null) {
-      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(0).build();
-      //  fragments.add(fragment);
-      //  pos.add(0);
-      //}
-      //if (statement.new_orders != null) {
-      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(1).build();
-      //  fragments.add(fragment);
-      //  pos.add(1);
-      //}
-      //if (statement.new_checkin != null) {
-      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(2).build();
-      //  fragments.add(fragment);
-      //  pos.add(2);
-      //}
-      //if (statement.new_users != null) {
-      //  BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(3).build();
-      //  fragments.add(fragment);
-      //  pos.add(3);
-      //}
     }
 
     @Override public int getCount() {
@@ -978,22 +970,7 @@ public class GymDetailFragment extends BaseFragment
     }
 
     @Override public Fragment getItem(int position) {
-      //Integer integer = pos.get(position);
-      //Fragment fragment = fragments.get(position);
-      //if (statement.shop_turnovers != null
-      //    && statement.shop_turnovers.date_counts != null
-      //    && !statement.shop_turnovers.date_counts.isEmpty()) {
-      //  ((TurnoverBarChartFragment) fragment).setBarChartData(statement.shop_turnovers.getData());
-      //}
-      //if (statement.new_sells != null) {
-      //  ((BaseStatementChartFragment) fragment).doData(statement.new_sells.getData());
-      //} else if (statement.new_orders != null) {
-      //  ((BaseStatementChartFragment) fragment).doData(statement.new_orders.getData());
-      //} else if (statement.new_checkin != null) {
-      //  ((BaseStatementChartFragment) fragment).doData(statement.new_checkin.getData());
-      //} else if (statement.new_users != null) {
-      //  ((BaseStatementChartFragment) fragment).doData(statement.new_users.getData());
-      //}
+
       Integer integer = pos.get(position);
       Fragment fragment = fragments.get(position);
       if (statement == null) return fragment;
@@ -1024,17 +1001,6 @@ public class GymDetailFragment extends BaseFragment
 
     private HomeStatement statement;
 
-    public void setData(int pos, IChartData datas) {
-      Fragment fragment = fragments.get(pos);
-      if (fragment instanceof TurnoverBarChartFragment && datas instanceof TurBarWelcomeResponse) {
-        ((TurnoverBarChartFragment) fragment).setBarChartData(
-            ((TurBarWelcomeResponse) datas).getData());
-      } else if (fragment instanceof BaseStatementChartFragment
-          && datas instanceof FollowUpDataStatistic.NewCreateUsersBean) {
-        ((BaseStatementChartFragment) fragment).doData(
-            ((FollowUpDataStatistic.NewCreateUsersBean) datas).getData());
-      }
-    }
 
     @Override public long getItemId(int position) {
       return position;

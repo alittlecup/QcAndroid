@@ -112,6 +112,7 @@
               android:layout_marginLeft="5dp"
               android:layout_marginRight="15dp"
               android:gravity="center"
+              android:visibility="gone"
               android:orientation="vertical"
               >
             <ImageView
