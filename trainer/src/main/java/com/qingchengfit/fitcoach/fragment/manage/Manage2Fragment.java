@@ -142,7 +142,8 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   }
 
   private void routeToShowQrCode() {
-
+    QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/qrcode"))
+        .call();
   }
 
   private void updateToolbarUI(float present) {

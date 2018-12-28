@@ -14,9 +14,15 @@ import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListDataWrapper;
+import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
+import cn.qingchengfit.saasbase.turnovers.TurOrderSellerHistoryWrapper;
+import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.http.TrainerAllApi;
 import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 
@@ -125,6 +131,36 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override public Observable<QcDataResponse<JsonObject>> isSelfSu() {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<TurFilterResponse>> qcGetTurnoversFilterItems() {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderListResponse>> qcGetTurnoverOrderItems(
+      Map<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse<TurnoversChartStatDataResponse>> qcGetTurnoverChartStat(
+      Map<String, Object> params) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderListDataWrapper>> qcGetTurnoverOrderDetail(
+      String turnover_id) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderListDataWrapper>> qcPutTurnoverOrderDetail(
+      String turnover_id, String seller_id) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
+      String turnover_id) {
     return null;
   }
 }

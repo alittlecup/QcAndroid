@@ -37,7 +37,6 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
-import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -297,7 +296,8 @@ public class CardModel implements CardRealModel {
     return null;
   }
 
-  @Override public Flowable<QcDataResponse<CouponResponse>> qcLoadCoupons(String staff_id,
+
+  @Override public Observable<QcDataResponse<CouponResponse>> qcLoadCoupons(String staff_id,
       HashMap<String, Object> params) {
     return posApi.qcLoadCoupons(staff_id, params);
   }

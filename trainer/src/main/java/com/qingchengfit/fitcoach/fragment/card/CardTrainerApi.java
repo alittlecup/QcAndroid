@@ -12,7 +12,6 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
-import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.http.Body;
@@ -84,6 +83,6 @@ public interface CardTrainerApi {
 
   //学员卡列表
   @GET("/api/v2/coaches/{id}/cashier/useable/coupons/?show_all=1")
-  Flowable<QcDataResponse<CouponResponse>> qcLoadCoupons(@Path("id") String student_id,
+  rx.Observable<QcDataResponse<CouponResponse>> qcLoadCoupons(@Path("id") String student_id,
       @QueryMap Map<String, Object> params);
 }

@@ -850,4 +850,7 @@ public interface TrainerAllApi {
 
   @PUT("/api/v2/notifications/") rx.Observable<QcResponse> qcClearTypeNoti(
       @Body ClearNotiBody body);
+
+
+
 }

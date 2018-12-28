@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.di;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.card.di.BindStaffCardActivity;
+import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
@@ -19,7 +19,6 @@ import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
@@ -52,7 +51,6 @@ import com.qingchengfit.fitcoach.fragment.unlogin.HomeBannerFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginHomeFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginScheduleAdFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnloginManageFragment;
-import com.taobao.weex.ui.module.WXWebViewModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -89,8 +87,8 @@ import dagger.multibindings.IntoMap;
     BindRecruitModule.class, BindSeacherOrgModule.class,
     BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
     BindStudentActivity.class, StudentViewModel.class, BindCheckoutCounterActivity.class,
-    CheckViewModule.class, BindLoginActivity.class, BindSaasCommActivity.class,BindStaffCardActivity.class,
-    ViewModelModule.class,BindStaffActivity.class,WxPreviewModule.class,
+    CheckViewModule.class, BindLoginActivity.class, BindSaasCommActivity.class,
+    ViewModelModule.class,WxPreviewModule.class, CardModule.class,
 
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class, AppComponent.ArticleCommentsListFragmentModule.class,

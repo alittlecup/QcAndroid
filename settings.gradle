@@ -1,7 +1,7 @@
 //include ':atest'
 //include ':atest'
 include ':staff'
-//include ':trainer'
+include ':trainer'
 include ':card'
 include ':student'
 include ':shop'

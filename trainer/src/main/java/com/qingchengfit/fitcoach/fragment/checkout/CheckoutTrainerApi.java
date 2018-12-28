@@ -1,13 +1,17 @@
 package com.qingchengfit.fitcoach.fragment.checkout;
 
+import cn.qingchengfit.checkout.bean.CashierBean;
+import cn.qingchengfit.checkout.bean.CheckoutBillWrapper;
+import cn.qingchengfit.checkout.bean.CheckoutBills;
 import cn.qingchengfit.checkout.bean.HomePageBean;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.checkout.bean.CashierBean;
+import com.google.gson.JsonObject;
 import io.reactivex.Flowable;
 import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
@@ -44,5 +48,19 @@ public interface CheckoutTrainerApi {
   @POST("api/coaches/{coach_id}/cashier/create/")
   Flowable<QcDataResponse<CashierBean>> qcPostCashierOrder(@Path("coach_id") String staff_id,
       @Body Map<String, Object> params);
+
+
+  @GET("api/v2/coaches/{staff_id}/shop-qrcode/bills/?show_all=1")
+  Flowable<QcDataResponse<CheckoutBills>> qcLoadCheckoutBills(@Path("staff_id") String staff_id,
+      @QueryMap Map<String, Object> params);
+
+  @GET("api/v2/coaches/{staff_id}/shop-qrcode/bills/{bill_id}/")
+  Flowable<QcDataResponse<CheckoutBillWrapper>> qcLoadCheckoutBillDetail(
+      @Path("staff_id") String staff_id, @Path("bill_id") String bill_id,
+      @QueryMap Map<String, Object> params);
+
+  @PUT("api/v2/coaches/{staff_id}/shop-qrcode/bills/{bill_id}/")
+  Flowable<QcDataResponse<CheckoutBillWrapper>> qcPutBillDetail(@Path("staff_id") String staff_id,
+      @Path("bill_id") String bill_id, @Body JsonObject body, @QueryMap Map<String, Object> params);
 
   }
