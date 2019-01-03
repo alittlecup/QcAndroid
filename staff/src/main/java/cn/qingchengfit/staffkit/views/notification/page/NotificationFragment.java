@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,55 +16,51 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.router.qc.QcRouteUtil;
-import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
-import cn.qingchengfit.utils.DialogUtils;
-import io.reactivex.Maybe;
-import io.reactivex.disposables.Disposable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import java.util.concurrent.TimeUnit;
-import javax.inject.Inject;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
-import cn.qingchengfit.staffkit.views.student.StudentActivity;
+import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -209,7 +204,7 @@ public class NotificationFragment extends BaseFragment
           }
           if (!StringUtils.isEmpty(msg.getBrand_id())
               && !StringUtils.isEmpty(msg.getShop_id())
-              && msg.type < 20) {
+              && msg.type <= 20) {
             final CoachService coachService1 =
                 gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
             if (coachService1 != null) {
@@ -248,6 +243,12 @@ public class NotificationFragment extends BaseFragment
                           gymWrapper.setCoachService(coachService1);
                           presenter.checkoutSellerStudentPermission(msg.getUser().getId());
                           return;
+                        }else if(msg.type==20){
+                          if (serPermisAction.check(PermissionServerUtils.MODULE_SHOP_TURNOVER)) {
+                            RouteUtil.routeTo(getContext(),"staff", "/turnover/home", null);
+                          } else {
+                            DialogUtils.showAlert(getContext(), cn.qingchengfit.saasbase.R.string.alert_permission_forbid);
+                          }
                         } else if (msg.type == 19) {
                           gymWrapper.setCoachService(coachService1);
                           QcRouteUtil.setRouteOptions(
