@@ -182,7 +182,7 @@ import java.math.BigDecimal;
 
   private boolean checkMoney(String s) {
     if (TextUtils.isEmpty(mBinding.edRemarks.getText().toString())) {
-      ToastUtils.show("请填写备注信息");
+      ToastUtils.show("请填写款项说明");
       return false;
     }
     try {
