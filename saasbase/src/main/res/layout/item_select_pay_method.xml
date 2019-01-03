@@ -34,7 +34,7 @@
       android:gravity="center"
       android:paddingLeft="10dp"
       android:paddingRight="10dp"
-      android:text="花呗分期"
+      android:text="超过3000元大额支付"
       android:textColor="@color/bg_white"
       android:textSize="9sp"
       android:visibility="gone"

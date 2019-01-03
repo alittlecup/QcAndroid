@@ -360,7 +360,7 @@
                 />
             <TextView
                 android:id="@+id/tv_ali_hint"
-                android:layout_width="wrap_content"
+                android:layout_width="68dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
@@ -369,7 +369,8 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="3dp"
-                android:text="花呗分期"
+                android:gravity="center"
+                android:text="超过3000元\n大额支付"
                 android:textColor="@color/bg_white"
                 android:textSize="9sp"
                 />

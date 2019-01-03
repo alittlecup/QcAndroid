@@ -40,11 +40,6 @@ import java.math.BigDecimal;
       } else {
         mViewModel.enable.setValue(true);
       }
-      if (money.floatValue() > 3000) {
-        mBinding.tvAliHint.setText("大额支付");
-      } else {
-        mBinding.tvAliHint.setText("花呗分期");
-      }
     });
     mViewModel.cashierBean.observe(this, cashierBean -> {
       hideLoading();
