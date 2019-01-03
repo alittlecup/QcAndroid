@@ -12,7 +12,6 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoverBarChartFragmentBinding;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
-import cn.qingchengfit.saascommon.model.MyXAxisValueFormatter;
 import cn.qingchengfit.saascommon.model.NumChartYValueFormatter;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
@@ -119,24 +118,25 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
     chart.setScaleEnabled(false);
 
     XAxis xAxis = chart.getXAxis();
-    ArrayList<String> xValues = new ArrayList<>();
-    xValues.add("");
+    xAxis.setEnabled(true);
+    List<String> xValues = new ArrayList<>();
     Calendar c = Calendar.getInstance();
     c.add(Calendar.DATE, -7);
     for (int i = 0; i < 7; i++) {
       c.add(Calendar.DATE, 1);
-      xValues.add(DateUtils.Date2YYYYMMDD(c.getTime()));
+      if (i == 0 || i == 6) {
+        xValues.add(DateUtils.Date2YYYYMMDD(c.getTime()));
+      } else {
+        xValues.add("2018- ");//显示空
+      }
     }
-    xAxis.setValueFormatter(new MyXAxisValueFormatter(xValues));
-    xAxis.removeAllLimitLines();
-    xAxis.enableGridDashedLine(10f, 10f, 0f);
+    xAxis.setValueFormatter(new TurBarChartValueFormatter(xValues));
     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
     xAxis.setGridColor(Color.TRANSPARENT);// 去掉网格中竖线的显示
-    xAxis.setLabelCount(2, true);
-    xAxis.setDrawLabels(true);
     xAxis.setTextColor(Color.parseColor("#999999"));
     xAxis.setAxisLineColor(Color.parseColor("#dddddd"));
     xAxis.setYOffset(MeasureUtils.dpToPx(3f, getResources()));
+
     YAxis leftAxis = chart.getAxisLeft();
     leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
     //leftAxis.setAxisMaximum(Ymax == 0 ? 5 : (Ymax / 3f) * 4f);//Y轴最大高度
@@ -153,12 +153,12 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
     leftAxis.setDrawAxisLine(false);
     leftAxis.setXOffset(MeasureUtils.dpToPx(5f, getResources()));
     leftAxis.setValueFormatter(new NumChartYValueFormatter());
-    chart.setExtraBottomOffset(35f);
+    chart.setExtraBottomOffset(60f);
 
-    chart.setExtraLeftOffset(0);
     chart.getAxisRight().setEnabled(false);
 
-    MyMarkerView mv = new MyMarkerView(getContext(), R.layout.custom_marker_view, getResources().getColor(R.color.toolbar), "");
+    MyMarkerView mv = new MyMarkerView(getContext(), R.layout.custom_marker_view,
+        getResources().getColor(R.color.toolbar), "");
     mv.setChartView(chart); // For bounds control
     chart.setMarker(mv); // Set the marker to the chart
     chart.getLegend().setEnabled(false);
@@ -175,9 +175,10 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
         for (int i = 0; i < data.size(); i++) {
           TurBarChartData turBarChartData = data.get(i);
           if (turBarChartData.getTotal().getAmount() <= 0) {
-            chartDatas.add(new TurBarData(i, new float[]{0},turBarChartData.getDate()));
+            chartDatas.add(new TurBarData(i, new float[] { 0 }, turBarChartData.getDate()));
           } else {
-            chartDatas.add(new TurBarData(i, getChartFloat(turBarChartData.getStat(), tradeTypes),turBarChartData.getDate()));
+            chartDatas.add(new TurBarData(i, getChartFloat(turBarChartData.getStat(), tradeTypes),
+                turBarChartData.getDate()));
           }
         }
       }
@@ -204,7 +205,7 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
     if (data != null && !data.isEmpty()) {
       List<BarEntry> barEntries = new ArrayList<>();
       for (ITurnoverBarChartData data1 : data) {
-        barEntries.add(new BarEntry(data1.getX(), data1.getY(),data1.getData()));
+        barEntries.add(new BarEntry(data1.getX(), data1.getY(), data1.getData()));
       }
       BarDataSet set1;
       if (mBinding.barChart.getData() != null
@@ -223,7 +224,7 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
         BarData barData = new BarData(dataSets);
         barData.setValueFormatter(new StackedValueFormatter(false, "", 1));
         barData.setValueTextColor(Color.WHITE);
-
+        barData.setBarWidth(0.58f);
         mBinding.barChart.setData(barData);
       }
 

@@ -546,7 +546,7 @@ public class GymDetailFragment extends BaseFragment
     onGymInfo(gymWrapper.getCoachService());
     mChartAdapter = new GymDetailChartAdapter(getChildFragmentManager(), null);
 
-    vpCharts.setOffscreenPageLimit(3);
+    vpCharts.setOffscreenPageLimit(4);
     vpCharts.setAdapter(mChartAdapter);
     indicator.setViewPager(vpCharts);
   }

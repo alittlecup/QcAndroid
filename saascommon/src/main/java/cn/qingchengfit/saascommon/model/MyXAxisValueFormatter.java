@@ -1,6 +1,5 @@
 package cn.qingchengfit.saascommon.model;
 
-import android.util.Log;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.util.ArrayList;
@@ -35,9 +34,8 @@ public class MyXAxisValueFormatter implements IAxisValueFormatter {
   }
 
   @Override public String getFormattedValue(float value, AxisBase axis) {
-    Log.d("TAG", "getFormattedValue: "+value+"  AxisBase :"+axis);
-    return xValues.get(0);
-    //if (value >= xValues.size()) return "";
-    //return xValues.get((int) value).substring(5);
+    if (value >= xValues.size()) return "";
+    if (value < 0) return "";
+    return xValues.get((int) value).substring(5);
   }
 }
