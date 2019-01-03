@@ -20,24 +20,22 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
+import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.utils.SpanUtils;
-import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
@@ -47,7 +45,6 @@ import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -261,12 +258,6 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
       tvAddHint.setVisibility(View.VISIBLE);
       user.setShops(gymWrapper.shop_id());
       tvHeader.setText(getString(R.string.signin_img));
-
-      if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
-        mCivSalers.setClickable(false);
-        mCivSalers.setContent(
-            PreferenceUtils.getPrefString(App.context, Configs.PREFER_WORK_NAME, ""));
-      }
     }
     courseTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
