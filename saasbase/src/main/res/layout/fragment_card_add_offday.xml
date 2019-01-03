@@ -51,7 +51,18 @@
       app:civ_inputnum="true"
       app:civ_lable="收费(元)"
       app:civ_nonnull="true"
-
+      />
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/payment"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_edit_able="false"
+      app:civ_hint="请选择支付方式"
+      app:civ_inputnum="true"
+      app:civ_showright="true"
+      app:civ_lable="支付方式"
+      app:civ_nonnull="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView

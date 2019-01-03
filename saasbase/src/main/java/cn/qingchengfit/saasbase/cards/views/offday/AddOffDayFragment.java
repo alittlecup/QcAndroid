@@ -14,23 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-
-
+import cn.qingchengfit.items.BottomPayExpandItem;
+import cn.qingchengfit.items.BottomPayItem;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BottomPayDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
 
@@ -51,16 +52,17 @@ import javax.inject.Inject;
 @Leaf(module = "card", path = "/add/offday") public class AddOffDayFragment extends SaasBaseFragment
     implements AddOffDayView {
 
-	CommonInputView mark;
-	CommonInputView offdayReason;
-	CommonInputView startDay;
-	CommonInputView endDay;
-	CommonInputView spend;
-	Button comfirm;
+  CommonInputView mark;
+  CommonInputView offdayReason;
+  CommonInputView startDay;
+  CommonInputView endDay;
+  CommonInputView spend;
+  CommonInputView payment;
+  Button comfirm;
   @Need String cardId;
   @Inject AddOffDayPresenter presenter;
-	Toolbar toolbar;
-	TextView toolbarTitle;
+  Toolbar toolbar;
+  TextView toolbarTitle;
   private TimeDialogWindow pwTime;
   private TextWatcher textchange = new TextWatcher() {
     @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,6 +93,7 @@ import javax.inject.Inject;
     endDay = (CommonInputView) view.findViewById(R.id.end_day);
     spend = (CommonInputView) view.findViewById(R.id.spend);
     comfirm = (Button) view.findViewById(R.id.comfirm);
+    payment = view.findViewById(R.id.payment);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
     view.findViewById(R.id.offday_reason).setOnClickListener(new View.OnClickListener() {
@@ -118,7 +121,11 @@ import javax.inject.Inject;
         AddOffDayFragment.this.onClick(v);
       }
     });
-
+    payment.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showPaymentChooseDialog();
+      }
+    });
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText("添加请假");
@@ -129,11 +136,52 @@ import javax.inject.Inject;
     return view;
   }
 
+  BottomPayDialog dialog;
+  int chargeType = -1;
+
+  private void showPaymentChooseDialog() {
+    if (dialog == null) {
+      List<BottomPayExpandItem> items = new ArrayList<>();
+      BottomPayExpandItem item1 = new BottomPayExpandItem("线下支付");
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.CASH_PAY));
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.CREDIT_PAY));
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.TRANSIT_PAY));
+      item1.addSubItem(
+          new BottomPayItem(cn.qingchengfit.views.fragments.BottomPayDialog.PayType.OTHER_PAY));
+      items.add(item1);
+      dialog = new BottomPayDialog(getContext(), "选择支付方式", items);
+      dialog.setOnItemClickListener(i -> {
+        switch (i) {
+          case 1:
+            payment.setContent("现金支付");
+            chargeType = 1;
+            break;
+          case 2:
+            payment.setContent("刷卡支付");
+            chargeType = 2;
+            break;
+          case 3:
+            payment.setContent("转账支付");
+            chargeType = 3;
+            break;
+          case 4:
+            payment.setContent("其他");
+            chargeType = 4;
+            break;
+        }
+        return false;
+      });
+    }
+    dialog.show();
+  }
+
   @Override public void onDestroyView() {
     presenter.unattachView();
     super.onDestroyView();
   }
-
 
   public void onClick(View view) {
     int i = view.getId();
@@ -161,9 +209,13 @@ import javax.inject.Inject;
       WriteDescFragment.start(this, 2, "备注信息", "请填写备注信息");
     } else if (i == R.id.comfirm) {
       if (DateUtils.AlessOrEquelB(startDay.getContent(), endDay.getContent())) {
+        if (chargeType == -1) {
+          ToastUtils.show("请选择支付方式");
+          return;
+        }
         showLoading();
         presenter.commitOffDay(cardId, startDay.getContent(), endDay.getContent(),
-            offdayReason.getContent(), spend.getContent(), mark.getContent());
+            offdayReason.getContent(), spend.getContent(), mark.getContent(), chargeType);
       } else {
         ToastUtils.show("开始时间不得小于结束时间");
         return;

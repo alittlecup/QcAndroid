@@ -14,18 +14,19 @@ package cn.qingchengfit.saasbase.cards.network.body;
  * Created by Paper on 16/3/31 2016.
  */
 public class AddDayOffBody {
-    public String model;
-    public String id;
-    public String card_id;
-    public String start;
-    public String end;
-    public String message;
-    public String price;
-    public String remarks;
+  public String model;
+  public String id;
+  public String card_id;
+  public String start;
+  public String end;
+  public String message;
+  public String price;
+  public String remarks;
+  public Integer charge_type;
 
-    public AddDayOffBody(String model, String id, String card_id) {
-        this.model = model;
-        this.id = id;
-        this.card_id = card_id;
-    }
+  public AddDayOffBody(String model, String id, String card_id) {
+    this.model = model;
+    this.id = id;
+    this.card_id = card_id;
+  }
 }

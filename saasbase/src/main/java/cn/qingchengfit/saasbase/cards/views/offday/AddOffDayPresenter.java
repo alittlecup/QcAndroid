@@ -66,13 +66,14 @@ public class AddOffDayPresenter extends BasePresenter {
         view = null;
     }
 
-    public void commitOffDay(String cardId, String start, String end, String meg, String price, String remarks) {
+    public void commitOffDay(String cardId, String start, String end, String meg, String price, String remarks,int payment) {
         AddDayOffBody body = new AddDayOffBody(gymWrapper.model(), gymWrapper.id(), cardId);
         body.start = start;
         body.end = end;
         body.message = meg;
         body.price = price;
         body.remarks = remarks;
+        body.charge_type=payment;
         RxRegiste(cardModel.qcAddDayOff(body)
             .onBackpressureLatest()
             .subscribeOn(Schedulers.io())
