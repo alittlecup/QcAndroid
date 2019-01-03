@@ -46,31 +46,31 @@
               />
           <LinearLayout
               android:layout_width="0dp"
+              android:layout_height="wrap_content"
               android:layout_weight="1"
               android:gravity="center"
-              android:layout_height="wrap_content"
               >
-          <TextView
-              android:id="@+id/toolbar_title"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:ellipsize="end"
-              android:gravity="center"
-              android:textColor="@color/white"
-              android:textSize="16sp"
-              tools:text="测试场馆名称长度"
-              style="@style/Qc.TextCommonBlack"
-              />
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="测试场馆名称长度"
+                style="@style/Qc.TextCommonBlack"
+                />
 
-          <ImageView
-              android:id="@+id/down"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:scaleType="fitXY"
-              android:padding="10dp"
-              android:tint="@color/bg_white"
-              app:srcCompat="@drawable/ic_arrow_down_black_16dp"
-              />
+            <ImageView
+                android:id="@+id/down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:tint="@color/bg_white"
+                app:srcCompat="@drawable/ic_arrow_down_black_16dp"
+                />
           </LinearLayout>
 
           <RelativeLayout
@@ -112,8 +112,8 @@
               android:layout_marginLeft="5dp"
               android:layout_marginRight="15dp"
               android:gravity="center"
-              android:visibility="gone"
               android:orientation="vertical"
+              android:visibility="gone"
               >
             <ImageView
                 android:id="@+id/img_scan"
@@ -140,18 +140,21 @@
               android:id="@+id/img_cash"
               android:layout_width="?attr/actionBarSize"
               android:layout_height="match_parent"
+              android:padding="5dp"
               app:srcCompat="@drawable/ic_cash_line"
               />
           <ImageView
               android:id="@+id/img_cash_scan"
               android:layout_width="?attr/actionBarSize"
               android:layout_height="?attr/actionBarSize"
+              android:padding="5dp"
               app:srcCompat="@drawable/ic_scan_line"
               />
           <ImageView
               android:id="@+id/img_charge_card"
               android:layout_width="?attr/actionBarSize"
               android:layout_height="?attr/actionBarSize"
+              android:padding="5dp"
               app:srcCompat="@drawable/ic_charge_line"
               />
 
@@ -160,6 +163,8 @@
               android:id="@+id/img_new_card"
               android:layout_width="?attr/actionBarSize"
               android:layout_height="?attr/actionBarSize"
+              android:padding="5dp"
+
               app:srcCompat="@drawable/ic_newcard_line"
               />
 
@@ -476,8 +481,9 @@
 
   </LinearLayout>
   <include
+      layout="@layout/wx_view_bottom_short_action"
       android:id="@+id/include_bottom"
-      layout="@layout/wx_view_bottom_short_action"/>
+      />
   <FrameLayout
       android:id="@+id/top_frag"
       android:layout_width="match_parent"

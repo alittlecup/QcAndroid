@@ -20,13 +20,11 @@ import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 
@@ -183,7 +181,7 @@ public class QcScanActivity extends SaasCommonActivity
     mBinding.imgAli.setImageDrawable(getResources().getDrawable(
         selected ? R.drawable.ic_turnover_ali : R.drawable.ic_turnover_ali_disable));
     mBinding.imgWx.setImageDrawable(getResources().getDrawable(
-        selected ? R.drawable.ic_turnover_wx_disable : R.drawable.ic_turnover_wx));
+        selected ? R.drawable.ic_newcard_line : R.drawable.ic_turnover_wx));
     if (selected) {
       type = "ALIPAY_QRCODE";
       mBinding.tvPoint.setText("支付宝付款二维码");
