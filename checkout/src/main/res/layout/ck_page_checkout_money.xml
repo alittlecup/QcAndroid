@@ -370,7 +370,7 @@
                 android:paddingRight="5dp"
                 android:paddingTop="3dp"
                 android:gravity="center"
-                android:text="超过3000元\n大额支付"
+                android:text="花呗支付"
                 android:textColor="@color/bg_white"
                 android:textSize="9sp"
                 />

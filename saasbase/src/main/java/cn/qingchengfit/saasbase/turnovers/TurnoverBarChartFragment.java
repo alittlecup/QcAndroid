@@ -158,7 +158,7 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
     chart.getAxisRight().setEnabled(false);
 
     MyMarkerView mv = new MyMarkerView(getContext(), R.layout.custom_marker_view,
-        getResources().getColor(R.color.toolbar), "");
+        getResources().getColor(R.color.toolbar), "元");
     mv.setChartView(chart); // For bounds control
     chart.setMarker(mv); // Set the marker to the chart
     chart.getLegend().setEnabled(false);
@@ -175,7 +175,7 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
         for (int i = 0; i < data.size(); i++) {
           TurBarChartData turBarChartData = data.get(i);
           if (turBarChartData.getTotal().getAmount() <= 0) {
-            chartDatas.add(new TurBarData(i, new float[] { 0 }, turBarChartData.getDate()));
+            chartDatas.add(new TurBarData(i, new float[tradeTypes.size()], turBarChartData.getDate()));
           } else {
             chartDatas.add(new TurBarData(i, getChartFloat(turBarChartData.getStat(), tradeTypes),
                 turBarChartData.getDate()));

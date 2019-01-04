@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.respository;
 
-import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
@@ -15,7 +14,6 @@ import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.InactiveStat;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
@@ -61,7 +59,11 @@ public class StudentModel implements IStudentModel {
   @Override
   public Flowable<QcDataResponse<StudentBeanListWrapper>> loadStudentsByPhone(String phone) {
     HashMap<String, Object> params = gymWrapper.getParams();
-    params.put("q", phone);
+    if(phone.length()>=4){
+      params.put("q", phone);
+    }else{
+      params.put("username__icontains", phone);
+    }
     params.put("show_all",1);
     return studentApi.qcLoadStudentByPhone(loginStatus.staff_id(), params);
   }

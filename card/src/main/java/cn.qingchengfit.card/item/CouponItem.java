@@ -49,11 +49,19 @@ public class CouponItem extends AbstractFlexibleItem<DataBindingViewHolder<CaCou
 
         break;
     }
-
+    StringBuilder stringBuilder = new StringBuilder("还剩");
+    if (DateUtils.isOverCurrent(DateUtils.formatDateFromServer(data.getStart()))) {
+      int interval = DateUtils.interval(data.getEnd(), data.getStart());
+      stringBuilder.append(interval);
+    } else {
+      int i = DateUtils.dayNumFromToday(DateUtils.formatDateFromServer(data.getEnd()));
+      stringBuilder.append(i);
+    }
+    stringBuilder.append("天");
     mBinding.tvDates.setText(
         new StringBuilder().append(DateUtils.getYYYYMMDDfromServer(data.getStart()))
             .append("-")
-            .append(DateUtils.getYYYYMMDDfromServer(data.getEnd())));
+            .append(DateUtils.getYYYYMMDDfromServer(data.getEnd())).append(stringBuilder));
     mBinding.tvDesc.setText(data.getCoupon_tpl().getUse_condition().getDescription());
   }
 }

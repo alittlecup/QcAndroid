@@ -82,6 +82,15 @@ public class BottomPayDialog extends BaseDialogFragment
     }
   }
 
+  private String aliHint;
+
+  public void setAliMethodHint(String text) {
+      this.aliHint=text;
+      if(adapter!=null){
+        initView();
+      }
+  }
+
   @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
     //        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -121,7 +130,10 @@ public class BottomPayDialog extends BaseDialogFragment
 
   private void initView() {
     itemList.add(new SimpleTextItemItem("在线支付", Gravity.CENTER_VERTICAL));
-    itemList.add(new ItemPayMethod(new PayMethod(12, "支付宝收款", R.drawable.vd_payment_alipay)));
+    ItemPayMethod aliItem =
+        new ItemPayMethod(new PayMethod(12, "支付宝收款", R.drawable.vd_payment_alipay));
+    aliItem.setHint(aliHint);
+    itemList.add(aliItem);
     itemList.add(new ItemPayMethod(new PayMethod(7, "微信收款", R.drawable.vd_payment_wechat)));
     if (hasEditPermission) {
       itemList.add(new SimpleTextItemItem("线下支付", Gravity.CENTER_VERTICAL));

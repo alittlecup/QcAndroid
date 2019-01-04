@@ -149,6 +149,8 @@
               android:layout_height="wrap_content"
               android:background="@color/bg_grey"
               android:orientation="vertical"
+              android:translationZ="0dp"
+              android:elevation="0dp"
               >
             <FrameLayout
                 android:id="@+id/fl_chart"

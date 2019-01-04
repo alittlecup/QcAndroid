@@ -71,6 +71,7 @@ import rx.android.schedulers.AndroidSchedulers;
   CompatEditView etSearch;
   SwipeRefreshLayout srl;
   LinearLayout llSearchAll;
+  TextView searchText;
   ImageView addStudent;
 
   ChooseStudentListFragment chooseStudentListFragment;
@@ -107,6 +108,7 @@ import rx.android.schedulers.AndroidSchedulers;
     srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
     llSearchAll = view.findViewById(R.id.ll_search_all);
     addStudent = view.findViewById(R.id.btn_add_student);
+    searchText = view.findViewById(R.id.tv_search_text);
     view.findViewById(R.id.btn_add_student).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onBtnAddStudentClicked();

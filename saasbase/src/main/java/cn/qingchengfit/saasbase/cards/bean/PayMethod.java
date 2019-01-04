@@ -21,6 +21,7 @@ public class PayMethod implements Parcelable {
     this.icon = icon;
   }
 
+
   public PayMethod(int payType, String name, @DrawableRes int icon, boolean isPro) {
     this(payType, name, icon);
     this.isPro = isPro;

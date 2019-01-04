@@ -325,7 +325,8 @@ import rx.functions.Action1;
       }
     });
   }
-  protected void updatePayEvent(PayEvent payEvent){
+
+  protected void updatePayEvent(PayEvent payEvent) {
     if (payEvent != null && payEvent.getPayMethod() != null) {
       patType = payEvent.getPayMethod().payType;
       civPayMethod.setContent(payEvent.getPayMethod().name);
@@ -559,11 +560,16 @@ import rx.functions.Action1;
             .build());
   }
 
+  BottomPayDialog payDialog;
+
   public void onSelectPayMethod() {
-    BottomPayDialog f = BottomPayDialog.newInstance(
-        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,
-        gymWrapper.isPro());
-    f.show(getFragmentManager(), "");
+    if (payDialog == null) {
+      payDialog = BottomPayDialog.newInstance(
+          permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,
+          gymWrapper.isPro());
+    }
+    payDialog.setAliMethodHint(Float.valueOf(realMoney())>3000?"超过3000元\n大额支付":"花呗分期");
+    payDialog.show(getFragmentManager(), "");
   }
 
   @Override public void showInputMoney(boolean other, CardTplOption option, boolean validDay) {

@@ -43,7 +43,6 @@ public class TurnoverOrderItem
     DataBindingViewHolder<TurnoversOrderItemBinding> holder =
         new DataBindingViewHolder<>(view, adapter);
 
-
     return holder;
   }
 
@@ -70,7 +69,11 @@ public class TurnoverOrderItem
           DrawableUtils.tintDrawable(dataBinding.tvType.getContext(), R.drawable.circle_green,
               "#" + turFilterData.getColor()));
     }
-    dataBinding.tvCheckoutName.setText("收款人：" + data.getCheckoutName());
+    if (TextUtils.isEmpty(data.getCheckoutName())) {
+      dataBinding.tvCheckoutName.setText("收款人：");
+    } else {
+      dataBinding.tvCheckoutName.setText("收款人：" + data.getCheckoutName());
+    }
     holder.getDataBinding().btnAllot.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (listener != null) {

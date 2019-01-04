@@ -16,6 +16,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import java.util.List;
 import javax.inject.Inject;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class TurnoverOrderDetailVM extends BaseViewModel {
@@ -45,14 +46,23 @@ public class TurnoverOrderDetailVM extends BaseViewModel {
         input -> Transformations.map(loadTurOrderList(input),
             response -> dealResource(response) == null ? null
                 : dealResource(response).shop_turnover_seller_historys));
-    RxBus.getBus()
+     subscribe = RxBus.getBus()
         .register(Staff.class)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new BusSubscribe<Staff>() {
           @Override public void onNext(Staff staff) {
-           putTurnoverSellerId(turId.getValue(),staff.getId());
+            putTurnoverSellerId(turId.getValue(), staff.getId());
           }
         });
+  }
+  Subscription subscribe ;
+
+  @Override protected void onCleared() {
+    super.onCleared();
+    if (subscribe != null && !subscribe.isUnsubscribed()) {
+      subscribe.unsubscribe();
+      subscribe = null;
+    }
   }
 
   private LiveData<Resource<TurOrderListDataWrapper>> loadTurnoveDetail(String turnover_id) {
