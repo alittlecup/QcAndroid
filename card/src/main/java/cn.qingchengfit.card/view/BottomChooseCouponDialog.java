@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.card.databinding.BottomChooseCouponDialogBinding;
 import cn.qingchengfit.card.item.CouponItem;
 import cn.qingchengfit.widgets.BottomChooseDialog;

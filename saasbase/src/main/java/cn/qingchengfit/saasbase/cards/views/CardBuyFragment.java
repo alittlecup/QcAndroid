@@ -32,6 +32,7 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
 import cn.qingchengfit.saasbase.cards.event.PayEvent;
 import cn.qingchengfit.saasbase.cards.item.CardTplCustomOptionItem;
@@ -377,6 +378,7 @@ import rx.functions.Action1;
       presenter.setOtherOption(false);
       showInputMoney(false, cardOptionCustom, cardOptionCustom.limit_days);
       setPayMoney(cardOptionCustom.price);
+
     } else {
       cardOptionCustom = null;
       presenter.setOtherOption(true);
@@ -386,6 +388,7 @@ import rx.functions.Action1;
     commonFlexAdapter.toggleSelection(position);
     commonFlexAdapter.notifyDataSetChanged();
     resetSignaturePath("");
+    updateCoupons(null);
     return true;
   }
 
@@ -512,6 +515,10 @@ import rx.functions.Action1;
     }
   }
 
+  @Override public void updateCoupons(Coupon coupon) {
+
+  }
+
   public void onCivBindMenbersClicked() {
     //    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
     //        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
@@ -560,15 +567,10 @@ import rx.functions.Action1;
             .build());
   }
 
-  BottomPayDialog payDialog;
-
   public void onSelectPayMethod() {
-    if (payDialog == null) {
-      payDialog = BottomPayDialog.newInstance(
-          permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,
-          gymWrapper.isPro());
-    }
-    payDialog.setAliMethodHint(Float.valueOf(realMoney())>3000?"超过3000元\n大额支付":"花呗分期");
+    BottomPayDialog payDialog = BottomPayDialog.newInstance(
+        permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,
+        gymWrapper.isPro(), Float.valueOf(realMoney()) > 3000 ? "超过3000元\n大额支付" : "花呗分期");
     payDialog.show(getFragmentManager(), "");
   }
 
@@ -606,6 +608,9 @@ import rx.functions.Action1;
   @Override public void bindStudent(String student) {
     civBindMenbers.setContent(student);
     resetSignaturePath("");
+    if (!student.equals(civBindMenbers.getCivContent())) {
+      updateCoupons(null);
+    }
   }
 
   @Override public void bindSaler(String saler) {

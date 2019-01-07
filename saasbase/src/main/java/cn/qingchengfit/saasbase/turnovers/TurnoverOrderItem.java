@@ -70,9 +70,9 @@ public class TurnoverOrderItem
               "#" + turFilterData.getColor()));
     }
     if (TextUtils.isEmpty(data.getCheckoutName())) {
-      dataBinding.tvCheckoutName.setText("收款人：");
+      dataBinding.tvCheckoutName.setText("操作人：");
     } else {
-      dataBinding.tvCheckoutName.setText("收款人：" + data.getCheckoutName());
+      dataBinding.tvCheckoutName.setText("操作人：" + data.getCheckoutName());
     }
     holder.getDataBinding().btnAllot.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
@@ -442,6 +443,10 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   @Override public void onGetCardTpl(CardTpl cardTpl) {
+
+  }
+
+  @Override public void updateCoupons(Coupon coupon) {
 
   }
 

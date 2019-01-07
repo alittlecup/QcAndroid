@@ -1,6 +1,6 @@
-package cn.qingchengfit.card.event;
+package cn.qingchengfit.saasbase.cards.event;
 
-import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 
 public class ChooseCouponsEvent {
   public Coupon getCoupon() {

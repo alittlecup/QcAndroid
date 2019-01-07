@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.card.R;
-import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.card.buy.CompletedBuyView;
-import cn.qingchengfit.card.event.ChooseCouponsEvent;
+import cn.qingchengfit.saasbase.cards.event.ChooseCouponsEvent;
 import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
@@ -123,11 +123,17 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
 
   private Coupon coupon;
 
-  private void updateCoupons(Coupon coupon) {
+  @Override
+  public void updateCoupons(Coupon coupon) {
     this.coupon = coupon;
+    CardTplOption cardTplOption = presenter.getmChosenOption();
     if (coupon == null) {
       mBindCoupons.setContent("");
-      setPayMoney(presenter.getmChosenOption().getPrice());
+      if(cardTplOption!=null){
+        setPayMoney(cardTplOption.getPrice());
+      }else{
+        setPayMoney(0);
+      }
     } else {
       mBindCoupons.setContent(coupon.getDescription());
       setPayMoney(coupon.getReal_price());
@@ -137,7 +143,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   @Override protected void updatePayEvent(PayEvent payEvent) {
     super.updatePayEvent(payEvent);
     int payType = payEvent.getPayMethod().payType;
-    if (payType != 12 || payType != 7) {
+    if (payType != 12 && payType != 7) {
       mBindCoupons.setEnable(false);
       updateCoupons(null);
       mBindCoupons.setHint("优惠券仅支持在线支付使用");
@@ -169,7 +175,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   }
 
   @Override public String getCouponId() {
-    return coupon == null ? "" : String.valueOf(coupon.getId());
+    return coupon == null ? null : String.valueOf(coupon.getId());
   }
 
   private IQcRouteCallback callback = qcResult -> {

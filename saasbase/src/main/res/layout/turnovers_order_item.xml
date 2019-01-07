@@ -69,6 +69,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/btn_prime"
             android:text="分配"
+            android:layout_margin="1dp"
             android:textColor="@color/bg_white"
             android:textSize="14sp"
             android:visibility="gone"
@@ -89,7 +90,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="10dp"
-          android:text="收款人：田野"
+          android:text="操作人：田野"
           android:textColor="@color/text_black"
           android:textSize="14sp"
           />

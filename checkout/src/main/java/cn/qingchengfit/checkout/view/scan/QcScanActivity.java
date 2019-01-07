@@ -181,7 +181,7 @@ public class QcScanActivity extends SaasCommonActivity
     mBinding.imgAli.setImageDrawable(getResources().getDrawable(
         selected ? R.drawable.ic_turnover_ali : R.drawable.ic_turnover_ali_disable));
     mBinding.imgWx.setImageDrawable(getResources().getDrawable(
-        selected ? R.drawable.ic_newcard_line : R.drawable.ic_turnover_wx));
+        selected ? R.drawable.ic_turnover_wx_disable : R.drawable.ic_turnover_wx));
     if (selected) {
       type = "ALIPAY_QRCODE";
       mBinding.tvPoint.setText("支付宝付款二维码");

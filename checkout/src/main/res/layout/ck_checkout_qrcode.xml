@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="40dp"
-        android:text="场馆收款码"
+        android:text="场馆收款二维码"
         android:textColor="@color/bg_white"
         android:textSize="18sp"
         />
@@ -41,6 +41,7 @@
         android:orientation="vertical"
         >
       <TextView
+          android:id="@+id/tv_gym_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginBottom="20dp"
@@ -54,7 +55,7 @@
           android:layout_width="220dp"
           android:layout_height="220dp"
           android:background="@drawable/ch_checkout_qrcode_background"
-          android:padding="5dp"
+          android:padding="10dp"
           />
       <LinearLayout
           android:layout_width="220dp"
@@ -70,8 +71,8 @@
             android:orientation="vertical"
             >
           <ImageView
-              android:layout_width="25dp"
-              android:layout_height="25dp"
+              android:layout_width="35dp"
+              android:layout_height="35dp"
               app:srcCompat="@drawable/vd_pay_alipay"
               />
           <TextView
@@ -91,8 +92,8 @@
             android:orientation="vertical"
             >
           <ImageView
-              android:layout_width="25dp"
-              android:layout_height="25dp"
+              android:layout_width="35dp"
+              android:layout_height="35dp"
               app:srcCompat="@drawable/vd_pay_wechat"
               />
           <TextView
@@ -123,6 +124,7 @@
           android:layout_gravity="center_vertical"
           android:layout_marginLeft="15dp"
           android:text="收款记录"
+          android:textSize="14sp"
           android:textColor="@color/bg_white"
           />
       <ImageView

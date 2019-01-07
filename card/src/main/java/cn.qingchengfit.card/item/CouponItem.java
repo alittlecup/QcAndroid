@@ -2,7 +2,7 @@ package cn.qingchengfit.card.item;
 
 import android.view.View;
 import cn.qingchengfit.card.R;
-import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.card.databinding.CaCouponItemBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import cn.qingchengfit.utils.DateUtils;

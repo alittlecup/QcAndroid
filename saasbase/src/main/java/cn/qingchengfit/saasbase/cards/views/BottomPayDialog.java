@@ -71,6 +71,16 @@ public class BottomPayDialog extends BaseDialogFragment
     fragment.setArguments(args);
     return fragment;
   }
+  public static BottomPayDialog newInstance(boolean hasEditPermission, int pos, boolean isPro,String hint) {
+    Bundle args = new Bundle();
+    args.putBoolean("permission", hasEditPermission);
+    args.putInt("pos", pos);
+    args.putBoolean("isPro", isPro);
+    args.putString("hint",hint);
+    BottomPayDialog fragment = new BottomPayDialog();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -79,17 +89,12 @@ public class BottomPayDialog extends BaseDialogFragment
       hasEditPermission = getArguments().getBoolean("permission");
       pos = getArguments().getInt("pos");
       isPro = getArguments().getBoolean("isPro", true);
+      aliHint=getArguments().getString("hint");
     }
   }
 
   private String aliHint;
 
-  public void setAliMethodHint(String text) {
-      this.aliHint=text;
-      if(adapter!=null){
-        initView();
-      }
-  }
 
   @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
     //        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -1,6 +1,7 @@
 package cn.qingchengfit.card.bean;
 
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import java.util.List;
 
 public class UserWithCoupons {

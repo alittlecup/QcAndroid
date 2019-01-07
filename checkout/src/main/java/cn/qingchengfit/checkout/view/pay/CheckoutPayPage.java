@@ -143,7 +143,7 @@ import timber.log.Timber;
 
   private void initQrCode(IOrderData orderData) {
     QRGEncoder qrgEncoder = new QRGEncoder(orderData.getQrCodeUri(), null, QRGContents.Type.TEXT,
-        MeasureUtils.dpToPx(180f, getResources()));
+        MeasureUtils.dpToPx(200f, getResources()));
     try {
 
       Bitmap bitmap = qrgEncoder.encodeAsBitmap();

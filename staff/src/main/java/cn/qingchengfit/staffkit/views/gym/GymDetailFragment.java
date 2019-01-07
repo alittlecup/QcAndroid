@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -51,8 +50,10 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.events.EventChartTitle;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
+import cn.qingchengfit.saascommon.qrcode.views.QRScanActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.saascommon.views.CommonDialog;
+import cn.qingchengfit.saascommon.views.CommonSimpleTextActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.App;
@@ -76,8 +77,6 @@ import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
-import cn.qingchengfit.staffkit.views.login.SplashActivity;
-import cn.qingchengfit.staffkit.views.main.SettingFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.student.listener.IncreaseType;
@@ -132,8 +131,7 @@ import rx.functions.Action1;
  * Created by Paper on 16/2/1 2016.
  */
 public class GymDetailFragment extends BaseFragment
-    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener,
-    FlexibleAdapter.OnItemLongClickListener {
+    implements GymDetailView, AdapterView.OnItemClickListener, FlexibleAdapter.OnItemClickListener {
 
   public static final int RESULT_STAFF_MANAGE = 12;
 
@@ -154,6 +152,7 @@ public class GymDetailFragment extends BaseFragment
   ImageView tagPro;
   LinearLayout layoutCharge;
   CompatTextView tvPrice;
+  LinearLayout llScan;
 
   @Inject GymDetailPresenter gymDetailPresenter;
   @Inject StaffRespository restRepository;
@@ -170,7 +169,7 @@ public class GymDetailFragment extends BaseFragment
   private DialogList dialogList;
   private QuitGymFragment quitDialog;
   private GymDetailChartAdapter mChartAdapter;
-  private LinearLayout llTitleBelow, llTitleAbove, llCheckout;
+  private LinearLayout llTitleBelow, llTitleAbove, llCheckout, llTitle;
   /**
    * 即将到期提醒
    */
@@ -199,6 +198,7 @@ public class GymDetailFragment extends BaseFragment
     llTitleBelow = view.findViewById(R.id.ll_title_below);
     llTitleAbove = view.findViewById(R.id.ll_title_above);
     llCheckout = view.findViewById(R.id.ll_checkout);
+    llTitle = view.findViewById(R.id.ll_title);
     scheduleNotificationCount = (TextView) view.findViewById(R.id.schedule_notification_count);
     vpCharts = (ViewPager) view.findViewById(R.id.vp_charts);
     indicator = (CircleIndicator) view.findViewById(R.id.indicator);
@@ -208,6 +208,7 @@ public class GymDetailFragment extends BaseFragment
     tagPro = (ImageView) view.findViewById(R.id.tag_pro);
     layoutCharge = (LinearLayout) view.findViewById(R.id.layout_to_charge);
     tvPrice = (CompatTextView) view.findViewById(R.id.tv_price);
+    llScan = view.findViewById(R.id.ll_scan);
     view.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onTitleClick();
@@ -357,8 +358,10 @@ public class GymDetailFragment extends BaseFragment
     if (present <= 0) {
       llTitleAbove.setVisibility(View.GONE);
       llTitleBelow.setVisibility(View.VISIBLE);
+      llTitle.setVisibility(View.VISIBLE);
     } else if (present <= 1) {
       llTitleBelow.setVisibility(View.GONE);
+      llTitle.setVisibility(View.GONE);
       llTitleAbove.setVisibility(View.VISIBLE);
       llTitleAbove.setAlpha(present);
       llCheckout.setAlpha(Math.abs(1 - present));
@@ -792,6 +795,10 @@ public class GymDetailFragment extends BaseFragment
     MiniProgramUtil.saveMiniProgream(getContext(), gymWrapper.getGymId(), miniProgram);
   }
 
+  @Override public void onQuitGym() {
+
+  }
+
   /**
    * 单场馆新增健身房
    */
@@ -885,13 +892,6 @@ public class GymDetailFragment extends BaseFragment
     return true;
   }
 
-  @Override public void onItemLongClick(int position) {
-    IFlexible item = adapter.getItem(position);
-    if (item instanceof SimpleTextItemItem) {
-      routeTo("staff", "/turnover/home", null);
-    }
-  }
-
   private List<Fragment> getFragments(HomeStatement statement) {
     List<Fragment> fragments = new ArrayList<>();
     pos.clear();
@@ -974,7 +974,6 @@ public class GymDetailFragment extends BaseFragment
     }
 
     private HomeStatement statement;
-
 
     @Override public long getItemId(int position) {
       return position;

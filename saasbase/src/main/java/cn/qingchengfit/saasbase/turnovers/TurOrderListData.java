@@ -13,6 +13,16 @@ public class TurOrderListData implements Parcelable, ITurnoverOrderItemData {
   private String remarks;
   private boolean is_refund;
   private String created_at;
+
+  public String getBalance_at() {
+    return balance_at;
+  }
+
+  public void setBalance_at(String balance_at) {
+    this.balance_at = balance_at;
+  }
+
+  private String balance_at;
   private String id;
   private float amount;
   private String channel;
@@ -98,49 +108,8 @@ public class TurOrderListData implements Parcelable, ITurnoverOrderItemData {
     this.seller = seller;
   }
 
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeParcelable(this.shop, flags);
-    dest.writeInt(this.trade_type);
-    dest.writeParcelable(this.created_by, flags);
-    dest.writeString(this.remarks);
-    dest.writeByte(this.is_refund ? (byte) 1 : (byte) 0);
-    dest.writeString(this.created_at);
-    dest.writeString(this.id);
-    dest.writeFloat(this.amount);
-    dest.writeString(this.channel);
-    dest.writeParcelable(this.seller, flags);
-  }
-
   public TurOrderListData() {
   }
-
-  protected TurOrderListData(Parcel in) {
-    this.shop = in.readParcelable(Shop.class.getClassLoader());
-    this.trade_type = in.readInt();
-    this.created_by = in.readParcelable(Staff.class.getClassLoader());
-    this.remarks = in.readString();
-    this.is_refund = in.readByte() != 0;
-    this.created_at = in.readString();
-    this.id = in.readString();
-    this.amount = in.readFloat();
-    this.channel = in.readString();
-    this.seller = in.readParcelable(Staff.class.getClassLoader());
-  }
-
-  public static final Parcelable.Creator<TurOrderListData> CREATOR =
-      new Parcelable.Creator<TurOrderListData>() {
-        @Override public TurOrderListData createFromParcel(Parcel source) {
-          return new TurOrderListData(source);
-        }
-
-        @Override public TurOrderListData[] newArray(int size) {
-          return new TurOrderListData[size];
-        }
-      };
 
   @Override public String getPayType() {
     return channel;
@@ -163,10 +132,52 @@ public class TurOrderListData implements Parcelable, ITurnoverOrderItemData {
   }
 
   @Override public String getDate() {
-    return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(created_at));
+    return DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(balance_at));
   }
 
   @Override public String getID() {
     return id;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeParcelable(this.shop, flags);
+    dest.writeInt(this.trade_type);
+    dest.writeParcelable(this.created_by, flags);
+    dest.writeString(this.remarks);
+    dest.writeByte(this.is_refund ? (byte) 1 : (byte) 0);
+    dest.writeString(this.created_at);
+    dest.writeString(this.balance_at);
+    dest.writeString(this.id);
+    dest.writeFloat(this.amount);
+    dest.writeString(this.channel);
+    dest.writeParcelable(this.seller, flags);
+  }
+
+  protected TurOrderListData(Parcel in) {
+    this.shop = in.readParcelable(Shop.class.getClassLoader());
+    this.trade_type = in.readInt();
+    this.created_by = in.readParcelable(Staff.class.getClassLoader());
+    this.remarks = in.readString();
+    this.is_refund = in.readByte() != 0;
+    this.created_at = in.readString();
+    this.balance_at = in.readString();
+    this.id = in.readString();
+    this.amount = in.readFloat();
+    this.channel = in.readString();
+    this.seller = in.readParcelable(Staff.class.getClassLoader());
+  }
+
+  public static final Creator<TurOrderListData> CREATOR = new Creator<TurOrderListData>() {
+    @Override public TurOrderListData createFromParcel(Parcel source) {
+      return new TurOrderListData(source);
+    }
+
+    @Override public TurOrderListData[] newArray(int size) {
+      return new TurOrderListData[size];
+    }
+  };
 }

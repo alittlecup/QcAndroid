@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.turnovers.TurOrderListResponse;
 import cn.qingchengfit.saasbase.turnovers.TurOrderSellerHistoryWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurnoversChartStatDataResponse;
 import cn.qingchengfit.staffkit.constant.StaffAllApi;
+import cn.qingchengfit.utils.StringUtils;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -210,7 +211,9 @@ public class StaffModel implements IStaffModel {
   @Override public Observable<QcDataResponse<TurOrderListDataWrapper>> qcPutTurnoverOrderDetail(
       String turnover_id, String seller_id) {
     Map<String, Object> sellerParams = new HashMap<>();
-    sellerParams.put("seller_id", seller_id);
+    if(!StringUtils.isEmpty(seller_id)){
+      sellerParams.put("seller_id", seller_id);
+    }
     return staffAllApi.qcPutTurnoverOrderDetail(loginStatus.staff_id(), turnover_id, sellerParams,
         gymWrapper.getParams());
   }

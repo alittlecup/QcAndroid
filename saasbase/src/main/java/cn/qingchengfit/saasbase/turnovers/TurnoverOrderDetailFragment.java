@@ -11,8 +11,10 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoverOrderDetailBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -78,8 +80,10 @@ import javax.inject.Inject;
     mViewModel.loadTurDetail(turId);
     mBinding.tvSellerChange.setOnClickListener(v -> {
       if (permissionModel.check(PermissionServerUtils.SHOP_TURNOVER_CHANGE)) {
-        routeTo("staff", "/choose/saler/", null);
-      }else{
+        ChooseSalerFragment fragment = new ChooseSalerFragment();
+        fragment.setArguments(new BundleBuilder().withBoolean("hasNoStaff", false).build());
+        routeTo(fragment);
+      } else {
         DialogUtils.showAlert(getContext(), R.string.alert_permission_forbid);
       }
     });

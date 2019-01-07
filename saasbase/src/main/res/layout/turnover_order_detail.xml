@@ -37,7 +37,6 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-
             android:paddingRight="15dp"
             >
 
@@ -71,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="类型"
+                android:text="项目"
                 android:textColor="@color/text_color_gray"
                 android:textSize="14sp"
                 />
@@ -94,7 +93,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="收款人"
+                android:text="操作人"
                 android:textColor="@color/text_color_gray"
                 android:textSize="14sp"
                 />
@@ -182,6 +181,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="15dp"
+              android:gravity="center_vertical"
               >
             <TextView
                 android:layout_width="wrap_content"
@@ -203,11 +203,12 @@
             <TextView
                 android:id="@+id/tv_seller_change"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="22dp"
                 android:layout_marginLeft="5dp"
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/vd_arrow_right_grey_small"
-                android:text="更改"
+                android:gravity="center"
+                android:text="变更"
                 android:textSize="12sp"
                 />
           </LinearLayout>
@@ -241,11 +242,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@color/bg_white"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="10dp"
-            android:layout_marginTop="10dp"
             android:text="操作历史"
             android:textColor="@color/text_black"
             android:textSize="14sp"
@@ -255,8 +256,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bg_white"
-            android:paddingLeft="15dp"
             android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
             android:paddingRight="15dp"
             />
       </LinearLayout>

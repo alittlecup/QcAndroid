@@ -166,6 +166,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/bg_white"
                 android:orientation="horizontal"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 android:padding="15dp"
 
                 >

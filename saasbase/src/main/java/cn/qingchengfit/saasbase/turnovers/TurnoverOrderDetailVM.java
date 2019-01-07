@@ -84,6 +84,9 @@ public class TurnoverOrderDetailVM extends BaseViewModel {
   }
 
   private void putTurnoverSellerId(String turId, String sellerID) {
+    if(sellerID.equals("0")){
+      sellerID="";
+    }
     staffModel.qcPutTurnoverOrderDetail(turId, sellerID)
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {

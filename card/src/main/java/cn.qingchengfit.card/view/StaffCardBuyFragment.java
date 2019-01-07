@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.card.R;
-import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.card.buy.CompletedBuyView;
-import cn.qingchengfit.card.event.ChooseCouponsEvent;
+import cn.qingchengfit.saasbase.cards.event.ChooseCouponsEvent;
 import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
@@ -78,7 +78,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
   }
 
   @Override public String getCouponId() {
-    return coupon == null ? "" : String.valueOf(coupon.getId());
+    return coupon == null ? null : String.valueOf(coupon.getId());
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,11 +96,16 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
 
   private Coupon coupon;
 
-  private void updateCoupons(Coupon coupon) {
+  @Override public void updateCoupons(Coupon coupon) {
     this.coupon = coupon;
+    CardTplOption cardTplOption = presenter.getmChosenOption();
     if (coupon == null) {
       mBindCoupons.setContent("");
-      setPayMoney(presenter.getmChosenOption().getPrice());
+      if(cardTplOption!=null){
+        setPayMoney(cardTplOption.getPrice());
+      }else{
+        setPayMoney(0);
+      }
     } else {
       mBindCoupons.setContent(coupon.getDescription());
       setPayMoney(coupon.getReal_price());
@@ -142,6 +147,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     float total_fee = response.get("total_fee").getAsFloat();
     return String.valueOf(total_fee / 100);
   }
+
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));

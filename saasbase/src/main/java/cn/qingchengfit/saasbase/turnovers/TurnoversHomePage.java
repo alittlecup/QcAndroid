@@ -8,17 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -27,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
     extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM>
@@ -124,7 +128,6 @@ import javax.inject.Inject;
       }
     }
   }
-
   @Override public void onResume() {
     super.onResume();
     updateSimpleItem();
@@ -156,10 +159,20 @@ import javax.inject.Inject;
       mViewModel.loadFilterOptions();
       mViewModel.loadSellerItems();
     }
+    RxBusAdd(Staff.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .compose(this.<Staff>bindToLifecycle())
+        .compose(this.<Staff>doWhen(FragmentEvent.RESUME))
+        .subscribe(new BusSubscribe<Staff>() {
+          @Override public void onNext(Staff staff) {
+            mViewModel.putTurnoverSellerId(mViewModel.turId, staff.getId());
+          }
+        });
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
   }
 
   public void onDateFilter(View view) {
@@ -221,7 +234,7 @@ import javax.inject.Inject;
       String id = ((TurnoverOrderItem) item).getData().getID();
       mViewModel.setTurId(id);
       this.pos = pos;
-      routeTo("staff", "/choose/saler/", null);
+      routeTo("staff", "/choose/saler/", new BundleBuilder().withBoolean("hasNoStaff",false).build());
     }
   }
 

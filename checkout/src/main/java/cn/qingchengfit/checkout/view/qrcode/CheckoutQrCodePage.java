@@ -39,13 +39,15 @@ import timber.log.Timber;
     initToolbar();
     initListener();
     loadImage();
+    mBinding.tvGymName.setText(gymWrapper.getCoachService().getName());
   }
 
   private void loadImage() {
     String shop_id = gymWrapper.getCoachService().shop_id;
     String host = gymWrapper.getCoachService().host();
-    QRGEncoder qrgEncoder = new QRGEncoder(host + "/shop/" + shop_id + "/qrcode/receipt/", null, QRGContents.Type.TEXT,
-        MeasureUtils.dpToPx(180f, getResources()));
+    QRGEncoder qrgEncoder =
+        new QRGEncoder(host + "/shop/" + shop_id + "/qrcode/receipt/", null, QRGContents.Type.TEXT,
+            MeasureUtils.dpToPx(180f, getResources()));
     try {
       Bitmap bitmap = qrgEncoder.encodeAsBitmap();
       mBinding.imgQrcode.setAdjustViewBounds(true);
@@ -60,7 +62,7 @@ import timber.log.Timber;
   }
 
   private void initToolbar() {
-    mBinding.setToolbarModel(new ToolbarModel("场馆收款二维码"));
+    mBinding.setToolbarModel(new ToolbarModel(""));
     initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.includeToolbar.toolbarLayout.setBackgroundColor(Color.TRANSPARENT);
   }

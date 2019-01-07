@@ -15,6 +15,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
@@ -426,6 +427,8 @@ public class CardBuyPresenter extends BasePresenter {
     void onGetOptions(List<CardTplOption> options);
 
     void onGetCardTpl(CardTpl cardTpl);
+
+    void updateCoupons(Coupon coupon);
 
     /**
      * @param other 是否选中其他

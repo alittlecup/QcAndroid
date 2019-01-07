@@ -5,7 +5,6 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.util.Pair;
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.network.ResponseConstant;
@@ -15,7 +14,6 @@ import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.mvvm.LiveDataTransfer;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
-import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
@@ -25,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 
 public class TurnoversVM extends BaseViewModel {
 
@@ -166,25 +162,8 @@ public class TurnoversVM extends BaseViewModel {
     filterSeller.setValue("业绩归属");
     filterPayment.setValue("支付方式");
 
-    subscribe = RxBus.getBus()
-        .register(Staff.class)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new BusSubscribe<Staff>() {
-          @Override public void onNext(Staff staff) {
-            putTurnoverSellerId(turId, staff.getId());
-          }
-        });
   }
 
-  @Override protected void onCleared() {
-    super.onCleared();
-    if (subscribe != null && !subscribe.isUnsubscribed()) {
-      subscribe.unsubscribe();
-      subscribe = null;
-    }
-  }
-
-  Subscription subscribe;
 
   public void setTurId(String turId) {
     this.turId = turId;
@@ -294,6 +273,9 @@ public class TurnoversVM extends BaseViewModel {
   private boolean canTurnDateNext() {
     if (dateType.getValue() != TimeType.CUSTOMIZE && !DateUtils.isOverCurrent(
         DateUtils.formatDateFromYYYYMMDD(date.getValue().second))) {
+      if(dateType.getValue()==TimeType.DAY&&DateUtils.getStringToday().equals(date.getValue().second)){
+        return false;
+      }
       return true;
     } else {
       return false;
@@ -389,6 +371,9 @@ public class TurnoversVM extends BaseViewModel {
       new MutableLiveData<>();
 
   public void putTurnoverSellerId(String turId, String sellerID) {
+    if(sellerID.equals("0")){
+      sellerID="";
+    }
     staffModel.qcPutTurnoverOrderDetail(turId, sellerID)
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {

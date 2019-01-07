@@ -38,13 +38,7 @@ public class OrderListItem
       FlexibleAdapter adapter) {
     DataBindingViewHolder<ChOrderListItemBinding> holder =
         new DataBindingViewHolder<ChOrderListItemBinding>(view, adapter);
-    holder.getDataBinding().btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Bundle bundle = new Bundle();
-        bundle.putString("orderId", ((CheckoutBill)data).getId());
-        RouteUtil.routeTo(view.getContext(),"checkout","/order/confirm", bundle);
-      }
-    });
+
     return holder;
   }
 
@@ -53,6 +47,13 @@ public class OrderListItem
     ChOrderListItemBinding dataBinding = holder.getDataBinding();
     dataBinding.tvDate.setText(data.getOrderCreateDate());
     dataBinding.tvMoney.setText(data.getOrderMoney() + "元");
+    holder.getDataBinding().btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putString("orderId", ((CheckoutBill)data).getId());
+        RouteUtil.routeTo(dataBinding.getRoot().getContext(),"checkout","/order/confirm", bundle);
+      }
+    });
     switch (data.getType()) {
       case PayChannel.ALIPAY_QRCODE:
         dataBinding.tvType.setBackground(

@@ -1,4 +1,4 @@
-package cn.qingchengfit.card.bean;
+package cn.qingchengfit.saasbase.cards.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

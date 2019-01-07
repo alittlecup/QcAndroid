@@ -9,15 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.card.R;
-import cn.qingchengfit.card.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.card.bean.UserWithCoupons;
 import cn.qingchengfit.card.databinding.CaChooseCouponsFragmentBinding;
-import cn.qingchengfit.card.event.ChooseCouponsEvent;
+import cn.qingchengfit.saasbase.cards.event.ChooseCouponsEvent;
 import cn.qingchengfit.card.item.ChooseCouponsItem;
 import cn.qingchengfit.card.routers.CardParamsInjector;
 import cn.qingchengfit.card.view.BottomChooseCouponDialog;
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -130,7 +129,7 @@ import java.util.List;
     dialog.show();
   }
 
-  private ChooseCouponsEvent event;
+  private ChooseCouponsEvent event=new ChooseCouponsEvent(null);
 
   @Override public boolean onFragmentBackPress() {
     if (event != null) {

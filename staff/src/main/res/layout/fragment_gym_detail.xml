@@ -44,39 +44,17 @@
               android:textColor="@color/white"
               android:visibility="visible"
               />
-          <LinearLayout
+          <Space
               android:layout_width="0dp"
-              android:layout_height="wrap_content"
+              android:layout_height="0dp"
               android:layout_weight="1"
-              android:gravity="center"
-              >
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                tools:text="测试场馆名称长度"
-                style="@style/Qc.TextCommonBlack"
-                />
-
-            <ImageView
-                android:id="@+id/down"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:scaleType="fitXY"
-                android:tint="@color/bg_white"
-                app:srcCompat="@drawable/ic_arrow_down_black_16dp"
-                />
-          </LinearLayout>
+              />
 
           <RelativeLayout
               android:id="@+id/schedule_notification_layout"
               android:layout_width="?attr/actionBarSize"
               android:layout_height="?attr/actionBarSize"
+              tools:visibility="gone"
               >
             <ImageView
                 android:id="@+id/schedule_notification"
@@ -113,13 +91,21 @@
               android:layout_marginRight="15dp"
               android:gravity="center"
               android:orientation="vertical"
-              android:visibility="gone"
+              android:visibility="visible"
               >
             <ImageView
                 android:id="@+id/img_scan"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_gym_detail_scan"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扫一扫"
+                android:textColor="@color/bg_white"
+                android:textSize="10sp"
                 />
 
           </LinearLayout>
@@ -172,6 +158,38 @@
         </LinearLayout>
       </FrameLayout>
     </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+      <TextView
+          android:id="@+id/toolbar_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:gravity="center"
+          android:maxWidth="130dp"
+          android:singleLine="true"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          tools:text="测试场馆名称长度测试场馆名称长度"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <ImageView
+          android:id="@+id/down"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:scaleType="fitXY"
+          android:tint="@color/bg_white"
+          app:srcCompat="@drawable/ic_arrow_down_black_16dp"
+          />
+    </LinearLayout>
+
   </FrameLayout>
 
   <android.support.design.widget.CoordinatorLayout
