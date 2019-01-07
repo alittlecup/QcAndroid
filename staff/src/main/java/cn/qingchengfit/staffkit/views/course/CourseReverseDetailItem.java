@@ -78,6 +78,9 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
     private String setStatus(int status) {
         String s = "";
         switch (status) {
+            case 0:
+                s="已预约";
+                break;
             case 1:
                 s = "已完成";
                 break;
@@ -88,7 +91,7 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
                 s = "失败";
                 break;
             case 4:
-                s = "已预约";
+                s = "已签课";
                 break;
         }
         return s;
