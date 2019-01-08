@@ -71,7 +71,6 @@ public class QcScanActivity extends SaasCommonActivity
         selectAliPayCode(false);
       }
     });
-
   }
 
   private boolean hasBarCodeFlag = false;
@@ -142,12 +141,16 @@ public class QcScanActivity extends SaasCommonActivity
     DialogUtils.showAlert(this, "收款失败", "收款失败，请点击下方按钮重新扫码", (materialDialog, dialogAction) -> {
       materialDialog.dismiss();
       hasBarCodeFlag = false;
-      if (mBinding.qrCodeView != null) mBinding.qrCodeView.getCameraManager().startPreview();
+      startPreView();
     });
   }
 
   @Override protected void onResume() {
     super.onResume();
+    startPreView();
+  }
+
+  private void startPreView() {
     if (mBinding.qrCodeView != null) {
       new RxPermissions(this).request(Manifest.permission.CAMERA).subscribe(aBoolean -> {
         if (aBoolean) {

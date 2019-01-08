@@ -34,7 +34,7 @@ import com.anbillon.flabellum.annotations.Need;
     });
     mViewModel.getPutResult().observe(this, data -> {
       if (data != null) {
-        ToastUtils.show("上传成功");
+        ToastUtils.show("操作成功");
         getActivity().onBackPressed();
       }
     });

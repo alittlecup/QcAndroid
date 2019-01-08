@@ -18,6 +18,7 @@ import cn.qingchengfit.checkout.bean.PayChannel;
 import cn.qingchengfit.checkout.databinding.CkPageCheckoutMoneyBinding;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.checkout.bean.ScanRepayInfo;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -40,9 +41,9 @@ import java.math.BigDecimal;
       } else {
         mViewModel.enable.setValue(true);
       }
-      if(money.floatValue()>3000){
+      if (money.floatValue() > 3000) {
         mBinding.tvAliHint.setText("超过3000元\n大额支付");
-      }else{
+      } else {
         mBinding.tvAliHint.setText("花呗支付");
       }
     });
@@ -89,8 +90,7 @@ import java.math.BigDecimal;
         .addParam("data", json)).callAsync(callback);
   }
 
-  private IQcRouteCallback callback = qcResult -> QcRouteUtil.setRouteOptions(
-      new RouteOptions("checkout").setActionName("/checkout/home")).call();
+  private IQcRouteCallback callback = qcResult -> getActivity().onBackPressed();
 
   @Override
   public CkPageCheckoutMoneyBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -187,6 +187,8 @@ import java.math.BigDecimal;
 
   private boolean checkMoney(String s) {
     if (TextUtils.isEmpty(mBinding.edRemarks.getText().toString())) {
+      mBinding.edRemarks.requestFocus();
+      AppUtils.showKeyboard(getContext(), mBinding.edRemarks);
       ToastUtils.show("请填写款项说明");
       return false;
     }

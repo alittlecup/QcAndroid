@@ -34,6 +34,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,12 +85,18 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
   }
 
   private Map<Integer, TurnoverTradeType> tradeTypes = new HashMap<>();
-  private List<Integer> colors;
+  private List<Integer> colors = new ArrayList<>();
 
-  private void updateTradeTypes(List<TurnoverTradeType> tradeTypes) {
-    if (tradeTypes != null && !tradeTypes.isEmpty()) {
-      colors = new ArrayList<>();
-      for (TurnoverTradeType type : tradeTypes) {
+  private void updateTradeTypes(List<TurnoverTradeType> typeList) {
+    if (typeList != null && !typeList.isEmpty()) {
+      Collections.sort(typeList, new Comparator<TurnoverTradeType>() {
+        @Override public int compare(TurnoverTradeType o1, TurnoverTradeType o2) {
+          return o1.getTrade_type() - o2.getTrade_type();
+        }
+      });
+      colors.clear();
+      this.tradeTypes.clear();
+      for (TurnoverTradeType type : typeList) {
         this.tradeTypes.put(type.getTrade_type(), type);
         colors.add(Color.parseColor("#" + type.getColor()));
       }
@@ -170,19 +177,28 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
     List<ITurnoverBarChartData> chartDatas = new ArrayList<>();
     if (data != null && !data.isEmpty()) {
       this.data = data;
-      if (colors != null && !tradeTypes.isEmpty()) {
+      if (colors != null && !tradeTypes.isEmpty() ) {
         Collections.reverse(data);
         for (int i = 0; i < data.size(); i++) {
           TurBarChartData turBarChartData = data.get(i);
           if (turBarChartData.getTotal().getAmount() <= 0) {
-            chartDatas.add(new TurBarData(i, new float[tradeTypes.size()], turBarChartData.getDate()));
+            chartDatas.add(
+                new TurBarData(i, new float[tradeTypes.size()], turBarChartData.getDate()));
           } else {
             chartDatas.add(new TurBarData(i, getChartFloat(turBarChartData.getStat(), tradeTypes),
                 turBarChartData.getDate()));
           }
         }
+        updateColors(tradeTypes);
       }
       upDataChartData(chartDatas);
+    }
+  }
+
+  private void updateColors(Map<Integer, TurnoverTradeType> tradeTypes) {
+    colors.clear();
+    for (Map.Entry<Integer, TurnoverTradeType> entry : tradeTypes.entrySet()) {
+      colors.add(Color.parseColor("#" + entry.getValue().getColor()));
     }
   }
 
@@ -205,7 +221,7 @@ public class TurnoverBarChartFragment extends SaasCommonFragment
     if (data != null && !data.isEmpty()) {
       List<BarEntry> barEntries = new ArrayList<>();
       for (ITurnoverBarChartData data1 : data) {
-        barEntries.add(new BarEntry(data1.getX(), data1.getY(), data1.getData()));
+        barEntries.add(new TurBarEntry(data1.getX(), data1.getY(), data1.getData()));
       }
       BarDataSet set1;
       if (mBinding.barChart.getData() != null

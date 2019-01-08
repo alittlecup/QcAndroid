@@ -4,6 +4,7 @@
   </data>
   <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/recycler_view"
+      android:paddingTop="15dp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@color/bg_white"

@@ -1,13 +1,12 @@
 package cn.qingchengfit.checkout.component;
 
-import android.net.Uri;
 import android.os.Bundle;
+import cn.qingchengfit.checkout.bean.CashierBeanWrapper;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
-import cn.qingchengfit.checkout.bean.CashierBeanWrapper;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import com.google.gson.Gson;
@@ -58,16 +57,17 @@ public class CheckoutComponent implements IComponent {
         return true;
       case "reOrder":
         Map<String, Object> params = qc.getParams();
+        String type = (String) params.get("type");
         String scanInfoParams = (String) params.get("params");
         JsonObject jsonObject = new Gson().fromJson(scanInfoParams, JsonObject.class);
-        String channel = jsonObject.get("channel").getAsString();
         String price = jsonObject.get("price").getAsString();
         params.clear();
-        if (channel.equals("ALIPAY_QRCODE")) {
+        if (type.equals("ALIPAY_QRCODE")) {
           params.put("channel", "ALIPAY_BARCODE");
-        } else if (channel.equals("WEIXIN_QRCODE")) {
+        } else if (type.equals("WEIXIN_QRCODE")) {
           params.put("channel", "WEIXIN_BARCODE");
         }
+
 
         params.put("price", price);
         ICheckoutModel checkoutModel = ComponentModuleManager.get(ICheckoutModel.class);

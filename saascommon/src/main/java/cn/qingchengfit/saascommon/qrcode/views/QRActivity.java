@@ -106,7 +106,6 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String MODULE_WORKSPACE_PRIVATE = "/private/order";
   public static final String MODULE_WORKSPACE_ORDER_SIGNIN = "/checkin/help";
   public static final String MODULE_WORKSPACE_COMMODITY_LIST = "/commodity/list";
-  public static final String MODULE_WORKSPACE_WORKBENCH_COUNTER = "/workbench/counter";
 
   /**
    * 健身房服务

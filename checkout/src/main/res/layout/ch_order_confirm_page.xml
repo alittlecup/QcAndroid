@@ -29,6 +29,8 @@
         android:background="@color/bg_white"
         app:civ_edit_able="false"
         app:civ_lable="金额"
+        android:focusable="false"
+
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/civ_pay_type"
@@ -37,6 +39,8 @@
         android:background="@color/bg_white"
         app:civ_edit_able="false"
         app:civ_lable="支付方式"
+        android:focusable="false"
+
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/civ_time"
@@ -44,6 +48,7 @@
         android:layout_height="50dp"
         android:background="@color/bg_white"
         app:civ_edit_able="false"
+        android:focusable="false"
         app:civ_lable="直接时间"
         />
     <LinearLayout
@@ -58,6 +63,7 @@
           android:layout_width="match_parent"
           android:layout_height="50dp"
           app:civ_edit_able="false"
+          android:focusable="false"
           app:civ_hint="请填写备注完成确认收款"
           app:civ_lable="备注(必填)"
           app:civ_nonnull="true"
@@ -73,13 +79,14 @@
         <EditText
             android:id="@+id/edit_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:maxLength="20"
             android:layout_margin="10dp"
             android:textColor="@color/text_dark"
             android:textSize="14sp"
             android:background="@null"
             android:focusable="true"
+            android:gravity="top|left"
             style="@style/Qc.EditTextStyle"
             />
         <TextView

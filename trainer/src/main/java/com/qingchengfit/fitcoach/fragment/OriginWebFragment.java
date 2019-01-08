@@ -223,7 +223,7 @@ public class OriginWebFragment extends WebFragment {
 
       @Override
       public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-        DialogUtils.shwoConfirm(getContext(), message, new MaterialDialog.SingleButtonCallback() {
+        DialogUtils.showConfirm(getContext(), message, new MaterialDialog.SingleButtonCallback() {
           @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
             materialDialog.dismiss();
             switch (dialogAction) {

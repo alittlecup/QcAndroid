@@ -42,7 +42,7 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
       @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = TurnoversTiemFilterFragmentBinding.inflate(inflater, container, false);
-    mBinding.btnDay.setSelected(true);
+    mBinding.btnDay.setChecked(true);
     return mBinding.getRoot();
   }
 

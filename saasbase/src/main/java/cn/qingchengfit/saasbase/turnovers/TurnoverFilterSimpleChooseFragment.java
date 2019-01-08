@@ -52,6 +52,8 @@ public class TurnoverFilterSimpleChooseFragment extends SaasCommonFragment
     }
     if (adapter != null) {
       adapter.updateDataSet(items);
+      adapter.addSelection(0);
+      adapter.notifyItemChanged(0);
     }
   }
 

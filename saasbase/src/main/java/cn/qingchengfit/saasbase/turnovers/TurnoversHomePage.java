@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -18,6 +20,8 @@ import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -34,7 +38,8 @@ import rx.android.schedulers.AndroidSchedulers;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
     extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM>
-    implements OnRecycleItemClickListener, FlexibleAdapter.OnItemClickListener {
+    implements OnRecycleItemClickListener, FlexibleAdapter.OnItemClickListener,
+    FlexibleAdapter.EndlessScrollListener {
   TurnoversFilterFragement filterFragement;
   CommonFlexAdapter adapter;
   TurnoverChartFragment chartFragment;
@@ -44,7 +49,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
-    mViewModel.getOrderDatas().observe(this, orderDatas -> {
+    mViewModel.orderDatas.observe(this, orderDatas -> {
       if (orderDatas != null && !orderDatas.isEmpty()) {
         List<TurnoverOrderItem> items = new ArrayList<>();
         for (ITurnoverOrderItemData data : orderDatas) {
@@ -58,6 +63,23 @@ import rx.android.schedulers.AndroidSchedulers;
         items.add(new TurNoDataItem(R.drawable.turnover_no_orders, "没有流水账单"));
         adapter.updateDataSet(items);
       }
+      mBinding.recyclerView.scrollToPosition(0);
+    });
+    mViewModel.loadMoreOrderDatas.observe(this, orderDatas -> {
+      if (orderDatas != null && !orderDatas.isEmpty()) {
+        List<TurnoverOrderItem> items = new ArrayList<>();
+        for (ITurnoverOrderItemData data : orderDatas) {
+          TurnoverOrderItem turnoverOrderItem = new TurnoverOrderItem(data);
+          turnoverOrderItem.setListener(this);
+          items.add(turnoverOrderItem);
+        }
+        adapter.onLoadMoreComplete(items, 200);
+      } else {
+        adapter.onLoadMoreComplete(null);
+      }
+    });
+    mViewModel.isRest.observe(this, aBoolean -> {
+      LogUtil.d("isRest");
     });
     mViewModel.filterVisible.observe(this, aBoolean -> {
       if (aBoolean) {
@@ -113,9 +135,26 @@ import rx.android.schedulers.AndroidSchedulers;
         mBinding.tvUpdateTime.setText("(上次更新时间为：" + time + ")");
       }
     });
+    mViewModel.getMoreItems().observe(this, items -> {
+      if (items != null && !items.isEmpty()) {
+        List<TurnoverOrderItem> list = new ArrayList<>();
+        for (ITurnoverOrderItemData data : items) {
+          TurnoverOrderItem turnoverOrderItem = new TurnoverOrderItem(data);
+          turnoverOrderItem.setListener(this);
+          list.add(turnoverOrderItem);
+        }
+        adapter.onLoadMoreComplete(list, 200);
+      } else {
+        ToastUtils.show("没有更多数据了");
+      }
+    });
+    mViewModel.totalCount.observe(this, totalCount -> {
+      initLoadMore(totalCount);
+    });
     mViewModel.getOrderItemDataMutableLiveData().observe(this, data -> {
       // REFACTOR: 2019/1/4 这里其实应该是使用 onResume 相应的 LiveData  不过赶工期先实现功能了
       this.data = data;
+      updateSimpleItem();
     });
   }
 
@@ -125,12 +164,9 @@ import rx.android.schedulers.AndroidSchedulers;
       if (item instanceof TurnoverOrderItem) {
         ((TurnoverOrderItem) item).setData(data);
         adapter.notifyItemChanged(pos);
+        data = null;
       }
     }
-  }
-  @Override public void onResume() {
-    super.onResume();
-    updateSimpleItem();
   }
 
   private ITurnoverOrderItemData data;
@@ -159,8 +195,11 @@ import rx.android.schedulers.AndroidSchedulers;
       mViewModel.loadFilterOptions();
       mViewModel.loadSellerItems();
     }
-    RxBusAdd(Staff.class)
-        .observeOn(AndroidSchedulers.mainThread())
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RxBusAdd(Staff.class).observeOn(AndroidSchedulers.mainThread())
         .compose(this.<Staff>bindToLifecycle())
         .compose(this.<Staff>doWhen(FragmentEvent.RESUME))
         .subscribe(new BusSubscribe<Staff>() {
@@ -168,11 +207,6 @@ import rx.android.schedulers.AndroidSchedulers;
             mViewModel.putTurnoverSellerId(mViewModel.turId, staff.getId());
           }
         });
-  }
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
   }
 
   public void onDateFilter(View view) {
@@ -213,9 +247,19 @@ import rx.android.schedulers.AndroidSchedulers;
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
+  private ProgressItem progressItem;
+
+  private void initLoadMore(int count) {
+    adapter.setEndlessScrollListener(this, progressItem)
+        .setEndlessPageSize(30)
+        .setEndlessTargetCount(count);
+  }
+
   private void initRecyclerView() {
+    progressItem = new ProgressItem(getContext());
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
+    initLoadMore(100);
   }
 
   @Override public int getLayoutRes() {
@@ -234,7 +278,8 @@ import rx.android.schedulers.AndroidSchedulers;
       String id = ((TurnoverOrderItem) item).getData().getID();
       mViewModel.setTurId(id);
       this.pos = pos;
-      routeTo("staff", "/choose/saler/", new BundleBuilder().withBoolean("hasNoStaff",false).build());
+      routeTo("staff", "/choose/saler/",
+          new BundleBuilder().withBoolean("hasNoStaff", false).build());
     }
   }
 
@@ -242,9 +287,20 @@ import rx.android.schedulers.AndroidSchedulers;
     IFlexible item = adapter.getItem(position);
     if (item instanceof TurnoverOrderItem) {
       String id = ((TurnoverOrderItem) item).getData().getID();
+      mViewModel.setTurId("");
       routeTo("staff", "/turnover/order", new BundleBuilder().withString("turId", id).build());
     }
 
     return false;
+  }
+
+  @Override public void noMoreLoad(int newItemsSize) {
+    Log.d("TAG", "newItemsSize=" + newItemsSize);
+    Log.d("TAG", "Total pages loaded=" + adapter.getEndlessCurrentPage());
+    Log.d("TAG", "Total items loaded=" + adapter.getMainItemCount());
+  }
+
+  @Override public void onLoadMore(int lastPosition, int currentPage) {
+    mViewModel.loadMore();
   }
 }

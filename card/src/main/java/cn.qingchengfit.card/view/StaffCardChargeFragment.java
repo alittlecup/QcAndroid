@@ -131,12 +131,16 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
       mBindCoupons.setContent("");
       if(cardTplOption!=null){
         setPayMoney(cardTplOption.getPrice());
+        showInputMoney(false, cardTplOption, cardTplOption.isLimit_days());
       }else{
         setPayMoney(0);
       }
     } else {
-      mBindCoupons.setContent(coupon.getDescription());
+      if(cardTplOption!=null){
+        showInputMoney(false, cardTplOption, cardTplOption.isLimit_days());
+      }
       setPayMoney(coupon.getReal_price());
+      mBindCoupons.setContent(coupon.getDescription());
     }
   }
 

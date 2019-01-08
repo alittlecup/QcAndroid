@@ -37,12 +37,12 @@
 //         * organizations : [{"contact":"1616671212","id":2,"username":"中国健身大会"}]
 //         * current_page : 1
 //         * pages : 1
-//         * total_count : 1
+//         * totalCount : 1
 //         */
 //
 //        private int current_page;
 //        private int pages;
-//        private int total_count;
+//        private int totalCount;
 //        private List<OrganizationsEntity> organizations;
 //
 //        public int getCurrent_page() {
@@ -62,11 +62,11 @@
 //        }
 //
 //        public int getTotal_count() {
-//            return total_count;
+//            return totalCount;
 //        }
 //
-//        public void setTotal_count(int total_count) {
-//            this.total_count = total_count;
+//        public void setTotal_count(int totalCount) {
+//            this.totalCount = totalCount;
 //        }
 //
 //        public List<OrganizationsEntity> getOrganizations() {

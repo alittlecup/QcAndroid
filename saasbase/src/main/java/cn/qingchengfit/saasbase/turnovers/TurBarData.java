@@ -19,6 +19,8 @@ public class TurBarData implements ITurnoverBarChartData {
     return floatYs;
   }
 
+
+
   @Override public Object getData() {
     return data;
   }

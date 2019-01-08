@@ -316,10 +316,10 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     items.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_student)
         .text(getString(R.string.student))
         .build()));
-    items.add(new DailyWorkItem(
-        new FunctionBean.Builder().resImg(R.drawable.ck_ic_modules_workbench_counter)
-            .text("收银台")
-            .build()));
+    //items.add(new DailyWorkItem(
+    //    new FunctionBean.Builder().resImg(R.drawable.ck_ic_modules_workbench_counter)
+    //        .text("收银台")
+    //        .build()));
     items.add(new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.ic_function_more).text("管理功能").build()));
     items.add(new DailyWorkItem(new FunctionBean.Builder().build()));
@@ -369,10 +369,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
         }
         break;
       case 3:
-        QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home"))
-            .call();
-        break;
-      case 4:
         Intent toStudent = new Intent(getActivity(), FragActivity.class);
         toStudent.putExtra("type", 15);
         toStudent.putExtra("service", gymWrapper.getCoachService());

@@ -1,10 +1,12 @@
 package cn.qingchengfit.saasbase.turnovers;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.util.Pair;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.network.ResponseConstant;
@@ -12,8 +14,11 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.turnovers.TurnoversTimeFilterFragment.TimeType;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.mvvm.LiveDataTransfer;
+import cn.qingchengfit.saascommon.mvvm.SingleLiveEvent;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.saascommon.utils.StringUtils;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
@@ -23,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class TurnoversVM extends BaseViewModel {
 
@@ -61,10 +68,6 @@ public class TurnoversVM extends BaseViewModel {
   public final MutableLiveData<Pair<String, String>> date = new MutableLiveData<>();
   public MutableLiveData<String> orderListUpdateTime = new MutableLiveData<>();
 
-  public LiveData<List<? extends ITurnoverOrderItemData>> getOrderDatas() {
-    return orderDatas;
-  }
-
   public LiveData<Pair<List<ITurnoverChartData>, Float>> getChartDatas() {
     return chartDatas;
   }
@@ -73,17 +76,19 @@ public class TurnoversVM extends BaseViewModel {
     return chartResponse;
   }
 
+  public LiveData<Boolean> isRest;
   private LiveData<TurnoversChartStatDataResponse> chartResponse;
   private MediatorLiveData<Pair<List<ITurnoverChartData>, Float>> chartDatas =
       new MediatorLiveData<>();
   public MutableLiveData<TurnoversChartStatData> totalRate = new MutableLiveData<>();
-  private LiveData<List<? extends ITurnoverOrderItemData>> orderDatas;
   private MediatorLiveData<Map<String, Object>> params = new MediatorLiveData<>();
   private MediatorLiveData<Map<String, Object>> chartParams = new MediatorLiveData<>();
   public MutableLiveData<Boolean> chartVisible = new MutableLiveData<>();
-
+  public SingleLiveEvent<List<TurOrderListData>> loadMoreOrderDatas = new SingleLiveEvent<>();
+  public SingleLiveEvent<List<TurOrderListData>> orderDatas = new SingleLiveEvent<>();
   public MutableLiveData<Boolean> rightEnable = new MutableLiveData<>();
   public MutableLiveData<Boolean> leftEnable = new MutableLiveData<>();
+  public MutableLiveData<Integer> totalCount = new MutableLiveData<>();
 
   @Inject public TurnoversVM() {
     filterDate = Transformations.map(dateType, input -> {
@@ -121,7 +126,13 @@ public class TurnoversVM extends BaseViewModel {
     params.addSource(filterFeatureType, type -> updateLoadPramsData("trade_type", type, params));
     params.addSource(filterPaymentChannel,
         channel -> updateLoadPramsData("channel", channel, params));
-
+    isRest = Transformations.map(params, new Function<Map<String, Object>, Boolean>() {
+      @Override public Boolean apply(Map<String, Object> input) {
+        pageReset();
+        loadMore();
+        return true;
+      }
+    });
     chartParams.addSource(date, date -> updateDate(date, chartParams));
     chartParams.addSource(filterSellerId, id -> updateLoadPramsData("seller_id", id, chartParams));
     chartParams.addSource(filterPaymentChannel,
@@ -141,18 +152,6 @@ public class TurnoversVM extends BaseViewModel {
           filterFeatureType.getValue() == null ? "-1" : filterFeatureType.getValue()));
     });
 
-    orderDatas = Transformations.switchMap(params,
-        input -> Transformations.map(loadTurnoversOrderLists(input), input1 -> {
-          TurOrderListResponse turOrderListResponse = dealResource(input1);
-          if (turOrderListResponse != null) {
-            orderListUpdateTime.setValue(DateUtils.Date2HHmm(
-                DateUtils.formatDateFromServer(turOrderListResponse.update_time)));
-            return turOrderListResponse.shop_turnovers;
-          } else {
-            return null;
-          }
-        }));
-
     dateType.setValue(TimeType.DAY);
     date.setValue(new Pair<>(DateUtils.getStringToday(), DateUtils.getStringToday()));
     chartVisible.setValue(false);
@@ -162,18 +161,71 @@ public class TurnoversVM extends BaseViewModel {
     filterSeller.setValue("业绩归属");
     filterPayment.setValue("支付方式");
 
+    subscribe = RxBus.getBus()
+        .register(Staff.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<Staff>() {
+          @Override public void onNext(Staff staff) {
+            if (!StringUtils.isEmpty(turId)) {
+              putTurnoverSellerId(turId, staff.getId());
+            }
+          }
+        });
   }
 
+  Subscription subscribe;
+
+  @Override protected void onCleared() {
+    super.onCleared();
+    if (subscribe != null && !subscribe.isUnsubscribed()) {
+      subscribe.unsubscribe();
+      subscribe = null;
+    }
+  }
 
   public void setTurId(String turId) {
     this.turId = turId;
   }
 
   public String turId = "";
+  int curPage = 1, totalPage = 1;
+
+  private void pageReset() {
+    curPage = 1;
+    totalPage = 1;
+  }
+
+  public void loadMore() {
+    if (curPage <= totalPage) {
+      Map<String, Object> value = params.getValue();
+      value.put("page", curPage);
+      staffModel.qcGetTurnoverOrderItems(value)
+          .compose(RxHelper.schedulersTransformer())
+          .subscribe(response -> {
+            if (ResponseConstant.checkSuccess(response)) {
+              if (curPage == 1) {
+                orderDatas.setValue(response.data.shop_turnovers);
+              } else {
+                loadMoreOrderDatas.setValue(response.data.shop_turnovers);
+              }
+              orderListUpdateTime.setValue(
+                  DateUtils.Date2HHmm(DateUtils.formatDateFromServer(response.data.update_time)));
+              curPage++;
+              totalPage = response.data.pages;
+              totalCount.setValue(response.data.total_count);
+            } else {
+              ToastUtils.show(response.getMsg());
+            }
+          }, throwable -> {
+          });
+    }else{
+      loadMoreOrderDatas.setValue(null);
+    }
+  }
 
   private void upDateChartDatas(TurnoversChartStatDataResponse response, int type) {
     if (response != null && response.total != null && response.total.getAmount() > 0) {
-      List<ITurnoverChartData> iTurnoverChartData ;
+      List<ITurnoverChartData> iTurnoverChartData;
       if (type != -1) {
         iTurnoverChartData =
             convertChartStats(filterWithTradeType(response.stat, type), response.total.getAmount());
@@ -273,7 +325,8 @@ public class TurnoversVM extends BaseViewModel {
   private boolean canTurnDateNext() {
     if (dateType.getValue() != TimeType.CUSTOMIZE && !DateUtils.isOverCurrent(
         DateUtils.formatDateFromYYYYMMDD(date.getValue().second))) {
-      if(dateType.getValue()==TimeType.DAY&&DateUtils.getStringToday().equals(date.getValue().second)){
+      if (dateType.getValue() == TimeType.DAY && DateUtils.getStringToday()
+          .equals(date.getValue().second)) {
         return false;
       }
       return true;
@@ -350,6 +403,8 @@ public class TurnoversVM extends BaseViewModel {
             .compose(RxHelper.schedulersTransformerFlow()));
   }
 
+  private MutableLiveData<List<TurOrderListData>> moreItems = new MutableLiveData<>();
+
   private LiveData<Resource<TurnoversChartStatDataResponse>> loadTurnoverChartStat(
       Map<String, Object> params) {
     Integer value = dateType.getValue();
@@ -363,21 +418,21 @@ public class TurnoversVM extends BaseViewModel {
             .compose(RxHelper.schedulersTransformerFlow()));
   }
 
-  public MutableLiveData<ITurnoverOrderItemData> getOrderItemDataMutableLiveData() {
+  public SingleLiveEvent<ITurnoverOrderItemData> getOrderItemDataMutableLiveData() {
     return orderItemDataMutableLiveData;
   }
 
-  private MutableLiveData<ITurnoverOrderItemData> orderItemDataMutableLiveData =
-      new MutableLiveData<>();
+  private SingleLiveEvent<ITurnoverOrderItemData> orderItemDataMutableLiveData =
+      new SingleLiveEvent<>();
 
   public void putTurnoverSellerId(String turId, String sellerID) {
-    if(sellerID.equals("0")){
-      sellerID="";
+    if (sellerID.equals("0")) {
+      sellerID = "";
     }
     staffModel.qcPutTurnoverOrderDetail(turId, sellerID)
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
-           if (ResponseConstant.checkSuccess(response)) {
+          if (ResponseConstant.checkSuccess(response)) {
             orderItemDataMutableLiveData.setValue(response.getData().shop_turnover);
           } else {
             ToastUtils.show("修改业绩归属失败");
@@ -385,5 +440,9 @@ public class TurnoversVM extends BaseViewModel {
         }, throwable -> {
           ToastUtils.show("修改业绩归属失败");
         });
+  }
+
+  public MutableLiveData<List<TurOrderListData>> getMoreItems() {
+    return moreItems;
   }
 }

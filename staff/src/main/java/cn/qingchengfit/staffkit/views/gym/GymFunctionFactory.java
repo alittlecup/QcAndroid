@@ -84,7 +84,6 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WORKSPAC
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WORKSPACE_ORDER_LIST;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WORKSPACE_ORDER_SIGNIN;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WORKSPACE_PRIVATE;
-import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WORKSPACE_WORKBENCH_COUNTER;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.REPORT_EXPORT;
 
 /**
@@ -197,8 +196,7 @@ public class GymFunctionFactory {
       // TODO: 2018/3/20
       case MODULE_WORKSPACE_COMMODITY_LIST:
         return R.drawable.module_service_shop;
-      case MODULE_WORKSPACE_WORKBENCH_COUNTER:
-        return R.drawable.ck_ic_modules_workbench_counter;
+
 
       case MODULE_WARDROBE:
         return R.drawable.moudule_gym_wardrobe;
@@ -302,7 +300,6 @@ public class GymFunctionFactory {
       case MODULE_FINANCE_COURSE:
       case MODULE_SERVICE_SHOP:
       case MODULE_WORKSPACE_COMMODITY_LIST:
-      case MODULE_WORKSPACE_WORKBENCH_COUNTER:
       default:
         return 0;
     }
@@ -379,8 +376,7 @@ public class GymFunctionFactory {
         return R.string.module_service_shop;
       case MODULE_WORKSPACE_COMMODITY_LIST:
         return R.string.module_service_commodity_list;
-      case MODULE_WORKSPACE_WORKBENCH_COUNTER:
-        return R.string.module_service_workbench_counter;
+
 
       case MODULE_WARDROBE:
         return R.string.module_gym_wardrobe;
@@ -504,9 +500,7 @@ public class GymFunctionFactory {
 
         //fragment.routeTo("student", "/student/home", null);
         return;
-      case MODULE_WORKSPACE_WORKBENCH_COUNTER:
-        fragment.routeTo("checkout", "/checkout/home", null);
-        return;
+
 
       /**会员管理
        * 会员  会员卡  会员体测

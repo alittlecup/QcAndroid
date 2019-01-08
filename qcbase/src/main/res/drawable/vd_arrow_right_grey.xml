@@ -5,7 +5,7 @@
     android:width="24dp">
   
   <path
-      android:fillColor="@color/text_grey"
+      android:fillColor="@color/pinkish_grey"
       android:fillType="nonZero"
       android:pathData="M9.81,8L4.705,3.138C4.432,2.878 4.432,2.456 4.705,2.195C4.978,1.935 5.422,1.935 5.695,2.195L11.295,7.529C11.568,7.789 11.568,8.211 11.295,8.471L5.695,13.805C5.422,14.065 4.978,14.065 4.705,13.805C4.432,13.544 4.432,13.122 4.705,12.862L9.81,8Z"
       android:strokeColor="#00000000"

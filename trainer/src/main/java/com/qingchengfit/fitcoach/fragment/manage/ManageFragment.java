@@ -425,10 +425,7 @@ public class ManageFragment extends BaseFragment
           toPlan.putExtra("service", gymWrapper.getCoachService());
           startActivity(toPlan);
           break;
-        case R.drawable.ck_ic_modules_workbench_counter:
-          QcRouteUtil.setRouteOptions(new RouteOptions("checkout").setActionName("/checkout/home")).call();
 
-          break;
         default:
       }
     }

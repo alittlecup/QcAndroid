@@ -82,6 +82,7 @@ import java.util.List;
 
   private void initChooseCoupon() {
     if (chooseCoupon != null) {
+      event=new ChooseCouponsEvent(chooseCoupon);
       mBinding.tvChooseCouponName.setText(
           String.format(getResources().getString(R.string.choose_coupon_text),
               chooseCoupon.getDescription()));

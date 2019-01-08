@@ -63,12 +63,12 @@ public class TurnoverChartFragment extends SaasCommonFragment
     chart.setTransparentCircleAlpha(110);
 
     chart.setHoleRadius(62.5f);
-    chart.setTransparentCircleRadius(65f);
+    chart.setTransparentCircleRadius(62.5f);
 
     chart.setDrawCenterText(true);
 
     chart.setRotationAngle(270);
-    chart.setRotationEnabled(true);
+    chart.setRotationEnabled(false);
     chart.setHighlightPerTapEnabled(true);
 
     chart.setOnChartValueSelectedListener(this);
@@ -137,7 +137,7 @@ public class TurnoverChartFragment extends SaasCommonFragment
       mBinding.tvCharge.setVisibility(View.GONE);
       return;
     }
-    mBinding.tvTotalCount.setText("￥" + total.getAmount());
+    mBinding.tvTotalCount.setText("¥"+ total.getAmount());
     if (turnoversVM.dateType.getValue() != null
         && TurnoversTimeFilterFragment.TimeType.CUSTOMIZE != turnoversVM.dateType.getValue()) {
       float group_value = total.getGrowth_value();
@@ -148,7 +148,7 @@ public class TurnoverChartFragment extends SaasCommonFragment
         mBinding.tvCharge.setTextColor(Color.parseColor("#F03F3F"));
         mBinding.imgRate.setImageDrawable(getResources().getDrawable(R.drawable.ic_turnover_up));
       }
-      mBinding.tvCharge.setText("￥" + group_value + "\n" + total.getGrowth_rate() + "%");
+      mBinding.tvCharge.setText("¥" + group_value + "\n" + total.getGrowth_rate() + "%");
       mBinding.imgRate.setVisibility(View.VISIBLE);
       mBinding.tvCharge.setVisibility(View.VISIBLE);
     } else {
