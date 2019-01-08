@@ -18,6 +18,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.router.qc.IQcRouteCallback;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
@@ -131,19 +135,29 @@ public class SimpleCardListFragment extends SaasCommonFragment
   @Override public boolean onItemClick(int position) {
     IFlexible item = mAdapter.getItem(position);
     if (item instanceof CardItem) {
-      Bundle b = new Bundle();
-      b.putParcelable("card", ((CardItem) item).getRealCard());
-      b.putString("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
-      routeTo("card", "/charge/", b);
+      routeTo(((CardItem) item).getRealCard());
     }
     return false;
   }
 
   @Override public void onCardDetail(Card card) {
     hideLoading();
+    routeTo(card);
+  }
+
+  private void routeTo(Card card) {
     Bundle b = new Bundle();
     b.putParcelable("card", card);
     b.putString("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
-    routeTo("card", "/charge/", b);
+    QcRouteUtil.setRouteOptions(
+        new RouteOptions("card").setActionName("/charge/").addParam("data", b))
+        .callAsync(new IQcRouteCallback() {
+          @Override public void onResult(QCResult qcResult) {
+            if (qcResult.isSuccess()) {
+              getActivity().onBackPressed();
+              getActivity().finish();
+            }
+          }
+        });
   }
 }

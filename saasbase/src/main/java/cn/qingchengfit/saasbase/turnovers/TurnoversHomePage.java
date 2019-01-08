@@ -204,7 +204,7 @@ import rx.android.schedulers.AndroidSchedulers;
         .compose(this.<Staff>doWhen(FragmentEvent.RESUME))
         .subscribe(new BusSubscribe<Staff>() {
           @Override public void onNext(Staff staff) {
-            mViewModel.putTurnoverSellerId(mViewModel.turId, staff.getId());
+            mViewModel.putTurnoverSellerId(mViewModel.turId, staff);
           }
         });
   }

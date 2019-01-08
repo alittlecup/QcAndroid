@@ -213,6 +213,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
     ToastUtils.showS("续卡成功");
     getActivity().setResult(Activity.RESULT_OK);
     //getActivity().getSupportFragmentManager().popBackStack("", 1 );
+    getActivity().onBackPressed();
     getActivity().finish();
     String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
     if (TextUtils.isEmpty(qcCallId)) {
@@ -220,6 +221,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
           new CardDetailParams().cardid(card.getId()).build());
     } else {
       QC.sendQCResult(qcCallId, QCResult.success());
+      getActivity().finish();
     }
   }
 

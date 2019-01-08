@@ -167,7 +167,7 @@ public class TurnoversVM extends BaseViewModel {
         .subscribe(new BusSubscribe<Staff>() {
           @Override public void onNext(Staff staff) {
             if (!StringUtils.isEmpty(turId)) {
-              putTurnoverSellerId(turId, staff.getId());
+              putTurnoverSellerId(turId, staff);
             }
           }
         });
@@ -425,15 +425,18 @@ public class TurnoversVM extends BaseViewModel {
   private SingleLiveEvent<ITurnoverOrderItemData> orderItemDataMutableLiveData =
       new SingleLiveEvent<>();
 
-  public void putTurnoverSellerId(String turId, String sellerID) {
-    if (sellerID.equals("0")) {
-      sellerID = "";
+  public void putTurnoverSellerId(String turId, Staff staff) {
+    String id="";
+    if (staff.getId().equals("0")) {
+      id = "";
     }
-    staffModel.qcPutTurnoverOrderDetail(turId, sellerID)
+    staffModel.qcPutTurnoverOrderDetail(turId, id)
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
-            orderItemDataMutableLiveData.setValue(response.getData().shop_turnover);
+            TurOrderListData shop_turnover = response.getData().shop_turnover;
+            shop_turnover.setSeller(staff);
+            orderItemDataMutableLiveData.setValue(shop_turnover);
           } else {
             ToastUtils.show("修改业绩归属失败");
           }

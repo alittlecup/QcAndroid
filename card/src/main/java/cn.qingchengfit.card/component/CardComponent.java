@@ -129,6 +129,13 @@ public class CardComponent implements IComponent {
             }, throwable -> QC.sendQCResult(qc.getCallId(),
                 QCResult.error(throwable.getMessage())));
         return true;
+      case "/charge/":
+        Object data = qc.getParams().get("data");
+        if(data instanceof Bundle){
+          ((Bundle) data).putString("qcCallId",qc.getCallId());
+          RouteUtil.routeTo(qc.getContext(), getName(), actionName, (Bundle) data);
+        }
+        return true;
       case "/card/fragment":
         QC.sendQCResult(qc.getCallId(), QCResult.success("fragment", new SimpleCardListFragment()));
         return false;

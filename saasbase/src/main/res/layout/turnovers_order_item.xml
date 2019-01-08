@@ -67,7 +67,6 @@
             android:layout_width="48dp"
             android:layout_height="22dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/tur_order_deal_item"
             android:text="分配"
             android:translationZ="0dp"
             android:elevation="0dp"
@@ -75,6 +74,8 @@
             android:textColor="@color/bg_white"
             android:textSize="14sp"
             android:visibility="gone"
+            style="@style/QcBtnPrimary"
+
             />
         <TextView
             android:id="@+id/tv_seller_change"
