@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.listener.ICardListFragment;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -135,7 +136,13 @@ public class SimpleCardListFragment extends SaasCommonFragment
   @Override public boolean onItemClick(int position) {
     IFlexible item = mAdapter.getItem(position);
     if (item instanceof CardItem) {
-      routeTo(((CardItem) item).getRealCard());
+      Card realCard = ((CardItem) item).getRealCard();
+      if(AppUtils.getCurApp(getContext())==0){
+        detailPresenter.setCardId(realCard.getId());
+        detailPresenter.queryCardDetail();
+      }else{
+        routeTo(realCard);
+      }
     }
     return false;
   }

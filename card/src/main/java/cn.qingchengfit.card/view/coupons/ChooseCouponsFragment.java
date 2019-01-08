@@ -18,6 +18,7 @@ import cn.qingchengfit.card.routers.CardParamsInjector;
 import cn.qingchengfit.card.view.BottomChooseCouponDialog;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.widgets.BottomChooseDialog;
@@ -26,6 +27,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +84,7 @@ import java.util.List;
 
   private void initChooseCoupon() {
     if (chooseCoupon != null) {
-      event=new ChooseCouponsEvent(chooseCoupon);
+      event = new ChooseCouponsEvent(chooseCoupon);
       mBinding.tvChooseCouponName.setText(
           String.format(getResources().getString(R.string.choose_coupon_text),
               chooseCoupon.getDescription()));
@@ -111,8 +113,11 @@ import java.util.List;
   }
 
   @Override public boolean onItemClick(int position) {
-    UserWithCoupons data = ((ChooseCouponsItem) adapter.getItem(position)).getData();
-    showChooseCouponDialog(data.getCoupons());
+    IFlexible item = adapter.getItem(position);
+    if (item instanceof ChooseCouponsItem) {
+      UserWithCoupons data = ((ChooseCouponsItem) adapter.getItem(position)).getData();
+      showChooseCouponDialog(data.getCoupons());
+    }
     return false;
   }
 
@@ -130,7 +135,7 @@ import java.util.List;
     dialog.show();
   }
 
-  private ChooseCouponsEvent event=new ChooseCouponsEvent(null);
+  private ChooseCouponsEvent event = new ChooseCouponsEvent(null);
 
   @Override public boolean onFragmentBackPress() {
     if (event != null) {

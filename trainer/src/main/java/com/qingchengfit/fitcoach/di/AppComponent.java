@@ -22,6 +22,7 @@ import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
+import cn.qingchengfit.staff.di.BindTrainerStaffActivity;
 import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.di.BindStudentActivity;
 import cn.qingchengfit.views.container.ContainerActivity;
@@ -88,7 +89,7 @@ import dagger.multibindings.IntoMap;
     BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
     BindStudentActivity.class, StudentViewModel.class, BindCheckoutCounterActivity.class,
     CheckViewModule.class, BindLoginActivity.class, BindSaasCommActivity.class,
-    ViewModelModule.class,WxPreviewModule.class, CardModule.class,
+    ViewModelModule.class,WxPreviewModule.class, CardModule.class, BindTrainerStaffActivity.class,
 
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class, AppComponent.ArticleCommentsListFragmentModule.class,

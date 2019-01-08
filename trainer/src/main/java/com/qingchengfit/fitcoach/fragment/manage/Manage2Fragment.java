@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,23 +17,19 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.network.HttpThrowable;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.saascommon.events.EventChartTitle;
-import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
+import cn.qingchengfit.saascommon.events.EventChartTitle;
+import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
-import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.saascommon.widget.GuideView;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
-import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import com.bigkoo.pickerview.lib.DensityUtil;
@@ -132,13 +127,12 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   }
 
   private void routeToChargeCard() {
-    QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
-        .addParam("addAble", false)
-        .addParam("chooseType", 1)).call();
+    Bundle builder=new BundleBuilder().withBoolean("addAble",false).withInt("chooseType",1).build();
+    routeTo("student","/search/student/",builder);
   }
 
   private void routeToBuyCard() {
-    QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
+    routeTo("card","/cardtpl/nonew",null);
   }
 
   private void routeToShowQrCode() {

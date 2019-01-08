@@ -570,7 +570,7 @@ import rx.functions.Action1;
   public void onSelectPayMethod() {
     BottomPayDialog payDialog = BottomPayDialog.newInstance(
         permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE), selectPos,
-        gymWrapper.isPro(), Float.valueOf(realMoney()) > 3000 ? "超过3000元\n大额支付" : "花呗分期");
+        gymWrapper.isPro(), Float.valueOf(realMoney()) > 3000 ? "超过3000元大额支付" : "花呗分期");
     payDialog.show(getFragmentManager(), "");
   }
 

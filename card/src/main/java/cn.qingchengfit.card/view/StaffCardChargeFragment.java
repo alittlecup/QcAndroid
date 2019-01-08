@@ -48,11 +48,15 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
 
   @Inject StaffCardBuyPresenter buyPresenter;
   CommonInputView mBindCoupons;
+  String qcCallId = "";
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(buyPresenter, this);
+    if (TextUtils.isEmpty(qcCallId)) {
+      qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
+    }
     mBindCoupons = view.findViewById(R.id.civ_bind_coupons);
     mBindCoupons.setVisibility(View.VISIBLE);
     mBindCoupons.setOnClickListener(new View.OnClickListener() {
@@ -123,20 +127,19 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
 
   private Coupon coupon;
 
-  @Override
-  public void updateCoupons(Coupon coupon) {
+  @Override public void updateCoupons(Coupon coupon) {
     this.coupon = coupon;
     CardTplOption cardTplOption = presenter.getmChosenOption();
     if (coupon == null) {
       mBindCoupons.setContent("");
-      if(cardTplOption!=null){
+      if (cardTplOption != null) {
         setPayMoney(cardTplOption.getPrice());
         showInputMoney(false, cardTplOption, cardTplOption.isLimit_days());
-      }else{
+      } else {
         setPayMoney(0);
       }
     } else {
-      if(cardTplOption!=null){
+      if (cardTplOption != null) {
         showInputMoney(false, cardTplOption, cardTplOption.isLimit_days());
       }
       setPayMoney(coupon.getReal_price());
@@ -215,7 +218,6 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
     //getActivity().getSupportFragmentManager().popBackStack("", 1 );
     getActivity().onBackPressed();
     getActivity().finish();
-    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
     if (TextUtils.isEmpty(qcCallId)) {
       routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
           new CardDetailParams().cardid(card.getId()).build());
@@ -227,7 +229,6 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
 
   @Override public void onFailed(String s) {
     getActivity().finish();
-    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
     if (TextUtils.isEmpty(qcCallId)) {
       routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
           new CardDetailParams().cardid(card.getId()).build());

@@ -12,7 +12,6 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.widget.CircleView;
 import cn.qingchengfit.utils.ToastUtils;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -93,7 +92,7 @@ public class StringUtils {
     if (s == null || s.length() < 1) {
       return "";
     }
-    DecimalFormat formater = new DecimalFormat("###,###");
+    DecimalFormat formater = new DecimalFormat("###,###.##");
     double num = Double.parseDouble(s);
 
     return formater.format(num);

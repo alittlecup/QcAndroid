@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.common.views;
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qqingchengfit.saascommon.RouteFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -27,7 +26,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  *
  */
 @Trunk(fragments = {
-  CommonInputFragment.class, RouteFragment.class
+  CommonInputFragment.class
 })
 public class SaasCommActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
