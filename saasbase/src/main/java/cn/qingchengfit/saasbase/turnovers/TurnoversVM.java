@@ -277,10 +277,10 @@ public class TurnoversVM extends BaseViewModel {
 
         if (data.getAmount() > 0 && data.getAmount() * 100 / total <= 1) {
           datas.add(new TurnoverChartStat(total / 100f, turnoverTradeType.getColor(),
-              "￥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
+              "¥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
         } else if (data.getAmount() * 100 / total > 1) {
           datas.add(new TurnoverChartStat(data.getAmount(), turnoverTradeType.getColor(),
-              "￥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
+              "¥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
         }
       }
     }

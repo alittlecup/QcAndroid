@@ -5,9 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import cn.qingchengfit.saasbase.cards.bean.Coupon;
+import android.view.ViewGroup;
 import cn.qingchengfit.card.databinding.BottomChooseCouponDialogBinding;
 import cn.qingchengfit.card.item.CouponItem;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -40,6 +41,13 @@ public class BottomChooseCouponDialog extends BottomSheetDialog implements Flexi
     }
     adapter.addListener(this);
     adapter.setMode(type);
+    try {
+      // hack bg color of the BottomSheetDialog
+      ViewGroup parent = (ViewGroup) mBinding.getRoot().getParent();
+      parent.setBackgroundResource(android.R.color.transparent);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void initView(Context context) {
