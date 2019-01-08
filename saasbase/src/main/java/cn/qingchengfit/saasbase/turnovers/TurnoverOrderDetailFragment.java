@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
@@ -41,7 +42,8 @@ import javax.inject.Inject;
         mBinding.tvOrderId.setText(detail.getID());
         mBinding.tvSeller.setText(detail.getSellerName());
         mBinding.tvMark.setText(detail.getRemarks());
-        mBinding.tvMoney.setText("￥" + detail.getAmount());
+        mBinding.tvMoney.setText("¥" + detail.getAmount());
+        RxBus.getBus().post(detail);
       }
     });
     mViewModel.staffMutableLiveData.observe(this, staff -> {

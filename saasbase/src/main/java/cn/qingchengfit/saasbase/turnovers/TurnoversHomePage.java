@@ -4,20 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoversHomePageBinding;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -25,7 +22,6 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
-import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -34,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 
 @Leaf(module = "staff", path = "/turnover/home") public class TurnoversHomePage
     extends SaasBindingFragment<TurnoversHomePageBinding, TurnoversVM>
@@ -132,7 +127,7 @@ import rx.android.schedulers.AndroidSchedulers;
         mBinding.tvUpdateTime.setVisibility(View.GONE);
       } else {
         mBinding.tvUpdateTime.setVisibility(View.VISIBLE);
-        mBinding.tvUpdateTime.setText("(上次更新时间为：" + time + ")");
+        mBinding.tvUpdateTime.setText("(上次更新时间" + time + ")");
       }
     });
     mViewModel.getMoreItems().observe(this, items -> {
@@ -195,18 +190,6 @@ import rx.android.schedulers.AndroidSchedulers;
       mViewModel.loadFilterOptions();
       mViewModel.loadSellerItems();
     }
-  }
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    RxBusAdd(Staff.class).observeOn(AndroidSchedulers.mainThread())
-        .compose(this.<Staff>bindToLifecycle())
-        .compose(this.<Staff>doWhen(FragmentEvent.RESUME))
-        .subscribe(new BusSubscribe<Staff>() {
-          @Override public void onNext(Staff staff) {
-            mViewModel.putTurnoverSellerId(mViewModel.turId, staff);
-          }
-        });
   }
 
   public void onDateFilter(View view) {
@@ -288,6 +271,7 @@ import rx.android.schedulers.AndroidSchedulers;
     if (item instanceof TurnoverOrderItem) {
       String id = ((TurnoverOrderItem) item).getData().getID();
       mViewModel.setTurId("");
+      pos=position;
       routeTo("staff", "/turnover/order", new BundleBuilder().withString("turId", id).build());
     }
 
@@ -295,9 +279,6 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   @Override public void noMoreLoad(int newItemsSize) {
-    Log.d("TAG", "newItemsSize=" + newItemsSize);
-    Log.d("TAG", "Total pages loaded=" + adapter.getEndlessCurrentPage());
-    Log.d("TAG", "Total items loaded=" + adapter.getMainItemCount());
   }
 
   @Override public void onLoadMore(int lastPosition, int currentPage) {

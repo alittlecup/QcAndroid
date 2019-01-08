@@ -82,6 +82,7 @@ import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.followup.IncreaseStudentPageParams;
 import cn.qingchengfit.support.widgets.CompatTextView;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -340,13 +341,17 @@ public class GymDetailFragment extends BaseFragment
   }
 
   private void routeToChargeCard() {
-    QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
-        .addParam("addAble", false)
-        .addParam("chooseType", 1)).call();
+    //QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
+    //    .addParam("addAble", false)
+    //    .addParam("chooseType", 1)).call();
+    Bundle builder=new BundleBuilder().withBoolean("addAble",false).withInt("chooseType",1).build();
+    routeTo("student","/search/student/",builder);
+
   }
 
   private void routeToBuyCard() {
-    QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
+    //QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
+    routeTo("card","/cardtpl/nonew",null);
   }
 
   private void routeToShowQrCode() {

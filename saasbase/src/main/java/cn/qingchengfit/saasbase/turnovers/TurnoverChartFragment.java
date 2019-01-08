@@ -4,12 +4,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoverChartFragmentBinding;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.saascommon.views.TurnoverPieChartRenderer;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -137,7 +140,12 @@ public class TurnoverChartFragment extends SaasCommonFragment
       mBinding.tvCharge.setVisibility(View.GONE);
       return;
     }
-    mBinding.tvTotalCount.setText("¥"+ total.getAmount());
+    SpannableStringBuilder spannableStringBuilder = new SpanUtils().append("¥")
+        .setFontSize(20, true)
+        .append(StringUtils.formatePrice(String.valueOf(total.getAmount())))
+        .setFontSize(25, true)
+        .create();
+    mBinding.tvTotalCount.setText(spannableStringBuilder);
     if (turnoversVM.dateType.getValue() != null
         && TurnoversTimeFilterFragment.TimeType.CUSTOMIZE != turnoversVM.dateType.getValue()) {
       float group_value = total.getGrowth_value();
@@ -148,7 +156,12 @@ public class TurnoverChartFragment extends SaasCommonFragment
         mBinding.tvCharge.setTextColor(Color.parseColor("#F03F3F"));
         mBinding.imgRate.setImageDrawable(getResources().getDrawable(R.drawable.ic_turnover_up));
       }
-      mBinding.tvCharge.setText("¥" + group_value + "\n" + total.getGrowth_rate() + "%");
+      SpannableStringBuilder stringBuilder = new SpannableStringBuilder("¥").append(
+          StringUtils.formatePrice(String.valueOf(group_value)))
+          .append("\n")
+          .append(String.valueOf(total.getGrowth_rate()))
+          .append("%");
+      mBinding.tvCharge.setText(stringBuilder);
       mBinding.imgRate.setVisibility(View.VISIBLE);
       mBinding.tvCharge.setVisibility(View.VISIBLE);
     } else {

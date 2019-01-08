@@ -47,7 +47,7 @@ import timber.log.Timber;
     String host = gymWrapper.getCoachService().host();
     QRGEncoder qrgEncoder =
         new QRGEncoder(host + "/shop/" + shop_id + "/qrcode/receipt/", null, QRGContents.Type.TEXT,
-            MeasureUtils.dpToPx(200f, getResources()));
+            MeasureUtils.dpToPx(220f, getResources()));
     try {
       Bitmap bitmap = qrgEncoder.encodeAsBitmap();
       mBinding.imgQrcode.setAdjustViewBounds(true);

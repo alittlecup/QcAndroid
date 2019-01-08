@@ -171,6 +171,12 @@ public class TurnoversVM extends BaseViewModel {
             }
           }
         });
+     RxBus.getBus()
+        .register(TurOrderListData.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(data -> {
+          orderItemDataMutableLiveData.setValue(data);
+        });
   }
 
   Subscription subscribe;
@@ -426,7 +432,7 @@ public class TurnoversVM extends BaseViewModel {
       new SingleLiveEvent<>();
 
   public void putTurnoverSellerId(String turId, Staff staff) {
-    String id="";
+    String id=staff.getId();
     if (staff.getId().equals("0")) {
       id = "";
     }
