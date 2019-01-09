@@ -11,17 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.card.R;
-import cn.qingchengfit.saasbase.cards.bean.Coupon;
 import cn.qingchengfit.card.buy.CompletedBuyView;
-import cn.qingchengfit.saasbase.cards.event.ChooseCouponsEvent;
 import cn.qingchengfit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.router.QC;
-import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
+import cn.qingchengfit.saasbase.cards.bean.Coupon;
+import cn.qingchengfit.saasbase.cards.event.ChooseCouponsEvent;
 import cn.qingchengfit.saasbase.cards.event.PayEvent;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saascommon.utils.StringUtils;
@@ -221,21 +219,17 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     ToastUtils.showS("购卡成功");
     getActivity().setResult(Activity.RESULT_OK);
     getActivity().finish();
-    String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
-    if (TextUtils.isEmpty(qcCallId)) {
+    boolean isFromCheckout = getActivity().getIntent().getBooleanExtra("isFromCheckout",false);
+    if (!isFromCheckout) {
       routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
-    } else {
-      QC.sendQCResult(qcCallId, QCResult.success());
     }
   }
 
   @Override public void onFailed(String s) {
     getActivity().finish();
-    String qcCallId = getActivity().getIntent().getExtras().getString("qcCallId");
-    if (TextUtils.isEmpty(qcCallId)) {
+    boolean isFromCheckout = getActivity().getIntent().getBooleanExtra("isFromCheckout",false);
+    if (!isFromCheckout) {
       routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
-    } else {
-      QC.sendQCResult(qcCallId, QCResult.error(s));
     }
     ToastUtils.show(s);
   }

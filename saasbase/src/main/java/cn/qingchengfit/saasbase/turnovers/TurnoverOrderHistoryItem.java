@@ -34,7 +34,7 @@ public class TurnoverOrderHistoryItem
       DataBindingViewHolder<TurnoverOrderHistoryItemBinding> holder, int position, List payloads) {
     TurnoverOrderHistoryItemBinding dataBinding = holder.getDataBinding();
     dataBinding.tvDate.setText(data.getDate());
-    dataBinding.tvChangeBy.setText(data.getChangeByName());
-    dataBinding.tvSellerName.setText("by "+data.getSellerName());
+    dataBinding.tvChangeBy.setText("by "+data.getSellerName());
+    dataBinding.tvSellerName.setText(data.getChangeByName());
   }
 }

@@ -187,7 +187,6 @@ import javax.inject.Inject;
       stuff(R.id.fl_chart, chartFragment);
       initToolbar();
       initRecyclerView();
-      mViewModel.loadFilterOptions();
       mViewModel.loadSellerItems();
     }
   }

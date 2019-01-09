@@ -1,6 +1,5 @@
 package cn.qingchengfit;
 
-import android.util.Log;
 import cn.qingchengfit.events.EventNativePay;
 import cn.qingchengfit.events.EventRePay;
 import cn.qingchengfit.router.IComponent;
@@ -8,9 +7,7 @@ import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.util.HashMap;
 import java.util.Map;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -25,9 +22,14 @@ public class QcBaseComponent implements IComponent {
     switch (actionName) {
       case "/web/repay":
         Map<String, Object> params = qc.getParams();
+
         String params1 = (String) params.get("params");
         JsonObject jsonObject = new Gson().fromJson(params1, JsonObject.class);
         String channel = jsonObject.get("channel").getAsString();
+        Object type = params.get("type");
+        if(type instanceof String){
+          channel= (String) type;
+        }
         params.clear();
         if (channel.equals("ALIPAY_QRCODE")) {
           params.put("channel", "ALIPAY_BARCODE");

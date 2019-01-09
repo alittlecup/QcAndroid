@@ -155,7 +155,6 @@ public class SimpleCardListFragment extends SaasCommonFragment
   private void routeTo(Card card) {
     Bundle b = new Bundle();
     b.putParcelable("card", card);
-    b.putString("qcCallId", getActivity().getIntent().getStringExtra("qcCallId"));
     QcRouteUtil.setRouteOptions(
         new RouteOptions("card").setActionName("/charge/").addParam("data", b))
         .callAsync(new IQcRouteCallback() {

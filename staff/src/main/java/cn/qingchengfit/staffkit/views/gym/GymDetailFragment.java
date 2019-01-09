@@ -341,17 +341,16 @@ public class GymDetailFragment extends BaseFragment
   }
 
   private void routeToChargeCard() {
-    //QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/search/student/")
-    //    .addParam("addAble", false)
-    //    .addParam("chooseType", 1)).call();
-    Bundle builder=new BundleBuilder().withBoolean("addAble",false).withInt("chooseType",1).build();
-    routeTo("student","/search/student/",builder);
-
+    Bundle builder = new BundleBuilder().withBoolean("addAble", false)
+        .withInt("chooseType", 1)
+        .withBoolean("isFromCheckout", true)
+        .build();
+    routeTo("student", "/search/student/", builder);
   }
 
   private void routeToBuyCard() {
-    //QcRouteUtil.setRouteOptions(new RouteOptions("card").setActionName("/cardtpl/nonew")).call();
-    routeTo("card","/cardtpl/nonew",null);
+    Bundle builder = new BundleBuilder().withBoolean("isFromCheckout", true).build();
+    routeTo("card", "/cardtpl/nonew", builder);
   }
 
   private void routeToShowQrCode() {

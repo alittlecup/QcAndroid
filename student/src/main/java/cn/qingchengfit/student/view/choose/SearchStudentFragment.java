@@ -39,7 +39,7 @@ import java.util.List;
       etSearch.setSingleLine(true);
       etSearch.setOnKeyListener(new View.OnKeyListener() {
         @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
-          if (keyCode == KeyEvent.KEYCODE_SEARCH||keyCode==KeyEvent.KEYCODE_ENTER) {
+          if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_ENTER) {
             srl.setRefreshing(true);
             onSearch(etSearch.getText().toString());
           }
@@ -47,7 +47,7 @@ import java.util.List;
         }
       });
     }
-
+    presenter.attachView(this);
     if (!addAble) {
       toolbarTitle.setText("会员卡续卡");
       searchText.setText("搜索需要续卡的会员");
@@ -126,10 +126,9 @@ import java.util.List;
             QcStudentBean qcStudentBean = item.getQcStudentBean();
             Bundle bundle = new Bundle();
             bundle.putParcelable("qcStudentBean", qcStudentBean);
-            String qcCallId = getActivity().getIntent().getStringExtra("qcCallId");
-            if (!TextUtils.isEmpty(qcCallId)) {
-              bundle.putString("qcCallId", qcCallId);
-            }
+            boolean isFromCheckout =
+                getActivity().getIntent().getBooleanExtra("isFromCheckout", false);
+            bundle.putBoolean("isFromCheckout", isFromCheckout);
             routeTo("/student/card/list", bundle);
           }
           return false;

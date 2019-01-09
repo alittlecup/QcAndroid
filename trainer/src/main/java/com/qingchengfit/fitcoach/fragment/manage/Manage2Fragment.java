@@ -127,12 +127,17 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   }
 
   private void routeToChargeCard() {
-    Bundle builder=new BundleBuilder().withBoolean("addAble",false).withInt("chooseType",1).build();
-    routeTo("student","/search/student/",builder);
+    Bundle builder = new BundleBuilder().withBoolean("addAble", false)
+        .withBoolean("isFromCheckout", true)
+        .withInt("chooseType", 1)
+        .build();
+    routeTo("student", "/search/student/", builder);
   }
 
   private void routeToBuyCard() {
-    routeTo("card","/cardtpl/nonew",null);
+    Bundle builder = new BundleBuilder().withBoolean("isFromCheckout", true).build();
+
+    routeTo("card", "/cardtpl/nonew", builder);
   }
 
   private void routeToShowQrCode() {

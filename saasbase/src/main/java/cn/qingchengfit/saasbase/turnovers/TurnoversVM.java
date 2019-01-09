@@ -90,7 +90,9 @@ public class TurnoversVM extends BaseViewModel {
   public MutableLiveData<Boolean> leftEnable = new MutableLiveData<>();
   public MutableLiveData<Integer> totalCount = new MutableLiveData<>();
 
-  @Inject public TurnoversVM() {
+  @Inject public TurnoversVM(IStaffModel staffModel) {
+    this.staffModel=staffModel;
+    loadFilterOptions();
     filterDate = Transformations.map(dateType, input -> {
       String dateText = "";
       rightEnable.setValue(false);

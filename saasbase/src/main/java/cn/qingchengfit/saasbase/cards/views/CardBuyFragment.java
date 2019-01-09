@@ -520,8 +520,6 @@ import rx.functions.Action1;
   }
 
   public void onCivBindMenbersClicked() {
-    //    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
-    //        new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
     QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
         .addParam("studentIdList", presenter.getChoseStuIds())).call();
   }

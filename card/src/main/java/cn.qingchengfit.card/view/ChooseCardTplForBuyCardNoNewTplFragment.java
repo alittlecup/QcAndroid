@@ -71,7 +71,7 @@ public class ChooseCardTplForBuyCardNoNewTplFragment extends CardTplsHomeInGymFr
         Bundle build = new CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl())
             .qcStudentBean(qcStudentBean)
             .build();
-        build.putString("qcCallId",getActivity().getIntent().getStringExtra("qcCallId"));
+        build.putBoolean("isFromCheckout",getActivity().getIntent().getBooleanExtra("isFromCheckout",false));
         routeTo("/pay/",build);
       } else {
         showAlert("已停用的会员卡种类不能用于购买会员卡");
