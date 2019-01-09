@@ -46,7 +46,7 @@ public class BottomPayDialog extends BottomSheetDialog
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-        DensityUtil.dip2px(getContext(), 450));
+        DensityUtil.dip2px(getContext(), 600));
     getWindow().setGravity(Gravity.BOTTOM);
   }
 

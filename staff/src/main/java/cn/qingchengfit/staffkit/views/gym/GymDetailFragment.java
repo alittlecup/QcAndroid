@@ -282,14 +282,12 @@ public class GymDetailFragment extends BaseFragment
           startActivity(toSignIn);
           break;
         case 3:
-
           if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS)) {
             showAlert(R.string.sorry_for_no_permission);
             return;
           }
-          routeTo("student", "student/increase",
+          routeTo("student", "/student/increase",
               new IncreaseStudentPageParams().curType(IncreaseType.INCREASE_MEMBER).build());
-
           break;
         default:
           if (!serPermisAction.check(PermissionServerUtils.SALES_REPORT)) {
@@ -916,7 +914,7 @@ public class GymDetailFragment extends BaseFragment
       fragments.add(fragment);
       pos.add(1);
     }
-    if (statement.new_checkin != null) {
+    if (statement.new_checkin != null&&statement.new_checkin.checkin_module) {
       BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(2).build();
       fragments.add(fragment);
       pos.add(2);

@@ -105,6 +105,7 @@
             android:id="@+id/img_cash"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="match_parent"
+            android:padding="5dp"
             app:srcCompat="@drawable/ic_cash_line"
             />
         <ImageView
@@ -112,12 +113,14 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             app:srcCompat="@drawable/ic_scan_line"
+            android:padding="5dp"
             />
         <ImageView
             android:id="@+id/img_charge_card"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             app:srcCompat="@drawable/ic_charge_line"
+            android:padding="5dp"
             />
 
 
@@ -126,6 +129,7 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             app:srcCompat="@drawable/ic_newcard_line"
+            android:padding="5dp"
             />
 
 
@@ -281,6 +285,7 @@
             android:background="@color/bg_grey"
             android:paddingLeft="15dp"
             android:text="教练功能"
+            app:layout_scrollFlags="scroll|snap"
             android:textSize="12sp"
             style="@style/QcTextStyleSmallWarm"
             />

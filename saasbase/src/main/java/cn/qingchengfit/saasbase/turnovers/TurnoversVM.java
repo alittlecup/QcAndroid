@@ -91,7 +91,7 @@ public class TurnoversVM extends BaseViewModel {
   public MutableLiveData<Integer> totalCount = new MutableLiveData<>();
 
   @Inject public TurnoversVM(IStaffModel staffModel) {
-    this.staffModel=staffModel;
+    this.staffModel = staffModel;
     loadFilterOptions();
     filterDate = Transformations.map(dateType, input -> {
       String dateText = "";
@@ -173,7 +173,7 @@ public class TurnoversVM extends BaseViewModel {
             }
           }
         });
-     RxBus.getBus()
+    RxBus.getBus()
         .register(TurOrderListData.class)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(data -> {
@@ -226,21 +226,31 @@ public class TurnoversVM extends BaseViewModel {
             }
           }, throwable -> {
           });
-    }else{
+    } else {
       loadMoreOrderDatas.setValue(null);
     }
   }
 
   private void upDateChartDatas(TurnoversChartStatDataResponse response, int type) {
-    if (response != null && response.total != null && response.total.getAmount() > 0) {
+    if (response != null && response.total != null) {
       List<ITurnoverChartData> iTurnoverChartData;
+      float total = 0;
+      List<TurnoversChartStatData> data = new ArrayList<>();
+      if (response.stat != null && !response.stat.isEmpty()) {
+        for (TurnoversChartStatData stat : response.stat) {
+          if (stat.getAmount() > 0) {
+            data.add(stat);
+            total += stat.getAmount();
+          }
+        }
+      }
       if (type != -1) {
         iTurnoverChartData =
-            convertChartStats(filterWithTradeType(response.stat, type), response.total.getAmount());
+            convertChartStats(filterWithTradeType(data, type), total);
       } else {
-        iTurnoverChartData = convertChartStats(response.stat, response.total.getAmount());
+        iTurnoverChartData = convertChartStats(data, total);
       }
-      chartDatas.setValue(new Pair<>(iTurnoverChartData, response.total.getAmount()));
+      chartDatas.setValue(new Pair<>(iTurnoverChartData, total));
       chartVisible.setValue(true);
     } else {
       chartVisible.setValue(false);
@@ -276,7 +286,6 @@ public class TurnoversVM extends BaseViewModel {
       for (TurnoversChartStatData data : stat) {
         TurnoverTradeType turnoverTradeType =
             TurnoversHomePage.trade_types.get(data.getTrade_type());
-
         if (data.getAmount() > 0 && data.getAmount() * 100 / total <= 1) {
           datas.add(new TurnoverChartStat(total / 100f, turnoverTradeType.getColor(),
               "¥" + data.getAmount() + "/" + turnoverTradeType.getDesc()));
@@ -434,7 +443,7 @@ public class TurnoversVM extends BaseViewModel {
       new SingleLiveEvent<>();
 
   public void putTurnoverSellerId(String turId, Staff staff) {
-    String id=staff.getId();
+    String id = staff.getId();
     if (staff.getId().equals("0")) {
       id = "";
     }

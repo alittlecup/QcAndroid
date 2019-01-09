@@ -43,6 +43,8 @@ public class TurnoversTimeFilterFragment extends SaasCommonFragment {
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = TurnoversTiemFilterFragmentBinding.inflate(inflater, container, false);
     mBinding.btnDay.setChecked(true);
+    mBinding.etDateStart.setText(DateUtils.getStringToday());
+    mBinding.etDateEnd.setText(DateUtils.getStringToday());
     return mBinding.getRoot();
   }
 
