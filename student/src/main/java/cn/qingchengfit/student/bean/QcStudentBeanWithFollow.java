@@ -2,10 +2,8 @@ package cn.qingchengfit.student.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import java.util.List;
 
 /**
  * Created by huangbaole on 2017/11/8.
@@ -65,6 +63,6 @@ public class QcStudentBeanWithFollow extends QcStudentBean implements Parcelable
       };
 
   public boolean filter(String str) {
-    return (username != null && username.contains(str)) || (phone != null && phone.contains(str));
+    return (username != null && username.toLowerCase().contains(str)) || (phone != null && phone.contains(str));
   }
 }
