@@ -19,6 +19,7 @@ import cn.qingchengfit.saasbase.cards.CardActivity;
 import cn.qingchengfit.saasbase.cards.views.AutoNotifySettingFragment;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardFragment;
 import cn.qingchengfit.saasbase.cards.views.CardBalanceFragment;
+import cn.qingchengfit.saasbase.cards.views.CardBindStudentsFragment;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
@@ -63,7 +64,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen
     CardListFragment.class, SpendRecordFragment.class, SpendRecordListFragment.class,
     WebCardChargeFragment.class, WebChargeFragment.class,ChooseCardTplForBuyCardNoNewTplFragment.class,
     CardListNoBalanceFragment.class,TrainerCardBuyFragment.class,TrainerCardChargeFragment.class,
-    ChooseCouponsFragment.class
+    ChooseCouponsFragment.class, CardBindStudentsFragment.class
 }) public class StaffCardActivity extends CardActivity {
 
 

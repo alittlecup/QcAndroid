@@ -59,11 +59,13 @@ public class TurnoverOrderItem
     if (!TurnoversHomePage.trade_types.isEmpty()) {
       TurnoverTradeType turnoverTradeType =
           TurnoversHomePage.trade_types.get(Integer.parseInt(data.getFeatureName()));
+      if(turnoverTradeType==null)return;
       dataBinding.tvFeatureMoney.setText(
           "[" + turnoverTradeType.getDesc() + "] " + data.getMoney() + "元");
     }
     if (!TurnoversHomePage.paymentChannels.isEmpty()) {
       TurFilterData turFilterData = TurnoversHomePage.paymentChannels.get(data.getPayType());
+      if(turFilterData==null)return;
       dataBinding.tvType.setText(turFilterData.getShort_text());
       dataBinding.tvType.setBackground(
           DrawableUtils.tintDrawable(dataBinding.tvType.getContext(), R.drawable.circle_green,
