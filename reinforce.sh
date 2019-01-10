@@ -21,7 +21,6 @@ java -jar ${BASE}/jiagu.jar -importmulpkg ${BASE}/多渠道模板.txt #根据自
 java -jar ${BASE} -showmulpkg
 java -jar ${BASE} -showconfig
 java -jar ${BASE} -jiagu ${APK} ${DEST} -autosign
-java -jar $2/jiagu/lib/apksigner.jar sign --ks ${KEY_PATH} --ks-key-alias ${ALIAS} --ks-pass pass:Qingcheng2014 --key-pass pass:Qingcheng2014 ${DEST}$3-product-release_1`date +%y%m%d`_jiagu.apk
 echo "------ success! ------"
 rm ${DEST}*temp.apk
 
