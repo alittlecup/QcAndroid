@@ -1,7 +1,6 @@
 package cn.qingchengfit.staffkit;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,35 +27,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import cn.qingchengfit.Constants;
-import cn.qingchengfit.router.qc.QcRouteUtil;
-import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saascommon.SaasCommonActivity;
-import cn.qingchengfit.saascommon.SaasCommonFragment;
-import cn.qingchengfit.saascommon.model.AdvertiseInfo;
-import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.saascommon.utils.AdvertiseUtils;
-import cn.qingchengfit.saascommon.views.CommonDialog;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.utils.DialogUtils;
-
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.baidu.android.pushservice.PushManager;
-import com.google.gson.Gson;
-import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.TIMManager;
-import com.tencent.qcloud.sdk.Constant;
-import com.tencent.qcloud.timchat.MyApplication;
-import com.tencent.qcloud.timchat.common.AppData;
-import com.xiaomi.mipush.sdk.MiPushClient;
-
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -75,9 +45,12 @@ import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.reciever.PushReciever;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.utils.AdvertiseUtils;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
+import cn.qingchengfit.staffkit.reciever.PushReciever;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.EventGoNotification;
@@ -91,19 +64,32 @@ import cn.qingchengfit.staffkit.views.main.SettingFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
-import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.WebFragment;
 import cn.qingchengfit.weex.utils.WeexUtil;
 import cn.qingchengfit.widgets.TabViewNoVp;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.baidu.android.pushservice.PushManager;
+import com.google.gson.Gson;
+import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.TIMManager;
+import com.tencent.qcloud.sdk.Constant;
+import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.common.AppData;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -135,14 +121,15 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   String[] tags = new String[] { "gyms", "find", "msg", "setting", "ali" };
   private int[] mIconSelect = {
       R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active,
-       R.drawable.vd_tabbar_message_active,
+      R.drawable.vd_tabbar_none, R.drawable.vd_tabbar_message_active,
       R.drawable.vd_tabbar_mine_active
   };
   private int[] mIconNormal = {
       R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal,
-      R.drawable.vd_tabbar_message_normal,
+      R.drawable.vd_tabbar_none, R.drawable.vd_tabbar_message_normal,
       R.drawable.vd_tabbar_mine_normal
   };
+  private String[] tabText = { "健身房", "发现", "年货节", "消息", "我的" };
   private boolean isDownloading = false;
   private DownloadManager downloadManager;
   private Subscription updateSp;
@@ -156,6 +143,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   private Subscription sp;
   private Observable<EventBrandChange> brandChangeOb;
   private Observable<EventInitApp> mBackMainOb;
+  private ImageView imgNewYear;
   /**
    * 更新下载进度
    */
@@ -181,6 +169,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    imgNewYear = findViewById(R.id.img_new_year);
     tabview = (TabViewNoVp) findViewById(R.id.tabview);
     fragChooseBrand = (FrameLayout) findViewById(R.id.frag_choose_brand);
     layoutBrands = (FrameLayout) findViewById(R.id.layout_brands);
@@ -200,6 +189,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     askPermission();
     update(false);
     onNewIntent(getIntent());
+    tabview.setBottomText(tabText);
     tabview.setupTabView(mIconSelect, mIconNormal);
     tabview.setPoint(1);
     String discover_text = PreferenceUtils.getPrefString(this, "discover_text", "");
@@ -212,9 +202,15 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
         tabview.clearPoint(1);
         tvAdText.setVisibility(View.GONE);
       }
+      changeCenterImage(pos == 2);
       showPage(pos);
     });
     showPage(0);
+    imgNewYear.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        tabview.setCurrentItem(2);
+      }
+    });
     //聊天的初始化
 
     if (Constant.ACCOUNT_TYPE == 0) {
@@ -297,6 +293,24 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
         }));
   }
 
+  private void changeCenterImage(boolean selected) {
+    FrameLayout.LayoutParams layoutParams =
+        (FrameLayout.LayoutParams) imgNewYear.getLayoutParams();
+    if (selected) {
+      imgNewYear.setImageResource(R.drawable.ic_nianhuojie_check);
+      layoutParams.height = MeasureUtils.dpToPx(35f, getResources());
+      layoutParams.width = MeasureUtils.dpToPx(35f, getResources());
+      layoutParams.topMargin = MeasureUtils.dpToPx(25f, getResources());
+    } else {
+      imgNewYear.setImageResource(R.drawable.ic_nianhuojie_uncheck);
+      layoutParams.height = MeasureUtils.dpToPx(55f, getResources());
+      layoutParams.width = MeasureUtils.dpToPx(55f, getResources());
+      layoutParams.topMargin = 0;
+
+    }
+    imgNewYear.setLayoutParams(layoutParams);
+  }
+
   private void updateAdText(String s) {
     if (TextUtils.isEmpty(s)) {
       tvAdText.setVisibility(View.GONE);
@@ -341,8 +355,10 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
       case 1:
         return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
       case 2:
-        return new MainMsgFragment();
+        return QcVipFragment.newInstance(Configs.WEB_TEMP_NEW_YEAR.replace("http", "https"), "年货节");
       case 3:
+        return new MainMsgFragment();
+      case 4:
         return new SettingFragment();
       default:
         return new MainFirstFragment();
@@ -419,7 +435,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     if (!TextUtils.isEmpty(user_id)) loginStatus.setUserId(user_id);
     loginStatus.setSession(session);
   }
-
 
   private void registeGlobleEvent() {
     IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);

@@ -153,6 +153,8 @@ public class Configs {
   //团课
   public static final String WEB_HOW_TO_USE_BATCH_PRIVATE =
       "http://cloud.qingchengfit.cn/mobile/urls/34890304d8bc40ba9677ca8d99bcd02a/";
+  public static final String WEB_TEMP_NEW_YEAR =
+      "http://mp.weixin.qq.com/s?__biz=MzAxODAyODE5OQ==&mid=502628702&idx=1&sn=b77bdd8d6bff211b34a7fa5471efb679&chksm=03dda29634aa2b8062c043694f369f70ca4309846dad31192555c2658ac664270b249bfce6cc#rd";
 
   public static String getServerByBuildFLAVOR(String flavor) {
     String host = "";

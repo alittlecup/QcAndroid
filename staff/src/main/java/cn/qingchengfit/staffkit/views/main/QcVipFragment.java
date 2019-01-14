@@ -28,6 +28,7 @@ import timber.log.Timber;
 
 public class QcVipFragment extends WebFragment {
   private boolean isSingle = false;
+  private String title = "";
 
   public static QcVipFragment newInstance(String url) {
     Bundle args = new Bundle();
@@ -46,11 +47,21 @@ public class QcVipFragment extends WebFragment {
     return fragment;
   }
 
+  public static QcVipFragment newInstance(String url, String title) {
+    Bundle args = new Bundle();
+    args.putString("url", url);
+    args.putString("title", title);
+    QcVipFragment fragment = new QcVipFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       mCurUrl = getArguments().getString("url");
       isSingle = getArguments().getBoolean("isSingle");
+      title = getArguments().getString("title");
     }
   }
 
@@ -61,6 +72,9 @@ public class QcVipFragment extends WebFragment {
       View view = super.onCreateView(inflater, container, savedInstanceState);
       commonToolbar.setVisibility(View.VISIBLE);
       mTitle.setText(getString(R.string.home_tab_special));
+      if(!TextUtils.isEmpty(title)){
+        mTitle.setText(title);
+      }
       mToolbar.setNavigationIcon(null);
       if (BuildConfig.DEBUG) {
         mToolbar.getMenu().add("刷新").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);

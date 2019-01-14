@@ -23,19 +23,18 @@
   <cn.qingchengfit.widgets.TabViewNoVp
       android:id="@+id/tabview"
       android:layout_width="match_parent"
-      android:layout_height="50dp"
+      android:layout_height="48dp"
       android:layout_alignParentBottom="true"
       android:layout_marginTop="5dp"
       android:background="@color/toolbar"
       android:gravity="center_vertical"
       app:text_select_color="@color/colorPrimary"
       app:text_size="10sp"
-      app:tvn_txt="@array/home_tab"
       />
 
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="50dp"
+      android:layout_height="73dp"
       android:layout_alignParentBottom="true"
       android:orientation="horizontal"
       android:paddingTop="5dp"
@@ -50,10 +49,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:paddingTop="25dp"
         >
       <TextView
           android:id="@+id/tv_ad_text"
-          android:layout_width="48dp"
+          android:layout_width="wrap_content"
           android:layout_height="16dp"
           android:layout_gravity="right"
           android:background="@drawable/bg_fill_red_slide_white"
@@ -61,25 +61,36 @@
           android:paddingLeft="5dp"
           android:paddingRight="5dp"
           android:paddingTop="2dp"
-          android:visibility="gone"
-          tools:visibility="gone"
-          tools:text="大众点评"
           android:textColor="@color/white"
           android:textSize="9sp"
+          android:visibility="gone"
+          tools:text="年货节"
+          tools:visibility="visible"
+          />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+      <ImageView
+          android:id="@+id/img_new_year"
+          android:layout_width="55dp"
+          android:layout_height="55dp"
+          android:layout_gravity="center_horizontal"
+          app:srcCompat="@drawable/ic_nianhuojie_uncheck"
           />
     </FrameLayout>
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:paddingTop="25dp"
         >
-
       <TextView
           android:id="@+id/tv_noti_count"
           android:layout_width="20dp"
           android:layout_height="match_parent"
-          android:layout_alignParentEnd="true"
-          android:layout_alignParentRight="true"
           android:layout_gravity="center"
           android:layout_marginLeft="12dp"
           android:background="@drawable/bg_notification"
@@ -88,7 +99,8 @@
           android:textSize="10sp"
           android:visibility="gone"
           tools:text="99"
-          tools:visibility="visible" />
+          tools:visibility="visible"
+          />
     </FrameLayout>
     <Space
         android:layout_width="0dp"
