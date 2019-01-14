@@ -14,6 +14,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -32,9 +33,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.ButtonItem;
+import cn.qingchengfit.saasbase.items.GymPartnerItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.MiniProgram;
+import cn.qingchengfit.model.base.PartnerStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.model.responese.GymDetail;
@@ -63,6 +66,7 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
+import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountSuccessPageParams;
 import cn.qingchengfit.staffkit.dianping.pages.DianPingEmptyFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
@@ -72,6 +76,7 @@ import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
 import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
+import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
@@ -154,6 +159,7 @@ public class GymDetailFragment extends BaseFragment
   LinearLayout layoutCharge;
   CompatTextView tvPrice;
   LinearLayout llScan;
+  RecyclerView gymPartnerRecyclerView;
 
   @Inject GymDetailPresenter gymDetailPresenter;
   @Inject StaffRespository restRepository;
@@ -210,6 +216,8 @@ public class GymDetailFragment extends BaseFragment
     layoutCharge = (LinearLayout) view.findViewById(R.id.layout_to_charge);
     tvPrice = (CompatTextView) view.findViewById(R.id.tv_price);
     llScan = view.findViewById(R.id.ll_scan);
+    gymPartnerRecyclerView = view.findViewById(R.id.partner_recycler);
+
     view.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onTitleClick();
@@ -250,6 +258,7 @@ public class GymDetailFragment extends BaseFragment
     initView();
     registeSensors();
     initListener(view);
+    initPartnerRecyclerView();
     view.setOnTouchListener((v, event) -> true);
     view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {
       if (showTime > 0) {
@@ -313,8 +322,33 @@ public class GymDetailFragment extends BaseFragment
     if (isSingleBrand()) {
       view.findViewById(R.id.include_bottom).setVisibility(View.GONE);
     }
-
     return view;
+  }
+
+  private CommonFlexAdapter partnerAdapter;
+
+  private void initPartnerRecyclerView() {
+    gymPartnerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    gymPartnerRecyclerView.setAdapter(partnerAdapter =
+        new CommonFlexAdapter(new ArrayList(), (FlexibleAdapter.OnItemClickListener) position -> {
+          IFlexible item = partnerAdapter.getItem(position);
+          int type = ((GymPartnerItem) item).getType();
+          if (type == GymPartnerItem.GymPartnerType.PARTNER_MEITUAN) {
+            if (((GymPartnerItem) item).getStatus()) {
+              routeTo("dianping", "/dianping/success",
+                  new DianPingAccountSuccessPageParams().gymName(gymWrapper.getCoachService().getName())
+                      .build());
+            } else {
+              routeTo("dianping", "/dianping/home", null);
+            }
+          } else {
+            routeTo("staff", "/partner/page",
+                new BundleBuilder().withBoolean("status", ((GymPartnerItem) item).getStatus())
+                    .withInt("type", type)
+                    .build());
+          }
+          return false;
+        }));
   }
 
   private void initListener(View root) {
@@ -737,7 +771,6 @@ public class GymDetailFragment extends BaseFragment
           cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.white));
       tagPro.setImageResource(R.drawable.ic_pro_free);
     }
-
     toolbarTitile.setText(coachService.getName());
   }
 
@@ -764,6 +797,15 @@ public class GymDetailFragment extends BaseFragment
   }
 
   @Override public void onFailed() {
+  }
+
+  @Override public void onPartnter(PartnerStatus status) {
+    List<GymPartnerItem> items = new ArrayList<>();
+    items.add(new GymPartnerItem(GymPartnerItem.GymPartnerType.PARTNER_MEITUAN, status.meituan));
+    items.add(new GymPartnerItem(GymPartnerItem.GymPartnerType.PARTNER_TAOBAO, status.taobao));
+    items.add(new GymPartnerItem(GymPartnerItem.GymPartnerType.PARTNER_KOUBEI, status.koubei));
+    items.add(new GymPartnerItem(GymPartnerItem.GymPartnerType.PARTNER_ALI, status.alipay));
+    partnerAdapter.updateDataSet(items);
   }
 
   @Override public void onNotiCount(int count) {
@@ -914,7 +956,7 @@ public class GymDetailFragment extends BaseFragment
       fragments.add(fragment);
       pos.add(1);
     }
-    if (statement.new_checkin != null&&statement.new_checkin.checkin_module) {
+    if (statement.new_checkin != null && statement.new_checkin.checkin_module) {
       BaseStatementChartFragment fragment = new BaseStatementChartFragmentBuilder(2).build();
       fragments.add(fragment);
       pos.add(2);
@@ -933,11 +975,9 @@ public class GymDetailFragment extends BaseFragment
    * 报表适配器
    */
   class GymDetailChartAdapter extends FragmentPagerAdapter {
-    private FragmentManager mFm;
 
     public GymDetailChartAdapter(FragmentManager fm, HomeStatement statement) {
       super(fm);
-      this.mFm = fm;
       this.statement = statement;
     }
 

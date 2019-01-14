@@ -21,15 +21,13 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Created by Paper on 15/12/28 2015.
  */
-@Entity(primaryKeys = {"id","model"},tableName = "coachservice")
-public class CoachService implements Parcelable{
+@Entity(primaryKeys = { "id", "model" }, tableName = "coachservice") public class CoachService
+    implements Parcelable {
 
   //public static RowMapper<CoachService> SELECT_ALL_MAPPER = FACTORY.getAllCoachServiceMapper();
-  @NonNull
-  @SerializedName("model") public String model = "";
+  @NonNull @SerializedName("model") public String model = "";
   @SerializedName("type") public int type;
-  @NonNull
-  @SerializedName("id") public String id = "";
+  @NonNull @SerializedName("id") public String id = "";
 
   public void setCan_trial(boolean can_trial) {
     this.can_trial = can_trial;
@@ -53,28 +51,31 @@ public class CoachService implements Parcelable{
   @SerializedName("users_count") public int users_count;
   public String brand_id;
   @SerializedName("has_permission") public boolean has_permission = true;
-  @Ignore
-  @SerializedName("gd_district") public DistrictEntity gd_district;
+  @Ignore @SerializedName("gd_district") public DistrictEntity gd_district;
   public String system_end;
   public String gym_id;
   public String address;
   public String shop_id;
   public String position;
   public boolean can_trial;
-  @Ignore
-  public int alisport_status;
+  @Ignore public int alisport_status;
   public double gd_lng;
   public double gd_lat;
-  @Ignore
-  public int gym_type;
-  @Ignore
-  public String description;
-  @Ignore
-  public float area;
-  @Ignore
-  public int meituan_status;
+  @Ignore public int gym_type;
+  @Ignore public String description;
+  @Ignore public float area;
+  @Ignore public int meituan_status;
 
+  public PartnerStatus getPartner_status() {
+    return partner_status;
+  }
 
+  public void setPartner_status(PartnerStatus partner_status) {
+    this.partner_status = partner_status;
+  }
+
+  @Ignore @SerializedName("partner_status")
+  public PartnerStatus partner_status;
 
   private CoachService(Builder builder) {
     setModel(builder.model);
@@ -105,80 +106,79 @@ public class CoachService implements Parcelable{
   public CoachService() {
   }
 
-  @Ignore
-  @Nullable  public String id() {
+  @Ignore @Nullable public String id() {
     return id + "";
   }
-  @Ignore
-  @Nullable  public String model() {
+
+  @Ignore @Nullable public String model() {
     return model;
   }
-  @Ignore
-  @Nullable  public String gym_id() {
+
+  @Ignore @Nullable public String gym_id() {
     return gym_id;
   }
-  @Ignore
-  @Nullable  public Integer type() {
+
+  @Ignore @Nullable public Integer type() {
     return type;
   }
-  @Ignore
-  @Nullable  public String name() {
+
+  @Ignore @Nullable public String name() {
     return name;
   }
-  @Ignore
-  @Nullable  public String color() {
+
+  @Ignore @Nullable public String color() {
     return color;
   }
-  @Ignore
-  @Nullable  public String photo() {
+
+  @Ignore @Nullable public String photo() {
     return photo;
   }
-  @Ignore
-  @Nullable  public String host() {
+
+  @Ignore @Nullable public String host() {
     return host;
   }
-  @Ignore
-  @Nullable  public String brand_name() {
+
+  @Ignore @Nullable public String brand_name() {
     return brand_name;
   }
-  @Ignore
-  @Nullable  public String shop_id() {
+
+  @Ignore @Nullable public String shop_id() {
     return shop_id;
   }
-  @Ignore
-  @Nullable  public Integer courses_count() {
+
+  @Ignore @Nullable public Integer courses_count() {
     return courses_count;
   }
-  @Ignore
-  @Nullable  public Integer users_count() {
+
+  @Ignore @Nullable public Integer users_count() {
     return users_count;
   }
-  @Ignore
-  @Nullable  public String brand_id() {
+
+  @Ignore @Nullable public String brand_id() {
     return brand_id;
   }
-  @Ignore
-  public String system_end() {
+
+  @Ignore public String system_end() {
     return system_end;
   }
-  @Ignore
-  @Nullable  public String phone() {
+
+  @Ignore @Nullable public String phone() {
     return phone;
   }
-  @Ignore
-  @Nullable  public String address() {
+
+  @Ignore @Nullable public String address() {
     return address;
   }
-  @Ignore
-  @Nullable  public String position() {
+
+  @Ignore @Nullable public String position() {
     return position;
   }
-  @Ignore
-  @Nullable  public Boolean can_trial() {
+
+  @Ignore @Nullable public Boolean can_trial() {
     return can_trial;
   }
-  @Ignore
-  @Nullable  public DistrictEntity gd_district() {
+
+  @Ignore @Nullable public DistrictEntity gd_district() {
     return null;
   }
 
@@ -398,6 +398,8 @@ public class CoachService implements Parcelable{
     return description;
   }
 
+
+
   public static final class Builder {
     private String model;
     private int type;
@@ -577,6 +579,8 @@ public class CoachService implements Parcelable{
     dest.writeInt(this.gym_type);
     dest.writeString(this.description);
     dest.writeFloat(this.area);
+    dest.writeInt(this.meituan_status);
+    dest.writeParcelable(this.partner_status, flags);
   }
 
   protected CoachService(Parcel in) {
@@ -606,6 +610,8 @@ public class CoachService implements Parcelable{
     this.gym_type = in.readInt();
     this.description = in.readString();
     this.area = in.readFloat();
+    this.meituan_status = in.readInt();
+    this.partner_status = in.readParcelable(PartnerStatus.class.getClassLoader());
   }
 
   public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+  </data>
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      >
+    <ImageView
+        android:id="@+id/img_gym_partner"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        tools:srcCompat="@drawable/ic_gym_mt_line"
+        />
+    <TextView
+        android:id="@+id/tv_partner_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        tools:text="美团点评"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/tv_partner_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:drawableRight="@drawable/vd_arrow_right_grey_small"
+        android:drawableTint="@color/white"
+        android:text="未认证"
+        android:textSize="@dimen/txt_14sp"
+        />
+  </LinearLayout>
+</layout>

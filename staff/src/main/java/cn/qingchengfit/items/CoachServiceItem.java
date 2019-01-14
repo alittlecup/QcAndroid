@@ -1,9 +1,9 @@
 package cn.qingchengfit.items;
 
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
@@ -38,79 +38,96 @@ import java.util.List;
  */
 public class CoachServiceItem extends AbstractFlexibleItem<CoachServiceItem.CoachServiceVH> {
 
-    private CoachService coachService;
-    private boolean isShowRight = false;
+  private CoachService coachService;
+  private boolean isShowRight = false;
 
-    public CoachServiceItem(CoachService coachService) {
-        this.coachService = coachService;
+  public CoachServiceItem(CoachService coachService) {
+    this.coachService = coachService;
+  }
+
+  public CoachServiceItem(CoachService coachService, boolean isShowRight) {
+    this.coachService = coachService;
+    this.isShowRight = isShowRight;
+  }
+
+  public CoachService getCoachService() {
+    return coachService;
+  }
+
+  public void setCoachService(CoachService coachService) {
+    this.coachService = coachService;
+  }
+
+  @Override public boolean equals(Object o) {
+    if (o instanceof CoachServiceItem) {
+      return ((CoachServiceItem) o).getCoachService().getId().equalsIgnoreCase(coachService.getId());
+    } else {
+      return false;
     }
+  }
 
-    public CoachServiceItem(CoachService coachService, boolean isShowRight) {
-        this.coachService = coachService;
-        this.isShowRight = isShowRight;
+  @Override public int getLayoutRes() {
+    return R.layout.item_gym;
+  }
+
+  @Override public CoachServiceVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CoachServiceVH(view, adapter);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter, CoachServiceVH holder, int position,
+      List payloads) {
+
+    holder.itemGymName.setText(coachService.getName());
+    holder.itemGymPhonenum.setText("联系方式：" + coachService.getPhone());
+    holder.itemBrand.setText("我的职位：" + coachService.getPosition());
+    holder.qcIdentify.setImageResource(
+        GymUtils.getSystemEndDay(coachService) >= 0 ? R.drawable.ic_pro_green
+            : R.drawable.ic_pro_free);
+    Glide.with(adapter.getRecyclerView().getContext())
+        .load(PhotoUtils.getSmall(coachService.getPhoto()))
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_header)
+        .into(new CircleImgWrapper(holder.itemGymHeader, adapter.getRecyclerView().getContext()));
+    if (isShowRight) {
+      holder.itemRight.setVisibility(View.VISIBLE);
+      holder.itemRight.setImageResource(R.drawable.ic_arrow_right);
+    } else {
+      holder.itemRight.setVisibility(View.GONE);
     }
-
-    public CoachService getCoachService() {
-        return coachService;
+    holder.flPartner.setVisibility(View.VISIBLE);
+    if (coachService.partner_status != null) {
+        holder.imgAl.setImageResource(coachService.partner_status.alipay?R.drawable.ic_gym_al:R.drawable.ic_gym_al_disable);
+        holder.imgMt.setImageResource(coachService.partner_status.meituan?R.drawable.ic_gym_mt:R.drawable.ic_gym_mt_disable);
+        holder.imgTb.setImageResource(coachService.partner_status.taobao?R.drawable.ic_gym_tb:R.drawable.ic_gym_tb_disable);
+        holder.imgKb.setImageResource(coachService.partner_status.koubei?R.drawable.ic_gym_kb:R.drawable.ic_gym_kb_disable);
     }
+  }
 
-    public void setCoachService(CoachService coachService) {
-        this.coachService = coachService;
+  public class CoachServiceVH extends FlexibleViewHolder {
+    ImageView itemGymHeader;
+    TextView itemGymName;
+    TextView itemIsPersonal;
+    ImageView qcIdentify;
+    TextView itemGymPhonenum;
+    ImageView itemRight;
+    TextView itemBrand;
+    FrameLayout flPartner;
+    ImageView imgMt, imgTb, imgKb, imgAl;
+
+    public CoachServiceVH(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      itemGymHeader = (ImageView) view.findViewById(R.id.item_gym_header);
+      itemGymName = (TextView) view.findViewById(R.id.item_gym_name);
+      itemIsPersonal = (TextView) view.findViewById(R.id.item_is_personal);
+      qcIdentify = (ImageView) view.findViewById(R.id.qc_identify);
+      itemGymPhonenum = (TextView) view.findViewById(R.id.item_gym_phonenum);
+      itemRight = (ImageView) view.findViewById(R.id.item_right);
+      itemBrand = (TextView) view.findViewById(R.id.item_gym_brand);
+      flPartner=view.findViewById(R.id.fl_gym_partner);
+      imgMt=view.findViewById(R.id.img_mt);
+      imgKb=view.findViewById(R.id.img_kb);
+      imgTb=view.findViewById(R.id.img_tb);
+      imgAl=view.findViewById(R.id.img_al);
     }
-
-    @Override public boolean equals(Object o) {
-        if (o instanceof CoachServiceItem){
-            return ((CoachServiceItem) o).getCoachService().getId().equalsIgnoreCase(coachService.getId());
-        }else return false;
-    }
-
-    @Override public int getLayoutRes() {
-        return R.layout.item_gym;
-    }
-
-    @Override public CoachServiceVH createViewHolder(View view, FlexibleAdapter adapter) {
-        return new CoachServiceVH(view, adapter);
-    }
-
-    @Override public void bindViewHolder(FlexibleAdapter adapter, CoachServiceVH holder, int position, List payloads) {
-
-        holder.itemGymName.setText(coachService.getName());
-        holder.itemGymPhonenum.setText("联系方式：" + coachService.getPhone());
-        holder.itemBrand.setText("我的职位：" + coachService.getPosition());
-        holder.qcIdentify.setImageResource(GymUtils.getSystemEndDay(coachService) >= 0 ? R.drawable.ic_pro_green : R.drawable.ic_pro_free);
-        Glide.with(adapter.getRecyclerView().getContext())
-            .load(PhotoUtils.getSmall(coachService.getPhoto()))
-            .asBitmap()
-            .placeholder(R.drawable.ic_default_header)
-            .into(new CircleImgWrapper(holder.itemGymHeader, adapter.getRecyclerView().getContext()));
-        if (isShowRight) {
-            holder.itemRight.setVisibility(View.VISIBLE);
-            holder.itemRight.setImageResource(R.drawable.ic_arrow_right);
-        } else {
-            holder.itemRight.setVisibility(View.GONE);
-        }
-    }
-
-    public class CoachServiceVH extends FlexibleViewHolder {
-	ImageView itemGymHeader;
-	TextView itemGymName;
-	TextView itemIsPersonal;
-	ImageView qcIdentify;
-	TextView itemGymPhonenum;
-	ImageView itemRight;
-	TextView itemBrand;
-	View view;
-
-        public CoachServiceVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-          itemGymHeader = (ImageView) view.findViewById(R.id.item_gym_header);
-          itemGymName = (TextView) view.findViewById(R.id.item_gym_name);
-          itemIsPersonal = (TextView) view.findViewById(R.id.item_is_personal);
-          qcIdentify = (ImageView) view.findViewById(R.id.qc_identify);
-          itemGymPhonenum = (TextView) view.findViewById(R.id.item_gym_phonenum);
-          itemRight = (ImageView) view.findViewById(R.id.item_right);
-          itemBrand = (TextView) view.findViewById(R.id.item_gym_brand);
-          view = (View) view.findViewById(R.id.hiden);
-        }
-    }
+  }
 }

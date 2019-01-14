@@ -162,7 +162,7 @@ public class GymDetailPresenter extends BasePresenter {
               gymDetailView.setRecharge(qcResponseGymDetail.data.recharge,
                   qcResponseGymDetail.data.gym.has_first_month_favorable, price);
               gymDetailView.onSpecialPoint(qcResponseGymDetail.data.qingcheng_activity_count);
-
+              gymDetailView.onPartnter(qcResponseGymDetail.data.partner_status);
               if (qcResponseGymDetail.data.gym.module_custom != null) {
                 try {
                   qcDbManager.insertFunction(

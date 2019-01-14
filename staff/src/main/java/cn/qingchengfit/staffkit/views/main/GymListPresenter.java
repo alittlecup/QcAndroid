@@ -34,84 +34,90 @@ import rx.schedulers.Schedulers;
  */
 public class GymListPresenter extends BasePresenter {
 
-    @Inject GymWrapper gymWrapper;
-    @Inject LoginStatus loginStatus;
-    @Inject GymBaseInfoAction gymBaseInfoAction;
-    private StaffRespository mRestRepository;
-    private GymListView mView;
-    private Disposable dispose;
+  @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
+  private StaffRespository mRestRepository;
+  private GymListView mView;
+  private Disposable dispose;
 
-    @Inject public GymListPresenter(StaffRespository restRepository) {
-        this.mRestRepository = restRepository;
-    }
+  @Inject public GymListPresenter(StaffRespository restRepository) {
+    this.mRestRepository = restRepository;
+  }
 
-    @Override public void onStart() {
+  @Override public void onStart() {
 
-    }
+  }
 
-    @Override public void onStop() {
+  @Override public void onStop() {
 
-    }
+  }
 
-    @Override public void onPause() {
+  @Override public void onPause() {
 
-    }
+  }
 
-    @Override public void attachView(PView v) {
-        super.attachView(v);
-        mView = (GymListView) v;
-    }
+  @Override public void attachView(PView v) {
+    super.attachView(v);
+    mView = (GymListView) v;
+  }
 
-    public void subscribeGymsByBrandId() {
-        RxRegiste(gymBaseInfoAction.getAllGyms()
-          .flatMap(services -> {
-              List<CoachService> ret = new ArrayList<CoachService>();
-              for (CoachService service : services) {
-                  if (service.brand_id().equals(gymWrapper.brand_id())) ret.add(service);
-              }
-              return Flowable.just(ret);
-          })
-            .onBackpressureDrop()
-            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-            .subscribe(services -> mView.onServiceList(services)));
-    }
+  public void subscribeGymsByBrandId() {
+    RxRegiste(gymBaseInfoAction.getAllGyms()
+        .flatMap(services -> {
+          List<CoachService> ret = new ArrayList<CoachService>();
+          for (CoachService service : services) {
+            if (service.brand_id().equals(gymWrapper.brand_id())) ret.add(service);
+          }
+          return Flowable.just(ret);
+        })
+        .onBackpressureDrop()
+        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+        .subscribe(services ->{
+          //mView.onServiceList(services);
+        } ));
+  }
 
-    @Override public void attachIncomingIntent(Intent intent) {
+  @Override public void attachIncomingIntent(Intent intent) {
 
-    }
+  }
 
-    @Override public void onCreate() {
+  @Override public void onCreate() {
 
-    }
+  }
 
-    @Override public void unattachView() {
-        super.unattachView();
-        mView = null;
-        if (dispose != null && !dispose.isDisposed())
-            dispose.dispose();
-    }
+  @Override public void unattachView() {
+    super.unattachView();
+    mView = null;
+    if (dispose != null && !dispose.isDisposed()) dispose.dispose();
+  }
 
-    void loadData() {
-        RxRegiste(mRestRepository.getStaffAllApi()
-            .qcGetCoachService(loginStatus.staff_id(), null)
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(qcResponse -> {
-                if (ResponseConstant.checkSuccess(qcResponse)) {
-                    gymBaseInfoAction.writeGyms(qcResponse.getData().services);
-                } else {
-                    mView.onShowError(qcResponse.getMsg());
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    mView.onShowError(throwable.getMessage());
-                }
-            }));
-    }
+  void loadData() {
+    RxRegiste(mRestRepository.getStaffAllApi()
+        .qcGetCoachService(loginStatus.staff_id(), null)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(qcResponse -> {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            gymBaseInfoAction.writeGyms(qcResponse.getData().services);
+            List<CoachService> ret = new ArrayList<CoachService>();
+            for (CoachService service : qcResponse.getData().services) {
+              if (service.brand_id().equals(gymWrapper.brand_id())) ret.add(service);
+            }
+            mView.onServiceList(ret);
+          } else {
+            mView.onShowError(qcResponse.getMsg());
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            mView.onShowError(throwable.getMessage());
+          }
+        }));
+  }
 
-    interface GymListView extends CView {
-        void onServiceList(List<CoachService> list);
-    }
+  interface GymListView extends CView {
+    void onServiceList(List<CoachService> list);
+  }
 }

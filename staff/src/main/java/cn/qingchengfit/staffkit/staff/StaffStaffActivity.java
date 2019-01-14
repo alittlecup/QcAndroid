@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.staff.views.TrainerTabLeaveListFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabListFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoverOrderDetailFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoversHomePage;
+import cn.qingchengfit.saasbase.partner.PartnerAccountPage;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -51,16 +52,16 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/12/1.
  */
 @Trunk(fragments = {
-  ChooseSalerFragment.class, NewSalersListFragment.class,
-  TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class, StaffHomeFragment.class,
-  StaffAddFragment.class, StaffReInviteFragment.class,
-  StaffTabListFragment.class, StaffTabInviteListFragment.class, StaffTabLeaveListFragment.class,
-  InviteSendMsgFragment.class, InviteQrCodeFragment.class,
-  InviteLinkFragment.class, TrainerHomeFragment.class, TrainerTabInviteListFragment.class,
-  TrainerTabLeaveListFragment.class, TrainerTabListFragment.class, TrainerAddFragment.class,
-  SuFragment.class, SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
-  StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class, TurnoversHomePage.class, TurnoverOrderDetailFragment.class
-
+    ChooseSalerFragment.class, NewSalersListFragment.class, TrainerChooseFragment.class,
+    CoachListFragment.class, StaffDetailFragment.class, StaffHomeFragment.class,
+    StaffAddFragment.class, StaffReInviteFragment.class, StaffTabListFragment.class,
+    StaffTabInviteListFragment.class, StaffTabLeaveListFragment.class, InviteSendMsgFragment.class,
+    InviteQrCodeFragment.class, InviteLinkFragment.class, TrainerHomeFragment.class,
+    TrainerTabInviteListFragment.class, TrainerTabLeaveListFragment.class,
+    TrainerTabListFragment.class, TrainerAddFragment.class, SuFragment.class,
+    SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
+    StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class, TurnoversHomePage.class,
+    TurnoverOrderDetailFragment.class, PartnerAccountPage.class
 })
 
 public class StaffStaffActivity extends SaasContainerActivity {

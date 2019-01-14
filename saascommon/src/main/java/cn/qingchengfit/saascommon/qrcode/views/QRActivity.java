@@ -222,6 +222,9 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String SIGN_IN_CODE = "/sign/code";
   public static final String SIGN_IN_CARD = "/sign/card";
 
+  public static final String GYM_PARTNER_ALI = "enter-ali";
+  public static final String GYM_PARTNER_KOUBEI = "koubei";
+
   //    @BindView(R.id.qrdecoderview)
   QRCodeReaderView qrdecoderview;
 

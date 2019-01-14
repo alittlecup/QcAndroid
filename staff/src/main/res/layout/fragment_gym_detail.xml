@@ -413,32 +413,36 @@
       android:background="@color/toolbar"
       android:gravity="center_vertical"
       android:minHeight="72dp"
-      android:orientation="horizontal"
+      android:orientation="vertical"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
       android:transformPivotY="0dp"
       android:visibility="gone"
+      tools:visibility="visible"
+
       >
 
     <ImageView
         android:id="@+id/shop_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         tools:src="@drawable/ic_test"
         />
-
-    <LinearLayout
+    
+    <RelativeLayout
         android:id="@+id/gym_info_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical"
-
         >
 
       <LinearLayout
+          android:id="@+id/ll_gym_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
@@ -467,34 +471,35 @@
             android:textSize="10sp"
             app:srcCompat="@drawable/ic_pro_green"
             />
-
       </LinearLayout>
-
-
       <TextView
           android:id="@+id/gym_su"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/font_divider"
           android:maxLines="3"
+          android:layout_below="@+id/ll_gym_title"
           android:maxWidth="150dp"
           android:textColor="@color/white"
           android:textSize="13sp"
           tools:text="123123123122"
           />
+      <Button
+          android:id="@+id/recharge"
+          android:layout_width="60dp"
+          android:layout_height="30dp"
+          android:background="@drawable/bg_rect_prime"
+          android:text="续费"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/colorPrimary"
+          android:textSize="13sp"
 
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/recharge"
-        android:layout_width="64dp"
-        android:layout_height="28dp"
-        android:background="@drawable/bg_rect_prime"
-        android:text="续费"
-        android:textColor="@color/colorPrimary"
-        android:textSize="13sp"
-
+          />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/partner_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         />
 
   </LinearLayout>

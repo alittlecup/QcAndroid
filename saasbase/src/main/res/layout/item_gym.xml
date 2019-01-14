@@ -44,7 +44,7 @@
           android:id="@+id/item_gym_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          tools:text="陈驰元\n xxxasfd"
+          tools:text="陈驰元"
           style="@style/Qc.TextCommonBlack"
           />
 
@@ -80,6 +80,46 @@
 
           />
     </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fl_gym_partner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+      <ImageView
+          android:id="@+id/img_mt"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          app:srcCompat="@drawable/ic_gym_mt_disable"
+          />
+      <ImageView
+          android:id="@+id/img_tb"
+
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_marginLeft="16dp"
+          app:srcCompat="@drawable/ic_gym_tb_disable"
+          />
+      <ImageView
+          android:id="@+id/img_kb"
+
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_marginLeft="32dp"
+          app:srcCompat="@drawable/ic_gym_kb_disable"
+          />
+      <ImageView
+          android:id="@+id/img_al"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_marginLeft="48dp"
+          app:srcCompat="@drawable/ic_gym_al_disable"
+          />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/item_gym_phonenum"
