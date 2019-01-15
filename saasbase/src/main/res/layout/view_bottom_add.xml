@@ -26,6 +26,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:gravity="center"
         android:layout_marginTop="5dp"
         android:background="@drawable/btn_prime"
         tools:text="+ 添加课程种类"

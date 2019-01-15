@@ -40,11 +40,7 @@ import javax.inject.Inject;
 
   @Override public void onRefresh() {
 
-    //viewModel.courseListValue.addOnPropertyChangedCallback(
-    //    new Observable.OnPropertyChangedCallback() {
-    //      @Override public void onPropertyChanged(Observable sender, int propertyId) {
     List<AbstractFlexibleItem> datas = new ArrayList();
-    //ArrayList<CourseType> dataList = (ArrayList<CourseType>) getArguments().get("courseList");
     srl.setRefreshing(false);
     if (dataList == null || dataList.size() == 0) {
       datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
@@ -54,35 +50,7 @@ import javax.inject.Inject;
       }
     }
     commonFlexAdapter.updateDataSet(datas, true);
-    //  }
-    //});
 
-    //RxRegiste(courseApi.qcGetCourses(mIsPrivate)
-    //    .onBackpressureLatest()
-    //    .subscribeOn(Schedulers.io())
-    //    .observeOn(AndroidSchedulers.mainThread())
-    //    .map(qcResponse -> {
-    //      List<AbstractFlexibleItem> datas = new ArrayList();
-    //
-    //      srl.setRefreshing(false);
-    //      if (ResponseConstant.checkSuccess(qcResponse)) {
-    //        if (qcResponse.data != null && qcResponse.data.courses != null) {
-    //          if (qcResponse.data.courses.size() == 0) {
-    //            datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
-    //          }else {
-    //            datas.add(0, new CourseItem(createAllCourse()));
-    //            for (CourseType course : qcResponse.data.courses) {
-    //              datas.add(new CourseItem(course));
-    //            }
-    //          }
-    //        }
-    //      } else {
-    //        onShowError(qcResponse.getMsg());
-    //      }
-    //      return datas;
-    //    }).subscribe(iFlexibles -> {
-    //      commonFlexAdapter.updateDataSet(iFlexibles, true);
-    //    }, new NetWorkThrowable()));
   }
 
   @Override public boolean onItemClick(int position) {

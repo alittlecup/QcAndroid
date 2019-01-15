@@ -487,18 +487,18 @@ public class GymDetailFragment extends BaseFragment
               if (view.getScaleY() == 0) {
                 if (flGymInfo != null) flGymInfo.setVisibility(View.GONE);
               }
-              llScan.setVisibility(View.VISIBLE);
             }
 
             @Override public void onAnimationCancel(View view) {
             }
           })
           .start();
+      llScan.setVisibility(View.VISIBLE);
     } else {
       flGymInfo.setScaleY(0);
       flGymInfo.setVisibility(View.VISIBLE);
-      llScan.setVisibility(View.GONE);
       ViewCompat.animate(flGymInfo).scaleY(1).setDuration(200L).start();
+      llScan.setVisibility(View.GONE);
     }
     ViewCompat.animate(down).rotationBy(180).setDuration(200).start();
   }
