@@ -78,9 +78,9 @@ public class GymPartnerItem
     dataBinding.tvPartnerStatus.setText(status ? "已认证" : "未认证");
     dataBinding.tvPartnerStatus.setTextColor(dataBinding.getRoot()
         .getResources()
-        .getColor(status ? R.color.primary : R.color.warm_grey));
+        .getColor(status ? R.color.primary : R.color.white));
     Drawable drawable = DrawableUtils.tintDrawable(dataBinding.getRoot().getContext(),
-        R.drawable.vd_arrow_right_grey_small, status ? R.color.primary : R.color.warm_grey);
+        R.drawable.vd_arrow_right_grey_small, status ? R.color.primary : R.color.white);
     dataBinding.tvPartnerStatus.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
   }
 }

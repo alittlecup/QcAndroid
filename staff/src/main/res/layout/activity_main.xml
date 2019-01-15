@@ -25,7 +25,6 @@
       android:layout_width="match_parent"
       android:layout_height="48dp"
       android:layout_alignParentBottom="true"
-      android:layout_marginTop="5dp"
       android:background="@color/toolbar"
       android:gravity="center_vertical"
       app:text_select_color="@color/colorPrimary"

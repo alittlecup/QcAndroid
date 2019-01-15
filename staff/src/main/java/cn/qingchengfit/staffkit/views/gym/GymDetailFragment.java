@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -146,7 +147,6 @@ public class GymDetailFragment extends BaseFragment
   Toolbar toolbar;
   TextView toolbarTitile;
   ImageView down;
-  LinearLayout gymLayout;
   TextView toolbarLeft;
   AppBarLayout layoutCollapsed;
   TextView scheduleNotificationCount;
@@ -185,6 +185,7 @@ public class GymDetailFragment extends BaseFragment
   private boolean firstMonthClose;
   private static float offSetMaxSize;
   List<Fragment> fragments = new ArrayList<>();
+  FrameLayout flGymInfo;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -199,7 +200,6 @@ public class GymDetailFragment extends BaseFragment
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
     down = (ImageView) view.findViewById(R.id.down);
-    gymLayout = (LinearLayout) view.findViewById(R.id.gym_layout);
     toolbarLeft = (TextView) view.findViewById(R.id.toolbar_left);
     layoutCollapsed = (AppBarLayout) view.findViewById(R.id.layout_collapsed);
     llTitleBelow = view.findViewById(R.id.ll_title_below);
@@ -215,6 +215,12 @@ public class GymDetailFragment extends BaseFragment
     tagPro = (ImageView) view.findViewById(R.id.tag_pro);
     layoutCharge = (LinearLayout) view.findViewById(R.id.layout_to_charge);
     tvPrice = (CompatTextView) view.findViewById(R.id.tv_price);
+    flGymInfo=view.findViewById(R.id.fl_gym_info);
+    flGymInfo.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTitleClick();
+      }
+    });
     llScan = view.findViewById(R.id.ll_scan);
     gymPartnerRecyclerView = view.findViewById(R.id.partner_recycler);
 
@@ -468,9 +474,9 @@ public class GymDetailFragment extends BaseFragment
    * 点击标题弹出场馆信息
    */
   public void onTitleClick() {
-    gymLayout.setPivotY(0);
-    if (gymLayout.getVisibility() == View.VISIBLE) {
-      ViewCompat.animate(gymLayout)
+    flGymInfo.setPivotY(0);
+    if (flGymInfo.getVisibility() == View.VISIBLE) {
+      ViewCompat.animate(flGymInfo)
           .scaleY(0)
           .setDuration(200L)
           .setListener(new ViewPropertyAnimatorListener() {
@@ -479,8 +485,9 @@ public class GymDetailFragment extends BaseFragment
 
             @Override public void onAnimationEnd(View view) {
               if (view.getScaleY() == 0) {
-                if (gymLayout != null) gymLayout.setVisibility(View.GONE);
+                if (flGymInfo != null) flGymInfo.setVisibility(View.GONE);
               }
+              llScan.setVisibility(View.VISIBLE);
             }
 
             @Override public void onAnimationCancel(View view) {
@@ -488,9 +495,10 @@ public class GymDetailFragment extends BaseFragment
           })
           .start();
     } else {
-      gymLayout.setScaleY(0);
-      gymLayout.setVisibility(View.VISIBLE);
-      ViewCompat.animate(gymLayout).scaleY(1).setDuration(200L).start();
+      flGymInfo.setScaleY(0);
+      flGymInfo.setVisibility(View.VISIBLE);
+      llScan.setVisibility(View.GONE);
+      ViewCompat.animate(flGymInfo).scaleY(1).setDuration(200L).start();
     }
     ViewCompat.animate(down).rotationBy(180).setDuration(200).start();
   }

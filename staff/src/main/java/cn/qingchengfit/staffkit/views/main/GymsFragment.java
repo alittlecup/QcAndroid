@@ -99,7 +99,7 @@ public class GymsFragment extends BaseFragment
     /**
      * 订阅品牌
      */
-    gymListPresenter.loadData();
+    gymListPresenter.subscribeGymsByBrandId();
   }
 
   @Override public void onResume() {

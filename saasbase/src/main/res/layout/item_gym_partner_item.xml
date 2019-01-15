@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:drawablePadding="5dp"
         android:drawableRight="@drawable/vd_arrow_right_grey_small"
-        android:drawableTint="@color/white"
         android:text="未认证"
         android:textSize="@dimen/txt_14sp"
         />

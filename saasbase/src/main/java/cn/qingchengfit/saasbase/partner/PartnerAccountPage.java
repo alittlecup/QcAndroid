@@ -83,16 +83,16 @@ import javax.inject.Inject;
       String content = "";
       switch (type) {
         case GymPartnerItem.GymPartnerType.PARTNER_ALI:
-          content = "场馆将可以参与青橙联合阿里体育、淘宝、支付宝等\n持续推出的阿里健身新零售的流量赋能、金融赋能、企业用户开拓";
+          content = "场馆将可以参与青橙联合阿里体育、淘宝、支付宝等持续推出的阿里健身新零售的流量赋能、金融赋能、企业用户开拓";
           break;
         case GymPartnerItem.GymPartnerType.PARTNER_KOUBEI:
-          content = "场馆已成为口碑网认证商\n将获得更多的线上曝光机会";
+          content = "场馆已成为口碑网认证商将获得更多的线上曝光机会";
           break;
         case GymPartnerItem.GymPartnerType.PARTNER_TAOBAO:
-          content = "场馆将可以参与青橙联合阿里体育、淘宝、支付宝等\n持续推出的阿里健身新零售的流量赋能、金融赋能、企业用户开拓";
+          content = "场馆将可以参与青橙联合阿里体育、淘宝、支付宝等持续推出的阿里健身新零售的流量赋能、金融赋能、企业用户开拓";
           break;
         case GymPartnerItem.GymPartnerType.PARTNER_MEITUAN:
-          content = "场馆已成为美团点评认证商家\n将获得更多的线上曝光机会";
+          content = "场馆已成为美团点评认证商家将获得更多的线上曝光机会";
           break;
       }
       mBinding.tvPath.setText(content);
@@ -107,7 +107,6 @@ import javax.inject.Inject;
       mBinding.tvContent.setText("请在电脑浏览器中打开以下链接，管理认证");
       mBinding.tvPath.setText("http://cloud.qingchengfit.cn");
       mBinding.tvPath.setPadding(0, MeasureUtils.dpToPx(2f, getResources()), 0, 0);
-
       mBinding.tvPath.setTextColor(getResources().getColor(R.color.primary));
 
       mBinding.btnScan.setOnClickListener(v -> {

@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.base;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.os.Parcel;
@@ -74,7 +75,8 @@ import com.google.gson.annotations.SerializedName;
     this.partner_status = partner_status;
   }
 
-  @Ignore @SerializedName("partner_status")
+   @SerializedName("partner_status")
+   @Embedded(prefix = "status_")
   public PartnerStatus partner_status;
 
   private CoachService(Builder builder) {

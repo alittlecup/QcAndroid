@@ -96,10 +96,10 @@ public class CoachServiceItem extends AbstractFlexibleItem<CoachServiceItem.Coac
     }
     holder.flPartner.setVisibility(View.VISIBLE);
     if (coachService.partner_status != null) {
-        holder.imgAl.setImageResource(coachService.partner_status.alipay?R.drawable.ic_gym_al:R.drawable.ic_gym_al_disable);
-        holder.imgMt.setImageResource(coachService.partner_status.meituan?R.drawable.ic_gym_mt:R.drawable.ic_gym_mt_disable);
-        holder.imgTb.setImageResource(coachService.partner_status.taobao?R.drawable.ic_gym_tb:R.drawable.ic_gym_tb_disable);
-        holder.imgKb.setImageResource(coachService.partner_status.koubei?R.drawable.ic_gym_kb:R.drawable.ic_gym_kb_disable);
+        holder.imgAl.setImageResource(coachService.partner_status.alipay?R.drawable.ic_gym_al_circle:R.drawable.ic_gym_al_disable);
+        holder.imgMt.setImageResource(coachService.partner_status.meituan?R.drawable.ic_gym_mt_circle:R.drawable.ic_gym_mt_disable);
+        holder.imgTb.setImageResource(coachService.partner_status.taobao?R.drawable.ic_gym_tb_circle:R.drawable.ic_gym_tb_disable);
+        holder.imgKb.setImageResource(coachService.partner_status.koubei?R.drawable.ic_gym_kb_circle:R.drawable.ic_gym_kb_disable);
     }
   }
 

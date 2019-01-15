@@ -75,7 +75,7 @@ public class GymListPresenter extends BasePresenter {
         .subscribeOn(io.reactivex.schedulers.Schedulers.io())
         .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
         .subscribe(services ->{
-          //mView.onServiceList(services);
+          mView.onServiceList(services);
         } ));
   }
 
@@ -102,11 +102,6 @@ public class GymListPresenter extends BasePresenter {
         .subscribe(qcResponse -> {
           if (ResponseConstant.checkSuccess(qcResponse)) {
             gymBaseInfoAction.writeGyms(qcResponse.getData().services);
-            List<CoachService> ret = new ArrayList<CoachService>();
-            for (CoachService service : qcResponse.getData().services) {
-              if (service.brand_id().equals(gymWrapper.brand_id())) ret.add(service);
-            }
-            mView.onServiceList(ret);
           } else {
             mView.onShowError(qcResponse.getMsg());
           }
