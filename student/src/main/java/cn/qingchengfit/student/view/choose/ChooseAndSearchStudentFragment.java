@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,6 +80,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Inject IPermissionModel permissionModel;
   @Need public ArrayList<String> studentIdList;
   @Need public String source;
+  @Need public String from;
   @Need public Integer chooseType;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -166,6 +168,13 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   public void postBackSelectedStudent() {
+    if (!TextUtils.isEmpty(from)) {
+      List<QcStudentBean> selectedStudent = chooseStudentListFragment.getSelectedStudent();
+      if (selectedStudent.isEmpty()) {
+        DialogUtils.showAlert(getContext(), "至少绑定一个会员，如需停卡请返回进行停卡操作");
+        return;
+      }
+    }
     RxBus.getBus()
         .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent(), source));
     popBack();

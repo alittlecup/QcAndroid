@@ -119,6 +119,7 @@ import rx.android.schedulers.AndroidSchedulers;
       Map<String,Object> map=new HashMap<>();
       map.put("studentIdList",card.getUserIds());
       QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
+          .addParam("from","/card/detail")
           .addParams(map)).call();
       return true;
     });
