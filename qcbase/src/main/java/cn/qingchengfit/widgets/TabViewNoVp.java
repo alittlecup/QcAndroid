@@ -99,7 +99,7 @@ public class TabViewNoVp extends LinearLayout implements View.OnClickListener {
       int icon[] = new int[2];
       icon[0] = resDrawableOn[i];
       icon[1] = resDrawableOff[i];
-      if (mChildSize == 5 && i == 2) {
+      if (mChildSize == 5 && i == 2&&!resTxt[i].equals("发现")) {
         tabItem.setIconText(icon, new String[] { "" ,resTxt[i]});
       } else {
         tabItem.setIconText(icon, new String[] { resTxt[i], resTxt[i] });
