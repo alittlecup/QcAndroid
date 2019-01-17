@@ -35,7 +35,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
-import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
+import cn.qingchengfit.widgets.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;

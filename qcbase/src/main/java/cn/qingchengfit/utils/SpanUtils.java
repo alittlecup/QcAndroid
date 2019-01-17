@@ -1,4 +1,4 @@
-package cn.qingchengfit.saascommon.utils;
+package cn.qingchengfit.utils;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;

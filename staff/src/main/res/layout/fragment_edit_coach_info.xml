@@ -120,7 +120,7 @@
           />
     </RelativeLayout>
 
-    <cn.qingchengfit.staffkit.views.custom.PhoneEditText
+    <cn.qingchengfit.widgets.PhoneEditText
         android:id="@+id/phone_num"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

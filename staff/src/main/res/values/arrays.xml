@@ -120,11 +120,6 @@
   </string-array>
 
 
-  <string-array name="country_and_districion_list">
-    <item>中国大陆  +86</item>
-    <item>中国台湾  +886</item>
-  </string-array>
-
 
   <string-array name="module_strings">
     <item>workspace/order_list</item>

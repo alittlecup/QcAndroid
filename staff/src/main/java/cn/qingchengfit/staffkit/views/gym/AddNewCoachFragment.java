@@ -39,7 +39,7 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
-import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
+import cn.qingchengfit.widgets.PhoneEditText;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.MeasureUtils;

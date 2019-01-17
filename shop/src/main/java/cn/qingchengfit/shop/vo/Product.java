@@ -3,7 +3,7 @@ package cn.qingchengfit.shop.vo;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.shop.ui.items.inventory.IInventoryItemData;
 import android.text.TextUtils;
 import cn.qingchengfit.shop.ui.items.product.IProductItemData;

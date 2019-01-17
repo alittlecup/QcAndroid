@@ -3,6 +3,7 @@
   <string-array name="country_and_districion_list">
     <item>中国  +86</item>
     <item>中国台湾  +886</item>
+    <item>美国  +1</item>
   </string-array>
   <string-array name="gender_list">
     <item>男</item>

@@ -1,12 +1,11 @@
 package cn.qingchengfit.student.view.followup;
 
-import android.arch.lifecycle.Transformations;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.student.databinding.ViewIncreaseMemberTopBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;

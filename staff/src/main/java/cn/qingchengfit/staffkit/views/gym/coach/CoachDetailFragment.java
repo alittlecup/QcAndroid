@@ -32,7 +32,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
+import cn.qingchengfit.widgets.PhoneEditText;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;

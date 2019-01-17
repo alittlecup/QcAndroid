@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
-import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductInventoryBinding;
 import cn.qingchengfit.shop.util.ViewUtil;

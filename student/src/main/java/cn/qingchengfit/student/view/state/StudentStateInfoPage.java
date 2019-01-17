@@ -1,30 +1,24 @@
 package cn.qingchengfit.student.view.state;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.SpannableStringBuilder;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.student.Utils;
 import cn.qingchengfit.student.bean.InactiveBean;
 import cn.qingchengfit.student.bean.SellerStat;
-import cn.qingchengfit.student.bean.StatData;
 import cn.qingchengfit.student.databinding.PageStudentStateInfoBinding;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.item.SalerStudentInfoItem;
 import cn.qingchengfit.student.listener.IncreaseType;
-import cn.qingchengfit.student.view.home.StudentHomePieChartView;
 import cn.qingchengfit.student.widget.CountDateView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -37,10 +31,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Leaf(module = "student", path = "/saler/student") public class StudentStateInfoPage
     extends StudentBaseFragment<PageStudentStateInfoBinding, StudentStateInfoViewModel>

@@ -3,7 +3,7 @@ package cn.qingchengfit.shop.ui.items.product;
 import android.graphics.Color;
 import android.view.View;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
-import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductListBinding;
 import cn.qingchengfit.shop.util.ViewUtil;

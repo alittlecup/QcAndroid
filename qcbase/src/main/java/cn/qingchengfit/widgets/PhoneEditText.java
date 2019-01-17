@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.utils.ToastUtils;
 
 /**
@@ -27,12 +28,14 @@ public class PhoneEditText extends LinearLayout
   private boolean onlyMainland = false;
   //0: china
   //1: china taiwan
+  //2: 美国
   private int mDistrictInt = 0;
   private ImageView mLeftIcon;
   private boolean noNull = false;
   private TextView noNullTv;
   private String hintStr;
   private OnEditFocusListener onEditFocusListener;
+  private boolean isRequest;
 
   public PhoneEditText(Context context) {
     super(context);
@@ -66,8 +69,6 @@ public class PhoneEditText extends LinearLayout
 
   private void init(AttributeSet attrs, int defStyle) {
 
-    //        LayoutInflater.from(context).inflate(R.layout.layout_login_edittext, this, true);
-    // Load attributes
     final TypedArray a =
         getContext().obtainStyledAttributes(attrs, R.styleable.PhoneEditText, defStyle, 0);
     showIcon = a.getBoolean(R.styleable.PhoneEditText_phone_show_icon, true);
@@ -144,6 +145,12 @@ public class PhoneEditText extends LinearLayout
         ToastUtils.show(getResources().getString(R.string.err_login_phonenum));
         return false;
       }
+    } else if (mDistrictInt == 2) {
+      //美国
+      if (phoneNum.length() != 10) {
+        ToastUtils.show(getResources().getString(R.string.err_login_phonenum));
+        return false;
+      }
     }
     return true;
   }
@@ -166,6 +173,8 @@ public class PhoneEditText extends LinearLayout
         return "+86";
       case 1:
         return "+886";
+      case 2:
+        return "+1";
       default:
         return "+86";
     }
@@ -179,12 +188,18 @@ public class PhoneEditText extends LinearLayout
         mDistrictInt = 0;
       } else if (s.equalsIgnoreCase("+886")) {
         mDistrictInt = 1;
-      } else {
-        mDistrictInt = 0;
+      } else if (s.equalsIgnoreCase("+1")) {
+        mDistrictInt = 2;
       }
     }
     mDistrict.setText(
         getResources().getStringArray(R.array.country_and_districion_list)[mDistrictInt]);
+    if (isRequest) {
+      mDistrict.setText(new SpanUtils().append(mDistrict.getText())
+          .append(" *")
+          .setForegroundColor(getResources().getColor(R.color.red))
+          .create());
+    }
   }
 
   private onDistrictIntChangeListener onDistrictIntChangeListener;
@@ -213,7 +228,18 @@ public class PhoneEditText extends LinearLayout
       mPhoneNum.setHint("");
     }
     mPhoneNum.setAlpha(editble ? 1f : 0.5f);
-    findViewById(R.id.img_down).setVisibility(editble?View.VISIBLE:View.GONE);
-    findViewById(R.id.img_divier).setVisibility(editble?View.VISIBLE:View.GONE);
+    findViewById(R.id.img_down).setVisibility(editble ? View.VISIBLE : View.GONE);
+    findViewById(R.id.img_divier).setVisibility(editble ? View.VISIBLE : View.GONE);
+  }
+  public void setRequest(boolean isRequest) {
+    this.isRequest = isRequest;
+    if (isRequest) {
+      mDistrict.setText(new SpanUtils().append(mDistrict.getText())
+          .append(" *")
+          .setForegroundColor(getResources().getColor(R.color.red))
+          .create());
+    } else {
+      mDistrict.setText(mDistrict.getText().toString().replace(" *", ""));
+    }
   }
 }

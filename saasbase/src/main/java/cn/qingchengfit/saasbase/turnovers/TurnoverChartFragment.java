@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.TurnoverChartFragmentBinding;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
-import cn.qingchengfit.saascommon.utils.SpanUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.saascommon.views.TurnoverPieChartRenderer;
 import com.github.mikephil.charting.animation.Easing;

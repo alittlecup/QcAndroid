@@ -1,6 +1,0 @@
-<resources>
-  <declare-styleable name="PhoneEditText">
-    <attr format="boolean" name="phone_show_icon"/>
-    <attr format="string" name="phone_hint"/>
-  </declare-styleable>
-</resources>
