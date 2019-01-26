@@ -573,6 +573,7 @@
   <string name="module_manage_trainer">教练</string>
 
   <string name="module_shop_turnovers">营业流水</string>
+
   <string name="module_op_score">会员积分</string>
   <string name="module_op_acitivty">活动</string>
   <string name="module_op_ad">主页广告</string>
@@ -583,8 +584,8 @@
   <string name="module_op_hongbao">健身红包</string>
   <string name="module_op_private_share">私教拼课</string>
   <string name="module_op_group_share">组队拼课</string>
-  <string name="module_op_ali">天猫新零售</string>
-  <string name="module_op_ali11">天猫双11</string>
+  <string name="module_op_tmall_join">免费入驻淘宝</string>
+  <string name="module_op_parnter_manager">线上渠道管理</string>
   <string name="module_op_dianping">美团点评</string>
   <string name="module_op_more">更多功能</string>
 

@@ -283,12 +283,11 @@ public class GymMoreFragment extends BaseFragment
                     internalFuntion));
 
             FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
+
             mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SHOP_TURNOVERS), runFuntion));
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_TMALL_JOIN), runFuntion));
             mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_ALI11), runFuntion));
-            mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_ALI), runFuntion));
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_PARNTER_MANAGER), runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_DIANPING),
                 runFuntion));
@@ -298,7 +297,6 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_ACTIVITY),
                 runFuntion));
-            //                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_AD), runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERTAT_KOUBEI),
                 runFuntion));
@@ -328,9 +326,14 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     runFuntion));
+            mDatas.add(
+                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
+                    runFuntion));
 
 
             FunHeaderItem financialFuntion = new FunHeaderItem("财务与报表");
+            mDatas.add(new GymFuntionItem(
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SHOP_TURNOVERS), financialFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINACE_ONLINE),
                 financialFuntion));
@@ -355,6 +358,15 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINANCE_VISUAL_REPORT),
                 financialFuntion));
+            mDatas.add(
+                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
+                    financialFuntion));
+            mDatas.add(
+                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
+                    financialFuntion));
+            mDatas.add(
+                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
+                    financialFuntion));
 
             FunHeaderItem gymFuntion = new FunHeaderItem("场馆管理");
             mDatas.add(new GymFuntionItem(
@@ -371,7 +383,6 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_HOME),
                     gymFuntion));
-            //        mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WECHAT), gymFuntion));
             mDatas.add(
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     gymFuntion));

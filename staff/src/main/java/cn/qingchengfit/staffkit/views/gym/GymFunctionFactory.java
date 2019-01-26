@@ -51,8 +51,6 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_HOME;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_COACH;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_STAFF;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_STAFF_ADD;
-import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_ALI;
-import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_ALI11;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MARKET_DIANPING;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MSG;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_NONE;
@@ -68,6 +66,7 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_OPERATE_
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_OPERATE_REGIST;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_OPERATE_SCORE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_OPERTAT_KOUBEI;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_PARNTER_MANAGER;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_FREE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_GROUP;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_PRIVATE;
@@ -77,6 +76,7 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SMARTGYM
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_STUDENT;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_STUDENT_BODY_TEST;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_STUDENT_CARDS;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_TMALL_JOIN;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WARDROBE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WECHAT;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_WORKSPACE_COMMODITY_LIST;
@@ -176,7 +176,10 @@ public class GymFunctionFactory {
         return R.drawable.ic_icon_turnover;
       case MODULE_OPERATE_SCORE:
         return R.drawable.moudule_op_score;
-
+      case MODULE_TMALL_JOIN:
+        return R.drawable.ic_module_tmall_join;
+      case MODULE_PARNTER_MANAGER:
+        return R.drawable.ic_module_parnter_manager;
       case MODULE_OPERATE_COMPETITION:
         return R.drawable.moudule_op_competition;
 
@@ -196,7 +199,6 @@ public class GymFunctionFactory {
       // TODO: 2018/3/20
       case MODULE_WORKSPACE_COMMODITY_LIST:
         return R.drawable.module_service_shop;
-
 
       case MODULE_WARDROBE:
         return R.drawable.moudule_gym_wardrobe;
@@ -237,10 +239,7 @@ public class GymFunctionFactory {
 
       case MODULE_SMARTGYM_SMART:
         return R.drawable.vd_module_aigym;
-      case MODULE_MARKET_ALI:
-        return R.drawable.tmall_icon;
-      case MODULE_MARKET_ALI11:
-        return R.drawable.tmall11_icon;
+
       case MODULE_MARKET_DIANPING:
         return R.drawable.dazhongdianping_icon;
 
@@ -276,6 +275,8 @@ public class GymFunctionFactory {
       case MODULE_DATA_PRIVATE:
       case MODULE_DATA_WHITEPAPER:
       case MODULE_SMARTGYM_SMART:
+      case MODULE_TMALL_JOIN:
+      case MODULE_PARNTER_MANAGER:
 
         return 1;
       case MODULE_GYM_SITE:
@@ -342,6 +343,10 @@ public class GymFunctionFactory {
         return R.string.module_op_koubei;
       case MODULE_SHOP_TURNOVERS:
         return R.string.module_shop_turnovers;
+      case MODULE_TMALL_JOIN:
+        return R.string.module_op_tmall_join;
+      case MODULE_PARNTER_MANAGER:
+        return R.string.module_op_parnter_manager;
       case MODULE_OPERATE_SCORE:
         return R.string.module_op_score;
       case MODULE_OPERATE_COMPETITION:
@@ -376,7 +381,6 @@ public class GymFunctionFactory {
         return R.string.module_service_shop;
       case MODULE_WORKSPACE_COMMODITY_LIST:
         return R.string.module_service_commodity_list;
-
 
       case MODULE_WARDROBE:
         return R.string.module_gym_wardrobe;
@@ -417,10 +421,7 @@ public class GymFunctionFactory {
 
       case MODULE_SMARTGYM_SMART:
         return R.string.module_smartgym;
-      case MODULE_MARKET_ALI:
-        return R.string.module_op_ali;
-      case MODULE_MARKET_ALI11:
-        return R.string.module_op_ali11;
+
       case MODULE_MARKET_DIANPING:
         return R.string.module_op_dianping;
 
@@ -485,7 +486,6 @@ public class GymFunctionFactory {
         } else {
           DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
         }
-        //goQrScan(fragment, module, null, coachService);
         return;
       case MODULE_WORKSPACE_COMMODITY_LIST:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
@@ -493,23 +493,16 @@ public class GymFunctionFactory {
           DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
           return;
         }
-        //goQrScan(fragment, module, null, coachService);
-        //fragment.routeTo("shop","/shop/home",null);
         WeexUtil.loadJsMap(Configs.WEEX_RELEASE_PATH, Configs.WEEX_TEST_PATH,
             Configs.WEEX_PAGE_INDEX, BuildConfig.DEBUG);
 
-        //fragment.routeTo("student", "/student/home", null);
         return;
-
 
       /**会员管理
        * 会员  会员卡  会员体测
        *
        */
       case MODULE_STUDENT:
-        //Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
-        //fragment.startActivity(toStu);
-        //fragment.routeTo("student", "/student/home", null);
         if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS)) {
           QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/student/home"))
               .call();
@@ -531,8 +524,6 @@ public class GymFunctionFactory {
           DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
           return;
         }
-        //Intent toCard = new Intent(fragment.getActivity(), CardActivity.class);
-        //fragment.startActivity(toCard);
         fragment.routeTo("card", "/list/home/", null);
         return;
       case MODULE_STUDENT_BODY_TEST:
@@ -562,22 +553,13 @@ public class GymFunctionFactory {
        * 会员积分  活动   场馆主页广告
        * 介入口碑  注册送卡 场馆公告
        */
-      case MODULE_MARKET_ALI:
-        WebActivity.startWeb("https://jinshuju.net/f/xrU0bu", fragment.getContext());
+      case MODULE_TMALL_JOIN:
+        goQrScan(fragment,"/enter-ali",null,coachService);
         return;
-      case MODULE_MARKET_ALI11:
-        if (coachService.alisport_status == 3) {
-          fragment.routeTo("writeoff", "/ticket/list", null);
-        } else {
-          WebActivity.startWeb((Configs.Server
-              + "mobile/activity/enter-ali/#/brand/"
-              + coachService.getBrand_id()
-              + "/gym/"
-              + coachService.getGym_id()
-              + "/info-complete").replace("http", "https"), fragment.getContext());
-        }
+      case MODULE_PARNTER_MANAGER:
+        goQrScan(fragment,"/manage-partners",null,coachService);
+        return;
 
-        return;
       case MODULE_MARKET_DIANPING:
         if (coachService.meituan_status == 0) {
           fragment.routeTo("dianping", "/dianping/home", null);
@@ -587,9 +569,10 @@ public class GymFunctionFactory {
         }
         return;
       case MODULE_SHOP_TURNOVERS:
-        if(permissionModel.check(cn.qingchengfit.model.base.PermissionServerUtils.MODULE_SHOP_TURNOVER)){
+        if (permissionModel.check(
+            cn.qingchengfit.model.base.PermissionServerUtils.MODULE_SHOP_TURNOVER)) {
           fragment.routeTo("staff", "/turnover/home", null);
-        }else {
+        } else {
           DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
         }
 

@@ -16,7 +16,6 @@
       <module fileurl="file://$PROJECT_DIR$/student/student.iml" filepath="$PROJECT_DIR$/student/student.iml" />
       <module fileurl="file://$PROJECT_DIR$/trainer/trainer.iml" filepath="$PROJECT_DIR$/trainer/trainer.iml" />
       <module fileurl="file://$PROJECT_DIR$/weex/weex.iml" filepath="$PROJECT_DIR$/weex/weex.iml" />
-      <module fileurl="file://$PROJECT_DIR$/writeoff/writeoff.iml" filepath="$PROJECT_DIR$/writeoff/writeoff.iml" />
       <module fileurl="file://$PROJECT_DIR$/wxpreview/wxpreview.iml" filepath="$PROJECT_DIR$/wxpreview/wxpreview.iml" />
     </modules>
   </component>

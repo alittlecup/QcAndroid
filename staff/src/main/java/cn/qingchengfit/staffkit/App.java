@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 import cn.qingchengfit.card.StaffCardActivity;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -53,7 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
-import lib_zxing.activity.ZXingLibrary;
 import org.json.JSONException;
 import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
@@ -83,34 +81,16 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   // 配置分发的 URL
   final String SA_CONFIGURE_URL =
       "http://qingchengfit.cloud.sensorsdata.cn:8006/config?project=default";
-  // Debug 模式选项
-  //   SensorsDataAPI.DebugMode.DEBUG_OFF - 关闭 Debug 模式
-  //   SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
-  //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
   // 注意！请不要在正式发布的 App 中使用 Debug 模式！
-  final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_OFF;
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
   private AppComponent appCompoent;
-  //private ApplicationLike tinkerApplicationLike;
 
-  public AppComponent getAppCompoent() {
-    return appCompoent;
-  }
 
   @Override public void onCreate() {
 
     super.onCreate();
-    //
-    //tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
-    ////开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
-    //if (tinkerApplicationLike != null) {
-    //    TinkerPatch.init(tinkerApplicationLike)
-    //        .reflectPatchLibrary()
-    //        .setPatchRollbackOnScreenOff(true)
-    //        .setPatchRestartOnSrceenOff(true);
-    //    TinkerPatch.with().fetchPatchUpdate(true);
-    //}
+
     WeexDelegate.initWXSDKEngine(this);
     QC.init(this);
     QC.enableDebug(true);
@@ -123,7 +103,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
     }
-    ZXingLibrary.initDisplayOpinion(this);
     if (MsfSdkUtils.isMainProcess(this)) {
       LogUtil.d("MyApplication", "main process");
 
@@ -190,7 +169,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
       e.printStackTrace();
       LogUtil.e("hs_bug", e.getMessage());
     }
-    //}
     initX5();
   }
 
@@ -216,7 +194,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     lb.loginUser(staff);
     lb.session(session);
     lb.userId(user_id);
-    QCDbManagerImpl qcDbManager = new QCDbManagerImpl(this);
     appCompoent = DaggerAppComponent.builder()
         .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
             new GymWrapper.Builder().build(), new BaseRouter(),
@@ -227,14 +204,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         .realcardModule(new RealcardModule(new RealcardWrapper(null)))
         .trainMoudle(new TrainMoudle(new TrainIds.Builder().build()))
         .build();
-    //appCompoent = DaggerAppComponent.create();
     appCompoent.inject(this);
-  }
-
-  public void finishActivity() {
-    //杀死该应用进程
-    //android.os.Process.killProcess(android.os.Process.myPid());
-    System.exit(0);
   }
 
   @Override public DispatchingAndroidInjector<Activity> activityInjector() {

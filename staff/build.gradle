@@ -181,7 +181,6 @@ dependencies {
   addComponent("student", false)
   addComponent("card", false)
   addComponent("wxpreview", false)
-  addComponent("writeoff", false)
 
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')

@@ -1,4 +1,4 @@
-package cn.qingchengfit.writeoff.vo.impl;
+package cn.qingchengfit.saasbase.staff.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -143,9 +143,10 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String MODULE_OPERATE_PRIVATE_SHARE = "/private/collage";
   public static final String MODULE_OPERATE_GROUP_SHARE = "/group/collage";
   public static final String MODULE_OPERATE_MORE = "/spread/more";
-  public static final String MODULE_MARKET_ALI = "/tmall/retail";
-  public static final String MODULE_MARKET_ALI11 = "/tmall/eleven";
   public static final String MODULE_MARKET_DIANPING = "/meituan/dianping";
+
+  public static final String MODULE_TMALL_JOIN = "/tmall/join";
+  public static final String MODULE_PARNTER_MANAGER = "/partners/manager";
 
   /**
    * 财务
@@ -225,7 +226,6 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String GYM_PARTNER_ALI = "enter-ali";
   public static final String GYM_PARTNER_KOUBEI = "koubei";
 
-  //    @BindView(R.id.qrdecoderview)
   QRCodeReaderView qrdecoderview;
 
   Toolbar toolbar;
