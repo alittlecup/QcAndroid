@@ -61,7 +61,7 @@
   <application
       android:name=".App"
       android:allowBackup="false"
-      android:icon="@drawable/app_new_year"
+      android:icon="@mipmap/ic_launcher"
       android:label="${APP_NAME}"
       android:screenOrientation="portrait"
       android:supportsRtl="true"

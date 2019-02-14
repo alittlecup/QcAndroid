@@ -121,15 +121,15 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   String[] tags = new String[] { "gyms", "find", "msg", "setting", "ali" };
   private int[] mIconSelect = {
       R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active,
-      R.drawable.vd_tabbar_none, R.drawable.vd_tabbar_message_active,
+      R.drawable.vd_tabbar_message_active,
       R.drawable.vd_tabbar_mine_active
   };
   private int[] mIconNormal = {
       R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal,
-      R.drawable.vd_tabbar_none, R.drawable.vd_tabbar_message_normal,
+       R.drawable.vd_tabbar_message_normal,
       R.drawable.vd_tabbar_mine_normal
   };
-  private String[] tabText = { "健身房", "发现", "年货节", "消息", "我的" };
+  private String[] tabText = { "健身房", "发现", "消息", "我的" };
   private boolean isDownloading = false;
   private DownloadManager downloadManager;
   private Subscription updateSp;
@@ -354,11 +354,11 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     switch (pos) {
       case 1:
         return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
+      //case 2:
+      //  return QcVipFragment.newInstance(Configs.WEB_TEMP_NEW_YEAR.replace("http", "https"), "年货节");
       case 2:
-        return QcVipFragment.newInstance(Configs.WEB_TEMP_NEW_YEAR.replace("http", "https"), "年货节");
-      case 3:
         return new MainMsgFragment();
-      case 4:
+      case 3:
         return new SettingFragment();
       default:
         return new MainFirstFragment();

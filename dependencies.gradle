@@ -256,6 +256,6 @@ ext {
 
   chat_version = "1.0.0"
   recruit_version = "1.1.1"
-  today = new Date().format('yyMMdd').toInteger()
+  today = new Date().format('yyMMdd').toInteger()+1
   ticktime = System.currentTimeMillis() / 1000
 }

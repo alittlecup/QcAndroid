@@ -251,7 +251,9 @@ public class TurnoversVM extends BaseViewModel {
         iTurnoverChartData = convertChartStats(data, total);
       }
       chartDatas.setValue(new Pair<>(iTurnoverChartData, total));
-      chartVisible.setValue(true);
+      if(total>0){
+        chartVisible.setValue(true);
+      }
     } else {
       chartVisible.setValue(false);
     }
