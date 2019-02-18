@@ -34,6 +34,7 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.staff.routers.StaffRouterCenter;
 import cn.qingchengfit.staff.routers.dianpingImpl;
+import cn.qingchengfit.staff.routers.settingImpl;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.R;
@@ -188,7 +189,7 @@ import java.util.List;
   }
 
   @Provides static StaffRouterCenter provideStaffRouterCenter() {
-    return new StaffRouterCenter().registe(new dianpingImpl());
+    return new StaffRouterCenter().registe(new dianpingImpl()).registe(new settingImpl());
   }
 
   @Provides public IPermissionModel providePermissModel() {

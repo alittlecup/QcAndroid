@@ -1,9 +1,6 @@
 package cn.qingchengfit.staffkit.views.main;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,54 +8,30 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
-import cn.qingchengfit.events.EventLoginChange;
-import cn.qingchengfit.events.EventSessionError;
-import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
-import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.staffkit.constant.StaffRespository;
-import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
-import cn.qingchengfit.staffkit.views.setting.FixNotifySettingFragment;
-import cn.qingchengfit.staffkit.views.setting.ReportFragment;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.ShareDialogFragment;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import com.tencent.TIMManager;
-import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
-import com.xiaomi.mipush.sdk.MiPushClient;
-import java.util.Date;
 import javax.inject.Inject;
 import org.json.JSONException;
 import org.json.JSONObject;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -75,27 +48,20 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class SettingFragment extends BaseFragment implements SettingView {
   public static final int RESULT_LOGIN = 1;
-	ImageView headerIcon;
-	TextView drawerName;
-	TextView updateTime;
-	TextView logout;
-	TextView toolbarTitile;
-	Toolbar toolbar;
+  ImageView headerIcon;
+  TextView drawerName;
+  TextView toolbarTitile;
+  Toolbar toolbar;
 
-  @Inject GymWrapper gymWrapper;
-  @Inject StaffRespository mRestRepository;
   @Inject SettingPresenter presenter;
   @Inject LoginStatus loginStatus;
-  @Inject BusEventThrowable busEventThrowable;
   @Inject BaseRouter baseRouter;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_setting, container, false);
     headerIcon = (ImageView) view.findViewById(R.id.header_icon);
     drawerName = (TextView) view.findViewById(R.id.drawer_name);
-    updateTime = (TextView) view.findViewById(R.id.update_time);
-    logout = (TextView) view.findViewById(R.id.logout);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     view.findViewById(R.id.drawer_headerview).setOnClickListener(new View.OnClickListener() {
@@ -103,41 +69,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
         onHeader();
       }
     });
-    view.findViewById(R.id.setting_fix_notify).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onFixCheckin();
-      }
-    });
-    view.findViewById(R.id.aboutus).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onAboutUs();
-      }
-    });
-    view.findViewById(R.id.share).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onShare();
-      }
-    });
-    view.findViewById(R.id.web_site).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onWebSite();
-      }
-    });
-    view.findViewById(R.id.report).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onReport();
-      }
-    });
-    view.findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onUpdate();
-      }
-    });
-    view.findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onLogout();
-      }
-    });
+
     view.findViewById(R.id.civ_resume).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onMyResume();
@@ -151,14 +83,6 @@ public class SettingFragment extends BaseFragment implements SettingView {
 
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
-    onVisible();
-    RxBusAdd(EventSessionError.class).onBackpressureDrop()
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(eventSessionError -> {
-        onLogout();
-        ToastUtils.show("登录过期");
-        goLogin();
-      }, busEventThrowable);
 
     return view;
   }
@@ -166,110 +90,52 @@ public class SettingFragment extends BaseFragment implements SettingView {
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbar.setNavigationIcon(null);
-    toolbarTitile.setText(R.string.setting);
+    toolbarTitile.setText("我");
+    toolbar.inflateMenu(R.menu.menu_setting);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        routeTo("setting", "/setting/detail", null);
+        return false;
+      }
+    });
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    onVisible();
   }
 
   @Override protected void onVisible() {
     super.onVisible();
     if (getContext() != null) {
       if (!loginStatus.isLogined()) {
-                /*
-                 * 未登陆用户
-                 */
+        /*
+         * 未登陆用户
+         */
         Glide.with(getContext())
-          .load(PhotoUtils.getSmall(Configs.HEADER_COACH_MALE))
-          .asBitmap()
-          .into(new CircleImgWrapper(headerIcon, getContext()));
+            .load(PhotoUtils.getSmall(Configs.HEADER_COACH_MALE))
+            .asBitmap()
+            .into(new CircleImgWrapper(headerIcon, getContext()));
         drawerName.setText("未登录");
-        logout.setVisibility(View.GONE);
       } else {
-                /*
-                 * 已登录用户
-                 */
+        /*
+         * 已登录用户
+         */
         presenter.getSelfInfo();
       }
     }
   }
 
-  @Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-    super.onViewStateRestored(savedInstanceState);
-    updateTime.setText(BuildConfig.DEBUG ? "DEBUG版本-更新时间:" + DateUtils.Date2YYYYMMDDHHmm(
-      new Date(PreferenceUtils.getPrefLong(getContext(), "update", 0L) * 1000))
-      : AppUtils.getAppVer(getActivity()));
-  }
 
- public void onHeader() {
+  public void onHeader() {
     if (!loginStatus.isLogined()) {
       goLogin();
       return;
     }
-    routeTo("user","/edit/",null);
-    //FixSelfInfoFragment.start(this, 0, loginStatus.getLoginUser());
+    routeTo("user", "/edit/", null);
   }
 
-
- public void onFixCheckin() {
-    if (!loginStatus.isLogined()) {
-      goLogin();
-      return;
-    }
-    FixNotifySettingFragment.start(this, 4);
-  }
-
- public void onAboutUs() {
-    WebActivity.startWeb(Configs.ABOUT_US, true, getActivity());
-  }
-
- public void onShare() {
-    ShareDialogFragment.newInstance("健身房管理", getString(R.string.str_share_app),
-      "http://qcresource.b0.upaiyun.com/14.pic_thumb.jpg", Configs.DOWNLOAD_MANAGE)
-      .show(getFragmentManager(), "");
-  }
-
- public void onWebSite() {
-    new MaterialDialog.Builder(getContext()).autoDismiss(true)
-      .content("网页端地址\n" + "http://cloud.qingchengfit.cn/backend/settings/")
-      .positiveText(R.string.common_comfirm)
-      .negativeText(R.string.copy_link)
-      .autoDismiss(true)
-      .onNegative(new MaterialDialog.SingleButtonCallback() {
-        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-          ClipboardManager cmb =
-            (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-          cmb.setPrimaryClip(
-            ClipData.newPlainText("qingcheng", "http://cloud.qingchengfit.cn/backend/settings/"));
-          ToastUtils.showS("已复制");
-        }
-      })
-      .show();
-  }
-
- public void onReport() {
-    ReportFragment.start(this, 3);
-  }
-
- public void onUpdate() {
-    RxBus.getBus().post(new UpdateEvent());
-  }
-
- public void onLogout() {
-    if (getActivity() != null && getActivity() instanceof MainActivity) {
-      loginStatus.logout(getContext());
-      App.staffId = "";
-      PushManager.stopWork(getContext().getApplicationContext());
-      AppData.clear(getContext());
-      TIMManager.getInstance().logout();
-      PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
-      PreferenceUtils.setPrefString(getContext(), Configs.PREFER_WORK_ID, "");
-      PreferenceUtils.setPrefString(getContext(), Configs.CUR_BRAND_ID, "");
-      PreferenceUtils.setPrefString(getContext(), "session_id", "");
-      MiPushClient.unregisterPush(getContext().getApplicationContext());
-      RxBus.getBus().post(new EventLoginChange());
-      onVisible();
-    }
-  }
-
- public void onMyResume() {
+  public void onMyResume() {
     if (!loginStatus.isLogined()) {
       baseRouter.toLogin(this);
       return;
@@ -277,7 +143,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     baseRouter.routerTo("recruit", "resume", getContext(), 1001);
   }
 
- public void onOders() {
+  public void onOders() {
     if (!loginStatus.isLogined()) {
       baseRouter.toLogin(this);
       return;
@@ -291,25 +157,23 @@ public class SettingFragment extends BaseFragment implements SettingView {
 
   @Override public void onSelfInfo(Staff bean) {
     hideLoading();
-    logout.setVisibility(View.VISIBLE);
     loginStatus.setLoginUser(bean);
     Glide.with(getContext())
-      .load(PhotoUtils.getSmall(bean.getAvatar()))
-      .asBitmap()
-      .placeholder(bean.getGender()==0?R.drawable.default_manage_male:R.drawable.default_manager_female)
-      .into(new CircleImgWrapper(headerIcon, getContext()));
+        .load(PhotoUtils.getSmall(bean.getAvatar()))
+        .asBitmap()
+        .placeholder(bean.getGender() == 0 ? R.drawable.default_manage_male
+            : R.drawable.default_manager_female)
+        .into(new CircleImgWrapper(headerIcon, getContext()));
     drawerName.setText(bean.getUsername());
     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, bean.getUsername());
     if (!BuildConfig.DEBUG) {
-
       try {
-        JSONObject properties =
-          SensorsDataAPI.sharedInstance(getActivity().getApplicationContext()).getSuperProperties();
+        JSONObject properties = SensorsDataAPI.sharedInstance(getActivity().getApplicationContext())
+            .getSuperProperties();
         if (properties == null) properties = new JSONObject();
         properties.put("qc_user_id", loginStatus.getUserId());
-        //properties.put("qc_user_phone", bean.getPhone());
         SensorsDataAPI.sharedInstance(getActivity().getApplicationContext())
-          .registerSuperProperties(properties);
+            .registerSuperProperties(properties);
       } catch (JSONException e) {
         e.printStackTrace();
       }
@@ -321,9 +185,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     if (resultCode == Activity.RESULT_OK) {
       showLoading();
       presenter.getSelfInfo();
-            /*
-             * 发送消息告诉未登录页面已登录
-             */
+      //发送消息告诉未登录页面已登录
       RxBus.getBus().post(new EventFreshUnloginAd());
     }
   }
@@ -334,7 +196,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
 
   void goLogin() {
     Intent toLogin = new Intent(getContext().getPackageName(),
-      Uri.parse(AppUtils.getCurAppSchema(getContext())+"://login/"));
+        Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
     toLogin.putExtra("isRegiste", false);
     toLogin.putExtra("setting", true);
     startActivityForResult(toLogin, RESULT_LOGIN);

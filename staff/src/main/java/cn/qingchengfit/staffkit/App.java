@@ -77,7 +77,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   public static boolean gCanReload = false;
   // 数据接收的 URL
   final String SA_SERVER_URL =
-      "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
+      "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f214a94c6f970";
   // 配置分发的 URL
   final String SA_CONFIGURE_URL =
       "http://qingchengfit.cloud.sensorsdata.cn:8006/config?project=default";

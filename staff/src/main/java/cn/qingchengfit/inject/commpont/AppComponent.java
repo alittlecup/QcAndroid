@@ -49,6 +49,7 @@ import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.FlexableListFragment;
 import cn.qingchengfit.shop.di.BindShopActivity;
+import cn.qingchengfit.staff.di.BindSettingActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
 import cn.qingchengfit.staffkit.App;
@@ -312,7 +313,7 @@ import javax.inject.Singleton;
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,
-    WxPreviewModule.class, DianPingModule.class,
+    WxPreviewModule.class, DianPingModule.class, BindSettingActivity.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,
