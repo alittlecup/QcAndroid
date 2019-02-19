@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="data"
+        type="cn.qingcheng.gym.vo.IMyGymsItemData"
+        />
+  </data>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="78dp"
+      android:background="@color/bg_white"
+      android:orientation="vertical"
+      >
+    <ImageView
+        android:id="@+id/img_photo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        tools:background="@color/red"
+        />
+    <TextView
+        android:id="@+id/tv_brand_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_photo"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@+id/img_photo"
+        android:text="@{data.brandName}"
+        tools:text="引力工厂"
+        style="@style/QcTextStyleStandardDark"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_brand_name"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@+id/img_photo"
+        android:text='@{"品牌ID:"+data.brandID+"  创建人："+data.brandCreateName}'
+        tools:text="品牌ID: gravity    创建人：段光英"
+        style="@style/QcTextStyleSmallWarm"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_medium"
+        app:layout_scrollFlags="scroll"
+        />
+    <ImageView
+        android:id="@+id/img_arrow_right"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        app:srcCompat="@drawable/vd_arrow_right_grey"
+        app:visibleGone="@{!data.managed}"
+        />
+    <TextView
+        android:id="@+id/tv_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="管理"
+        android:textColor="@color/primary"
+        android:textSize="15dp"
+        app:visibleGone="@{data.managed}"
+        />
+
+
+  </RelativeLayout>
+</layout>

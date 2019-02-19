@@ -2,20 +2,20 @@
     package="cn.qingchengfit.card">
   <application>
     <activity
-        android:name="cn.qingchengfit.card.StaffCardActivity"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <action android:name="${APP_PACKAGE}"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
+      android:name="cn.qingchengfit.card.StaffCardActivity"
+      android:screenOrientation="portrait"
+      >
+    <intent-filter>
+      <action android:name="android.intent.action.VIEW"/>
+      <action android:name="${APP_PACKAGE}"/>
+      <category android:name="android.intent.category.DEFAULT"/>
+      <category android:name="android.intent.category.BROWSABLE"/>
 
-        <data
-            android:host="card"
-            android:scheme="${APP_SCHAME}"
-            />
-      </intent-filter>
-    </activity>
+      <data
+          android:host="card"
+          android:scheme="${APP_SCHAME}"
+          />
+    </intent-filter>
+  </activity>
   </application>
 </manifest>

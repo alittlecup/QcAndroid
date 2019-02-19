@@ -3,7 +3,21 @@
     package="cn.qingcheng.fit.gym">
 
   <application>
-    <activity android:name="cn.qingcheng.gym.GymActivity">
+    <activity
+        android:name="cn.qingcheng.gym.GymActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="${APP_PACKAGE}"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="gym"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
     </activity>
   </application>
 

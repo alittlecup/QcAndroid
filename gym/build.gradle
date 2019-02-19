@@ -1,17 +1,20 @@
 apply from: rootProject.file('qc_settings.gradle')
 apply from: rootProject.file('qc_upload_maven.gradle')
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 
 def annotations = rootProject.ext.annotations
 
 dependencies {
-  addComponent('saascommon', false)
+  addComponent('saascommon',false)
+  appComponent('login',false)
 
   annotationProcessor annotations["dagger-compiler"]
   annotationProcessor annotations["dagger-android-processor"]
 
 
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  annotationProcessor annotations["flabellum-dagger2"]
+  annotationProcessor annotations["flabellum-processor"]
+
+
+
 }
