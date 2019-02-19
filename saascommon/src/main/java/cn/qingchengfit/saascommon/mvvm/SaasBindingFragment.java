@@ -54,8 +54,13 @@ public abstract class SaasBindingFragment<DB extends ViewDataBinding, VM extends
       Bundle savedInstanceState);
 
   protected Class<VM> getVMClass() {
-    Type[] actualTypeArguments =
-        ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
+    ParameterizedType type ;
+    if (getClass().getGenericSuperclass() instanceof ParameterizedType) {
+      type = (ParameterizedType) getClass().getGenericSuperclass();
+    } else {
+      type = (ParameterizedType) getClass().getSuperclass().getGenericSuperclass();
+    }
+    Type[] actualTypeArguments = type.getActualTypeArguments();
     if (actualTypeArguments.length == 2) {
       return (Class<VM>) actualTypeArguments[1];
     }

@@ -13,6 +13,10 @@ import java.util.List;
 public class MyGymsItem extends AbstractFlexibleItem<DataBindingViewHolder<GyMyGymsItemBinding>> {
   private IMyGymsItemData data;
 
+  public IMyGymsItemData getData() {
+    return data;
+  }
+
   public MyGymsItem(IMyGymsItemData data) {
     this.data = data;
   }

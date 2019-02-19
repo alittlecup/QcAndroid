@@ -182,7 +182,11 @@ public class CommonInputView extends RelativeLayout {
     edit.setFocusable(enable);
     edit.setFocusableInTouchMode(enable);
     disableView.setVisibility(enable ? GONE : VISIBLE);
+  }
 
+  public void setCanBeNull(boolean canBeNull) {
+    this.canBeNull = canBeNull;
+    invalidate();
   }
 
   public void setLabelColor(@ColorRes int labelColor) {
@@ -196,6 +200,7 @@ public class CommonInputView extends RelativeLayout {
       image1.setVisibility(VISIBLE);
     }
   }
+
   public void setLabelDrawable(@DrawableRes int firstDrawable, @DrawableRes int secondDrawable) {
     View image1 = findViewById(R.id.im_icon1);
     View image2 = findViewById(R.id.im_icon2);
@@ -364,7 +369,7 @@ public class CommonInputView extends RelativeLayout {
         } else {
           cursor.setVisibility(GONE);
         }
-        if(focusChangeListener!=null){
+        if (focusChangeListener != null) {
           focusChangeListener.onFocusChange(v, hasFocus);
         }
       }

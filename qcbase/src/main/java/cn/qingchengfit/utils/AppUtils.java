@@ -201,9 +201,6 @@ public class AppUtils {
   }
 
   public static String getCurAppSchema(Context context) {
-    //      if (context.getApplicationContext().getPackageName().endsWith("staffkit")
-    //              ||context.getApplicationContext().getPackageName().endsWith("pos")||
-    //              context.getApplicationContext().getPackageName().contains("fitcoach")) {
     switch (getCurApp(context)) {
       case 1:
         return "qcstaff";
@@ -212,18 +209,6 @@ public class AppUtils {
       default:
         return "qccoach";
     }
-    //      }else {
-    //          int p = context.getPackageName().lastIndexOf(".");
-    //          String append = context.getPackageName().substring(p+1);
-    //          switch (getCurApp(context)) {
-    //              case 1:
-    //                  return "qcstaff"+append;
-    //              case 2:
-    //                  return "qcpos"+ append;
-    //              default:
-    //                  return "qccoach"+ append;
-    //          }
-    //      }
   }
 
   public static Uri getRouterUri(Context context, String path) {

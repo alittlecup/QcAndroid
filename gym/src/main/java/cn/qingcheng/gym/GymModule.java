@@ -1,6 +1,8 @@
 package cn.qingcheng.gym;
 
 import android.arch.lifecycle.ViewModel;
+import cn.qingcheng.gym.pages.brand.GymBrandViewModel;
+import cn.qingcheng.gym.pages.gym.GymInfoViewModel;
 import cn.qingcheng.gym.pages.my.MyGymsViewModel;
 import cn.qingchengfit.gym.di.BindGymActivity;
 import cn.qingchengfit.gym.routers.GymRouterCenter;
@@ -17,7 +19,13 @@ import dagger.multibindings.IntoMap;
   @Binds @IntoMap @ViewModelKey(MyGymsViewModel.class)
   abstract ViewModel bindMyGymViewModel(MyGymsViewModel viewModel);
 
-  @Provides  public static GymRouterCenter provideRouterCenter() {
+  @Binds @IntoMap @ViewModelKey(GymBrandViewModel.class)
+  abstract ViewModel bindGymBrandViewModel(GymBrandViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(GymInfoViewModel.class)
+  abstract ViewModel bindGymInfoViewModel(GymInfoViewModel viewModel);
+
+  @Provides public static GymRouterCenter provideRouterCenter() {
     return gymRouterCenter;
   }
 }
