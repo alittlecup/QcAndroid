@@ -13,7 +13,7 @@ import com.anbillon.flabellum.annotations.Need;
 
 @Leaf(module = "gym", path = "/gym/info") public class GymInfoPage
     extends GymBaseFragment<GyGymInfoPageBinding, GymInfoViewModel> {
-  @Need String gymID;
+  @Need public String gymID;
 
   @Override protected void subscribeUI() {
 

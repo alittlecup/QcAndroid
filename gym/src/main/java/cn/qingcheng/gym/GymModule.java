@@ -1,9 +1,14 @@
 package cn.qingcheng.gym;
 
 import android.arch.lifecycle.ViewModel;
+import cn.qingcheng.gym.pages.brand.ChangeGymViewModel;
 import cn.qingcheng.gym.pages.brand.GymBrandViewModel;
+import cn.qingcheng.gym.pages.create.GymBrandCreateViewModel;
+import cn.qingcheng.gym.pages.create.GymCreateChooseViewModel;
 import cn.qingcheng.gym.pages.gym.GymInfoViewModel;
+import cn.qingcheng.gym.pages.gym.GymSimpleListViewModel;
 import cn.qingcheng.gym.pages.my.MyGymsViewModel;
+import cn.qingcheng.gym.pages.search.GymSearchViewModel;
 import cn.qingchengfit.gym.di.BindGymActivity;
 import cn.qingchengfit.gym.routers.GymRouterCenter;
 import cn.qingchengfit.gym.routers.gymImpl;
@@ -19,11 +24,26 @@ import dagger.multibindings.IntoMap;
   @Binds @IntoMap @ViewModelKey(MyGymsViewModel.class)
   abstract ViewModel bindMyGymViewModel(MyGymsViewModel viewModel);
 
+  @Binds @IntoMap @ViewModelKey(GymSearchViewModel.class)
+  abstract ViewModel bindGymSearchViewModel(GymSearchViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(GymSimpleListViewModel.class)
+  abstract ViewModel bindGymSimpleListViewModel(GymSimpleListViewModel viewModel);
+
   @Binds @IntoMap @ViewModelKey(GymBrandViewModel.class)
   abstract ViewModel bindGymBrandViewModel(GymBrandViewModel viewModel);
 
   @Binds @IntoMap @ViewModelKey(GymInfoViewModel.class)
   abstract ViewModel bindGymInfoViewModel(GymInfoViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(ChangeGymViewModel.class)
+  abstract ViewModel bindChangeGymViewModel(ChangeGymViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(GymBrandCreateViewModel.class)
+  abstract ViewModel bindGymBrandCreateViewModel(GymBrandCreateViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(GymCreateChooseViewModel.class)
+  abstract ViewModel bindGymCreateChooseViewModel(GymCreateChooseViewModel viewModel);
 
   @Provides public static GymRouterCenter provideRouterCenter() {
     return gymRouterCenter;

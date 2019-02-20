@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import cn.qingchengfit.gym.BuildConfig;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
@@ -28,13 +30,21 @@ public class SplashActivity extends SaasCommonActivity {
     layoutParams.gravity = Gravity.CENTER;
     button.setLayoutParams(layoutParams);
     frameLayout.addView(button);
+    EditText editText = new EditText(this);
+
+    frameLayout.addView(editText);
     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.MATCH_PARENT);
     setContentView(frameLayout, params);
 
     button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        routeTo(SplashActivity.this, "gym", "/my/gyms", null);
+        String s = editText.getText().toString();
+        if (TextUtils.isEmpty(s)) {
+          routeTo(SplashActivity.this, "gym", "/my/gyms", null);
+        } else {
+          routeTo(SplashActivity.this, "gym", s, null);
+        }
       }
     });
   }

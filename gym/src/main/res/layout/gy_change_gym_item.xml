@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+  </data>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="54dp"
+      android:background="@color/bg_white"
+      android:gravity="center_vertical"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
+      >
+
+    <TextView
+        android:id="@+id/tv_brand_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="引力工场"
+        style="@style/QcTextStyleStandardDark"
+        />
+    <TextView
+        android:id="@+id/tv_gym_create_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        tools:text="创建人：Smart"
+        style="@style/QcTextStyleSmallWarm"
+        />
+    <ImageView
+        android:id="@+id/img_arrow_right"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="5dp"
+        app:srcCompat="@drawable/vd_arrow_right_grey"
+        />
+
+
+  </LinearLayout>
+</layout>
