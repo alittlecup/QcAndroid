@@ -50,16 +50,21 @@ import rx.android.schedulers.AndroidSchedulers;
         .subscribe((msg -> {
           if (TextUtils.isEmpty(msg)) {
             mBinding.tvCreateGym.setVisibility(View.GONE);
-            mBinding.tvCancel.setVisibility(View.GONE);
+            mBinding.imgClear.setVisibility(View.GONE);
           } else {
             mBinding.tvCreateGym.setVisibility(View.VISIBLE);
             mBinding.tvCreateGym.setText("+ 创建\"" + msg + "\"场馆");
-            mBinding.tvCancel.setVisibility(View.VISIBLE);
+            mBinding.imgClear.setVisibility(View.VISIBLE);
           }
         }));
     mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
 
+      }
+    });
+    mBinding.imgArrowLeft.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        getActivity().onBackPressed();
       }
     });
   }

@@ -53,10 +53,10 @@ public class GymCreateChoosePage
 
   private void changeChecked(boolean isBrandCheked) {
     this.isBrandChecked = isBrandCheked;
-    mBinding.rlBrand.setPressed(isBrandCheked);
+    mBinding.rlBrand.setSelected(isBrandCheked);
     mBinding.imgBrandChecked.setVisibility(isBrandCheked ? View.VISIBLE : View.GONE);
 
-    mBinding.rlGym.setPressed(!isBrandCheked);
+    mBinding.rlGym.setSelected(!isBrandCheked);
     mBinding.imgGymChecked.setVisibility(!isBrandCheked ? View.VISIBLE : View.GONE);
   }
 }

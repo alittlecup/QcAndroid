@@ -27,6 +27,7 @@ import com.bigkoo.pickerview.lib.SimpleScrollPicker;
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     initToolbar(mBinding.includeToolbar.toolbar);
+    mBinding.civBrandCount.setContent(String.valueOf(2));
     mBinding.setToolbarModel(new ToolbarModel("创建连锁品牌"));
     mBinding.civBrandCount.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

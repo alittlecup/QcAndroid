@@ -22,32 +22,17 @@ import com.anbillon.flabellum.annotations.Leaf;
   }
 
   private void initView() {
-    mBinding.civGymName.setCanBeNull(false);
+    mBinding.civGymName.setCanClick(false);
     mBinding.civGymName.setEditable(true);
+    mBinding.civGymName.setEnable(true);
 
-    mBinding.civGymType.setEditable(false);
-    mBinding.civGymType.setCanClick(true);
+    mBinding.civGymType.setShowRight(true);
+
     mBinding.civGymAddress.setShowRight(true);
-    mBinding.civGymType.setCanBeNull(false);
 
-    mBinding.civGymPhone.setEditable(true);
-    mBinding.civGymPhone.setIsNum(true);
-    mBinding.civGymPhone.setCanBeNull(false);
-
-    mBinding.civGymAddress.setEditable(false);
-    mBinding.civGymAddress.setCanClick(true);
-    mBinding.civGymAddress.setShowRight(true);
-    mBinding.civGymAddress.setCanBeNull(false);
-
-    mBinding.civGymSquare.setEditable(true);
-    mBinding.civGymSquare.setCanClick(false);
     mBinding.civGymSquare.setShowRight(true);
-    mBinding.civGymSquare.setCanBeNull(false);
 
-    mBinding.civGymMark.setEditable(false);
-    mBinding.civGymMark.setCanClick(true);
     mBinding.civGymMark.setShowRight(true);
-    mBinding.civGymMark.setCanBeNull(false);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

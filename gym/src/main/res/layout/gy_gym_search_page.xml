@@ -22,6 +22,7 @@
         android:orientation="horizontal"
         >
       <ImageView
+          android:id="@+id/img_arrow_left"
           android:layout_width="20dp"
           android:layout_height="20dp"
           android:layout_marginLeft="10dp"
