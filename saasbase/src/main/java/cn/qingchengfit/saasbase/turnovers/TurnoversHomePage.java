@@ -127,7 +127,7 @@ import javax.inject.Inject;
         mBinding.tvUpdateTime.setVisibility(View.GONE);
       } else {
         mBinding.tvUpdateTime.setVisibility(View.VISIBLE);
-        mBinding.tvUpdateTime.setText("(上次更新时间" + time + ")");
+        mBinding.tvUpdateTime.setText("(最近更新时间：" + time + ")");//最近更新时间：2019-02-14 15:30
       }
     });
     mViewModel.getMoreItems().observe(this, items -> {

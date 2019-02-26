@@ -188,7 +188,7 @@ import rx.schedulers.Schedulers;
             gymNameStr = initBean.shop.name;
             gymAddress.setContent(initBean.shop.address);
             addressStr = initBean.shop.address;
-            sizeStr = initBean.shop.area + " m2";
+            sizeStr = initBean.shop.area +"";
             gymSize.setContent(sizeStr);
             descriptionStr = initBean.shop.description;
             gymDescribe.setContent(descriptionStr);
@@ -327,7 +327,7 @@ import rx.schedulers.Schedulers;
              return;
         }
         if (getParentFragment() instanceof GuideFragment) {
-            int gymSizeInt = Integer.parseInt(gymSize.getContent().substring(0, gymSize.getContent().length()-4));
+            int gymSizeInt = Integer.parseInt(gymSize.getContent());
             ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder()
                     .address(gymAddress.getContent())
                     .gd_district_id(city_code + "")

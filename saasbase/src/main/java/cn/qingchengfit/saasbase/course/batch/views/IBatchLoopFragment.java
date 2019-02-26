@@ -234,9 +234,13 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment
     new DialogList(getContext()).list(orderTimeIntervals, new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
         civOrderInterval.setContent(orderTimeIntervals[p]);
-        //根据位置计算实际时间的公式 5 15 30 45 60
+        //根据位置计算实际时间的公式 5 10 15 30 45 60
         int position = p + 1;
-        slice = position * 5 * 60;
+        if (p <= 1) {
+          slice = (p+1) * 5 * 60;
+        } else {
+          slice = (p-1) * 15 * 60;
+        }
       }
     }).show();
   }

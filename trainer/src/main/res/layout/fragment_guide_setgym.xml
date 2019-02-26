@@ -146,7 +146,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="营业面积"
-      app:civ_content=" m2"
+      app:civ_unit="m2"
       app:civ_nonnull="true"
       app:civ_text_color="@color/text_black" />
 
