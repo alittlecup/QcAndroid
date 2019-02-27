@@ -12,13 +12,14 @@
       />
 
   <include layout="@layout/fragment_unlogin_add_photo"/>
-  
+
   <Space
       android:layout_width="match_parent"
       android:layout_height="60dp"
       />
 
   <LinearLayout
+      android:id="@+id/ll_login"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
@@ -41,6 +42,43 @@
         android:background="@drawable/btn_green_radius_full_outline"
         android:text="已有账号登录"
         android:textColor="?colorPrimary"
+        />
+
+  </LinearLayout>
+  <LinearLayout
+      android:id="@+id/ll_add_gym"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+    <FrameLayout
+        android:id="@+id/btn_add_gym"
+        android:layout_width="210dp"
+        android:layout_height="48dp"
+        style="@style/QcBtnPrimary"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:drawableLeft="@drawable/vd_search_white"
+          android:text="    加入已有场馆"
+          android:textColor="@color/bg_white"
+          android:textSize="17sp"
+          />
+
+    </FrameLayout>
+    <TextView
+        android:id="@+id/tv_create_gym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建新场馆"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/primary"
+        android:textSize="15sp"
         />
 
   </LinearLayout>

@@ -671,43 +671,12 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
 
   }
 
-  ///**
-  // * 点击选择品牌
-  // */
-  //@OnClick({ R.id.toolbar_title, R.id.title_down }) public void onClickTitle() {
-  //    getSupportFragmentManager().beginTransaction().replace(R.id.frag_choose_brand, new ChooseBrandFragment()).commit();
-  //    ViewCompat.setPivotY(fragChooseBrand, 0);
-  //    if (layoutBrands.getVisibility() == View.VISIBLE) {
-  //        onBgClick();
-  //    } else {
-  //        layoutBrands.setVisibility(View.VISIBLE);
-  //        ViewCompat.animate(layoutBrands).alpha(1).setDuration(300).start();
-  //        ViewCompat.animate(fragChooseBrand).scaleY(1).setDuration(300).start();
-  //    }
-  //}
+
 
   @Override public void setBar(ToolbarBean bar) {
 
   }
 
-  ///**
-  // * 添加场馆
-  // */
-  //@OnClick(R.id.btn_left) public void onClickLeft() {
-  //    if (gymWrapper.inBrand()) {
-  //        if (!gymWrapper.getBrand().has_add_permission) {
-  //            ToastUtils.show("您没有改场馆管理权限");
-  //            return;
-  //        }
-  //        Intent toBrandManage = new Intent(this, BrandManageActivity.class);
-  //        toBrandManage.putExtra(Configs.EXTRA_BRAND, gymWrapper.getBrand());
-  //        startActivity(toBrandManage);
-  //    } else {
-  //        Intent toGuide = new Intent(this, GuideActivity.class);
-  //        toGuide.putExtra("isAdd", true);
-  //        startActivity(toGuide);
-  //    }
-  //}
 
   /**
    * 关闭选择品牌窗口

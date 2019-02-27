@@ -217,7 +217,7 @@ public class TurnoversVM extends BaseViewModel {
                 loadMoreOrderDatas.setValue(response.data.shop_turnovers);
               }
               orderListUpdateTime.setValue(
-                  DateUtils.Date2HHmm(DateUtils.formatDateFromServer(response.data.update_time)));
+                  DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(response.data.update_time)));
               curPage++;
               totalPage = response.data.pages;
               totalCount.setValue(response.data.total_count);

@@ -29,6 +29,7 @@ import cn.qingchengfit.saasbase.staff.views.TrainerTabListFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoverOrderDetailFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoversHomePage;
 import cn.qingchengfit.saasbase.partner.PartnerAccountPage;
+import cn.qingchengfit.staffkit.views.gym.GymServiceSettingFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -61,7 +62,7 @@ import com.anbillon.flabellum.annotations.Trunk;
     TrainerTabListFragment.class, TrainerAddFragment.class, SuFragment.class,
     SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
     StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class, TurnoversHomePage.class,
-    TurnoverOrderDetailFragment.class, PartnerAccountPage.class
+    TurnoverOrderDetailFragment.class, PartnerAccountPage.class, GymServiceSettingFragment.class
 })
 
 public class StaffStaffActivity extends SaasContainerActivity {

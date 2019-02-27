@@ -40,6 +40,7 @@
       />
 
   <LinearLayout
+      android:id="@+id/ll_login"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
@@ -65,4 +66,40 @@
         />
 
   </LinearLayout>
+  <LinearLayout
+      android:id="@+id/ll_add_gym"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+    <FrameLayout
+        android:id="@+id/tv_create_gym"
+        android:layout_width="210dp"
+        android:layout_height="48dp"
+        style="@style/QcBtnPrimary"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:text="创建新场馆"
+          android:textColor="@color/bg_white"
+          android:textSize="17sp"
+          />
+
+    </FrameLayout>
+    <TextView
+        android:id="@+id/btn_add_gym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="加入已有场馆"
+        android:textColor="@color/primary"
+        android:textSize="15sp"
+        />
+
+  </LinearLayout>
+
 </LinearLayout>

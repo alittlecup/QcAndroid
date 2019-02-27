@@ -628,27 +628,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       R.drawable.ic_tabbar_account_normal
   };
 
-  //private void showPage(int position) {
-  //  Flowable.just(position)
-  //    .throttleFirst(800, TimeUnit.MILLISECONDS)
-  //    .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-  //    .subscribe(pos -> {
-  //      curPageIndex = pos;
-  //      String[] tags = getResources().getStringArray(R.array.home_tab);
-  //      FragmentTransaction ts = getSupportFragmentManager().beginTransaction();
-  //      Fragment f = fragments.get(tags[pos]);
-  //      if (f == null) {
-  //        f = generateFragment(pos);
-  //        fragments.put(tags[pos],f);
-  //      }
-  //      ts.setCustomAnimations(R.anim.anim_fade_in,R.anim.anim_fade_out);
-  //      if (f.isAdded())
-  //        ts.remove(f);
-  //      ts.replace(R.id.frag_main, f, tags[pos]);
-  //      ts.commitNowAllowingStateLoss();
-  //    },throwable -> {});
-  //
-  //}
 
   private void showPage(int pos) {
     String[] tags = getResources().getStringArray(R.array.home_tab);
