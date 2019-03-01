@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="25dp"
+          android:layout_marginTop="25dp"
+          android:gravity="center"
+          android:text="下面的成员将会加入您的场馆"
+          android:textColor="@color/text_grey"
+          android:textSize="15sp"
+          />
+      <ImageView
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          tools:background="@color/colorPrimary"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          tools:text="段光英 (18707195611)"
+          style="@style/QcTextStyleStandardDark"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="25dp"
+          android:layout_marginTop="10dp"
+          android:text="通过健身管理App申请"
+          style="@style/QcTextStyleSmallGrey"
+          />
+    </LinearLayout>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/bg_white"
+        app:civ_content="TA的职位"
+        >
+
+    </cn.qingchengfit.widgets.CommonInputView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        >
+      <Button
+          android:id="@+id/btn_cancel"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:text="拒绝申请"
+          style="@style/QcBtnGreyFrame"
+          />
+      <Space
+          android:layout_width="20dp"
+          android:layout_height="0dp"
+          />
+      <Button
+          android:id="@+id/btn_confirm"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:text="通过申请"
+          style="@style/QcBtnPrimary"
+          />
+
+    </LinearLayout>
+
+  </LinearLayout>
+</layout>
