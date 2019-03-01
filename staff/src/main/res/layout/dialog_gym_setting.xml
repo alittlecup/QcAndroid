@@ -23,7 +23,6 @@
           android:layout_width="100dp"
           android:layout_height="80dp"
           android:layout_marginTop="25dp"
-          android:src=""
           />
       <TextView
           android:id="@+id/tv_gym_type"

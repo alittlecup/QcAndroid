@@ -146,6 +146,7 @@ dependencies {
   addComponent('student', false)
   addComponent('checkout', false)
   addComponent("wxpreview", false)
+  addComponent("gym", false)
 
 
 
