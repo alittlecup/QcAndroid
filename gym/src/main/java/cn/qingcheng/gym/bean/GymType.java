@@ -1,11 +1,13 @@
-package cn.qingchengfit.saasbase.gymconfig.bean;
+package cn.qingcheng.gym.bean;
 
+import android.arch.persistence.room.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * Created by Bob Du on 2018/10/25 16:30
  */
+@Entity(tableName = "gymtype",primaryKeys = "gym_type")
 public class GymType implements Parcelable {
     public String gym_type_value;
     public int gym_type;

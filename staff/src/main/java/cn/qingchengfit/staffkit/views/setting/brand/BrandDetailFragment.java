@@ -18,7 +18,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.Shops;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;

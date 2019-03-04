@@ -27,7 +27,7 @@ import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.base.User_Student;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;

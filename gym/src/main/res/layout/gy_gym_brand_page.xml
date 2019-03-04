@@ -74,7 +74,6 @@
             android:layout_alignTop="@id/tv_brand_name"
             android:padding="2dp"
             android:tint="@color/grey"
-            app:visibleGone="@{brand.has_permission}"
             bind:srcCompat="@drawable/vd_facial_edit_black"
             />
       </RelativeLayout>

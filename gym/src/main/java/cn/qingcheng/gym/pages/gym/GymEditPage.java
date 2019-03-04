@@ -22,32 +22,30 @@ import com.anbillon.flabellum.annotations.Leaf;
   }
 
   private void initView() {
-    mBinding.civGymName.setCanClick(false);
-    mBinding.civGymName.setEditable(true);
-    mBinding.civGymName.setEnable(true);
-
-    mBinding.civGymType.setShowRight(true);
-
+     mBinding.civGymType.setShowRight(true);
     mBinding.civGymAddress.setShowRight(true);
 
-    mBinding.civGymSquare.setShowRight(true);
-
     mBinding.civGymMark.setShowRight(true);
+    mBinding.tvGymAction.setVisibility(View.VISIBLE);
+    mBinding.tvGymAction.setOnClickListener(v -> showDeleteDialog());
+    mBinding.imgPhotoArrow.setVisibility(View.VISIBLE);
+    mBinding.viewShadow.setVisibility(View.GONE);
   }
 
-  @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    super.initToolbar(toolbar);
-    toolbar.inflateMenu(R.menu.menu_save);
-    toolbar.getMenu()
-        .getItem(0)
-        .setTitle(new SpanUtils().append("保存")
-            .setForegroundColor(getResources().getColor(R.color.primary))
-            .create());
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+  @Override public void initToolbar() {
+    ToolbarModel toolbarModel = new ToolbarModel("编辑场馆信息");
+    toolbarModel.setMenu(R.menu.menu_save);
+    toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         return false;
       }
     });
+    mBinding.setToolbarModel(toolbarModel);
+    initToolbar(mBinding.includeToolbar.toolbar);
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
   }
 
   private void showDeleteDialog() {
@@ -55,7 +53,7 @@ import com.anbillon.flabellum.annotations.Leaf;
       @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
         materialDialog.dismiss();
         if (dialogAction == DialogAction.POSITIVE) {
-          // TODO: 2019/2/20  删除
+          mViewModel.deleteShop(shop.id);
         }
       }
     });

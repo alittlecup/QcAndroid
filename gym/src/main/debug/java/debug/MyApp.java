@@ -10,6 +10,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import javax.inject.Inject;
+import timber.log.Timber;
 
 public class MyApp extends Application implements HasActivityInjector {
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
@@ -28,6 +29,9 @@ public class MyApp extends Application implements HasActivityInjector {
     DaggerAppComponent.create().inject(this);
     QcRouteUtil.init(this);
     ToastUtils.init(this);
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree());
+    }
     //初始化神策
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
         SA_SERVER_URL,                      // 数据接收的 URL

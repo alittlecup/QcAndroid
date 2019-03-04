@@ -3,7 +3,7 @@
   <data>
     <variable
         name="brandShop"
-        type="cn.qingchengfit.saascommon.bean.Shop"
+        type="cn.qingchengfit.model.base.Shop"
         />
 
   </data>
@@ -86,7 +86,7 @@
             android:layout_height="15dp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/vd_arrow_right_grey"
-            app:visibleGone="@{!brandShop.has_permission}"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/tv_gym_edit"
@@ -96,7 +96,7 @@
             android:text="编辑"
             android:textColor="@color/primary"
             android:textSize="13dp"
-            app:visibleGone="@{brandShop.has_permission}"
+            android:visibility="visible"
             />
       </FrameLayout>
     </LinearLayout>

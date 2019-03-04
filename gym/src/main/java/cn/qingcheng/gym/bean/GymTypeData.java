@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.bean;
+package cn.qingcheng.gym.bean;
 
 import java.util.List;
 

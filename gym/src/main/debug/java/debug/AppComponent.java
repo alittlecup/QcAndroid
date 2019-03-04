@@ -12,6 +12,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     AppModel.class,
     AndroidInjectionModule.class,
     AndroidSupportInjectionModule.class,LoginDepModel.class, BindLoginActivity.class, GymModule.class,
-}) public interface AppComponent extends AndroidInjector<debug.MyApp> {
+})
+public interface AppComponent extends AndroidInjector<debug.MyApp> {
 
 }

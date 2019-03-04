@@ -4,7 +4,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package cn.qingcheng.gym.pages.brand;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,8 @@ import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymBrandPageBinding;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -47,6 +47,7 @@ import java.util.List;
       Bundle savedInstanceState) {
     if (mBinding != null) return mBinding;
     mBinding = GyGymBrandPageBinding.inflate(inflater, container, false);
+    mBinding.setBrand(brand);
     initRecycler();
     initListener();
     initToolbar();
@@ -55,12 +56,8 @@ import java.util.List;
     } else {
       mBinding.btnNewGym.setVisibility(View.GONE);
     }
-    return mBinding;
-  }
-
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
     mViewModel.loadShops(brand.id);
+    return mBinding;
   }
 
   private void initToolbar() {
@@ -77,7 +74,7 @@ import java.util.List;
   private void initListener() {
     mBinding.btnNewGym.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
+        routeTo("/gym/create", null);
       }
     });
     mBinding.imgEditBrand.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +93,7 @@ import java.util.List;
     IFlexible item = adapter.getItem(position);
     if (item instanceof GymBrandItem) {
       Shop data = ((GymBrandItem) item).getData();
-      if (position == 1) {
-        routeTo("gym", "/gym/edit", null);
-      } else {
-        routeTo("gym", "/gym/info", null);
-      }
+      routeTo("/gym/edit", new BundleBuilder().withParcelable("shop", data).build());
     }
     return false;
   }

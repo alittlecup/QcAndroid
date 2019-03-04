@@ -37,6 +37,7 @@ import java.util.List;
 
   @Override public GyPageMyGymsBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    if(mBinding!=null)return mBinding;
     mBinding = GyPageMyGymsBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();

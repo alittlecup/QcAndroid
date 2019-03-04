@@ -1,6 +1,7 @@
 package cn.qingcheng.gym.responsitory.network;
 
 import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -26,5 +27,13 @@ public class GymModelImpl implements IGymModel {
   @Override
   public Observable<QcDataResponse<ShopsResponse>> qcGetBrandAllShops( String brand_id) {
     return gymApi.qcGetBrandAllShops(loginStatus.staff_id(),brand_id);
+  }
+
+  @Override public Observable<QcDataResponse<GymTypeData>> qcLoadGymTypes() {
+    return gymApi.qcGetGymType();
+  }
+
+  @Override public Observable<QcDataResponse> qcDelGym(String id) {
+    return gymApi.qcDelGym(id);
   }
 }

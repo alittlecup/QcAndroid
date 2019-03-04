@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
@@ -28,16 +27,10 @@ import dagger.android.ContributesAndroidInjector;
  * Created by Paper on 15/11/19 2015.
  */
 @Module public abstract class AppModel {
+ public static LoginStatus build = new LoginStatus.Builder().build();
 
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
-
   @Provides static LoginStatus provideLogin() {
-    LoginStatus build = new LoginStatus.Builder().build();
-    Staff staff = new Staff();
-    staff.setId("7505");
-    build.setLoginUser(staff);
-    build.setSession("zmypzucc4rd115a2ny8xjwziom0zkgus");
-    build.setUserId("54405");
     return build;
   }
 

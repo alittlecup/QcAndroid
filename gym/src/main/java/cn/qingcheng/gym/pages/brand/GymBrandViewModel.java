@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class GymBrandViewModel extends BaseViewModel {
         brandId -> Transformations.map(gymResponsitory.qcGetBrandAllShops(brandId),
             shopsResponseResource -> {
               ShopsResponse shopsResponse = dealResource(shopsResponseResource);
-              return brandId==null?new ArrayList<>():shopsResponse.shops;
+              return shopsResponse==null?new ArrayList<>():shopsResponse.shops;
             }));
   }
   public void loadShops(String brandId){

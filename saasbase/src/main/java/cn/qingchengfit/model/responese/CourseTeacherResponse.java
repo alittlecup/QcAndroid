@@ -1,6 +1,6 @@
 package cn.qingchengfit.model.responese;
 
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

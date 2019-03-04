@@ -28,8 +28,6 @@ import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.saasbase.gymconfig.bean.GymType;
-import cn.qingchengfit.saasbase.gymconfig.bean.GymTypeData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.PreferenceUtils;

@@ -3,7 +3,7 @@ package cn.qingcheng.gym.item;
 import android.view.View;
 import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymBrandItemBinding;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;

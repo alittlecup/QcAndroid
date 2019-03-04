@@ -2,6 +2,7 @@ package cn.qingcheng.gym.responsitory;
 
 import android.arch.lifecycle.LiveData;
 import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingcheng.gym.responsitory.network.IGymModel;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -12,6 +13,7 @@ import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
 import javax.inject.Inject;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class GymResponsitoryImpl implements IGymResponsitory {
   @Inject IGymModel gymModel;
@@ -34,5 +36,18 @@ public class GymResponsitoryImpl implements IGymResponsitory {
 
   @Override public LiveData<Resource<ShopsResponse>> qcGetBrandAllShops(String brand_id) {
     return toLiveData(gymModel.qcGetBrandAllShops(brand_id));
+  }
+
+  @Override public LiveData<Resource<GymTypeData>> qcGetGymTypes() {
+    return toLiveData(gymModel.qcLoadGymTypes());
+  }
+
+  @Override public LiveData<Resource<Boolean>> qcDeleteShop(String shop_id) {
+    return toLiveData(
+        gymModel.qcDelGym(shop_id).map(
+            (Func1<QcDataResponse, QcDataResponse<Boolean>>) qcResponse -> {
+              qcResponse.setData(qcResponse.status == 200);
+              return qcResponse;
+            }));
   }
 }

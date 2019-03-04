@@ -1,7 +1,7 @@
 package cn.qingchengfit.model.responese;
 
 import android.os.Parcel;
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.constant.Configs;
 import java.util.ArrayList;
 import java.util.List;

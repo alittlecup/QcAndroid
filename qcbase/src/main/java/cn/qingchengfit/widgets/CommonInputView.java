@@ -167,9 +167,7 @@ public class CommonInputView extends RelativeLayout {
 
   public void setEditable(boolean editable) {
     edit.setEnabled(editable);
-    if (editable) {
-      edit.setCursorVisible(false);
-    }
+    edit.setCursorVisible(editable);
   }
 
   public boolean isEditable() {
@@ -182,6 +180,7 @@ public class CommonInputView extends RelativeLayout {
     edit.setFocusableInTouchMode(enable);
     disableView.setVisibility(enable ? GONE : VISIBLE);
   }
+
   public void setLabelColor(@ColorRes int labelColor) {
     label.setTextColor(getResources().getColor(labelColor));
   }
@@ -326,9 +325,6 @@ public class CommonInputView extends RelativeLayout {
     edit.setText(str_content);
     edit.setHint(str_hint);
     setEditable(editable);
-    if (canClick) {
-      edit.setKeyListener(null);
-    }
     edit.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -403,7 +399,6 @@ public class CommonInputView extends RelativeLayout {
     this.canClick = canClick;
     if (canClick) {
       edit.setClickable(false);
-      edit.setKeyListener(null);
     } else {
       edit.setEnabled(true);
       edit.setClickable(true);

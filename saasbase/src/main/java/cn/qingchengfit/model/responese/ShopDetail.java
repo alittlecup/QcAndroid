@@ -1,6 +1,6 @@
 package cn.qingchengfit.model.responese;
 
-import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.model.base.Shop;
 
 /**
  * power by
