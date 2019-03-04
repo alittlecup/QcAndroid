@@ -6,6 +6,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saascommon.bean.Shop;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;

@@ -3,18 +3,22 @@ package cn.qingcheng.gym.pages.brand;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.item.GymBrandItem;
-import cn.qingcheng.gym.vo.IGymBrandItemData;
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymBrandPageBinding;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.bean.Shop;
+import cn.qingchengfit.utils.CircleImgWrapper;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -24,13 +28,13 @@ import java.util.List;
     extends GymBaseFragment<GyGymBrandPageBinding, GymBrandViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
-  @Need String brandId;
+  @Need Brand brand;
 
   @Override protected void subscribeUI() {
     mViewModel.datas.observe(this, datas -> {
       if (datas != null && !datas.isEmpty()) {
         List<GymBrandItem> items = new ArrayList<>();
-        for (IGymBrandItemData data : datas) {
+        for (Shop data : datas) {
           items.add(new GymBrandItem(data));
         }
         adapter.updateDataSet(items);
@@ -41,21 +45,33 @@ import java.util.List;
   @Override
   public GyGymBrandPageBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    if (mBinding != null) return mBinding;
     mBinding = GyGymBrandPageBinding.inflate(inflater, container, false);
-    Log.d("TAG", "initDataBinding: " + brandId);
+    initRecycler();
+    initListener();
+    initToolbar();
+    if (brand.has_add_permission) {
+      mBinding.btnNewGym.setVisibility(View.VISIBLE);
+    } else {
+      mBinding.btnNewGym.setVisibility(View.GONE);
+    }
     return mBinding;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    initRecycler();
-    initListener();
-    initToolbar();
+    mViewModel.loadShops(brand.id);
   }
 
   private void initToolbar() {
     initToolbar(mBinding.includeToolbar.toolbar);
-    mBinding.setToolbarModel(new ToolbarModel("健身房名称"));
+    mBinding.setToolbarModel(new ToolbarModel(brand.name));
+
+    Glide.with(getContext())
+        .load(PhotoUtils.getSmall(brand.getPhoto()))
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_header)
+        .into(new CircleImgWrapper(mBinding.imgBrandPhoto, getContext()));
   }
 
   private void initListener() {
@@ -79,7 +95,7 @@ import java.util.List;
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);
     if (item instanceof GymBrandItem) {
-      IGymBrandItemData data = ((GymBrandItem) item).getData();
+      Shop data = ((GymBrandItem) item).getData();
       if (position == 1) {
         routeTo("gym", "/gym/edit", null);
       } else {

@@ -1,24 +1,25 @@
 package cn.qingcheng.gym.item;
 
 import android.view.View;
-import cn.qingcheng.gym.vo.IGymBrandItemData;
 import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymBrandItemBinding;
+import cn.qingchengfit.saascommon.bean.Shop;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
-import cn.qingchengfit.utils.PhotoUtils;
+import com.bumptech.glide.Glide;
+import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
 
 public class GymBrandItem
     extends AbstractFlexibleItem<DataBindingViewHolder<GyGymBrandItemBinding>> {
-  public IGymBrandItemData getData() {
+  public Shop getData() {
     return data;
   }
 
-  IGymBrandItemData data;
+  Shop data;
 
-  public GymBrandItem(IGymBrandItemData data) {
+  public GymBrandItem(Shop data) {
     this.data = data;
   }
 
@@ -38,9 +39,12 @@ public class GymBrandItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<GyGymBrandItemBinding> holder, int position, List payloads) {
     GyGymBrandItemBinding dataBinding = holder.getDataBinding();
-    dataBinding.setData(data);
-    if (data.getGymPhoto() != null) {
-      PhotoUtils.smallCircle(dataBinding.imgGymPhoto, data.getGymPhoto());
-    }
+    dataBinding.setBrandShop(data);
+
+    Glide.with(dataBinding.getRoot().getContext())
+        .load(data.photo)
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_header)
+        .into(new CircleImgWrapper(dataBinding.imgGymPhoto, dataBinding.getRoot().getContext()));
   }
 }

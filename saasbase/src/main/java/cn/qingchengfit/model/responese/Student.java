@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
+import cn.qingchengfit.saascommon.bean.Shop;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -6,38 +6,35 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.TextView;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.gym.BuildConfig;
+import cn.qingchengfit.gym.R;
+import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.router.qc.QcRouteUtil;
+import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.BaseActivity;
+import javax.inject.Inject;
 
 public class SplashActivity extends SaasCommonActivity {
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  TextView textView;
+
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FrameLayout frameLayout = new FrameLayout(this);
-    Button button = new Button(this);
-    button.setText("open");
-    FrameLayout.LayoutParams layoutParams =
-        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
-    layoutParams.gravity = Gravity.CENTER;
-    button.setLayoutParams(layoutParams);
-    frameLayout.addView(button);
-    EditText editText = new EditText(this);
-
-    frameLayout.addView(editText);
-    ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT);
-    setContentView(frameLayout, params);
-
-    button.setOnClickListener(new View.OnClickListener() {
+    setContentView(R.layout.splash_main_activity);
+    EditText editText = findViewById(R.id.path_edit);
+    textView = findViewById(R.id.textview);
+    findViewById(R.id.open).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         String s = editText.getText().toString();
         if (TextUtils.isEmpty(s)) {
@@ -47,6 +44,32 @@ public class SplashActivity extends SaasCommonActivity {
         }
       }
     });
+
+    findViewById(R.id.login).setOnClickListener(view -> {
+      QcRouteUtil.setRouteOptions(new RouteOptions("login").setContext(this).setActionName("open"))
+          .call();
+    });
+  }
+
+  @Override protected void onResume() {
+    super.onResume();
+    textView.setText(QcRestRepository.getSession(this));
+    if (!TextUtils.isEmpty(textView.getText())) {
+      setLoginInfo();
+    }
+  }
+
+  private void setLoginInfo() {
+    Staff staff = new Staff();
+    staff.setId("7505");
+    loginStatus.setSession(QcRestRepository.getSession(this));
+    loginStatus.setLoginUser(staff);
+    loginStatus.setUserId("54405");
+
+    CoachService coachService = new CoachService();
+    coachService.setModel("staff_gym");
+    coachService.setId("10548");
+    gymWrapper.setCoachService(coachService);
   }
 
   private void routeTo(Context context, String model, String path, Bundle bd) {

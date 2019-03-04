@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saascommon.bean.Shop;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.CircleImgWrapper;

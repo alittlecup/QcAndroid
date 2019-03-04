@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.setting.brand;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saascommon.bean.Shop;
 import java.util.List;
 
 /**

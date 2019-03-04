@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.AllotSaleStudents;
-import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saascommon.bean.Shop;
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;

@@ -25,6 +25,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -52,6 +53,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
   TextView drawerName;
   TextView toolbarTitile;
   Toolbar toolbar;
+  CommonInputView civBrands;
 
   @Inject SettingPresenter presenter;
   @Inject LoginStatus loginStatus;
@@ -64,6 +66,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     drawerName = (TextView) view.findViewById(R.id.drawer_name);
     toolbarTitile = (TextView) view.findViewById(R.id.toolbar_title);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+    civBrands = view.findViewById(R.id.civ_my_gyms);
     view.findViewById(R.id.drawer_headerview).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onHeader();
@@ -78,6 +81,11 @@ public class SettingFragment extends BaseFragment implements SettingView {
     view.findViewById(R.id.civ_orders).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onOders();
+      }
+    });
+    view.findViewById(R.id.civ_my_gyms).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        routeTo("gym", "/my/gyms", null);
       }
     });
 
@@ -125,7 +133,6 @@ public class SettingFragment extends BaseFragment implements SettingView {
       }
     }
   }
-
 
   public void onHeader() {
     if (!loginStatus.isLogined()) {
@@ -178,6 +185,10 @@ public class SettingFragment extends BaseFragment implements SettingView {
         e.printStackTrace();
       }
     }
+  }
+
+  @Override public void onBrandsCount(int count) {
+    civBrands.setContent(count + "家");
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

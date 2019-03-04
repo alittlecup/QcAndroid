@@ -4,6 +4,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.QcScheduleBean;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saascommon.bean.Shop;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

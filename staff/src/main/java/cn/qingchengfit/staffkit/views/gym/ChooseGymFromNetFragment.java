@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saascommon.bean.Shop;
 import cn.qingchengfit.model.responese.Shops;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;

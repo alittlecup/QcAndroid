@@ -1,47 +1,26 @@
 package cn.qingcheng.gym.pages.my;
 
-import android.arch.lifecycle.MutableLiveData;
-import cn.qingcheng.gym.vo.IMyGymsItemData;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Transformations;
+import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.responsitory.IGymResponsitory;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
 public class MyGymsViewModel extends BaseViewModel {
 
-  public MutableLiveData<List<IMyGymsItemData>> datas = new MutableLiveData<>();
+  public LiveData<List<Brand>> datas;
+  @Inject IGymResponsitory gymResponsitory;
 
-  @Inject public MyGymsViewModel() {
-    testData();
+  @Inject public MyGymsViewModel(IGymResponsitory gymResponsitory) {
+    this.gymResponsitory=gymResponsitory;
+    datas = Transformations.map(gymResponsitory.qcGetBrands(), resource -> {
+      BrandsResponse brandsResponse = dealResource(resource);
+      return brandsResponse.brands;
+    });
   }
 
-  private void testData() {
-    List<IMyGymsItemData> data = new ArrayList<>();
-    IMyGymsItemData data1 = new IMyGymsItemData() {
-      @Override public String getBrandName() {
-        return " 引力工厂";
-      }
 
-      @Override public String getBrandID() {
-        return "123123";
-      }
-
-      @Override public String getBrandCreateName() {
-        return "刘姐";
-      }
-
-      @Override public String getBrandPhoto() {
-        return null;
-      }
-
-      @Override public boolean isManaged() {
-        return true;
-      }
-    };
-    data.add(data1);
-    data.add(data1);
-    data.add(data1);
-    data.add(data1);
-    datas.setValue(data);
-  }
 }

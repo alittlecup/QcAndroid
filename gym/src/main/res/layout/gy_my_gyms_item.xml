@@ -5,7 +5,7 @@
   <data>
     <variable
         name="data"
-        type="cn.qingcheng.gym.vo.IMyGymsItemData"
+        type="cn.qingchengfit.model.base.Brand"
         />
   </data>
   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,7 +29,7 @@
         android:layout_alignTop="@+id/img_photo"
         android:layout_marginLeft="12dp"
         android:layout_toRightOf="@+id/img_photo"
-        android:text="@{data.brandName}"
+        android:text="@{data.name}"
         tools:text="引力工厂"
         style="@style/QcTextStyleStandardDark"
         />
@@ -40,7 +40,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="3dp"
         android:layout_toRightOf="@+id/img_photo"
-        android:text='@{"品牌ID:"+data.brandID+"  创建人："+data.brandCreateName}'
+        android:text='@{"品牌ID:"+data.cname+"  创建人："+data.created_by.username}'
         tools:text="品牌ID: gravity    创建人：段光英"
         style="@style/QcTextStyleSmallWarm"
         />
@@ -59,7 +59,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
         app:srcCompat="@drawable/vd_arrow_right_grey"
-        app:visibleGone="@{!data.managed}"
+        app:visibleGone="@{!data.has_add_permission}"
         />
     <TextView
         android:id="@+id/tv_manage"
@@ -71,7 +71,7 @@
         android:text="管理"
         android:textColor="@color/primary"
         android:textSize="15dp"
-        app:visibleGone="@{data.managed}"
+        app:visibleGone="@{data.has_add_permission}"
         />
 
 

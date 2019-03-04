@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.usecase.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saascommon.bean.Shop;
 import java.util.List;
 
 /**

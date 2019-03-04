@@ -64,22 +64,6 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
     @Inject public GymWrapper gymWrapper;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //        Window window = this.getDialog().getWindow();
-        //        window.setGravity(Gravity.TOP);
-        //
-        //        window.getDecorView().setPadding(0, 0, 0, 0);
-        //        WindowManager.LayoutParams lp = window.getAttributes();
-        //        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        //        int[] textSizeAttr = new int[]{android.R.attr.actionBarSize};
-        //        int indexOfAttrTextSize = 0;
-        //        TypedArray a = getContext().obtainStyledAttributes(new TypedValue().data, textSizeAttr);
-        //        int actionbarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
-        //        a.recycle();
-        //        lp.y = actionbarSize;
-        //        window.setAttributes(lp);
-        //        window.setWindowAnimations(R.style.TopDialogStyle);
-
         View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
       rvBrand = (RecyclerView) view.findViewById(R.id.rv_brand);
 
@@ -98,28 +82,6 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
         return view;
     }
 
-    //    @NonNull
-    //    @Override
-    //    public Dialog onCreateDialog(Bundle savedInstanceState) {
-    //
-    //        Dialog dialog = super.onCreateDialog(savedInstanceState);
-    //        // 设置宽度为屏宽、靠近屏幕底部。
-    //        Window window = dialog.getWindow();
-    //
-    //        WindowManager.LayoutParams wlp = window.getAttributes();
-    //        wlp.width = LinearLayout.LayoutParams.MATCH_PARENT;
-    //        wlp.gravity = Gravity.TOP;
-    //        wlp.y = 100;
-    //        wlp.horizontalMargin = 0;
-    //        dialog.setCanceledOnTouchOutside(true);
-    //        dialog.setCancelable(true);
-    //        window.setAttributes(wlp);
-    //        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//注意此处
-    //        window.setLayout(MeasureUtils.getScreenWidth(getResources()), MeasureUtils.dpToPx(480f, getResources()));
-    //
-    //        return dialog;
-    //
-    //    }
 
     @Override public void show(FragmentManager manager, String tag) {
 

@@ -17,15 +17,19 @@ public abstract class GymBaseFragment<DB extends ViewDataBinding, VM extends Bas
     super.onCreate(savedInstanceState);
   }
 
-  @Override public void routeTo(String model, String path, Bundle bd) {
+  @Override protected void routeTo(String uri, Bundle bd, boolean b) {
     if (BuildConfig.RUN_AS_APP) {
-      String uri = model + path;
-      if (!uri.startsWith("/")) uri = "/" + uri;
-      if (getActivity() instanceof BaseActivity) {
-        routeTo(Uri.parse("qcgym:/" + uri), bd);
+      if (!uri.startsWith("/")) {
+        uri = "/" + uri;
+      }
+      if (this.getActivity() instanceof BaseActivity) {
+        this.routeTo(Uri.parse(BuildConfig.PROJECT_NAME
+            + "://"
+            + ((BaseActivity) this.getActivity()).getModuleName()
+            + uri), bd, b);
       }
     } else {
-      super.routeTo(model, path, bd);
+      super.routeTo(uri, bd, b);
     }
   }
 }

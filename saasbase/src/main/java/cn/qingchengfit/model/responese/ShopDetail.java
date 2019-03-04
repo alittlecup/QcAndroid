@@ -1,5 +1,7 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.saascommon.bean.Shop;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

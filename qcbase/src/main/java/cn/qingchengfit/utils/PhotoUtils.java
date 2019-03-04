@@ -140,10 +140,4 @@ public class PhotoUtils {
     });
   }
 
-  //public static void smallFile(ImageView v, String url){
-  //    Glide.with(v.getContext())
-  //        .load(url)
-  //        .asBitmap()
-  //        .into(new CircleImgWrapper(v, v.getContext()));
-  //}
 }

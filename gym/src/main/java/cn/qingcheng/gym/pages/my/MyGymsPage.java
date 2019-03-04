@@ -1,15 +1,14 @@
 package cn.qingcheng.gym.pages.my;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.item.MyGymsItem;
-import cn.qingcheng.gym.vo.IMyGymsItemData;
 import cn.qingchengfit.gym.databinding.GyPageMyGymsBinding;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -28,7 +27,7 @@ import java.util.List;
     mViewModel.datas.observe(this, datas -> {
       if (datas != null && !datas.isEmpty()) {
         List<MyGymsItem> items = new ArrayList<>();
-        for (IMyGymsItemData data : datas) {
+        for (Brand data : datas) {
           items.add(new MyGymsItem(data));
         }
         adapter.updateDataSet(items);
@@ -39,19 +38,16 @@ import java.util.List;
   @Override public GyPageMyGymsBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding = GyPageMyGymsBinding.inflate(inflater, container, false);
+    initToolbar();
+    initRecyclerView();
+    mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        routeTo( "/gym/create",null);
+      }
+    });
     return mBinding;
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    initRecyclerView();
-    initToolbar();
-    mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-
-      }
-    });
-  }
 
   private void initToolbar() {
     mBinding.setToolbarModel(new ToolbarModel("我的健身房"));
@@ -66,9 +62,8 @@ import java.util.List;
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);
     if (item instanceof MyGymsItem) {
-      IMyGymsItemData data = ((MyGymsItem) item).getData();
-      routeTo("gym", "/gym/brand",
-          new BundleBuilder().withString("brandId", data.getBrandID()).build());
+      Brand data = ((MyGymsItem) item).getData();
+      routeTo("/gym/brand", new BundleBuilder().withParcelable("brand", data).build());
     }
     return false;
   }

@@ -3,8 +3,13 @@ package cn.qingchengfit.staffkit.views.main;
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.responese.SettingUsecase;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -22,49 +27,63 @@ import javax.inject.Inject;
  */
 public class SettingPresenter extends BasePresenter {
 
-    private SettingUsecase usecase;
-    private SettingView view;
+  private SettingUsecase usecase;
+  private SettingView view;
+  @Inject StaffRespository staffRespository;
+  @Inject LoginStatus loginStatus;
 
-    @Inject public SettingPresenter(SettingUsecase usecase) {
-        this.usecase = usecase;
-    }
+  @Inject public SettingPresenter(SettingUsecase usecase) {
+    this.usecase = usecase;
+  }
 
-    @Override public void onStart() {
+  @Override public void onStart() {
 
-    }
+  }
 
-    @Override public void onStop() {
+  @Override public void onStop() {
 
-    }
+  }
 
-    @Override public void onPause() {
+  @Override public void onPause() {
 
-    }
+  }
 
-    @Override public void attachView(PView v) {
-        view = (SettingView) v;
-    }
+  @Override public void attachView(PView v) {
+    view = (SettingView) v;
+  }
 
-    @Override public void attachIncomingIntent(Intent intent) {
+  @Override public void attachIncomingIntent(Intent intent) {
 
-    }
+  }
 
-    @Override public void onCreate() {
+  @Override public void onCreate() {
 
-    }
+  }
 
-    @Override public void unattachView() {
-        super.unattachView();
-        view = null;
-    }
+  @Override public void unattachView() {
+    super.unattachView();
+    view = null;
+  }
 
-    public void getSelfInfo() {
-        usecase.getSelfInfo(qcResponseSelfInfo -> {
-            if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
-                view.onSelfInfo(qcResponseSelfInfo.data.staff);
-            } else {
+  public void getSelfInfo() {
+    usecase.getSelfInfo(qcResponseSelfInfo -> {
+      if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
+        view.onSelfInfo(qcResponseSelfInfo.data.staff);
+      } else {
 
+      }
+    });
+    staffRespository.getStaffAllApi()
+        .qcGetBrands(loginStatus.staff_id())
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            List<Brand> brands = response.getData().brands;
+            if (view != null) {
+              view.onBrandsCount(brands.size());
             }
+          }
+        }, throwable -> {
         });
-    }
+  }
 }

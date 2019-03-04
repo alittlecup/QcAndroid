@@ -12,6 +12,7 @@ import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
 
 /**
  * power by
@@ -28,13 +29,11 @@ import dagger.Provides;
  */
 @Module public abstract class AppModel {
 
-
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
-
 
   @Provides static LoginStatus provideLogin() {
     LoginStatus build = new LoginStatus.Builder().build();
-    Staff staff=new Staff();
+    Staff staff = new Staff();
     staff.setId("7505");
     build.setLoginUser(staff);
     build.setSession("zmypzucc4rd115a2ny8xjwziom0zkgus");
@@ -42,13 +41,13 @@ import dagger.Provides;
     return build;
   }
 
-
+  @ContributesAndroidInjector abstract SplashActivity bindSplashActivity();
 
   @Provides static Application providesApplication() {
     return MyApp.INSTANCE;
   }
 
-   @Provides static GymWrapper provideGym() {
+  @Provides static GymWrapper provideGym() {
     GymWrapper gymWrapper = new GymWrapper.Builder().build();
     CoachService coachService = new CoachService();
     coachService.setId("10548");

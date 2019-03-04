@@ -5,7 +5,7 @@
   <data>
     <variable
         name="brand"
-        type="cn.qingcheng.gym.vo.IMyGymsItemData"
+        type="cn.qingchengfit.model.base.Brand"
         />
     <variable
         name="toolbarModel"
@@ -52,7 +52,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="30dp"
             android:layout_toRightOf="@+id/img_brand_photo"
-            android:text="@{brand.brandName}"
+            android:text="@{brand.name}"
             tools:text="引力工场"
             style="@style/QcTextStyleStandardDark"
             />
@@ -62,7 +62,7 @@
             android:layout_alignLeft="@+id/tv_brand_name"
             android:layout_below="@+id/tv_brand_name"
             android:layout_marginTop="3dp"
-            android:text='@{"品牌ID:"+brand.brandID+"  创建人："+brand.brandCreateName}'
+            android:text='@{"品牌ID:"+brand.cname+"  创建人："+brand.created_by.username}'
             tools:text="品牌ID: gravity    创建人：段光英"
             style="@style/QcTextStyleSmallWarm"
             />
@@ -74,7 +74,7 @@
             android:layout_alignTop="@id/tv_brand_name"
             android:padding="2dp"
             android:tint="@color/grey"
-            app:visibleGone="@{brand.managed}"
+            app:visibleGone="@{brand.has_permission}"
             bind:srcCompat="@drawable/vd_facial_edit_black"
             />
       </RelativeLayout>
@@ -84,7 +84,6 @@
           android:layout_height="44dp"
           android:layout_marginTop="24dp"
           android:text="+新增场馆"
-          app:visibleGone="@{brand.managed}"
           android:textSize="17sp"
           style="@style/QcBtnPrimary"
           />

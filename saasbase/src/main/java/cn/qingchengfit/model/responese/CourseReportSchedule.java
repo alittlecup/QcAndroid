@@ -3,6 +3,7 @@ package cn.qingchengfit.model.responese;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.saasbase.report.bean.CourseCoach;
+import cn.qingchengfit.saascommon.bean.Shop;
 
 /**
  * Created by fb on 2017/5/16.

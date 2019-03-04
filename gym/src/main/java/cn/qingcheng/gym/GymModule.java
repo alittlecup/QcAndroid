@@ -9,6 +9,10 @@ import cn.qingcheng.gym.pages.gym.GymInfoViewModel;
 import cn.qingcheng.gym.pages.gym.GymSimpleListViewModel;
 import cn.qingcheng.gym.pages.my.MyGymsViewModel;
 import cn.qingcheng.gym.pages.search.GymSearchViewModel;
+import cn.qingcheng.gym.responsitory.GymResponsitoryImpl;
+import cn.qingcheng.gym.responsitory.IGymResponsitory;
+import cn.qingcheng.gym.responsitory.network.GymModelImpl;
+import cn.qingcheng.gym.responsitory.network.IGymModel;
 import cn.qingchengfit.gym.di.BindGymActivity;
 import cn.qingchengfit.gym.routers.GymRouterCenter;
 import cn.qingchengfit.gym.routers.gymImpl;
@@ -20,6 +24,9 @@ import dagger.multibindings.IntoMap;
 
 @Module(includes = { BindGymActivity.class }) public abstract class GymModule {
   private static GymRouterCenter gymRouterCenter = new GymRouterCenter().registe(new gymImpl());
+
+  @Binds  abstract IGymModel bindGymModel(GymModelImpl gymModel);
+  @Binds abstract IGymResponsitory bindIGymResponsitory(GymResponsitoryImpl gymResponsitory);
 
   @Binds @IntoMap @ViewModelKey(MyGymsViewModel.class)
   abstract ViewModel bindMyGymViewModel(MyGymsViewModel viewModel);

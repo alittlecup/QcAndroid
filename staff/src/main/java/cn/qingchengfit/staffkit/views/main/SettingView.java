@@ -17,5 +17,7 @@ import cn.qingchengfit.model.base.Staff;
  * Created by Paper on 16/4/27 2016.
  */
 public interface SettingView extends PView {
-    void onSelfInfo(Staff bean);
+  void onSelfInfo(Staff bean);
+
+  void onBrandsCount(int count);
 }
