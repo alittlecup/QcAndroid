@@ -74,7 +74,7 @@ import java.util.List;
   private void initListener() {
     mBinding.btnNewGym.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        routeTo("/gym/create", null);
+        routeTo("/gym/create", new BundleBuilder().withParcelable("brand", brand).build());
       }
     });
     mBinding.imgEditBrand.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,8 @@ import java.util.List;
     IFlexible item = adapter.getItem(position);
     if (item instanceof GymBrandItem) {
       Shop data = ((GymBrandItem) item).getData();
-      routeTo("/gym/edit", new BundleBuilder().withParcelable("shop", data).build());
+      routeTo("/gym/edit",
+          new BundleBuilder().withParcelable("shop", data).withParcelable("brand", brand).build());
     }
     return false;
   }

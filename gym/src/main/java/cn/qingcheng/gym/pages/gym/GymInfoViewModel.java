@@ -1,13 +1,16 @@
 package cn.qingcheng.gym.pages.gym;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingcheng.gym.bean.GymType;
 import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.network.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,7 +34,6 @@ public class GymInfoViewModel extends BaseViewModel {
           Boolean aBoolean = dealResource(booleanResource);
           return aBoolean == null ? false : aBoolean;
         }));
-
   }
 
   public void loadGymTypes() {
@@ -40,5 +42,22 @@ public class GymInfoViewModel extends BaseViewModel {
 
   public void deleteShop(String shop_id) {
     deleteShopID.setValue(shop_id);
+  }
+
+  public LiveData<Shop> createShop(Shop shop) {
+    return Transformations.map(gymResponsitory.qcSystemInit(shop),
+        new Function<Resource<Shop>, Shop>() {
+          @Override public Shop apply(Resource<Shop> shopResource) {
+            return dealResource(shopResource);
+          }
+        });
+  }
+
+  public LiveData<Boolean> editShop(Shop shop) {
+    return Transformations.map(gymResponsitory.editGymIntro(shop.id, shop), new Function<Resource<Boolean>, Boolean>() {
+      @Override public Boolean apply(Resource<Boolean> booleanResource) {
+        return dealResource(booleanResource);
+      }
+    });
   }
 }

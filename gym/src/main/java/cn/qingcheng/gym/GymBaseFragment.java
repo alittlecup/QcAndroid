@@ -8,6 +8,7 @@ import cn.qingchengfit.gym.BuildConfig;
 import cn.qingchengfit.gym.routers.GymParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 
 public abstract class GymBaseFragment<DB extends ViewDataBinding, VM extends BaseViewModel>
@@ -15,6 +16,9 @@ public abstract class GymBaseFragment<DB extends ViewDataBinding, VM extends Bas
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     GymParamsInjector.inject(this);
     super.onCreate(savedInstanceState);
+    if (mViewModel != null) {
+      mViewModel.getErrorMsg().observe(this, str -> ToastUtils.show(str));
+    }
   }
 
   @Override protected void routeTo(String uri, Bundle bd, boolean b) {

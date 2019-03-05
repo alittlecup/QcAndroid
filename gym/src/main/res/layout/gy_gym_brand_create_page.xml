@@ -43,6 +43,7 @@
           android:id="@+id/img_gym_photo"
           android:layout_width="60dp"
           android:layout_height="60dp"
+          android:src="@drawable/ic_default_header"
           tools:background="@color/bg_red"
           />
     </LinearLayout>

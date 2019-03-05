@@ -47,6 +47,7 @@ public class Shop implements Parcelable {
   public String description;
   public String weixin_image;
   public boolean weixin_success;
+  public String brand_id;
   public String weixin;
 
   public int area;
@@ -78,6 +79,7 @@ public class Shop implements Parcelable {
     dest.writeString(this.description);
     dest.writeString(this.weixin_image);
     dest.writeByte(this.weixin_success ? (byte) 1 : (byte) 0);
+    dest.writeString(this.brand_id);
     dest.writeString(this.weixin);
     dest.writeInt(this.area);
     dest.writeInt(this.gym_type);
@@ -102,6 +104,7 @@ public class Shop implements Parcelable {
     this.description = in.readString();
     this.weixin_image = in.readString();
     this.weixin_success = in.readByte() != 0;
+    this.brand_id = in.readString();
     this.weixin = in.readString();
     this.area = in.readInt();
     this.gym_type = in.readInt();

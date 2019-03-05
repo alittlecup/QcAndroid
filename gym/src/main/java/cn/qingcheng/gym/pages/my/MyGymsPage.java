@@ -43,7 +43,7 @@ import java.util.List;
     initRecyclerView();
     mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        routeTo( "/gym/create",null);
+        routeTo( "/gym/choose/create",null);
       }
     });
     return mBinding;

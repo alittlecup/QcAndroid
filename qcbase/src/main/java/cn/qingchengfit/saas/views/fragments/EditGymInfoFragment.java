@@ -125,7 +125,6 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
         presenter.setContact(phone.getContent());
         presenter.setGymName(gymName.getContent());
         presenter.setGymPhone(phone.getContent());
-        presenter.setContact(phone.getContent());
         presenter.editGymInfo();
         return false;
       }

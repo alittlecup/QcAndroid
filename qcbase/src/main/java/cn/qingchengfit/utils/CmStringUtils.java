@@ -253,6 +253,7 @@ public class CmStringUtils {
     return true;
   }
   public static String delHTMLTag(String htmlStr){
+    if(CmStringUtils.isEmpty(htmlStr))return htmlStr;
     String regEx_script="<script[^>]*?>[\\s\\S]*?<\\/script>"; //定义script的正则表达式
     String regEx_style="<style[^>]*?>[\\s\\S]*?<\\/style>"; //定义style的正则表达式
     String regEx_html="<[^>]+>"; //定义HTML标签的正则表达式

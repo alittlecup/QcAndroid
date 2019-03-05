@@ -373,6 +373,12 @@ import rx.functions.Func1;
     return ob;
   }
 
+  public <T> Observable<T> RxBusAddAllLife(@NonNull Class<T> clazz) {
+    Observable ob = RxBus.getBus().register(clazz);
+    observablesAllLife.add(new Pair<String, Observable>(clazz.getName(), ob));
+    return ob;
+  }
+
   protected void stuff(Fragment fragment) {
     String tag = UUID.randomUUID().toString();
     if (fragment instanceof BaseFragment) {

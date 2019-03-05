@@ -10,9 +10,11 @@ import cn.qingchengfit.gym.R;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.SpanUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/gym/edit") public class GymEditPage extends GymInfoPage {
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -22,7 +24,7 @@ import com.anbillon.flabellum.annotations.Leaf;
   }
 
   private void initView() {
-     mBinding.civGymType.setShowRight(true);
+    mBinding.civGymType.setShowRight(true);
     mBinding.civGymAddress.setShowRight(true);
 
     mBinding.civGymMark.setShowRight(true);
@@ -35,10 +37,22 @@ import com.anbillon.flabellum.annotations.Leaf;
   @Override public void initToolbar() {
     ToolbarModel toolbarModel = new ToolbarModel("编辑场馆信息");
     toolbarModel.setMenu(R.menu.menu_save);
-    toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        return false;
+    toolbarModel.setListener(item -> {
+      if(checkShop(shop)){
+        if(brand!=null){
+          shop.brand_id = brand.id;
+        }
+        mViewModel.editShop(shop).observe(GymEditPage.this,aBoolean -> {
+          if(aBoolean){
+            ToastUtils.show("修改场馆成功");
+            getActivity().onBackPressed();
+          }else{
+            ToastUtils.show("修改场馆失败");
+
+          }
+        });
       }
+      return false;
     });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);

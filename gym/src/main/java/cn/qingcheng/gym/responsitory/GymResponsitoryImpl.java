@@ -1,10 +1,13 @@
 package cn.qingcheng.gym.responsitory;
 
 import android.arch.lifecycle.LiveData;
+import cn.qingcheng.gym.bean.BrandPostBody;
+import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingcheng.gym.responsitory.network.IGymModel;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.mvvm.LiveDataTransfer;
 import cn.qingchengfit.saascommon.network.Resource;
@@ -43,11 +46,26 @@ public class GymResponsitoryImpl implements IGymResponsitory {
   }
 
   @Override public LiveData<Resource<Boolean>> qcDeleteShop(String shop_id) {
-    return toLiveData(
-        gymModel.qcDelGym(shop_id).map(
-            (Func1<QcDataResponse, QcDataResponse<Boolean>>) qcResponse -> {
-              qcResponse.setData(qcResponse.status == 200);
-              return qcResponse;
-            }));
+    return toLiveData(gymModel.qcDelGym(shop_id)
+        .map((Func1<QcDataResponse, QcDataResponse<Boolean>>) qcResponse -> {
+          qcResponse.setData(qcResponse.status == 200);
+          return qcResponse;
+        }));
+  }
+
+  @Override public LiveData<Resource<BrandResponse>> qcCreateBrand(BrandPostBody body) {
+    return toLiveData(gymModel.qcCreatBrand(body));
+  }
+
+  @Override public LiveData<Resource<Shop>> qcSystemInit(Shop body) {
+    return toLiveData(gymModel.qcSystemInit(body));
+  }
+
+  @Override public LiveData<Resource<Boolean>> editGymIntro(String gymId, Shop body) {
+    return toLiveData(gymModel.editGymIntro(gymId, body)
+        .map((Func1<QcDataResponse, QcDataResponse<Boolean>>) qcResponse -> {
+          qcResponse.setData(qcResponse.status == 200);
+          return qcResponse;
+        }));
   }
 }
