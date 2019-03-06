@@ -4,6 +4,8 @@ import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
+import cn.qingcheng.gym.bean.GymApplyOrderResponses;
+import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
@@ -68,10 +70,28 @@ public class GymModelImpl implements IGymModel {
     return gymApi.qcPostGymApply(body);
   }
 
-  @Override public Observable<QcDataResponse<GymApplyOrderResponse>> qcGetGymApplyOrder(
+  @Override public Observable<QcDataResponse<GymApplyOrderResponses>> qcGetGymApplyOrder(
       Map<String, Object> body) {
-    Map<String,Object> params=new HashMap<>(body);
+    Map<String, Object> params = new HashMap<>(body);
     params.put("user_id", loginStatus.getUserId());
+    params.put("status", 1);
     return gymApi.qcGetGymApplyOrder(params);
+  }
+
+  @Override
+  public Observable<QcDataResponse<GymPosition>> qcGetGymUserPosition(String id, String type) {
+    return gymApi.qcGetGymUserPosition(id, type);
+  }
+
+  @Override
+  public Observable<QcDataResponse<GymApplyOrderResponse>> qcGetGymApplyOrderInfo(String gymId,
+      String orderId) {
+    return gymApi.qcGetGymApplyOrderInfo(gymId, orderId);
+  }
+
+  @Override
+  public Observable<QcDataResponse<GymApplyOrderResponse>> qcDealGymApplyOrder(String gymId,
+      String orderId, Map<String, Object> body) {
+    return gymApi.qcDealGymApplyOrder(gymId, orderId, body);
   }
 }

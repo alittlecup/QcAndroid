@@ -5,6 +5,8 @@ import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
+import cn.qingcheng.gym.bean.GymApplyOrderResponses;
+import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
@@ -77,7 +79,7 @@ public class GymResponsitoryImpl implements IGymResponsitory {
     return toLiveData(gymModel.qcGetGymsByName(name));
   }
 
-  @Override public LiveData<Resource<GymPositions>> qcGetGymPositions(String id) {
+    @Override public LiveData<Resource<GymPositions>> qcGetGymPositions(String id) {
     return toLiveData(gymModel.qcGetGymPositions(id));
   }
 
@@ -87,7 +89,22 @@ public class GymResponsitoryImpl implements IGymResponsitory {
   }
 
   @Override
-  public LiveData<Resource<GymApplyOrderResponse>> qcGetGymApplyOrder(Map<String, Object> body) {
+  public LiveData<Resource<GymApplyOrderResponses>> qcGetGymApplyOrder(Map<String, Object> body) {
     return toLiveData(gymModel.qcGetGymApplyOrder(body));
+  }
+
+  @Override public LiveData<Resource<GymPosition>> qcGetGymUserPosition(String id, String type) {
+    return toLiveData(gymModel.qcGetGymUserPosition(id, type));
+  }
+
+  @Override public LiveData<Resource<GymApplyOrderResponse>> qcGetGymApplyOrderInfo(String gymId,
+      String orderId) {
+    return toLiveData(gymModel.qcGetGymApplyOrderInfo(gymId, orderId));
+  }
+
+  @Override
+  public LiveData<Resource<GymApplyOrderResponse>> qcDealGymApplyOrder(String gymId, String orderId,
+      Map<String, Object> body) {
+    return toLiveData(gymModel.qcDealGymApplyOrder(gymId, orderId, body));
   }
 }

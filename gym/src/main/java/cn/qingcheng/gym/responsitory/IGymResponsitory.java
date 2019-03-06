@@ -5,6 +5,8 @@ import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
+import cn.qingcheng.gym.bean.GymApplyOrderResponses;
+import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
@@ -34,5 +36,13 @@ public interface IGymResponsitory {
 
   LiveData<Resource<GymApplyOrderResponse>> qcPostGymApply(Map<String, Object> body);
 
-  LiveData<Resource<GymApplyOrderResponse>> qcGetGymApplyOrder(Map<String, Object> body);
+  LiveData<Resource<GymApplyOrderResponses>> qcGetGymApplyOrder(Map<String, Object> body);
+
+  LiveData<Resource<GymPosition>> qcGetGymUserPosition( String id, String type);
+
+  LiveData<Resource<GymApplyOrderResponse>> qcGetGymApplyOrderInfo(String gymId, String orderId);
+
+
+  LiveData<Resource<GymApplyOrderResponse>> qcDealGymApplyOrder(
+      String gymId, String orderId,  Map<String, Object> body);
 }

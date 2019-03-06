@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
+import cn.qingcheng.gym.bean.GymApplyOrderResponses;
 import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
@@ -36,10 +37,26 @@ public class GymApplyViewModel extends BaseViewModel {
 
   public LiveData<GymApplyOrderResponse> loadGymOrder(Map<String, Object> params) {
     return Transformations.map(gymResponsitory.qcGetGymApplyOrder(params),
-        gymApplyOrderResponseResource -> dealResource(gymApplyOrderResponseResource));
+        gymApplyOrderResponseResource -> {
+          GymApplyOrderResponses gymApplyOrderResponses =
+              dealResource(gymApplyOrderResponseResource);
+          if (gymApplyOrderResponses != null
+              && gymApplyOrderResponses.gymApplyOrderResponses != null) {
+            List<GymApplyOrderResponse> orders = gymApplyOrderResponses.gymApplyOrderResponses;
+            if (!orders.isEmpty()) {
+              return orders.get(0);
+            }
+          }
+          return null;
+        });
   }
 
   public void postGymApplyOrder(Map<String, Object> params) {
     this.params.setValue(params);
+  }
+
+  public LiveData<GymPosition> findPositionInGym(String gymId,String type){
+    return Transformations.map(gymResponsitory.qcGetGymUserPosition(gymId, type),
+        gymPositionResource -> dealResource(gymPositionResource));
   }
 }

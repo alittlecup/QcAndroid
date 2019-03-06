@@ -117,6 +117,40 @@ import java.util.Map;
       params.put("position_type", 1);
     }
     params.put("gym_id", gym.id);
+
+    Glide.with(getContext())
+        .load(PhotoUtils.getSmall(gym.getPhoto()))
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_header)
+        .into(new CircleImgWrapper(mBinding.imgGmyPhoto, getContext()));
+    findPositionInGym(gym.id);
+    return mBinding;
+  }
+
+  private void findPositionInGym(String gymID) {
+    mViewModel.findPositionInGym(gymID, AppUtils.getCurApp(getContext()) + "")
+        .observe(this, gymPosition -> {
+          if (gymPosition == null) {
+            loadUserApplyOrders();
+          } else {
+            mBinding.tvMyPosition.setText(gymPosition.name);
+            updateBtnView();
+          }
+        });
+  }
+
+  private void updateView(Gym gym) {
+    mBinding.tvGymAddress.setText(gym.address);
+    mBinding.tvGymName.setText(brandName + "-" + gym.name);
+    if (gym instanceof GymWithSuperUser) {
+      SuperUser superuser = ((GymWithSuperUser) gym).superuser;
+      if (superuser != null && superuser.user != null) {
+        mBinding.tvCreateName.setText(superuser.user.username);
+      }
+    }
+  }
+
+  private void loadUserApplyOrders() {
     mViewModel.loadGymOrder(params).observe(this, gymApplyOrderResponse -> {
       if (gymApplyOrderResponse != null) {
         GymApplyOrder gymApplyOrder = gymApplyOrderResponse.gymApplyOrder;
@@ -134,10 +168,7 @@ import java.util.Map;
               mBinding.tvPoint.setVisibility(View.GONE);
               break;
             case 2:
-              mBinding.btnApply.setText("返回场馆主页");
-              mBinding.btnApply.setOnClickListener(v->{
-                //Todo 返回场馆主页
-              });
+              updateBtnView();
               break;
             case 3:
               break;
@@ -145,23 +176,13 @@ import java.util.Map;
         }
       }
     });
-    Glide.with(getContext())
-        .load(PhotoUtils.getSmall(gym.getPhoto()))
-        .asBitmap()
-        .placeholder(R.drawable.ic_default_header)
-        .into(new CircleImgWrapper(mBinding.imgGmyPhoto, getContext()));
-    return mBinding;
   }
 
-  private void updateView(Gym gym) {
-    mBinding.tvGymAddress.setText(gym.address);
-    mBinding.tvGymName.setText(brandName + "-" + gym.name);
-    if (gym instanceof GymWithSuperUser) {
-      SuperUser superuser = ((GymWithSuperUser) gym).superuser;
-      if (superuser != null && superuser.user != null) {
-        mBinding.tvCreateName.setText(superuser.user.username);
-      }
-    }
+  private void updateBtnView() {
+    mBinding.btnApply.setText("返回场馆主页");
+    mBinding.btnApply.setOnClickListener(v -> {
+      //Todo 返回场馆主页
+    });
   }
 
   private void showSendDialog() {

@@ -4,6 +4,8 @@ import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
+import cn.qingcheng.gym.bean.GymApplyOrderResponses;
+import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
@@ -44,15 +46,27 @@ public interface GymApi {
   @GET("/api/v2/enter/gyms/search/")
   rx.Observable<QcDataResponse<GymSearchResponse>> qcGetGymsByName(@Query("name") String name);
 
-  @GET("api/v2/gyms/{gymId}/staff/enter/positions/?show_all=1")
+  @GET("/api/v2/gyms/{gymId}/staff/enter/positions/?show_all=1")
   rx.Observable<QcDataResponse<GymPositions>> qcGetGymPositions(@Path("gymId") String id);
 
-  @POST("api/v2/gym/enter/applications/")
+  @POST("/api/v2/gym/enter/applications/")
   rx.Observable<QcDataResponse<GymApplyOrderResponse>> qcPostGymApply(
       @Body Map<String, Object> body);
 
-  @GET("api/v2/gym/enter/applications/")
-  rx.Observable<QcDataResponse<GymApplyOrderResponse>> qcGetGymApplyOrder(
+  @GET("/api/v2/gym/enter/applications/")
+  rx.Observable<QcDataResponse<GymApplyOrderResponses>> qcGetGymApplyOrder(
       @QueryMap Map<String, Object> body);
+
+  @GET("api/v2/gyms/{gymID}/staff/enter/user/position/")
+  rx.Observable<QcDataResponse<GymPosition>> qcGetGymUserPosition(@Path("gymID") String id,
+      @Query("position_type") String type);
+
+  @GET("api/v2/gyms/{gymId}/enter/application/{orderId}/")
+  rx.Observable<QcDataResponse<GymApplyOrderResponse>> qcGetGymApplyOrderInfo(
+      @Path("gymId") String gymId, @Path("orderId") String orderId);
+
+  @PUT("api/v2/gyms/{gymId}/enter/application/{orderId}/")
+  rx.Observable<QcDataResponse<GymApplyOrderResponse>> qcDealGymApplyOrder(
+      @Path("gymId") String gymId, @Path("orderId") String orderId, @Body Map<String, Object> body);
 }
 

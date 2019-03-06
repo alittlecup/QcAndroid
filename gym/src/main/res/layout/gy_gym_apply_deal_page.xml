@@ -60,11 +60,14 @@
     </LinearLayout>
 
     <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_position"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:background="@color/bg_white"
-        app:civ_content="TA的职位"
+        app:civ_clickable="true"
+        app:civ_lable="TA的职位"
+        app:civ_showright="true"
         >
 
     </cn.qingchengfit.widgets.CommonInputView>
@@ -72,10 +75,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
         >
       <Button
           android:id="@+id/btn_cancel"
