@@ -1,21 +1,29 @@
 package cn.qingcheng.gym.pages.gym;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import cn.qingcheng.gym.GymBaseFragment;
+import cn.qingcheng.gym.bean.BrandWithGyms;
+import cn.qingcheng.gym.item.GymSimpleListItem;
 import cn.qingchengfit.gym.databinding.GyGymSimpleListPageBinding;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
-@Leaf(module = "gym",path = "/gym/simple/list")
-public class GymSimpleListPage
-    extends GymBaseFragment<GyGymSimpleListPageBinding, GymSimpleListViewModel> {
+import java.util.List;
+
+@Leaf(module = "gym", path = "/gym/simple/list") public class GymSimpleListPage
+    extends GymBaseFragment<GyGymSimpleListPageBinding, GymSimpleListViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
+  @Need BrandWithGyms brand;
 
   @Override protected void subscribeUI() {
 
@@ -24,18 +32,35 @@ public class GymSimpleListPage
   @Override
   public GyGymSimpleListPageBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return mBinding = GyGymSimpleListPageBinding.inflate(inflater, container, false);
+    if (mBinding != null) return mBinding;
+    mBinding = GyGymSimpleListPageBinding.inflate(inflater, container, false);
+    initRecyclerView();
+    mBinding.setToolbarModel(new ToolbarModel(brand.brand.name));
+    initToolbar(mBinding.includeToolbar.toolbar);
+    return mBinding;
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    initRecyclerView();
-    mBinding.setToolbarModel(new ToolbarModel("场馆名称"));
-    initToolbar(mBinding.includeToolbar.toolbar);
-  }
 
   private void initRecyclerView() {
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
+    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
+    List< ? extends Gym> gyms = brand.gyms;
+    List<IFlexible> items = new ArrayList<>();
+    if (gyms != null && !gyms.isEmpty()) {
+      for (Gym gym : gyms) {
+        items.add(new GymSimpleListItem(brand.brand.name, gym));
+      }
+    }
+    adapter.updateDataSet(items);
+  }
+
+  @Override public boolean onItemClick(int position) {
+    IFlexible item = adapter.getItem(position);
+    if (item instanceof GymSimpleListItem) {
+      Gym gym = ((GymSimpleListItem) item).getGym();
+
+      routeTo("/gym/apply", new BundleBuilder().withParcelable("gym", gym).withString("brandName",brand.brand.name).build());
+    }
+    return false;
   }
 }

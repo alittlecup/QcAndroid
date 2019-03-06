@@ -4,6 +4,9 @@ import android.arch.lifecycle.LiveData;
 import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.bean.GymApplyOrderResponse;
+import cn.qingcheng.gym.bean.GymPositions;
+import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingcheng.gym.responsitory.network.IGymModel;
@@ -14,6 +17,7 @@ import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Func1;
@@ -67,5 +71,23 @@ public class GymResponsitoryImpl implements IGymResponsitory {
           qcResponse.setData(qcResponse.status == 200);
           return qcResponse;
         }));
+  }
+
+  @Override public LiveData<Resource<GymSearchResponse>> qcGetGymsByName(String name) {
+    return toLiveData(gymModel.qcGetGymsByName(name));
+  }
+
+  @Override public LiveData<Resource<GymPositions>> qcGetGymPositions(String id) {
+    return toLiveData(gymModel.qcGetGymPositions(id));
+  }
+
+  @Override
+  public LiveData<Resource<GymApplyOrderResponse>> qcPostGymApply(Map<String, Object> body) {
+    return toLiveData(gymModel.qcPostGymApply(body));
+  }
+
+  @Override
+  public LiveData<Resource<GymApplyOrderResponse>> qcGetGymApplyOrder(Map<String, Object> body) {
+    return toLiveData(gymModel.qcGetGymApplyOrder(body));
   }
 }

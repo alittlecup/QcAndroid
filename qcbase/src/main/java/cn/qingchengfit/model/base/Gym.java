@@ -78,6 +78,16 @@ public class Gym implements Parcelable {
     gd_district_id = builder.gd_district_id;
   }
 
+  public static final Creator<Gym> CREATOR = new Creator<Gym>() {
+    @Override public Gym createFromParcel(Parcel in) {
+      return new Gym(in);
+    }
+
+    @Override public Gym[] newArray(int size) {
+      return new Gym[size];
+    }
+  };
+
   public String getPhone() {
     return phone;
   }
@@ -526,14 +536,4 @@ public class Gym implements Parcelable {
     this.gd_district_id = (Integer) in.readValue(Integer.class.getClassLoader());
     this.contact = in.readString();
   }
-
-  public static final Creator<Gym> CREATOR = new Creator<Gym>() {
-    @Override public Gym createFromParcel(Parcel source) {
-      return new Gym(source);
-    }
-
-    @Override public Gym[] newArray(int size) {
-      return new Gym[size];
-    }
-  };
 }

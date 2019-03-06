@@ -1,24 +1,26 @@
 package cn.qingcheng.gym.item;
 
 import android.view.View;
-import cn.qingcheng.gym.vo.IGymSearchItemData;
+import cn.qingcheng.gym.bean.BrandWithGyms;
 import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymSearchItemBinding;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
+import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
 
 public class GymSearchItem
     extends AbstractFlexibleItem<DataBindingViewHolder<GyGymSearchItemBinding>> {
-  public IGymSearchItemData getData() {
+  public BrandWithGyms getData() {
     return data;
   }
 
-  private IGymSearchItemData data;
+  private BrandWithGyms data;
 
-  public GymSearchItem(IGymSearchItemData data) {
+  public GymSearchItem(BrandWithGyms data) {
     this.data = data;
   }
 
@@ -38,9 +40,12 @@ public class GymSearchItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<GyGymSearchItemBinding> holder, int position, List payloads) {
     GyGymSearchItemBinding dataBinding = holder.getDataBinding();
-    dataBinding.setData(data);
-    if (data.getBrandPhoto() != null) {
-      PhotoUtils.smallCircle(dataBinding.imgGymPhoto, data.getBrandPhoto());
-    }
+    dataBinding.setData(data.brand);
+    Glide.with(dataBinding.getRoot().getContext())
+        .load(PhotoUtils.getSmall(data.brand.getPhoto()))
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_header)
+        .into(new CircleImgWrapper(dataBinding.imgGymPhoto, dataBinding.getRoot().getContext()));
+    dataBinding.tvGmyCount.setText(data.gyms.size() + "家场馆");
   }
 }

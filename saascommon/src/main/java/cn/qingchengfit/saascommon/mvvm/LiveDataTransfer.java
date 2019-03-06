@@ -24,6 +24,7 @@ public class LiveDataTransfer {
       final Observable<QcDataResponse<T>> observable) {
     return new PublisherLiveData<>(RxReactiveStreams.toPublisher(observable));
   }
+
   public static <T> LiveData<Resource<T>> fromPublisher(
       final Publisher<QcDataResponse<T>> observable) {
     return new PublisherLiveData<>(observable);
@@ -89,7 +90,11 @@ public class LiveDataTransfer {
         if (item.status == 200) {
           postValue(Resource.success(item.data));
         } else {
-          postValue(Resource.error(item.getMsg(), null));
+          Resource<T> error = Resource.error(item.getMsg(), null);
+          if (item.error_code != null && item.error_code.length() > 0) {
+            error.setErrorCode(Integer.valueOf(item.error_code));
+          }
+          postValue(error);
         }
       }
 

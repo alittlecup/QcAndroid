@@ -2,6 +2,8 @@ package cn.qingcheng.gym;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import cn.qingcheng.gym.pages.apply.GymApplyDealPage;
+import cn.qingcheng.gym.pages.apply.GymApplyPage;
 import cn.qingcheng.gym.pages.brand.ChangeGymPage;
 import cn.qingcheng.gym.pages.brand.GymBrandPage;
 import cn.qingcheng.gym.pages.create.GymBrandCreatePage;
@@ -20,7 +22,7 @@ import javax.inject.Inject;
 @Trunk(fragments = {
     MyGymsPage.class, GymBrandPage.class, GymEditPage.class, GymInfoPage.class, GymCreatePage.class,
     GymCreateChoosePage.class, GymBrandCreatePage.class, GymSearchPage.class, GymSimpleListPage.class,
-    ChangeGymPage.class,
+    ChangeGymPage.class, GymApplyDealPage.class, GymApplyPage.class
 }) public class GymActivity extends SaasCommonActivity {
   @Inject GymRouterCenter routerCenter;
 

@@ -1,6 +1,8 @@
 package cn.qingcheng.gym;
 
 import android.arch.lifecycle.ViewModel;
+import cn.qingcheng.gym.pages.apply.GymApplyDealViewModel;
+import cn.qingcheng.gym.pages.apply.GymApplyViewModel;
 import cn.qingcheng.gym.pages.brand.ChangeGymViewModel;
 import cn.qingcheng.gym.pages.brand.GymBrandViewModel;
 import cn.qingcheng.gym.pages.create.GymBrandCreateViewModel;
@@ -51,6 +53,12 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(GymCreateChooseViewModel.class)
   abstract ViewModel bindGymCreateChooseViewModel(GymCreateChooseViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(GymApplyViewModel.class)
+  abstract ViewModel bindGymApplyViewModel(GymApplyViewModel viewModel);
+
+  @Binds @IntoMap @ViewModelKey(GymApplyDealViewModel.class)
+  abstract ViewModel bindGymApplyDealViewModel(GymApplyDealViewModel viewModel);
 
   @Provides public static GymRouterCenter provideRouterCenter() {
     return gymRouterCenter;

@@ -40,7 +40,7 @@ public class SplashActivity extends SaasCommonActivity {
         if (TextUtils.isEmpty(s)) {
           routeTo(SplashActivity.this, "gym", "/my/gyms", null);
         } else {
-          routeTo(SplashActivity.this, "gym", s, null);
+          routeTo(SplashActivity.this, "gym", "/gym/"+s, null);
         }
       }
     });

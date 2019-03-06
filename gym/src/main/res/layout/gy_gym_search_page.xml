@@ -54,6 +54,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="场馆名称"
+            android:singleLine="true"
             android:imeOptions="actionSearch"
             style="@style/QcTextStyleMediumDark"
             />
@@ -81,13 +82,13 @@
           />
 
     </LinearLayout>
-    <include layout="@layout/divider_medium"/>
     <TextView
         android:id="@+id/tv_create_gym"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:paddingLeft="15dp"
         android:text="+ 创建引力场馆"
+        android:visibility="gone"
         android:textColor="@color/primary"
         />
     <include

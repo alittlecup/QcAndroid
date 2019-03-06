@@ -3,7 +3,7 @@
   <data>
     <variable
         name="data"
-        type="cn.qingcheng.gym.vo.IGymSearchItemData"
+        type="cn.qingchengfit.model.base.Brand"
         />
   </data>
   <RelativeLayout
@@ -27,7 +27,7 @@
         android:layout_alignTop="@id/img_gym_photo"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/img_gym_photo"
-        android:text="@{data.brandName}"
+        android:text="@{data.name}"
         tools:text="引力工场"
         style="@style/QcTextStyleStandardDark"
         />
@@ -38,7 +38,7 @@
         android:layout_alignLeft="@id/tv_gym_name"
         android:layout_below="@id/tv_gym_name"
         android:layout_marginTop="5dp"
-        android:text='@{"创建人："+data.brandCreateName}'
+        android:text='@{"创建人："+data.created_by.username}'
         tools:text="创建人：Smart"
         style="@style/QcTextStyleSmallWarm"
         />
@@ -49,7 +49,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:text='@{data.gymsCount+"家场馆"}'
         tools:text="场馆数量"
 
         style="@style/QcTextStyleSmallWarm"
