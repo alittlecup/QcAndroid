@@ -28,8 +28,7 @@ public class GymApplyViewModel extends BaseViewModel {
   }
 
   public void loadGymPositions(String gymId) {
-    positions =
-        Transformations.map(gymResponsitory.qcGetGymPositions(gymId), gymPositionsResource -> {
+    positions = Transformations.map(gymResponsitory.qcGetGymPositions(gymId), gymPositionsResource -> {
           GymPositions gymPositions = dealResource(gymPositionsResource);
           return gymPositions == null ? null : gymPositions.positions;
         });
@@ -57,6 +56,6 @@ public class GymApplyViewModel extends BaseViewModel {
 
   public LiveData<GymPosition> findPositionInGym(String gymId,String type){
     return Transformations.map(gymResponsitory.qcGetGymUserPosition(gymId, type),
-        gymPositionResource -> dealResource(gymPositionResource));
+        this::dealResource);
   }
 }

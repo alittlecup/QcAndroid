@@ -1,6 +1,7 @@
 package cn.qingcheng.gym.pages.apply;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,15 +129,14 @@ import java.util.Map;
   }
 
   private void findPositionInGym(String gymID) {
-    mViewModel.findPositionInGym(gymID, AppUtils.getCurApp(getContext()) + "")
-        .observe(this, gymPosition -> {
-          if (gymPosition == null) {
-            loadUserApplyOrders();
-          } else {
-            mBinding.tvMyPosition.setText(gymPosition.name);
-            updateBtnView();
-          }
-        });
+    mViewModel.findPositionInGym(gymID, 1 + "").observe(this, gymPosition -> {
+      if (gymPosition != null&& !TextUtils.isEmpty(gymPosition.id)) {
+        mBinding.tvMyPosition.setText(gymPosition.name);
+        updateBtnView();
+      } else {
+        loadUserApplyOrders();
+      }
+    });
   }
 
   private void updateView(Gym gym) {
@@ -180,6 +180,9 @@ import java.util.Map;
 
   private void updateBtnView() {
     mBinding.btnApply.setText("返回场馆主页");
+    mBinding.btnApply.setEnabled(true);
+    mBinding.tvPoint.setVisibility(View.GONE);
+    mBinding.tvMyPosition.setClickable(false);
     mBinding.btnApply.setOnClickListener(v -> {
       //Todo 返回场馆主页
     });

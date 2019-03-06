@@ -2,10 +2,12 @@ package cn.qingcheng.gym.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.gson.annotations.SerializedName;
 
 public class GymPosition implements Parcelable {
   public String id;
   public String shop_id;
+  @SerializedName(value = "name",alternate = "position")
   public String name;
 
   @Override public int describeContents() {
