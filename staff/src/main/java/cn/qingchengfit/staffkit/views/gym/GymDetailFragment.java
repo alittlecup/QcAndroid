@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.GymSettingInfo;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.inject.moudle.GymStatus;
@@ -124,6 +125,12 @@ import org.json.JSONObject;
 import rx.Observable;
 import rx.functions.Action1;
 
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_MANAGE_COACH;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_FREE;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_GROUP;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_PRIVATE;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_SERVICE_SHOP;
+
 /**
  * power by
  * <p/>
@@ -215,7 +222,7 @@ public class GymDetailFragment extends BaseFragment
     tagPro = (ImageView) view.findViewById(R.id.tag_pro);
     layoutCharge = (LinearLayout) view.findViewById(R.id.layout_to_charge);
     tvPrice = (CompatTextView) view.findViewById(R.id.tv_price);
-    flGymInfo=view.findViewById(R.id.fl_gym_info);
+    flGymInfo = view.findViewById(R.id.fl_gym_info);
     flGymInfo.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         onTitleClick();
@@ -328,6 +335,7 @@ public class GymDetailFragment extends BaseFragment
     if (isSingleBrand()) {
       view.findViewById(R.id.include_bottom).setVisibility(View.GONE);
     }
+    gymDetailPresenter.loadGymSettingInfo();
     return view;
   }
 
@@ -342,8 +350,8 @@ public class GymDetailFragment extends BaseFragment
           if (type == GymPartnerItem.GymPartnerType.PARTNER_MEITUAN) {
             if (((GymPartnerItem) item).getStatus()) {
               routeTo("dianping", "/dianping/success",
-                  new DianPingAccountSuccessPageParams().gymName(gymWrapper.getCoachService().getName())
-                      .build());
+                  new DianPingAccountSuccessPageParams().gymName(
+                      gymWrapper.getCoachService().getName()).build());
             } else {
               routeTo("dianping", "/dianping/home", null);
             }
@@ -791,7 +799,24 @@ public class GymDetailFragment extends BaseFragment
       for (Object o : (List) module) {
         if (o instanceof String) {
           if (!TextUtils.isEmpty((String) o)) {
-            datas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion((String) o)));
+            GymFuntion gymFuntion = GymFunctionFactory.instanceGymFuntion((String) o);
+            if (gymFuntion.getImg() == 0) {
+              continue;
+            }
+            if (info != null) {
+              if ((!info.has_private && gymFuntion.getModuleName().equals(MODULE_SERVICE_PRIVATE))
+                  || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
+                  || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
+                  || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
+                  || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))) {
+                gymFuntion.setNotSetting(true);
+                datas.add(new GymFuntionItem(gymFuntion));
+              } else {
+                datas.add(new GymFuntionItem(gymFuntion));
+              }
+            } else {
+              datas.add(new GymFuntionItem(gymFuntion));
+            }
           }
         }
       }
@@ -899,6 +924,25 @@ public class GymDetailFragment extends BaseFragment
    */
   @Override public void onSuperUser(Staff su) {
     gymSu.setText("超级管理员：" + su.getUsername());
+  }
+
+  private GymSettingInfo info;
+
+  @Override public void showGymFirstSettingDialog(GymSettingInfo data) {
+    if (data != null) {
+      if (data.has_mall
+          || data.has_private
+          || data.has_team
+          || data.open_checkin
+          || data.skip_window) {
+        info = data;
+        PreferenceUtils.setPrefBoolean(getContext(),"isFirstSettingGym",false);
+      } else {
+        GymSettingDialog gymSettingDialog = new GymSettingDialog(getContext(),data.gym_type);
+        gymSettingDialog.show();
+        PreferenceUtils.setPrefBoolean(getContext(),"isFirstSettingGym",true);
+      }
+    }
   }
 
   /**

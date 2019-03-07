@@ -19,7 +19,6 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IExportModel;
-import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
@@ -32,6 +31,7 @@ import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staff.routers.StaffRouterCenter;
 import cn.qingchengfit.staff.routers.dianpingImpl;
 import cn.qingchengfit.staff.routers.settingImpl;
@@ -189,7 +189,7 @@ import java.util.List;
   }
 
   @Provides static StaffRouterCenter provideStaffRouterCenter() {
-    return new StaffRouterCenter().registe(new dianpingImpl()).registe(new settingImpl());
+    return new StaffRouterCenter().registe(new dianpingImpl()).registe(new settingImpl()).registe(new cn.qingchengfit.staff.routers.staffImpl());
   }
 
   @Provides public IPermissionModel providePermissModel() {

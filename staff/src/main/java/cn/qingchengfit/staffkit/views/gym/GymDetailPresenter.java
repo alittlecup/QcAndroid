@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
+import cn.qingchengfit.bean.GymSettingInfo;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -15,6 +16,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
@@ -154,7 +156,7 @@ public class GymDetailPresenter extends BasePresenter {
               if (qcResponseGymDetail.data.gym.first_month_favorable_info != null) {
                 price = qcResponseGymDetail.data.gym.first_month_favorable_info.favorable_price;
               }
-              if (qcResponseGymDetail.getData().gym.miniProgram!= null) {
+              if (qcResponseGymDetail.getData().gym.miniProgram != null) {
                 gymDetailView.onMiniProgram(qcResponseGymDetail.getData().gym.miniProgram);
               }
               gymWrapper.setHasFirst(qcResponseGymDetail.data.gym.has_first_month_favorable);
@@ -204,5 +206,27 @@ public class GymDetailPresenter extends BasePresenter {
         })
 
     );
+  }
+
+  public void loadGymSettingInfo() {
+    RxRegiste(restRepository.getStaffAllApi()
+        .qcGetGymSettingInfo(loginStatus.staff_id(), gymWrapper.getParams())
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            GymSettingInfo gymSettingInfo = new GymSettingInfo();
+            gymSettingInfo.has_teacher = false;
+            gymSettingInfo.open_checkin = false;
+            gymSettingInfo.has_private = false;
+            gymSettingInfo.has_mall = false;
+            gymSettingInfo.has_team = false;
+            gymSettingInfo.skip_window = false;
+            gymSettingInfo.gym_type = "健身工作室";
+            gymDetailView.showGymFirstSettingDialog(gymSettingInfo);
+          } else {
+            ToastUtils.show(response.getMsg());
+            gymDetailView.onFailed();
+          }
+        }));
   }
 }

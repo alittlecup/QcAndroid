@@ -5,14 +5,13 @@
   <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/halftrans_background"
       android:orientation="vertical"
       >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
         android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/bg_white_corners"
         android:gravity="center_horizontal"
@@ -22,13 +21,16 @@
       <ImageView
           android:layout_width="100dp"
           android:layout_height="80dp"
-          android:layout_marginTop="25dp"
+          android:layout_marginTop="40dp"
+          android:paddingTop="10dp"
+          android:scaleX="2"
+          android:scaleY="2"
+          app:srcCompat="@drawable/ic_img_gym_servicetype"
           />
       <TextView
           android:id="@+id/tv_gym_type"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="30dp"
           android:text="您的工作室主要提供哪些服务？"
           android:textColor="@color/text_black"
           android:textSize="17sp"
@@ -60,8 +62,7 @@
               android:layout_height="14dp"
               android:layout_gravity="right|bottom"
               android:layout_margin="5dp"
-              android:tint="@color/divider_dark"
-              app:srcCompat="@drawable/vd_success_tick_white"
+              app:srcCompat="@drawable/vd_success_tick_grey"
               />
 
         </FrameLayout>
@@ -81,8 +82,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:text="私教"
               android:checked="true"
+              android:text="私教"
               android:textColor="@color/text_grey"
               android:textSize="15sp"
               />
@@ -91,15 +92,13 @@
               android:layout_height="14dp"
               android:layout_gravity="right|bottom"
               android:layout_margin="5dp"
-              android:tint="@color/divider_dark"
-              app:srcCompat="@drawable/vd_success_tick_white"
+              app:srcCompat="@drawable/vd_success_tick_grey"
               />
 
         </FrameLayout>
 
       </LinearLayout>
       <LinearLayout
-          android:id="@+id/fl_train_setting"
 
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -107,6 +106,7 @@
           android:orientation="horizontal"
           >
         <FrameLayout
+            android:id="@+id/fl_train_setting"
             android:layout_width="130dp"
             android:layout_height="50dp"
             android:background="@drawable/btn_primary_frame_checked"
@@ -125,8 +125,7 @@
               android:layout_height="14dp"
               android:layout_gravity="right|bottom"
               android:layout_margin="5dp"
-              android:tint="@color/divider_dark"
-              app:srcCompat="@drawable/vd_success_tick_white"
+              app:srcCompat="@drawable/vd_success_tick_grey"
               />
 
         </FrameLayout>
@@ -155,8 +154,7 @@
               android:layout_height="14dp"
               android:layout_gravity="right|bottom"
               android:layout_margin="5dp"
-              android:tint="@color/divider_dark"
-              app:srcCompat="@drawable/vd_success_tick_white"
+              app:srcCompat="@drawable/vd_success_tick_grey"
               />
 
         </FrameLayout>
@@ -167,8 +165,8 @@
           android:layout_width="275dp"
           android:layout_height="45dp"
           android:layout_marginTop="25dp"
-          android:textSize="17sp"
           android:text="确定"
+          android:textSize="17sp"
           />
 
     </LinearLayout>

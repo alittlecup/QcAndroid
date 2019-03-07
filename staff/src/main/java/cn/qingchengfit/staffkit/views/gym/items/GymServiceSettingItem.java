@@ -11,6 +11,10 @@ import java.util.List;
 
 public class GymServiceSettingItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemGymServiceSettingBinding>> {
+  public int getType() {
+    return type;
+  }
+
   private int type;
 
   public GymServiceSettingItem(int type) {

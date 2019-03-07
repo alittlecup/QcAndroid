@@ -1,8 +1,11 @@
 package cn.qingchengfit.staffkit.staff;
 
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
+import cn.qingchengfit.saasbase.partner.PartnerAccountPage;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteLinkFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteQrCodeFragment;
@@ -28,9 +31,10 @@ import cn.qingchengfit.saasbase.staff.views.TrainerTabLeaveListFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabListFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoverOrderDetailFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoversHomePage;
-import cn.qingchengfit.saasbase.partner.PartnerAccountPage;
-import cn.qingchengfit.staffkit.views.gym.GymServiceSettingFragment;
+import cn.qingchengfit.staff.routers.StaffRouterCenter;
+import cn.qingchengfit.staffkit.views.GymServiceSettingFragment;
 import com.anbillon.flabellum.annotations.Trunk;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -66,7 +70,17 @@ import com.anbillon.flabellum.annotations.Trunk;
 })
 
 public class StaffStaffActivity extends SaasContainerActivity {
+  @Inject StaffRouterCenter staffRouterCenter;
+
   @Override public String getModuleName() {
     return "staff";
+  }
+
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    Fragment fragment = staffRouterCenter.getFragment(intent.getData(), intent.getExtras());
+    if (fragment instanceof GymServiceSettingFragment) {
+      return fragment;
+    }
+    return super.getRouterFragment(intent);
   }
 }

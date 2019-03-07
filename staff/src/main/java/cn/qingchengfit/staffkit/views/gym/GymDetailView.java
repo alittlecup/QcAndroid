@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym;
 
+import cn.qingchengfit.bean.GymSettingInfo;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.MiniProgram;
@@ -61,4 +62,6 @@ public interface GymDetailView extends PView {
     void onQuitGym();
 
     void onSuperUser(Staff su);
+
+    void showGymFirstSettingDialog(GymSettingInfo data);
 }

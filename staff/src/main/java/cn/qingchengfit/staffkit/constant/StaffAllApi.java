@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.constant;
 
 import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.bean.GymSettingInfo;
 import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.views.CheckProtocolModel;
@@ -1794,8 +1795,8 @@ public interface StaffAllApi {
   @GET("/api/tags/?is_gym=1") rx.Observable<QcDataResponse<GymTags>> qcGetGymTags();
 
   @POST("/api/partner/meituan/gyms/{gym_id}/link/")
-  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(@Path("gym_id") String id,
-      @Body Map<String, Object> params);
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostDianPingAccount(
+      @Path("gym_id") String id, @Body Map<String, Object> params);
 
   @GET("/api/partner/meituan/gyms/{gym_id}/link/")
   rx.Observable<QcDataResponse<DianPingGymInfo>> qcGetDianPingGymInfo(@Path("gym_id") String id,
@@ -1829,4 +1830,14 @@ public interface StaffAllApi {
   rx.Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
       @Path("staff_id") String id, @Path("turnover_id") String tur_id,
       @QueryMap Map<String, Object> params);
+
+  //------------------------------//
+  //跳过弹框接口
+  @GET("api/v2/staffs/{staff_id}/gym/pop/window/")
+  rx.Observable<QcDataResponse<GymSettingInfo>> qcGetGymSettingInfo(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+
+  @PUT("api/v2/staffs/{staff_id}/gym/pop/window/")
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPutGymSetting(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
 }

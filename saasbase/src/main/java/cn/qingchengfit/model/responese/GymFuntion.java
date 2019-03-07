@@ -26,98 +26,115 @@ import android.support.annotation.StringRes;
 
 public class GymFuntion {
 
-    private String moduleName;
-    @StringRes private int text;
-    @DrawableRes private int img;
+  private String moduleName;
+  @StringRes private int text;
+  @DrawableRes private int img;
 
+  private int gymGrade;
+  private boolean isGymPro;
+
+  public boolean isNotSetting() {
+    return notSetting;
+  }
+
+  public void setNotSetting(boolean notSetting) {
+    this.notSetting = notSetting;
+  }
+
+  private boolean notSetting;
+
+  private GymFuntion(Builder builder) {
+    setModuleName(builder.moduleName);
+    setText(builder.text);
+    setImg(builder.img);
+    setGymGrade(builder.gymGrade);
+    isGymPro = builder.isGymPro;
+    notSetting = builder.notSetting;
+  }
+
+  public int getGymGrade() {
+    return gymGrade;
+  }
+
+  public void setGymGrade(int gymGrade) {
+    this.gymGrade = gymGrade;
+  }
+
+  public String getModuleName() {
+    return moduleName;
+  }
+
+  public void setModuleName(String moduleName) {
+    this.moduleName = moduleName;
+  }
+
+  public int getText() {
+    return text;
+  }
+
+  public void setText(int text) {
+    this.text = text;
+  }
+
+  public int getImg() {
+    return img;
+  }
+
+  public void setImg(int img) {
+    this.img = img;
+  }
+
+  public boolean isGymPro() {
+    return isGymPro;
+  }
+
+  public void setGymPro(boolean gymPro) {
+    isGymPro = gymPro;
+  }
+
+  public static final class Builder {
+    private String moduleName;
+    private int text;
+    private int img;
     private int gymGrade;
     private boolean isGymPro;
 
-    private GymFuntion(Builder builder) {
-        setModuleName(builder.moduleName);
-        setText(builder.text);
-        setImg(builder.img);
-        setGymGrade(builder.gymGrade);
-        isGymPro = builder.isGymPro;
+    public void setNotSetting(boolean notSetting) {
+      this.notSetting = notSetting;
     }
 
-    public int getGymGrade() {
-        return gymGrade;
+    private boolean notSetting = false;
+
+    public Builder() {
     }
 
-    public void setGymGrade(int gymGrade) {
-        this.gymGrade = gymGrade;
+    public Builder moduleName(String val) {
+      moduleName = val;
+      return this;
     }
 
-    public String getModuleName() {
-        return moduleName;
+    public Builder text(int val) {
+      text = val;
+      return this;
     }
 
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
+    public Builder img(int val) {
+      img = val;
+      return this;
     }
 
-    public int getText() {
-        return text;
+    public Builder gymGrade(int val) {
+      gymGrade = val;
+      return this;
     }
 
-    public void setText(int text) {
-        this.text = text;
+    public Builder isGymPro(boolean val) {
+      isGymPro = val;
+      return this;
     }
 
-    public int getImg() {
-        return img;
+    public GymFuntion build() {
+      return new GymFuntion(this);
     }
-
-    public void setImg(int img) {
-        this.img = img;
-    }
-
-    public boolean isGymPro() {
-        return isGymPro;
-    }
-
-    public void setGymPro(boolean gymPro) {
-        isGymPro = gymPro;
-    }
-
-    public static final class Builder {
-        private String moduleName;
-        private int text;
-        private int img;
-        private int gymGrade;
-        private boolean isGymPro;
-
-        public Builder() {
-        }
-
-        public Builder moduleName(String val) {
-            moduleName = val;
-            return this;
-        }
-
-        public Builder text(int val) {
-            text = val;
-            return this;
-        }
-
-        public Builder img(int val) {
-            img = val;
-            return this;
-        }
-
-        public Builder gymGrade(int val) {
-            gymGrade = val;
-            return this;
-        }
-
-        public Builder isGymPro(boolean val) {
-            isGymPro = val;
-            return this;
-        }
-
-        public GymFuntion build() {
-            return new GymFuntion(this);
-        }
-    }
+  }
 }

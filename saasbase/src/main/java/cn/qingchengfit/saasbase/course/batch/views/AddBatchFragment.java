@@ -3,8 +3,6 @@ package cn.qingchengfit.saasbase.course.batch.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,12 +17,10 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
@@ -34,7 +30,6 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -117,11 +112,12 @@ public class AddBatchFragment extends SaasBaseFragment
   private CommonFlexAdapter commonFlexAdapter;
   @Need public Staff mTeacher;
   @Need public Course mCourse;
+  @Need public Boolean isGroup;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher, "addbatch",
-        mCourse == null || mCourse.is_private());
+        isPrivate());
     batchBaseFragment.setListener(this);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     arrayOpenTime = getResources().getStringArray(R.array.order_open_time);
@@ -142,6 +138,10 @@ public class AddBatchFragment extends SaasBaseFragment
             }
           }
         });
+  }
+  private boolean isPrivate(){
+    if(isGroup)return false;
+    return (mCourse == null || mCourse.is_private());
   }
 
   @Nullable @Override
@@ -187,7 +187,7 @@ public class AddBatchFragment extends SaasBaseFragment
     });
 
     delegatePresenter(presenter, this);
-    presenter.setPrivate(mCourse == null || mCourse.is_private());
+    presenter.setPrivate(isPrivate());
 
     initToolbar(toolbar);
 
@@ -234,7 +234,6 @@ public class AddBatchFragment extends SaasBaseFragment
     stuff(batchBaseFragment);
   }
 
-
   @Override public int getLayoutRes() {
     return R.id.frag_course_info;
   }
@@ -260,12 +259,13 @@ public class AddBatchFragment extends SaasBaseFragment
     popBack();
   }
 
-  @Override public void onTemplete(boolean isFree, boolean openOnline, int maxuer,Rule onLineRule) {
+  @Override
+  public void onTemplete(boolean isFree, boolean openOnline, int maxuer, Rule onLineRule) {
     if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
       batchBaseFragment.setOrderSutdentCount(maxuer);
       batchBaseFragment.openPayOnline(openOnline);
-      if(openOnline){
-        batchBaseFragment.payOnlineRule=onLineRule;
+      if (openOnline) {
+        batchBaseFragment.payOnlineRule = onLineRule;
       }
     }
     ToastUtils.showS("已自动填充排期");

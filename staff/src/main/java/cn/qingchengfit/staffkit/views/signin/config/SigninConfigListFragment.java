@@ -9,30 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
-import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Router;
-import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
+import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
 import cn.qingchengfit.staffkit.views.signin.zq.presenter.ZqAccessPresenter;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -159,6 +157,16 @@ public class SigninConfigListFragment extends BaseFragment
     btnHowToUse.setCompoundDrawablesWithIntrinsicBounds(
         ContextCompat.getDrawable(getContext(), R.drawable.ic_vector_info_grey), null, null, null);
     isLoading = true;
+    if(PreferenceUtils.getPrefBoolean(getContext(),"isFirstSettingGym",false)){
+      Button button = view.findViewById(R.id.btn_first_setting);
+      button.setVisibility(View.VISIBLE);
+      button.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+
+        }
+      });
+
+    }
     return view;
   }
 

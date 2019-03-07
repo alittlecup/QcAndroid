@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="94dp"
@@ -43,6 +44,19 @@
         style="@style/Qc.TextCommonBlack"
         />
   </LinearLayout>
+  <TextView
+      android:id="@+id/tv_not_set"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right"
+      android:layout_marginTop="5dp"
+      android:background="@drawable/bg_fill_red_slide_white"
+      android:padding="5dp"
+      android:textColor="@color/bg_white"
+      android:textSize="10sp"
+      android:visibility="visible"
+      tools:text="未设置"
+      />
 
   <ImageView
       android:id="@+id/status_icon"
@@ -51,6 +65,7 @@
       android:layout_gravity="right|end"
       android:layout_marginEnd="8dp"
       android:layout_marginRight="8dp"
+      tools:background="@color/bg_red"
       android:scaleType="centerInside"
 
       />
