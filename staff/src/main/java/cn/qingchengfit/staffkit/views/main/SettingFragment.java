@@ -125,6 +125,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
             .asBitmap()
             .into(new CircleImgWrapper(headerIcon, getContext()));
         drawerName.setText("未登录");
+        onBrandsCount(0);
       } else {
         /*
          * 已登录用户
@@ -188,7 +189,11 @@ public class SettingFragment extends BaseFragment implements SettingView {
   }
 
   @Override public void onBrandsCount(int count) {
-    civBrands.setContent(count + "家");
+    if (count <= 0) {
+      civBrands.setContent("");
+    } else {
+      civBrands.setContent(count + "家");
+    }
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -46,7 +46,9 @@ import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.StringUtils;
@@ -204,7 +206,7 @@ public class NotificationFragment extends BaseFragment
           }
           if (!StringUtils.isEmpty(msg.getBrand_id())
               && !StringUtils.isEmpty(msg.getShop_id())
-              && msg.type <= 20) {
+              && msg.type <= 23) {
             final CoachService coachService1 =
                 gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
             if (coachService1 != null) {
@@ -243,17 +245,30 @@ public class NotificationFragment extends BaseFragment
                           gymWrapper.setCoachService(coachService1);
                           presenter.checkoutSellerStudentPermission(msg.getUser().getId());
                           return;
-                        }else if(msg.type==20){
+                        } else if (msg.type == 20) {
                           if (serPermisAction.check(PermissionServerUtils.MODULE_SHOP_TURNOVER)) {
-                            RouteUtil.routeTo(getContext(),"staff", "/turnover/home", null);
+                            RouteUtil.routeTo(getContext(), "staff", "/turnover/home", null);
                           } else {
-                            DialogUtils.showAlert(getContext(), cn.qingchengfit.saasbase.R.string.alert_permission_forbid);
+                            DialogUtils.showAlert(getContext(),
+                                cn.qingchengfit.saasbase.R.string.alert_permission_forbid);
                           }
                         } else if (msg.type == 19) {
                           gymWrapper.setCoachService(coachService1);
                           QcRouteUtil.setRouteOptions(
                               new RouteOptions("student").setActionName("/student/birthday"))
                               .call();
+                          return;
+                        } else if (msg.type == 21) {
+                          gymWrapper.setCoachService(coachService1);
+                          RouteUtil.routeTo(getContext(), "gym", "/gym/deal//apply",
+                              new BundleBuilder().withString("applyId", msg.getGymApplyId())
+                                  .withString("gymId", msg.getGymId())
+                                  .build());
+                          return;
+                        } else if (msg.type == 22) {
+                          Intent toGymdetail = new Intent(getActivity(), GymActivity.class);
+                          toGymdetail.putExtra(GymActivity.GYM_TO, GymActivity.GYM_DETAIL);
+                          startActivity(toGymdetail);
                           return;
                         }
 
@@ -332,9 +347,7 @@ public class NotificationFragment extends BaseFragment
         }
       }
     }
-    //        mAdatper.clear();
     mAdatper.updateDataSet(mData, true);
-    //        mAdatper.notifyDataSetChanged();
 
     try {
       if (mfirstUnread > 0) {

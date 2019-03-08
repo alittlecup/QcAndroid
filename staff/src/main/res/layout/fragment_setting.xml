@@ -81,10 +81,12 @@
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_my_gyms"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
+          android:layout_height="50dp"
           app:civ_clickable="true"
           app:civ_lable="我的健身房"
+          app:civ_showdivier="true"
           app:civ_showright="true"
+          app:civ_content_color="@color/text_warm"
           app:civ_text_color="@color/text_dark"
           />
 

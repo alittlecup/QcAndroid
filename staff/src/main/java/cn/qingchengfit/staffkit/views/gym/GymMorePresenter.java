@@ -29,7 +29,6 @@ public class GymMorePresenter extends BasePresenter {
     @Inject public GymMorePresenter(StaffRespository restRepository) {
         this.restRepository = restRepository;
     }
-
     void updateFunction(List<String> modules) {
         if (modules != null) {
             qcDbManager.insertFunction(modules);
@@ -49,6 +48,7 @@ public class GymMorePresenter extends BasePresenter {
                 }
             }, new NetWorkThrowable()));
     }
+
 
     @Override public void attachView(PView v) {
         view = (MVPView) v;

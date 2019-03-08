@@ -12,15 +12,25 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.DialogGymSettingBinding;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class GymSettingDialog extends AppCompatDialog {
   DialogGymSettingBinding mBinding;
+
+  public Set<String> getModules() {
+    return modules;
+  }
+
+  public  Set<String> modules = new LinkedHashSet<>();
 
   public GymSettingDialog(@NonNull Context context, String gymType) {
     super(context);
@@ -37,23 +47,46 @@ public class GymSettingDialog extends AppCompatDialog {
     mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         ArrayList<Integer> types = new ArrayList<>();
+        modules.clear();
+        modules.add(QRActivity.MODULE_STUDENT_CARDS);
+        modules.add(QRActivity.MODULE_STUDENT);
         int i = 0;
         if (mBinding.flGroupSetting.isActivated()) {
           types.add(1);
           i += 1;
+          modules.add(QRActivity.MODULE_SERVICE_GROUP);
+          modules.add(QRActivity.MODULE_MANAGE_COACH);
+          modules.add(QRActivity.MODULE_GYM_SITE);
+          modules.add(QRActivity.MODULE_WORKSPACE_ORDER_LIST);
+          modules.add(QRActivity.MODULE_WORKSPACE_GROUP);
         }
         if (mBinding.flPrivateSetting.isActivated()) {
           types.add(2);
           i += 1;
+          modules.add(QRActivity.MODULE_SERVICE_PRIVATE);
+          modules.add(QRActivity.MODULE_MANAGE_COACH);
+          modules.add(QRActivity.MODULE_GYM_SITE);
+          modules.add(QRActivity.MODULE_WORKSPACE_ORDER_LIST);
+          modules.add(QRActivity.MODULE_WORKSPACE_PRIVATE);
         }
         if (mBinding.flTrainSetting.isActivated()) {
           types.add(3);
           i += 1;
+          modules.add(QRActivity.MODULE_SERVICE_FREE);
+          modules.add(QRActivity.MODULE_WORKSPACE_ORDER_SIGNIN);
+          modules.add(QRActivity.MODULE_WARDROBE);
         }
         if (mBinding.flShopSetting.isActivated()) {
           types.add(4);
           i += 1;
+          modules.add(QRActivity.MODULE_SERVICE_SHOP);
+          modules.add(QRActivity.MODULE_WORKSPACE_COMMODITY_LIST);
         }
+        if (i == 0) {
+          ToastUtils.show("请至少选择一项服务");
+          return;
+        }
+
         PreferenceUtils.setPrefInt(getContext(), "GymSettingCount", i);
         RouteUtil.routeTo(getContext(), "staff", "/gym/setting",
             new BundleBuilder().withIntegerArrayList("types", types).build());

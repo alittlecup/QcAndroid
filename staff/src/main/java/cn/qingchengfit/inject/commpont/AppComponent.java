@@ -2,6 +2,7 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import cn.qingcheng.gym.GymModule;
 import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
@@ -313,7 +314,7 @@ import javax.inject.Singleton;
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,
-    WxPreviewModule.class, DianPingModule.class, BindSettingActivity.class,
+    WxPreviewModule.class, DianPingModule.class, BindSettingActivity.class, GymModule.class,
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class,
     AppComponent.MainMsgModule.class, AppComponent.UnloginAdModule.class,

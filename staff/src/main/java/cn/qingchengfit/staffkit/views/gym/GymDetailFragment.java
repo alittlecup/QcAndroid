@@ -35,7 +35,6 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.ButtonItem;
-import cn.qingchengfit.saasbase.items.GymPartnerItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.MiniProgram;
@@ -49,6 +48,7 @@ import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saasbase.items.GymPartnerItem;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.turnovers.TurnoverBarChartFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
@@ -118,6 +118,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import org.json.JSONException;
@@ -951,6 +952,12 @@ public class GymDetailFragment extends BaseFragment
         PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", false);
       } else {
         GymSettingDialog gymSettingDialog = new GymSettingDialog(getContext(), data.gym_type);
+        gymSettingDialog.setOnDismissListener(dialog -> {
+          Set<String> modules = gymSettingDialog.getModules();
+          if (!modules.isEmpty()) {
+            gymDetailPresenter.updateFunction(new ArrayList<>(modules));
+          }
+        });
         gymSettingDialog.show();
         PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", true);
       }

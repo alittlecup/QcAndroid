@@ -7,6 +7,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.QcResponsePermission;
@@ -137,6 +138,26 @@ public class GymDetailPresenter extends BasePresenter {
           }
         }));
   }
+  void updateFunction(List<String> modules) {
+    if (modules != null) {
+      qcDbManager.insertFunction(modules);
+    }
+    RxRegiste(restRepository.getStaffAllApi()
+        .qcUpdateModule(loginStatus.staff_id(), new UpdateModule.Builder().module_custom(modules).build(), gymWrapper.getParams())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+
+            } else {
+              mvpView.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
 
   public void getGymWelcome() {
     spWelcome = gymUseCase.getGymWelcom(gymWrapper.id(), gymWrapper.model(),
@@ -181,31 +202,6 @@ public class GymDetailPresenter extends BasePresenter {
             }
           }
         });
-  }
-
-  public void quitGym() {
-    RxRegiste(restRepository.getStaffAllApi()
-        .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
-        .onBackpressureBuffer()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcResponse>() {
-          @Override public void call(QcResponse qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              gymDetailView.onQuitGym();
-            } else {
-              ToastUtils.show(qcResponse.getMsg());
-              gymDetailView.onFailed();
-            }
-            ;
-          }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            gymDetailView.onFailed();
-          }
-        })
-
-    );
   }
 
   public void loadGymSettingInfo() {

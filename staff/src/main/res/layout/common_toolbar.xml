@@ -35,7 +35,32 @@
           android:gravity="center"
           android:textColor="@color/white"
           tools:text="hahah"
+          tools:visibility="gone"
+
           />
+      <LinearLayout
+          android:id="@+id/show_gym"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:visibility="gone"
+          tools:visibility="visible"
+          >
+        <ImageView
+            android:id="@+id/img_gym_photo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            tools:background="@color/colorPrimary"
+            />
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:background="?android:selectableItemBackground"
+            android:text="预览"
+            android:textColor="@color/white"
+            />
+      </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
     <CheckBox
@@ -71,8 +96,8 @@
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         >
 
       <TextView

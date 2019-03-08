@@ -1,11 +1,15 @@
 package cn.qingcheng.gym.pages.apply;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
+import cn.qingcheng.gym.bean.GymApplyOrder;
+import cn.qingcheng.gym.bean.GymApplyOrderResponse;
 import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.network.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,5 +36,15 @@ public class GymApplyDealViewModel extends BaseViewModel {
     param.put("status", status);
     param.put("position_id", positionId);
     gymResponsitory.qcDealGymApplyOrder(gymId, orderId, param);
+  }
+
+  public LiveData<GymApplyOrder> loagAplyOrderInfo(String gymId, String applyId) {
+    return Transformations.map(gymResponsitory.qcGetGymApplyOrderInfo(gymId, applyId),
+        new Function<Resource<GymApplyOrderResponse>, GymApplyOrder>() {
+          @Override public GymApplyOrder apply(Resource<GymApplyOrderResponse> resource) {
+            GymApplyOrderResponse gymApplyOrderResponse = dealResource(resource);
+            return gymApplyOrderResponse == null ? null : gymApplyOrderResponse.gymApplyOrder;
+          }
+        });
   }
 }

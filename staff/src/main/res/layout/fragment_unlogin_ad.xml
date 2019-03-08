@@ -39,33 +39,7 @@
       android:layout_height="20dp"
       />
 
-  <LinearLayout
-      android:id="@+id/ll_login"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_horizontal"
-      android:orientation="horizontal"
-      >
 
-    <Button
-        android:id="@+id/btn_use_now"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:background="@drawable/btn_green_radius_full"
-        android:text="免费使用"
-        />
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginLeft="@dimen/little"
-        android:background="@drawable/btn_green_radius_full_outline"
-        android:text="已有账号登录"
-        android:textColor="@color/colorPrimary"
-        />
-
-  </LinearLayout>
   <LinearLayout
       android:id="@+id/ll_add_gym"
       android:layout_width="match_parent"

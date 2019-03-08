@@ -43,10 +43,9 @@ public class NotificationItem extends AbstractFlexibleItem<NotificationItem.Noti
   @Override public void bindViewHolder(FlexibleAdapter adapter, NotificationVH holder, int position,
       List payloads) {
     NotificationMsg entity = msg;
-    if (TextUtils.isEmpty(entity.getUrl())
-        && entity.card_id == 0
-        && entity.type < 11
-        && entity.type == 18) {
+    if (TextUtils.isEmpty(entity.getUrl()) && entity.card_id == 0 && entity.type < 11
+        || entity.type == 18
+        || entity.type == 23) {
       holder.iconRight.setVisibility(View.GONE);
     } else {
       holder.iconRight.setVisibility(View.VISIBLE);

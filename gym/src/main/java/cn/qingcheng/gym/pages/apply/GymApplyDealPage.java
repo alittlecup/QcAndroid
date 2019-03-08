@@ -1,35 +1,38 @@
 package cn.qingcheng.gym.pages.apply;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.bean.GymPosition;
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymApplyDealPageBinding;
-import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.bumptech.glide.Glide;
+import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
 @Leaf(module = "gym", path = "/gym/deal//apply") public class GymApplyDealPage
     extends GymBaseFragment<GyGymApplyDealPageBinding, GymApplyDealViewModel> {
-  @Need Gym gym;
+  @Need String applyId;
+  @Need String gymId;
   private BottomChooseDialog positionChooseDialog;
   private String positionID;
 
   @Override protected void subscribeUI() {
     if (AppUtils.getCurApp(getContext()) != 0) {
-      mViewModel.loadGymPositions(gym.id);
+      mViewModel.loadGymPositions(gymId);
       mViewModel.positions.observe(this, gymPositions -> {
         hideLoading();
         if (gymPositions != null && !gymPositions.isEmpty()) {
@@ -38,18 +41,36 @@ import java.util.List;
             items.add(new BottomChooseData(position.name));
           }
           positionChooseDialog = new BottomChooseDialog(getContext(), "TA的职位", items);
-          positionChooseDialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
-            @Override public boolean onItemClick(int position) {
-              List<GymPosition> value = mViewModel.positions.getValue();
-              GymPosition gymPosition = value.get(position);
-              mBinding.civPosition.setContent(gymPosition.name);
-              positionID = gymPosition.id;
-              return true;
-            }
+          positionChooseDialog.setOnItemClickListener(position -> {
+            List<GymPosition> value = mViewModel.positions.getValue();
+            GymPosition gymPosition = value.get(position);
+            mBinding.civPosition.setContent(gymPosition.name);
+            positionID = gymPosition.id;
+            return true;
           });
         }
       });
+      mViewModel.loagAplyOrderInfo(gymId, applyId).observe(this, gymApplyOrder -> {
+        if (gymApplyOrder != null) {
+          mBinding.civPosition.setContent(gymApplyOrder.position.name);
+          positionID = gymApplyOrder.position.id;
+          mBinding.btnConfirm.setText(
+              gymApplyOrder.user.getUsername() + "(" + gymApplyOrder.user.getPhone() + ")");
+          loadPhoto(gymApplyOrder.user);
+        }
+      });
     }
+  }
+
+  private void loadPhoto(Staff staff) {
+    Glide.with(getContext())
+        .load(com.tencent.qcloud.timchat.widget.PhotoUtils.getSmall(staff.getAvatar()))
+        .asBitmap()
+        .placeholder(staff.getGender() == 0 ? R.drawable.default_student_male
+            : R.drawable.default_student_female)
+        .error(staff.getGender() == 0 ? R.drawable.default_student_male
+            : R.drawable.default_student_female)
+        .into(new CircleImgWrapper(mBinding.imgPhoto, getContext()));
   }
 
   @Override
@@ -66,30 +87,33 @@ import java.util.List;
     });
     mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        //dealApply();
+        dealApply(gymId, applyId, 2);
       }
     });
     if (AppUtils.getCurApp(getContext()) == 0) {
       mBinding.civPosition.setContent("教练");
     } else {
-
+      mBinding.civPosition.setOnClickListener((View.OnClickListener) v -> {
+        if (positionChooseDialog != null) {
+          positionChooseDialog.show();
+        } else {
+          mViewModel.loadGymPositions(gymId);
+        }
+      });
     }
     return mBinding;
   }
 
   private void showCancelDialog() {
-    DialogUtils.showConfirm(getContext(), "确定要拒绝XXX的加入申请吗？",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-            materialDialog.dismiss();
-            if (dialogAction == DialogAction.POSITIVE) {
-              //dealApply();
-            }
-          }
-        });
+    DialogUtils.showConfirm(getContext(), "确定要拒绝XXX的加入申请吗？", (materialDialog, dialogAction) -> {
+      materialDialog.dismiss();
+      if (dialogAction == DialogAction.POSITIVE) {
+        dealApply(gymId, applyId, 3);
+      }
+    });
   }
 
   private void dealApply(String gymid, String orderID, int status) {
-    mViewModel.dealApply(gym.id, orderID, AppUtils.getCurApp(getContext()), positionID);
+    mViewModel.dealApply(gymid, orderID, status, positionID);
   }
 }

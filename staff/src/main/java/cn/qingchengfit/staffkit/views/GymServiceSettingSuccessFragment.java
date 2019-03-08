@@ -60,7 +60,6 @@ import com.anbillon.flabellum.annotations.Need;
         mBinding.tvSuccess.setText("恭喜您，商品添加成功 !");
         mBinding.tvSuccessHint.setText("推广给会员开始购买吧");
         PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_mall", true);
-
         break;
     }
     mBinding.btnPreview.setOnClickListener(new View.OnClickListener() {

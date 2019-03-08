@@ -10,12 +10,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
 import android.widget.LinearLayout;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventFreshUnloginAd;
-import cn.qingchengfit.login.LoginActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
@@ -24,7 +20,6 @@ import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -51,9 +46,7 @@ public class UnloginAdFragment extends BaseFragment {
   public static final int RESULT_LOGIN = 2;
   ViewPager vp;
   CircleIndicator splashIndicator;
-  Button btnUseNow;
-  Button btnLogin;
-  LinearLayout llGym,llLogin;
+  LinearLayout llGym;
   private int[] imgs = new int[] {
       R.drawable.img_guide1, R.drawable.img_guide2, R.drawable.img_guide3, R.drawable.img_guide4,
   };
@@ -71,21 +64,7 @@ public class UnloginAdFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_unlogin_ad, container, false);
     vp = (ViewPager) view.findViewById(R.id.vp);
     splashIndicator = (CircleIndicator) view.findViewById(R.id.splash_indicator);
-    btnUseNow = (Button) view.findViewById(R.id.btn_use_now);
-    btnLogin = (Button) view.findViewById(R.id.btn_login);
     llGym = view.findViewById(R.id.ll_add_gym);
-    llLogin = view.findViewById(R.id.ll_login);
-    view.findViewById(R.id.btn_use_now).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onClickUse(v);
-      }
-    });
-    view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onClickUse(v);
-      }
-    });
-
     //告诉 未登录home页，新增场馆到第几步了
     RxBus.getBus().post(new EventUnloginHomeLevel(0));
     ArrayList<Fragment> list = new ArrayList<>();
@@ -97,61 +76,52 @@ public class UnloginAdFragment extends BaseFragment {
     vp.setOffscreenPageLimit(2);
     vp.setAdapter(viewPaperAdapter);
     splashIndicator.setViewPager(vp);
-    loginChange(TextUtils.isEmpty(App.staffId));
-    RxBusAdd(EventFreshUnloginAd.class).subscribe(new Action1<EventFreshUnloginAd>() {
-      @Override public void call(EventFreshUnloginAd eventFreshUnloginAd) {
-        loginChange(TextUtils.isEmpty(App.staffId));
-      }
-    });
     view.findViewById(R.id.btn_add_gym).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        routeTo("gym", "/gym/search", null);
+        if (TextUtils.isEmpty(App.staffId)) {
+          toLogin();
+          search = true;
+        } else {
+          routeTo("gym", "/gym/search", null);
+        }
       }
     });
     view.findViewById(R.id.tv_create_gym).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        routeTo("gym", "/gym/create", null);
+        if (TextUtils.isEmpty(App.staffId)) {
+          toLogin();
+          search = false;
+        } else {
+          routeTo("gym", "/gym/create", null);
+        }
       }
     });
 
     return view;
   }
 
-  private void loginChange(boolean isLogin) {
-    llLogin.setVisibility(isLogin ? View.GONE : View.VISIBLE);
-    llGym.setVisibility(isLogin ? View.VISIBLE : View.GONE);
-  }
-
-  @Override protected void onVisible() {
-    super.onVisible();
-  }
+  private boolean search = false;
 
   @Override public String getFragmentName() {
     return UnloginAdFragment.class.getName();
   }
 
-  public void onClickUse(View v) {
-    if (!TextUtils.isEmpty(App.staffId)) {
-      if (getParentFragment() instanceof HomeUnLoginFragment) {
-        ((HomeUnLoginFragment) getParentFragment()).replace(
-            new ChooseBrandInMainFragmentBuilder().build(), true);
-      }
-    } else {
-      Intent toLogin = new Intent(getContext().getPackageName(),
-          Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
-      toLogin.putExtra("isRegiste", v.getId() == R.id.btn_use_now);
-      toLogin.putExtra("ad", true);
-      startActivityForResult(toLogin, RESULT_LOGIN);
-    }
+  public void toLogin() {
+    Intent toLogin = new Intent(getContext().getPackageName(),
+        Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
+    toLogin.putExtra("isRegiste", false);
+    toLogin.putExtra("ad", true);
+    startActivityForResult(toLogin, RESULT_LOGIN);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
       if (requestCode == RESULT_LOGIN) {
-        if (getParentFragment() instanceof HomeUnLoginFragment) {
-          ((HomeUnLoginFragment) getParentFragment()).replace(
-              new ChooseBrandInMainFragmentBuilder().build(), true);
+        if (search) {
+          routeTo("gym", "/gym/search", null);
+        } else {
+          routeTo("gym", "/gym/create", null);
         }
       }
     }
