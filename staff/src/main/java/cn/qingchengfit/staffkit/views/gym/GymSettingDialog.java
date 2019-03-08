@@ -16,6 +16,7 @@ import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.DialogGymSettingBinding;
 import cn.qingchengfit.utils.BundleBuilder;
+import cn.qingchengfit.utils.PreferenceUtils;
 import java.util.ArrayList;
 
 public class GymSettingDialog extends AppCompatDialog {
@@ -36,19 +37,24 @@ public class GymSettingDialog extends AppCompatDialog {
     mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         ArrayList<Integer> types = new ArrayList<>();
+        int i = 0;
         if (mBinding.flGroupSetting.isActivated()) {
           types.add(1);
+          i += 1;
         }
         if (mBinding.flPrivateSetting.isActivated()) {
           types.add(2);
+          i += 1;
         }
         if (mBinding.flTrainSetting.isActivated()) {
           types.add(3);
+          i += 1;
         }
         if (mBinding.flShopSetting.isActivated()) {
           types.add(4);
+          i += 1;
         }
-
+        PreferenceUtils.setPrefInt(getContext(), "GymSettingCount", i);
         RouteUtil.routeTo(getContext(), "staff", "/gym/setting",
             new BundleBuilder().withIntegerArrayList("types", types).build());
         dismiss();

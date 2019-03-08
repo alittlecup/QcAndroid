@@ -29,6 +29,7 @@ import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
 import cn.qingchengfit.staffkit.views.signin.zq.presenter.ZqAccessPresenter;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -68,17 +69,17 @@ public class SigninConfigListFragment extends BaseFragment
   @Inject StaffRespository restRepository;
   @Inject ModuleConfigsPresenter presenter;
   @Inject IPermissionModel permissionModel;
-	TextView tvSigninTypeSetted;
-	TextView btnHowToUse;
-	LinearLayout layoutSigninType;
-	LinearLayout layoutSigninWardrobe;
-	LinearLayout layoutSigninScreen;
-	ExpandedLayout swOpen;
-	Toolbar toolbar;
-	TextView toolbarTitile;
-	CommonInputView inputSignUseCard;
-	CommonInputView inputSignUseQrcode;
-	CommonInputView inputSignUseZq;
+  TextView tvSigninTypeSetted;
+  TextView btnHowToUse;
+  LinearLayout layoutSigninType;
+  LinearLayout layoutSigninWardrobe;
+  LinearLayout layoutSigninScreen;
+  ExpandedLayout swOpen;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  CommonInputView inputSignUseCard;
+  CommonInputView inputSignUseQrcode;
+  CommonInputView inputSignUseZq;
   @Inject ZqAccessPresenter zqPresenter;
   private boolean setted;
   private boolean isJumping = false;
@@ -157,15 +158,16 @@ public class SigninConfigListFragment extends BaseFragment
     btnHowToUse.setCompoundDrawablesWithIntrinsicBounds(
         ContextCompat.getDrawable(getContext(), R.drawable.ic_vector_info_grey), null, null, null);
     isLoading = true;
-    if(PreferenceUtils.getPrefBoolean(getContext(),"isFirstSettingGym",false)){
+    if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)) {
       Button button = view.findViewById(R.id.btn_first_setting);
       button.setVisibility(View.VISIBLE);
       button.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
+          routeTo("staff", "/gym/setting/success", new BundleBuilder().withInt("type", 3).build());
+          getActivity().finish();
 
         }
       });
-
     }
     return view;
   }
@@ -180,25 +182,21 @@ public class SigninConfigListFragment extends BaseFragment
     return SigninConfigListFragment.class.getName();
   }
 
- public void onClickHowUse() {
+  public void onClickHowUse() {
     WebActivity.startWeb(Router.WEB_HOW_TO_USE_SIGNIN, getContext());
   }
 
-
-  public void onSignUseCard(){
+  public void onSignUseCard() {
     ContainerActivity.router(QRActivity.SIGN_IN_CARD, getContext());
   }
 
-
-  public void onSignUseQrCode(){
+  public void onSignUseQrCode() {
     ContainerActivity.router(QRActivity.SIGN_IN_CODE, getContext());
   }
 
-
-  public void onSignUseZq(){
+  public void onSignUseZq() {
     ContainerActivity.router(QRActivity.ZQ_ACCESS, getContext());
   }
-
 
   public void onClick(View view) {
     switch (view.getId()) {
@@ -255,8 +253,7 @@ public class SigninConfigListFragment extends BaseFragment
     swOpen.setExpanded(moduleBean.isCheckin());
 
     Observable observable =
-        restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId,
-            gymWrapper.getParams());
+        restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId, gymWrapper.getParams());
     RxRegiste(HttpUtil.getInstance()
         .toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {
           @Override protected void _onNext(SignInCardCostBean.Data signInCardCostBean) {
@@ -300,7 +297,7 @@ public class SigninConfigListFragment extends BaseFragment
   }
 
   @Override public void onGetAccess(List<Guard> guardList) {
-    inputSignUseZq.setContent(guardList.size() +  "个");
+    inputSignUseZq.setContent(guardList.size() + "个");
   }
 
   @Override public void changeStatusOk() {

@@ -30,9 +30,11 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -116,8 +118,8 @@ public class AddBatchFragment extends SaasBaseFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher, "addbatch",
-        isPrivate());
+    batchBaseFragment =
+        BatchDetailCommonView.newInstance(mCourse, mTeacher, "addbatch", isPrivate());
     batchBaseFragment.setListener(this);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     arrayOpenTime = getResources().getStringArray(R.array.order_open_time);
@@ -139,8 +141,9 @@ public class AddBatchFragment extends SaasBaseFragment
           }
         });
   }
-  private boolean isPrivate(){
-    if(isGroup)return false;
+
+  private boolean isPrivate() {
+    if (isGroup!=null&&isGroup) return false;
     return (mCourse == null || mCourse.is_private());
   }
 
@@ -256,7 +259,13 @@ public class AddBatchFragment extends SaasBaseFragment
 
   @Override public void onSuccess() {
     hideLoading();
-    popBack();
+    if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)) {
+      getActivity().finish();
+      routeTo("staff", "/gym/setting/success",
+          new BundleBuilder().withInt("type", presenter.isPrivate() ? 2 : 1).build());
+    } else {
+      popBack();
+    }
   }
 
   @Override

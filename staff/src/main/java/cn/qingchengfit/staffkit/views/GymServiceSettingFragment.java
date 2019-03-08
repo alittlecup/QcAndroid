@@ -19,11 +19,15 @@ import cn.qingchengfit.staff.routers.StaffParamsInjector;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.databinding.FragmentGymServiceSettingBinding;
+import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.items.GymServiceSettingItem;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.utils.BundleBuilder;
+import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -55,7 +59,41 @@ import javax.inject.Inject;
       }
       adapter.updateDataSet(items);
     }
+    mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        getActivity().onBackPressed();
+      }
+    });
     return mBinding.getRoot();
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    initView();
+  }
+
+  private void initView() {
+    boolean gym_setting_group =
+        PreferenceUtils.getPrefBoolean(getContext(), "gym_setting_group", false);
+    boolean gym_setting_private =
+        PreferenceUtils.getPrefBoolean(getContext(), "gym_setting_private", false);
+    boolean gym_setting_train =
+        PreferenceUtils.getPrefBoolean(getContext(), "gym_setting_train", false);
+    boolean gym_setting_mall =
+        PreferenceUtils.getPrefBoolean(getContext(), "gym_setting_mall", false);
+    for (int i = 0; i < adapter.getItemCount(); i++) {
+      IFlexible item = adapter.getItem(i);
+      if (item instanceof GymServiceSettingItem) {
+        if (((GymServiceSettingItem) item).getType() == 1 && gym_setting_group
+            || (((GymServiceSettingItem) item).getType() == 2 && gym_setting_private)
+            || (((GymServiceSettingItem) item).getType() == 3 && gym_setting_train)
+            || (((GymServiceSettingItem) item).getType() == 4 && gym_setting_mall)) {
+          adapter.addSelection(i);
+          mBinding.btnConfirm.setEnabled(true);
+        }
+      }
+    }
+    adapter.notifyDataSetChanged();
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +106,13 @@ import javax.inject.Inject;
     ToolbarModel toolbarModel = new ToolbarModel("服务设置");
     toolbarModel.setMenu(cn.qingchengfit.staffkit.R.menu.menu_skip);
     toolbarModel.setListener(item -> {
-      skipSetting();
+      DialogUtils.showConfirm(getContext(), "完成服务设置才能正常使用系统，确认跳过吗？",
+          (materialDialog, dialogAction) -> {
+            materialDialog.dismiss();
+            if (dialogAction == DialogAction.POSITIVE) {
+              skipSetting();
+            }
+          });
       return false;
     });
     mBinding.setToolbarModel(toolbarModel);
@@ -89,6 +133,7 @@ import javax.inject.Inject;
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
             getActivity().onBackPressed();
+            PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", false);
           } else {
             ToastUtils.show(response.getMsg());
           }

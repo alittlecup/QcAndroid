@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <ImageView
+        android:layout_width="81dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_congratulations"
+        />
+    <TextView
+        android:id="@+id/tv_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="恭喜您，商品添加成功 !"
+        style="@style/QcTextStyleLargeDark"
+        />
+    <TextView
+        android:id="@+id/tv_success_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="推广给会员开始购买吧"
+        style="@style/QcTextStyleMediumWarm"
+        />
+    <ImageView
+        android:id="@+id/img_sign_code"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="25dp"
+        android:visibility="gone"
+        />
+    <Button
+        android:id="@+id/btn_preview"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/button_preview"
+        style="@style/QcBtnPrimary"
+        />
+    <Button
+        android:id="@+id/btn_action"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:text="继续设置"
+        android:textSize="15sp"
+        style="@style/QcBtnGreyFrame"
+        />
+
+  </LinearLayout>
+</layout>

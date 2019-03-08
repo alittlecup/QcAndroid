@@ -32,6 +32,8 @@ import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BundleBuilder;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -105,11 +107,16 @@ import javax.inject.Inject;
 
     mViewModel.getPostProductResult().observe(this, aBoolean -> {
       if (aBoolean) {
-        routeTo("/add/success",
-            new ProductAddSuccessPageParams().status(mViewModel.getProduct().getProductStatus())
-                .build());
-        setBackPressNull();
-        popBack();
+        boolean productStatus = mViewModel.getProduct().getProductStatus();
+        if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)
+            && productStatus) {
+          routeTo("staff", "/gym/setting/success", new BundleBuilder().withInt("type", 4).build());
+          getActivity().finish();
+        } else {
+          routeTo("/add/success", new ProductAddSuccessPageParams().status(productStatus).build());
+          setBackPressNull();
+          popBack();
+        }
       }
     });
   }

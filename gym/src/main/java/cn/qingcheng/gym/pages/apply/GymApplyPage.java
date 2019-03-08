@@ -1,10 +1,12 @@
 package cn.qingcheng.gym.pages.apply;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingcheng.gym.GymActivity;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.bean.GymApplyOrder;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -184,7 +186,11 @@ import java.util.Map;
     mBinding.tvPoint.setVisibility(View.GONE);
     mBinding.tvMyPosition.setClickable(false);
     mBinding.btnApply.setOnClickListener(v -> {
-      //Todo 返回场馆主页
+      Intent toGymdetail = new Intent("cn.qingchengfit.staffkit.views.gym.GymActivity");
+      toGymdetail.putExtra("gym_to", 1);
+      toGymdetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+      startActivity(toGymdetail);
+      getActivity().finish();
     });
   }
 

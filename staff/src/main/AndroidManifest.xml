@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="cn.qingchengfit.staffkit"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.qingchengfit.staffkit"
     >
 
   <uses-permission android:name="android.permission.INTERNET"/>
@@ -38,8 +38,9 @@
   <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
   <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.qingchengfit.push"/>
 
-  <permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"
-              android:protectionLevel="signature"
+  <permission
+      android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"
+      android:protectionLevel="signature"
       />
   <!--这里com.tencent.imsdk改成app的包名-->
   <uses-permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"/>
@@ -54,8 +55,9 @@
       android:name="com.tencent.rdm.uuid"
       android:value="e12a51d3-d049-456b-89cc-15d311605ce7"
       />
-  <meta-data android:name="com.sensorsdata.analytics.android.ResourcePackageName"
-             android:value="${APP_PACKAGE}"
+  <meta-data
+      android:name="com.sensorsdata.analytics.android.ResourcePackageName"
+      android:value="${APP_PACKAGE}"
       />
 
   <application
@@ -65,9 +67,9 @@
       android:label="${APP_NAME}"
       android:screenOrientation="portrait"
       android:supportsRtl="true"
+      android:taskAffinity="cn.qingchengfit.staff"
       android:theme="@style/QcAppTheme"
       tools:replace="label,allowBackup"
-      android:taskAffinity="cn.qingchengfit.staff"
       >
     <meta-data
         android:name="BUG_HD_SDK_GENERAL_KEY"
@@ -177,8 +179,9 @@
         android:enabled="true"
         android:exported="true"
         />
-    <service android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-             android:enabled="true"
+    <service
+        android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+        android:enabled="true"
         />
     <!--注：此service必须在小米推送SDK2.2.5版本以后（包括2.2.5版本）加入-->
     <receiver
@@ -306,8 +309,9 @@
         <!-- 可选，标签、地理位置上报回应，不上报则不需要 -->
         <action android:name="com.huawei.android.push.plugin.RESPONSE"/>
       </intent-filter>
-      <meta-data android:name="CS_cloud_ablitity"
-                 android:value="successRateAnalytics"
+      <meta-data
+          android:name="CS_cloud_ablitity"
+          android:value="successRateAnalytics"
           />
     </receiver>
 
@@ -356,9 +360,17 @@
 
     <activity
         android:name=".views.gym.GymActivity"
-        android:screenOrientation="portrait"
         android:configChanges="keyboard"
-        />
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="cn.qingchengfit.staffkit.views.gym.GymActivity"/>
+
+      </intent-filter>
+    </activity>
+
+
     <activity
         android:name=".views.ChooseActivity"
         android:configChanges="keyboard"
@@ -453,18 +465,18 @@
     <activity
         android:name=".views.student.detail.StudentsDetailActivity"
         android:screenOrientation="portrait"
-    >
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW"/>
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
 
-            <category android:name="android.intent.category.DEFAULT"/>
-            <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
 
-            <data
-                android:host="studentdetail"
-                android:scheme="qcstaff"
+        <data
+            android:host="studentdetail"
+            android:scheme="qcstaff"
             />
-        </intent-filter>
+      </intent-filter>
 
     </activity>
     <activity
@@ -619,7 +631,8 @@
         android:windowSoftInputMode="adjustNothing"
         />
 
-    <activity android:name=".views.notification.NotificationActivity"
+    <activity
+        android:name=".views.notification.NotificationActivity"
         android:screenOrientation="portrait"
         />
     <activity
@@ -721,8 +734,9 @@
         android:configChanges="keyboard"
         android:screenOrientation="portrait"
         />
-    <activity android:name="com.tbruyelle.rxpermissions.ShadowActivity"
-              android:theme="@style/Qc.SplashTheme"
+    <activity
+        android:name="com.tbruyelle.rxpermissions.ShadowActivity"
+        android:theme="@style/Qc.SplashTheme"
         >
     </activity>
 
@@ -745,27 +759,32 @@
 
     <activity android:name="com.tencent.qcloud.timchat.ui.VideoActivity"/>
 
-    <activity android:name="com.tencent.qcloud.timchat.ui.ImageViewActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.ImageViewActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
 
-    <activity android:name="com.tencent.qcloud.timchat.ui.ImagePreviewActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.ImagePreviewActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-    <activity android:name="com.tencent.qcloud.timchat.ui.MessageNotifySettingActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.MessageNotifySettingActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
 
-    <activity android:name="com.tencent.qcloud.timchat.ui.GroupMemberActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.GroupMemberActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-    <activity android:name="com.tencent.qcloud.timchat.ui.SetGroupNameActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.SetGroupNameActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
 
     <activity
@@ -825,8 +844,9 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-              android:theme="@style/Base.Theme.AppCompat"
+    <activity
+        android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        android:theme="@style/Base.Theme.AppCompat"
         />
     <activity
         android:name="com.commonsware.cwac.cam2.CameraActivity"
@@ -849,8 +869,9 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
-              android:launchMode="standard"
+    <activity
+        android:name="cn.qingchengfit.recruit.views.RecruitActivity"
+        android:launchMode="standard"
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
@@ -903,6 +924,7 @@
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <action android:name="${APP_PACKAGE}"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
 
@@ -933,9 +955,9 @@
 
 
     <!--<activity-->
-        <!--android:name=".student.StaffStudentActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--&gt;-->
+    <!--android:name=".student.StaffStudentActivity"-->
+    <!--android:screenOrientation="portrait"-->
+    <!--&gt;-->
 
     <!--</activity>-->
 

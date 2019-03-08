@@ -652,6 +652,8 @@ public class GymDetailFragment extends BaseFragment
   @Override public void studentPreview(final String url, final String copy) {
     mCopyUrl = copy;
     mPreViewUrl = url;
+    PreferenceUtils.setPrefString(getContext(), "mPreViewUrl", url);
+    PreferenceUtils.setPrefString(getContext(), "mCopyUrl", copy);
   }
 
   private void guideToStudentPreview() {
@@ -803,20 +805,8 @@ public class GymDetailFragment extends BaseFragment
             if (gymFuntion.getImg() == 0) {
               continue;
             }
-            if (info != null) {
-              if ((!info.has_private && gymFuntion.getModuleName().equals(MODULE_SERVICE_PRIVATE))
-                  || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
-                  || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
-                  || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
-                  || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))) {
-                gymFuntion.setNotSetting(true);
-                datas.add(new GymFuntionItem(gymFuntion));
-              } else {
-                datas.add(new GymFuntionItem(gymFuntion));
-              }
-            } else {
-              datas.add(new GymFuntionItem(gymFuntion));
-            }
+            datas.add(new GymFuntionItem(gymFuntion));
+            updateGymSettingData(info);
           }
         }
       }
@@ -827,6 +817,26 @@ public class GymDetailFragment extends BaseFragment
         .build()));
 
     notifyMyFunctions();
+  }
+
+  private void updateGymSettingData(GymSettingInfo info) {
+    if (info != null) {
+      int size = datas.size();
+      for (int i = 0; i < size; i++) {
+        AbstractFlexibleItem item = datas.get(i);
+        if (item instanceof GymFuntionItem) {
+          GymFuntion gymFuntion = ((GymFuntionItem) item).getGymFuntion();
+          if ((!info.has_private && gymFuntion.getModuleName().equals(MODULE_SERVICE_PRIVATE))
+              || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
+              || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
+              || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
+              || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))) {
+            gymFuntion.setNotSetting(true);
+          }
+          ((GymFuntionItem) item).setGymFuntion(gymFuntion);
+        }
+      }
+    }
   }
 
   @Override public void onFailed() {
@@ -936,11 +946,13 @@ public class GymDetailFragment extends BaseFragment
           || data.open_checkin
           || data.skip_window) {
         info = data;
-        PreferenceUtils.setPrefBoolean(getContext(),"isFirstSettingGym",false);
+        updateGymSettingData(info);
+        adapter.updateDataSet(datas);
+        PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", false);
       } else {
-        GymSettingDialog gymSettingDialog = new GymSettingDialog(getContext(),data.gym_type);
+        GymSettingDialog gymSettingDialog = new GymSettingDialog(getContext(), data.gym_type);
         gymSettingDialog.show();
-        PreferenceUtils.setPrefBoolean(getContext(),"isFirstSettingGym",true);
+        PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", true);
       }
     }
   }

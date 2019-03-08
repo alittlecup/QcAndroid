@@ -33,6 +33,7 @@ import cn.qingchengfit.saasbase.turnovers.TurnoverOrderDetailFragment;
 import cn.qingchengfit.saasbase.turnovers.TurnoversHomePage;
 import cn.qingchengfit.staff.routers.StaffRouterCenter;
 import cn.qingchengfit.staffkit.views.GymServiceSettingFragment;
+import cn.qingchengfit.staffkit.views.GymServiceSettingSuccessFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 import javax.inject.Inject;
 
@@ -66,7 +67,8 @@ import javax.inject.Inject;
     TrainerTabListFragment.class, TrainerAddFragment.class, SuFragment.class,
     SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
     StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class, TurnoversHomePage.class,
-    TurnoverOrderDetailFragment.class, PartnerAccountPage.class, GymServiceSettingFragment.class
+    TurnoverOrderDetailFragment.class, PartnerAccountPage.class, GymServiceSettingFragment.class,
+    GymServiceSettingSuccessFragment.class
 })
 
 public class StaffStaffActivity extends SaasContainerActivity {
@@ -78,7 +80,8 @@ public class StaffStaffActivity extends SaasContainerActivity {
 
   @Override protected Fragment getRouterFragment(Intent intent) {
     Fragment fragment = staffRouterCenter.getFragment(intent.getData(), intent.getExtras());
-    if (fragment instanceof GymServiceSettingFragment) {
+    if (fragment instanceof GymServiceSettingFragment
+        || (fragment instanceof GymServiceSettingSuccessFragment)) {
       return fragment;
     }
     return super.getRouterFragment(intent);
