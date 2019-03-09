@@ -2,12 +2,9 @@ package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponToken;
-import cn.qingchengfit.saasbase.network.response.GymList;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.staff.model.StaffShipResponse;
 import cn.qingchengfit.saasbase.staff.model.Staffs;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -17,12 +14,7 @@ import retrofit2.http.Query;
  */
 
 public interface GetApi {
-  //获取token
-  @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
 
-  //获取健身房相关服务
-  @GET("/api/staffs/{id}/services/") rx.Observable<QcResponseData<GymList>> qcGetCoachService(@Path("id") String id,
-      @Query("brand_id") String brand_id);
 
   //获取某个健身房的教练列表
   @GET("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<Staffs>> qcGetGymCoaches(@Path("id") String id,

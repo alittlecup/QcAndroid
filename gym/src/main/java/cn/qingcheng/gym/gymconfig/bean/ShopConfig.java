@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.bean;
+package cn.qingcheng.gym.gymconfig.bean;
 
 import com.google.gson.annotations.SerializedName;
 

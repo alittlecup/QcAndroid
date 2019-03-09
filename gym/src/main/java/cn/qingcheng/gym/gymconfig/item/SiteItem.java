@@ -1,14 +1,11 @@
-package cn.qingchengfit.saasbase.gymconfig.item;
+package cn.qingcheng.gym.gymconfig.item;
 
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.model.base.Space;
-import cn.qingchengfit.saasbase.R;
-
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -31,7 +28,7 @@ public class SiteItem extends AbstractFlexibleItem<SiteItem.SiteItemVH> {
   }
 
   @Override public int getLayoutRes() {
-    return R.layout.item_saas_site;
+    return R.layout.gy_item_saas_site;
   }
 
   @Override public SiteItemVH createViewHolder(View view, FlexibleAdapter adapter) {

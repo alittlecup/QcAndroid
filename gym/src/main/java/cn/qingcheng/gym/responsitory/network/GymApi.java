@@ -11,6 +11,7 @@ import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
 import java.util.Map;
 import retrofit2.http.Body;
@@ -68,5 +69,14 @@ public interface GymApi {
   @PUT("api/v2/gyms/{gymId}/enter/application/{orderId}/")
   rx.Observable<QcDataResponse<GymApplyOrderResponse>> qcDealGymApplyOrder(
       @Path("gymId") String gymId, @Path("orderId") String orderId, @Body Map<String, Object> body);
+
+  /**
+   * 场地操作
+   */
+  //新建场地
+  @POST("/api/staffs/{staff_id}/spaces/") rx.Observable<QcDataResponse> qcCreateSpace(@Path("staff_id") String staff_id,
+      @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brand_id, @Body
+      Space space);
+
 }
 

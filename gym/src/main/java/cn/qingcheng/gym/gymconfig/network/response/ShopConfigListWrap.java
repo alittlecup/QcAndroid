@@ -1,11 +1,8 @@
-package cn.qingchengfit.saasbase.gymconfig;
+package cn.qingcheng.gym.gymconfig.network.response;
 
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigListWrap;
-import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
-import cn.qingchengfit.saasbase.network.response.GymList;
-import retrofit2.http.GET;
+import cn.qingchengfit.network.response.QcListData;
+import cn.qingcheng.gym.gymconfig.bean.ShopConfig;
+import java.util.List;
 
 /**
  * power by
@@ -25,15 +22,9 @@ import retrofit2.http.GET;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/12/1.
- *
- * 用来处理场馆的一些基础配置，以及一些小的，没有独立出去的场馆功能
+ * Created by Paper on 2017/12/19.
  */
-public interface IGymConfigModel {
-  rx.Observable<QcDataResponse<SpaceListWrap>> getSites();
-  rx.Observable<QcDataResponse<ShopConfigListWrap>> getConfigs(String configs);
-  rx.Observable<QcDataResponse> saveShopConfigs(ShopConfigBody body);
 
-  @GET("/api/staffs/{id}/services/") rx.Observable<QcDataResponse<GymList>> qcGetCoachService(
-    String brand_id);
+public class ShopConfigListWrap extends QcListData{
+  public List<ShopConfig> configs;
 }

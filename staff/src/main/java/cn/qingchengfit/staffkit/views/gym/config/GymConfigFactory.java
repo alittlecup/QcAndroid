@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.views.gym.config;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.model.responese.SignInConfig;
-import cn.qingchengfit.staffkit.constant.ShopConfigs;
+import cn.qingcheng.gym.gymconfig.ShopConfigs;
 
 /**
  * power by

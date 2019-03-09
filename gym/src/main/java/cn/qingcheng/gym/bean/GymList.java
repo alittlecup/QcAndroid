@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.network.response;
+package cn.qingcheng.gym.bean;
 
 import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;

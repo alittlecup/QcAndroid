@@ -1,15 +1,15 @@
-package cn.qingchengfit.saasbase.gymconfig.presenter;
+package cn.qingcheng.gym.gymconfig.presenter;
 
+import cn.qingcheng.gym.gymconfig.IGymConfigModel;
+import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingcheng.gym.gymconfig.bean.ShopConfig;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigListWrap;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.constant.ShopConfigs;
-import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigListWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import java.util.List;
 import javax.inject.Inject;

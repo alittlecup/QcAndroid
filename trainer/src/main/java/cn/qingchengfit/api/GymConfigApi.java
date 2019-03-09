@@ -1,8 +1,8 @@
 package cn.qingchengfit.api;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
-import cn.qingchengfit.saasbase.network.response.GymList;
+import cn.qingcheng.gym.gymconfig.network.response.SpaceListWrap;
+import cn.qingcheng.gym.bean.GymList;
 import java.util.HashMap;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -37,19 +37,4 @@ public interface GymConfigApi {
   //获取教练系统
   @GET("/api/v1/coaches/{id}/services/") rx.Observable<QcDataResponse<GymList>> qcGetCoachService(@Path("id") String id);
 
-  ///**
-  // * 查询场馆配置
-  // */
-  //@GET("/api/staffs/{staff_id}/shops/configs/")
-  //rx.Observable<QcDataResponse<ShopConfigListWrap>> qcGetShopConfig(@Path("staff_id") String staff_id,
-  //  @Query("keys") String key, @QueryMap HashMap<String, Object> params);
-  //
-  ///**
-  // * 健身房所有设置
-  // * http://192.168.1.7:8000/api/staffs/3281/shops/configs/?id=5370&model=staff_gym
-  // */
-  //@PUT("/api/staffs/{staff_id}/shops/configs/")
-  //rx.Observable<QcDataResponse> saveShopConfigs(
-  //  @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
-  //  ShopConfigBody body);
 }

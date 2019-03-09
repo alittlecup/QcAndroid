@@ -1,7 +1,7 @@
-package cn.qingchengfit.saasbase.gymconfig.network.response;
+package cn.qingchengfit.saascommon.events;
 
-import cn.qingchengfit.network.response.QcListData;
-import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
+import cn.qingchengfit.model.base.Space;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +22,21 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/12/19.
+ * Created by Paper on 2017/12/1.
  */
 
-public class ShopConfigListWrap extends QcListData{
-  public List<ShopConfig> configs;
+public class EventSiteSelected {
+  List<Space> spaces = new ArrayList<>();
+
+  public void add(Space space) {
+    spaces.add(space);
+  }
+
+  public void clear() {
+    spaces.clear();
+  }
+
+  public List<Space> getSpaces() {
+    return spaces;
+  }
 }

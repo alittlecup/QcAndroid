@@ -11,24 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
-import cn.qingchengfit.saascommon.events.EventCourse;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
+import cn.qingchengfit.saascommon.events.EventCourse;
 import cn.qingchengfit.saascommon.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiParams;
-import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitParams;
-import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.github.clans.fab.FloatingActionButton;
@@ -68,16 +63,16 @@ import rx.android.schedulers.AndroidSchedulers;
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,
     BatchCopyItem.OnClickPrintListener {
 
-	protected TextView toolbarTitile;
-	protected Toolbar toolbar;
-	protected SwipeRefreshLayout srl;
-	RecyclerView rv;
-	FloatingActionMenu addBatchBtn;
+  protected TextView toolbarTitile;
+  protected Toolbar toolbar;
+  protected SwipeRefreshLayout srl;
+  RecyclerView rv;
+  FloatingActionMenu addBatchBtn;
 
   protected CommonFlexAdapter commonFlexAdapter;
   @Inject IPermissionModel permissionModel;
-	FloatingActionButton fabMutiBatch;
-	FloatingActionButton fabCopyBatch;
+  FloatingActionButton fabMutiBatch;
+  FloatingActionButton fabCopyBatch;
   private LinearLayoutManager linearLayoutManager;
   protected final static String TARGET = "BatchListFragment";
 
@@ -124,7 +119,7 @@ import rx.android.schedulers.AndroidSchedulers;
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
-        routeTo("gym", "/orderlimit/", new OrderLimitParams().mIsPrivate(isPrivate).build());
+        routeTo("gym", "/orderlimit/", new BundleBuilder().withBoolean("mIsPrivate", isPrivate).build());
         break;
       case 2://预约短信通知
         /**
@@ -134,7 +129,8 @@ import rx.android.schedulers.AndroidSchedulers;
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
-        routeTo("gym", "/msgnoti/", new MsgNotiParams().mIsPrivate(isPrivate).build());
+        routeTo("gym", "/msgnoti/",
+            new BundleBuilder().withBoolean("mIsPrivate", isPrivate).build());
         break;
       case 3://课件
         /**
@@ -147,9 +143,10 @@ import rx.android.schedulers.AndroidSchedulers;
         QRActivity.start(getContext(), QRActivity.PLANS_SETTING_GROUP);
         break;
       default://课程种类
-        if(isPrivate&&permissionModel.check(PermissionServerUtils.PRISETTING)||(!isPrivate&&permissionModel.check(PermissionServerUtils.TEAMSETTING))){
+        if (isPrivate && permissionModel.check(PermissionServerUtils.PRISETTING) || (!isPrivate
+            && permissionModel.check(PermissionServerUtils.TEAMSETTING))) {
           routeTo("/list/", new CourseListParams().mIsPrivate(isPrivate).build());
-        }else{
+        } else {
           showAlert(R.string.sorry_for_no_permission);
         }
         break;
@@ -195,14 +192,18 @@ import rx.android.schedulers.AndroidSchedulers;
     fabMutiBatch.setImageResource(R.drawable.fab_add);
     //fabMutiBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
     //fabMutiBatch.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-    fabMutiBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
-    fabMutiBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
+    fabMutiBatch.setColorNormal(
+        ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
+    fabMutiBatch.setColorPressed(
+        ContextCompat.getColor(getContext(), R.color.copy_batch_add_button_color));
     //fabMutiBatch.setLabelTextColor(R.color.text_dark);
     fabMutiBatch.setOnClickListener(v -> clickAddBatch());
 
     fabCopyBatch.setLabelText("复制排期");
-    fabCopyBatch.setColorNormal(ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
-    fabCopyBatch.setColorPressed(ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
+    fabCopyBatch.setColorNormal(
+        ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
+    fabCopyBatch.setColorPressed(
+        ContextCompat.getColor(getContext(), R.color.copy_batch_button_color));
     //fabCopyBatch.setLabelColors(R.color.white, R.color.white, R.color.white);
     //fabCopyBatch.setLabelTextColor(R.color.text_dark);
     //fabCopyBatch.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple));
@@ -214,20 +215,23 @@ import rx.android.schedulers.AndroidSchedulers;
     addBatchBtn.setClosedOnTouchOutside(true);
     addBatchBtn.setIconAnimated(false);
 
-    ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleX", 1f, 0.6f);
+    ObjectAnimator scaleOutX =
+        ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleX", 1f, 0.6f);
     scaleOutX.setDuration(50);
-    ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleY", 1f, 0.6f);
+    ObjectAnimator scaleOutY =
+        ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleY", 1f, 0.6f);
     scaleOutY.setDuration(50);
 
-    ObjectAnimator scaleInX = ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleX", 0.6f, 1f);
+    ObjectAnimator scaleInX =
+        ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleX", 0.6f, 1f);
     scaleInX.setDuration(50);
-    ObjectAnimator scaleInY = ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleY", 0.6f, 1f);
+    ObjectAnimator scaleInY =
+        ObjectAnimator.ofFloat(addBatchBtn.getMenuIconView(), "scaleY", 0.6f, 1f);
     scaleInY.setDuration(50);
 
     AnimatorSet animatorSet = new AnimatorSet();
     animatorSet.play(scaleOutX).with(scaleOutY);
     animatorSet.play(scaleInX).with(scaleInY).after(scaleOutX);
-
 
     addBatchBtn.setOnMenuButtonClickListener(v -> {
       animatorSet.start();
@@ -247,15 +251,15 @@ import rx.android.schedulers.AndroidSchedulers;
     onRefresh();
   }
 
- public void clickAddBatch() {
+  public void clickAddBatch() {
 
   }
 
-  public void clickCopyBatch(){
+  public void clickCopyBatch() {
 
   }
 
-  public void clickPrint(){
+  public void clickPrint() {
 
   }
 

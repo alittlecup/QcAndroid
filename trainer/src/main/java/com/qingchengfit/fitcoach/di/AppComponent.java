@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.di;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import cn.qingcheng.gym.GymModule;
 import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
@@ -86,10 +87,11 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
     AppModule.class,ActivityModule.class, AppAbstractModule.class,AndroidInjectionModule.class,AndroidSupportInjectionModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class,
-    BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
+    BindTrainerCourseActivity.class, BindUserActivity.class,
     BindStudentActivity.class, StudentViewModel.class, BindCheckoutCounterActivity.class,
     CheckViewModule.class, BindLoginActivity.class, BindSaasCommActivity.class,
     ViewModelModule.class,WxPreviewModule.class, CardModule.class, BindTrainerStaffActivity.class,
+    GymModule.class,
 
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class, AppComponent.ArticleCommentsListFragmentModule.class,

@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.views;
+package cn.qingcheng.gym.gymconfig.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.saascommon.events.EventSiteSelected;
+import cn.qingcheng.gym.gymconfig.item.SiteItem;
+import cn.qingcheng.gym.gymconfig.item.SiteSelectedItem;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.model.base.Space;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
-import cn.qingchengfit.saasbase.gymconfig.item.SiteItem;
-import cn.qingchengfit.saasbase.gymconfig.item.SiteSelectedItem;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import com.anbillon.flabellum.annotations.Leaf;

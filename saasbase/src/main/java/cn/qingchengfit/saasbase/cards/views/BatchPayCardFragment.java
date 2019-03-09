@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,9 +25,7 @@ import cn.qingchengfit.saasbase.cards.item.BatchCardChooseTypeCountItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardHeaderItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
-import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
-import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
-import cn.qingchengfit.saasbase.utils.UpgradeDialog;
+import cn.qingchengfit.saascommon.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;

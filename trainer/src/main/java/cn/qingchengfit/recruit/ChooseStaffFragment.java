@@ -14,7 +14,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.recruit.model.ChatGym;
 import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
-import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
+import cn.qingchengfit.saascommon.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.BottomStudentsFragment;

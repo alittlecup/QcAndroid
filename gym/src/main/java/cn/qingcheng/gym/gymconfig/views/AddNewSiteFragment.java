@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.views;
+package cn.qingcheng.gym.gymconfig.views;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,23 +16,23 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import cn.qingcheng.gym.responsitory.network.GymApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.repository.PostApi;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public class AddNewSiteFragment extends BaseDialogFragment {
 
@@ -71,7 +71,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_add_new_site, container, false);
+    View view = inflater.inflate(R.layout.gy_fragment_add_new_site, container, false);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     name = (CommonInputView) view.findViewById(R.id.name);
     count = (CommonInputView) view.findViewById(R.id.count);
@@ -98,6 +98,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     toolbarTitile.setText("新增场地");
     name.addTextWatcher(textChange);
     count.addTextWatcher(textChange);
+    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 
@@ -136,16 +137,12 @@ public class AddNewSiteFragment extends BaseDialogFragment {
   }
 
   @SuppressWarnings("unused") public void onComfirm() {
-    //是用户新建 还是
-
     Space space = new Space(name.getContent(), count.getContent(), isSupportPrivate, isSupportTeam);
-    restRepository.createRxJava1Api(PostApi.class)
+    restRepository.createRxJava1Api(GymApi.class)
         .qcCreateSpace(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model(), null, space)
-        .onBackpressureBuffer()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcResponse>() {
-          @Override public void call(QcResponse qcResponse) {
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(new Action1<QcDataResponse>() {
+          @Override public void call(QcDataResponse qcResponse) {
             if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
               getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
                   new Intent());

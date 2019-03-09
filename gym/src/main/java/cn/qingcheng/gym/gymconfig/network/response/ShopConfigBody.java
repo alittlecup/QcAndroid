@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.network.response;
+package cn.qingcheng.gym.gymconfig.network.response;
 
 import java.util.List;
 

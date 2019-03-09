@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.views;
+package cn.qingcheng.gym.gymconfig.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,16 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
-
+import cn.qingcheng.gym.gymconfig.bean.ShopConfig;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingcheng.gym.gymconfig.presenter.OrderLimitPresenter;
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.items.SimpleTextItemItem;
-import cn.qingchengfit.saasbase.R;
-
-import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.gymconfig.presenter.OrderLimitPresenter;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -35,7 +31,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/orderlimit/") public class OrderLimitFragment
-    extends SaasBaseFragment
+    extends SaasCommonFragment
     implements OrderLimitPresenter.MVPView, BottomListFragment.ComfirmChooseListener {
 
 	CommonInputView civOrderCourseTime;
@@ -90,14 +86,6 @@ import javax.inject.Inject;
     });
 
     delegatePresenter(mOrderLimitPresenter, this);
-    //mCallbackActivity.setToolbar(mIsPrivate ? "私教预约限制" : "团课预约限制", false, null, R.menu.menu_comfirm,
-    //    new Toolbar.OnMenuItemClickListener() {
-    //      @Override public boolean onMenuItemClick(MenuItem item) {
-    //        showLoading();
-    //        comfirmConfigs();
-    //        return true;
-    //      }
-    //    });
     swSignGroup.setLabel(mIsPrivate ? getResources().getString(R.string.label_sign_private_class)
         : getResources().getString(R.string.label_sign_group_class));
 

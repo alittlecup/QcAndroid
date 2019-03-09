@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Course;
@@ -19,20 +18,19 @@ import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
-import cn.qingchengfit.saascommon.events.EventStaffWrap;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
-import cn.qingchengfit.saascommon.events.EventCourse;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
-import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
-import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
+import cn.qingchengfit.saascommon.events.EventCourse;
+import cn.qingchengfit.saascommon.events.EventSiteSelected;
+import cn.qingchengfit.saascommon.events.EventStaffWrap;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -511,8 +509,8 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改场地
    */
   public void onSpaceClicked() {
-    routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(isPrivate)
-        .selectIds(ListUtils.getIdList(spaces))
+    routeTo("gym", "/site/choose/", new BundleBuilder().withBoolean("isPrivate", isPrivate)
+        .withStringArrayList("selectIds", ListUtils.getIdList(spaces))
         .build());
   }
 

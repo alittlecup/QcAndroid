@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.common.views;
+package cn.qingchengfit.saascommon.views;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,8 +8,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.databinding.FragStaffAppBinding;
+import cn.qingchengfit.saascommon.R;
+import cn.qingchengfit.saascommon.databinding.FragStaffAppBinding;
 
 /**
  * power by
@@ -54,8 +54,7 @@ public class UseStaffAppFragmentFragment extends DialogFragment {
     db = FragStaffAppBinding.inflate(inflater);
     db.openApp.setOnClickListener(view -> {
       try {
-        Intent intent = new Intent();
-        intent =
+        Intent intent =
           getActivity().getPackageManager().getLaunchIntentForPackage("cn.qingchengfit.staffkit");
         getActivity().startActivity(intent);
       } catch (Exception e) {

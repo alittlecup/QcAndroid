@@ -89,7 +89,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_add_new_site, container, false);
+    View view = inflater.inflate(R.layout.gy_fragment_add_new_site, container, false);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     name = (CommonInputView) view.findViewById(R.id.name);
     count = (CommonInputView) view.findViewById(R.id.count);

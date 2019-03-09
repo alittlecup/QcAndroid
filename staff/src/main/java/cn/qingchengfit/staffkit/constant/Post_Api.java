@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.constant;
 
 import android.support.v4.util.ArrayMap;
+import cn.qingcheng.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.AddDayOffBody;
 import cn.qingchengfit.model.body.AddFollowRecordBody;
@@ -41,7 +42,6 @@ import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.CoachResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
-import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerWrapper;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponseRenew;
@@ -51,7 +51,7 @@ import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;

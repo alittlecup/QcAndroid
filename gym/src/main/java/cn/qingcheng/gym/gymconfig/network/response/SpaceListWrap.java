@@ -1,8 +1,7 @@
-package cn.qingchengfit.saasbase.gymconfig.item;
+package cn.qingcheng.gym.gymconfig.network.response;
 
-import android.view.View;
 import cn.qingchengfit.model.base.Space;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
+import cn.qingchengfit.network.response.QcListData;
 import java.util.List;
 
 /**
@@ -26,18 +25,6 @@ import java.util.List;
  * Created by Paper on 2017/12/1.
  */
 
-public class SiteSelectedItem extends SiteItem {
-
-  public SiteSelectedItem(Space space) {
-    super(space);
-  }
-
-  @Override public void bindViewHolder(FlexibleAdapter adapter, SiteItemVH holder, int position,
-      List payloads) {
-    super.bindViewHolder(adapter, holder, position, payloads);
-    holder.cb.setVisibility(View.VISIBLE);
-    holder.righticon.setVisibility(View.GONE);
-    holder.cb.setChecked(adapter.isSelected(position));
-    holder.text2.setText("支持" + space.getCapacity() + "," + space.getSupportString());
-  }
+public class SpaceListWrap extends QcListData {
+  public List<Space> spaces;
 }

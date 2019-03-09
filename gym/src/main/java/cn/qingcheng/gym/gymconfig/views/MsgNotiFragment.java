@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.views;
+package cn.qingcheng.gym.gymconfig.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import cn.qingchengfit.saasbase.R;
-
-import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.constant.ShopConfigs;
-import cn.qingchengfit.saasbase.gymconfig.bean.ShopConfig;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.gymconfig.presenter.MsgNotiPresenter;
+import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingcheng.gym.gymconfig.bean.ShopConfig;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingcheng.gym.gymconfig.presenter.MsgNotiPresenter;
+import cn.qingchengfit.gym.R;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -31,7 +29,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
-@Leaf(module = "gym", path = "/msgnoti/") public class MsgNotiFragment extends SaasBaseFragment
+@Leaf(module = "gym", path = "/msgnoti/") public class MsgNotiFragment extends SaasCommonFragment
     implements MsgNotiPresenter.MVPView {
   CommonInputView swBeginNotiMin;
   ExpandedLayout swBeginNoti;

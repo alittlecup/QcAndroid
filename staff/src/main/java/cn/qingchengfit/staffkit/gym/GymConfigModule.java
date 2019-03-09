@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.gym;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
+import cn.qingcheng.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import dagger.Module;
 import dagger.Provides;

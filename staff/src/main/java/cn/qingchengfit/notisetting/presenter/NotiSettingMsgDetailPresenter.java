@@ -11,7 +11,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingchengfit.staffkit.constant.ShopConfigs;
+import cn.qingcheng.gym.gymconfig.ShopConfigs;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

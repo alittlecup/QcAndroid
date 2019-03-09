@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.views;
+package cn.qingcheng.gym.gymconfig.views;
 
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.gym.R;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
 
@@ -37,7 +37,7 @@ import javax.inject.Inject;
  * Created by Paper on 2018/3/7.
  */
 @Leaf(module = "gym",path = "/upgrade/done/")
-public class UpgradeDoneFragment extends SaasBaseFragment {
+public class UpgradeDoneFragment extends SaasCommonFragment {
 
   @Inject GymWrapper gymWrapper;
 

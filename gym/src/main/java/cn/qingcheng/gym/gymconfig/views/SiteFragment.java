@@ -1,19 +1,19 @@
-package cn.qingchengfit.saasbase.gymconfig.views;
+package cn.qingcheng.gym.gymconfig.views;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import cn.qingcheng.gym.gymconfig.IGymConfigModel;
+import cn.qingcheng.gym.gymconfig.item.SiteItem;
+import cn.qingcheng.gym.gymconfig.network.response.SpaceListWrap;
+import cn.qingchengfit.gym.R;
+import cn.qingchengfit.gym.routers.GymParamsInjector;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
-import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saasbase.gymconfig.item.SiteItem;
-import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
-import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saascommon.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
@@ -63,7 +63,7 @@ public class SiteFragment extends BaseListFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    SaasbaseParamsInjector.inject(this);
+    GymParamsInjector.inject(this);
   }
 
   @Override protected void addDivider() {

@@ -40,11 +40,10 @@ import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.common.bottom.BottomBuyLimitFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
-import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
-import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
+import cn.qingcheng.gym.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
@@ -310,7 +309,7 @@ import javax.inject.Singleton;
 
     BindStaffCourseActivity.class,
     BindStaffStaffActivity.class, CardModule.class,
-    BindGymConfigAcitivty.class, BindSaasCommActivity.class,
+     BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
     BindStudentActivity.class, WeexModule.class, ViewModelModule.class,
     BindShopActivity.class,StudentViewModel.class,BindCheckoutCounterActivity.class,CheckViewModule.class,

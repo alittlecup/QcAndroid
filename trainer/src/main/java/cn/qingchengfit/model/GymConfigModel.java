@@ -5,11 +5,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.api.GymConfigApi;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigListWrap;
-import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
-import cn.qingchengfit.saasbase.network.response.GymList;
+import cn.qingcheng.gym.gymconfig.IGymConfigModel;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingcheng.gym.gymconfig.network.response.ShopConfigListWrap;
+import cn.qingcheng.gym.gymconfig.network.response.SpaceListWrap;
+import cn.qingcheng.gym.bean.GymList;
 import java.util.HashMap;
 import rx.Observable;
 
