@@ -90,8 +90,8 @@
             android:id="@+id/civ_gym_phone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:civ_inputnum="true"
             app:civ_edit_able="true"
+            app:civ_inputnum="true"
             app:civ_lable="联系方式"
             app:civ_nonnull="true"
             />
@@ -107,18 +107,18 @@
             android:id="@+id/civ_gym_square"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:civ_lable="营业面积"
             app:civ_edit_able="true"
-            app:civ_nonnull="true"
             app:civ_inputnum="true"
+            app:civ_lable="营业面积"
+            app:civ_nonnull="true"
             app:civ_unit="m2"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_gym_mark"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:civ_lable="描述您的健身房"
             app:civ_clickable="true"
+            app:civ_lable="描述您的健身房"
             />
         <Space
             android:layout_width="0dp"

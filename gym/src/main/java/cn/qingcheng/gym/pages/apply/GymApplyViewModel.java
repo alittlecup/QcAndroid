@@ -19,6 +19,7 @@ public class GymApplyViewModel extends BaseViewModel {
   public LiveData<List<GymPosition>> positions;
   LiveData<Resource<GymApplyOrderResponse>> gymApplyOrder;
   private MutableLiveData<Map<String, Object>> params = new MutableLiveData<>();
+  public MutableLiveData<GymApplyOrderResponse> gymApplyOrderPre = new MutableLiveData<>();
 
   @Inject public GymApplyViewModel(IGymResponsitory gymResponsitory) {
     this.gymResponsitory = gymResponsitory;
@@ -28,14 +29,15 @@ public class GymApplyViewModel extends BaseViewModel {
   }
 
   public void loadGymPositions(String gymId) {
-    positions = Transformations.map(gymResponsitory.qcGetGymPositions(gymId), gymPositionsResource -> {
+    positions =
+        Transformations.map(gymResponsitory.qcGetGymPositions(gymId), gymPositionsResource -> {
           GymPositions gymPositions = dealResource(gymPositionsResource);
           return gymPositions == null ? null : gymPositions.positions;
         });
   }
 
-  public LiveData<GymApplyOrderResponse> loadGymOrder(Map<String, Object> params) {
-    return Transformations.map(gymResponsitory.qcGetGymApplyOrder(params),
+  public void loadGymOrder(Map<String, Object> params) {
+    Transformations.map(gymResponsitory.qcGetGymApplyOrder(params),
         gymApplyOrderResponseResource -> {
           GymApplyOrderResponses gymApplyOrderResponses =
               dealResource(gymApplyOrderResponseResource);
@@ -43,7 +45,7 @@ public class GymApplyViewModel extends BaseViewModel {
               && gymApplyOrderResponses.gymApplyOrderResponses != null) {
             List<GymApplyOrderResponse> orders = gymApplyOrderResponses.gymApplyOrderResponses;
             if (!orders.isEmpty()) {
-              return orders.get(0);
+              gymApplyOrderPre.setValue(orders.get(0));
             }
           }
           return null;
@@ -54,7 +56,7 @@ public class GymApplyViewModel extends BaseViewModel {
     this.params.setValue(params);
   }
 
-  public LiveData<GymPosition> findPositionInGym(String gymId,String type){
+  public LiveData<GymPosition> findPositionInGym(String gymId, String type) {
     return Transformations.map(gymResponsitory.qcGetGymUserPosition(gymId, type),
         this::dealResource);
   }

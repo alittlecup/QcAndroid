@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.setting.brand;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -22,14 +23,11 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
-import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -271,8 +269,9 @@ public class BrandEditFragment extends BaseFragment {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               hideLoading();
               ToastUtils.show("删除品牌成功！");
-              PreferenceUtils.setPrefString(getContext(), Configs.CUR_BRAND_ID, "");
-              BusinessUtils.reOpenApp(getActivity());
+              routeTo("gym", "/my/gyms", null);
+              getActivity().setResult(Activity.RESULT_OK);
+              getActivity().finish();
             } else {
               hideLoading();
             }

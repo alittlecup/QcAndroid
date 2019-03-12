@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.bean.BransShopsPremissions;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponses;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -106,5 +107,11 @@ public class GymResponsitoryImpl implements IGymResponsitory {
   public LiveData<Resource<GymApplyOrderResponse>> qcDealGymApplyOrder(String gymId, String orderId,
       Map<String, Object> body) {
     return toLiveData(gymModel.qcDealGymApplyOrder(gymId, orderId, body));
+  }
+
+  @Override
+  public LiveData<Resource<BransShopsPremissions>> qcGetBrandShopsPermission(String brandID,
+      String permission) {
+    return toLiveData(gymModel.qcGetBrandShopsPermission(brandID,permission));
   }
 }

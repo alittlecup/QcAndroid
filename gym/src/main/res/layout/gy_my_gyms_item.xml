@@ -71,7 +71,6 @@
         android:text="管理"
         android:textColor="@color/primary"
         android:textSize="15dp"
-        app:visibleGone="@{data.has_add_permission}"
         />
 
 

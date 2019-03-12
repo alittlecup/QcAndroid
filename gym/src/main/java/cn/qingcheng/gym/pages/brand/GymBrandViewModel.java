@@ -3,6 +3,7 @@ package cn.qingcheng.gym.pages.brand;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import cn.qingcheng.gym.bean.BransShopsPremissions;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
 import cn.qingchengfit.model.base.Shop;
@@ -22,10 +23,17 @@ public class GymBrandViewModel extends BaseViewModel {
         brandId -> Transformations.map(gymResponsitory.qcGetBrandAllShops(brandId),
             shopsResponseResource -> {
               ShopsResponse shopsResponse = dealResource(shopsResponseResource);
-              return shopsResponse==null?new ArrayList<>():shopsResponse.shops;
+              return shopsResponse == null ? new ArrayList<>() : shopsResponse.shops;
             }));
   }
-  public void loadShops(String brandId){
+
+  public void loadShops(String brandId) {
     this.brandId.setValue(brandId);
+  }
+
+  public LiveData<BransShopsPremissions> loadShopPermissions(String brandID,String gymPermission) {
+    return Transformations.map(gymResponsitory.qcGetBrandShopsPermission(brandID,
+        gymPermission),
+        bransShopsPremissionsResource -> dealResource(bransShopsPremissionsResource));
   }
 }

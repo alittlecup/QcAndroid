@@ -7,10 +7,13 @@ import android.arch.lifecycle.Transformations;
 import cn.qingcheng.gym.bean.GymType;
 import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
+import cn.qingcheng.gym.responsitory.network.IGymModel;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -21,6 +24,8 @@ public class GymInfoViewModel extends BaseViewModel {
   public LiveData<Boolean> deleteResult;
   private MutableLiveData<String> deleteShopID = new MutableLiveData<>();
   private ActionLiveEvent loadGymTypes = new ActionLiveEvent();
+  private MutableLiveData<Boolean> quiteResult = new MutableLiveData<>();
+  @Inject IGymModel gymModel;
 
   @Inject public GymInfoViewModel(IGymResponsitory gymResponsitory) {
     this.gymResponsitory = gymResponsitory;
@@ -54,10 +59,21 @@ public class GymInfoViewModel extends BaseViewModel {
   }
 
   public LiveData<Boolean> editShop(Shop shop) {
-    return Transformations.map(gymResponsitory.editGymIntro(shop.id, shop), new Function<Resource<Boolean>, Boolean>() {
-      @Override public Boolean apply(Resource<Boolean> booleanResource) {
-        return dealResource(booleanResource);
+    return Transformations.map(gymResponsitory.editGymIntro(shop.id, shop),
+        new Function<Resource<Boolean>, Boolean>() {
+          @Override public Boolean apply(Resource<Boolean> booleanResource) {
+            return dealResource(booleanResource);
+          }
+        });
+  }
+
+  public void quiteGym(String gymID) {
+    gymModel.qcQuitGym(gymID).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+      if (ResponseConstant.checkSuccess(response)) {
+        quiteResult.setValue(true);
+      } else {
+        quiteResult.setValue(false);
       }
-    });
+    }, throwable -> quiteResult.setValue(false));
   }
 }

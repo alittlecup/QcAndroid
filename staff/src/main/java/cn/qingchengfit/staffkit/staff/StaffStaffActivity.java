@@ -68,7 +68,7 @@ import javax.inject.Inject;
     SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
     StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class, TurnoversHomePage.class,
     TurnoverOrderDetailFragment.class, PartnerAccountPage.class, GymServiceSettingFragment.class,
-    GymServiceSettingSuccessFragment.class
+    GymServiceSettingSuccessFragment.class,
 })
 
 public class StaffStaffActivity extends SaasContainerActivity {

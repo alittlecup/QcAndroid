@@ -23,11 +23,13 @@ import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.CommonInputTextFragment;
 import cn.qingchengfit.widgets.BottomChooseDialog;
+import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
@@ -68,6 +70,13 @@ import rx.functions.Action1;
     mViewModel.deleteResult.observe(this, aBoolean -> {
       hideLoading();
       ToastUtils.show(aBoolean ? "删除场馆成功" : "删除场馆失败");
+      if (aBoolean) {
+        getActivity().onBackPressed();
+      }
+    });
+    mViewModel.deleteResult.observe(this, aBoolean -> {
+      hideLoading();
+      ToastUtils.show(aBoolean ? "离职退出场馆成功" : "离职退出场馆失败");
       if (aBoolean) {
         getActivity().onBackPressed();
       }
@@ -133,10 +142,10 @@ import rx.functions.Action1;
               shop.area = 0;
               return;
             }
-            shop.area = Integer.valueOf(s);
+            shop.area = Float.valueOf(s);
           } catch (NumberFormatException e) {
             ToastUtils.show("请输入正确数字");
-            mBinding.civGymSquare.setContent("0");
+            mBinding.civGymSquare.setContent("");
             shop.area = 0;
           }
         });
@@ -190,7 +199,7 @@ import rx.functions.Action1;
     mBinding.civGymMark.setContent(CmStringUtils.delHTMLTag(shop.description));
     mBinding.civGymSquare.setContent(shop.area + "");
     mBinding.viewShadow.setVisibility(View.VISIBLE);
-    mBinding.tvGymAction.setText("删除场馆");
+    mBinding.tvGymAction.setText("离职退出该场馆");
     mBinding.civGymType.setContent(
         findGymTypeValueByType(shop.gym_type, mViewModel.gymTypes.getValue()));
 
@@ -199,6 +208,19 @@ import rx.functions.Action1;
         .asBitmap()
         .placeholder(R.drawable.ic_default_header)
         .into(new CircleImgWrapper(mBinding.imgGymPhoto, getContext()));
+
+    mBinding.tvGymAction.setOnClickListener(v -> showFireGymDialog());
+  }
+
+  public void showFireGymDialog() {
+    DialogUtils.showIconDialog(getContext(), -1, "确认退出", "退出后将无法恢复，\n需由该健身房工作人员添加", "取消", "确定",
+        (materialDialog, dialogAction) -> {
+          materialDialog.dismiss();
+          if (dialogAction == DialogAction.POSITIVE) {
+            showLoading();
+            mViewModel.quiteGym(shop.id);
+          }
+        });
   }
 
   public void onAddressClicked() {

@@ -3,6 +3,7 @@ package cn.qingcheng.gym.responsitory.network;
 import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.bean.BransShopsPremissions;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponses;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -12,6 +13,7 @@ import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.Map;
 import rx.Observable;
 
@@ -43,6 +45,11 @@ public interface IGymModel {
   Observable<QcDataResponse<GymApplyOrderResponse>> qcGetGymApplyOrderInfo(String gymId,
       String orderId);
 
-  Observable<QcDataResponse<GymApplyOrderResponse>> qcDealGymApplyOrder(
-      String gymId, String orderId,  Map<String, Object> body);
+  Observable<QcDataResponse<GymApplyOrderResponse>> qcDealGymApplyOrder(String gymId,
+      String orderId, Map<String, Object> body);
+
+  Observable<QcDataResponse<BransShopsPremissions>> qcGetBrandShopsPermission(String brandID,
+      String permission);
+
+  Observable<QcResponse> qcQuitGym(String gymId);
 }

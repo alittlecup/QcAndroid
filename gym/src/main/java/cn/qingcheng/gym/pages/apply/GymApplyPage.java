@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingcheng.gym.GymActivity;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.bean.GymApplyOrder;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -132,7 +131,7 @@ import java.util.Map;
 
   private void findPositionInGym(String gymID) {
     mViewModel.findPositionInGym(gymID, 1 + "").observe(this, gymPosition -> {
-      if (gymPosition != null&& !TextUtils.isEmpty(gymPosition.id)) {
+      if (gymPosition != null && !TextUtils.isEmpty(gymPosition.id)) {
         mBinding.tvMyPosition.setText(gymPosition.name);
         updateBtnView();
       } else {
@@ -153,7 +152,8 @@ import java.util.Map;
   }
 
   private void loadUserApplyOrders() {
-    mViewModel.loadGymOrder(params).observe(this, gymApplyOrderResponse -> {
+    mViewModel.loadGymOrder(params);
+    mViewModel.gymApplyOrderPre.observe(this, gymApplyOrderResponse -> {
       if (gymApplyOrderResponse != null) {
         GymApplyOrder gymApplyOrder = gymApplyOrderResponse.gymApplyOrder;
         if (gymApplyOrder != null) {
@@ -195,6 +195,9 @@ import java.util.Map;
   }
 
   private void showSendDialog() {
+    mBinding.btnApply.setText("已发送申请");
+    mBinding.btnApply.setEnabled(false);
+    mBinding.tvMyPosition.setEnabled(false);
     DialogUtils.showIconDialog(getContext(), R.drawable.ic_vd_success_dialog_icon, "已发送申请",
         "场馆超级管理员通过申请后，系统会进行通知，请及时留意", "知道了", new MaterialDialog.SingleButtonCallback() {
           @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {

@@ -581,7 +581,12 @@
     <activity
         android:name=".views.setting.BrandManageActivity"
         android:screenOrientation="portrait"
-        />
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="cn.qingchengfit.staffkit.views.setting.BrandManageActivity"/>
+      </intent-filter>
+    </activity>
     <activity
         android:name=".views.staff.StaffManageActivity"
         android:screenOrientation="portrait"

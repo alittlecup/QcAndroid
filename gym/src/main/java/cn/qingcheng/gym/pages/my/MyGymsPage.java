@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.item.MyGymsItem;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.gym.databinding.GyPageMyGymsBinding;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -17,18 +18,24 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/my/gyms") public class MyGymsPage
     extends GymBaseFragment<GyPageMyGymsBinding, MyGymsViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   private CommonFlexAdapter adapter;
+  @Inject LoginStatus loginStatus;
 
   @Override protected void subscribeUI() {
     mViewModel.datas.observe(this, datas -> {
       if (datas != null && !datas.isEmpty()) {
         List<MyGymsItem> items = new ArrayList<>();
         for (Brand data : datas) {
-          items.add(new MyGymsItem(data));
+          if (loginStatus.getUserId().equals(data.created_by.getId())) {
+            items.add(new MyGymsItem(data, true));
+          } else {
+            items.add(new MyGymsItem(data, false));
+          }
         }
         adapter.updateDataSet(items);
       }
@@ -37,18 +44,17 @@ import java.util.List;
 
   @Override public GyPageMyGymsBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    if(mBinding!=null)return mBinding;
+    if (mBinding != null) return mBinding;
     mBinding = GyPageMyGymsBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
     mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        routeTo( "/gym/choose/create",null);
+        routeTo("/gym/choose/create", null);
       }
     });
     return mBinding;
   }
-
 
   private void initToolbar() {
     mBinding.setToolbarModel(new ToolbarModel("我的健身房"));

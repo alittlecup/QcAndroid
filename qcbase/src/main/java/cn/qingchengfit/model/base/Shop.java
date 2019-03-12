@@ -50,7 +50,7 @@ public class Shop implements Parcelable {
   public String brand_id;
   public String weixin;
 
-  public int area;
+  public float area;
   public int gym_type;
 
   public Shop() {
@@ -81,7 +81,7 @@ public class Shop implements Parcelable {
     dest.writeByte(this.weixin_success ? (byte) 1 : (byte) 0);
     dest.writeString(this.brand_id);
     dest.writeString(this.weixin);
-    dest.writeInt(this.area);
+    dest.writeFloat(this.area);
     dest.writeInt(this.gym_type);
   }
 
@@ -106,7 +106,7 @@ public class Shop implements Parcelable {
     this.weixin_success = in.readByte() != 0;
     this.brand_id = in.readString();
     this.weixin = in.readString();
-    this.area = in.readInt();
+    this.area = in.readFloat();
     this.gym_type = in.readInt();
   }
 

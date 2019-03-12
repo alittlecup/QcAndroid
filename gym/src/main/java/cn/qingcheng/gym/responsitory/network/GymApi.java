@@ -3,6 +3,7 @@ package cn.qingcheng.gym.responsitory.network;
 import cn.qingcheng.gym.bean.BrandPostBody;
 import cn.qingcheng.gym.bean.BrandResponse;
 import cn.qingcheng.gym.bean.BrandsResponse;
+import cn.qingcheng.gym.bean.BransShopsPremissions;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponses;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -13,6 +14,7 @@ import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -74,9 +76,16 @@ public interface GymApi {
    * 场地操作
    */
   //新建场地
-  @POST("/api/staffs/{staff_id}/spaces/") rx.Observable<QcDataResponse> qcCreateSpace(@Path("staff_id") String staff_id,
-      @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brand_id, @Body
-      Space space);
+  @POST("/api/staffs/{staff_id}/spaces/") rx.Observable<QcDataResponse> qcCreateSpace(
+      @Path("staff_id") String staff_id, @Query("id") String gymid, @Query("model") String model,
+      @Query("brand_id") String brand_id, @Body Space space);
 
+  @POST("/api/staffs/{staff_id}/brands/permissions/")
+  rx.Observable<QcDataResponse<BransShopsPremissions>> qcGetBrandShopsPermission(
+      @Path("staff_id") String staff_id, @Query("brand_id") String brandID,
+      @Query("key") String permission);
+
+  @POST("/api/v2/staffs/{staff_id}/dimission/") rx.Observable<QcResponse> qcQuitGym(
+      @Path("staff_id") String staff_id, @Query("gym_id") String gymId);
 }
 

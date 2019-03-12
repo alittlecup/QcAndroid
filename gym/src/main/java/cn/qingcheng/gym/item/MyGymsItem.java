@@ -1,12 +1,10 @@
 package cn.qingcheng.gym.item;
 
-import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyMyGymsItemBinding;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
-import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -20,8 +18,11 @@ public class MyGymsItem extends AbstractFlexibleItem<DataBindingViewHolder<GyMyG
     return data;
   }
 
-  public MyGymsItem(Brand data) {
+  boolean isCreated;
+
+  public MyGymsItem(Brand data, boolean isCreated) {
     this.data = data;
+    this.isCreated = isCreated;
   }
 
   @Override public boolean equals(Object o) {
@@ -41,7 +42,8 @@ public class MyGymsItem extends AbstractFlexibleItem<DataBindingViewHolder<GyMyG
       DataBindingViewHolder<GyMyGymsItemBinding> holder, int position, List payloads) {
     GyMyGymsItemBinding dataBinding = holder.getDataBinding();
     dataBinding.setData(data);
-
+    dataBinding.tvManage.setVisibility(isCreated ? View.VISIBLE : View.GONE);
+    dataBinding.imgArrowRight.setVisibility(isCreated ? View.GONE : View.VISIBLE);
     Glide.with(dataBinding.getRoot().getContext())
         .load(data.getPhoto())
         .asBitmap()

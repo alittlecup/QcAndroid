@@ -330,6 +330,10 @@ public class StringUtils {
   }
 
   public static boolean checkPhoneNumber(String phoneNum, boolean isTaiwan) {
+    if(StringUtils.isEmpty(phoneNum)){
+      ToastUtils.show("请填写正确的手机号码");
+      return false;
+    }
     if (!isTaiwan) {
       //china
       if (phoneNum.length() != 11 || !phoneNum.startsWith("1")) {

@@ -23,6 +23,16 @@ public class GymBrandItem
     this.data = data;
   }
 
+  public boolean isEditAble() {
+    return editAble;
+  }
+
+  public void setEditAble(boolean editAble) {
+    this.editAble = editAble;
+  }
+
+  private boolean editAble = false;
+
   @Override public boolean equals(Object o) {
     return false;
   }
@@ -46,5 +56,7 @@ public class GymBrandItem
         .asBitmap()
         .placeholder(R.drawable.ic_default_header)
         .into(new CircleImgWrapper(dataBinding.imgGymPhoto, dataBinding.getRoot().getContext()));
+    dataBinding.imgArrowRight.setVisibility(editAble ? View.GONE : View.VISIBLE);
+    dataBinding.tvGymEdit.setVisibility(editAble ? View.VISIBLE : View.GONE);
   }
 }
