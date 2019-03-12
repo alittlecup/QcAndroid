@@ -11,9 +11,10 @@ import cn.qingchengfit.gym.databinding.GyGymApplyDealPageBinding;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saascommon.network.Status;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import com.afollestad.materialdialogs.DialogAction;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -50,17 +51,26 @@ import java.util.List;
           });
         }
       });
+      showLoading();
       mViewModel.loagAplyOrderInfo(gymId, applyId).observe(this, gymApplyOrder -> {
+        hideLoading();
         if (gymApplyOrder != null) {
+          if (gymApplyOrder.status != 1) {
+            routeTo("/gym/deal/finish",null);
+            return;
+          }
           mBinding.civPosition.setContent(gymApplyOrder.position.name);
           positionID = gymApplyOrder.position.id;
-          mBinding.btnConfirm.setText(
+          staff = gymApplyOrder.user;
+          mBinding.tvNamePhone.setText(
               gymApplyOrder.user.getUsername() + "(" + gymApplyOrder.user.getPhone() + ")");
           loadPhoto(gymApplyOrder.user);
         }
       });
     }
   }
+
+  private Staff staff;
 
   private void loadPhoto(Staff staff) {
     Glide.with(getContext())
@@ -105,15 +115,22 @@ import java.util.List;
   }
 
   private void showCancelDialog() {
-    DialogUtils.showConfirm(getContext(), "确定要拒绝XXX的加入申请吗？", (materialDialog, dialogAction) -> {
-      materialDialog.dismiss();
-      if (dialogAction == DialogAction.POSITIVE) {
-        dealApply(gymId, applyId, 3);
-      }
-    });
+    if (staff != null) {
+      DialogUtils.showConfirm(getContext(), "确定要拒绝" + staff.getUsername() + "的加入申请吗？",
+          (materialDialog, dialogAction) -> {
+            materialDialog.dismiss();
+            if (dialogAction == DialogAction.POSITIVE) {
+              dealApply(gymId, applyId, 3);
+            }
+          });
+    }
   }
 
   private void dealApply(String gymid, String orderID, int status) {
-    mViewModel.dealApply(gymid, orderID, status, positionID);
+    mViewModel.dealApply(gymid, orderID, status, positionID).observe(this, resource -> {
+      if (resource.status == Status.SUCCESS) {
+        routeTo("/gym/deal/finish", null);
+      }
+    });
   }
 }

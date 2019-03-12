@@ -8,6 +8,7 @@ import cn.qingcheng.gym.gymconfig.views.OrderLimitFragment;
 import cn.qingcheng.gym.gymconfig.views.SiteFragment;
 import cn.qingcheng.gym.gymconfig.views.SiteSelectedFragment;
 import cn.qingcheng.gym.gymconfig.views.UpgradeDoneFragment;
+import cn.qingcheng.gym.pages.apply.GymApplyDealFinishPage;
 import cn.qingcheng.gym.pages.apply.GymApplyDealPage;
 import cn.qingcheng.gym.pages.apply.GymApplyPage;
 import cn.qingcheng.gym.pages.brand.ChangeGymPage;
@@ -30,7 +31,7 @@ import javax.inject.Inject;
     GymCreateChoosePage.class, GymBrandCreatePage.class, GymSearchPage.class,
     GymSimpleListPage.class, ChangeGymPage.class, GymApplyDealPage.class, GymApplyPage.class,
     SiteFragment.class, SiteSelectedFragment.class, OrderLimitFragment.class, MsgNotiFragment.class,
-    AddNewSiteFragment.class, UpgradeDoneFragment.class
+    AddNewSiteFragment.class, UpgradeDoneFragment.class, GymApplyDealFinishPage.class
 }) public class GymActivity extends SaasCommonActivity {
   @Inject GymRouterCenter routerCenter;
 

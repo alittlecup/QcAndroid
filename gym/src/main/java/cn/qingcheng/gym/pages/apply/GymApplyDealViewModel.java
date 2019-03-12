@@ -31,11 +31,11 @@ public class GymApplyDealViewModel extends BaseViewModel {
         });
   }
 
-  public void dealApply(String gymId, String orderId, int status, String positionId) {
+  public LiveData<Resource<GymApplyOrderResponse>> dealApply(String gymId, String orderId, int status, String positionId) {
     Map<String, Object> param = new HashMap<>();
     param.put("status", status);
     param.put("position_id", positionId);
-    gymResponsitory.qcDealGymApplyOrder(gymId, orderId, param);
+   return gymResponsitory.qcDealGymApplyOrder(gymId, orderId, param);
   }
 
   public LiveData<GymApplyOrder> loagAplyOrderInfo(String gymId, String applyId) {
