@@ -18,13 +18,8 @@ import javax.inject.Inject;
 @Leaf(module = "gym", path = "/gym/edit") public class GymEditPage extends GymInfoPage {
   @Inject LoginStatus loginStatus;
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    mBinding.setToolbarModel(new ToolbarModel("编辑场馆信息"));
-    initView();
-  }
-
-  private void initView() {
+  public void initView() {
+    super.initView();
     mBinding.civGymType.setShowRight(true);
     mBinding.civGymAddress.setShowRight(true);
 
@@ -84,5 +79,4 @@ import javax.inject.Inject;
       }
     });
   }
-
 }

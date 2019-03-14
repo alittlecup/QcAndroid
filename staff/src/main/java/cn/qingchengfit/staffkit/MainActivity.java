@@ -121,13 +121,11 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   String[] tags = new String[] { "gyms", "find", "msg", "setting", "ali" };
   private int[] mIconSelect = {
       R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active,
-      R.drawable.vd_tabbar_message_active,
-      R.drawable.vd_tabbar_mine_active
+      R.drawable.vd_tabbar_message_active, R.drawable.vd_tabbar_mine_active
   };
   private int[] mIconNormal = {
       R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal,
-       R.drawable.vd_tabbar_message_normal,
-      R.drawable.vd_tabbar_mine_normal
+      R.drawable.vd_tabbar_message_normal, R.drawable.vd_tabbar_mine_normal
   };
   private String[] tabText = { "健身房", "发现", "消息", "我的" };
   private boolean isDownloading = false;
@@ -294,8 +292,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   }
 
   private void changeCenterImage(boolean selected) {
-    FrameLayout.LayoutParams layoutParams =
-        (FrameLayout.LayoutParams) imgNewYear.getLayoutParams();
+    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) imgNewYear.getLayoutParams();
     if (selected) {
       imgNewYear.setImageResource(R.drawable.ic_nianhuojie_check);
       layoutParams.height = MeasureUtils.dpToPx(35f, getResources());
@@ -306,7 +303,6 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
       layoutParams.height = MeasureUtils.dpToPx(55f, getResources());
       layoutParams.width = MeasureUtils.dpToPx(55f, getResources());
       layoutParams.topMargin = 0;
-
     }
     imgNewYear.setLayoutParams(layoutParams);
   }
@@ -484,6 +480,11 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     String openUlr = getIntent().getStringExtra(OPEN_URL);
     if (!StringUtils.isEmpty(openUlr) && openUlr.startsWith("http")) {
       WebActivity.startWeb(openUlr, this);
+    }
+    int to = getIntent().getIntExtra("to", -1);
+    if (to != -1) {
+      showPage(to);
+      RxBus.getBus().post(EventBrandChange.class);
     }
   }
 
@@ -671,12 +672,9 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
 
   }
 
-
-
   @Override public void setBar(ToolbarBean bar) {
 
   }
-
 
   /**
    * 关闭选择品牌窗口

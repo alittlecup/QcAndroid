@@ -85,6 +85,22 @@ public class Shop implements Parcelable {
     dest.writeInt(this.gym_type);
   }
 
+  private Shop(Builder builder) {
+    id = builder.id;
+    name = builder.name;
+    address = builder.address;
+    phone = builder.phone;
+    description = builder.description;
+    photo = builder.photo;
+    gd_district_id = builder.gd_district_id;
+    gd_lat = builder.gd_lat;
+    gd_lng = builder.gd_lng;
+    system_end = builder.system_end;
+    contact = builder.contact;
+    gym_type=builder.gym_type;
+    area=builder.area;
+  }
+
   protected Shop(Parcel in) {
     this.id = in.readString();
     this.address = in.readString();
@@ -119,5 +135,93 @@ public class Shop implements Parcelable {
       return new Shop[size];
     }
   };
+
+  public static final class Builder {
+    private String id;
+    private String name;
+    private String address;
+    private String phone;
+    private String description;
+    private String photo;
+    private String gd_district_id;
+    private double gd_lat;
+    private double gd_lng;
+    private String system_end;
+    private String contact;
+    private int gym_type;
+    private float area;
+
+    public Builder() {
+    }
+
+    public Builder gym_type(int gym_type) {
+      this.gym_type = gym_type;
+      return this;
+    }
+    public Builder area(float area) {
+      this.area = area;
+      return this;
+    }
+
+
+    public Builder id(String val) {
+      id = val;
+      return this;
+    }
+
+    public Builder name(String val) {
+      name = val;
+      return this;
+    }
+
+    public Builder address(String val) {
+      address = val;
+      return this;
+    }
+
+    public Builder phone(String val) {
+      phone = val;
+      return this;
+    }
+
+    public Builder description(String val) {
+      description = val;
+      return this;
+    }
+
+    public Builder photo(String val) {
+      photo = val;
+      return this;
+    }
+
+    public Builder gd_district_id(String val) {
+      gd_district_id = val;
+      return this;
+    }
+
+    public Builder gd_lat(double val) {
+      gd_lat = val;
+      return this;
+    }
+
+    public Builder gd_lng(double val) {
+      gd_lng = val;
+      return this;
+    }
+
+    public Builder system_end(String val) {
+      system_end = val;
+      return this;
+    }
+
+    public Builder contact(String val) {
+      contact = val;
+      return this;
+    }
+
+    public Shop build() {
+      return new Shop(this);
+    }
+  }
 }
 

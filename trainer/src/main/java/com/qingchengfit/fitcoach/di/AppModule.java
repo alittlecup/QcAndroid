@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.di;
 
 import android.app.Application;
+import cn.qingcheng.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.card.TrainerCardRouters;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -12,14 +13,12 @@ import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingcheng.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.exportImpl;
-import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.user.IUserModel;
@@ -70,7 +69,6 @@ import java.util.List;
   private QcDbManager db;
   private SaasbaseRouterCenter saasbaseRouterCenter =
       new SaasbaseRouterCenter().registe(new exportImpl())
-          .registe(new gymImpl())
           .registe(new staffImpl())
           .registe(new commonImpl())
           .registe(new TrainerCardRouters())

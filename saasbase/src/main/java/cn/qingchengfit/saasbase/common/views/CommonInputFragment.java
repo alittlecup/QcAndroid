@@ -52,15 +52,6 @@ import com.anbillon.flabellum.annotations.Need;
     et.setHint(hint);
   }
 
-  //public static CommonInputFragment newInstance(String hint, String content, String title) {
-  //  Bundle args = new Bundle();
-  //  args.putString("t", title);
-  //  args.putString("c", content);
-  //  args.putString("h", hint);
-  //  CommonInputFragment fragment = new CommonInputFragment();
-  //  fragment.setArguments(args);
-  //  return fragment;
-  //}
 
   @Override public void onBtnClicked() {
     if (TextUtils.isEmpty(et.getText())) {

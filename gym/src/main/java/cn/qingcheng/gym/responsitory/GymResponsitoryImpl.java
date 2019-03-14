@@ -11,6 +11,7 @@ import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
+import cn.qingcheng.gym.bean.ShopCreateBody;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingcheng.gym.responsitory.network.IGymModel;
 import cn.qingchengfit.model.base.Shop;
@@ -64,7 +65,7 @@ public class GymResponsitoryImpl implements IGymResponsitory {
     return toLiveData(gymModel.qcCreatBrand(body));
   }
 
-  @Override public LiveData<Resource<Shop>> qcSystemInit(Shop body) {
+  @Override public LiveData<Resource<Shop>> qcSystemInit(ShopCreateBody body) {
     return toLiveData(gymModel.qcSystemInit(body));
   }
 

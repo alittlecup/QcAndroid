@@ -10,6 +10,7 @@ import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
+import cn.qingcheng.gym.bean.ShopCreateBody;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Space;
@@ -41,7 +42,8 @@ public interface GymApi {
   @POST("/api/brands/") rx.Observable<QcDataResponse<BrandResponse>> qcCreatBrand(
       @Body BrandPostBody body);
 
-  @POST("/api/systems/initial/") rx.Observable<QcDataResponse<Shop>> qcSystemInit(@Body Shop body);
+  @POST("/api/systems/initial/") rx.Observable<QcDataResponse<Shop>> qcSystemInit(@Body
+      ShopCreateBody body);
 
   @PUT("/api/common/user/gyms/{gym_id}/") rx.Observable<QcDataResponse> editGymIntro(
       @Path("gym_id") String gymId, @Body Shop body);
@@ -80,7 +82,7 @@ public interface GymApi {
       @Path("staff_id") String staff_id, @Query("id") String gymid, @Query("model") String model,
       @Query("brand_id") String brand_id, @Body Space space);
 
-  @POST("/api/staffs/{staff_id}/brands/permissions/")
+  @GET("/api/staffs/{staff_id}/brands/permissions/")
   rx.Observable<QcDataResponse<BransShopsPremissions>> qcGetBrandShopsPermission(
       @Path("staff_id") String staff_id, @Query("brand_id") String brandID,
       @Query("key") String permission);

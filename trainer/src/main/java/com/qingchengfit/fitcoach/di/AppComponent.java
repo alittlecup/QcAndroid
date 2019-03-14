@@ -18,7 +18,6 @@ import cn.qingchengfit.saasbase.chat.ChatChooseInGymFragment;
 import cn.qingchengfit.saasbase.chat.ChatFriendAllChooseFragment;
 import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
-import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;

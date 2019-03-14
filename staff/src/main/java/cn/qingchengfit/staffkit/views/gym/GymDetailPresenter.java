@@ -1,7 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
-import cn.qingchengfit.bean.GymSettingInfo;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -138,12 +137,14 @@ public class GymDetailPresenter extends BasePresenter {
           }
         }));
   }
+
   void updateFunction(List<String> modules) {
     if (modules != null) {
       qcDbManager.insertFunction(modules);
     }
     RxRegiste(restRepository.getStaffAllApi()
-        .qcUpdateModule(loginStatus.staff_id(), new UpdateModule.Builder().module_custom(modules).build(), gymWrapper.getParams())
+        .qcUpdateModule(loginStatus.staff_id(),
+            new UpdateModule.Builder().module_custom(modules).build(), gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -157,7 +158,6 @@ public class GymDetailPresenter extends BasePresenter {
           }
         }, new NetWorkThrowable()));
   }
-
 
   public void getGymWelcome() {
     spWelcome = gymUseCase.getGymWelcom(gymWrapper.id(), gymWrapper.model(),
@@ -210,15 +210,7 @@ public class GymDetailPresenter extends BasePresenter {
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
-            GymSettingInfo gymSettingInfo = new GymSettingInfo();
-            gymSettingInfo.has_teacher = false;
-            gymSettingInfo.open_checkin = false;
-            gymSettingInfo.has_private = false;
-            gymSettingInfo.has_mall = false;
-            gymSettingInfo.has_team = false;
-            gymSettingInfo.skip_window = false;
-            gymSettingInfo.gym_type = "健身工作室";
-            gymDetailView.showGymFirstSettingDialog(gymSettingInfo);
+            gymDetailView.showGymFirstSettingDialog(response.data);
           } else {
             ToastUtils.show(response.getMsg());
             gymDetailView.onFailed();

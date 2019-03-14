@@ -2,9 +2,12 @@ package cn.qingchengfit.component;
 
 import android.content.Intent;
 import android.os.Parcelable;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
+import cn.qingchengfit.staffkit.MainActivity;
+import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
@@ -40,6 +43,14 @@ public class StaffComponent implements IComponent {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         qc.getContext().startActivity(intent);
         return true;
+      case "open/gymdetail":
+        Intent toGymdetail = new Intent(qc.getContext(), MainActivity.class);
+        toGymdetail.putExtra("to", 0);
+        qc.getContext().startActivity(toGymdetail);
+        RxBus.getBus().post(EventBrandChange.class);
+        QC.sendQCResult(qc.getCallId(), QCResult.success());
+
+        return false;
     }
     return false;
   }

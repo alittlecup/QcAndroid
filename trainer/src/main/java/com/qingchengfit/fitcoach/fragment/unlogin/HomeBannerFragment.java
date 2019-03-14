@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.unlogin;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,22 +13,16 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.events.EventLoginChange;
-import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -53,9 +48,7 @@ public class HomeBannerFragment extends BaseFragment {
 
   ViewPager vp;
   CircleIndicator splashIndicator;
-  Button btnUseNow;
-  Button btnLogin;
-  LinearLayout llLogin, llGym;
+  LinearLayout  llGym;
   @Inject LoginStatus loginStatus;
   ArrayList<Fragment> list = new ArrayList<>();
   private int[] imgs = new int[] {
@@ -83,39 +76,25 @@ public class HomeBannerFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_home_banner, container, false);
     vp = (ViewPager) view.findViewById(R.id.vp);
     splashIndicator = (CircleIndicator) view.findViewById(R.id.splash_indicator);
-    btnUseNow = (Button) view.findViewById(R.id.btn_use_now);
-    btnLogin = (Button) view.findViewById(R.id.btn_login);
-    llLogin = view.findViewById(R.id.ll_login);
     llGym = view.findViewById(R.id.ll_add_gym);
-    view.findViewById(R.id.btn_use_now).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onClickUseNow();
-      }
-    });
-    view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onLogin();
-      }
-    });
-
     viewPaperAdapter = new FragmentAdapter(getChildFragmentManager(), list);
     vp.setAdapter(viewPaperAdapter);
     splashIndicator.setViewPager(vp);
-    loginChange(loginStatus.isLogined());
-    RxBusAdd(EventLoginChange.class).delay(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(eventLoginChange -> {
-          loginChange(loginStatus.isLogined());
-        }, new HttpThrowable());
-
-    view.findViewById(R.id.btn_add_gym).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+    view.findViewById(R.id.btn_add_gym).setOnClickListener(v -> {
+      if(loginStatus.isLogined()){
         routeTo("gym", "/gym/search", null);
+      }else{
+        onLogin();
+        search=true;
+
       }
     });
-    view.findViewById(R.id.tv_create_gym).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+    view.findViewById(R.id.tv_create_gym).setOnClickListener(v -> {
+      if(loginStatus.isLogined()){
         routeTo("gym", "/gym/create", null);
+      }else{
+        onLogin();
+        search=false;
       }
     });
     return view;
@@ -125,36 +104,24 @@ public class HomeBannerFragment extends BaseFragment {
     super.onVisible();
   }
 
-  private void loginChange(boolean isLogin) {
-    llLogin.setVisibility(isLogin ? View.GONE : View.VISIBLE);
-    llGym.setVisibility(isLogin ? View.VISIBLE : View.GONE);
-  }
-
-  /**
-   * 注册
-   */
-
-  public void onClickUseNow() {
-    if (!loginStatus.isLogined()) {
-      Intent toLogin = new Intent(getContext().getPackageName(),
-          Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
-
-      toLogin.putExtra("isRegiste", true);
-      startActivity(toLogin);
-    } else {
-      startActivity(new Intent(getActivity(), GuideActivity.class));
+  private boolean search=false;
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == 1001) {
+        if (search) {
+          routeTo("gym", "/gym/search", null);
+        } else {
+          routeTo("gym", "/gym/create", null);
+        }
+      }
     }
   }
-
-  /**
-   * 立即登录
-   */
-
   public void onLogin() {
     Intent toLogin = new Intent(getContext().getPackageName(),
         Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
     toLogin.putExtra("isRegiste", false);
-    startActivity(toLogin);
+    startActivityForResult(toLogin,1001);
   }
 
   @Override public String getFragmentName() {

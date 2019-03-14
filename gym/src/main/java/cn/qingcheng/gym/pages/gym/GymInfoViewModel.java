@@ -6,12 +6,14 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingcheng.gym.bean.GymType;
 import cn.qingcheng.gym.bean.GymTypeData;
+import cn.qingcheng.gym.bean.ShopCreateBody;
 import cn.qingcheng.gym.responsitory.IGymResponsitory;
 import cn.qingcheng.gym.responsitory.network.IGymModel;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
+import cn.qingchengfit.saascommon.mvvm.SingleLiveEvent;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class GymInfoViewModel extends BaseViewModel {
   private ActionLiveEvent loadGymTypes = new ActionLiveEvent();
   private MutableLiveData<Boolean> quiteResult = new MutableLiveData<>();
   @Inject IGymModel gymModel;
+  public SingleLiveEvent<Shop> shopSingleLiveEvent = new SingleLiveEvent<>();
 
   @Inject public GymInfoViewModel(IGymResponsitory gymResponsitory) {
     this.gymResponsitory = gymResponsitory;
@@ -49,14 +52,6 @@ public class GymInfoViewModel extends BaseViewModel {
     deleteShopID.setValue(shop_id);
   }
 
-  public LiveData<Shop> createShop(Shop shop) {
-    return Transformations.map(gymResponsitory.qcSystemInit(shop),
-        new Function<Resource<Shop>, Shop>() {
-          @Override public Shop apply(Resource<Shop> shopResource) {
-            return dealResource(shopResource);
-          }
-        });
-  }
 
   public LiveData<Boolean> editShop(Shop shop) {
     return Transformations.map(gymResponsitory.editGymIntro(shop.id, shop),
@@ -75,5 +70,14 @@ public class GymInfoViewModel extends BaseViewModel {
         quiteResult.setValue(false);
       }
     }, throwable -> quiteResult.setValue(false));
+  }
+  public void createShop(ShopCreateBody shop) {
+    gymModel.qcSystemInit(shop).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+      if (ResponseConstant.checkSuccess(response)) {
+        shopSingleLiveEvent.setValue(response.data);
+      } else {
+        shopSingleLiveEvent.setValue(null);
+      }
+    }, throwable -> shopSingleLiveEvent.setValue(null));
   }
 }

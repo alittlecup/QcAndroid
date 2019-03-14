@@ -108,13 +108,15 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
     }
     holder.notSetting.setVisibility(mGymFuntion.isNotSetting() ? View.VISIBLE : View.GONE);
     holder.notSetting.setText("未设置");
-    if (mGymFuntion.isNotSetting() && mGymFuntion.getModuleName().equals(MODULE_MANAGE_COACH)) {
-      holder.notSetting.setText("邀请");
-      Drawable drawable = DrawableUtils.tintDrawable(holder.notSetting.getContext(),
-          R.drawable.bg_fill_red_slide_white, R.color.success_green);
-      holder.notSetting.setBackground(drawable);
-    } else {
-      holder.notSetting.setVisibility(View.GONE);
+    if (MODULE_MANAGE_COACH.equals(mGymFuntion.getModuleName())) {
+      if (mGymFuntion.isNotSetting()) {
+        holder.notSetting.setText("邀请");
+        Drawable drawable = DrawableUtils.tintDrawable(holder.notSetting.getContext(),
+            R.drawable.bg_fill_red_slide_white, R.color.success_green);
+        holder.notSetting.setBackground(drawable);
+      } else {
+        holder.notSetting.setVisibility(View.GONE);
+      }
     }
   }
 

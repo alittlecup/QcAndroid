@@ -21,6 +21,7 @@ import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saascommon.utils.StringUtils;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -187,12 +188,15 @@ import rx.functions.Action1;
       }
     });
     mBinding.civGymAddress.setOnClickListener(v -> onAddressClicked());
-    mBinding.civGymMark.setOnClickListener(
-        v -> routeTo(CommonInputTextFragment.newInstance("描述您的健身房", shop.description, "请填写健身房描述")));
+    mBinding.civGymMark.setOnClickListener(v ->
+        routeTo("common", "/input/", new BundleBuilder().withString("title", "描述您的健身房")
+            .withString("content", shop.description)
+            .withString("hint", "请填写健身房描述")
+            .build()));
     mBinding.imgGymPhoto.setOnClickListener(v -> onLayoutGymImgClicked());
   }
 
-  private void initView() {
+  public void initView() {
     mBinding.civGymName.setContent(shop.name);
     mBinding.civGymPhone.setContent(shop.contact);
     mBinding.civGymAddress.setContent(shop.address);
@@ -213,7 +217,7 @@ import rx.functions.Action1;
   }
 
   public void showFireGymDialog() {
-    DialogUtils.showIconDialog(getContext(), -1, "确认退出", "退出后将无法恢复，\n需由该健身房工作人员添加", "取消", "确定",
+    DialogUtils.showConfirm(getContext(), "确认退出", "退出后将无法恢复，\n需由该健身房工作人员添加",
         (materialDialog, dialogAction) -> {
           materialDialog.dismiss();
           if (dialogAction == DialogAction.POSITIVE) {
@@ -252,7 +256,7 @@ import rx.functions.Action1;
   public boolean checkShop(Shop shop) {
     if (TextUtils.isEmpty(shop.name)) {
       ToastUtils.show("请填写场馆名称");
-    } else if (StringUtils.checkPhoneNumber(shop.phone, false)) {
+    } else if (!StringUtils.checkPhoneNumber(shop.contact, false)) {
       ToastUtils.show("请填写正确手机号");
     } else if (TextUtils.isEmpty(shop.address)) {
       ToastUtils.show("请选择场馆地址");

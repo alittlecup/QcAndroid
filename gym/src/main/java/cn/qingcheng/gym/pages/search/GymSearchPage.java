@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.bean.BrandWithGyms;
 import cn.qingcheng.gym.bean.GymSearchResponse;
+import cn.qingcheng.gym.bean.GymWithSuperUser;
 import cn.qingcheng.gym.item.GymSearchItem;
 import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyGymSearchPageBinding;
@@ -27,6 +28,8 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,6 +38,13 @@ import rx.android.schedulers.AndroidSchedulers;
     extends GymBaseFragment<GyGymSearchPageBinding, GymSearchViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   private CommonFlexAdapter adapter;
+  private Comparator<BrandWithGyms> gymsComparator=new Comparator<BrandWithGyms>() {
+    @Override public int compare(BrandWithGyms o1, BrandWithGyms o2) {
+      List<GymWithSuperUser> gyms = o1.gyms;
+      List<GymWithSuperUser> gyms1 = o2.gyms;
+      return gyms.size()-gyms1.size();
+    }
+  };
 
   @Override protected void subscribeUI() {
     mViewModel.response.observe(this, this::upDateItems);
@@ -47,12 +57,14 @@ import rx.android.schedulers.AndroidSchedulers;
       List<BrandWithGyms> brands = response.brands;
       List<BrandWithGyms> others = response.others;
       if (brands != null && !brands.isEmpty()) {
+        Collections.sort(brands,gymsComparator);
         for (BrandWithGyms brand : brands) {
           items.add(new GymSearchItem(brand));
         }
       }
       items.add(new SimpleTextItemItem("以下为场馆中包含\"" + mBinding.editSearch.getText() + "\"的结果"));
       if (others != null && !others.isEmpty()) {
+        Collections.sort(others,gymsComparator);
         for (BrandWithGyms brand : others) {
           items.add(new GymSearchItem(brand));
         }
@@ -99,7 +111,7 @@ import rx.android.schedulers.AndroidSchedulers;
         }));
     mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
+        routeTo("/gym/create", null);
       }
     });
     mBinding.imgArrowLeft.setOnClickListener(new View.OnClickListener() {

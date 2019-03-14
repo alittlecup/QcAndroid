@@ -10,6 +10,7 @@ import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
+import cn.qingcheng.gym.bean.ShopCreateBody;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -28,7 +29,7 @@ public interface IGymModel {
 
   Observable<QcDataResponse<BrandResponse>> qcCreatBrand(BrandPostBody body);
 
-  Observable<QcDataResponse<Shop>> qcSystemInit(Shop body);
+  Observable<QcDataResponse<Shop>> qcSystemInit(ShopCreateBody body);
 
   Observable<QcDataResponse> editGymIntro(String gymId, Shop body);
 

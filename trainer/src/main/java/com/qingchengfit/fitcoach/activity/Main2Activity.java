@@ -90,7 +90,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import tencent.tls.platform.TLSErrInfo;
 
-
 public class Main2Activity extends BaseActivity implements WebActivityInterface {
 
   /**
@@ -381,7 +380,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     loginIM();
     if (loginStatus.isLogined()) {
       if (spOrders != null && !spOrders.isUnsubscribed()) spOrders.unsubscribe();
-      spOrders = TrainerRepository.getStaticTrainerAllApi().qcGetOrderList()
+      spOrders = TrainerRepository.getStaticTrainerAllApi()
+          .qcGetOrderList()
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
@@ -422,7 +422,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       pushBody.push_id = userid;
       pushBody.device_type = "android";
       pushBody.distribute = getString(R.string.oem_tag);
-      TrainerRepository.getStaticTrainerAllApi().qcPostPushId(App.coachid, pushBody)
+      TrainerRepository.getStaticTrainerAllApi()
+          .qcPostPushId(App.coachid, pushBody)
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .subscribe(new Subscriber<QcResponse>() {
@@ -602,6 +603,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       startActivity(toWeb);
     } else if (intent.getIntExtra(ACTION, -1) == INIT) {
 
+    } else if (intent.getIntExtra(ACTION, -1) == 10) {
+      showPage(1);
     }
   }
 
@@ -627,7 +630,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       R.drawable.ic_tabbar_discover_normal, R.drawable.vd_tab_noti_nomal,
       R.drawable.ic_tabbar_account_normal
   };
-
 
   private void showPage(int pos) {
     String[] tags = getResources().getStringArray(R.array.home_tab);

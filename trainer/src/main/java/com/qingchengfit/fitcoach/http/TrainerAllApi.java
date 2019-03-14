@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
+import cn.qingcheng.gym.bean.GymTypeData;
 import cn.qingchengfit.bean.BrandBody;
 import cn.qingchengfit.bean.ChangeBrandCreatorBody;
 import cn.qingchengfit.bean.CoachInitBean;
@@ -27,7 +28,6 @@ import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
-import cn.qingcheng.gym.gymconfig.bean.GymTypeData;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;

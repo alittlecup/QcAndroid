@@ -10,6 +10,7 @@ import cn.qingcheng.gym.bean.GymPosition;
 import cn.qingcheng.gym.bean.GymPositions;
 import cn.qingcheng.gym.bean.GymSearchResponse;
 import cn.qingcheng.gym.bean.GymTypeData;
+import cn.qingcheng.gym.bean.ShopCreateBody;
 import cn.qingcheng.gym.bean.ShopsResponse;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -51,7 +52,7 @@ public class GymModelImpl implements IGymModel {
     return gymApi.qcCreatBrand(body);
   }
 
-  @Override public Observable<QcDataResponse<Shop>> qcSystemInit(Shop body) {
+  @Override public Observable<QcDataResponse<Shop>> qcSystemInit(ShopCreateBody body) {
     return gymApi.qcSystemInit(body);
   }
 

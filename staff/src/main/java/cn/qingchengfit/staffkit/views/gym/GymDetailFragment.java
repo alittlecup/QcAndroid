@@ -81,7 +81,6 @@ import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
-import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
@@ -181,8 +180,6 @@ public class GymDetailFragment extends BaseFragment
   private GymMoreAdapter adapter;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
 
-  private DialogList dialogList;
-  private QuitGymFragment quitDialog;
   private GymDetailChartAdapter mChartAdapter;
   private LinearLayout llTitleBelow, llTitleAbove, llCheckout, llTitle;
   /**
@@ -828,10 +825,12 @@ public class GymDetailFragment extends BaseFragment
         if (item instanceof GymFuntionItem) {
           GymFuntion gymFuntion = ((GymFuntionItem) item).getGymFuntion();
           if ((!info.has_private && gymFuntion.getModuleName().equals(MODULE_SERVICE_PRIVATE))
-              || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
-              || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
-              || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
-              || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))) {
+
+            || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
+            || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
+            || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
+            || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))
+          ) {
             gymFuntion.setNotSetting(true);
           }
           ((GymFuntionItem) item).setGymFuntion(gymFuntion);
@@ -917,12 +916,9 @@ public class GymDetailFragment extends BaseFragment
   }
 
   @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    if (dialogList != null) {
-      dialogList.dismiss();
-      //品牌管理
-      if (getActivity() instanceof MainActivity && position == 0) {
-        gymDetailPresenter.manageBrand();
-      }
+    //品牌管理
+    if (getActivity() instanceof MainActivity && position == 0) {
+      gymDetailPresenter.manageBrand();
     }
   }
 

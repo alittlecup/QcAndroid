@@ -130,7 +130,7 @@ import java.util.Map;
   }
 
   private void findPositionInGym(String gymID) {
-    mViewModel.findPositionInGym(gymID, 1 + "").observe(this, gymPosition -> {
+    mViewModel.findPositionInGym(gymID, AppUtils.getCurApp(getContext()) + "").observe(this, gymPosition -> {
       if (gymPosition != null && !TextUtils.isEmpty(gymPosition.id)) {
         mBinding.tvMyPosition.setText(gymPosition.name);
         updateBtnView();
@@ -186,11 +186,18 @@ import java.util.Map;
     mBinding.tvPoint.setVisibility(View.GONE);
     mBinding.tvMyPosition.setClickable(false);
     mBinding.btnApply.setOnClickListener(v -> {
-      Intent toGymdetail = new Intent("cn.qingchengfit.staffkit.views.gym.GymActivity");
-      toGymdetail.putExtra("gym_to", 1);
-      toGymdetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-      startActivity(toGymdetail);
+      if(AppUtils.getCurApp(getContext())==1){
+        Intent toGymdetail = new Intent("cn.qingchengfit.staffkit.views.gym.GymActivity");
+        toGymdetail.putExtra("gym_to", 1);
+        toGymdetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(toGymdetail);
+      }else {
+        Intent toGymdetail = new Intent("com.qingchengfit.fitcoach.activity.Main2Activity");
+        toGymdetail.putExtra("main_action", 10);
+        startActivity(toGymdetail);
+      }
       getActivity().finish();
+
     });
   }
 

@@ -175,7 +175,7 @@ import javax.inject.Inject;
                 .withParcelable("brand", brand)
                 .build());
       }else{
-        routeTo("/gym/edit",
+        routeTo("/gym/info",
             new BundleBuilder()
                 .withParcelable("shop", data)
                 .withParcelable("brand", brand)
