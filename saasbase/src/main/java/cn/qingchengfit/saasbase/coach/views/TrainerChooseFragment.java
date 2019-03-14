@@ -9,11 +9,15 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.events.EventStaffWrap;
 import cn.qingchengfit.saasbase.staff.items.StaffSelectSingleItem;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
+import cn.qingchengfit.saascommon.events.EventStaffWrap;
+import cn.qingchengfit.saascommon.item.CommonUserItem;
+import cn.qingchengfit.utils.CrashUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +44,7 @@ import java.util.List;
     extends CoachListFragment {
 
   @Need public String selectedId;
+  @Need public ArrayList<StaffShip> staffs;
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = commonFlexAdapter.getItem(position);
@@ -59,8 +64,8 @@ import java.util.List;
     View view = super.onCreateView(inflater, container, savedInstanceState);
     FrameLayout frameLayout = view.findViewById(R.id.fl_recycler_container);
 
-    View bottomView = LayoutInflater.from(getContext())
-        .inflate(R.layout.view_bottom_add, frameLayout, false);
+    View bottomView =
+        LayoutInflater.from(getContext()).inflate(R.layout.view_bottom_add, frameLayout, false);
     TextView textView = bottomView.findViewById(R.id.tv_bottom_content);
     textView.setText("+ 邀请教练");
     bottomView.setVisibility(View.VISIBLE);
@@ -70,6 +75,23 @@ import java.util.List;
       }
     });
     frameLayout.addView(bottomView);
+
+    if(staffs!=null&&!staffs.isEmpty()){
+      List<CommonUserItem> staffItems = new ArrayList<>();
+      for (StaffShip coach : staffs) {
+        try {
+          if (coach.teacher != null) {
+            coach.id = coach.teacher.getId();
+          } else {
+            coach.id = coach.user.id;
+          }
+          staffItems.add(generateItem(coach));
+        } catch (Exception e) {
+          CrashUtils.sendCrash(e);
+        }
+      }
+      setDatas(staffItems, 1);
+    }
     return view;
   }
 
@@ -80,7 +102,6 @@ import java.util.List;
   @Override protected String getTitle() {
     return "选择教练";
   }
-
 
   @Override public void setDatas(List<? extends IFlexible> ds, int page) {
     if (TextUtils.isEmpty(selectedId)) {

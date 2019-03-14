@@ -7,12 +7,17 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.Course;
-import cn.qingchengfit.saascommon.events.EventCourse;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
+import cn.qingchengfit.saascommon.events.EventCourse;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -39,17 +44,29 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 
   @Need public String src;
   @Need public String courseId;
+  @Need public ArrayList<CourseType> courses;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText(mIsPrivate ? "选择私教课" : "选择团课种类");
     floatingActionButton.setVisibility(View.GONE);
     llBottomAdd.setVisibility(View.VISIBLE);
+
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     tvBottomContent.setText(mIsPrivate?"+ 添加私教课种类":"+ 添加团课种类");
+    if(courses!=null){
+      List<IFlexible> datas = new ArrayList<IFlexible>();
+      for (CourseType course : courses) {
+        datas.add(new CourseItem(course));
+      }
+      if (datas.size() == 0) {
+        datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
+      }
+      commonFlexAdapter.updateDataSet(datas, true);
+    }
   }
 
   @Override public boolean onItemClick(int position) {

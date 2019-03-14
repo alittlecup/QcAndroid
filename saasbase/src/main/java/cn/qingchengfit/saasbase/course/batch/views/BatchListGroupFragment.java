@@ -12,15 +12,15 @@ import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
-import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -109,7 +109,8 @@ public class BatchListGroupFragment
             return;
         }
 
-        routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(false).src(TARGET).build());
+
+        routeTo("/batch/add/",new BundleBuilder().withBoolean("isGroup",true).build());
     }
 
     @Override

@@ -100,7 +100,7 @@ public class CoachListFragment extends BaseStaffListFragment {
                     if (coach.teacher != null) {
                       coach.id = coach.teacher.getId();
                     } else {
-                      coach.id = coach.teacher.id;
+                      coach.id = coach.user.id;
                     }
                     staffItems.add(generateItem(coach));
                   } catch (Exception e) {

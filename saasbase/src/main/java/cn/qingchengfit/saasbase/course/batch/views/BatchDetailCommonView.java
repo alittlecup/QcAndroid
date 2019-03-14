@@ -13,22 +13,35 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BottomChooseData;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.course.views.AddCourseParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
+import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saascommon.events.EventCourse;
 import cn.qingchengfit.saascommon.events.EventSiteSelected;
 import cn.qingchengfit.saascommon.events.EventStaffWrap;
+import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -85,6 +98,11 @@ public class BatchDetailCommonView extends BaseFragment {
   LinearLayout llPayContent;
 
   @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
+  @Inject IPermissionModel serPermisAction;
+  @Inject public ICourseModel courseApi;
+
+  @Inject IStaffModel staffModel;
 
   private Course course;
   private Staff trainer;
@@ -488,12 +506,91 @@ public class BatchDetailCommonView extends BaseFragment {
     super.onDestroyView();
   }
 
+  public void initData() {
+    showLoading();
+    RxRegiste(staffModel.getTrainers()
+        .compose(RxHelper.schedulersTransformer())
+        .doOnTerminate(this::hideLoading)
+        .subscribe(new NetSubscribe<QcDataResponse<StaffShipsListWrap>>() {
+          @Override public void onNext(QcDataResponse<StaffShipsListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              List<StaffShip> staffships = qcResponse.data.staffships;
+              if (staffships != null && !staffships.isEmpty()) {
+
+                routeTo("staff", "/trainer/choose/",
+                    new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null)
+                        .staffs(new ArrayList<>(staffships))
+                        .build());
+              } else {
+                if (!serPermisAction.check(PermissionServerUtils.COACHSETTING_CAN_WRITE)) {
+                  showAlert(R.string.alert_permission_forbid);
+                  return;
+                }
+                showNoCoachDialog();
+              }
+            } else {
+
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }));
+  }
+
+  private void showNoCoachDialog() {
+    List<BottomChooseData> data = new ArrayList<>();
+    data.add(new BottomChooseData(loginStatus.staff_name() + "(我自己)"));
+    data.add(new BottomChooseData("邀请其他教练"));
+    BottomChooseDialog dialog = new BottomChooseDialog(getContext(), "选择教练", data);
+    dialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
+      @Override public boolean onItemClick(int position) {
+        if (position == 0) {
+          RxBus.getBus()
+              .post(new EventStaffWrap.Builder().staff(loginStatus.getLoginUser())
+                  .type(EventStaffWrap.TRAINER)
+                  .build());
+        } else {
+          routeTo("/trainer/add/", null);
+        }
+        return false;
+      }
+    });
+  }
+
+  public void loadCourse() {
+    showLoading();
+    RxRegiste(courseApi.qcGetCourses(isPrivate)
+        .compose(RxHelper.schedulersTransformer())
+        .doOnTerminate(this::hideLoading)
+        .subscribe(qcResponse -> {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            if (qcResponse.data != null
+                && qcResponse.data.courses != null
+                && !qcResponse.data.courses.isEmpty()) {
+              routeTo("course", "/choose/", CourseChooseParams.builder()
+                  .src(mSource)
+                  .mIsPrivate(isPrivate)
+                  .courses(new ArrayList<>(qcResponse.data.courses))
+                  .build());
+            } else {
+              if (!serPermisAction.checkInBrand(
+                  isPrivate ? PermissionServerUtils.PRISETTING_CAN_WRITE
+                      : PermissionServerUtils.TEAMSETTING_CAN_WRITE)) {
+                showAlert(R.string.sorry_for_no_permission);
+                return;
+              }
+              routeTo("/add/", new AddCourseParams().isPrivate(isPrivate).build());
+            }
+          } else {
+            onShowError(qcResponse.getMsg());
+          }
+        }, new NetWorkThrowable()));
+  }
+
   /**
    * 更改课程
    */
   public void onCourseLayoutClicked() {
-    routeTo("course", "/choose/",
-        CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
+    loadCourse();
   }
 
   /**
@@ -501,8 +598,7 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0) return;
-    routeTo("staff", "/trainer/choose/",
-        new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
+    initData();
   }
 
   /**

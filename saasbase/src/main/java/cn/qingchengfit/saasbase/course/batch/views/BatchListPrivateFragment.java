@@ -14,12 +14,12 @@ import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.events.EventStaffWrap;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
+import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.events.EventStaffWrap;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -137,7 +137,8 @@ import javax.inject.Inject;
       showAlert(R.string.sorry_for_no_permission);
       return;
     }
-    routeTo("staff","/trainer/choose/",null);
+    routeTo("/batch/add/",null);
+
   }
 
   @Override public void clickCopyBatch() {
