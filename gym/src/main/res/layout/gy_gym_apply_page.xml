@@ -84,9 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/bg_white_corners"
-            android:translationZ="2dp"
             >
           <LinearLayout
               android:layout_width="match_parent"
@@ -179,7 +179,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
             android:text="提交申请后，需要管理员同意之后才能加入场馆"
             style="@style/QcTextStyleSmallGrey"
             />

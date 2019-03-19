@@ -42,10 +42,10 @@ public interface GymApi {
   @POST("/api/brands/") rx.Observable<QcDataResponse<BrandResponse>> qcCreatBrand(
       @Body BrandPostBody body);
 
-  @POST("/api/systems/initial/") rx.Observable<QcDataResponse<Shop>> qcSystemInit(@Body
-      ShopCreateBody body);
+  @POST("/api/systems/initial/") rx.Observable<QcDataResponse<Shop>> qcSystemInit(
+      @Body ShopCreateBody body);
 
-  @PUT("/api/common/user/gyms/{gym_id}/") rx.Observable<QcDataResponse> editGymIntro(
+  @PUT("/api/gym/{gym_id}/") rx.Observable<QcDataResponse> editGymIntro(
       @Path("gym_id") String gymId, @Body Shop body);
 
   @GET("/api/v2/enter/gyms/search/")

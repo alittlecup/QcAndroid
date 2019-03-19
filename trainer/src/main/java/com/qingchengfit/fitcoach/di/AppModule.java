@@ -13,7 +13,7 @@ import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;

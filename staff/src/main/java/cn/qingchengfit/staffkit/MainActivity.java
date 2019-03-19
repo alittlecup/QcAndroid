@@ -44,7 +44,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;

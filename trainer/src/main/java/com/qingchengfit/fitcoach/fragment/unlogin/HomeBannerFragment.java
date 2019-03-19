@@ -91,7 +91,7 @@ public class HomeBannerFragment extends BaseFragment {
     });
     view.findViewById(R.id.tv_create_gym).setOnClickListener(v -> {
       if(loginStatus.isLogined()){
-        routeTo("gym", "/gym/create", null);
+        routeTo("gym", "/gym/choose/create", null);
       }else{
         onLogin();
         search=false;
@@ -105,23 +105,23 @@ public class HomeBannerFragment extends BaseFragment {
   }
 
   private boolean search=false;
-  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == 1001) {
-        if (search) {
-          routeTo("gym", "/gym/search", null);
-        } else {
-          routeTo("gym", "/gym/create", null);
-        }
-      }
-    }
-  }
+  //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+  //  super.onActivityResult(requestCode, resultCode, data);
+  //  if (resultCode == Activity.RESULT_OK) {
+  //    if (requestCode == 1001) {
+  //      if (search) {
+  //        routeTo("gym", "/gym/search", null);
+  //      } else {
+  //        routeTo("gym", "/gym/choose/create", null);
+  //      }
+  //    }
+  //  }
+  //}
   public void onLogin() {
     Intent toLogin = new Intent(getContext().getPackageName(),
         Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
     toLogin.putExtra("isRegiste", false);
-    startActivityForResult(toLogin,1001);
+    startActivity(toLogin);
   }
 
   @Override public String getFragmentName() {

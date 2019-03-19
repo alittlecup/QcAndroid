@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.model.dbaction;
 
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.schedulers.Schedulers;

@@ -1,8 +1,7 @@
-package cn.qingchengfit.saasbase.db;
+package cn.qingchengfit.saascommon.model;
 
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
 import io.reactivex.Flowable;
 import java.util.List;
 import javax.inject.Inject;

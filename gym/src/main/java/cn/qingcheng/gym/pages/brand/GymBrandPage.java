@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,9 +83,11 @@ import javax.inject.Inject;
     if (isCreateUser()) {
       mBinding.imgEditBrand.setVisibility(View.VISIBLE);
       mBinding.btnNewGym.setVisibility(View.VISIBLE);
+      mBinding.flBtnNew.setVisibility(View.VISIBLE);
     } else {
       mBinding.imgEditBrand.setVisibility(View.GONE);
       mBinding.btnNewGym.setVisibility(View.GONE);
+      mBinding.flBtnNew.setVisibility(View.GONE);
       mViewModel.loadShopPermissions(brand.id, PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)
           .observe(this, bransShopsPremissions -> {
             if (bransShopsPremissions != null) {
@@ -161,6 +164,8 @@ import javax.inject.Inject;
   private void initRecycler() {
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
+    ((SimpleItemAnimator)mBinding.recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+    mBinding.recyclerView.getItemAnimator().setChangeDuration(0);
   }
 
   @Override public boolean onItemClick(int position) {
@@ -171,6 +176,7 @@ import javax.inject.Inject;
       if (editAble) {
         routeTo("/gym/edit",
             new BundleBuilder()
+                .withBoolean("isBrandCreate",isCreateUser())
                 .withParcelable("shop", data)
                 .withParcelable("brand", brand)
                 .build());

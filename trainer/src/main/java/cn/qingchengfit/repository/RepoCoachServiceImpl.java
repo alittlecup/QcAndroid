@@ -1,9 +1,8 @@
 package cn.qingchengfit.repository;
 
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.utils.LogUtil;
-import co.hkm.soltag.helper;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;

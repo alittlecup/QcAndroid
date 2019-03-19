@@ -6,20 +6,34 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.model.responese.SignInUrl;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGContents;
+import cn.qingchengfit.saascommon.qrcode.qrgenearator.QRGEncoder;
 import cn.qingchengfit.staff.routers.StaffParamsInjector;
+import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.databinding.FragmentGymSettingSuccessBinding;
-import cn.qingchengfit.staffkit.views.gym.GymActivity;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.google.zxing.WriterException;
+import javax.inject.Inject;
+import rx.functions.Action1;
 
 @Leaf(module = "staff", path = "/gym/setting/success") public class GymServiceSettingSuccessFragment
     extends SaasCommonFragment {
   FragmentGymSettingSuccessBinding mBinding;
   @Need Integer type;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
+  @Inject StaffRespository qcRestRepository;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,12 +62,11 @@ import com.anbillon.flabellum.annotations.Need;
         mBinding.tvSuccess.setText("恭喜您，私教设置成功 !");
         mBinding.tvSuccessHint.setText("推广给会员开始约课吧");
         PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_private", true);
-
         break;
       case 3:
         mBinding.tvSuccess.setText("恭喜您，自主训练设置成功 !");
         mBinding.tvSuccessHint.setText("以下是场馆的签到二维码");
-        mBinding.imgSignCode.setVisibility(View.VISIBLE);
+        loadSignUrl();
         PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_train", true);
         break;
       case 4:
@@ -93,5 +106,26 @@ import com.anbillon.flabellum.annotations.Need;
     toWebForGuide.putExtra("url", PreferenceUtils.getPrefString(getContext(), "mPreViewUrl", ""));
     toWebForGuide.putExtra("copyurl", PreferenceUtils.getPrefString(getContext(), "mCopyUrl", ""));
     startActivity(toWebForGuide);
+  }
+
+  private void loadSignUrl() {
+    RxRegiste(qcRestRepository.getStaffAllApi()
+        .qcGetCheckinUrl(loginStatus.staff_id(), gymWrapper.getParams())
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(new Action1<SignInUrl>() {
+          @Override public void call(SignInUrl signInUrl) {
+            if (signInUrl != null) {
+              String checkin_url = signInUrl.data.getCheckin_url();
+              QRGEncoder qrgEncoder = new QRGEncoder(checkin_url, null, QRGContents.Type.TEXT,
+                  MeasureUtils.dpToPx(180f, getResources()));
+              try {
+                mBinding.imgSignCode.setImageBitmap(qrgEncoder.encodeAsBitmap());
+                mBinding.imgSignCode.setVisibility(View.VISIBLE);
+              } catch (WriterException e) {
+                e.printStackTrace();
+              }
+            }
+          }
+        }, new NetWorkThrowable()));
   }
 }

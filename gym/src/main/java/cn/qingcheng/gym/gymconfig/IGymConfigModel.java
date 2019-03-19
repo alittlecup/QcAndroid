@@ -5,7 +5,6 @@ import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingcheng.gym.gymconfig.network.response.ShopConfigListWrap;
 import cn.qingcheng.gym.gymconfig.network.response.SpaceListWrap;
 import cn.qingchengfit.network.response.QcDataResponse;
-import retrofit2.http.GET;
 
 /**
  * power by
@@ -34,6 +33,6 @@ public interface IGymConfigModel {
   rx.Observable<QcDataResponse<ShopConfigListWrap>> getConfigs(String configs);
   rx.Observable<QcDataResponse> saveShopConfigs(ShopConfigBody body);
 
-  @GET("/api/staffs/{id}/services/") rx.Observable<QcDataResponse<GymList>> qcGetCoachService(
+ rx.Observable<QcDataResponse<GymList>> qcGetCoachService(
     String brand_id);
 }

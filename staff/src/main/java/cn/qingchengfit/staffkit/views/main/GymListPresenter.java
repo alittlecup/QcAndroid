@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;

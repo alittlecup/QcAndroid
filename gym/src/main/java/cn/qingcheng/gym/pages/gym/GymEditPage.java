@@ -13,10 +13,12 @@ import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/gym/edit") public class GymEditPage extends GymInfoPage {
   @Inject LoginStatus loginStatus;
+  @Need Boolean isBrandCreate;
 
   public void initView() {
     super.initView();
@@ -29,7 +31,7 @@ import javax.inject.Inject;
     mBinding.imgPhotoArrow.setVisibility(View.VISIBLE);
     mBinding.viewShadow.setVisibility(View.GONE);
 
-    if (loginStatus.getUserId().equals(brand.created_by.getId())) {
+    if (isBrandCreate) {
       mBinding.tvGymAction.setText("删除该场馆");
       mBinding.tvGymAction.setOnClickListener(v -> {
         showDeleteDialog();
@@ -40,6 +42,7 @@ import javax.inject.Inject;
         showFireGymDialog();
       });
     }
+    mBinding.imgGymPhoto.setClickable(true);
   }
 
   @Override public void initToolbar() {

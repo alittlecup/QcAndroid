@@ -34,7 +34,7 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.constant.ConstantNotification;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.utils.RouteUtil;

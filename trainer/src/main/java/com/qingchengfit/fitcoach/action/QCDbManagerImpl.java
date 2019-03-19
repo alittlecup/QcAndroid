@@ -8,7 +8,7 @@
 //import cn.qingchengfit.model.base.Permission;
 //import cn.qingchengfit.model.base.QcStudentBean;
 //import cn.qingchengfit.model.base.Shop;
-//import cn.qingchengfit.saasbase.permission.QcDbManager;
+//import cn.qingchengfit.saascommon.model.QcDbManager;
 //import com.qingchengfit.fitcoach.App;
 //import com.squareup.sqlbrite.BriteDatabase;
 //import com.squareup.sqlbrite.SqlBrite;

@@ -38,11 +38,11 @@ import rx.android.schedulers.AndroidSchedulers;
     extends GymBaseFragment<GyGymSearchPageBinding, GymSearchViewModel>
     implements FlexibleAdapter.OnItemClickListener {
   private CommonFlexAdapter adapter;
-  private Comparator<BrandWithGyms> gymsComparator=new Comparator<BrandWithGyms>() {
+  private Comparator<BrandWithGyms> gymsComparator = new Comparator<BrandWithGyms>() {
     @Override public int compare(BrandWithGyms o1, BrandWithGyms o2) {
       List<GymWithSuperUser> gyms = o1.gyms;
       List<GymWithSuperUser> gyms1 = o2.gyms;
-      return gyms.size()-gyms1.size();
+      return gyms1.size() - gyms.size();
     }
   };
 
@@ -57,14 +57,14 @@ import rx.android.schedulers.AndroidSchedulers;
       List<BrandWithGyms> brands = response.brands;
       List<BrandWithGyms> others = response.others;
       if (brands != null && !brands.isEmpty()) {
-        Collections.sort(brands,gymsComparator);
+        Collections.sort(brands, gymsComparator);
         for (BrandWithGyms brand : brands) {
           items.add(new GymSearchItem(brand));
         }
       }
       items.add(new SimpleTextItemItem("以下为场馆中包含\"" + mBinding.editSearch.getText() + "\"的结果"));
       if (others != null && !others.isEmpty()) {
-        Collections.sort(others,gymsComparator);
+        Collections.sort(others, gymsComparator);
         for (BrandWithGyms brand : others) {
           items.add(new GymSearchItem(brand));
         }
@@ -102,18 +102,16 @@ import rx.android.schedulers.AndroidSchedulers;
         .subscribe((msg -> {
           if (TextUtils.isEmpty(msg)) {
             mBinding.tvCreateGym.setVisibility(View.GONE);
+            mBinding.divider.setVisibility(View.GONE);
             mBinding.imgClear.setVisibility(View.GONE);
           } else {
             mBinding.tvCreateGym.setVisibility(View.VISIBLE);
+            mBinding.divider.setVisibility(View.VISIBLE);
             mBinding.tvCreateGym.setText("+ 创建\"" + msg + "\"场馆");
             mBinding.imgClear.setVisibility(View.VISIBLE);
           }
         }));
-    mBinding.tvCreateGym.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        routeTo("/gym/create", null);
-      }
-    });
+    mBinding.tvCreateGym.setOnClickListener(v -> routeTo("/gym/create", null));
     mBinding.imgArrowLeft.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         getActivity().onBackPressed();
@@ -138,6 +136,9 @@ import rx.android.schedulers.AndroidSchedulers;
         mBinding.editSearch.setText("");
         mBinding.imgClear.setVisibility(View.GONE);
       }
+    });
+    mBinding.tvCancel.setOnClickListener(v -> {
+      getActivity().onBackPressed();
     });
   }
 

@@ -8,9 +8,9 @@
   </data>
   <LinearLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/root"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:id="@+id/root"
       android:background="@color/bg_white"
       android:orientation="vertical"
       >
@@ -54,8 +54,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="场馆名称"
-            android:singleLine="true"
             android:imeOptions="actionSearch"
+            android:singleLine="true"
             style="@style/QcTextStyleMediumDark"
             />
         <ImageView
@@ -82,19 +82,28 @@
           />
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_medium"
+        />
     <TextView
         android:id="@+id/tv_create_gym"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:paddingLeft="15dp"
         android:text="+ 创建引力场馆"
-        android:visibility="gone"
         android:textColor="@color/primary"
+        android:visibility="gone"
+        tools:visibility="visible"
         />
     <include
         layout="@layout/divider_medium"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
+        android:id="@+id/divider"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         />

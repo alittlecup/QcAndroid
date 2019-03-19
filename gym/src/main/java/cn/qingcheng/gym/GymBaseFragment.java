@@ -4,6 +4,7 @@ import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import cn.qingchengfit.gym.BuildConfig;
 import cn.qingchengfit.gym.routers.GymParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
@@ -17,7 +18,11 @@ public abstract class GymBaseFragment<DB extends ViewDataBinding, VM extends Bas
     GymParamsInjector.inject(this);
     super.onCreate(savedInstanceState);
     if (mViewModel != null) {
-      mViewModel.getErrorMsg().observe(this, str -> ToastUtils.show(str));
+      mViewModel.getErrorMsg().observe(this, str -> {
+        if (!TextUtils.isEmpty(str)) {
+          ToastUtils.show(str);
+        }
+      });
     }
   }
 

@@ -34,6 +34,14 @@
           android:text="品牌logo"
           style="@style/QcTextStyleStandardDark"
           />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="3dp"
+          android:text="*"
+          android:textColor="@color/danger_red_normal"
+          android:textSize="15sp"
+          />
       <Space
           android:layout_width="0dp"
           android:layout_height="0dp"
@@ -47,6 +55,12 @@
           tools:background="@color/bg_red"
           />
     </LinearLayout>
+    <View
+        android:id="@+id/commoninput_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_white"
+        />
     <Space
         android:layout_width="0dp"
         android:layout_height="15dp"
@@ -57,7 +71,9 @@
         android:layout_height="50dp"
         android:background="@color/bg_white"
         app:civ_edit_able="true"
+        app:civ_hint="请输入品牌名称"
         app:civ_lable="品牌名称"
+        app:civ_nonnull="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/civ_brand_count"
@@ -67,7 +83,16 @@
         app:civ_clickable="true"
         app:civ_edit_able="false"
         app:civ_lable="场馆数量"
+        app:civ_nonnull="true"
+        app:civ_showdivier="false"
         />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_white"
+        />
+
     <Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
@@ -76,6 +101,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:text="下一步"
+        style="@style/QcBtnPrimary"
         />
 
   </LinearLayout>

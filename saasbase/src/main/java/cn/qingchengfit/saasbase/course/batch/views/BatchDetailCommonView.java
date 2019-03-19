@@ -417,6 +417,8 @@ public class BatchDetailCommonView extends BaseFragment {
     return prePriceChoosePos != 0;
   }
 
+  int asTeacher = -1;
+
   public void openPay(boolean open) {
     if (llPayContent != null) {
       llPayContent.setVisibility(open ? View.VISIBLE : View.GONE);
@@ -516,7 +518,7 @@ public class BatchDetailCommonView extends BaseFragment {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               List<StaffShip> staffships = qcResponse.data.staffships;
               if (staffships != null && !staffships.isEmpty()) {
-
+                asTeacher = -1;
                 routeTo("staff", "/trainer/choose/",
                     new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null)
                         .staffs(new ArrayList<>(staffships))
@@ -529,8 +531,8 @@ public class BatchDetailCommonView extends BaseFragment {
                 showNoCoachDialog();
               }
             } else {
-
               onShowError(qcResponse.getMsg());
+              asTeacher = -1;
             }
           }
         }));
@@ -548,8 +550,10 @@ public class BatchDetailCommonView extends BaseFragment {
               .post(new EventStaffWrap.Builder().staff(loginStatus.getLoginUser())
                   .type(EventStaffWrap.TRAINER)
                   .build());
+          asTeacher = 1;
         } else {
           routeTo("/trainer/add/", null);
+          asTeacher = -1;
         }
         return false;
       }

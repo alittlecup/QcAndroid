@@ -368,6 +368,14 @@ public class AddBatchFragment extends SaasBaseFragment
     return batchBaseFragment != null && batchBaseFragment.isAdded() && batchBaseFragment.needPay();
   }
 
+  @Override public int isStaffAsTeather() {
+    if(batchBaseFragment != null && batchBaseFragment.isAdded()){
+      return batchBaseFragment.asTeacher;
+    }else{
+      return -1;
+    }
+  }
+
   /**
    * 选择开始时间
    */

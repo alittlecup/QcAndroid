@@ -27,22 +27,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_grey"
+        android:background="@color/bg_white"
         android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         >
 
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:background="@color/bg_white"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
           >
         <ImageView
             android:id="@+id/img_brand_photo"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
-
             tools:background="@color/primary"
             />
         <TextView
@@ -77,20 +78,51 @@
             bind:srcCompat="@drawable/vd_facial_edit_black"
             />
       </RelativeLayout>
-      <Button
-          android:id="@+id/btn_new_gym"
+      <FrameLayout
+          android:id="@+id/fl_btn_new"
           android:layout_width="match_parent"
-          android:layout_height="44dp"
-          android:layout_marginTop="24dp"
-          android:text="+新增场馆"
-          android:textSize="17sp"
-          style="@style/QcBtnPrimary"
-          />
+          android:layout_height="60dp"
+          >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"
+              android:background="@color/bg_white"
+              />
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"
+              android:background="@color/bg_light_grey"
+              />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_new_gym"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_vertical"
+            android:elevation="5px"
+            android:text="+新增场馆"
+            android:textSize="17sp"
+            style="@style/QcBtnPrimary"
+            />
+      </FrameLayout>
+
       <android.support.v7.widget.RecyclerView
           android:id="@+id/recycler_view"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_marginTop="20dp"
+          android:background="@color/bg_light_grey"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          android:paddingTop="20dp"
           />
     </LinearLayout>
   </LinearLayout>

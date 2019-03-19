@@ -1,11 +1,14 @@
 package cn.qingcheng.gym.pages.apply;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import cn.qingcheng.gym.GymBaseFragment;
 import cn.qingcheng.gym.bean.GymApplyOrder;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -130,14 +133,15 @@ import java.util.Map;
   }
 
   private void findPositionInGym(String gymID) {
-    mViewModel.findPositionInGym(gymID, AppUtils.getCurApp(getContext()) + "").observe(this, gymPosition -> {
-      if (gymPosition != null && !TextUtils.isEmpty(gymPosition.id)) {
-        mBinding.tvMyPosition.setText(gymPosition.name);
-        updateBtnView();
-      } else {
-        loadUserApplyOrders();
-      }
-    });
+    mViewModel.findPositionInGym(gymID, AppUtils.getCurApp(getContext()) + "")
+        .observe(this, gymPosition -> {
+          if (gymPosition != null && !TextUtils.isEmpty(gymPosition.id)) {
+            mBinding.tvMyPosition.setText(gymPosition.name);
+            updateBtnView();
+          } else {
+            loadUserApplyOrders();
+          }
+        });
   }
 
   private void updateView(Gym gym) {
@@ -152,29 +156,25 @@ import java.util.Map;
   }
 
   private void loadUserApplyOrders() {
-    mViewModel.loadGymOrder(params);
-    mViewModel.gymApplyOrderPre.observe(this, gymApplyOrderResponse -> {
-      if (gymApplyOrderResponse != null) {
-        GymApplyOrder gymApplyOrder = gymApplyOrderResponse.gymApplyOrder;
-        if (gymApplyOrder != null) {
-          if (AppUtils.getCurApp(getContext()) != 0) {
-            mBinding.tvMyPosition.setText(gymApplyOrder.position.name);
-          }
-          if (gymApplyOrder.status == 1) {
+    mViewModel.loadGymOrder(params).observe(this, gymApplyOrder -> {
+      if (gymApplyOrder != null) {
+        if (AppUtils.getCurApp(getContext()) != 0) {
+          mBinding.tvMyPosition.setText(gymApplyOrder.position.name);
+        }
+        if (gymApplyOrder.status == 1) {
+          mBinding.btnApply.setText("已发送申请");
+        }
+        switch (gymApplyOrder.status) {
+          case 1:
             mBinding.btnApply.setText("已发送申请");
-          }
-          switch (gymApplyOrder.status) {
-            case 1:
-              mBinding.btnApply.setText("已发送申请");
-              mBinding.btnApply.setEnabled(false);
-              mBinding.tvPoint.setVisibility(View.GONE);
-              break;
-            case 2:
-              updateBtnView();
-              break;
-            case 3:
-              break;
-          }
+            mBinding.btnApply.setEnabled(false);
+            mBinding.tvPoint.setVisibility(View.GONE);
+            break;
+          case 2:
+            updateBtnView();
+            break;
+          case 3:
+            break;
         }
       }
     });
@@ -186,18 +186,17 @@ import java.util.Map;
     mBinding.tvPoint.setVisibility(View.GONE);
     mBinding.tvMyPosition.setClickable(false);
     mBinding.btnApply.setOnClickListener(v -> {
-      if(AppUtils.getCurApp(getContext())==1){
+      if (AppUtils.getCurApp(getContext()) == 1) {
         Intent toGymdetail = new Intent("cn.qingchengfit.staffkit.views.gym.GymActivity");
         toGymdetail.putExtra("gym_to", 1);
         toGymdetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(toGymdetail);
-      }else {
+      } else {
         Intent toGymdetail = new Intent("com.qingchengfit.fitcoach.activity.Main2Activity");
         toGymdetail.putExtra("main_action", 10);
         startActivity(toGymdetail);
       }
       getActivity().finish();
-
     });
   }
 
@@ -205,20 +204,46 @@ import java.util.Map;
     mBinding.btnApply.setText("已发送申请");
     mBinding.btnApply.setEnabled(false);
     mBinding.tvMyPosition.setEnabled(false);
-    DialogUtils.showIconDialog(getContext(), R.drawable.ic_vd_success_dialog_icon, "已发送申请",
-        "场馆超级管理员通过申请后，系统会进行通知，请及时留意", "知道了", new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-            materialDialog.dismiss();
-          }
-        });
+    //DialogUtils.showIconDialog(getContext(), R.drawable.ic_vd_success_dialog_icon, "已发送申请",
+    //    "场馆管理员通过申请后，系统会进行通知，请及时留意", "知道了", new MaterialDialog.SingleButtonCallback() {
+    //      @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+    //        materialDialog.dismiss();
+    //      }
+    //    });
+    showDialog(R.drawable.ic_vd_success_dialog_icon, "已发送申请",
+        "场馆管理员通过申请后，系统会进行通知，请及时留意");
   }
 
   private void showAlertDialog() {
-    DialogUtils.showIconDialog(getContext(), R.drawable.ic_vd_alert_dialog_icon, "当日申请次数用光了",
-        "请线下联系场馆同事在系统中邀请您加入场馆", "知道了", new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-            materialDialog.dismiss();
-          }
-        });
+    //DialogUtils.showIconDialog(getContext(), R.drawable.ic_vd_alert_dialog_icon, "当日申请次数用光了",
+    //    "请线下联系场馆同事在系统中邀请您加入场馆", "知道了", new MaterialDialog.SingleButtonCallback() {
+    //      @Override public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+    //        materialDialog.dismiss();
+    //      }
+    //    });
+    showDialog( R.drawable.ic_vd_alert_dialog_icon, "当日申请次数用光了",
+        "请线下联系场馆同事在系统中邀请您加入场馆");
+  }
+
+  private void showDialog(int drawableRes, String title, String content) {
+    View inflate = LayoutInflater.from(getContext()).inflate(R.layout.gy_dialog_cousom_view, null);
+    ImageView imageView = inflate.findViewById(R.id.img_icon);
+    imageView.setImageResource(drawableRes);
+    TextView titleView = inflate.findViewById(R.id.title);
+    TextView contentView = inflate.findViewById(R.id.content);
+    titleView.setText(title);
+    contentView.setText(content);
+    MaterialDialog materialDialog =
+        new MaterialDialog.Builder(getContext()).customView(inflate, false)
+            .neutralColorRes(R.color.primary)
+            .neutralText("知道了")
+            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                materialDialog.dismiss();
+              }
+            })
+            .build();
+    materialDialog.show();
   }
 }

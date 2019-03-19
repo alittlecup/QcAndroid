@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.views.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -92,7 +91,7 @@ public class UnloginAdFragment extends BaseFragment {
           toLogin();
           search = false;
         } else {
-          routeTo("gym", "/gym/create", null);
+          routeTo("gym", "/gym/choose/create", null);
         }
       }
     });
@@ -111,19 +110,19 @@ public class UnloginAdFragment extends BaseFragment {
         Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
     toLogin.putExtra("isRegiste", false);
     toLogin.putExtra("ad", true);
-    startActivityForResult(toLogin, RESULT_LOGIN);
+    startActivity(toLogin);
   }
-
-  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == RESULT_LOGIN) {
-        if (search) {
-          routeTo("gym", "/gym/search", null);
-        } else {
-          routeTo("gym", "/gym/create", null);
-        }
-      }
-    }
-  }
+  //
+  //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+  //  super.onActivityResult(requestCode, resultCode, data);
+  //  if (resultCode == Activity.RESULT_OK) {
+  //    if (requestCode == RESULT_LOGIN) {
+  //      if (search) {
+  //        routeTo("gym", "/gym/search", null);
+  //      } else {
+  //        routeTo("gym", "/gym/choose/create", null);
+  //      }
+  //    }
+  //  }
+  //}
 }

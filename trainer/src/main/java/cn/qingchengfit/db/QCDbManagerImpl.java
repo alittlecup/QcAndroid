@@ -11,7 +11,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.saasbase.db.GymFunctionDao;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import io.reactivex.Flowable;

@@ -38,6 +38,8 @@ import javax.inject.Inject;
           }
         }
         adapter.updateDataSet(items);
+      }else{
+        adapter.clear();
       }
     });
   }

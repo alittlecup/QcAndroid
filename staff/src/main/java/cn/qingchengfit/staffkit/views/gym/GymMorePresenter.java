@@ -9,7 +9,7 @@ import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;

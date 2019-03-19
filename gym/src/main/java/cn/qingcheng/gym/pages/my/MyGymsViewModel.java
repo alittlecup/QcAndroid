@@ -15,12 +15,10 @@ public class MyGymsViewModel extends BaseViewModel {
   @Inject IGymResponsitory gymResponsitory;
 
   @Inject public MyGymsViewModel(IGymResponsitory gymResponsitory) {
-    this.gymResponsitory=gymResponsitory;
+    this.gymResponsitory = gymResponsitory;
     datas = Transformations.map(gymResponsitory.qcGetBrands(), resource -> {
       BrandsResponse brandsResponse = dealResource(resource);
-      return brandsResponse.brands;
+      return brandsResponse == null ? null : brandsResponse.brands;
     });
   }
-
-
 }

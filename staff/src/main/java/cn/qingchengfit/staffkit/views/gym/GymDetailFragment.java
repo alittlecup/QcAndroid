@@ -72,7 +72,7 @@ import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountSuccessPageParams;
 import cn.qingchengfit.staffkit.dianping.pages.DianPingEmptyFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
-import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
+import cn.qingchengfit.saascommon.events.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;

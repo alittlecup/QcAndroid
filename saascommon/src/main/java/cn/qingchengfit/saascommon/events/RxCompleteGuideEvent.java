@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.rxbus.event;
+package cn.qingchengfit.saascommon.events;
 
 /**
  * Created by peggy on 16/6/6.

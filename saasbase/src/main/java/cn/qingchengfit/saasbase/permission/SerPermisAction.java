@@ -4,7 +4,8 @@ import android.support.annotation.NonNull;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import java.util.List;
 import javax.inject.Inject;
 

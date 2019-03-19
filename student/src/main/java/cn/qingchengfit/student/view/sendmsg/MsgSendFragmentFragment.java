@@ -39,12 +39,8 @@ import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.BaseActivity;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import java.util.ArrayList;
@@ -143,16 +139,21 @@ import rx.functions.Action1;
 
     RxTextView.textChangeEvents(etContent).subscribe(new Action1<TextViewTextChangeEvent>() {
       @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
-        if (textViewTextChangeEvent.text().length() < smsBegin.length()) {
+        CharSequence text = textViewTextChangeEvent.text();
+        if (text.length() < smsBegin.length()) {
           etContent.setText(smsBegin);
           etContent.setSelection(etContent.getText().length());
+        } else if (!text.subSequence(0, 24).equals(smsBegin)) {
+          String trim = etContent.getText().toString().trim();
+          etContent.setText(smsBegin + trim);
+          etContent.setSelection(etContent.getText().length());
         }
-        if ((textViewTextChangeEvent.text().toString().length() - 24) > 56) {
+        if ((text.toString().length() - 24) > 56) {
           layoutSendHint.setVisibility(View.VISIBLE);
         } else {
           layoutSendHint.setVisibility(View.GONE);
         }
-        tvSmsCount.setText((textViewTextChangeEvent.text().toString().length() - 24) + "");
+        tvSmsCount.setText((text.toString().length() - 24) + "");
       }
     });
     updateData();

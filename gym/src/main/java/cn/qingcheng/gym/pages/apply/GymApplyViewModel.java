@@ -3,6 +3,7 @@ package cn.qingcheng.gym.pages.apply;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import cn.qingcheng.gym.bean.GymApplyOrder;
 import cn.qingcheng.gym.bean.GymApplyOrderResponse;
 import cn.qingcheng.gym.bean.GymApplyOrderResponses;
 import cn.qingcheng.gym.bean.GymPosition;
@@ -36,16 +37,16 @@ public class GymApplyViewModel extends BaseViewModel {
         });
   }
 
-  public void loadGymOrder(Map<String, Object> params) {
-    Transformations.map(gymResponsitory.qcGetGymApplyOrder(params),
+  public LiveData<GymApplyOrder> loadGymOrder(Map<String, Object> params) {
+    return Transformations.map(gymResponsitory.qcGetGymApplyOrder(params),
         gymApplyOrderResponseResource -> {
           GymApplyOrderResponses gymApplyOrderResponses =
               dealResource(gymApplyOrderResponseResource);
           if (gymApplyOrderResponses != null
               && gymApplyOrderResponses.gymApplyOrderResponses != null) {
-            List<GymApplyOrderResponse> orders = gymApplyOrderResponses.gymApplyOrderResponses;
+            List<GymApplyOrder> orders = gymApplyOrderResponses.gymApplyOrderResponses;
             if (!orders.isEmpty()) {
-              gymApplyOrderPre.setValue(orders.get(0));
+              return orders.get(0);
             }
           }
           return null;

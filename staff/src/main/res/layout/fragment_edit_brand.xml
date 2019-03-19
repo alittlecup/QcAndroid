@@ -109,6 +109,7 @@
       android:background="@color/white"
       android:gravity="center"
       android:text="删除该品牌"
+      android:textSize="17sp"
       android:textColor="@color/red"
       />
 

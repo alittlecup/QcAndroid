@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:gravity="center_vertical"
-            android:hint="搜索职位/公司"
+            android:hint="搜索手机号或姓名"
             android:minWidth="90dp"
             android:textColorHint="#bbbbbb"
             android:textSize="13sp"

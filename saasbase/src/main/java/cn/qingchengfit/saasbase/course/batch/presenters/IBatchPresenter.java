@@ -169,6 +169,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     body.teacher_id = mvpView.getTrainerId();
     body.time_repeats = mvpView.getBatchLoops() == null?mvpView.getTimeRepeats():BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
     body.is_free = !mvpView.needPay();
+    body.request_user_as_teacher= mvpView.isStaffAsTeather();
   }
 
   /**
@@ -294,5 +295,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     int suportMemberNum();
 
     boolean needPay();
+
+    int isStaffAsTeather();
   }
 }

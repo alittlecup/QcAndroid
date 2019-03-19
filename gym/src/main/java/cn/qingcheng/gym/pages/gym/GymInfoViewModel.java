@@ -26,7 +26,7 @@ public class GymInfoViewModel extends BaseViewModel {
   public LiveData<Boolean> deleteResult;
   private MutableLiveData<String> deleteShopID = new MutableLiveData<>();
   private ActionLiveEvent loadGymTypes = new ActionLiveEvent();
-  private MutableLiveData<Boolean> quiteResult = new MutableLiveData<>();
+  public MutableLiveData<Boolean> quiteResult = new MutableLiveData<>();
   @Inject IGymModel gymModel;
   public SingleLiveEvent<Shop> shopSingleLiveEvent = new SingleLiveEvent<>();
 

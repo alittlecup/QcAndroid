@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.permission;
+package cn.qingchengfit.saascommon.model;
 
 import android.support.annotation.NonNull;
 import cn.qingchengfit.model.base.CoachService;

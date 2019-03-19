@@ -15,7 +15,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.apis.CourseModel;
 import cn.qingcheng.gym.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IExportModel;

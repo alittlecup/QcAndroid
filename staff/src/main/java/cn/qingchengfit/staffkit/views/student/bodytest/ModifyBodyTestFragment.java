@@ -30,7 +30,7 @@ import cn.qingchengfit.model.responese.BodyTestExtra;
 import cn.qingchengfit.model.responese.BodyTestMeasure;
 import cn.qingchengfit.model.responese.BodyTestTemplateBase;
 import cn.qingchengfit.model.base.Shop;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.widget.NumberInputFilter;
 import cn.qingchengfit.staffkit.R;

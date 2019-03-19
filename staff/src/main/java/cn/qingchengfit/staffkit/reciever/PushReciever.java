@@ -11,7 +11,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.utils.RouterUtils;
 import cn.qingchengfit.staffkit.App;

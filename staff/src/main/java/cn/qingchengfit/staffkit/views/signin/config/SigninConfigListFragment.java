@@ -280,12 +280,12 @@ public class SigninConfigListFragment extends BaseFragment
     if (swOpen.isExpanded()) {
       if (!setted) {
         //isJumping = true;
-        getFragmentManager().beginTransaction()
-            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_in)
-            .replace(mCallbackActivity.getFragId(),
-                new SignInTypeFragmentBuilder().autoIn(1).build())
-            .addToBackStack(null)
-            .commit();
+        //getFragmentManager().beginTransaction()
+        //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_in)
+        //    .replace(mCallbackActivity.getFragId(),
+        //        new SignInTypeFragmentBuilder().autoIn(1).build())
+        //    .addToBackStack(null)
+        //    .commit();
       }
     } else {
 

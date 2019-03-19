@@ -4,10 +4,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import cn.qingcheng.gym.bean.ShopCreateBody;
 import cn.qingcheng.gym.pages.gym.GymInfoPage;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.gym.R;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
@@ -16,11 +13,9 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.bigkoo.pickerview.lib.DensityUtil;
-import com.google.gson.Gson;
-import javax.inject.Inject;
 
 @Leaf(module = "gym", path = "/gym/create") public class GymCreatePage extends GymInfoPage {
-  @Inject GymWrapper gymWrapper;
+
 
   @Override public void initToolbar() {
     super.initToolbar();
@@ -31,6 +26,7 @@ import javax.inject.Inject;
     super.initView();
     mBinding.civGymType.setShowRight(true);
     mBinding.civGymAddress.setShowRight(true);
+    mBinding.imgGymPhoto.setClickable(true);
 
     mBinding.civGymMark.setShowRight(true);
     mBinding.imgPhotoArrow.setVisibility(View.VISIBLE);
@@ -45,6 +41,8 @@ import javax.inject.Inject;
     mBinding.tvGymAction.setLayoutParams(layoutParams);
     mBinding.tvGymAction.setText("完成");
     mBinding.tvGymAction.setVisibility(View.VISIBLE);
+    mBinding.dividerTop.setVisibility(View.GONE);
+    mBinding.dividerBottom.setVisibility(View.GONE);
 
     if (brand != null) {
       PhotoUtils.smallCircle(mBinding.imgGymPhoto, brand.getPhoto());
@@ -52,22 +50,7 @@ import javax.inject.Inject;
     mViewModel.shopSingleLiveEvent.observe(this, shop -> {
       if (shop != null) {
         ToastUtils.show("创建场馆成功");
-        if (AppUtils.getCurApp(getContext()) == 1) {
-          if(brand==null){
-            brand=new Brand();
-            brand.setId(shop.brand_id);
-          }
-          CoachService coachService =
-              new Gson().fromJson(new Gson().toJson(shop), CoachService.class);
-          gymWrapper.setBrand(brand);
-          gymWrapper.setCoachService(coachService);
-          QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("open/gymdetail"))
-              .call();
-        } else {
-          QcRouteUtil.setRouteOptions(new RouteOptions("trainer").setActionName("open/gymdetail"))
-              .call();
-        }
-        getActivity().finish();
+        createGymSuccess();
       } else {
         ToastUtils.show("创建场馆失败");
       }
@@ -85,5 +68,16 @@ import javax.inject.Inject;
         mViewModel.createShop(shopCreateBody);
       }
     });
+  }
+
+  @Override public void routeToPage() {
+    if (AppUtils.getCurApp(getContext()) == 1) {
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("open/gymdetail"))
+          .call();
+    } else {
+      QcRouteUtil.setRouteOptions(
+          new RouteOptions("trainer").setActionName("open/gymdetail")).call();
+    }
+    getActivity().finish();
   }
 }

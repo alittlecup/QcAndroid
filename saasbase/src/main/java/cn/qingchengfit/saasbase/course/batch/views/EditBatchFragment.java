@@ -376,6 +376,9 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     return batchBaseFragment.needPay();
   }
 
+  @Override public int isStaffAsTeather() {
+    return -1;
+  }
 
   /**
    * 选择开始时间
