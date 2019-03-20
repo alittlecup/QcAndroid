@@ -92,14 +92,14 @@ import rx.functions.Action1;
       hideLoading();
       ToastUtils.show(aBoolean ? "删除场馆成功" : "删除场馆失败");
       if (aBoolean) {
-        routeToPage();
+        createGymSuccess();
       }
     });
     mViewModel.quiteResult.observe(this, aBoolean -> {
       hideLoading();
       ToastUtils.show(aBoolean ? "离职退出场馆成功" : "离职退出场馆失败");
       if (aBoolean) {
-        routeToPage();
+        createGymSuccess();
       }
     });
   }

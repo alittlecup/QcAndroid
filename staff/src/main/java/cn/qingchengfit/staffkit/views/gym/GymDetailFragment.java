@@ -428,7 +428,6 @@ public class GymDetailFragment extends BaseFragment
     gymDetailPresenter.updatePermission();
     if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)) {
       gymDetailPresenter.loadGymSettingInfo();
-
     }
   }
 
@@ -567,6 +566,7 @@ public class GymDetailFragment extends BaseFragment
                                       if (recycleview != null) {
                                         CompatUtils.removeGlobalLayout(recycleview.getViewTreeObserver(), this);
                                         //判断是否调至会员端预览
+                                        if (getContext() == null) return;
                                         if (!PreferenceUtils.getPrefBoolean(getContext(), "goStudentPre", false)) {
                                           getChildFragmentManager().beginTransaction()
                                               .replace(R.id.top_frag, new GymDetailShowGuideDialogFragment())
