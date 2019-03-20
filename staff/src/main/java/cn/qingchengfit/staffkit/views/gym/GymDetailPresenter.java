@@ -215,6 +215,6 @@ public class GymDetailPresenter extends BasePresenter {
             ToastUtils.show(response.getMsg());
             gymDetailView.onFailed();
           }
-        }));
+        },throwable -> {}));
   }
 }

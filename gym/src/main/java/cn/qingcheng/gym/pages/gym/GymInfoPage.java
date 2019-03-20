@@ -50,7 +50,9 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -211,14 +213,12 @@ import rx.functions.Action1;
             .withString("content", shop.description)
             .withString("hint", "请填写健身房描述")
             .build()));
-    mBinding.imgGymPhoto.setOnClickListener(v -> onLayoutGymImgClicked());
   }
 
   public void initView() {
     mBinding.civGymName.setContent(shop.name);
     mBinding.civGymPhone.setContent(shop.contact);
     mBinding.civGymAddress.setContent(shop.address);
-    mBinding.imgGymPhoto.setClickable(false);
     mBinding.civGymMark.setContent(CmStringUtils.delHTMLTag(shop.description));
     mBinding.civGymSquare.setContent(shop.area + "");
     mBinding.viewShadow.setVisibility(View.VISIBLE);
@@ -235,6 +235,8 @@ import rx.functions.Action1;
         .into(new CircleImgWrapper(mBinding.imgGymPhoto, getContext()));
 
     mBinding.tvGymAction.setOnClickListener(v -> showFireGymDialog());
+    mBinding.imgGymPhoto.setOnClickListener(v -> onLayoutGymImgClicked());
+    mBinding.imgGymPhoto.setClickable(false);
   }
 
   public void showFireGymDialog() {
@@ -243,7 +245,10 @@ import rx.functions.Action1;
           materialDialog.dismiss();
           if (dialogAction == DialogAction.POSITIVE) {
             showLoading();
-            mViewModel.quiteGym(shop.id);
+            Map<String, Object> params = new HashMap<>();
+            params.put("id",shop.model_id);
+            params.put("model",shop.model);
+            mViewModel.quiteGym(params);
           }
         });
   }
@@ -288,6 +293,7 @@ import rx.functions.Action1;
     }
     return false;
   }
+
   public void createGymSuccess() {
     RxRegiste(gymConfigModel.qcGetCoachService(null)
         .compose(RxHelper.schedulersTransformer())
@@ -321,8 +327,8 @@ import rx.functions.Action1;
         }, throwable -> {
         }));
   }
-  public void routeToPage(){
-    getActivity().onBackPressed();
 
+  public void routeToPage() {
+    getActivity().onBackPressed();
   }
 }

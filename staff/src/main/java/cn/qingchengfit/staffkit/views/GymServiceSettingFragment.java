@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import cn.qingchengfit.staff.routers.StaffParamsInjector;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.databinding.FragmentGymServiceSettingBinding;
-import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.items.GymServiceSettingItem;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.utils.BundleBuilder;
@@ -60,11 +58,7 @@ import javax.inject.Inject;
       }
       adapter.updateDataSet(items);
     }
-    mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        getActivity().onBackPressed();
-      }
-    });
+    mBinding.btnConfirm.setOnClickListener(v -> getActivity().onBackPressed());
     return mBinding.getRoot();
   }
 

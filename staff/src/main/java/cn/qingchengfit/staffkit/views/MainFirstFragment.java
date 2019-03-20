@@ -55,7 +55,7 @@ public class MainFirstFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
-        changeBrands();
+        changeView();
     }
     private void changeBrands(){
         RxRegiste(qcDbManager.getAllCoachService()

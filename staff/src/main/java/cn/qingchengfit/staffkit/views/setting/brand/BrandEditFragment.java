@@ -12,8 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.qingcheng.gym.gymconfig.IGymConfigModel;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.BrandBody;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.BrandResponse;
@@ -22,6 +27,8 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
@@ -30,13 +37,16 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.views.fragments.EventFreshCoachService;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.bumptech.glide.Glide;
+import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -268,16 +278,57 @@ public class BrandEditFragment extends BaseFragment {
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
+            hideLoading();
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              hideLoading();
               ToastUtils.show("删除品牌成功！");
-              PreferenceUtils.setPrefString(getContext(), Configs.CUR_BRAND_ID, "");
-              getActivity().setResult(Activity.RESULT_OK);
-              getActivity().finish();
-            } else {
-              hideLoading();
+              createGymSuccess();
             }
           }
         }, new NetWorkThrowable()));
+  }
+
+  @Inject IGymConfigModel gymConfigModel;
+  @Inject GymWrapper gymWrapper;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
+
+  public void createGymSuccess() {
+    RxRegiste(gymConfigModel.qcGetCoachService(null)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(gymListQcResponseData -> {
+          if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
+            List<CoachService> services = gymListQcResponseData.getData().services;
+            gymBaseInfoAction.writeGyms(services);
+            if (services == null || services.size() == 0) {
+              gymWrapper.setNoService(true);
+            } else if (services.size() == 1) {
+              gymWrapper.setBrand(new Brand.Builder().id(services.get(0).brand_id())
+                  .name(services.get(0).name())
+                  .build());
+              gymWrapper.setCoachService(services.get(0));
+            } else {
+              gymWrapper.setBrand(new Brand.Builder().id(services.get(0).brand_id())
+                  .name(services.get(0).name())
+                  .build());
+            }
+            RxRegiste(gymBaseInfoAction.getAllGyms()
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .subscribe(servicess -> {
+                  gymBaseInfoAction.writeGyms(servicess);
+                  SensorsUtils.track("QcSaasCreateShop")
+                      .addProperty("qc_brand_shops_count", (servicess.size() - 1) + "")
+                      .commit(getContext());
+                }));
+            RxBus.getBus().post(new EventFreshCoachService());
+            RxBus.getBus().post(new EventLoginChange());
+            routeToPage();
+          }
+        }, throwable -> {
+        }));
+  }
+
+  public void routeToPage() {
+    PreferenceUtils.setPrefString(getContext(), Configs.CUR_BRAND_ID, "");
+    getActivity().setResult(Activity.RESULT_OK);
+    getActivity().finish();
   }
 }

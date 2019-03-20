@@ -52,5 +52,5 @@ public interface IGymModel {
   Observable<QcDataResponse<BransShopsPremissions>> qcGetBrandShopsPermission(String brandID,
       String permission);
 
-  Observable<QcResponse> qcQuitGym(String gymId);
+  Observable<QcResponse> qcQuitGym(Map<String,Object> params);
 }

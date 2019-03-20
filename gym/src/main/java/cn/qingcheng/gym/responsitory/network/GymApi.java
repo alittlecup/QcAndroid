@@ -88,6 +88,6 @@ public interface GymApi {
       @Query("key") String permission);
 
   @POST("/api/v2/staffs/{staff_id}/dimission/") rx.Observable<QcResponse> qcQuitGym(
-      @Path("staff_id") String staff_id, @Query("gym_id") String gymId);
+      @Path("staff_id") String staff_id, @QueryMap Map<String,Object> params);
 }
 

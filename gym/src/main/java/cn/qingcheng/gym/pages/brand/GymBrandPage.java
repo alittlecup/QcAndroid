@@ -65,6 +65,8 @@ import javax.inject.Inject;
           }
         }
         adapter.updateDataSet(items);
+      } else {
+        adapter.clear();
       }
     });
   }
@@ -164,8 +166,6 @@ import javax.inject.Inject;
   private void initRecycler() {
     mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
-    ((SimpleItemAnimator)mBinding.recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-    mBinding.recyclerView.getItemAnimator().setChangeDuration(0);
   }
 
   @Override public boolean onItemClick(int position) {
@@ -174,18 +174,14 @@ import javax.inject.Inject;
       Shop data = ((GymBrandItem) item).getData();
       boolean editAble = ((GymBrandItem) item).isEditAble();
       if (editAble) {
-        routeTo("/gym/edit",
-            new BundleBuilder()
-                .withBoolean("isBrandCreate",isCreateUser())
-                .withParcelable("shop", data)
-                .withParcelable("brand", brand)
-                .build());
-      }else{
-        routeTo("/gym/info",
-            new BundleBuilder()
-                .withParcelable("shop", data)
-                .withParcelable("brand", brand)
-                .build());
+        routeTo("/gym/edit", new BundleBuilder().withBoolean("isBrandCreate", isCreateUser())
+            .withParcelable("shop", data)
+            .withParcelable("brand", brand)
+            .build());
+      } else {
+        routeTo("/gym/info", new BundleBuilder().withParcelable("shop", data)
+            .withParcelable("brand", brand)
+            .build());
       }
     }
     return false;

@@ -426,6 +426,10 @@ public class GymDetailFragment extends BaseFragment
   @Override public void onResume() {
     super.onResume();
     gymDetailPresenter.updatePermission();
+    if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)) {
+      gymDetailPresenter.loadGymSettingInfo();
+
+    }
   }
 
   public String weixin_image = "";
@@ -825,12 +829,10 @@ public class GymDetailFragment extends BaseFragment
         if (item instanceof GymFuntionItem) {
           GymFuntion gymFuntion = ((GymFuntionItem) item).getGymFuntion();
           if ((!info.has_private && gymFuntion.getModuleName().equals(MODULE_SERVICE_PRIVATE))
-
-            || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
-            || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
-            || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
-            || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))
-          ) {
+              || (!info.has_team && gymFuntion.getModuleName().equals(MODULE_SERVICE_GROUP))
+              || (!info.open_checkin && gymFuntion.getModuleName().equals(MODULE_SERVICE_FREE))
+              || (!info.has_mall && gymFuntion.getModuleName().equals(MODULE_SERVICE_SHOP))
+              || (!info.has_teacher && gymFuntion.getModuleName().equals(MODULE_MANAGE_COACH))) {
             gymFuntion.setNotSetting(true);
           }
           ((GymFuntionItem) item).setGymFuntion(gymFuntion);
@@ -955,9 +957,17 @@ public class GymDetailFragment extends BaseFragment
           }
         });
         gymSettingDialog.show();
+        clearGymSetting();
         PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", true);
       }
     }
+  }
+
+  private void clearGymSetting() {
+    PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_group", false);
+    PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_private", false);
+    PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_train", false);
+    PreferenceUtils.setPrefBoolean(getContext(), "gym_setting_mall", false);
   }
 
   /**

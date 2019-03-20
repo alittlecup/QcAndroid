@@ -104,7 +104,7 @@ public class GymModelImpl implements IGymModel {
     return gymApi.qcGetBrandShopsPermission(loginStatus.staff_id(), brandID, permission);
   }
 
-  @Override public Observable<QcResponse> qcQuitGym(String gymId) {
-    return gymApi.qcQuitGym(loginStatus.staff_id(), gymId);
+  @Override public Observable<QcResponse> qcQuitGym(Map<String,Object> params) {
+    return gymApi.qcQuitGym(loginStatus.staff_id(), params);
   }
 }

@@ -18,6 +18,7 @@ import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 public class GymInfoViewModel extends BaseViewModel {
@@ -62,8 +63,8 @@ public class GymInfoViewModel extends BaseViewModel {
         });
   }
 
-  public void quiteGym(String gymID) {
-    gymModel.qcQuitGym(gymID).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+  public void quiteGym(Map<String,Object> params) {
+    gymModel.qcQuitGym(params).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
       if (ResponseConstant.checkSuccess(response)) {
         quiteResult.setValue(true);
       } else {

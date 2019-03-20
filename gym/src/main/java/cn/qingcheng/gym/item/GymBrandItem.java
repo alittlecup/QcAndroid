@@ -59,4 +59,5 @@ public class GymBrandItem
     dataBinding.imgArrowRight.setVisibility(editAble ? View.GONE : View.VISIBLE);
     dataBinding.tvGymEdit.setVisibility(editAble ? View.VISIBLE : View.GONE);
   }
+
 }
