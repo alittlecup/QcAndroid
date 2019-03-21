@@ -5,6 +5,7 @@ import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.databinding.GyMyGymsItemBinding;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.saascommon.flexble.DataBindingViewHolder;
+import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -45,7 +46,7 @@ public class MyGymsItem extends AbstractFlexibleItem<DataBindingViewHolder<GyMyG
     dataBinding.tvManage.setVisibility(isCreated ? View.VISIBLE : View.GONE);
     dataBinding.imgArrowRight.setVisibility(isCreated ? View.GONE : View.VISIBLE);
     Glide.with(dataBinding.getRoot().getContext())
-        .load(data.getPhoto())
+        .load(PhotoUtils.getSmall(data.getPhoto()))
         .asBitmap()
         .placeholder(R.drawable.ic_default_header)
         .into(new CircleImgWrapper(dataBinding.imgPhoto, dataBinding.getRoot().getContext()));

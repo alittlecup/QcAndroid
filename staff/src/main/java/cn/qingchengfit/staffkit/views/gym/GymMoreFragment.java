@@ -20,6 +20,7 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -31,6 +32,7 @@ import cn.qingchengfit.staffkit.views.gym.items.FunHeaderItem;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -68,6 +70,7 @@ public class GymMoreFragment extends BaseFragment
   @Inject GymMorePresenter mGymMorePresenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject GymFunctionFactory gymFunctionFactory;
   private GymMoreAdapter mAdapter;
   /**
@@ -287,7 +290,8 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_TMALL_JOIN), runFuntion));
             mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_PARNTER_MANAGER), runFuntion));
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_PARNTER_MANAGER),
+                runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_DIANPING),
                 runFuntion));
@@ -330,10 +334,10 @@ public class GymMoreFragment extends BaseFragment
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     runFuntion));
 
-
             FunHeaderItem financialFuntion = new FunHeaderItem("财务与报表");
             mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SHOP_TURNOVERS), financialFuntion));
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SHOP_TURNOVERS),
+                financialFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINACE_ONLINE),
                 financialFuntion));
@@ -569,7 +573,14 @@ public class GymMoreFragment extends BaseFragment
   }
 
   @Override public void onQuiteGym() {
-    startActivity(new Intent(getActivity(), SplashActivity.class));
+    RxRegiste(gymBaseInfoAction.getAllGyms()
+        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+        .subscribe(servicess -> {
+          gymBaseInfoAction.writeGyms(servicess);
+          SensorsUtils.track("QcSaasCreateShop")
+              .addProperty("qc_brand_shops_count", (servicess.size() - 1) + "")
+              .commit(getContext());
+        }));
     getActivity().finish();
   }
 }
