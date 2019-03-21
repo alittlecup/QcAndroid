@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import cn.qingcheng.gym.GymActivity;
+import cn.qingchengfit.gym.GymActivity;
 import cn.qingchengfit.card.StaffCardActivity;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;

@@ -1,11 +1,11 @@
 package cn.qingchengfit.saasbase.apis;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
-import cn.qingcheng.gym.gymconfig.network.response.ShopConfigListWrap;
-import cn.qingcheng.gym.gymconfig.network.response.SpaceListWrap;
-import cn.qingcheng.gym.bean.GymList;
-import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigListWrap;
+import cn.qingchengfit.gym.gymconfig.network.response.SpaceListWrap;
+import cn.qingchengfit.gym.bean.GymList;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

@@ -117,6 +117,10 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
       } else {
         holder.notSetting.setVisibility(View.GONE);
       }
+    }else{
+      Drawable drawable = DrawableUtils.tintDrawable(holder.notSetting.getContext(),
+          R.drawable.bg_fill_red_slide_white, R.color.danger_red_normal);
+      holder.notSetting.setBackground(drawable);
     }
   }
 

@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.constant;
 
 import android.support.v4.util.ArrayMap;
-import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.bean.GymSettingInfo;
 import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.login.bean.LoginBody;
@@ -157,7 +157,7 @@ import cn.qingchengfit.network.response.WxAuthorWrap;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
-import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;

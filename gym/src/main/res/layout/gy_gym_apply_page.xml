@@ -3,7 +3,7 @@
   <data>
     <variable
         name="brand"
-        type="cn.qingcheng.gym.vo.IMyGymsItemData"
+        type="cn.qingchengfit.gym.vo.IMyGymsItemData"
         />
     <variable
         name="toolbarModel"

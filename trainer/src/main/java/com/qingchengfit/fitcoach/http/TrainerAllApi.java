@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
-import cn.qingcheng.gym.bean.GymTypeData;
+import cn.qingchengfit.gym.bean.GymTypeData;
 import cn.qingchengfit.bean.BrandBody;
 import cn.qingchengfit.bean.ChangeBrandCreatorBody;
 import cn.qingchengfit.bean.CoachInitBean;

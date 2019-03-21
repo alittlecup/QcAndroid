@@ -58,7 +58,7 @@ public class QcRestRepository {
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
     this.host = host;
     if (BuildConfig.DEBUG) {
-      String debug_ip = PreferenceUtils.getPrefString(context, "debug_ip", Constants.ServerDebug);
+      String debug_ip = PreferenceUtils.getPrefString(context, "debug_ip", Constants.Server);
       if (!host.equals(debug_ip)) {
         this.host = debug_ip;
       }

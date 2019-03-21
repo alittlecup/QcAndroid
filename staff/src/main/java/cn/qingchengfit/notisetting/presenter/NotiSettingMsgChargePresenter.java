@@ -14,7 +14,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.staffkit.rxbus.event.PayEvent;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;

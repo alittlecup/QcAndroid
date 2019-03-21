@@ -85,6 +85,10 @@ public class SettingFragment extends BaseFragment implements SettingView {
     });
     view.findViewById(R.id.civ_my_gyms).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
+        if (!loginStatus.isLogined()) {
+          baseRouter.toLogin(SettingFragment.this);
+          return;
+        }
         routeTo("gym", "/my/gyms", null);
       }
     });

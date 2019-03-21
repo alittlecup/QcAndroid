@@ -11,7 +11,7 @@ import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
-import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;

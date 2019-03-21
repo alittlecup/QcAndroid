@@ -10,7 +10,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.StringUtils;

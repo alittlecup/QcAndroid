@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.constant;
 
 import android.support.v4.util.ArrayMap;
-import cn.qingcheng.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.login.views.CheckProtocolModel;
 import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.model.common.Attendances;

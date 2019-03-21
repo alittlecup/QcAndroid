@@ -4,7 +4,7 @@
 
   <application>
     <activity
-        android:name="cn.qingcheng.gym.GymActivity"
+        android:name=".GymActivity"
         android:screenOrientation="portrait"
         >
       <intent-filter>

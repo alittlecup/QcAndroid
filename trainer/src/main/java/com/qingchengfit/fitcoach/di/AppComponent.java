@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.di;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingcheng.gym.GymModule;
+import cn.qingchengfit.gym.GymModule;
 import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;

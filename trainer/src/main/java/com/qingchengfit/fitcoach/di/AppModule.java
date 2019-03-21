@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.di;
 
 import android.app.Application;
-import cn.qingcheng.gym.gymconfig.IGymConfigModel;
+import cn.qingchengfit.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.card.TrainerCardRouters;
 import cn.qingchengfit.di.model.GymWrapper;

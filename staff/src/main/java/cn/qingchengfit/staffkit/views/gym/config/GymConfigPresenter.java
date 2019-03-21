@@ -9,7 +9,7 @@ import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingcheng.gym.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.List;
 import javax.inject.Inject;

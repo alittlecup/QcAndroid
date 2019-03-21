@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.qingcheng.gym.gymconfig.IGymConfigModel;
+import cn.qingchengfit.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventChooseImage;

@@ -1,8 +1,8 @@
 package cn.qingchengfit.api;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingcheng.gym.gymconfig.network.response.SpaceListWrap;
-import cn.qingcheng.gym.bean.GymList;
+import cn.qingchengfit.gym.gymconfig.network.response.SpaceListWrap;
+import cn.qingchengfit.gym.bean.GymList;
 import java.util.HashMap;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

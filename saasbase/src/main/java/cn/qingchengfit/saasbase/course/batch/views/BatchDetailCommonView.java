@@ -552,12 +552,13 @@ public class BatchDetailCommonView extends BaseFragment {
                   .build());
           asTeacher = 1;
         } else {
-          routeTo("/trainer/add/", null);
+          routeTo("staff", "/trainer/add/", null);
           asTeacher = -1;
         }
         return false;
       }
     });
+    dialog.show();
   }
 
   public void loadCourse() {

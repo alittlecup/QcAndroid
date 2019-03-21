@@ -170,4 +170,10 @@ import javax.inject.Inject;
   @Override public void showSuitGym() {
     layoutSuitGym.setVisibility(View.VISIBLE);
   }
+
+  @Override public void createSuccess(String string) {
+    ToastUtils.show(string);
+    routeTo("course", "/choose/",
+        CourseChooseParams.builder().src("addbatch").mIsPrivate(isPrivate).build());
+  }
 }

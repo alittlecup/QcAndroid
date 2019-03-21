@@ -2,7 +2,7 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingcheng.gym.GymModule;
+import cn.qingchengfit.gym.GymModule;
 import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
@@ -43,7 +43,7 @@ import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
-import cn.qingcheng.gym.gymconfig.views.UpgradeDoneFragment;
+import cn.qingchengfit.gym.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;

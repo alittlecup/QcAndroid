@@ -138,13 +138,17 @@ public class SigninConfigListFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(zqPresenter, this);
     initToolbar(toolbar);
+    Button button = view.findViewById(R.id.btn_first_setting);
+
     swOpen.setOnCheckedChangeListener((buttonView, isChecked) -> {
       if (!isAutoOpen) presenter.putModuleConfigs(isChecked);
       layoutSigninScreen.setVisibility(isChecked ? View.VISIBLE : View.GONE);
       layoutSigninType.setVisibility(isChecked ? View.VISIBLE : View.GONE);
       layoutSigninWardrobe.setVisibility(isChecked ? View.VISIBLE : View.GONE);
       isAutoOpen = false;
+      button.setEnabled(isChecked);
     });
+
     swOpen.getViewTreeObserver()
         .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
           @Override public void onGlobalLayout() {
@@ -154,18 +158,16 @@ public class SigninConfigListFragment extends BaseFragment
           }
         });
     swOpen.setEnabled(permissionModel.check(PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE));
-
+    button.setEnabled(false);
     btnHowToUse.setCompoundDrawablesWithIntrinsicBounds(
         ContextCompat.getDrawable(getContext(), R.drawable.ic_vector_info_grey), null, null, null);
     isLoading = true;
     if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)) {
-      Button button = view.findViewById(R.id.btn_first_setting);
       button.setVisibility(View.VISIBLE);
       button.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
           routeTo("staff", "/gym/setting/success", new BundleBuilder().withInt("type", 3).build());
           getActivity().finish();
-
         }
       });
     }

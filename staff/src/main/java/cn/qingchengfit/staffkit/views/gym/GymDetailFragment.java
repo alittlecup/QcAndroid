@@ -333,7 +333,6 @@ public class GymDetailFragment extends BaseFragment
     if (isSingleBrand()) {
       view.findViewById(R.id.include_bottom).setVisibility(View.GONE);
     }
-    gymDetailPresenter.loadGymSettingInfo();
     return view;
   }
 
@@ -426,9 +425,7 @@ public class GymDetailFragment extends BaseFragment
   @Override public void onResume() {
     super.onResume();
     gymDetailPresenter.updatePermission();
-    if (PreferenceUtils.getPrefBoolean(getContext(), "isFirstSettingGym", false)) {
-      gymDetailPresenter.loadGymSettingInfo();
-    }
+    gymDetailPresenter.loadGymSettingInfo();
   }
 
   public String weixin_image = "";

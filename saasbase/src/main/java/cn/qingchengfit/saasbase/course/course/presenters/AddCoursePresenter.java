@@ -36,7 +36,7 @@ public class AddCoursePresenter extends BasePresenter<AddCoursePresenter.MVPview
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcDataResponse) {
           if (ResponseConstant.checkSuccess(qcDataResponse)){
-            mvpView.onShowError("添加成功");
+            mvpView.createSuccess("添加成功");
             mvpView.popBack();
           }else {
             mvpView.onShowError(qcDataResponse.getMsg());
@@ -51,5 +51,6 @@ public class AddCoursePresenter extends BasePresenter<AddCoursePresenter.MVPview
 
   public interface MVPview extends CView {
     void showSuitGym();
+    void createSuccess(String string);
   }
 }
