@@ -73,7 +73,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.HashMap;
 import javax.inject.Inject;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -650,8 +649,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     }
     ts.commit();
   }
-
-  HashMap<String, Fragment> fragments = new HashMap<>();
 
   public Fragment generateFragment(int position) {
     if (position == 0) {

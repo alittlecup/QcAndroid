@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.unlogin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -85,7 +84,6 @@ public class HomeBannerFragment extends BaseFragment {
         routeTo("gym", "/gym/search", null);
       }else{
         onLogin();
-        search=true;
 
       }
     });
@@ -94,7 +92,6 @@ public class HomeBannerFragment extends BaseFragment {
         routeTo("gym", "/gym/choose/create", null);
       }else{
         onLogin();
-        search=false;
       }
     });
     return view;
@@ -104,19 +101,7 @@ public class HomeBannerFragment extends BaseFragment {
     super.onVisible();
   }
 
-  private boolean search=false;
-  //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-  //  super.onActivityResult(requestCode, resultCode, data);
-  //  if (resultCode == Activity.RESULT_OK) {
-  //    if (requestCode == 1001) {
-  //      if (search) {
-  //        routeTo("gym", "/gym/search", null);
-  //      } else {
-  //        routeTo("gym", "/gym/choose/create", null);
-  //      }
-  //    }
-  //  }
-  //}
+
   public void onLogin() {
     Intent toLogin = new Intent(getContext().getPackageName(),
         Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));

@@ -11,6 +11,7 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
@@ -47,6 +48,7 @@ public class UnLoginHomeFragment extends BaseFragment {
 
     @Inject LoginStatus loginStatus;
     @Inject RepoCoachServiceImpl repoCoachService;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
 
     MainScheduleFragment mainScheduleFragment;
     UnLoginScheduleAdFragment homeBannerFragment;
@@ -91,12 +93,11 @@ public class UnLoginHomeFragment extends BaseFragment {
     }
 
     private void changeLogin(){
-        //if (!isAdded()) return;
         if (loginStatus.isLogined()) {
             //已登录
-            //if (spGetService == null) {
-                spGetService = repoCoachService.readAllServices();
+                spGetService = gymBaseInfoAction.getAllGyms();
                 RxRegiste(spGetService.observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+                    repoCoachService.createServices(coachServices);
                     if (coachServices.size() == 0) {
                         //无场馆
                         getChildFragmentManager().beginTransaction()

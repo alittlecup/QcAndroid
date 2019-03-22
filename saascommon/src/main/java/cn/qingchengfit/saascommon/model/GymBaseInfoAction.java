@@ -22,7 +22,6 @@ import rx.Observable;
  */
 public class GymBaseInfoAction {
 
-    static CoachService res = null;
     @Inject QcDbManager qcDbManager;
 
     @Inject

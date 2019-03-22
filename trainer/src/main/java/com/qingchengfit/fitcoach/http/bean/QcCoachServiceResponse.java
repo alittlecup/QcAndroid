@@ -23,7 +23,5 @@ public class QcCoachServiceResponse extends QcResponse {
 
     public static class CoachServiceData {
         @SerializedName("services") public List<CoachService> services;
-        //        @SerializedName("gyms")
-        //        public List<QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity> gyms;
     }
 }

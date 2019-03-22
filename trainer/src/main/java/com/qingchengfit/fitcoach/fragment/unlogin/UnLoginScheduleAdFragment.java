@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.unlogin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,33 +57,19 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
         routeTo("gym", "/gym/search", null);
       }else{
         onLogin();
-        search=true;
 
       }
     });
     view.findViewById(R.id.tv_create_gym).setOnClickListener(v -> {
       if(loginStatus.isLogined()){
-        routeTo("gym", "/gym/create", null);
+        routeTo("gym", "/gym/choose/create", null);
       }else{
         onLogin();
-        search=false;
       }
     });
     return view;
   }
-  private boolean search=false;
-  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == 1001) {
-        if (search) {
-          routeTo("gym", "/gym/search", null);
-        } else {
-          routeTo("gym", "/gym/create", null);
-        }
-      }
-    }
-  }
+
 
   @Override public String getFragmentName() {
     return UnLoginScheduleAdFragment.class.getName();
@@ -98,7 +83,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
     Intent toLogin = new Intent(getContext().getPackageName(),
         Uri.parse(AppUtils.getCurAppSchema(getContext()) + "://login/"));
     toLogin.putExtra("isRegiste", false);
-    startActivityForResult(toLogin,1001);
+    startActivity(toLogin);
   }
 
   @Override public void onDestroyView() {
