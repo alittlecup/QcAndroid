@@ -212,7 +212,7 @@ public class LoginFragment extends BaseFragment
             et.setText("");
             et.setHint("请输入测试环境(如：cloudtest、c1等)");
           } else {
-            et.setText("http://" + list.get(selectedPos.get(0)) + "/");
+            et.setText("https://" + list.get(selectedPos.get(0)) + "/");
           }
         }
       });
@@ -234,7 +234,7 @@ public class LoginFragment extends BaseFragment
 
         if (!et.getText().toString().contains("http")) {
           Constants.ServerDebug =
-              "http://" + et.getText().toString().trim() + (isStartWithNumber(host) ? ""
+              "https://" + et.getText().toString().trim() + (isStartWithNumber(host) ? ""
                   : ".qingchengfit.cn/");
           PreferenceUtils.setPrefString(getContext(), "debug_ip", Constants.ServerDebug);
         } else {

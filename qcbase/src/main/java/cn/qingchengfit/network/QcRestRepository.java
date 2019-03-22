@@ -50,7 +50,7 @@ import retrofit2.http.GET;
 
 public class QcRestRepository {
 
-  private final OkHttpClient client;
+  private  OkHttpClient client;
   private Retrofit retrofitRxJava1;
   private Retrofit retrofitRxJava2;
   private String host = "";
@@ -110,8 +110,10 @@ public class QcRestRepository {
         }
         return chain.proceed(request);
       }
-    }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
-
+    }).followRedirects(false)
+        .addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
+    MyRetryAndFollowUpInterceptor interceptor1=new MyRetryAndFollowUpInterceptor(client,true);
+    client = client.newBuilder().addInterceptor(interceptor1).build();
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
     retrofitRxJava1 = new Retrofit.Builder().baseUrl(this.host)
