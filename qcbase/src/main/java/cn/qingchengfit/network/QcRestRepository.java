@@ -17,6 +17,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.phrase.Phrase;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -84,6 +85,7 @@ public class QcRestRepository {
 
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
+              .addHeader("Referer",host)
               .addHeader("Cookie", "csrftoken=" + token + ";" + getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
@@ -99,6 +101,7 @@ public class QcRestRepository {
           return response;
         } else {
           request = request.newBuilder()
+              .addHeader("Referer",host)
               .addHeader("Cookie", QcRestRepository.getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
@@ -107,6 +110,7 @@ public class QcRestRepository {
                   + "  QingchengApp/"
                   + AppUtils.getCurAppName(context))
               .build();
+          HttpUrl url = request.url();
         }
         return chain.proceed(request);
       }
