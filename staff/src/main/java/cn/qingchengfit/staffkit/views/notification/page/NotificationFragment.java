@@ -1,5 +1,7 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.gym.pages.apply.GymApplyDealViewModel;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
@@ -37,6 +40,7 @@ import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -103,6 +107,7 @@ public class NotificationFragment extends BaseFragment
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject GymWrapper gymWrapper;
+  @Inject ViewModelProvider.Factory viewModelFactory;
   Toolbar toolbar;
   TextView toolbarTitile;
   FrameLayout toolbarLayout;
@@ -259,11 +264,28 @@ public class NotificationFragment extends BaseFragment
                               .call();
                           return;
                         } else if (msg.type == 21) {
+                          showLoading();
                           gymWrapper.setCoachService(coachService1);
-                          RouteUtil.routeTo(getContext(), "gym", "/gym/deal//apply",
-                              new BundleBuilder().withString("applyId", msg.getGymApplyId())
-                                  .withString("gymId", msg.getGymId())
-                                  .build());
+                          GymApplyDealViewModel viewModel =
+                              ViewModelProviders.of(NotificationFragment.this, viewModelFactory)
+                                  .get(GymApplyDealViewModel.class);
+                          viewModel.loagAplyOrderInfo(coachService1.gym_id, msg.getGymApplyId())
+                              .observe(NotificationFragment.this, gymApplyOrder -> {
+                                hideLoading();
+                                if (gymApplyOrder != null) {
+                                  if (gymApplyOrder.status == 1) {
+                                    RouteUtil.routeTo(getContext(), "gym", "/gym/deal/finish",
+                                        null);
+                                  } else {
+                                    RouteUtil.routeTo(getContext(), "gym", "/gym/deal//apply",
+                                        new BundleBuilder().withString("applyId",
+                                            msg.getGymApplyId())
+                                            .withString("gymId", msg.getGymId())
+                                            .build());
+                                  }
+                                }
+                              });
+
                           return;
                         } else if (msg.type == 22) {
                           Intent toGymdetail = new Intent(getActivity(), GymActivity.class);

@@ -50,23 +50,23 @@ import java.util.List;
           });
         }
       });
-      showLoading();
-      mViewModel.loagAplyOrderInfo(gymId, applyId).observe(this, gymApplyOrder -> {
-        hideLoading();
-        if (gymApplyOrder != null) {
-          if (gymApplyOrder.status != 1) {
-            routeTo("/gym/deal/finish",null);
-            return;
-          }
-          mBinding.civPosition.setContent(gymApplyOrder.position.name);
-          positionID = gymApplyOrder.position.id;
-          staff = gymApplyOrder.user;
-          mBinding.tvNamePhone.setText(
-              gymApplyOrder.user.getUsername() + "(" + gymApplyOrder.user.getPhone() + ")");
-          loadPhoto(gymApplyOrder.user);
-        }
-      });
     }
+    showLoading();
+    mViewModel.loagAplyOrderInfo(gymId, applyId).observe(this, gymApplyOrder -> {
+      hideLoading();
+      if (gymApplyOrder != null) {
+        if (gymApplyOrder.status != 1) {
+          routeTo("/gym/deal/finish",null);
+          return;
+        }
+        mBinding.civPosition.setContent(gymApplyOrder.position.name);
+        positionID = gymApplyOrder.position.id;
+        staff = gymApplyOrder.user;
+        mBinding.tvNamePhone.setText(
+            gymApplyOrder.user.getUsername() + "(" + gymApplyOrder.user.getPhone() + ")");
+        loadPhoto(gymApplyOrder.user);
+      }
+    });
   }
 
   private Staff staff;
