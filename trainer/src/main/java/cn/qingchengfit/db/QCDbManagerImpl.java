@@ -19,19 +19,24 @@ import io.reactivex.Maybe;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 public class QCDbManagerImpl implements QcDbManager {
   private static final String TAG = "QCDbManager";
   AppDatabase appDatabase;
 
-  public QCDbManagerImpl(App application) {
+  @Inject public QCDbManagerImpl(App application) {
     appDatabase = Room.databaseBuilder(application, AppDatabase.class, "qc_coach")
-        .addMigrations(new Migration(1,2) {
+        .addMigrations(new Migration(1, 2) {
           @Override public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE coachservice  ADD COLUMN status_meituan INTEGER DEFAULT 0");
-            database.execSQL("ALTER TABLE coachservice  ADD COLUMN status_alipay INTEGER DEFAULT 0");
-            database.execSQL("ALTER TABLE coachservice  ADD COLUMN status_taobao INTEGER DEFAULT 0");
-            database.execSQL("ALTER TABLE coachservice  ADD COLUMN status_koubei INTEGER DEFAULT 0");
+            database.execSQL(
+                "ALTER TABLE coachservice  ADD COLUMN status_meituan INTEGER DEFAULT 0");
+            database.execSQL(
+                "ALTER TABLE coachservice  ADD COLUMN status_alipay INTEGER DEFAULT 0");
+            database.execSQL(
+                "ALTER TABLE coachservice  ADD COLUMN status_taobao INTEGER DEFAULT 0");
+            database.execSQL(
+                "ALTER TABLE coachservice  ADD COLUMN status_koubei INTEGER DEFAULT 0");
           }
         })
         .allowMainThreadQueries()

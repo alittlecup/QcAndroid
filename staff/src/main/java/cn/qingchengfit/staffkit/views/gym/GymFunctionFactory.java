@@ -553,6 +553,13 @@ public class GymFunctionFactory {
        * 会员积分  活动   场馆主页广告
        * 介入口碑  注册送卡 场馆公告
        */
+      case MODULE_OPERATE_SCORE:
+        if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
+            PermissionServerUtils.SCORE_SETTING)) {
+          DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
+          return;
+        }
+        break;
       case MODULE_TMALL_JOIN:
         goQrScan(fragment,"/enter-ali",null,coachService);
         return;

@@ -208,10 +208,6 @@ import javax.inject.Inject;
     }
     RxBus.getBus().post(new EventBatchPayCard(rules));
     popBack();
-    //ret.putExtra("rules", rules);
-    //ret.putExtra("count", count);
-    //getActivity().setResult(Activity.RESULT_OK, ret);
-    //getActivity().finish();
   }
 
   @Override public String getFragmentName() {
@@ -224,7 +220,7 @@ import javax.inject.Inject;
     totalCount = new int[] { 0, 0, 0, 0 };
     openCount = new int[] { 0, 0, 0, 0 };
     commonFlexAdapter.clear();
-    if (card_tpls != null) {
+    if (card_tpls != null&&!card_tpls.isEmpty()) {
       if (cardTplBatchShips != null) {
         for (int i = 0; i < cardTplBatchShips.size(); i++) {
           CardTplBatchShip cardTplBatchShip = cardTplBatchShips.get(i);
@@ -324,6 +320,10 @@ import javax.inject.Inject;
         }
       }
       commonFlexAdapter.updateDataSet(mDatas);
+    }else{
+      List<CommonNoDataItem> commonNoDataItems = new ArrayList<>();
+      commonNoDataItems.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "没有可用的会员卡种类","请先添加会员卡种类"));
+      commonFlexAdapter.updateDataSet(commonNoDataItems);
     }
   }
 
@@ -361,15 +361,15 @@ import javax.inject.Inject;
 
   @Override public void onDoneCardtplList() {
     List<CardTpl> cardTplByType = presenter.getCardTplByType(0);
+    List<CardTpl> filterCardTplEnable=new ArrayList<>();
     if(!cardTplByType.isEmpty()){
-      List<CardTpl> filterCardTplEnable=new ArrayList<>();
       for(CardTpl tpl:cardTplByType){
         if(tpl.is_enable){
           filterCardTplEnable.add(tpl);
         }
       }
-      onGetData(filterCardTplEnable);
     }
+    onGetData(filterCardTplEnable);
   }
 
   @Override public void onRefresh() {

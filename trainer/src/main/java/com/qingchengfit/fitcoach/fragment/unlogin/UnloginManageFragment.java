@@ -74,24 +74,18 @@ public class UnloginManageFragment extends LazyloadFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
+    changeView();
     return view;
   }
-
-  @Override public void onResume() {
-    super.onResume();
-    changeView();
-  }
-
   @Override protected void onVisible() {
     changeView();
   }
 
   public void changeView() {
     if (loginStatus.isLogined()) {
-      RxRegiste(gymBaseInfoAction.getAllGyms()
+      RxRegiste(repoCoachService.readAllServices()
           .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
           .subscribe(coachServices -> {
-            repoCoachService.createServices(coachServices);
             if (coachServices.size() == 0) {
               //无场馆
               getChildFragmentManager().beginTransaction()

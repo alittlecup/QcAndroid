@@ -349,9 +349,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
   public Fragment generateFragment(int pos) {
     switch (pos) {
       case 1:
-        return QcVipFragment.newInstance(Configs.URL_QC_FIND.replace("http", "https"));
-      //case 2:
-      //  return QcVipFragment.newInstance(Configs.WEB_TEMP_NEW_YEAR.replace("http", "https"), "年货节");
+        return QcVipFragment.newInstance(Configs.URL_QC_FIND);
       case 2:
         return new MainMsgFragment();
       case 3:
@@ -483,7 +481,7 @@ public class MainActivity extends SaasCommonActivity implements FragCallBack {
     }
     int to = getIntent().getIntExtra("to", -1);
     if (to != -1) {
-      showPage(to);
+      tabview.setCurrentItem(to);
       RxBus.getBus().post(EventBrandChange.class);
     }
   }

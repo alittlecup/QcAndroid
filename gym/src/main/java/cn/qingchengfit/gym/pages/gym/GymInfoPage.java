@@ -28,6 +28,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CircleImgWrapper;
@@ -62,6 +63,7 @@ import rx.functions.Action1;
   @Inject LoginStatus loginStatus;
   @Inject IGymConfigModel gymConfigModel;
   @Inject GymWrapper gymWrapper;
+  @Inject QcDbManager qcDbManager;
   BottomChooseDialog gymTypeDialog;
 
   private ChoosePictureFragmentNewDialog choosePicFragment;
@@ -302,6 +304,7 @@ import rx.functions.Action1;
           if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
             List<CoachService> services = gymListQcResponseData.getData().services;
             gymBaseInfoAction.writeGyms(services);
+            qcDbManager.writeGyms(services);
             if (services == null || services.size() == 0) {
               gymWrapper.setNoService(true);
             } else if (services.size() == 1) {

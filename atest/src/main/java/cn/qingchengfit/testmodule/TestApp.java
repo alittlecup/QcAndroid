@@ -12,7 +12,7 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.gymconfig.GymConfigAcitivty;
+import cn.qingcheng.gym.gymconfig.GymConfigAcitivty;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import cn.qingchengfit.staffkit.App;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 
 /**
  * power by
@@ -28,13 +30,18 @@ import cn.qingchengfit.staffkit.App;
  */
 public class LogView {
 
-    //    private CompositeSubscription subscriptions;
-    //
-    //    private LumberYard lumberYard ;
 
     public LogView(App app) {
-        //this.lumberYard = new LumberYard(app);
-        //Timber.plant(new Timber.DebugTree());
+        Flowable.just(1)
+            .subscribe(new Consumer<Integer>() {
+                @Override public void accept(Integer integer) throws Exception {
+
+                }
+            }, new Consumer<Throwable>() {
+                @Override public void accept(Throwable throwable) throws Exception {
+
+                }
+            });
     }
 
     public void setLogview(final Context context, @LayoutRes int layoutResID) {

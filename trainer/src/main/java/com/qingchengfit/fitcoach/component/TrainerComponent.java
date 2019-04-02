@@ -4,7 +4,6 @@ import android.content.Intent;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.activity.Main2Activity;
 
 public class TrainerComponent implements IComponent {
   @Override public String getName() {
@@ -22,8 +21,8 @@ public class TrainerComponent implements IComponent {
         qc.getContext().startActivity(intent);
         return true;
       case "open/gymdetail":
-        Intent toGymdetail = new Intent(qc.getContext(), Main2Activity.class);
-        toGymdetail.putExtra("main_action", 10);
+        Intent toGymdetail = new Intent(qc.getContext(), FragActivity.class);
+        toGymdetail.putExtra("type", 10);
         qc.getContext().startActivity(toGymdetail);
         return false;
     }

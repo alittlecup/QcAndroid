@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/QcAndroid.iml" filepath="$PROJECT_DIR$/QcAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/card/card.iml" filepath="$PROJECT_DIR$/card/card.iml" />
       <module fileurl="file://$PROJECT_DIR$/checkout/checkout.iml" filepath="$PROJECT_DIR$/checkout/checkout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gym/gym.iml" filepath="$PROJECT_DIR$/gym/gym.iml" />
       <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
       <module fileurl="file://$PROJECT_DIR$/qcbase/qcbase.iml" filepath="$PROJECT_DIR$/qcbase/qcbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/recruit/recruit.iml" filepath="$PROJECT_DIR$/recruit/recruit.iml" />

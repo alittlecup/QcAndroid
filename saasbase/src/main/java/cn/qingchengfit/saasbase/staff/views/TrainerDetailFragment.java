@@ -42,12 +42,12 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2018/1/16.
  */
 @Leaf(module = "staff", path = "/trainer/detail/") public class TrainerDetailFragment
-  extends StaffDetailFragment {
+    extends StaffDetailFragment {
   @Inject IStaffModel staffModel;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-    @Nullable Bundle savedInstanceState) {
+      @Nullable Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     db.position.setVisibility(View.GONE);
     return v;
@@ -56,27 +56,31 @@ import rx.schedulers.Schedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     db.setToolbarModel(
-      new ToolbarModel.Builder().title("教练详情").menu(R.menu.menu_save).listener(item -> {
-        ManagerBody body = presenter.getBody();
-        body.setArea_code(getAreaCode());
-        body.setPhone(getPhone());
-        body.setUsername(getName());
-        RxRegiste(staffModel.editTrainer(staffShip.id, body)
-          .onBackpressureLatest()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(new NetSubscribe<QcDataResponse>() {
-            @Override public void onNext(QcDataResponse qcResponse) {
-              if (ResponseConstant.checkSuccess(qcResponse)) {
-                onShowError("保存成功");
-                popBack();
-              } else {
-                onShowError(qcResponse.getMsg());
-              }
-            }
-          }));
-        return true;
-      }).build());
+        new ToolbarModel.Builder().title("教练详情").menu(R.menu.menu_save).listener(item -> {
+          ManagerBody body = presenter.getBody();
+          body.setArea_code(getAreaCode());
+          body.setPhone(getPhone());
+          body.setUsername(getName());
+          boolean b = db.phoneNum.checkPhoneNum();
+          if (!b) {
+            return false;
+          }
+          RxRegiste(staffModel.editTrainer(staffShip.id, body)
+              .onBackpressureLatest()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new NetSubscribe<QcDataResponse>() {
+                @Override public void onNext(QcDataResponse qcResponse) {
+                  if (ResponseConstant.checkSuccess(qcResponse)) {
+                    onShowError("保存成功");
+                    popBack();
+                  } else {
+                    onShowError(qcResponse.getMsg());
+                  }
+                }
+              }));
+          return true;
+        }).build());
   }
 
   @Override public void onBtnDelClicked() {
@@ -85,23 +89,23 @@ import rx.schedulers.Schedulers;
       return;
     }
     DialogUtils.instanceDelDialog(getActivity(),
-      String.format("确定将%s设为离职吗？", staffShip.getUsername()),
-      "离职后\n" + "1.该用户不能登录到当前场馆后台。\n" + "2.跟该教练相关的过往业务数据将被保留。\n" + "3.可以由健身房工作人员复职",
-      (dialog, which) -> {
-        showLoading();
-        RxRegiste(staffModel.delTrainer(staffShip.getId())
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(new NetSubscribe<QcDataResponse>() {
-            @Override public void onNext(QcDataResponse qcDataResponse) {
-              if (ResponseConstant.checkSuccess(qcDataResponse)) {
-                onShowError("离职成功");
-                popBack();
-              } else {
-                onShowError(qcDataResponse.getMsg());
-              }
-            }
-          }));
-      }).show();
+        String.format("确定将%s设为离职吗？", staffShip.getUsername()),
+        "离职后\n" + "1.该用户不能登录到当前场馆后台。\n" + "2.跟该教练相关的过往业务数据将被保留。\n" + "3.可以由健身房工作人员复职",
+        (dialog, which) -> {
+          showLoading();
+          RxRegiste(staffModel.delTrainer(staffShip.getId())
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new NetSubscribe<QcDataResponse>() {
+                @Override public void onNext(QcDataResponse qcDataResponse) {
+                  if (ResponseConstant.checkSuccess(qcDataResponse)) {
+                    onShowError("离职成功");
+                    popBack();
+                  } else {
+                    onShowError(qcDataResponse.getMsg());
+                  }
+                }
+              }));
+        }).show();
   }
 }

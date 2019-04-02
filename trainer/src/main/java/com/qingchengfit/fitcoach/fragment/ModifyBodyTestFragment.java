@@ -440,14 +440,15 @@ public class ModifyBodyTestFragment extends BaseFragment {
                 commonInputView.setTag(R.id.tag_1, extra.id);
                 commonInputView.setTag(R.id.tag_2, extra.unit);
                 commonInputView.setEditable(true);
+                commonInputView.setContentColor(
+                    ContextCompat.getColor(getContext(), R.color.text_dark));
                 otherData.addView(commonInputView);
-                commonInputView.setLabel(extra.name);
                 if (!TextUtils.isEmpty(extra.unit)) {
                   commonInputView.setUnit(extra.unit);
                 }
+                commonInputView.setLabel(extra.name);
                 commonInputView.setContent(extra.value);
-                commonInputView.setContentColor(
-                    ContextCompat.getColor(getContext(), R.color.text_dark));
+
               }
             } else {
               datas.clear();

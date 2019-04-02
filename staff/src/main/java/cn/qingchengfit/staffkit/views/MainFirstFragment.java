@@ -11,6 +11,7 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
+import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
 import cn.qingchengfit.staffkit.views.main.HomeFragment;
 import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
@@ -50,13 +51,15 @@ public class MainFirstFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_empty, container, false);
         changeView();
         RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> changeView(),throwable -> {});
+        RxBusAdd(EventBrandChange.class).subscribe(eventLoginChange -> changeView(),throwable -> {});
         return view;
     }
 
-    @Override public void onResume() {
-        super.onResume();
+    @Override protected void onVisible() {
+        super.onVisible();
         changeView();
     }
+
     private void changeBrands(){
         RxRegiste(qcDbManager.getAllCoachService()
             .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
@@ -89,6 +92,7 @@ public class MainFirstFragment extends BaseFragment {
                 }
             }, throwable -> {}));
     }
+
 
     /**
      * 已登录 -----》无场馆

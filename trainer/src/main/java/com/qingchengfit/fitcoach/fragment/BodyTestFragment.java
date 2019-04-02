@@ -261,9 +261,6 @@ public class BodyTestFragment extends BaseFragment {
                                 ContextCompat.getColor(getContext(), R.color.text_dark));
                         }
                     }
-                    //                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
-                    //                            datas.add(new ImageGridBean(photo.photo));
-                    //                        }
 
                 }
             });

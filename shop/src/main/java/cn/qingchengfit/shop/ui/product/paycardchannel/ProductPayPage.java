@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
@@ -33,18 +34,24 @@ import java.util.List;
 
   @Override protected void subscribeUI() {
     mViewModel.datas.observe(this, datas -> {
-      if (datas == null || datas.isEmpty()) return;
-      List<CardSwitchItem> items = new ArrayList<>();
-      for (CardSwitchData data : datas) {
-        items.add(new CardSwitchItem(data));
-      }
-      mViewModel.items.set(items);
       hideLoadingTrans();
-      mBinding.recyclerview.post(new Runnable() {
-        @Override public void run() {
-          upDateSelectPosition(items);
+      if (datas == null || datas.isEmpty()) {
+        List<CommonNoDataItem> commonNoDataItems = new ArrayList<>();
+        commonNoDataItems.add(
+            new CommonNoDataItem(R.drawable.vd_img_empty_universe, "没有可用的会员卡种类", "请先添加会员卡种类"));
+        adapter.updateDataSet(commonNoDataItems);
+      } else {
+        List<CardSwitchItem> items = new ArrayList<>();
+        for (CardSwitchData data : datas) {
+          items.add(new CardSwitchItem(data));
         }
-      });
+        mViewModel.items.set(items);
+        mBinding.recyclerview.post(new Runnable() {
+          @Override public void run() {
+            upDateSelectPosition(items);
+          }
+        });
+      }
     });
   }
 

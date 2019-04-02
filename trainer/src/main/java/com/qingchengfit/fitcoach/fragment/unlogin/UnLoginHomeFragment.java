@@ -82,11 +82,6 @@ public class UnLoginHomeFragment extends BaseFragment {
         return view;
     }
 
-    @Override public void onResume() {
-        super.onResume();
-        changeLogin();
-    }
-
     @Override protected void onVisible() {
         super.onVisible();
         changeLogin();
@@ -95,9 +90,8 @@ public class UnLoginHomeFragment extends BaseFragment {
     private void changeLogin(){
         if (loginStatus.isLogined()) {
             //已登录
-                spGetService = gymBaseInfoAction.getAllGyms();
+                spGetService = repoCoachService.readAllServices();
                 RxRegiste(spGetService.observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(coachServices -> {
-                    repoCoachService.createServices(coachServices);
                     if (coachServices.size() == 0) {
                         //无场馆
                         getChildFragmentManager().beginTransaction()

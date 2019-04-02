@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:background="@drawable/bg_rect_square_img"
         android:padding="0.5dp"
         >
 

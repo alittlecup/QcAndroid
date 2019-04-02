@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -319,9 +320,13 @@ public class BatchDetailCommonView extends BaseFragment {
       coach.setLabel("课程");
       coach.setContent(course.getName());
     } else {
-      PhotoUtils.small(img, course.getPhoto());
-      text1.setText(course.getName());
-      text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
+      PhotoUtils.small(img, course.getPhoto(), R.drawable.img_default_course);
+      if (TextUtils.isEmpty(course.id)) {
+        text1.setText("请选择课程");
+      } else {
+        text1.setText(course.getName());
+        text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
+      }
     }
     queryTemple();
   }
@@ -338,12 +343,22 @@ public class BatchDetailCommonView extends BaseFragment {
    * 设置教练
    */
   public void setTrainer(Staff staff) {
-    if (staff == null) return;
+    if (staff == null) {
+      if (isPrivate) {
+        if (text1 == null || text3 == null) return;
+        PhotoUtils.small(img,"",R.drawable.img_default_teacher_male);
+        img.setImageResource(R.drawable.img_default_teacher_male);
+        text1.setText("请选择教练");
+      }
+      return;
+    }
     if (coach == null) return;
     this.trainer = staff;
     if (isPrivate) {
       if (text1 == null || text3 == null) return;
-      PhotoUtils.small(img, staff.getAvatar());
+      PhotoUtils.small(img, staff.getAvatar(),
+          staff.gender == 0 ? R.drawable.img_default_teacher_male
+              : R.drawable.img_default_teacher_female);
       text1.setText(staff.getUsername());
       text3.setVisibility(View.GONE);
     } else {

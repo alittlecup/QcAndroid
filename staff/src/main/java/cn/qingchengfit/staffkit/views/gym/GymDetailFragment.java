@@ -933,6 +933,7 @@ public class GymDetailFragment extends BaseFragment
   }
 
   private GymSettingInfo info;
+  GymSettingDialog gymSettingDialog;
 
   @Override public void showGymFirstSettingDialog(GymSettingInfo data) {
     if (data != null) {
@@ -946,14 +947,18 @@ public class GymDetailFragment extends BaseFragment
         adapter.updateDataSet(datas);
         PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", false);
       } else {
-        GymSettingDialog gymSettingDialog = new GymSettingDialog(getContext(), data.gym_type);
-        gymSettingDialog.setOnDismissListener(dialog -> {
-          Set<String> modules = gymSettingDialog.getModules();
-          if (!modules.isEmpty()) {
-            gymDetailPresenter.updateFunction(new ArrayList<>(modules));
-          }
-        });
-        gymSettingDialog.show();
+        if (gymSettingDialog == null) {
+          gymSettingDialog = new GymSettingDialog(getContext(), data.gym_type);
+          gymSettingDialog.setOnDismissListener(dialog -> {
+            Set<String> modules = gymSettingDialog.getModules();
+            if (!modules.isEmpty()) {
+              gymDetailPresenter.updateFunction(new ArrayList<>(modules));
+            }
+          });
+        }
+        if (!gymSettingDialog.isShowing()) {
+          gymSettingDialog.show();
+        }
         clearGymSetting();
         PreferenceUtils.setPrefBoolean(getContext(), "isFirstSettingGym", true);
       }

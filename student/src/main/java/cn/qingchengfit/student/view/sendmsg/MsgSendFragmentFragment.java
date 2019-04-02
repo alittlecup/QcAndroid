@@ -143,7 +143,7 @@ import rx.functions.Action1;
         if (text.length() < smsBegin.length()) {
           etContent.setText(smsBegin);
           etContent.setSelection(etContent.getText().length());
-        } else if (!text.subSequence(0, 24).equals(smsBegin)) {
+        } else if (text.length() > smsBegin.length() && !text.subSequence(0, 24).toString().equals(smsBegin)) {
           String trim = etContent.getText().toString().trim();
           etContent.setText(smsBegin + trim);
           etContent.setSelection(etContent.getText().length());

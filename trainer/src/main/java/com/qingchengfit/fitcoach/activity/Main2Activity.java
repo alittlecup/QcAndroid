@@ -657,7 +657,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       return new UnloginManageFragment();
     } else if (position == 2) {
       return MainWebFragment.newInstance(
-          Configs.Server.replace("http", "https") + "mobile/coach/discover/");
+          Configs.Server + "mobile/coach/discover/");
     } else if (position == 3) {
       return new MainMsgFragment();
     } else {

@@ -16,10 +16,13 @@ import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.phrase.Phrase;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
@@ -51,7 +54,7 @@ import retrofit2.http.GET;
 
 public class QcRestRepository {
 
-  private  OkHttpClient client;
+  private OkHttpClient client;
   private Retrofit retrofitRxJava1;
   private Retrofit retrofitRxJava2;
   private String host = "";
@@ -64,11 +67,13 @@ public class QcRestRepository {
         this.host = debug_ip;
       }
     }
+    List<Protocol> protocols = new ArrayList<>();
+    protocols.add(Protocol.HTTP_1_1);
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
     interceptor.setLevel(
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
-    client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
+    client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
       @Override public Response intercept(Chain chain) throws IOException {
         String token = "";
         Request request = chain.request();
@@ -85,7 +90,7 @@ public class QcRestRepository {
 
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
-              .addHeader("Referer",host)
+              .addHeader("Referer", request.url().scheme() + "://" + request.url().host())
               .addHeader("Cookie", "csrftoken=" + token + ";" + getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
@@ -101,7 +106,7 @@ public class QcRestRepository {
           return response;
         } else {
           request = request.newBuilder()
-              .addHeader("Referer",host)
+              .addHeader("Referer", request.url().scheme() + "://" + request.url().host())
               .addHeader("Cookie", QcRestRepository.getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
@@ -114,9 +119,13 @@ public class QcRestRepository {
         }
         return chain.proceed(request);
       }
-    }).followRedirects(false)
-        .addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
-    MyRetryAndFollowUpInterceptor interceptor1=new MyRetryAndFollowUpInterceptor(client,true);
+    })
+        .followRedirects(false)
+        //.protocols(protocols)
+        .addNetworkInterceptor(interceptor)
+        .readTimeout(3, TimeUnit.MINUTES)
+        .build();
+    MyRetryAndFollowUpInterceptor interceptor1 = new MyRetryAndFollowUpInterceptor(client, true);
     client = client.newBuilder().addInterceptor(interceptor1).build();
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 

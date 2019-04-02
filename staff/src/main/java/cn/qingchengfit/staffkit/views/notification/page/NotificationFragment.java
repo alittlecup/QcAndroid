@@ -1,7 +1,5 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +18,8 @@ import android.widget.Toast;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.gym.pages.apply.GymApplyDealViewModel;
+import cn.qingchengfit.gym.bean.GymApplyOrder;
+import cn.qingchengfit.gym.responsitory.network.IGymModel;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
@@ -37,10 +35,10 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.constant.ConstantNotification;
-import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.saascommon.mvvm.ViewModelFactory;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -107,7 +105,7 @@ public class NotificationFragment extends BaseFragment
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
   @Inject GymWrapper gymWrapper;
-  @Inject ViewModelProvider.Factory viewModelFactory;
+  @Inject IGymModel gymResponsitory;
   Toolbar toolbar;
   TextView toolbarTitile;
   FrameLayout toolbarLayout;
@@ -203,15 +201,9 @@ public class NotificationFragment extends BaseFragment
         String s = msg.getUrl();
 
         try {
-          Intent toActivity = null;
-          if (!TextUtils.isEmpty(s)) {
-
-          } else {
-
-          }
           if (!StringUtils.isEmpty(msg.getBrand_id())
               && !StringUtils.isEmpty(msg.getShop_id())
-              && msg.type <= 23) {
+              && msg.type < 23) {
             final CoachService coachService1 =
                 gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
             if (coachService1 != null) {
@@ -266,27 +258,27 @@ public class NotificationFragment extends BaseFragment
                         } else if (msg.type == 21) {
                           showLoading();
                           gymWrapper.setCoachService(coachService1);
-                          GymApplyDealViewModel viewModel =
-                              ViewModelProviders.of(NotificationFragment.this, viewModelFactory)
-                                  .get(GymApplyDealViewModel.class);
-                          viewModel.loagAplyOrderInfo(coachService1.gym_id, msg.getGymApplyId())
-                              .observe(NotificationFragment.this, gymApplyOrder -> {
-                                hideLoading();
-                                if (gymApplyOrder != null) {
-                                  if (gymApplyOrder.status == 1) {
-                                    RouteUtil.routeTo(getContext(), "gym", "/gym/deal/finish",
-                                        null);
-                                  } else {
-                                    RouteUtil.routeTo(getContext(), "gym", "/gym/deal//apply",
-                                        new BundleBuilder().withString("applyId",
-                                            msg.getGymApplyId())
-                                            .withString("gymId", msg.getGymId())
-                                            .build());
+                          gymResponsitory.qcGetGymApplyOrderInfo(coachService1.gym_id, msg.getGymApplyId())
+                              .compose(RxHelper.schedulersTransformer())
+                              .doOnTerminate(() -> hideLoading())
+                              .subscribe(response -> {
+                                if (ResponseConstant.checkSuccess(response)) {
+                                  GymApplyOrder gymApplyOrder = response.data.gymApplyOrder;
+                                  if (gymApplyOrder != null) {
+                                    if (gymApplyOrder.status != 1) {
+                                      RouteUtil.routeTo(getContext(), "gym", "/gym/deal/finish",
+                                          null);
+                                    } else {
+                                      RouteUtil.routeTo(getContext(), "gym", "/gym/deal//apply",
+                                          new BundleBuilder().withString("applyId",
+                                              msg.getGymApplyId())
+                                              .withString("gymId", msg.getGymId())
+                                              .build());
+                                    }
                                   }
                                 }
-                              });
-
-                          return;
+                              }, throwable -> {
+                              }); return;
                         } else if (msg.type == 22) {
                           Intent toGymdetail = new Intent(getActivity(), GymActivity.class);
                           toGymdetail.putExtra(GymActivity.GYM_TO, GymActivity.GYM_DETAIL);
@@ -324,7 +316,6 @@ public class NotificationFragment extends BaseFragment
             if (s.toLowerCase().startsWith("http")) {
               WebActivity.startWeb(s, getContext());
             } else {
-
               Uri uri = Uri.parse(s);
               Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
               tosb.setPackage(getContext().getPackageName());
@@ -342,8 +333,7 @@ public class NotificationFragment extends BaseFragment
           WebActivity.startWeb(s, getActivity());
         }
       }
-    }
-    return true;
+    } return true;
   }
 
   private NotificationMsg curMsg = null;

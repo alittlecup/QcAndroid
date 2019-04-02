@@ -51,7 +51,7 @@ buildscript {
 
   repositories {
     maven {
-      url 'http://43.241.209.158:15004/repository/maven-public/'
+      url 'http://39.97.179.7:15004/repository/maven-public/'
     }
   }
 
@@ -71,7 +71,7 @@ allprojects {
       dirs '../aars'
     }
     maven {
-      url 'http://43.241.209.158:15004/repository/maven-public/'
+      url 'http://39.97.179.7:15004/repository/maven-public/'
     }
 
     maven {

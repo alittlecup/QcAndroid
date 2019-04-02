@@ -54,8 +54,8 @@ public class ConstantNotification {
   public static final int TYPE_GYM_POSITION_APPLY = 21; //职位申请
   public static final int TYPE_GYM_STAFF_SUCCESS = 22; //申请工作人员通过
   public static final int TYPE_GYM_STAFF_FAIL = 23; //申请工作人员拒绝
-  public static final int TYPE_GYM_CAOCH_SUCCESS = 24; //申请工作人员通过
-  public static final int TYPE_GYM_COACH_FAIL = 25; //申请工作人员拒绝
+  public static final int TYPE_GYM_CAOCH_SUCCESS = 24; //申请教练通过
+  public static final int TYPE_GYM_COACH_FAIL = 25; //申请教练拒绝
   public static final int TYPE_FITNESS_TRAINER_CHANGED = 16;                //健身房-教练变更
   public static final int TYPE_MEETING_PAY = 10001;               //会议-支付成功-购票人
   public static final int TYPE_MEETING_TICKET = 10002;                //会议-报名成功-参会人

@@ -34,6 +34,7 @@ public class GymSettingDialog extends AppCompatDialog {
 
   public GymSettingDialog(@NonNull Context context, String gymType) {
     super(context);
+    setCanceledOnTouchOutside(false);
     View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_gym_setting, null);
     setContentView(inflate);
     mBinding = DialogGymSettingBinding.bind(inflate);

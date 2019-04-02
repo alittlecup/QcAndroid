@@ -20,13 +20,14 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.inject.Inject;
 import rx.subjects.Subject;
 
 public class QCDbManagerImpl implements QcDbManager {
   private static final String TAG = "QCDbManager";
   AppDatabase appDatabase;
   private ConcurrentHashMap<Object, Subject> subjectMapper = new ConcurrentHashMap<>();
-
+  @Inject
   public QCDbManagerImpl(App application) {
     appDatabase = Room.databaseBuilder(application, AppDatabase.class, "qc_staff")
         .addMigrations(new Migration(1,2) {
