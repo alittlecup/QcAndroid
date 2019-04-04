@@ -45,6 +45,9 @@ public interface GymApi {
   @POST("/api/systems/initial/") rx.Observable<QcDataResponse<Shop>> qcSystemInit(
       @Body ShopCreateBody body);
 
+  @POST("/api/coach/systems/initial/") rx.Observable<QcDataResponse<Shop>> qcSystemInitTrainer(
+      @Body ShopCreateBody body);
+
   @PUT("/api/gym/{gym_id}/") rx.Observable<QcDataResponse> editGymIntro(
       @Path("gym_id") String gymId, @Body Shop body);
 

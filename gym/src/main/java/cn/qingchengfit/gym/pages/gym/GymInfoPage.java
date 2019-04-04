@@ -70,6 +70,7 @@ import rx.functions.Action1;
 
   @Override protected void subscribeUI() {
     mViewModel.gymTypes.observe(this, types -> {
+      hideLoading();
       if (types != null && !types.isEmpty()) {
         List<BottomChooseData> datas = new ArrayList<>();
         for (GymType type : types) {
@@ -200,6 +201,7 @@ import rx.functions.Action1;
     mBinding.civGymType.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (gymTypeDialog == null) {
+          showLoading();
           mViewModel.loadGymTypes();
         } else {
           gymTypeDialog.show();

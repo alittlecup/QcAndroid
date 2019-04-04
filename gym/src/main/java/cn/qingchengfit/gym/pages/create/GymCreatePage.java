@@ -65,16 +65,18 @@ import com.bigkoo.pickerview.lib.DensityUtil;
         if (brand != null) {
           shopCreateBody.brand_id = brand.id;
         }
-        mViewModel.createShop(shopCreateBody);
+
+          mViewModel.createShop(shopCreateBody,AppUtils.getCurApp(getContext())==0);
+
       }
     });
   }
 
   @Override public void routeToPage() {
     if (AppUtils.getCurApp(getContext()) == 1) {
-      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("open/gymdetail")).call();
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("open/gymdetail").setContext(getActivity())).call();
     } else {
-      QcRouteUtil.setRouteOptions(new RouteOptions("trainer").setActionName("open/gymdetail"))
+      QcRouteUtil.setRouteOptions(new RouteOptions("trainer").setActionName("open/gymdetail").setContext(getActivity()))
           .call();
     }
     getActivity().finish();

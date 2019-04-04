@@ -13,6 +13,7 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
@@ -82,6 +83,7 @@ public class SyncGymFragment extends BaseFragment {
     RxBusAdd(EventSyncDone.class).subscribe(new Action1<EventSyncDone>() {
       @Override public void call(EventSyncDone eventSyncDone) {
         Intent toMain = new Intent(getActivity(), Main2Activity.class);
+        toMain.putExtra(Main2Activity.ACTION, 100);
         startActivity(toMain);
         getActivity().finish();
       }
@@ -89,12 +91,7 @@ public class SyncGymFragment extends BaseFragment {
 
     RxRegiste(TrainerRepository.getStaticTrainerAllApi()
         .qcGetCoachService(App.coachid)
-        .onBackpressureBuffer()
-        .subscribeOn(Schedulers.io())
-
-        .onBackpressureBuffer()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(RxHelper.schedulersTransformer())
         .subscribe(qcCoachServiceResponse -> {
           if (ResponseConstant.checkSuccess(qcCoachServiceResponse)) {
             syncGymHint.setText(

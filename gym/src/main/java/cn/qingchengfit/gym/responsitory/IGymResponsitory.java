@@ -28,7 +28,7 @@ public interface IGymResponsitory {
 
   LiveData<Resource<BrandResponse>> qcCreateBrand(BrandPostBody body);
 
-  LiveData<Resource<Shop>> qcSystemInit(ShopCreateBody body);
+  LiveData<Resource<Shop>> qcSystemInit(ShopCreateBody body,boolean istrainer);
 
   LiveData<Resource<Boolean>> editGymIntro(String gymId, Shop body);
 

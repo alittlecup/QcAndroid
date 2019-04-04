@@ -62,7 +62,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
     });
     view.findViewById(R.id.tv_create_gym).setOnClickListener(v -> {
       if(loginStatus.isLogined()){
-        routeTo("gym", "/gym/choose/create", null);
+        routeTo("gym", "/gym/create", null);
       }else{
         onLogin();
       }

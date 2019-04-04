@@ -52,7 +52,9 @@ public class GymModelImpl implements IGymModel {
     return gymApi.qcCreatBrand(body);
   }
 
-  @Override public Observable<QcDataResponse<Shop>> qcSystemInit(ShopCreateBody body) {
+  @Override
+  public Observable<QcDataResponse<Shop>> qcSystemInit(ShopCreateBody body, boolean istrainer) {
+    if (istrainer) return gymApi.qcSystemInitTrainer(body);
     return gymApi.qcSystemInit(body);
   }
 
@@ -104,7 +106,7 @@ public class GymModelImpl implements IGymModel {
     return gymApi.qcGetBrandShopsPermission(loginStatus.staff_id(), brandID, permission);
   }
 
-  @Override public Observable<QcResponse> qcQuitGym(Map<String,Object> params) {
+  @Override public Observable<QcResponse> qcQuitGym(Map<String, Object> params) {
     return gymApi.qcQuitGym(loginStatus.staff_id(), params);
   }
 }

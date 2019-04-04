@@ -29,7 +29,7 @@ public interface IGymModel {
 
   Observable<QcDataResponse<BrandResponse>> qcCreatBrand(BrandPostBody body);
 
-  Observable<QcDataResponse<Shop>> qcSystemInit(ShopCreateBody body);
+  Observable<QcDataResponse<Shop>> qcSystemInit(ShopCreateBody body,boolean istrainer);
 
   Observable<QcDataResponse> editGymIntro(String gymId, Shop body);
 

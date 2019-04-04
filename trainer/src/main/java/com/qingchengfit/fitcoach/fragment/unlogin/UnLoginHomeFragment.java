@@ -75,10 +75,12 @@ public class UnLoginHomeFragment extends BaseFragment {
           .hide(homeBannerFragment)
           .commitAllowingStateLoss();
 
+
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
+        changeLogin();
         return view;
     }
 

@@ -65,8 +65,8 @@ public class GymResponsitoryImpl implements IGymResponsitory {
     return toLiveData(gymModel.qcCreatBrand(body));
   }
 
-  @Override public LiveData<Resource<Shop>> qcSystemInit(ShopCreateBody body) {
-    return toLiveData(gymModel.qcSystemInit(body));
+  @Override public LiveData<Resource<Shop>> qcSystemInit(ShopCreateBody body,boolean istrainer) {
+    return toLiveData(gymModel.qcSystemInit(body,istrainer));
   }
 
   @Override public LiveData<Resource<Boolean>> editGymIntro(String gymId, Shop body) {

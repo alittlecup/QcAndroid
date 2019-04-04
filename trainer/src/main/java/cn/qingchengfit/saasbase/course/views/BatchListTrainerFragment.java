@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,10 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCopyItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
+import cn.qingchengfit.saasbase.course.batch.views.AddBatchParams;
 import cn.qingchengfit.saasbase.course.batch.views.BatchCopyParams;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanFragment;
 import cn.qingchengfit.saasbase.course.batch.views.EditBatchParams;
-import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.course.presenters.CourseBatchDetailPresenter;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
@@ -185,8 +184,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       showAlert(cn.qingchengfit.saasbase.R.string.sorry_for_no_permission);
       return;
     }
-
-    routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(mType == 1).src(TARGET).build());
+    routeTo("/batch/add/", new AddBatchParams().mCourse(null).isGroup(mType != 1 ? Boolean.FALSE : Boolean.TRUE).build());
   }
 
   @Override public String getFragmentName() {

@@ -127,18 +127,6 @@ import rx.functions.Action1;
     mBinding.editSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 
     mBinding.editSearch.setSingleLine(true);
-    //mBinding.editSearch.setOnEditorActionListener(new View.OnKeyListener() {
-    //  @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
-    //    if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_ENTER) {
-    //      String s = mBinding.editSearch.getText().toString();
-    //      if (!TextUtils.isEmpty(s)) {
-    //        showLoading();
-    //        mViewModel.searchGym(s);
-    //      }
-    //    }
-    //    return false;
-    //  }
-    //});
     RxTextView.editorActions(mBinding.editSearch)
         .throttleFirst(500, TimeUnit.MILLISECONDS)
         .subscribe(new Action1<Integer>() {

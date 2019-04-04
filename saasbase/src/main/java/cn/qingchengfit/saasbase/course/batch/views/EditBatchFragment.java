@@ -18,9 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -84,25 +83,26 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/22.
  */
-@Leaf(module = "course", path = "/batch/edit/")
-public class EditBatchFragment extends SaasBaseFragment implements IBatchPresenter.MVPView,
-  FlexibleAdapter.OnItemClickListener{
+@Leaf(module = "course", path = "/batch/edit/") public class EditBatchFragment
+    extends SaasBaseFragment
+    implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	FrameLayout fragCourseInfo;
-	TextView tvBatchLoopHint;
-	TextView tvClearAutoBatch;
-	RecyclerView recyclerview;
-	CompatTextView btnAllSchedule;
-	CommonInputView starttime;
-	CommonInputView endtime;
-	CommonInputView civOpenTime;
-	Button btnDel;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  FrameLayout fragCourseInfo;
+  TextView tvBatchLoopHint;
+  TextView tvClearAutoBatch;
+  RecyclerView recyclerview;
+  CompatTextView btnAllSchedule;
+  CommonInputView starttime;
+  CommonInputView endtime;
+  CommonInputView civOpenTime;
+  Button btnDel;
 
   @Inject BatchEditPresenter presenter;
   CommonFlexAdapter commonFlexAdapter;
   @Need public String batchId;
+  @Need Staff staff;
   @Need public Boolean isPrvite = false;
   @Need public Boolean isStaff = false;
 
@@ -121,12 +121,12 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     arrayOpenTime = getResources().getStringArray(R.array.order_open_time);
-    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(),this);
+    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    super.onCreateView(inflater,container,savedInstanceState);
+    super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_edit_batch, container, false);
     toolbar = (Toolbar) view.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
@@ -165,18 +165,16 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       }
     });
 
-    delegatePresenter(presenter,this);
+    delegatePresenter(presenter, this);
     presenter.setBatchId(batchId);
     presenter.setPrivate(isPrvite);
     initView();
     initToolbar(toolbar);
-    RxBusAdd(Time_repeat.class)
-      .onBackpressureDrop()
-      .subscribe(new BusSubscribe<Time_repeat>() {
-        @Override public void onNext(Time_repeat time_repeat) {
-          commonFlexAdapter.updateItem(new CmLRTxt90Item(time_repeat));
-        }
-      });
+    RxBusAdd(Time_repeat.class).onBackpressureDrop().subscribe(new BusSubscribe<Time_repeat>() {
+      @Override public void onNext(Time_repeat time_repeat) {
+        commonFlexAdapter.updateItem(new CmLRTxt90Item(time_repeat));
+      }
+    });
 
     return view;
   }
@@ -186,19 +184,18 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     toolbarTitle.setText("详情");
     toolbar.inflateMenu(R.menu.menu_save);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
-      .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          presenter.buildBody();
-          presenter.arrangeBatch();
-        }
-      });
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .subscribe(new BusSubscribe<Void>() {
+          @Override public void onNext(Void aVoid) {
+            presenter.buildBody();
+            presenter.arrangeBatch();
+          }
+        });
   }
 
   private void initView() {
-    recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withOffset(1).withBottomEdge(true)
-    );
+    recyclerview.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withOffset(1).withBottomEdge(true));
     recyclerview.setNestedScrollingEnabled(false);
     recyclerview.setItemAnimator(new FadeInUpItemAnimator());
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -215,9 +212,9 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonView&&!hadSetData){
+    if (f instanceof BatchDetailCommonView && !hadSetData) {
       inflateBatchInfo(presenter.getBatchDetail());
     }
   }
@@ -225,42 +222,42 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 查看所有排期批次
    */
- public void onBtnAllScheduleClicked() {
-    routeTo("/batch/schedule/list/",new cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListParams()
-      .batchId(presenter.getBatchId())
-      .isPrivate(presenter.isPrivate())
-      .build());
+  public void onBtnAllScheduleClicked() {
+    routeTo("/batch/schedule/list/",
+        new cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListParams().batchId(
+            presenter.getBatchId()).isPrivate(presenter.isPrivate()).build());
   }
 
   @Override public boolean onFragmentBackPress() {
-    DialogUtils.instanceDelDialog(getContext(), "是否放弃本次更改？", new MaterialDialog.SingleButtonCallback() {
-      @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        popBack();
-      }
-    }).show();
+    DialogUtils.instanceDelDialog(getContext(), "是否放弃本次更改？",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            popBack();
+          }
+        }).show();
     return true;
   }
 
   /**
    * 删除当前批次
    */
- public void onBtnDelClicked() {
+  public void onBtnDelClicked() {
     DialogUtils.instanceDelDialog(getContext(), "是否确认删除当前排课？", (dialog, which) -> {
       presenter.delBatch();
     }).show();
-
   }
 
   @Override public void onSuccess() {
 
   }
 
-  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer,Rule onLineRule) {
+  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer, Rule onLineRule) {
 
   }
 
   @Override public void onBatchDetail(BatchDetail batchDetail) {
-    if (batchDetail == null){
+    if (batchDetail == null) {
       return;
     }
     courseLength = batchDetail.course.length;
@@ -272,11 +269,13 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
     }
-    if (!batchBaseFragment.isAdded())
-      stuff(R.id.frag_course_info,batchBaseFragment);
-    else inflateBatchInfo(batchDetail);
+    if (!batchBaseFragment.isAdded()) {
+      stuff(R.id.frag_course_info, batchBaseFragment);
+    } else {
+      inflateBatchInfo(batchDetail);
+    }
 
-    if (batchDetail.time_repeats != null){
+    if (batchDetail.time_repeats != null) {
       List<IFlexible> items = new ArrayList<>();
       for (Time_repeat time_repeat : batchDetail.time_repeats) {
         time_repeat.setPrivate(presenter.isPrivate());
@@ -289,32 +288,37 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     onOpenRule(batchDetail.open_rule);
   }
 
-   public void onOpenRule(BatchOpenRule rule) {
-    if (rule != null){
-      if (rule.type == 1)
+  public void onOpenRule(BatchOpenRule rule) {
+    if (rule != null) {
+      if (rule.type == 1) {
         civOpenTime.setContent(arrayOpenTime[0]);
-      else  if (rule.type == 2 ){
-        civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
-      }else if (rule.type == 3){
-        civOpenTime.setContent("提前"+rule.advance_hours+"小时开放");
+      } else if (rule.type == 2) {
+        civOpenTime.setContent(
+            DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
+      } else if (rule.type == 3) {
+        civOpenTime.setContent("提前" + rule.advance_hours + "小时开放");
       }
     }
   }
 
-  private IFlexible generateRepeatItem(Time_repeat tr){
-    if (presenter.isPrivate()){
+  private IFlexible generateRepeatItem(Time_repeat tr) {
+    if (presenter.isPrivate()) {
       return new CmLRTxt90Item(tr);
-    }else
+    } else {
       return new CmLRTxtItem(tr);
+    }
   }
+
   private boolean hadSetData;
-  private void inflateBatchInfo(BatchDetail batchDetail){
+
+  private void inflateBatchInfo(BatchDetail batchDetail) {
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
     batchBaseFragment.openPay(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
-    batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
-    hadSetData=true;
+    batchBaseFragment.setRules(batchDetail.rule,
+        (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
+    hadSetData = true;
   }
 
   @Override public void onLoppers(List<BatchLoop> loopers) {
@@ -361,8 +365,8 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     ArrayList<Time_repeat> tp = new ArrayList<>();
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
       IFlexible item = commonFlexAdapter.getItem(i);
-      if (item instanceof CmLRTxtItem){
-        tp.add(((Time_repeat)((CmLRTxtItem) item).getData()));
+      if (item instanceof CmLRTxtItem) {
+        tp.add(((Time_repeat) ((CmLRTxtItem) item).getData()));
       }
     }
     return tp;
@@ -383,12 +387,12 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 选择开始时间
    */
- public void onStartTime() {
+  public void onStartTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
     pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
-      Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+        Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         starttime.setContent(DateUtils.Date2YYYYMMDD(date));
@@ -403,12 +407,12 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   /**
    * 选择结束时间
    */
- public void onEndTime() {
+  public void onEndTime() {
     if (pwTime == null) {
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
     pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
-      Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+        Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()) {
@@ -426,26 +430,26 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, endtime.isEmpty() ? new Date()
-        : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0,
+        endtime.isEmpty() ? new Date() : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
- public void onOpenTime() {
+  public void onOpenTime() {
     if (openDialog == null) {
-      openDialog =
-        DialogList.builder(getContext()).list(arrayOpenTime, new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0) {
-              presenter.setOpenRuleType(1);
-              civOpenTime.setContent(arrayOpenTime[0]);
-            } else if (position == 1) {
-              chooseOpenTime();
-            } else {
-              chooseAheadOfHour();
+      openDialog = DialogList.builder(getContext())
+          .list(arrayOpenTime, new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              if (position == 0) {
+                presenter.setOpenRuleType(1);
+                civOpenTime.setContent(arrayOpenTime[0]);
+              } else if (position == 1) {
+                chooseOpenTime();
+              } else {
+                chooseAheadOfHour();
+              }
             }
-          }
-        });
+          });
     }
     openDialog.show();
   }
@@ -465,7 +469,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       });
     }
     chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date()) - 1,
-      DateUtils.getYear(new Date()) + 1);
+        DateUtils.getYear(new Date()) + 1);
     Date d = new Date();
     if (!TextUtils.isEmpty(civOpenTime.getContent())) {
       try {
@@ -495,16 +499,13 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     simpleScrollPicker.show(0, 240, 4);
   }
 
-
-
   /**
-   *
    * 点击周几上课时间，以便
    */
   @Override public boolean onItemClick(int position) {
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
-    if (item instanceof CmLRTxtItem){
+    if (item instanceof CmLRTxtItem) {
       //根据课程类型 弹窗-修改时间
       if (!presenter.isPrivate()) {
         //团课
@@ -535,12 +536,10 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         timeWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
       } else {
         //私教
-        EditPrivateOpenTimeFragment.newInstance((Time_repeat) ((CmLRTxtItem) item).getData()).show(getChildFragmentManager(),EditPrivateOpenTimeFragment.class.getSimpleName());
+        EditPrivateOpenTimeFragment.newInstance((Time_repeat) ((CmLRTxtItem) item).getData())
+            .show(getChildFragmentManager(), EditPrivateOpenTimeFragment.class.getSimpleName());
       }
     }
     return true;
   }
-
-
-
 }

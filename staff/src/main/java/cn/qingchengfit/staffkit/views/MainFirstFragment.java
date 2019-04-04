@@ -9,6 +9,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
@@ -16,8 +18,13 @@ import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
 import cn.qingchengfit.staffkit.views.main.HomeFragment;
 import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import org.reactivestreams.Publisher;
 
 /**
  * power by
@@ -59,10 +66,16 @@ public class MainFirstFragment extends BaseFragment {
         super.onVisible();
         changeView();
     }
-
+@Inject GymBaseInfoAction action;
     private void changeBrands(){
         RxRegiste(qcDbManager.getAllCoachService()
-            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .flatMap((Function<List<CoachService>, Publisher<List<CoachService>>>) coachServices -> {
+                if(coachServices==null||coachServices.size()==0){
+                    return action.getAllGyms();
+                }
+                return Flowable.just(coachServices);
+            })
+            .observeOn(AndroidSchedulers.mainThread())
             .throttleLast(500, TimeUnit.MILLISECONDS)
             .subscribe(coachServices -> {
                 if (coachServices == null || coachServices.size() == 0) {

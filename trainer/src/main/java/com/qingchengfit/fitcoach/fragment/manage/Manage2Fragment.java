@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.responese.HomeStatement;
@@ -58,6 +59,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
   GymDetailChartAdapter mPageAdapter;
   private GuideView guideView;
   @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
   private float offSetMaxSize = 0f;
 
   @Override protected void subscribeUI() {
@@ -231,7 +233,9 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     if (ccid != 0 && TextUtils.isEmpty(newCcid)) {
       newCcid = ccid + "";
     }
-    mViewModel.loadCoachService(newCcid);
+    if (loginStatus.isLogined()) {
+      mViewModel.loadCoachService(newCcid);
+    }
   }
 
   private void checkPermission() {

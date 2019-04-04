@@ -53,12 +53,14 @@ android {
     release {
       signingConfig signingConfigs.release
       minifyEnabled true
+      shrinkResources true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
     debug {
+//      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       signingConfig signingConfigs.release
       minifyEnabled false
-      shrinkResources false
+//      shrinkResources true
       debuggable true
       debug {
         ext.enableCrashlytics = false
@@ -68,7 +70,8 @@ android {
 
   flavorDimensions "qc"
   productFlavors {
-    SIT {//测试环境 可以更换测试地址，默认地址为cloudtest
+    SIT {
+      //测试环境 可以更换测试地址，默认地址为cloudtest
       applicationId "cn.qingchengfit.staffkit.internaltest"
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               APP_SCHAME        : "qcstaff",
@@ -80,7 +83,8 @@ android {
       }
       dimension "qc"
     }
-    UAT {//灰度环境，不可以更换测试地址，默认地址为cloudmirror
+    UAT {
+      //灰度环境，不可以更换测试地址，默认地址为cloudmirror
       applicationId "cn.qingchengfit.staffkit"
       manifestPlaceholders = [APP_NAME          : "青橙健身管理",
                               APP_SCHAME        : "qcstaff",
@@ -91,7 +95,8 @@ android {
       }
       dimension "qc"
     }
-    product {//正式环境，不可以更换测试地址，默认地址为cloud
+    product {
+      //正式环境，不可以更换测试地址，默认地址为cloud
       applicationId "cn.qingchengfit.staffkit"
       manifestPlaceholders = [APP_NAME          : "青橙健身管理",
                               APP_SCHAME        : "qcstaff",

@@ -72,8 +72,8 @@ public class GymInfoViewModel extends BaseViewModel {
       }
     }, throwable -> quiteResult.setValue(false));
   }
-  public void createShop(ShopCreateBody shop) {
-    gymModel.qcSystemInit(shop).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+  public void createShop(ShopCreateBody shop,boolean istrainer) {
+    gymModel.qcSystemInit(shop,istrainer).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
       if (ResponseConstant.checkSuccess(response)) {
         shopSingleLiveEvent.setValue(response.data);
       } else {

@@ -16,7 +16,7 @@
         android:background="@drawable/bg_white_corners"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="30dp"
         >
       <ImageView
           android:layout_width="100dp"
@@ -36,15 +36,16 @@
           android:textSize="17sp"
           />
       <LinearLayout
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="25dp"
           android:orientation="horizontal"
           >
         <FrameLayout
             android:id="@+id/fl_group_setting"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="13"
             android:background="@drawable/btn_primary_frame_checked"
             android:checked="true"
             >
@@ -67,14 +68,16 @@
 
         </FrameLayout>
         <Space
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_weight="1.5"
             />
 
         <FrameLayout
             android:id="@+id/fl_private_setting"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="13"
             android:background="@drawable/btn_primary_frame_checked"
             android:checked="true"
             >
@@ -100,15 +103,16 @@
       </LinearLayout>
       <LinearLayout
 
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="15dp"
           android:orientation="horizontal"
           >
         <FrameLayout
             android:id="@+id/fl_train_setting"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="13"
             android:background="@drawable/btn_primary_frame_checked"
             android:checked="true"
             >
@@ -130,14 +134,16 @@
 
         </FrameLayout>
         <Space
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_weight="1.5"
             />
 
         <FrameLayout
             android:id="@+id/fl_shop_setting"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="13"
             android:background="@drawable/btn_primary_frame_checked"
             android:checked="true"
             >
@@ -162,7 +168,7 @@
       </LinearLayout>
       <Button
           android:id="@+id/btn_confirm"
-          android:layout_width="275dp"
+          android:layout_width="match_parent"
           android:layout_height="45dp"
           android:layout_marginTop="25dp"
           android:text="确定"

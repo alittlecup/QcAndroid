@@ -604,6 +604,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
     } else if (intent.getIntExtra(ACTION, -1) == 10) {
       showPage(1);
+    }else if (intent.getIntExtra(ACTION, -1) == 100) {
+      tabview.setCurrentItem(0);
     }
   }
 
