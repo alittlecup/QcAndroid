@@ -1,7 +1,9 @@
 package cn.qingchengfit.gym.pages.apply;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.gym.GymBaseFragment;
@@ -31,35 +33,40 @@ import java.util.List;
   private String positionID;
 
   @Override protected void subscribeUI() {
-    if (AppUtils.getCurApp(getContext()) != 0) {
-      mViewModel.loadGymPositions(gymId);
-      mViewModel.positions.observe(this, gymPositions -> {
-        hideLoading();
-        if (gymPositions != null && !gymPositions.isEmpty()) {
-          List<BottomChooseData> items = new ArrayList<>();
-          for (GymPosition position : gymPositions) {
-            items.add(new BottomChooseData(position.name));
-          }
-          positionChooseDialog = new BottomChooseDialog(getContext(), "TA的职位", items);
-          positionChooseDialog.setOnItemClickListener(position -> {
-            List<GymPosition> value = mViewModel.positions.getValue();
-            GymPosition gymPosition = value.get(position);
-            mBinding.civPosition.setContent(gymPosition.name);
-            positionID = gymPosition.id;
-            return true;
-          });
+    mViewModel.loadGymPositions(gymId);
+    mViewModel.positions.observe(this, gymPositions -> {
+      hideLoading();
+      if (gymPositions != null && !gymPositions.isEmpty()) {
+        List<BottomChooseData> items = new ArrayList<>();
+        for (GymPosition position : gymPositions) {
+          items.add(new BottomChooseData(position.name));
         }
-      });
-    }
+        positionChooseDialog = new BottomChooseDialog(getContext(), "TA的职位", items);
+        positionChooseDialog.setOnItemClickListener(position -> {
+          List<GymPosition> value = mViewModel.positions.getValue();
+          GymPosition gymPosition = value.get(position);
+          mBinding.civPosition.setContent(gymPosition.name);
+          positionID = gymPosition.id;
+          return true;
+        });
+      }
+    });
     showLoading();
     mViewModel.loagAplyOrderInfo(gymId, applyId).observe(this, gymApplyOrder -> {
       hideLoading();
       if (gymApplyOrder != null) {
         if (gymApplyOrder.status != 1) {
-          routeTo("/gym/deal/finish",null);
+          routeTo("/gym/deal/finish", null);
           return;
         }
-        mBinding.civPosition.setContent(gymApplyOrder.position.name);
+        if (TextUtils.isEmpty(gymApplyOrder.position.name)) {
+          mBinding.civPosition.setContent("教练");
+          mBinding.civPosition.setClickable(false);
+          mBinding.tvApplyFrom.setText("通过教练助手App申请");
+        } else {
+          mBinding.civPosition.setContent(gymApplyOrder.position.name);
+          mBinding.tvApplyFrom.setText("通过健身管理App申请");
+        }
         positionID = gymApplyOrder.position.id;
         staff = gymApplyOrder.user;
         mBinding.tvNamePhone.setText(
@@ -99,17 +106,14 @@ import java.util.List;
         dealApply(gymId, applyId, 2);
       }
     });
-    if (AppUtils.getCurApp(getContext()) == 0) {
-      mBinding.civPosition.setContent("教练");
-    } else {
-      mBinding.civPosition.setOnClickListener((View.OnClickListener) v -> {
-        if (positionChooseDialog != null) {
-          positionChooseDialog.show();
-        } else {
-          mViewModel.loadGymPositions(gymId);
-        }
-      });
-    }
+
+    mBinding.civPosition.setOnClickListener((View.OnClickListener) v -> {
+      if (positionChooseDialog != null) {
+        positionChooseDialog.show();
+      } else {
+        mViewModel.loadGymPositions(gymId);
+      }
+    });
     return mBinding;
   }
 

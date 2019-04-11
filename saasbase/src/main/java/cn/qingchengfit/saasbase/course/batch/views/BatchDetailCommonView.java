@@ -598,7 +598,7 @@ public class BatchDetailCommonView extends BaseFragment {
                 showAlert(R.string.sorry_for_no_permission);
                 return;
               }
-              routeTo("/add/", new AddCourseParams().isPrivate(isPrivate).build());
+              routeTo("/add/", new AddCourseParams().isPrivate(isPrivate).notFromList(true).build());
             }
           } else {
             onShowError(qcResponse.getMsg());

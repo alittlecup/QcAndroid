@@ -15,17 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
-
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.bean.NewPushMsg;
 import cn.qingchengfit.bean.RxRefreshList;
-import cn.qingchengfit.bean.SpinnerBean;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -35,7 +30,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.google.gson.Gson;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -48,14 +42,10 @@ import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
-import com.qingchengfit.fitcoach.http.bean.Coach;
-import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
-import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,33 +54,23 @@ import rx.functions.Action1;
 @FragmentWithArgs public class ScheduesFragment extends BaseFragment {
   public static final String TAG = ScheduesFragment.class.getName();
   @Arg @Nullable Long mDateTime;
-	PagerSlidingTabStrip scheduleTab;
-	ViewPager scheduleVp;
-	TextView monthView;
-	TextView tvMonth;
-	FloatingActionsMenu webFloatbtn;
-	View bgShow;
-  //@BindView(R.id.schedule_expend_view) LinearLayout scheduleExpendView;
+  PagerSlidingTabStrip scheduleTab;
+  ViewPager scheduleVp;
+  TextView monthView;
+  TextView tvMonth;
+  FloatingActionsMenu webFloatbtn;
+  View bgShow;
   private FloatingActionButton btn1;
   private FloatingActionButton btn2;
   private FloatingActionButton btn3;
-  private ArrayList<ScheduleBean> scheduleBeans;
-  private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
   private String curSystemId;
-  private int curPostion = 0;
-
-  private QcSchedulesResponse mQcSchedulesResponse;
 
   private DatePicker mDatePicker;
-  private Coach coach;
-  private ArrayList<SpinnerBean> spinnerBeans;
-  private List<Integer> mSystemsId = new ArrayList<>();
   private FragmentAdapter mFragmentAdapter;
-  private Observable<NewPushMsg> mObservable;
   private Observable<String> mObservableReresh;
   private String curModel;
-  private String mTitle;
-
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
 
   public ScheduesFragment() {
   }
@@ -105,7 +85,7 @@ import rx.functions.Action1;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_schedues, container, false);
     scheduleTab = (PagerSlidingTabStrip) view.findViewById(R.id.schedule_tab);
     scheduleVp = (ViewPager) view.findViewById(R.id.schedule_vp);
@@ -141,12 +121,7 @@ import rx.functions.Action1;
     });
 
     PreferenceUtils.setPrefBoolean(getContext(), "is_week_view", false);
-    Gson gson = new Gson();
-    String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
-    if (TextUtils.isEmpty(id)) {
 
-    }
-    coach = gson.fromJson(id, Coach.class);
     //初始化title下拉
     tvMonth.setText(DateUtils.getChineseMonth(new Date()));
     setUpViewPager();
@@ -167,7 +142,7 @@ import rx.functions.Action1;
     });
     if (getContext() != null) {
       new RxPermissions(getActivity()).request(Manifest.permission.READ_CALENDAR,
-        Manifest.permission.WRITE_CALENDAR).subscribe(aBoolean -> {
+          Manifest.permission.WRITE_CALENDAR).subscribe(aBoolean -> {
         if (aBoolean) {
         } else {
           //ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
@@ -216,14 +191,14 @@ import rx.functions.Action1;
         sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
         if (eventScheduleAction.mCoachService != null) {
           if (!eventScheduleAction.mCoachService.has_permission
-            && eventScheduleAction.action != 1) {
+              && eventScheduleAction.action != 1) {
             showAlert(R.string.alert_permission_forbid);
             return;
           } else {
             sb.append("&id=")
-              .append(eventScheduleAction.mCoachService.getId())
-              .append("&model=")
-              .append(eventScheduleAction.mCoachService.getModel());
+                .append(eventScheduleAction.mCoachService.getId())
+                .append("&model=")
+                .append(eventScheduleAction.mCoachService.getModel());
           }
         }
 
@@ -235,28 +210,23 @@ import rx.functions.Action1;
     });
 
     webFloatbtn.setOnFloatingActionsMenuUpdateListener(
-      new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
-        @Override public void onMenuExpanded() {
-          btn1.setEnabled(true);
-          btn2.setEnabled(true);
-          btn3.setEnabled(true);
-          RxBus.getBus().post(new EventInit(false, 2));
-          bgShow.setVisibility(View.VISIBLE);
-          //ViewCompat.setAlpha(bgShow,0);
-          //ViewCompat.animate(bgShow).alpha(1).setDuration(R.integer.anim_time).start();
-        }
+        new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+          @Override public void onMenuExpanded() {
+            btn1.setEnabled(true);
+            btn2.setEnabled(true);
+            btn3.setEnabled(true);
+            RxBus.getBus().post(new EventInit(false, 2));
+            bgShow.setVisibility(View.VISIBLE);
+          }
 
-        @Override public void onMenuCollapsed() {
-          //ViewCompat.animate(bgShow).alpha(0).setDuration(R.integer.anim_time).start();
-          bgShow.setVisibility(View.GONE);
-        }
-      });
+          @Override public void onMenuCollapsed() {
+            bgShow.setVisibility(View.GONE);
+          }
+        });
     if (getParentFragment() instanceof MainScheduleFragment) {
       if (((MainScheduleFragment) getParentFragment()).getCoachService() != null) {
         curSystemId = ((MainScheduleFragment) getParentFragment()).getCoachService().id;
         curModel = ((MainScheduleFragment) getParentFragment()).getCoachService().model;
-      } else {
-
       }
     }
 
@@ -288,10 +258,6 @@ import rx.functions.Action1;
     return view;
   }
 
-  @Override public void onHiddenChanged(boolean hidden) {
-    super.onHiddenChanged(hidden);
-  }
-
   private void setUpViewPager() {
     mFragmentAdapter = new FragmentAdapter(getChildFragmentManager());
     mFragmentAdapter.setCurCenterDay(new Date());
@@ -300,13 +266,13 @@ import rx.functions.Action1;
 
     scheduleTab.setViewPager(scheduleVp);
     scheduleTab.getViewTreeObserver()
-      .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-        @Override public void onGlobalLayout() {
-          CompatUtils.removeGlobalLayout(scheduleTab.getViewTreeObserver(), this);
-          scheduleTab.notifyDataSetChanged();
-          goDateSchedule(mDateTime == null ? new Date() : new Date(mDateTime));
-        }
-      });
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+          @Override public void onGlobalLayout() {
+            CompatUtils.removeGlobalLayout(scheduleTab.getViewTreeObserver(), this);
+            scheduleTab.notifyDataSetChanged();
+            goDateSchedule(mDateTime == null ? new Date() : new Date(mDateTime));
+          }
+        });
     scheduleVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -326,7 +292,14 @@ import rx.functions.Action1;
     });
   }
 
- public void backToady() {
+  @Override public void onResume() {
+    super.onResume();
+    if (loginStatus.isLogined() && !TextUtils.isEmpty(gymWrapper.getGymId())) {
+      goDateSchedule(mDateTime == null ? new Date() : new Date(mDateTime));
+    }
+  }
+
+  public void backToady() {
     goDateSchedule(new Date());
   }
 
@@ -338,16 +311,12 @@ import rx.functions.Action1;
     if (getParentFragment() instanceof MainScheduleFragment) {
       CoachService c = ((MainScheduleFragment) getParentFragment()).getCoachService();
       if (c != null) {
-        RxBus.getBus().post(new EventScheduleAction(c, v,0));
+        RxBus.getBus().post(new EventScheduleAction(c, v, 0));
       } else {
-        new ChooseGymForPermissionFragmentBuilder(v, null,0).build().show(getFragmentManager(), "");
+        new ChooseGymForPermissionFragmentBuilder(v, null, 0).build()
+            .show(getFragmentManager(), "");
       }
     }
-    //webFloatbtn.collapse();
-  }
-
-  @Override public void onStart() {
-    super.onStart();
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -369,11 +338,9 @@ import rx.functions.Action1;
     mFragmentAdapter.notifyDataSetChanged();
     scheduleTab.notifyDataSetChanged();
     scheduleVp.setCurrentItem(mFragmentAdapter.getCurMidPos(), false);
-
-    //scheduleTab.selectChild(mFragmentAdapter.getCurMidPos(),0);
   }
 
- public void onCalendarClick() {
+  public void onCalendarClick() {
     mDatePicker = new DatePicker();
     mDatePicker.show(getFragmentManager(), "");
     if (getActivity() instanceof Main2Activity) {
@@ -396,20 +363,19 @@ import rx.functions.Action1;
   }
 
   @Override public void onDestroyView() {
-    RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
     RxBus.getBus().unregister(RxRefreshList.class.getName(), mObservableReresh);
 
     super.onDestroyView();
   }
 
- public void onMonth() {
+  public void onMonth() {
     getFragmentManager().beginTransaction()
-      .setCustomAnimations(R.anim.slide_fade_in, R.anim.slide_fade_out)
-      .replace(R.id.schedule_frag, new ScheduleWeekFragment())
-      .commitAllowingStateLoss();
+        .setCustomAnimations(R.anim.slide_fade_in, R.anim.slide_fade_out)
+        .replace(R.id.schedule_frag, new ScheduleWeekFragment())
+        .commitAllowingStateLoss();
   }
 
- public void onClick() {
+  public void onClick() {
     webFloatbtn.collapse();
   }
 
@@ -418,13 +384,13 @@ import rx.functions.Action1;
    */
 
   public static class SchedulesVH extends RecyclerView.ViewHolder {
-	TextView itemScheduleTime;
-	TextView itemScheduleClassname;
-	TextView itemScheduleGymname;
-	TextView itemScheduleNum;
-	ImageView itemScheduleClasspic;
-	ImageView itemScheduleStatus;
-	View indicator;
+    TextView itemScheduleTime;
+    TextView itemScheduleClassname;
+    TextView itemScheduleGymname;
+    TextView itemScheduleNum;
+    ImageView itemScheduleClasspic;
+    ImageView itemScheduleStatus;
+    View indicator;
 
     public SchedulesVH(View view) {
       super(view);
@@ -441,7 +407,7 @@ import rx.functions.Action1;
   public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     private String[] weekDays = new String[] {
-      "日", "一", "二", "三", "四", "五", "六"
+        "日", "一", "二", "三", "四", "五", "六"
     };
     private Date curDate = new Date();
 

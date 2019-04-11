@@ -184,7 +184,7 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       showAlert(cn.qingchengfit.saasbase.R.string.sorry_for_no_permission);
       return;
     }
-    routeTo("/batch/add/", new AddBatchParams().mCourse(null).isGroup(mType != 1 ? Boolean.FALSE : Boolean.TRUE).build());
+    routeTo("/batch/add/", new AddBatchParams().mCourse(null).isGroup(mType ==0).build());
   }
 
   @Override public String getFragmentName() {
@@ -216,14 +216,6 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
     return true;
   }
 
-  //@OnClick(R.id.preview) public void onClick() {
-  //  WebActivity.startWeb(
-  //    (mType == Configs.TYPE_PRIVATE ? Configs.PRIVATE_PRIVEIW : Configs.GROUP_PRIVEIW)
-  //      + "?id="
-  //      + gymWrapper.id()
-  //      + "&model="
-  //      +gymWrapper.model(), getContext());
-  //}
 
   @Override public void noMoreLoad(int i) {
 

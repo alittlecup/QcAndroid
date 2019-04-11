@@ -10,14 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.FunctionBean;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.network.HttpThrowable;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
@@ -26,7 +29,6 @@ import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
-import cn.qingchengfit.saascommon.widget.GuideView;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -43,6 +45,7 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.databinding.ManageFragmentBinding;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
+import com.qingchengfit.fitcoach.event.EventScheduleRefresh;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -57,9 +60,10 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     implements FlexibleAdapter.OnItemClickListener, AdapterView.OnItemClickListener {
   CommonFlexAdapter adapter;
   GymDetailChartAdapter mPageAdapter;
-  private GuideView guideView;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
+  @Inject RepoCoachServiceImpl repoCoachService;
+
   private float offSetMaxSize = 0f;
 
   @Override protected void subscribeUI() {
@@ -104,6 +108,22 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
         ((DailyWorkItem) item).setRightTopText(hasSetted ? "" : "未设置");
       }
       adapter.notifyItemChanged(pos);
+    }
+  }
+
+  @Override protected void onVisible() {
+    super.onVisible();
+    String id = gymWrapper.getGymId();
+    if (!TextUtils.isEmpty(id) && loginStatus.isLogined()) {
+      mViewModel.loadGymWelcomeDeta();
+    }
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    String id = gymWrapper.getGymId();
+    if (!TextUtils.isEmpty(id) && loginStatus.isLogined()) {
+      mViewModel.loadGymWelcomeDeta();
     }
   }
 
@@ -215,13 +235,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     startActivity(toWebForGuide);
   }
 
-  private void showGuide() {
-    guideView = GuideView.getInstance();
-    guideView.initGuide(getActivity(), "ManagerFragment");
-    guideView.addGuide(R.layout.page_guide_manager);
-    guideView.setNoScroll();
-  }
-
   private void getServer() {
     Long ccid = 0l;
     try {
@@ -235,6 +248,24 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     }
     if (loginStatus.isLogined()) {
       mViewModel.loadCoachService(newCcid);
+      String finalNewCcid = newCcid;
+      RxRegiste(repoCoachService.readAllServices()
+          .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+          .subscribe(coachServices -> {
+            if (coachServices.size() > 0) {
+              gymWrapper.setCoachService(coachServices.get(0));
+              for (CoachService s : coachServices) {
+                if (s.getId().equals(finalNewCcid)) {
+                  gymWrapper.setCoachService(s);
+                  break;
+                }
+              }
+              setGymInfo(gymWrapper.getCoachService());
+            } else {//无场馆状态
+              RxBus.getBus().post(new EventLoginChange());
+            }
+            RxBus.getBus().post(new EventScheduleRefresh());
+          }, new HttpThrowable()));
     }
   }
 
@@ -265,7 +296,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     PhotoUtils.smallCircle(mBinding.imgGymPhoto, coachService.getPhoto());
     mViewModel.loadPremission(App.coachid + "");
     mViewModel.loadGymWelcomeDeta();
-    showGuide();
   }
 
   private void upDatePremission(QcResponsePermission.Data data) {
@@ -319,10 +349,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     items.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_student)
         .text(getString(R.string.student))
         .build()));
-    //items.add(new DailyWorkItem(
-    //    new FunctionBean.Builder().resImg(R.drawable.ck_ic_modules_workbench_counter)
-    //        .text("收银台")
-    //        .build()));
     items.add(new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.ic_function_more).text("管理功能").build()));
     if (adapter != null) {

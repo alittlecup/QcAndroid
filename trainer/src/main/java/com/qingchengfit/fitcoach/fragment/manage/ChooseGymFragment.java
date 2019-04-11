@@ -96,7 +96,6 @@ import rx.schedulers.Schedulers;
       gymID = gymWrapper.getCoachService().gym_id;
     }
     mDatas.clear();
-    //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
     mAdapter = new CommonFlexAdapter(mDatas, this);
     mAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     recyclerview.setHasFixedSize(true);

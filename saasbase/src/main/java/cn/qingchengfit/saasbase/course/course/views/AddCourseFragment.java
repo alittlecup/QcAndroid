@@ -50,6 +50,7 @@ import javax.inject.Inject;
   @Inject GymWrapper gymWrapper;
 
   @Need public Boolean isPrivate;
+  @Need public Boolean notFromList;
 
   private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
     @Override public boolean onMenuItemClick(MenuItem item) {
@@ -173,7 +174,12 @@ import javax.inject.Inject;
 
   @Override public void createSuccess(String string) {
     ToastUtils.show(string);
-    routeTo("course", "/choose/",
-        CourseChooseParams.builder().src("addbatch").mIsPrivate(isPrivate).build());
+    if (notFromList) {
+      routeTo("course", "/choose/",
+          CourseChooseParams.builder().src("addbatch").mIsPrivate(isPrivate).build());
+      popBack();
+    } else {
+      popBack();
+    }
   }
 }

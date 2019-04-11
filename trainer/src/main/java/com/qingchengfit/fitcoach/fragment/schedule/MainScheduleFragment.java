@@ -92,7 +92,6 @@ public class MainScheduleFragment extends BaseFragment {
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-
     setVisible();
   }
 

@@ -37,7 +37,6 @@ public class AddCoursePresenter extends BasePresenter<AddCoursePresenter.MVPview
         @Override public void onNext(QcDataResponse qcDataResponse) {
           if (ResponseConstant.checkSuccess(qcDataResponse)){
             mvpView.createSuccess("添加成功");
-            mvpView.popBack();
           }else {
             mvpView.onShowError(qcDataResponse.getMsg());
           }

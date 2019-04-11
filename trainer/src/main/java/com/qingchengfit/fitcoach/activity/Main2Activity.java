@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.UpdateVersion;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventCloseApp;
 import cn.qingchengfit.events.EventLoginChange;
@@ -51,6 +52,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.event.EventInit;
+import com.qingchengfit.fitcoach.event.EventScheduleRefresh;
+import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
@@ -106,6 +109,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   MaterialDialog logoutDialog;
   @Inject LoginStatus loginStatus;
   @Inject RepoCoachServiceImpl repoCoachService;
+  @Inject GymWrapper gymWrapper;
   @Inject BaseRouter baseRouter;
   @Inject QcRestRepository qcRestRepository;
   AsyncDownloader mDownloadThread;
@@ -578,7 +582,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
       try {
         String path = intent.getData().toString();
         url = path.split("openurl/")[1];
-        showPage(2);
+        tabview.setCurrentItem(2);
         if (!url.startsWith("http")) url = "http://" + url;
         WebActivity.startWeb(url, this);
       } catch (Exception e) {
@@ -603,9 +607,14 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     } else if (intent.getIntExtra(ACTION, -1) == INIT) {
 
     } else if (intent.getIntExtra(ACTION, -1) == 10) {
-      showPage(1);
-    }else if (intent.getIntExtra(ACTION, -1) == 100) {
+      tabview.setCurrentItem(1);
+    }
+    if (intent.getIntExtra(ACTION, -1) == 100) {
       tabview.setCurrentItem(0);
+      if (!TextUtils.isEmpty(gymWrapper.getGymId())) {
+        RxBus.getBus().post(EventScheduleRefresh.class);
+        RxBus.getBus().post(new EventScheduleService(gymWrapper.getCoachService()));
+      }
     }
   }
 
@@ -658,8 +667,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     } else if (position == 1) {
       return new UnloginManageFragment();
     } else if (position == 2) {
-      return MainWebFragment.newInstance(
-          Configs.Server + "mobile/coach/discover/");
+      return MainWebFragment.newInstance(Configs.Server + "mobile/coach/discover/");
     } else if (position == 3) {
       return new MainMsgFragment();
     } else {
