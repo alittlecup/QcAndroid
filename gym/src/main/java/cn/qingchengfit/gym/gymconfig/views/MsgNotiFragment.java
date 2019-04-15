@@ -15,6 +15,7 @@ import cn.qingchengfit.gym.gymconfig.bean.ShopConfig;
 import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.gym.gymconfig.presenter.MsgNotiPresenter;
 import cn.qingchengfit.gym.R;
+import cn.qingchengfit.gym.routers.GymParamsInjector;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
@@ -59,6 +60,7 @@ import javax.inject.Inject;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    GymParamsInjector.inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

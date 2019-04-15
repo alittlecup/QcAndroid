@@ -10,10 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import cn.qingchengfit.gym.R;
 import cn.qingchengfit.gym.gymconfig.bean.ShopConfig;
 import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.gym.gymconfig.presenter.OrderLimitPresenter;
-import cn.qingchengfit.gym.R;
+import cn.qingchengfit.gym.routers.GymParamsInjector;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.utils.ToastUtils;
@@ -22,7 +23,6 @@ import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ import javax.inject.Inject;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
+    GymParamsInjector.inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

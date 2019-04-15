@@ -546,7 +546,6 @@ import rx.functions.Func1;
       Intent to = new Intent(getContext().getPackageName(), uri);
       if (getActivity() instanceof BaseActivity) {
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())
-          //&& !uri.getPath().startsWith("/choose")
         ) {
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else {
