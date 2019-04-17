@@ -11,8 +11,6 @@ import cn.qingchengfit.network.ActivityLifeCycleEvent;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +31,8 @@ public class SigninConfigCardtypePresenter extends BasePresenter {
     }
 
     public void getCardCostList() {
-        HashMap<String, Object> params = gymWrapper.getParams();
 
+        HashMap<String, Object> params = gymWrapper.getParams();
         Observable observable =  restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId, params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {
             @Override protected void _onNext(SignInCardCostBean.Data signInCardCostBean) {
@@ -46,6 +44,7 @@ public class SigninConfigCardtypePresenter extends BasePresenter {
                 view.onShowError(message);
             }
         }));
+
     }
 
     public void confirm(List<SignInCostBody.CardCost> card_costs) {

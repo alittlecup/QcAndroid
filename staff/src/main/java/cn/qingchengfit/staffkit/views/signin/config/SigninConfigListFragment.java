@@ -209,7 +209,7 @@ public class SigninConfigListFragment extends BaseFragment
         }
         getFragmentManager().beginTransaction()
             .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-            .replace(mCallbackActivity.getFragId(), new SignInTypeFragment())
+            .replace(mCallbackActivity.getFragId(), new SignInTimeListFragment())
             .addToBackStack(null)
             .commit();
         break;
@@ -234,6 +234,9 @@ public class SigninConfigListFragment extends BaseFragment
             .replace(mCallbackActivity.getFragId(), new SignInConfigScreenFragment())
             .addToBackStack(null)
             .commit();
+        break;
+      case R.id.layout_signin_time:
+
         break;
     }
   }
@@ -281,13 +284,6 @@ public class SigninConfigListFragment extends BaseFragment
   @Override public void onStatusSuccess() {
     if (swOpen.isExpanded()) {
       if (!setted) {
-        //isJumping = true;
-        //getFragmentManager().beginTransaction()
-        //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_in)
-        //    .replace(mCallbackActivity.getFragId(),
-        //        new SignInTypeFragmentBuilder().autoIn(1).build())
-        //    .addToBackStack(null)
-        //    .commit();
       }
     } else {
 

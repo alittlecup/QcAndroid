@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import cn.qingchengfit.widgets.R;
 import com.bigkoo.pickerview.lib.ArrayWheelAdapter;
 import com.bigkoo.pickerview.lib.NumericWheelAdapter;
@@ -39,92 +40,101 @@ import java.util.List;
  */
 
 public class SimpleScrollPicker extends Dialog {
-    private LayoutInflater mLayoutInflater;
-    private View rootView;
-    private WheelView wheelview;
-    private SelectItemListener listener;
-    private String label = "";
+  private LayoutInflater mLayoutInflater;
+  private View rootView;
+  private WheelView wheelview;
+  private TextView tvLeft;
+  private SelectItemListener listener;
+  private String label = "";
 
-    public SimpleScrollPicker(@NonNull Context context) {
-        this(context, true, null);
-    }
+  public SimpleScrollPicker(@NonNull Context context) {
+    this(context, true, null);
+  }
 
-    public SimpleScrollPicker(@NonNull Context context, @StyleRes int themeResId) {
-        this(context, true, null);
-    }
+  public SimpleScrollPicker(@NonNull Context context, @StyleRes int themeResId) {
+    this(context, true, null);
+  }
 
-    protected SimpleScrollPicker(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, R.style.ChoosePicDialogStyle);
-        init(context);
-    }
+  protected SimpleScrollPicker(@NonNull Context context, boolean cancelable,
+      @Nullable OnCancelListener cancelListener) {
+    super(context, R.style.ChoosePicDialogStyle);
+    init(context);
+  }
 
-    private void init(Context context) {
-        mLayoutInflater = LayoutInflater.from(context);
-        rootView = mLayoutInflater.inflate(R.layout.dialog_simple_picker, null);
-        wheelview = (WheelView) rootView.findViewById(R.id.wheelview);
-        rootView.findViewById(R.id.btn_comfirm).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                if (listener != null) {
-                    listener.onSelectItem(wheelview.getCurrentItem());
-                }
-                dismiss();
-            }
-        });
-    }
+  private void init(Context context) {
+    mLayoutInflater = LayoutInflater.from(context);
+    rootView = mLayoutInflater.inflate(R.layout.dialog_simple_picker, null);
+    wheelview = (WheelView) rootView.findViewById(R.id.wheelview);
+    tvLeft=rootView.findViewById(R.id.tv_left);
+    rootView.findViewById(R.id.btn_comfirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (listener != null) {
+          listener.onSelectItem(wheelview.getCurrentItem());
+        }
+        dismiss();
+      }
+    });
+  }
 
-    public String getLabel() {
-        return label;
-    }
+  public String getLabel() {
+    return label;
+  }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
-    public void show(List<String> datas, int pos) {
-        wheelview.setAdapter(new ArrayWheelAdapter<String>((ArrayList<String>) datas));// 设置"年"的显示数据
-        wheelview.TEXT_SIZE = 50;
-        wheelview.setCyclic(false);
-        wheelview.setLabel(label);// 添加文字
-        wheelview.setCurrentItem(pos);
-        show();
-    }
+  public void setTvLeft(CharSequence text) {
+    tvLeft.setText(text);
+  }
 
-    public void show(int min, int max, int pos) {
-        show(min, max, 1, pos);
-    }
+  public void show(List<String> datas, int pos) {
+    // 设置"年"的显示数据
+    wheelview.setAdapter(new ArrayWheelAdapter<>((ArrayList<String>) datas));
+    wheelview.TEXT_SIZE = 50;
+    wheelview.setCyclic(false);
+    // 添加文字
+    wheelview.setLabel(label);
+    wheelview.setCurrentItem(pos);
+    show();
+  }
 
-    public void show(int min, int max, int interval, int pos) {
-        wheelview.setAdapter(new NumericWheelAdapter(min, max, interval));// 设置"年"的显示数据
-        wheelview.TEXT_SIZE = 50;
-        wheelview.setCyclic(false);
-        wheelview.setCurrentItem(pos);
-        wheelview.setLabel(label);// 添加文字
+  public void show(int min, int max, int pos) {
+    show(min, max, 1, pos);
+  }
 
-        show();
-    }
+  public void show(int min, int max, int interval, int pos) {
+    wheelview.setAdapter(new NumericWheelAdapter(min, max, interval));// 设置"年"的显示数据
+    wheelview.TEXT_SIZE = 50;
+    wheelview.setCyclic(false);
+    wheelview.setCurrentItem(pos);
+    wheelview.setLabel(label);// 添加文字
 
-    public SelectItemListener getListener() {
-        return listener;
-    }
+    show();
+  }
 
-    public void setListener(SelectItemListener listener) {
-        this.listener = listener;
-    }
+  public SelectItemListener getListener() {
+    return listener;
+  }
 
-    @Override public void show() {
-        Window window = this.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-        window.setWindowAnimations(R.style.ButtomDialogStyle);
-        window.setContentView(rootView);
-        super.show();
-    }
+  public void setListener(SelectItemListener listener) {
+    this.listener = listener;
+  }
 
-    public interface SelectItemListener {
-        void onSelectItem(int pos);
-    }
+  @Override public void show() {
+    Window window = this.getWindow();
+    window.setGravity(Gravity.BOTTOM);
+    window.getDecorView().setPadding(0, 0, 0, 0);
+    WindowManager.LayoutParams lp = window.getAttributes();
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    window.setAttributes(lp);
+    window.setWindowAnimations(R.style.ButtomDialogStyle);
+    window.setContentView(rootView);
+    super.show();
+  }
+
+  public interface SelectItemListener {
+    void onSelectItem(int pos);
+  }
 }

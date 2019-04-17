@@ -15,14 +15,14 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@drawable/bg_qr_code"
-      android:gravity="center_horizontal"
       >
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="280dp"
         android:layout_height="330dp"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="45dp"
         android:clipToPadding="false"
         android:elevation="4dp"
         android:layerType="software"
@@ -69,6 +69,17 @@
             />
       </LinearLayout>
     </android.support.v7.widget.CardView>
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="415dp"
+        android:text="扫描会员入场码"
+        android:textSize="14sp"
+        android:background="@drawable/btn_qc_rect_round_coner_grey"
+        android:textColor="@color/colorPrimary"
+        />
 
   </FrameLayout>
 </LinearLayout>

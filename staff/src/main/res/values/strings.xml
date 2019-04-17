@@ -825,6 +825,7 @@
   <string name="signin_use_qrcode">扫码签到</string>
   <string name="signin_use_zq">智奇门禁</string>
   <string name="signin_settlement">签到结算</string>
+  <string name="signin_checkin_time">人场时段</string>
   <string name="text_zq_introduce">智奇门禁介绍</string>
   <string name="text_zq_buy">智奇门禁购买</string>
 

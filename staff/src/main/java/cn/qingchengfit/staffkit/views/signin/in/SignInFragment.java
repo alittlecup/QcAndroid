@@ -96,9 +96,6 @@ public class SignInFragment extends BaseFragment {
                         } else {
                             transaction.hide(signInStudentListFragment).show(signInListFragment).commit();
                         }
-                        //                            transaction.replace(R.id.signin_frag, signInListFragment)
-                        //                                    .addToBackStack(null)
-                        //                                    .commit();
                     } else {
                         if (signInStudentListFragment == null) {
                             signInStudentListFragment = SignInStudentListFragment.newInstance(true);
@@ -108,9 +105,6 @@ public class SignInFragment extends BaseFragment {
                         } else {
                             transaction.hide(signInListFragment).show(signInStudentListFragment).commit();
                         }
-                        //                            transaction.replace(R.id.signin_frag, signInStudentListFragment)
-                        //                                    .addToBackStack(null)
-                        //                                    .commit();
                     }
                 }
             });

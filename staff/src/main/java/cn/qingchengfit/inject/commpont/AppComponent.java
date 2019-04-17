@@ -368,7 +368,7 @@ import javax.inject.Singleton;
     AppComponent.ChatFriendAllChooseModule.class, AppComponent.ChatChooseInGymModule.class,
     AppComponent.GymDetailShowGuideDialogModule.class, AppComponent.MutiChooseSiteModule.class,
     AppComponent.BatchPayOnlineModule.class, AppComponent.ChooseBrandModule.class,
-    AppComponent.WebModule.class,// AppComponent.QRModule.class, todo 这里移除后是否有问题
+    AppComponent.WebModule.class,
     AppComponent.SimpleChooseModule.class, AppComponent.WriteDescModule.class,
     AppComponent.CoachDetailFragmentModule.class, AppComponent.HomeUnLoginFragmentModule.class,
     AppComponent.WardrobeListFragmentModule.class, AppComponent.WardrobeDetailFragmentModule.class,
@@ -2105,34 +2105,7 @@ public interface AppComponent {
         extends AndroidInjector.Builder<RankCountFragment> {
     }
   }
-  //
-  //void inject(SignInActivity activity);
-  //
-  //void inject(SignInHomeFragment fragment);
-  //
-  //void inject(SignInFragment fragment);
-  //
-  //void inject(SignOutFragment fragment);
-  //
-  //void inject(SignInConfigFragment fragment);
-  //
-  //void inject(SignInLogFragment fragment);
-  //
-  //void inject(SignInListFragment fragment);
-  //
-  //void inject(SignInStudentListFragment fragment);
-  //
-  //void inject(SignOutListFragment fragment);
-  //
-  //void inject(SinginConfigWardrobeFragment fragment);
-  //
-  //void inject(SigninConfigCardtypeListFragment fragment);
-  //
-  //void inject(SignInConfigScreenFragment fragment);
-  //
-  //void inject(SigninConfigListFragment fragment);
-  //
-  //void inject(SignInTypeFragment fragment);
+
 
   @Subcomponent() public interface SignUpChangeNameFragmentSubcomponent
       extends AndroidInjector<SignUpChangeNameFragment> {

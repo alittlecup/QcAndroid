@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInConfig;
@@ -59,10 +58,8 @@ import timber.log.Timber;
   TabLayout tabLayout;
   ViewPager viewpager;
 
-  //tab 的 adapter
   SignInViewpagerAdapter adapter;
 
-  @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject StaffRespository restRepository;
   @Inject SerPermisAction serPermisAction;

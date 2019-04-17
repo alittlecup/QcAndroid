@@ -74,6 +74,22 @@
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
       android:visibility="gone"
+      android:orientation="horizontal"
+      tools:visibility="visible"
+      >
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/layout_signin_time"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="15dp"
+      android:background="@drawable/bg_white_click"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
       tools:visibility="visible"
       >
 
@@ -81,10 +97,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/signin_settlement"
+        android:text="@string/signin_checkin_time"
         style="@style/QcTextStyleStandardDark"
         />
-
     <TextView
         android:id="@+id/tv_signin_type_setted"
         android:layout_width="wrap_content"

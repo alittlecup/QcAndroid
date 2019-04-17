@@ -1,7 +1,7 @@
 /*
  *  Android Wheel Control.
  *  https://code.google.com/p/android-wheel/
- *  
+ *
  *  Copyright 2010 Yuri Kanivets
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -241,10 +241,10 @@ public class WheelView extends View {
     scroller = new Scroller(context);
   }
 
-  private int compareLength(){
+  private int compareLength() {
     int max = 0;
-    if (adapter != null){
-      for (int i = 0; i < adapter.getItemsCount(); i++){
+    if (adapter != null) {
+      for (int i = 0; i < adapter.getItemsCount(); i++) {
         int length = adapter.getItem(i).length();
         max = max > length ? max : length;
       }
@@ -588,7 +588,8 @@ public class WheelView extends View {
       return 0;
     }
 
-    int adapterLength = adapter.getMaximumLength() != 0 ? adapter.getMaximumLength() : maxLength + 1;
+    int adapterLength =
+        adapter.getMaximumLength() != 0 ? adapter.getMaximumLength() : maxLength + 1;
     if (adapterLength > 0) {
       return adapterLength;
     }
@@ -641,7 +642,8 @@ public class WheelView extends View {
     } else {
       itemsWidth = 0;
     }
-    itemsWidth += ADDITIONAL_ITEMS_SPACE; // make it some more
+    // make it some more
+    itemsWidth += ADDITIONAL_ITEMS_SPACE;
 
     labelWidth = 0;
     if (label != null && label.length() > 0) {
@@ -678,7 +680,8 @@ public class WheelView extends View {
         itemsWidth = (int) newWidthItems;
         labelWidth = pureWidth - itemsWidth;
       } else {
-        itemsWidth = pureWidth + LABEL_OFFSET; // no label
+        // no label
+        itemsWidth = pureWidth + LABEL_OFFSET;
       }
     }
 
@@ -707,7 +710,7 @@ public class WheelView extends View {
     if (!isScrollingPerformed && (valueLayout == null || valueLayout.getWidth() > widthItems)) {
       String text = getAdapter() != null ? getAdapter().getItem(currentItem) : null;
       //valuePaint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
-      valuePaint.setTextSize(TEXT_SIZE );
+      valuePaint.setTextSize(TEXT_SIZE);
       valueLayout = new StaticLayout(text != null ? text : "", valuePaint, widthItems,
           widthLabel > 0 ? Layout.Alignment.ALIGN_CENTER : Layout.Alignment.ALIGN_CENTER, 1,
           ADDITIONAL_ITEM_HEIGHT, false);
@@ -799,12 +802,11 @@ public class WheelView extends View {
 
     Rect bounds = new Rect();
     itemsLayout.getLineBounds(visibleItems / 2, bounds);
-
-    //		canvas.scale(1.2f, 1.2f);
-    // draw label
+    float tratranslateX = 0;
     if (labelLayout != null) {
+      tratranslateX = labelLayout.getWidth() + LABEL_OFFSET;
       canvas.save();
-      canvas.translate(itemsLayout.getWidth() + LABEL_OFFSET, bounds.top);
+      canvas.translate(0, bounds.top);
       labelLayout.draw(canvas);
       canvas.restore();
     }
@@ -812,7 +814,7 @@ public class WheelView extends View {
     // draw current value
     if (valueLayout != null) {
       canvas.save();
-      canvas.translate(0, bounds.top + scrollingOffset);
+      canvas.translate(tratranslateX, bounds.top + scrollingOffset);
       valueLayout.draw(canvas);
       canvas.restore();
     }
@@ -828,7 +830,11 @@ public class WheelView extends View {
     canvas.save();
 
     int top = itemsLayout.getLineTop(1);
-    canvas.translate(0, -top + scrollingOffset);
+    float translateX = 0;
+    if (labelLayout != null) {
+      translateX = labelLayout.getWidth() + LABEL_OFFSET;
+    }
+    canvas.translate(translateX, -top + scrollingOffset);
 
     itemsPaint.setColor(ITEMS_TEXT_COLOR);
     itemsPaint.drawableState = getDrawableState();
