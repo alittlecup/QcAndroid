@@ -7,9 +7,8 @@ public class SignTimeListVM extends BaseViewModel {
   @Inject public SignTimeListVM() {
 
   }
+
   public void loadSinInTimes() {
-
-
 
   }
 }

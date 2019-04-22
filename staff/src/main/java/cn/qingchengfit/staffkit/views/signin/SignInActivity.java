@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.signin;
 
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,6 +22,9 @@ import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Trunk;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
@@ -34,11 +38,13 @@ import rx.functions.Action1;
     SignInTimeListFragment.class, SignInTimeSettingFragment.class, SignInTimePayOnceFragment.class
 })
 public class SignInActivity extends BaseActivity
-    implements FragCallBack, SignInPresenter.SignInView {
+    implements FragCallBack, SignInPresenter.SignInView , HasSupportFragmentInjector {
 
   public static Integer checkinWithLocker = 1;
   public static String checkin_url = "";
   public static String checkout_url = "";
+  @Inject DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
   Toolbar toolbar;
   TextView toolbarTitile;
   FrameLayout studentFrag;
@@ -165,5 +171,9 @@ public class SignInActivity extends BaseActivity
 
   @Override public void onFail() {
 
+  }
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingAndroidInjector;
   }
 }

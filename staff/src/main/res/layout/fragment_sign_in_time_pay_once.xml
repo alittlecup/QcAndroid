@@ -37,18 +37,7 @@
         app:civ_lable="单次支付"
         app:civ_unit="元"
         />
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-    <Button
-        android:id="@+id/btn_save"
-        android:text="保  存"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        style="@style/QcBtnPrimary"
-        />
+
 
   </LinearLayout>
 </layout>

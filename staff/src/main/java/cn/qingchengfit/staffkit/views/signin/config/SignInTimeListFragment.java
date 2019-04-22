@@ -33,7 +33,7 @@ public class SignInTimeListFragment
     initRecyclerView();
     initListener();
     mViewModel.loadSinInTimes();
-    mBinding.setToolbarModel(new ToolbarModel("入场时间"));
+    mBinding.setToolbarModel(new ToolbarModel("入场时段"));
     initToolbar(mBinding.includeToolbar.toolbar);
     return mBinding;
   }
@@ -55,7 +55,7 @@ public class SignInTimeListFragment
   @Override public boolean onItemClick(int i) {
     IFlexible item = mAdapter.getItem(i);
     if (item instanceof SignTimeListItem) {
-
+      routeTo(SignInTimeSettingFragment.getInstance(true));
     }
     return false;
   }

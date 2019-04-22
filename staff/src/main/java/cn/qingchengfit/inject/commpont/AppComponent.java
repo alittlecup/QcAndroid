@@ -52,6 +52,7 @@ import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.staff.di.BindSettingActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
+import cn.qingchengfit.staff.di.BindSignInActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -307,7 +308,7 @@ import javax.inject.Singleton;
     AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindImportExportActivity.class,
 
-    BindStaffCourseActivity.class,
+    BindStaffCourseActivity.class,BindSignInActivity.class,
     BindStaffStaffActivity.class, CardModule.class,
      BindSaasCommActivity.class,
     BindUserActivity.class, BindLoginActivity.class,
@@ -351,7 +352,7 @@ import javax.inject.Singleton;
     AppComponent.SiteListModule.class, AppComponent.SiteDetailModule.class,
     AppComponent.ChooseSiteModule.class, AppComponent.MutiChooseSiteModule.class,
     AppComponent.ScheduleModule.class, AppComponent.ScheduleListModule.class,
-    AppComponent.SignInModule.class, AppComponent.SignInHomeModule.class,
+    AppComponent.SignInHomeModule.class,
     AppComponent.SignInFragModule.class, AppComponent.SignOutModule.class,
     AppComponent.SignInConfigModule.class, AppComponent.SignInLogModule.class,
     AppComponent.SignInListModule.class, AppComponent.SignInStudentListModule.class,
@@ -494,7 +495,6 @@ import javax.inject.Singleton;
      * 聊天
      */
     AppComponent.JobSearchChatModule.class, AppComponent.RecruitMessageListFragmentModule.class,
-    //AppComponent.JobSearchChatModule.class,
     /**
      * 消息
      */
@@ -1001,17 +1001,6 @@ public interface AppComponent {
         extends AndroidInjector.Builder<SearchResultFragment> {
     }
   }
-  //void inject(GymDetailFragment gymDetailFragment);
-  //
-  //void inject(GymMoreFragment gymDetailFragment);
-  //
-  //void inject(GymExpireFragment gymDetailFragment);
-  //
-  //void inject(UpgrateGymFragment gymDetailFragment);
-  //
-  //void inject(UpgradeInfoDialogFragment gymDetailFragment);
-  //
-  //void inject(TrialProDialogFragment gymDetailFragment);
 
   @Subcomponent() public interface DistrictAddSubcomponent
       extends AndroidInjector<DistrictAddFragment> {
@@ -1105,11 +1094,7 @@ public interface AppComponent {
   /**
    * 签到
    */
-  @Subcomponent() public interface SignInSubcomponent extends AndroidInjector<SignInActivity> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<SignInActivity> {
-    }
-  }
+
 
   @Subcomponent() public interface SignInHomeSubcomponent
       extends AndroidInjector<SignInHomeFragment> {
@@ -2849,11 +2834,7 @@ public interface AppComponent {
         ScheduleListSubcomponent.Builder builder);
   }
 
-  @Module(subcomponents = SignInSubcomponent.class) abstract class SignInModule {
-    @Binds @IntoMap @ActivityKey(SignInActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-        SignInSubcomponent.Builder builder);
-  }
+
 
   @Module(subcomponents = SignInHomeSubcomponent.class) abstract class SignInHomeModule {
     @Binds @IntoMap @FragmentKey(SignInHomeFragment.class)

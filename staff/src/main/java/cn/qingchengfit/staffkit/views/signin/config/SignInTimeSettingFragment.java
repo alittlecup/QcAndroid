@@ -2,16 +2,22 @@ package cn.qingchengfit.staffkit.views.signin.config;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.FragmentSigninTimeSettingBinding;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import com.bigkoo.pickerview.SimpleScrollPicker;
@@ -29,18 +35,39 @@ import javax.inject.Inject;
 public class SignInTimeSettingFragment
     extends SaasBindingFragment<FragmentSigninTimeSettingBinding, SignInTimeSettingVM> {
   @Inject GymWrapper gymWrapper;
+  private boolean delAble;
 
   @Override protected void subscribeUI() {
 
   }
 
+  public static SignInTimeSettingFragment getInstance(boolean delAble) {
+    SignInTimeSettingFragment fragment = new SignInTimeSettingFragment();
+    fragment.setArguments(new BundleBuilder().withBoolean("delAble", delAble).build());
+    return fragment;
+  }
+
   @Override public FragmentSigninTimeSettingBinding initDataBinding(LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     mBinding = FragmentSigninTimeSettingBinding.inflate(inflater, container, false);
+    if (getArguments() != null) {
+      delAble = getArguments().getBoolean("delAble", false);
+    }
     initListener();
-    mBinding.setToolbarModel(new ToolbarModel("入场时间"));
-    initToolbar(mBinding.includeToolbar.toolbar);
+    initToolbar();
+    mBinding.civTrainCount.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+    mBinding.btnDel.setVisibility(delAble ? View.VISIBLE : View.GONE);
     return mBinding;
+  }
+
+  private void initToolbar() {
+    ToolbarModel toolbarModel = new ToolbarModel("入场时段");
+    toolbarModel.setMenu(R.menu.menu_save);
+    toolbarModel.setListener(menuItem -> {
+      return false;
+    });
+    mBinding.setToolbarModel(toolbarModel);
+    initToolbar(mBinding.includeToolbar.toolbar);
   }
 
   private void initListener() {
@@ -57,7 +84,7 @@ public class SignInTimeSettingFragment
     RxView.clicks(mBinding.civTimeWeek)
         .compose(RxHelper.schedulersClickTransformer())
         .subscribe(v -> {
-
+          routeTo(new SignTimeWeekChooseFragment());
         });
     RxView.clicks(mBinding.tvChangeDuration)
         .compose(RxHelper.schedulersClickTransformer())

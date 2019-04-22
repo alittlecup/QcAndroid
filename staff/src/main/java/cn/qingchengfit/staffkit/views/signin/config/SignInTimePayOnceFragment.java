@@ -2,13 +2,15 @@ package cn.qingchengfit.staffkit.views.signin.config;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.FragmentSignInTimePayOnceBinding;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -23,7 +25,16 @@ public class SignInTimePayOnceFragment extends SaasCommonFragment {
       @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = FragmentSignInTimePayOnceBinding.inflate(inflater, container, false);
-    mBinding.setToolbarModel(new ToolbarModel("入场时间"));
+
+    ToolbarModel toolbarModel = new ToolbarModel("入场时间");
+    toolbarModel.setMenu(R.menu.menu_save);
+    toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem menuItem) {
+
+        return false;
+      }
+    });
+    mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.swOpen.setOnCheckedChangeListener((buttonView, isChecked) -> {
       if(isChecked){
@@ -36,11 +47,7 @@ public class SignInTimePayOnceFragment extends SaasCommonFragment {
 
       }
     });
-    RxView.clicks(mBinding.btnSave)
-        .compose(RxHelper.schedulersClickTransformer())
-        .subscribe(v->{
 
-        });
 
     return mBinding.getRoot();
   }

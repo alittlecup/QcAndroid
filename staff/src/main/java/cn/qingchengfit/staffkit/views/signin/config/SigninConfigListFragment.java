@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.HttpUtil;
@@ -64,14 +63,13 @@ import timber.log.Timber;
 public class SigninConfigListFragment extends BaseFragment
     implements ModuleConfigsPresenter.MVPView, ZqAccessPresenter.MVPView {
 
-  @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject StaffRespository restRepository;
   @Inject ModuleConfigsPresenter presenter;
   @Inject IPermissionModel permissionModel;
   TextView tvSigninTypeSetted;
   TextView btnHowToUse;
-  LinearLayout layoutSigninType;
+  LinearLayout layoutSigninTime;
   LinearLayout layoutSigninWardrobe;
   LinearLayout layoutSigninScreen;
   ExpandedLayout swOpen;
@@ -90,7 +88,7 @@ public class SigninConfigListFragment extends BaseFragment
     View view = inflater.inflate(R.layout.fragment_signin_config_list, container, false);
     tvSigninTypeSetted = (TextView) view.findViewById(R.id.tv_signin_type_setted);
     btnHowToUse = (TextView) view.findViewById(R.id.btn_how_to_use);
-    layoutSigninType = (LinearLayout) view.findViewById(R.id.layout_signin_type);
+    layoutSigninTime = (LinearLayout) view.findViewById(R.id.layout_signin_time);
     layoutSigninWardrobe = (LinearLayout) view.findViewById(R.id.layout_signin_wardrobe);
     layoutSigninScreen = (LinearLayout) view.findViewById(R.id.layout_signin_screen);
     swOpen = (ExpandedLayout) view.findViewById(R.id.sw_open);
@@ -119,7 +117,7 @@ public class SigninConfigListFragment extends BaseFragment
         onSignUseZq();
       }
     });
-    view.findViewById(R.id.layout_signin_type).setOnClickListener(new View.OnClickListener() {
+    view.findViewById(R.id.layout_signin_time).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         SigninConfigListFragment.this.onClick(v);
       }
@@ -141,9 +139,11 @@ public class SigninConfigListFragment extends BaseFragment
     Button button = view.findViewById(R.id.btn_first_setting);
 
     swOpen.setOnCheckedChangeListener((buttonView, isChecked) -> {
-      if (!isAutoOpen) presenter.putModuleConfigs(isChecked);
+      if (!isAutoOpen) {
+        presenter.putModuleConfigs(isChecked);
+      }
       layoutSigninScreen.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-      layoutSigninType.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+      layoutSigninTime.setVisibility(isChecked ? View.VISIBLE : View.GONE);
       layoutSigninWardrobe.setVisibility(isChecked ? View.VISIBLE : View.GONE);
       isAutoOpen = false;
       button.setEnabled(isChecked);
@@ -202,7 +202,7 @@ public class SigninConfigListFragment extends BaseFragment
 
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.layout_signin_type:
+      case R.id.layout_signin_time:
         if (!permissionModel.check(PermissionServerUtils.CHECKIN_HELP)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
@@ -235,8 +235,7 @@ public class SigninConfigListFragment extends BaseFragment
             .addToBackStack(null)
             .commit();
         break;
-      case R.id.layout_signin_time:
-
+      default:
         break;
     }
   }
@@ -254,7 +253,9 @@ public class SigninConfigListFragment extends BaseFragment
   }
 
   @Override public void onModuleStatus(ScoreStatus.ModuleBean moduleBean) {
-    if (moduleBean.isCheckin()) isAutoOpen = true;
+    if (moduleBean.isCheckin()) {
+      isAutoOpen = true;
+    }
     swOpen.setExpanded(moduleBean.isCheckin());
 
     Observable observable =
