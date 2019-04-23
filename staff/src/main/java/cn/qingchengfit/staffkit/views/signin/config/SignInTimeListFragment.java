@@ -8,10 +8,12 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.staffkit.databinding.FragmentSigninTimeBinding;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
+import cn.qingchengfit.staffkit.views.signin.bean.SignInTimeFrameBean;
 import com.jakewharton.rxbinding.view.RxView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -24,6 +26,17 @@ public class SignInTimeListFragment
   CommonFlexAdapter mAdapter;
 
   @Override protected void subscribeUI() {
+    mViewModel.timeFrames.observe(this, this::upDateList);
+  }
+
+  private void upDateList(List<SignInTimeFrameBean> signInTimeFrameBeans) {
+    if (signInTimeFrameBeans != null && !signInTimeFrameBeans.isEmpty()) {
+      List<SignTimeListItem> items = new ArrayList<>();
+      for (SignInTimeFrameBean bean : signInTimeFrameBeans) {
+        items.add(new SignTimeListItem(bean));
+      }
+      mAdapter.updateDataSet(items);
+    }
   }
 
   @Override
@@ -32,7 +45,7 @@ public class SignInTimeListFragment
     mBinding = FragmentSigninTimeBinding.inflate(inflater, container, false);
     initRecyclerView();
     initListener();
-    mViewModel.loadSinInTimes();
+    mViewModel.loadTimeFrameList();
     mBinding.setToolbarModel(new ToolbarModel("入场时段"));
     initToolbar(mBinding.includeToolbar.toolbar);
     return mBinding;
@@ -55,7 +68,7 @@ public class SignInTimeListFragment
   @Override public boolean onItemClick(int i) {
     IFlexible item = mAdapter.getItem(i);
     if (item instanceof SignTimeListItem) {
-      routeTo(SignInTimeSettingFragment.getInstance(true));
+      routeTo(SignInTimeSettingFragment.getInstance(((SignTimeListItem) item).getBean()));
     }
     return false;
   }

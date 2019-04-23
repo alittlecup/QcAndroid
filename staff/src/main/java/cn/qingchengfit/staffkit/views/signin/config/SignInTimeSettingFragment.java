@@ -1,7 +1,9 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.FragmentSigninTimeSettingBinding;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
+import cn.qingchengfit.staffkit.views.signin.bean.SignInTimeFrameBean;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
@@ -35,29 +38,45 @@ import javax.inject.Inject;
 public class SignInTimeSettingFragment
     extends SaasBindingFragment<FragmentSigninTimeSettingBinding, SignInTimeSettingVM> {
   @Inject GymWrapper gymWrapper;
-  private boolean delAble;
+  private SignInTimeFrameBean bean;
 
   @Override protected void subscribeUI() {
 
   }
 
-  public static SignInTimeSettingFragment getInstance(boolean delAble) {
+  public static SignInTimeSettingFragment getInstance(SignInTimeFrameBean bean) {
     SignInTimeSettingFragment fragment = new SignInTimeSettingFragment();
-    fragment.setArguments(new BundleBuilder().withBoolean("delAble", delAble).build());
+    fragment.setArguments(new BundleBuilder().withParcelable("bean", bean).build());
     return fragment;
   }
 
   @Override public FragmentSigninTimeSettingBinding initDataBinding(LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     mBinding = FragmentSigninTimeSettingBinding.inflate(inflater, container, false);
-    if (getArguments() != null) {
-      delAble = getArguments().getBoolean("delAble", false);
-    }
+
     initListener();
     initToolbar();
     mBinding.civTrainCount.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-    mBinding.btnDel.setVisibility(delAble ? View.VISIBLE : View.GONE);
+    if (getArguments() != null) {
+      bean = getArguments().getParcelable("bean");
+      updateView(bean);
+    }
     return mBinding;
+  }
+
+  private void updateView(SignInTimeFrameBean bean) {
+    if (bean != null) {
+      mBinding.civTimeStart.setContent(bean.getStartTime());
+      mBinding.civTimeEnd.setContent(bean.getEndTime());
+      mBinding.btnDel.setVisibility(View.VISIBLE);
+      setDurationPos(bean.getExpireTime() / 60);
+      mBinding.civTrainCount.setContent(String.valueOf(bean.getMaxUsers()));
+      mBinding.civPayOnce.setContent(bean.isSupportOnlinePay() ? "已设置" : "未设置");
+      mBinding.civPayCard.setContent(bean.isSupportCardPay() ? "已设置" : "未设置");
+      mBinding.civTimeWeek.setContent("每周" + bean.getTimeFrameWeekWithSplit("/"));
+    } else {
+      mBinding.btnDel.setVisibility(View.GONE);
+    }
   }
 
   private void initToolbar() {
@@ -139,21 +158,22 @@ public class SignInTimeSettingFragment
     List<String> datas = new ArrayList<>();
     int hourLength = 24;
     for (int i = 0; i <= hourLength; i++) {
-      datas.add(String.valueOf(i) + "个小时");
+      datas.add(i + "个小时");
     }
     if (simpleScrollPicker == null) {
       simpleScrollPicker = new SimpleScrollPicker(getContext());
       simpleScrollPicker.setTvLeft("修改扣费方式");
       simpleScrollPicker.setLabel("有效时间");
     }
-    simpleScrollPicker.setListener(pos1 -> {
-      String s = datas.get(pos1);
-      if (pos1 == 0) {
-        mBinding.tvDurationContent.setText("每次入场都扣费");
-      } else {
-        mBinding.tvDurationContent.setText(s + "内入场不重复扣费");
-      }
-    });
+    simpleScrollPicker.setListener(this::setDurationPos);
     simpleScrollPicker.show(datas, pos);
+  }
+
+  private void setDurationPos(int pos) {
+    if (pos == 0) {
+      mBinding.tvDurationContent.setText("每次入场都扣费");
+    } else {
+      mBinding.tvDurationContent.setText(pos + "个小时内入场不重复扣费");
+    }
   }
 }

@@ -5,7 +5,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
 
-
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
@@ -21,93 +20,100 @@ import java.util.List;
  */
 public class SignInConfigItem extends AbstractFlexibleItem<SignInConfigItem.ItemViewHolder> {
 
-    public SignInCardCostBean.CardCost bean;
-    public boolean isSelect;
-    public boolean isClickable = true;
+  public SignInCardCostBean.CardCost bean;
+  public boolean isSelect;
+  public boolean isClickable = true;
 
-    public SignInConfigItem(SignInCardCostBean.CardCost bean, boolean isClickable) {
-        this.bean = bean;
-        this.isClickable = isClickable;
+  public SignInConfigItem(SignInCardCostBean.CardCost bean, boolean isClickable) {
+    this.bean = bean;
+    this.isClickable = isClickable;
+  }
+
+  public SignInConfigItem(SignInCardCostBean.CardCost bean) {
+    this.bean = bean;
+  }
+
+  @Override public int getLayoutRes() {
+    return R.layout.item_signin_config;
+  }
+
+  @Override public ItemViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ItemViewHolder(view, adapter);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter, ItemViewHolder holder, int position,
+      List payloads) {
+
+    isSelect = bean.isSelected();
+    holder.swSigninConfig.setLabel(bean.getName());
+    holder.swSigninConfig.setOpen(isSelect);
+    holder.swSigninConfig.setClickable(isClickable);
+    holder.swSigninConfig.setShowDivier(isSelect);
+    holder.swSigninConfigFee.getEditText().setEnabled(isClickable);
+    holder.swSigninConfigFee.setVisibility(
+        bean.getType() != Configs.CATEGORY_DATE && bean.isSelected() ? View.VISIBLE : View.GONE);
+
+    switch (bean.getType()) {
+      case Configs.CATEGORY_VALUE:
+        holder.swSigninConfigFee.setLabel(
+            adapter.getRecyclerView().getContext().getString(R.string.sign_in_config_cost, "元"));
+        holder.swSigninConfigFee.getEditText()
+            .setText(bean.isSelected() ? String.valueOf(bean.getCost()) : "");
+        break;
+      case Configs.CATEGORY_TIMES:
+        holder.swSigninConfigFee.setLabel(
+            adapter.getRecyclerView().getContext().getString(R.string.sign_in_config_cost, "次"));
+        holder.swSigninConfigFee.getEditText()
+            .setText(bean.isSelected() ? String.valueOf(bean.getCost()) : "");
+        break;
+      case Configs.CATEGORY_DATE:
+        holder.swSigninConfig.setShowDivier(false);
+        break;
     }
+  }
 
-    public SignInConfigItem(SignInCardCostBean.CardCost bean) {
-        this.bean = bean;
-    }
+  @Override public boolean equals(Object o) {
+    return false;
+  }
 
-    @Override public int getLayoutRes() {
-        return R.layout.item_signin_config;
-    }
+  public static class ItemViewHolder extends FlexibleViewHolder {
 
-    @Override public ItemViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
-        return new ItemViewHolder(view, adapter);
-    }
+    SwitcherLayout swSigninConfig;
+    CommonInputView swSigninConfigFee;
 
-    @Override public void bindViewHolder(FlexibleAdapter adapter, ItemViewHolder holder, int position, List payloads) {
+    public ItemViewHolder(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      swSigninConfig = (SwitcherLayout) view.findViewById(R.id.sw_signin_config);
+      swSigninConfigFee = (CommonInputView) view.findViewById(R.id.sw_signin_config_fee);
 
-        isSelect = bean.isSelected();
-        holder.swSigninConfig.setLabel(bean.getName());
-        holder.swSigninConfig.setOpen(isSelect);
-        holder.swSigninConfig.setClickable(isClickable);
-        holder.swSigninConfig.setShowDivier(isSelect);
-        holder.swSigninConfigFee.getEditText().setEnabled(isClickable);
-        holder.swSigninConfigFee.setVisibility(bean.getType() != Configs.CATEGORY_DATE && bean.isSelected() ? View.VISIBLE : View.GONE);
-
-        switch (bean.getType()) {
-            case Configs.CATEGORY_VALUE:
-                holder.swSigninConfigFee.setLabel(adapter.getRecyclerView().getContext().getString(R.string.sign_in_config_cost, "元"));
-                holder.swSigninConfigFee.getEditText().setText(bean.isSelected() ? String.valueOf(bean.getCost()) : "");
-                break;
-            case Configs.CATEGORY_TIMES:
-                holder.swSigninConfigFee.setLabel(adapter.getRecyclerView().getContext().getString(R.string.sign_in_config_cost, "次"));
-                holder.swSigninConfigFee.getEditText().setText(bean.isSelected() ? String.valueOf(bean.getCost()) : "");
-                break;
-            case Configs.CATEGORY_DATE:
-                holder.swSigninConfig.setShowDivier(false);
-                break;
+      swSigninConfig.setOnCheckListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+          ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setSelected(b);
+          if (((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.getType()
+              != Configs.CATEGORY_DATE) {
+            swSigninConfigFee.setVisibility(b ? View.VISIBLE : View.GONE);
+            swSigninConfig.setShowDivier(b);
+          }
         }
-    }
+      });
+      swSigninConfigFee.addTextWatcher(new TextWatcher() {
+        @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    @Override public boolean equals(Object o) {
-        return false;
-    }
-
-    public static class ItemViewHolder extends FlexibleViewHolder {
-
-	SwitcherLayout swSigninConfig;
-	CommonInputView swSigninConfigFee;
-
-        public ItemViewHolder(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-          swSigninConfig = (SwitcherLayout) view.findViewById(R.id.sw_signin_config);
-          swSigninConfigFee = (CommonInputView) view.findViewById(R.id.sw_signin_config_fee);
-
-          swSigninConfig.setOnCheckListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setSelected(b);
-                    if (((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.getType() != Configs.CATEGORY_DATE) {
-                        swSigninConfigFee.setVisibility(b ? View.VISIBLE : View.GONE);
-                        swSigninConfig.setShowDivier(b);
-                    }
-                }
-            });
-            swSigninConfigFee.addTextWatcher(new TextWatcher() {
-                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override public void afterTextChanged(Editable editable) {
-                    if ("".equals(editable.toString())) {
-                        ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setCost(0);
-                    } else {
-                        ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setCost(
-                            Float.valueOf(editable.toString().trim()));
-                    }
-                }
-            });
         }
+
+        @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override public void afterTextChanged(Editable editable) {
+          if ("".equals(editable.toString())) {
+            ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setCost(0);
+          } else {
+            ((SignInConfigItem) mAdapter.getItem(getFlexibleAdapterPosition())).bean.setCost(
+                Float.valueOf(editable.toString().trim()));
+          }
+        }
+      });
     }
+  }
 }

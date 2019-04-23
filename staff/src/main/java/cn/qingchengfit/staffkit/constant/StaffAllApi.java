@@ -1,8 +1,9 @@
 package cn.qingchengfit.staffkit.constant;
 
 import android.support.v4.util.ArrayMap;
-import cn.qingchengfit.gym.gymconfig.ShopConfigs;
 import cn.qingchengfit.bean.GymSettingInfo;
+import cn.qingchengfit.gym.gymconfig.ShopConfigs;
+import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.views.CheckProtocolModel;
@@ -157,7 +158,6 @@ import cn.qingchengfit.network.response.WxAuthorWrap;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
-import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
@@ -184,6 +184,7 @@ import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecordWrapper;
+import cn.qingchengfit.staffkit.views.signin.bean.SignTimeFrameBeanWrapper;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
@@ -251,9 +252,7 @@ public interface StaffAllApi {
       @Query("type_json") String query);
 
   /**
-   * @param id
-   * @param date
-   * @return
+   *
    */
   @GET("/api/staffs/{id}/schedules/") rx.Observable<QcSchedulesResponse> qcGetSchedules(
       @Path("id") String id, @Query("date") String date, @QueryMap HashMap<String, Object> params);
@@ -1835,10 +1834,14 @@ public interface StaffAllApi {
   //------------------------------//
   //跳过弹框接口
   @GET("api/v2/staffs/{staff_id}/gym/pop/window/")
-  rx.Observable<QcDataResponse<GymSettingInfo>> qcGetGymSettingInfo(
-      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+  rx.Observable<QcDataResponse<GymSettingInfo>> qcGetGymSettingInfo(@Path("staff_id") String id,
+      @QueryMap Map<String, Object> params);
 
   @PUT("api/v2/staffs/{staff_id}/gym/pop/window/")
-  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPutGymSetting(
-      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPutGymSetting(@Path("staff_id") String id,
+      @QueryMap Map<String, Object> params);
+
+  @GET("/api/v2/staffs/{staff_id}/checkin/time-frames/")
+  rx.Observable<QcDataResponse<SignTimeFrameBeanWrapper>> qcGetCheckInTimeFrames(@Path("staff_id") String staffId,
+      @QueryMap Map<String, Object> params);
 }
