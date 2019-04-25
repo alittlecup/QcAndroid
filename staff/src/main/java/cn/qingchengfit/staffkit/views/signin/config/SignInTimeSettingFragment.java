@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -26,9 +28,12 @@ import cn.qingchengfit.staffkit.views.signin.bean.SignInTimeUploadBean;
 import cn.qingchengfit.staffkit.views.signin.bean.SignTimeFrame;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -149,6 +154,20 @@ public class SignInTimeSettingFragment
     });
     mBinding.setToolbarModel(toolbarModel);
     initToolbar(mBinding.includeToolbar.toolbar);
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbar.setNavigationOnClickListener(v -> showBackDialog());
+  }
+
+  private void showBackDialog() {
+    DialogUtils.showConfirm(getContext(), "确认放弃本次编辑？", (materialDialog, dialogAction) -> {
+      materialDialog.dismiss();
+      if (dialogAction == DialogAction.POSITIVE) {
+        getActivity().onBackPressed();
+      }
+    });
   }
 
   private void makeUploadBody() {

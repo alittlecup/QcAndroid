@@ -36,7 +36,7 @@ import rx.functions.Action1;
  * @date 16/8/30
  */
 @Trunk(fragments = {
-    SignInTimeListFragment.class, SignInTimeSettingFragment.class, SignInTimePayOnceFragment.class
+    SignInTimeListFragment.class, SignInTimeSettingFragment.class, SignInTimePayOnceFragment.class,SignInMemberCheckinFragment.class
 })
 public class SignInActivity extends BaseActivity
     implements FragCallBack, SignInPresenter.SignInView , HasSupportFragmentInjector {
