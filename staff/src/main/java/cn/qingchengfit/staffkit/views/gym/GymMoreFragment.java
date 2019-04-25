@@ -289,7 +289,7 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_TMALL_JOIN), runFuntion));
             mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_PARNTER_MANAGER),
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GENERAL_CARD),
                 runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_DIANPING),

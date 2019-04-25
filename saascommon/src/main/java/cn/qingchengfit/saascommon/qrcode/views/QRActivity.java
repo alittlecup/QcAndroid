@@ -146,7 +146,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String MODULE_MARKET_DIANPING = "/meituan/dianping";
 
   public static final String MODULE_TMALL_JOIN = "/tmall/join";
-  public static final String MODULE_PARNTER_MANAGER = "/partners/manager";
+  public static final String MODULE_GENERAL_CARD = "/general/card";
 
   /**
    * 财务
