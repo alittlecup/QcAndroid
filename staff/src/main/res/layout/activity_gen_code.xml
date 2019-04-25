@@ -69,17 +69,26 @@
             />
       </LinearLayout>
     </android.support.v7.widget.CardView>
-    <Button
+    <FrameLayout
         android:id="@+id/btn_scan"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="415dp"
-        android:text="扫描会员入场码"
-        android:textSize="14sp"
-        android:background="@drawable/btn_qc_rect_round_coner_grey"
-        android:textColor="@color/colorPrimary"
-        />
-
+        android:background="@drawable/bg_white_radius_20"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:drawableLeft="@drawable/ic_module_sign_scan"
+          android:drawablePadding="5dp"
+          android:text="扫描会员入场码"
+          android:textColor="@color/colorPrimary"
+          android:textSize="14sp"
+          />
+    </FrameLayout>
   </FrameLayout>
 </LinearLayout>

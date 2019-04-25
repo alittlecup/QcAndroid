@@ -33,7 +33,7 @@ public class SigninConfigCardtypePresenter extends BasePresenter {
     public void getCardCostList() {
 
         HashMap<String, Object> params = gymWrapper.getParams();
-        Observable observable =  restRepository.getStaffAllApi().qcGetSignInCostConfig(App.staffId, params);
+        Observable observable =  restRepository.getStaffAllApi().qcGetSignInCostConfig(loginStatus.staff_id(), params);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInCardCostBean.Data>() {
             @Override protected void _onNext(SignInCardCostBean.Data signInCardCostBean) {
                 view.onGetCostList(signInCardCostBean.card_costs);

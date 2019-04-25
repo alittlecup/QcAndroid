@@ -30,6 +30,7 @@ public class DateUtils {
   public static final Long MINITE_TIME = 60 * 1000L;
   public static final Long SECOND_TIME = 1000L;
   public static final String[] weeks = {"周一","周二","周三","周四","周五","周六","周日"};
+  public static final String[] weeksSimple = {"一","二","三","四","五","六","日"};
 
   public static Date formatDateFromServer(String s) {
     try {
@@ -494,6 +495,11 @@ public class DateUtils {
     return formatDateFromYYYYMMDD(YYYYMMDDa).getTime() <= formatDateFromYYYYMMDD(
         YYYYMMDDb).getTime();
   }
+  public static boolean AlessTimeB(String HHmma, String HHmmb) {
+    return formatDateHHMM(HHmma).getTime() < formatDateHHMM(
+        HHmmb).getTime();
+  }
+
 
   public static Date formatDatefromMMDD(String s) {
     SimpleDateFormat formatter = new SimpleDateFormat("MM-dd", Locale.CHINA);

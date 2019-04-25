@@ -18,8 +18,19 @@ public class SignInCardCostBean {
 
     @SerializedName(value = "cost") private float cost;
     @SerializedName(value = "type", alternate = "card_tpl_type") private int type;
-    @SerializedName(value = "id", alternate = "card_tpl_id") private Integer id;
+    @SerializedName(value = "id") private Integer id;
     @SerializedName(value = "name", alternate = "card_tpl_name") private String name;
+
+    public int getCardTplId() {
+      return cardTplId;
+    }
+
+    public void setCardTplId(int cardTplId) {
+      this.cardTplId = cardTplId;
+    }
+
+    //这个跟 ID 是一样的，为了上传的时候能够被后端识别，因为同一个类后端不同接口对应不同字段
+    @SerializedName("card_tpl_id") private int cardTplId;
 
     public CardCost() {
     }
@@ -98,6 +109,7 @@ public class SignInCardCostBean {
       dest.writeInt(this.type);
       dest.writeValue(this.id);
       dest.writeString(this.name);
+      dest.writeInt(this.cardTplId);
     }
 
     protected CardCost(Parcel in) {
@@ -106,9 +118,10 @@ public class SignInCardCostBean {
       this.type = in.readInt();
       this.id = (Integer) in.readValue(Integer.class.getClassLoader());
       this.name = in.readString();
+      this.cardTplId = in.readInt();
     }
 
-    public static final Parcelable.Creator<CardCost> CREATOR = new Parcelable.Creator<CardCost>() {
+    public static final Creator<CardCost> CREATOR = new Creator<CardCost>() {
       @Override public CardCost createFromParcel(Parcel source) {
         return new CardCost(source);
       }

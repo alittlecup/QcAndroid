@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -164,6 +165,16 @@ public class SignInTimeFrameBean implements Parcelable {
     return expireTime;
   }
 
+  public List<Integer> getTimeFrameWeek() {
+    List<Integer> integers = new ArrayList<>();
+    if (checkTimeRepeates()) {
+      for (SignTimeFrame frame : timeRepeats) {
+        integers.add(frame.weekday);
+      }
+    }
+    return integers;
+  }
+
   public void setExpireTime(int expireTime) {
     this.expireTime = expireTime;
   }
@@ -228,6 +239,16 @@ public class SignInTimeFrameBean implements Parcelable {
       return timeRepeats.get(0).end;
     }
     return "";
+  }
+
+  public SignInTimeUploadBean copyUpload() {
+    SignInTimeUploadBean bean = new SignInTimeUploadBean();
+    bean.setMaxUsers(getMaxUsers());
+    bean.setTimeRepeats(getTimeRepeats());
+    bean.setSupportOnlinePay(isSupportOnlinePay());
+    bean.setOnlinePayPrice(getOnlinePayPrice());
+    bean.setExpireTime(getExpireTime());
+    return bean;
   }
 
   protected SignInTimeFrameBean(Parcel in) {

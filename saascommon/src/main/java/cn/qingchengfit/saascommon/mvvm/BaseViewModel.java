@@ -3,8 +3,9 @@ package cn.qingchengfit.saascommon.mvvm;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Function;
+import java.util.ArrayList;
+import java.util.List;
+import rx.Subscription;
 
 /**
  * ViewModel 的基本类，用于添加和解除订阅
@@ -27,6 +28,7 @@ public class BaseViewModel extends ViewModel {
   }
 
   private MutableLiveData<String> errormsg = new MutableLiveData<>();
+  protected List<Subscription> subscriptions = new ArrayList<>();
 
   public <T> T dealResource(Resource<T> resource) {
     switch (resource.status) {
@@ -41,7 +43,7 @@ public class BaseViewModel extends ViewModel {
     return null;
   }
 
-  public <T> void dealResource(Resource<T> resource,ViewModelAction<T> action) {
+  public <T> void dealResource(Resource<T> resource, ViewModelAction<T> action) {
     switch (resource.status) {
       case SUCCESS:
         action.dealWithData(resource.data);
@@ -52,7 +54,21 @@ public class BaseViewModel extends ViewModel {
         break;
     }
   }
+
   public interface ViewModelAction<T> {
     void dealWithData(T t);
+  }
+
+  public void autoClear(Subscription subscription) {
+    this.subscriptions.add(subscription);
+  }
+
+  @Override protected void onCleared() {
+    super.onCleared();
+    if (subscriptions.isEmpty()) {
+      for (Subscription subscription : subscriptions) {
+        subscription.unsubscribe();
+      }
+    }
   }
 }

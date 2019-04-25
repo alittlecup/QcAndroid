@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.gson.annotations.SerializedName;
 
 public class SimpleSuccessResponse implements Parcelable {
   public boolean isSuccessful() {
@@ -11,8 +12,8 @@ public class SimpleSuccessResponse implements Parcelable {
   public void setSuccessful(boolean successful) {
     this.successful = successful;
   }
-
-  boolean successful;
+@SerializedName(value = "successful",alternate = "is_successful")
+ private boolean successful;
 
   @Override public int describeContents() {
     return 0;

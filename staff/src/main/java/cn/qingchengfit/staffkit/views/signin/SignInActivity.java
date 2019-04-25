@@ -13,6 +13,7 @@ import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.model.responese.SignInUrl;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.staffkit.views.signin.config.SignInMemberCheckinFragment;
 import cn.qingchengfit.staffkit.views.signin.config.SignInTimeListFragment;
 import cn.qingchengfit.staffkit.views.signin.config.SignInTimePayOnceFragment;
 import cn.qingchengfit.staffkit.views.signin.config.SignInTimeSettingFragment;
@@ -96,6 +97,11 @@ public class SignInActivity extends BaseActivity
         } else if (path.contains("checkin/config")) {
           getSupportFragmentManager().beginTransaction()
               .replace(R.id.student_frag, new SigninConfigListFragment())
+              .commit();
+        }else if(path.contains("checkin/member")){
+          String qrcode = getIntent().getExtras().getString("qrcode","");
+          getSupportFragmentManager().beginTransaction()
+              .replace(R.id.student_frag, SignInMemberCheckinFragment.getWithQrCode(qrcode))
               .commit();
         }
         return;

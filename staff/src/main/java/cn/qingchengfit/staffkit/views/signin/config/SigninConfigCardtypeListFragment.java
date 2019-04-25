@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
@@ -54,107 +53,107 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/2/13.
  */
-@FragmentWithArgs public class SigninConfigCardtypeListFragment extends BaseFragment implements SigninConfigCardtypePresenter.MVPView {
+@FragmentWithArgs public class SigninConfigCardtypeListFragment extends BaseFragment
+    implements SigninConfigCardtypePresenter.MVPView {
 
-    @Arg(required = false) ArrayList<SignInCardCostBean.CardCost> costList;
+  @Arg(required = false) ArrayList<SignInCardCostBean.CardCost> costList;
 
-	RecyclerView recycleview;
-    @Inject SigninConfigCardtypePresenter presenter;
-    /**
-     * 获得的初始化费用配置信息
-     */
-    private List<AbstractFlexibleItem> items = new ArrayList<>();
-    private CommonFlexAdapter flexibleAdapter;
+  RecyclerView recycleview;
+  @Inject SigninConfigCardtypePresenter presenter;
+  /**
+   * 获得的初始化费用配置信息
+   */
+  private List<AbstractFlexibleItem> items = new ArrayList<>();
+  private CommonFlexAdapter flexibleAdapter;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
-    }
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    FragmentArgs.inject(this);
+  }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_signin_cardtype_lsit, container, false);
-      recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_signin_cardtype_lsit, container, false);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
 
-      delegatePresenter(presenter, this);
-        mCallbackActivity.setToolbar("会员卡签到", false, null, R.menu.menu_compelete, new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                if (isSetted()) {
-                    ArrayList<Parcelable> card_costs = new ArrayList<>();
-                    for (int i = 0; i < flexibleAdapter.getItemCount(); i++) {
-                        if (flexibleAdapter.getItem(i) instanceof SignInConfigItem) {
-                            SignInConfigItem signInConfigItem = (SignInConfigItem) flexibleAdapter.getItem(i);
-                            if (signInConfigItem.bean.isSelected()) {
-                                card_costs.add(signInConfigItem.bean);
-                            }
-                        }
-                    }
-                    //presenter.confirm(card_costs);
-                    Intent ret = IntentUtils.instanceListParcelable(card_costs);
-                    getActivity().setResult(Activity.RESULT_OK, ret);
-                    getActivity().finish();
-                } else {
-                    onShowError("请至少选择一张会员卡种类");
+    delegatePresenter(presenter, this);
+    mCallbackActivity.setToolbar("会员卡签到", false, null, R.menu.menu_compelete,
+        new Toolbar.OnMenuItemClickListener() {
+          @Override public boolean onMenuItemClick(MenuItem item) {
+            if (isSetted()) {
+              ArrayList<Parcelable> card_costs = new ArrayList<>();
+              for (int i = 0; i < flexibleAdapter.getItemCount(); i++) {
+                if (flexibleAdapter.getItem(i) instanceof SignInConfigItem) {
+                  SignInConfigItem signInConfigItem = (SignInConfigItem) flexibleAdapter.getItem(i);
+                  if (signInConfigItem.bean.isSelected()) {
+                    card_costs.add(signInConfigItem.bean);
+                  }
                 }
-                return true;
+              }
+              Intent ret = IntentUtils.instanceListParcelable(card_costs);
+              getActivity().setResult(Activity.RESULT_OK, ret);
+              getActivity().finish();
+            } else {
+              onShowError("请至少选择一张会员卡种类");
             }
+            return true;
+          }
         });
-        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycleview.addItemDecoration(new SpaceItemDecoration(10, getContext()));
-        recycleview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(recycleview.getViewTreeObserver(), this);
-                if (costList != null) {
-                    items.clear();
-                    for (SignInCardCostBean.CardCost o : costList) {
-                        items.add(new SignInConfigItem(o));
-                    }
-                    if (items.size() == 0) items.add(new CommonNoDataItem(R.drawable.no_cardtype, "您没有可用卡种类"));
-                }
-                flexibleAdapter = new CommonFlexAdapter(items);
-                recycleview.setAdapter(flexibleAdapter);
+    recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+    recycleview.addItemDecoration(new SpaceItemDecoration(10, getContext()));
+    recycleview.getViewTreeObserver()
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+          @Override public void onGlobalLayout() {
+            CompatUtils.removeGlobalLayout(recycleview.getViewTreeObserver(), this);
+            if (costList != null) {
+              items.clear();
+              for (SignInCardCostBean.CardCost o : costList) {
+                items.add(new SignInConfigItem(o));
+              }
+              if (items.size() == 0) {
+                items.add(new CommonNoDataItem(R.drawable.no_cardtype, "您没有可用卡种类"));
+              }
             }
+            flexibleAdapter = new CommonFlexAdapter(items);
+            recycleview.setAdapter(flexibleAdapter);
+          }
         });
+    return view;
+  }
 
-        return view;
+  public boolean isSetted() {
+    if (flexibleAdapter.getItemCount() == 0) {
+      return false;
     }
-
-    public boolean isSetted() {
-        //if (swtSigninConfigLocker.isOpen() || swtSigninConfigLockerBack.isOpen()) {
-        //    return true;
-        //} else {
-        if (flexibleAdapter.getItemCount() == 0) {
-            return false;
+    for (int i = 0; i < flexibleAdapter.getItemCount(); i++) {
+      if (flexibleAdapter.getItem(i) instanceof SignInConfigItem) {
+        SignInConfigItem item = (SignInConfigItem) flexibleAdapter.getItem(i);
+        if (item.bean.isSelected()) {
+          return true;
         }
-        for (int i = 0; i < flexibleAdapter.getItemCount(); i++) {
-            if (flexibleAdapter.getItem(i) instanceof SignInConfigItem) {
-                SignInConfigItem item = (SignInConfigItem) flexibleAdapter.getItem(i);
-                if (item.bean.isSelected()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-        //}
+      }
     }
+    return false;
+  }
 
-    @Override public void onGetCostList(List<SignInCardCostBean.CardCost> signInConfigs) {
+  @Override public void onGetCostList(List<SignInCardCostBean.CardCost> signInConfigs) {
+  }
 
-    }
 
-    @Override public void onCostConfigSuccess() {
-        getActivity().onBackPressed();
-    }
+  @Override public void onCostConfigSuccess() {
+    getActivity().onBackPressed();
+  }
 
-    @Override public String getFragmentName() {
-        return SigninConfigCardtypeListFragment.class.getName();
-    }
+  @Override public String getFragmentName() {
+    return SigninConfigCardtypeListFragment.class.getName();
+  }
 
-    @Override public void onShowError(String e) {
-        hideLoading();
-        ToastUtils.show(e);
-    }
+  @Override public void onShowError(String e) {
+    hideLoading();
+    ToastUtils.show(e);
+  }
 
-    @Override public void onShowError(@StringRes int e) {
-        onShowError(getString(e));
-    }
+  @Override public void onShowError(@StringRes int e) {
+    onShowError(getString(e));
+  }
 }

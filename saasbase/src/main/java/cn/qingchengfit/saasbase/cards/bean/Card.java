@@ -10,7 +10,6 @@ import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.utils.CmStringUtils;
-import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +53,7 @@ public class Card implements Parcelable {
     public Staff seller;
     public String url;
     public String content_link;//卡详情界面的服务协议信息地址
+    public int cost;
     public Staff getSeller() {
         return seller;
     }

@@ -32,14 +32,14 @@
           android:orientation="vertical"
           >
         <ImageView
-            android:id="@+id/img_gmy_photo"
+            android:id="@+id/img_user_photo"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="18dp"
             tools:background="@color/bg_white"
             />
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -48,7 +48,7 @@
             tools:text="Mekhi"
             />
         <TextView
-            android:id="@+id/tv_gym_type"
+            android:id="@+id/tv_user_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

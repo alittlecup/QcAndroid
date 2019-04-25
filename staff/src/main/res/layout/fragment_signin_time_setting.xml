@@ -26,6 +26,7 @@
         app:civ_edit_able="false"
         app:civ_lable="开始时间"
         app:civ_showright="true"
+        app:civ_clickable="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/civ_time_end"
@@ -33,6 +34,7 @@
         android:layout_height="45dp"
         app:civ_edit_able="false"
         app:civ_lable="结束时间"
+        app:civ_clickable="true"
         app:civ_showright="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
@@ -42,6 +44,8 @@
         android:layout_marginTop="10dp"
         app:civ_edit_able="false"
         app:civ_lable="周期"
+        app:civ_clickable="true"
+
         app:civ_showright="true"
         />
     <LinearLayout
@@ -107,7 +111,7 @@
         android:layout_marginTop="10dp"
         app:civ_edit_able="false"
         app:civ_lable="单次支付"
-
+        app:civ_clickable="true"
         app:civ_showright="true"
         />
     <cn.qingchengfit.widgets.CommonInputView
@@ -116,7 +120,7 @@
         android:layout_height="45dp"
         app:civ_edit_able="false"
         app:civ_lable="会员卡结算"
-
+        app:civ_clickable="true"
         app:civ_showright="true"
         />
     <Space
@@ -129,6 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="删除"
+        android:visibility="gone"
         style="@style/QcBtnPrimaryDanger"
         />
 

@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.views.gym;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -84,6 +85,7 @@ import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
+import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.student.listener.IncreaseType;
 import cn.qingchengfit.student.view.followup.IncreaseStudentPageParams;
@@ -605,6 +607,13 @@ public class GymDetailFragment extends BaseFragment
           if (!TextUtils.isEmpty(content)) {
             if (content.startsWith("DIANPING-QINGCHENG-SHOPMAPPING")) {
               DianPingEmptyFragment.addDianPingEmptyFragment(getFragmentManager(), content);
+            } else if (content.startsWith("QINGCHENG-STAFF-CHECKIN")) {
+              Intent toSignInConfigs = new Intent(getContext(), SignInActivity.class);
+              toSignInConfigs.setAction(getResources().getString(R.string.qc_action));
+              toSignInConfigs.setData(Uri.parse("checkin/member"));
+              toSignInConfigs.putExtra("qrcode", content);
+              toSignInConfigs.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              startActivity(toSignInConfigs);
             } else if (content.startsWith("http")) {
               WebActivity.startWeb(content, getContext());
             } else {

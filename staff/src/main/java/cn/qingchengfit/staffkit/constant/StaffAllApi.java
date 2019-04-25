@@ -184,7 +184,10 @@ import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecordWrapper;
+import cn.qingchengfit.staffkit.views.signin.bean.SignInCheckInQrCodeBean;
+import cn.qingchengfit.staffkit.views.signin.bean.SignInTimeUploadBean;
 import cn.qingchengfit.staffkit.views.signin.bean.SignTimeFrameBeanWrapper;
+import cn.qingchengfit.staffkit.views.signin.bean.SignTimeFrameBeansWrapper;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
@@ -1842,6 +1845,25 @@ public interface StaffAllApi {
       @QueryMap Map<String, Object> params);
 
   @GET("/api/v2/staffs/{staff_id}/checkin/time-frames/")
-  rx.Observable<QcDataResponse<SignTimeFrameBeanWrapper>> qcGetCheckInTimeFrames(@Path("staff_id") String staffId,
+  rx.Observable<QcDataResponse<SignTimeFrameBeansWrapper>> qcGetCheckInTimeFrames(
+      @Path("staff_id") String staffId, @QueryMap Map<String, Object> params);
+
+  @DELETE("/api/v2/staffs/{staff_id}/checkin/time-frames/{time_frame_id}/")
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcDelCheckInTimeFrame(
+      @Path("staff_id") String staffId, @Path("time_frame_id") String timeFrameId,
+      @QueryMap Map<String, Object> params);
+
+  @PUT("/api/v2/staffs/{staff_id}/checkin/time-frames/{time_frame_id}/")
+  rx.Observable<QcDataResponse<SignTimeFrameBeanWrapper>> qcPutCheckInTimeFrame(
+      @Path("staff_id") String staffId, @Path("time_frame_id") String timeFrameId,
+      @Body SignInTimeUploadBean body, @QueryMap Map<String, Object> params);
+
+  @POST("/api/v2/staffs/{staff_id}/checkin/time-frames/")
+  rx.Observable<QcDataResponse<SignTimeFrameBeanWrapper>> qcPostCheckInTimeFrame(
+      @Path("staff_id") String staffId, @Body SignInTimeUploadBean body,
+      @QueryMap Map<String, Object> params);
+
+  @GET("/api/v2/staffs/{staff_id)/checkin/qrcode/")
+  rx.Observable<QcDataResponse<SignInCheckInQrCodeBean>> qcGetCheckinInfoByQrCode(@Path("staff_id") String id,
       @QueryMap Map<String, Object> params);
 }
