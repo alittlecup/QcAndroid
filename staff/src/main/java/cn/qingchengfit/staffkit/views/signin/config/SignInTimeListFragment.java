@@ -3,15 +3,20 @@ package cn.qingchengfit.staffkit.views.signin.config;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.FragmentSigninTimeBinding;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.signin.bean.SignInTimeFrameBean;
 import com.jakewharton.rxbinding.view.RxView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import io.reactivex.internal.operators.completable.CompletableEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +41,9 @@ public class SignInTimeListFragment
         items.add(new SignTimeListItem(bean));
       }
       mAdapter.updateDataSet(items);
+      mBinding.llEmpty.setVisibility(View.GONE);
+    } else {
+      mBinding.llEmpty.setVisibility(View.VISIBLE);
     }
   }
 

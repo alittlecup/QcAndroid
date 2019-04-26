@@ -50,7 +50,7 @@ public class CardtplOptionItem extends AbstractFlexibleItem<CardtplOptionItem.Ca
       List payloads) {
     holder.layoutCardOption.setEnabled(mEnabled);
     String unitStr =
-        CardBusinessUtils.getCardTypeCategoryUnit(cardtplType, holder.title.getContext());
+        CardBusinessUtils.getCardTypeCategoryUnit(cardtplType);
     holder.title.setText("¥" + option.price);
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);

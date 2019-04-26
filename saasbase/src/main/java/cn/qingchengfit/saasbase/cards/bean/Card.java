@@ -53,7 +53,7 @@ public class Card implements Parcelable {
     public Staff seller;
     public String url;
     public String content_link;//卡详情界面的服务协议信息地址
-    public int cost;
+    public float cost;
     public Staff getSeller() {
         return seller;
     }

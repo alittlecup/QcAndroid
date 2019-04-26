@@ -1863,7 +1863,7 @@ public interface StaffAllApi {
       @Path("staff_id") String staffId, @Body SignInTimeUploadBean body,
       @QueryMap Map<String, Object> params);
 
-  @GET("/api/v2/staffs/{staff_id)/checkin/qrcode/")
+  @GET("/api/v2/staffs/{staff_id}/checkin/qrcode/")
   rx.Observable<QcDataResponse<SignInCheckInQrCodeBean>> qcGetCheckinInfoByQrCode(@Path("staff_id") String id,
       @QueryMap Map<String, Object> params);
 }

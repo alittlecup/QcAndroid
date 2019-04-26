@@ -99,7 +99,7 @@ public class CardBusinessUtils {
     }
   }
 
-  public static String getCardTypeCategoryUnit(int type, Context context) {
+  public static String getCardTypeCategoryUnit(int type) {
     switch (type) {
       case 2:
         return "次";

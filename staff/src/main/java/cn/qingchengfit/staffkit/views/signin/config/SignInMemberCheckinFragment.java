@@ -1,15 +1,24 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.SignInItem;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.staffkit.databinding.FragmentSignInMemberBinding;
+import cn.qingchengfit.staffkit.views.signin.SignInActivity;
+import cn.qingchengfit.staffkit.views.signin.bean.SignInCheckInQrCodeBean;
+import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseWardrobeActivity;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -29,6 +38,13 @@ public class SignInMemberCheckinFragment
         upDateCard(data.card);
       }
     });
+    mViewModel.checkInResult.observe(this, result -> {
+      hideLoading();
+      if (result != null && result) {
+        ToastUtils.show("确认入场成功");
+        getActivity().onBackPressed();
+      }
+    });
   }
 
   @Override
@@ -44,7 +60,51 @@ public class SignInMemberCheckinFragment
       }
     }
     initToolbar();
+
+    if (SignInActivity.checkinWithLocker == 1) {
+      mBinding.llSignLocker.setVisibility(View.VISIBLE);
+    } else {
+      mBinding.llSignLocker.setVisibility(View.GONE);
+    }
+    mBinding.civChooseSite.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent chooseLocker = new Intent(getActivity(), ChooseWardrobeActivity.class);
+        chooseLocker.putExtra("locker", selectedLocker);
+        startActivityForResult(chooseLocker, 1001);
+      }
+    });
+    mBinding.btnApply.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        checkIn();
+      }
+    });
+
     return mBinding;
+  }
+
+  private void checkIn() {
+    SignInCheckInQrCodeBean.Data value = mViewModel.data.getValue();
+    if (value != null) {
+      mViewModel.checkIn(value.user.id, value.card.getId(),
+          selectedLocker == null ? "" : selectedLocker.id + "");
+    }
+  }
+
+  private Locker selectedLocker;
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == 1001) {
+        if (data != null) {
+          Locker locker = data.getParcelableExtra("locker");
+          if (locker != null) {
+            selectedLocker = locker;
+            mBinding.civChooseSite.setContent(locker.name);
+          }
+        }
+      }
+    }
   }
 
   private void initToolbar() {
@@ -60,11 +120,12 @@ public class SignInMemberCheckinFragment
 
   private void upDateCard(Card card) {
     mBinding.tvCardName.setText(card.getName());
-    mBinding.tvCardDesc.setText(card.getBrand_id());
+    mBinding.tvCardDesc.setText("余额: "+ CardBusinessUtils.getCardBlance(card));
     if (card.getType() == 3) {
-      mBinding.tvCardDesc.setText("期限卡不扣费");
+      mBinding.tvCost.setText("期限卡不扣费");
     } else {
-      mBinding.tvCardDesc.setText("余额: " + CardBusinessUtils.getCardBlance(card));
+      mBinding.tvCost.setText(
+          " 扣费: " + card.cost + CardBusinessUtils.getCardTypeCategoryUnit(card.getType()));
     }
   }
 }

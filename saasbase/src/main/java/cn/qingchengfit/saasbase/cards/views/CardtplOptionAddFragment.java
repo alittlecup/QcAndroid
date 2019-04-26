@@ -102,7 +102,7 @@ import rx.schedulers.Schedulers;
   }
 
   public void initView() {
-    civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate, getContext()));
+    civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate));
     //期限卡不需要设置有效期
     elValidDay.setVisibility(cardCate == 3 ? View.GONE : View.VISIBLE);
     if (cardCate == 3) {

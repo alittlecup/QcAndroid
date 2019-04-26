@@ -280,7 +280,7 @@ import rx.android.schedulers.AndroidSchedulers;
               + CardBusinessUtils.getCardBlance(card)
               + "  扣费后卡余额："
               + (a - b)
-              + CardBusinessUtils.getCardTypeCategoryUnit(card.getType(), getContext()));
+              + CardBusinessUtils.getCardTypeCategoryUnit(card.getType()));
           if (swDeduction.isOpen()) {
             refundMoney.setContent(formatePrice(b * card.getRatio()) + "");
           }
