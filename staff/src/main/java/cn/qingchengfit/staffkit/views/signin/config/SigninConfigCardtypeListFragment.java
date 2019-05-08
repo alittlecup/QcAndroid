@@ -94,7 +94,9 @@ import javax.inject.Inject;
               getActivity().setResult(Activity.RESULT_OK, ret);
               getActivity().finish();
             } else {
-              onShowError("请至少选择一张会员卡种类");
+              Intent ret = IntentUtils.instanceListParcelable(new ArrayList<>());
+              getActivity().setResult(Activity.RESULT_OK, ret);
+              getActivity().finish();
             }
             return true;
           }

@@ -188,6 +188,7 @@ import cn.qingchengfit.staffkit.views.signin.bean.SignInCheckInQrCodeBean;
 import cn.qingchengfit.staffkit.views.signin.bean.SignInTimeUploadBean;
 import cn.qingchengfit.staffkit.views.signin.bean.SignTimeFrameBeanWrapper;
 import cn.qingchengfit.staffkit.views.signin.bean.SignTimeFrameBeansWrapper;
+import cn.qingchengfit.staffkit.views.signin.bean.UserCheckinOrderResponse;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
@@ -1864,6 +1865,10 @@ public interface StaffAllApi {
       @QueryMap Map<String, Object> params);
 
   @GET("/api/v2/staffs/{staff_id}/checkin/qrcode/")
-  rx.Observable<QcDataResponse<SignInCheckInQrCodeBean>> qcGetCheckinInfoByQrCode(@Path("staff_id") String id,
-      @QueryMap Map<String, Object> params);
+  rx.Observable<QcDataResponse<SignInCheckInQrCodeBean>> qcGetCheckinInfoByQrCode(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
+
+  @GET("/api/v2/staffs/{staff_id}/user/checkin/latest/")
+  rx.Observable<QcDataResponse<UserCheckinOrderResponse>> qcGetUserCheckinOrders(
+      @Path("staff_id") String id, @QueryMap Map<String, Object> params);
 }

@@ -43,6 +43,8 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 
+import static java.lang.invoke.MethodHandles.lookup;
+
 /**
  * @author huangbaole
  */
@@ -191,6 +193,10 @@ public class SignInTimeSettingFragment
       ToastUtils.show("请输入自主训练人数");
       return;
     }
+    if (Integer.parseInt(countContent) <= 0) {
+      ToastUtils.show("自主训练人数应大于 0");
+      return;
+    }
     if (!DateUtils.AlessTimeB(startTime, endTime)) {
       ToastUtils.show("开始时间应小于结束时间");
       return;
@@ -335,7 +341,6 @@ public class SignInTimeSettingFragment
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
       if (requestCode == ChooseActivity.SIGN_IN_CARDS) {
-        mBinding.civPayCard.setContent(getResources().getString(R.string.common_have_setting));
         ArrayList<Parcelable> costsList = IntentUtils.getListParcelable(data);
         if (costsList != null && costsList.size() > 0) {
           cardCosts.clear();
@@ -344,6 +349,10 @@ public class SignInTimeSettingFragment
             cc.setCardTplId(cc.getId());
             cardCosts.add(cc);
           }
+          mBinding.civPayCard.setContent(getResources().getString(R.string.common_have_setting));
+        } else {
+          mBinding.civPayCard.setContent(getResources().getString(R.string.common_un_setting));
+          cardCosts.clear();
         }
       }
     }

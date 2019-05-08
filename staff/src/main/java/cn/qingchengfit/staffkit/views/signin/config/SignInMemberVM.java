@@ -10,8 +10,10 @@ import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.signin.bean.SignInCheckInQrCodeBean;
+import cn.qingchengfit.staffkit.views.signin.bean.UserCheckInOrder;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import timber.log.Timber;
 
@@ -21,6 +23,7 @@ public class SignInMemberVM extends BaseViewModel {
   @Inject StaffRespository staffRespository;
   public MutableLiveData<SignInCheckInQrCodeBean.Data> data = new MutableLiveData<>();
   public MutableLiveData<Boolean> checkInResult = new MutableLiveData<>();
+  public MutableLiveData<List<UserCheckInOrder>> orders = new MutableLiveData<>();
 
   @Inject public SignInMemberVM() {
 
@@ -59,5 +62,23 @@ public class SignInMemberVM extends BaseViewModel {
             ToastUtils.show(qcResponse.msg);
           }
         }, throwable -> Timber.e(throwable.getMessage()));
+  }
+
+  public void loadCheckInOrders(String userId) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("user_id", userId);
+    staffRespository.getStaffAllApi()
+        .qcGetUserCheckinOrders(status.staff_id(), params)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            List<UserCheckInOrder> orders = response.data.orders;
+            this.orders.setValue(orders);
+          } else {
+            ToastUtils.show(response.msg);
+          }
+        }, throwable -> {
+          ToastUtils.show(throwable.getMessage());
+        });
   }
 }

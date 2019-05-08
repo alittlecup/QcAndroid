@@ -45,6 +45,9 @@ public class SignInTimePayOnceFragment extends SaasCommonFragment {
           if (TextUtils.isEmpty(content)) {
             ToastUtils.show("请输入单次支付价格");
             return false;
+          } else if (Float.valueOf(content) == 0) {
+            ToastUtils.show("单次支付价格应大于0元");
+            return false;
           } else {
             RxBus.getBus().post(new SignInTimePayOnceEvent(true, Float.valueOf(content)));
           }

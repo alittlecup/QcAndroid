@@ -3,12 +3,10 @@ package cn.qingchengfit.staffkit.views.signin.config;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.LocaleList;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.items.SignInItem;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.model.responese.Locker;
@@ -18,10 +16,14 @@ import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.staffkit.databinding.FragmentSignInMemberBinding;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.signin.bean.SignInCheckInQrCodeBean;
+import cn.qingchengfit.staffkit.views.signin.bean.UserCheckInOrder;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseWardrobeActivity;
 import cn.qingchengfit.utils.BundleBuilder;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import java.util.Date;
 
 public class SignInMemberCheckinFragment
     extends SaasBindingFragment<FragmentSignInMemberBinding, SignInMemberVM> {
@@ -45,6 +47,26 @@ public class SignInMemberCheckinFragment
         getActivity().onBackPressed();
       }
     });
+    mViewModel.orders.observe(this, orders -> {
+      if (ListUtils.isEmpty(orders)) {
+        for (UserCheckInOrder order : orders) {
+          if (!order.isExpire()) {
+            upDateExpireView(DateUtils.formatDateFromServer(order.getExpireTime()));
+            return;
+          }
+        }
+      }
+      mBinding.cardCheckIn.setVisibility(View.GONE);
+      mBinding.cardView.setVisibility(View.VISIBLE);
+    });
+  }
+
+  public void upDateExpireView(Date expireTime) {
+    mBinding.cardCheckIn.setVisibility(View.VISIBLE);
+    mBinding.cardView.setVisibility(View.GONE);
+    mBinding.tvExpireTime.setText("本次自主训练有效时间至" + DateUtils.Date2HHmm(expireTime));
+    mBinding.btnApply.setText("返回");
+    mBinding.btnApply.setOnClickListener(v -> getActivity().onBackPressed());
   }
 
   @Override
@@ -101,8 +123,11 @@ public class SignInMemberCheckinFragment
           if (locker != null) {
             selectedLocker = locker;
             mBinding.civChooseSite.setContent(locker.name);
+            return;
           }
         }
+        selectedLocker = null;
+        mBinding.civChooseSite.setContent("");
       }
     }
   }
@@ -116,11 +141,12 @@ public class SignInMemberCheckinFragment
     PhotoUtils.smallCircle(mBinding.imgUserPhoto, user.getAvatar());
     mBinding.tvUserName.setText(user.getUsername());
     mBinding.tvUserPhone.setText(user.getPhone());
+    mViewModel.loadCheckInOrders(user.getId());
   }
 
   private void upDateCard(Card card) {
     mBinding.tvCardName.setText(card.getName());
-    mBinding.tvCardDesc.setText("余额: "+ CardBusinessUtils.getCardBlance(card));
+    mBinding.tvCardDesc.setText("余额: " + CardBusinessUtils.getCardBlance(card));
     if (card.getType() == 3) {
       mBinding.tvCost.setText("期限卡不扣费");
     } else {

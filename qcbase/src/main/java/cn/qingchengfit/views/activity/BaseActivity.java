@@ -123,6 +123,7 @@ public class BaseActivity extends AppCompatActivity {
     getSupportFragmentManager().registerFragmentLifecycleCallbacks(fcb,false);
   }
 
+
   protected boolean isFitSystemBar(){
     return true;
   }

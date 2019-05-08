@@ -31,7 +31,6 @@
       android:text="@string/signin_way"
       />
 
-  <include layout="@layout/divider_grey"/>
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/input_sign_use_card"
@@ -90,6 +89,7 @@
         android:layout_marginEnd="@dimen/little"
         android:layout_marginRight="@dimen/little"
         android:text="@string/common_un_setting"
+        android:textColor="@color/text_black"
         />
 
     <ImageView
