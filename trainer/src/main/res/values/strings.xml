@@ -436,4 +436,7 @@
   <string name="all">全部</string>
   <string name="choose_salers">选择销售</string>
   <string name="notification_job">求职招聘</string>
+  <string name="tv_recent_register" formatted="false">新注册%d人</string>
+  <string name="tv_already_approach" formatted="false">已接洽%d人</string>
+  <string name="tv_student" formatted="false">会员%d人</string>
 </resources>

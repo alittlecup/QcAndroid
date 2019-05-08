@@ -1,13 +1,13 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.bean.BaseInfoBean;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.bean.StatementBean;
 import cn.qingchengfit.bean.StudentCardBean;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.student.bean.StudentWrap;
+import cn.qingchengfit.student.view.base.StudentBaseInfoBean;
+import cn.qingchengfit.student.view.followrecord.CoachFollowRecordPage;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -33,13 +37,10 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.fragment.StudentBaseInfoFragment;
-import com.qingchengfit.fitcoach.fragment.StudentBodyTestListFragment;
 import com.qingchengfit.fitcoach.fragment.StudentCardFragment;
 import com.qingchengfit.fitcoach.fragment.StudentClassRecordFragment;
+import com.qingchengfit.fitcoach.fragment.StudentMoreInfoFragment;
 import com.qingchengfit.fitcoach.http.TrainerRepository;
-import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
-import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
@@ -48,6 +49,7 @@ import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -84,15 +86,17 @@ public class StudentHomeActivity extends BaseActivity {
   private String mModelId;
   private String mStudentId;
   private String mStudentShipId;
-  private StudentBaseInfoFragment studentBaseInfoFragment;
+  private StudentMoreInfoFragment studentMoreInfoFragment;
   private StudentClassRecordFragment studentClassRecordFragment;
   private StudentCardFragment studentCardFragment;
-  private StudentBodyTestListFragment studentBodyTestListFragment;
   private int mModelType = 1;
   private String gourpUrl;
   private String privateUrl;
   private Observable<Object> mObserveRefresh;
   private int mGender = 0;
+
+  @Inject GymWrapper gymWrapper;
+  @Inject StudentWrap studentWrap;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -119,17 +123,25 @@ public class StudentHomeActivity extends BaseActivity {
     mMyhomeAppBarAppBarLayout = (AppBarLayout) findViewById(R.id.myhome_appBar);
     mStudentViewPager = (ViewPager) findViewById(R.id.student);
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
-    mModel = getIntent().getStringExtra("model");
-    mModelId = getIntent().getStringExtra("id");
-    mStudentId = getIntent().getStringExtra("student_id");
+    mModel = gymWrapper.model();
+    mModelId = gymWrapper.id();
+    Uri data = getIntent().getData();
     mModelType = getIntent().getIntExtra("modeltype", 1);
-    mStudentShipId = getIntent().getStringExtra("ship_id");
+    if (data != null) {
+      mStudentId = data.getQueryParameter("studentId");
+      mStudentShipId = data.getQueryParameter("shipId");
+    }else{
+      mStudentId = getIntent().getStringExtra("student_id");
+      mStudentShipId = getIntent().getStringExtra("ship_id");
+    }
     mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
     setSupportActionBar(mToolbar);
     getSupportActionBar().setTitle("");
     toolbarTitle.setText("学员详情");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+    StudentBean tempBean = new StudentBean();
+    tempBean.id = mStudentId;
+    studentWrap.setStudentBean(tempBean);
     initHeader();
     initViewPager();
     initBaseInfo();
@@ -138,7 +150,7 @@ public class StudentHomeActivity extends BaseActivity {
     } else {
       getStudentCards();
     }
-    getStudentBodyTest();
+    //getStudentBodyTest();
 
     mObserveRefresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
     mObserveRefresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Object>() {
@@ -151,7 +163,7 @@ public class StudentHomeActivity extends BaseActivity {
       }
 
       @Override public void onNext(Object o) {
-        getStudentBodyTest();
+        //getStudentBodyTest();
       }
     });
   }
@@ -248,27 +260,24 @@ public class StudentHomeActivity extends BaseActivity {
                   .load(R.drawable.ic_gender_signal_female)
                   .into(mGenderImageView);
             }
-            List<BaseInfoBean> beans = new ArrayList<BaseInfoBean>();
-            BaseInfoBean phone = new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机", user.phone);
-            String birthDay;
-            if (TextUtils.isEmpty(user.date_of_birth)) {
-              birthDay = "暂无";
-            } else {
-              birthDay = user.date_of_birth;
-            }
-            BaseInfoBean birth = new BaseInfoBean(R.drawable.ic_baseinfo_wechat, "生日", birthDay);
-            BaseInfoBean address =
-                new BaseInfoBean(R.drawable.ic_baseinfo_city, "地址", user.address);
-            BaseInfoBean registe = new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "注册日期",
-                DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(user.joined_at)));
-            beans.add(phone);
-            beans.add(birth);
-            beans.add(address);
-            beans.add(registe);
+            StudentBean tmpStudentBean = new StudentBean();
+            tmpStudentBean.id = studentInfoResponse.data.ship.user.id;
+            tmpStudentBean.avatar = user.avatar;
+            tmpStudentBean.checkin_avatar = user.avatar;
+            //tmpStudentBean.sellers = studentBaseInfoEvent.user_student.getSellers();
+            //tmpStudentBean.coaches = studentBaseInfoEvent.user_student.getCoaches();
+            tmpStudentBean.gender = Integer.parseInt(user.gender) == 0;
+            tmpStudentBean.phone = user.phone;
+            tmpStudentBean.username = user.username;
+            studentWrap.setStudentBean(tmpStudentBean);
             mGender = user.user.gender;
             gourpUrl = studentInfoResponse.data.group_url;
             privateUrl = studentInfoResponse.data.private_url;
-            if (studentBaseInfoFragment != null) studentBaseInfoFragment.setDatas(beans);
+            if (studentMoreInfoFragment != null) {
+              studentMoreInfoFragment.setBean(
+                  new StudentBaseInfoBean(user.avatar, user.phone, user.date_of_birth, user.address,
+                      user.joined_at));
+            }
           }
         });
   }
@@ -311,7 +320,8 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void getStudentCards() {
-    TrainerRepository.getStaticTrainerAllApi().qcGetStuedntCard(mStudentId, getParams())
+    TrainerRepository.getStaticTrainerAllApi()
+        .qcGetStuedntCard(mStudentId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -360,51 +370,9 @@ public class StudentHomeActivity extends BaseActivity {
         });
   }
 
-  public void getStudentBodyTest() {
-    TrainerRepository.getStaticTrainerAllApi().qcGetStuedntBodyTest(mStudentId, getParams())
-        .observeOn(AndroidSchedulers.mainThread())
-        .onBackpressureBuffer()
-        .subscribeOn(Schedulers.io())
-        .subscribe(new Subscriber<BodyTestReponse>() {
-          @Override public void onCompleted() {
-
-          }
-
-          @Override public void onError(Throwable e) {
-
-          }
-
-          @Override public void onNext(BodyTestReponse bodyTestReponse) {
-            List<BodyTestBean> strings = new ArrayList<BodyTestBean>();
-            for (BodyTestReponse.BodyTestMeasure measure : bodyTestReponse.data.measures) {
-              BodyTestBean bodyTestBean = new BodyTestBean();
-              bodyTestBean.data =
-                  DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(measure.created_at))
-                      + "体测数据";
-              bodyTestBean.id = measure.id;
-              strings.add(bodyTestBean);
-            }
-            if (studentBodyTestListFragment != null) studentBodyTestListFragment.setData(strings);
-          }
-        });
-  }
-
   public void onBtn1() {
     if (mStudentViewPager.getCurrentItem() == 1) {
       goGroup();
-    } else {
-      if (!CurentPermissions.newInstance()
-          .queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_WRITE)) {
-        showAlert(R.string.alert_permission_forbid);
-        return;
-      }
-
-      Intent toAdd = new Intent(this, BodyTestActivity.class);
-      toAdd.putExtra("type", 1);
-      toAdd.putExtra("model", mModel);
-      toAdd.putExtra("modelid", mModelId);
-      toAdd.putExtra("studentid", mStudentId);
-      startActivity(toAdd);
     }
   }
 
@@ -414,9 +382,7 @@ public class StudentHomeActivity extends BaseActivity {
 
   private void initViewPager() {
     ArrayList<Fragment> fragments = new ArrayList<>();
-    studentBaseInfoFragment = new StudentBaseInfoFragment();
     studentClassRecordFragment = new StudentClassRecordFragment();
-    fragments.add(studentBaseInfoFragment);
     fragments.add(studentClassRecordFragment);
     if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
 
@@ -424,9 +390,13 @@ public class StudentHomeActivity extends BaseActivity {
       studentCardFragment = new StudentCardFragment();
       fragments.add(studentCardFragment);
     }
-    studentBodyTestListFragment = StudentBodyTestListFragment.newInstance(mModel, mModelId);
 
-    fragments.add(studentBodyTestListFragment);
+    //studentBodyTestListFragment = StudentBodyTestListFragment.newInstance(mModel, mModelId);
+
+
+    fragments.add(new CoachFollowRecordPage());
+    studentMoreInfoFragment = new StudentMoreInfoFragment();
+    fragments.add(studentMoreInfoFragment);
     mAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
     mStudentViewPager.setAdapter(mAdapter);
     mStudentViewPager.setOffscreenPageLimit(4);
@@ -434,15 +404,11 @@ public class StudentHomeActivity extends BaseActivity {
       @Override
       public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         LogUtil.e("position:" + position);
-        if (position == 1) {
+        if (position == 0) {
           add1.setVisibility(View.VISIBLE);
           add2.setVisibility(View.VISIBLE);
           add2.setText("代约私教");
           add1.setText("代约团课");
-        } else if (position == fragments.size() - 1) {
-          add1.setVisibility(View.VISIBLE);
-          add2.setVisibility(View.GONE);
-          add1.setText("新增体测信息");
         } else {
           add1.setVisibility(View.GONE);
           add2.setVisibility(View.GONE);

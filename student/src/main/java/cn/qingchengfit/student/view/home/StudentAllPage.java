@@ -38,7 +38,7 @@ import rx.functions.Action1;
     extends StudentBaseFragment<StPageAllStudentBinding, StudentAllViewModel>
     implements DrawerListener, LoadDataListener, SearchView.OnQueryTextListener {
   StudentRecyclerSortView listView;
-  private StudentFilterView filterView;
+  protected StudentFilterView filterView;
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
@@ -53,6 +53,7 @@ import rx.functions.Action1;
         hideLoading();
       }
     });
+    setFilterView();
   }
 
   @Override
@@ -63,6 +64,10 @@ import rx.functions.Action1;
     initListener();
     toggleToolbar(false, "");
     return mBinding;
+  }
+
+  public void setFilterView() {
+    this.filterView = new StudentFilterView();
   }
 
   private void initListener() {
@@ -88,11 +93,7 @@ import rx.functions.Action1;
         (buttonView, isChecked) -> listView.selectAll(isChecked,buttonView));
 
     mBinding.fabAddStudent.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-        QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
-      } else {
-        showAlert(R.string.sorry_for_no_permission);
-      }
+      addStudent();
     });
     mBinding.drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
       @Override public void onDrawerOpened(View drawerView) {
@@ -101,11 +102,20 @@ import rx.functions.Action1;
     });
   }
 
+  public void addStudent(){
+    if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/add/student")).call();
+    } else {
+      showAlert(R.string.sorry_for_no_permission);
+    }
+  }
+
   private void initFragment() {
     if (listView != null) return;
     listView = new StudentRecyclerSortView();
     stuff(R.id.list_container, listView);
-    filterView = new StudentFilterView();
+    //TODO 对原代码改动
+    //filterView = new StudentFilterView();
     stuff(R.id.frame_student_filter, filterView);
     listView.setFilterView(filterView);
     listView.setListener(this);
@@ -114,6 +124,7 @@ import rx.functions.Action1;
     filterView.setFilterShowAll(true);
     filterView.setListener(params -> {
       mViewModel.loadSource(params);
+      listView.notifyFilterDot(params.size() > 2);
       mBinding.drawer.closeDrawer(GravityCompat.END);
     });
   }
@@ -231,4 +242,5 @@ import rx.functions.Action1;
       mBinding.includeAllot.getRoot().setVisibility(View.VISIBLE);
     }
   }
+
 }

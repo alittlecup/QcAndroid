@@ -125,4 +125,7 @@
   <string name="follow_notify_other">通知他人：</string>
   <string name="transfer_student">%s注册的会员</string>
   <string name="attendance_nosign">%d节以上</string>
+  <string name="coach_student_new_register" formatted="false">新注册%d人</string>
+  <string name="coach_student_already_follow" formatted="false">已接洽%d人</string>
+  <string name="coach_student_member" formatted="false">会员%d人</string>
 </resources>

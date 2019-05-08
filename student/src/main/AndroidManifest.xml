@@ -2,7 +2,8 @@
     package="cn.qingchengfit.student">
   <application>
     <activity android:name=".StudentActivity"
-        android:screenOrientation="portrait">
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustPan">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <action android:name="${APP_PACKAGE}"/>

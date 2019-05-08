@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <data>
+    <variable
+        name="page"
+        type="com.qingchengfit.fitcoach.fragment.StudentMoreInfoFragment"/>
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_physical_measurement"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_lable="体测数据"
+        app:civ_showright="true"
+        app:civ_clickable="true"
+        android:onClick="@{page::onPhysicalMeasurement}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_base_info"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_content="查看"
+        app:civ_edit_able="false"
+        app:civ_lable="基本信息"
+        app:civ_showright="true"
+        android:onClick="@{page::onBaseInfo}"
+        app:civ_clickable="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        >
+
+      <ImageView
+          android:id="@+id/img_play_pta_video"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingEnd="5dp"
+          android:paddingTop="5dp"
+          app:srcCompat="@drawable/vd_play_pta_video"
+          android:onClick="@{()->page.onPlayVideo()}"
+          />
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/vd_coach_pta"
+          android:onClick="@{()->page.onPlayVideo()}"
+          />
+
+      <Space
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableEnd="@drawable/vd_pdf_grey"
+          android:drawablePadding="11dp"
+          android:text="下载PDF"
+          style="@style/QcTextStyleSmallWarm"
+          android:onClick="@{()->page.onDownloadPDF()}"
+          />
+
+    </LinearLayout>
+
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_trainer_goal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_content="未填写"
+        app:civ_edit_able="false"
+        app:civ_lable="训练目标"
+        app:civ_showright="true"
+        app:civ_clickable="true"
+        android:onClick="@{()->page.onTrainerGoal()}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_trainer_style"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_content="未填写"
+        app:civ_edit_able="false"
+        app:civ_lable="训练风格"
+        app:civ_showright="true"
+        app:civ_clickable="true"
+        android:onClick="@{()->page.onTrainerStyle()}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_sport_level"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_content="未填写"
+        app:civ_edit_able="false"
+        app:civ_lable="训练水平"
+        app:civ_showright="true"
+        app:civ_clickable="true"
+        android:onClick="@{()->page.onSportLevel()}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_sport_goal_motivation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_content="未填写"
+        app:civ_edit_able="false"
+        app:civ_lable="运动目标的动机"
+        app:civ_showright="true"
+        app:civ_clickable="true"
+        android:onClick="@{()->page.onSportGoalMotivation()}"
+        />
+
+  </LinearLayout>
+</layout>

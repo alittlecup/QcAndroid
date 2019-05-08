@@ -13,6 +13,7 @@ import cn.qingchengfit.student.view.attendance.AttendanceStudentPage;
 import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentPage;
 import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
+import cn.qingchengfit.student.view.base.StudentBaseInfoFragment;
 import cn.qingchengfit.student.view.birthday.StudentBirthdayPage;
 import cn.qingchengfit.student.view.choose.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.student.view.choose.ChooseStaffPage;
@@ -31,11 +32,15 @@ import cn.qingchengfit.student.view.followup.IncreaseStudentPage;
 import cn.qingchengfit.student.view.followup.IncreaseStudentSortView;
 import cn.qingchengfit.student.view.followup.IncreaseStudentTopView;
 import cn.qingchengfit.student.view.home.StudentAllPage;
+import cn.qingchengfit.student.view.home.StudentCoachAllPage;
+import cn.qingchengfit.student.view.home.StudentCoachFilterView;
+import cn.qingchengfit.student.view.home.StudentCoachHomePage;
 import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentHomePage;
 import cn.qingchengfit.student.view.home.StudentHomePieChartView;
 import cn.qingchengfit.student.view.home.StudentListView;
 import cn.qingchengfit.student.view.home.StudentRecyclerSortView;
+import cn.qingchengfit.student.view.ptag.CoachPtagQuestionPage;
 import cn.qingchengfit.student.view.sendmsg.MsgSendFragmentFragment;
 import cn.qingchengfit.student.view.sendmsg.SendMsgHomeFragment;
 import cn.qingchengfit.student.view.sendmsg.ShortMsgDetailFragment;
@@ -58,7 +63,9 @@ import javax.inject.Inject;
     AttendanceRankPage.class, AttendanceNosignPage.class, AttendanceAbsentPage.class,
     NotiOthersPage.class, SalerStudentStatePage.class, ChooseStaffPage.class,
     ChooseAndSearchStudentFragment.class, StudentHomePieChartView.class,
-    TrainerChooseAndSearchFragment.class, SearchStudentFragment.class,StudentDetailWithCardPage.class
+    TrainerChooseAndSearchFragment.class, SearchStudentFragment.class,StudentDetailWithCardPage.class,
+    StudentCoachAllPage.class, StudentCoachHomePage.class, StudentCoachFilterView.class,
+    StudentBaseInfoFragment.class, CoachPtagQuestionPage.class,
 }) public class StudentActivity extends SaasCommonActivity {
   @Inject StudentRouterCenter studentRouterCenter;
 
@@ -69,4 +76,4 @@ import javax.inject.Inject;
   @Override protected Fragment getRouterFragment(Intent intent) {
     return studentRouterCenter.getFragment(intent.getData(), intent.getExtras());
   }
-}
+} 

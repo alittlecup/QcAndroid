@@ -3,7 +3,6 @@ package cn.qingchengfit.student.view.home;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
-import android.databinding.ObservableField;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saascommon.filter.ItemFilterCommon;
@@ -77,7 +76,21 @@ public class StudentFilterViewModel extends BaseViewModel
 
   public void loadfilterModel() {
     action.call();
+    resetFilterUserCase();
     filterUserCase.excute(loginStatus.staff_id(), salerId, gymWrapper.getParams());
+  }
+
+  public void setFilterUserCase(FilterUserCase filterUserCase) {
+    this.filterUserCase = filterUserCase;
+  }
+
+  //修改教练Filter数据来源
+  public void resetFilterUserCase(){
+
+  }
+
+  public ActionLiveEvent getAction() {
+    return action;
   }
 
   public void onReset() {

@@ -1,15 +1,20 @@
 package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.InactiveStat;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
@@ -28,13 +33,7 @@ import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
-
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import java.util.Map;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
 
 /**
  * power by
@@ -338,4 +337,19 @@ public interface IStudentModel {
 
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
     HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coach_id, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coach_id, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<Object>> qcSubmitPtagAnswer(CoachPtagAnswerBody body);
+
+  Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String naireId);
+
+  Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter();
+
 }

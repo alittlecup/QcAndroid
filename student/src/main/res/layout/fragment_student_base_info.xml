@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"/>
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/common_simple_toolbar"
+        app:toolbarModel="@{toolbarModel}"
+      />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:background="@color/white"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="头像"
+          style="@style/QcTextStyleLargeDark"
+          />
+
+      <Space
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          />
+
+      <ImageView
+          android:id="@+id/image_student_base_info_head"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          tools:src="@drawable/head"
+          />
+
+    </LinearLayout>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_student_base_info_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_lable="手机"
+        app:civ_left_icon="@drawable/vd_student_base_info_phone"
+        android:layout_marginTop="10dp"
+        app:civ_clickable="true"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_student_base_info_birthday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_lable="生日"
+        app:civ_left_icon="@drawable/vd_student_base_info_birthday"
+        app:civ_clickable="true"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_student_base_info_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_lable="地址"
+        app:civ_left_icon="@drawable/vd_student_base_info_address"
+        app:civ_clickable="true"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_student_base_info_register"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:civ_lable="注册日期"
+        app:civ_left_icon="@drawable/vd_student_base_info_register"
+        app:civ_clickable="true"
+        />
+
+
+  </LinearLayout>
+</layout>

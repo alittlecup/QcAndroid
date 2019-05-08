@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.component;
 import android.content.Intent;
 import cn.qingchengfit.router.IComponent;
 import cn.qingchengfit.router.QC;
+import cn.qingchengfit.router.QCResult;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 
 public class TrainerComponent implements IComponent {
@@ -19,6 +20,7 @@ public class TrainerComponent implements IComponent {
         intent.putExtra("qcCallId",qc.getCallId());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         qc.getContext().startActivity(intent);
+        QC.sendQCResult(qc.getCallId(), QCResult.success());
         return true;
       case "open/gymdetail":
         Intent toGymdetail = new Intent(qc.getContext(), FragActivity.class);

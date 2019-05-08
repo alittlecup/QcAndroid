@@ -10,6 +10,10 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
@@ -198,6 +202,41 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
     return studentApi.qcGetTrackRecords(loginStatus.staff_id(), user_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coach_id,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coach_id,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override public Flowable<QcDataResponse<Object>> qcSubmitPtagAnswer(CoachPtagAnswerBody body) {
+    return null;
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String coachId) {
+    return null;
+  }
+
+  @Override public Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter() {
+    return null;
   }
 
   //@Override

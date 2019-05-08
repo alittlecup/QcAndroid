@@ -1,19 +1,15 @@
 package cn.qingchengfit.student.view.home;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 import cn.qingchengfit.saascommon.item.IItemData;
-import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.ViewStudentRecyclerSortBinding;
-import cn.qingchengfit.student.item.ChooseDetailItem;
 import cn.qingchengfit.student.listener.DrawerListener;
 import cn.qingchengfit.student.listener.LoadDataListener;
 import cn.qingchengfit.student.viewmodel.SortViewModel;
@@ -124,6 +120,11 @@ public class StudentRecyclerSortView
       mViewModel.getStudentBeans().setValue(items);
     }
     return mBinding;
+  }
+
+  //筛选项变化
+  public void notifyFilterDot(boolean isChecked){
+    mBinding.includeFilter.tvSortFilter.setChecked(isChecked);
   }
 
   @Override protected void onFinishAnimation() {

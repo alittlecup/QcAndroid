@@ -9,7 +9,6 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.student.respository.IStudentModel;
-import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.fragment.NotificationFragment;
 import com.qingchengfit.fitcoach.fragment.card.CardModel;
 import com.qingchengfit.fitcoach.fragment.card.StaffModel;
@@ -33,7 +32,7 @@ import dagger.multibindings.IntoMap;
 
   @Binds abstract IStudentModel bindStudentModel(StudentModel cardModel);
 
-  @ContributesAndroidInjector() abstract StudentHomeActivity contributeStudentHomeActivity();
+  //@ContributesAndroidInjector() abstract StudentHomeActivity contributeStudentHomeActivity();
 
   @ContributesAndroidInjector() abstract ScheduesFragment contributeScheduesFragment();
   @ContributesAndroidInjector() abstract NotificationFragment contributeNotificationFragment();

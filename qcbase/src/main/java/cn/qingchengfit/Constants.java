@@ -49,4 +49,9 @@ public class Constants {
       "http://zoneke-img.b0.upaiyun.com/75656eb980b79e7748041f830332cc62.png";
   public static final String AVATAR_COACH_FEMALE =
       "http://zoneke-img.b0.upaiyun.com/7f362320fb3c82270f6c9c623e39ba92.png";
+
+  public static final String PTAG_VIDEO =
+      "http://qcfile.b0.upaiyun.com/e3dafdeeb5d17eed6394d052537a3d10.mp4";
+  public static final String PTAG_DOWNLOAD_PDF =
+      "http://qcfile.b0.upaiyun.com/a6530e2f0f56bf99c084f45c9edf138a.pdf";
 }

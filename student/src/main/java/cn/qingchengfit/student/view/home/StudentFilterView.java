@@ -3,7 +3,6 @@ package cn.qingchengfit.student.view.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.student.R;
@@ -13,7 +12,6 @@ import cn.qingchengfit.student.listener.onRightFilterCloseListener;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +38,7 @@ public class StudentFilterView
           }
         }
       });
+      onSelectedItem();
     });
     mViewModel.getmResetEvent().observe(this, aVoid -> {
       showDialog();
@@ -57,6 +56,10 @@ public class StudentFilterView
       mBinding.recyclerBillFilter.scrollToPosition(0);
       hasScroll=true;
     }
+  }
+
+  public void onSelectedItem(){
+
   }
 
   private void showDialog() {

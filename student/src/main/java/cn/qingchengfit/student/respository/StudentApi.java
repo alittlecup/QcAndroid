@@ -12,7 +12,6 @@ import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
-import cn.qingchengfit.student.bean.QcStudentWithUsers;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -398,4 +397,10 @@ public interface StudentApi {
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(
       @Path("staff_id") String staff_id, @Path("user_id") String user_id,
       @QueryMap HashMap<String, Object> params);
+
+  /**
+   *  教练名下所有会员
+   */
+  @GET("/api/v2/coaches/{id}/students/") Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudentWithCoach(
+      @Path("id") String id, @QueryMap HashMap<String, Object> params);
 }

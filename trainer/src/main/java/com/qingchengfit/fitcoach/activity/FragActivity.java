@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.saascommon.SaasCommonActivity;
+import cn.qingchengfit.student.view.home.StudentCoachHomePage;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
 import com.qingchengfit.fitcoach.fragment.AddSelfGymFragment;
@@ -16,9 +15,9 @@ import com.qingchengfit.fitcoach.fragment.AddStudentManulkFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailNativeFragment;
 import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
-import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
+import com.qingchengfit.fitcoach.fragment.StudentBodyTestListFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
 import com.qingchengfit.fitcoach.fragment.manage.EditGymFragment;
@@ -89,7 +88,8 @@ public class FragActivity extends SaasCommonActivity {
         fragment = new MyCoursePlanFragment();
         break;
       case 9:
-        fragment = new MyStudentFragment();
+        fragment = new StudentCoachHomePage();
+        //routeTo("student", "/student/coach/home/", null);
         break;
       case 10://Go sync page
         fragment = new SyncGymFragment();
@@ -108,6 +108,9 @@ public class FragActivity extends SaasCommonActivity {
         break;
       case 15:
         fragment = new GymManageFragment();
+        break;
+      case 16:
+        fragment = new StudentBodyTestListFragment();
         break;
       default:
         break;

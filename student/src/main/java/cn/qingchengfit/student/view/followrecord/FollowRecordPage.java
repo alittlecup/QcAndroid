@@ -3,16 +3,13 @@ package cn.qingchengfit.student.view.followrecord;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
-import cn.qingchengfit.student.bean.Attach;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.databinding.StPageFollowRecordBinding;
 import cn.qingchengfit.student.item.FollowRecordItem;
@@ -58,18 +55,24 @@ import javax.inject.Inject;
 
   @Override public void onResume() {
     super.onResume();
+    loadData();
+  }
+
+  public void loadData(){
     mViewModel.loadSource(new HashMap<>());
   }
 
   private void initListener() {
-    mBinding.fab.setOnClickListener(v -> {
-      if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-        Uri uri = AppUtils.getRouterUri(getContext(), "student/student/follow_record_edit");
-        routeTo(uri, new FollowRecordEditPageParams().build(), false);
-      } else {
-        showAlert(R.string.sorry_for_no_permission);
-      }
-    });
+    mBinding.fab.setOnClickListener(this::onClickAddBtn);
+  }
+
+  public void onClickAddBtn(View v){
+    if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+      Uri uri = AppUtils.getRouterUri(getContext(), "student/student/follow_record_edit");
+      routeTo(uri, new FollowRecordEditPageParams().build(), false);
+    } else {
+      showAlert(R.string.sorry_for_no_permission);
+    }
   }
 
   private void initRecyclerView() {

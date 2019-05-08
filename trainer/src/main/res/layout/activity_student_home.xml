@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:background="@color/backgroud_grey"
         android:fitsSystemWindows="true"
-
+        app:elevation="0dp"
         >
 
       <android.support.design.widget.CollapsingToolbarLayout
@@ -119,14 +119,16 @@
           android:id="@+id/tab"
           android:layout_width="match_parent"
           android:layout_height="44dp"
-          android:layout_marginLeft="@dimen/activity_horizontal_margin"
-          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:paddingStart="@dimen/activity_horizontal_margin"
+          android:paddingEnd="@dimen/activity_horizontal_margin"
           app:tabGravity="center"
-          app:tabIndicatorColor="@color/primary"
+          app:tabIndicatorColor="@color/white"
           app:tabIndicatorHeight="3dp"
-          app:tabSelectedTextColor="@color/primary_dark"
+          app:tabSelectedTextColor="@color/white"
           app:tabTextAppearance="@style/Qc.TextCommonGrey"
-          app:tabTextColor="@color/text_grey"
+          app:tabTextColor="#b2ffffff"
+          android:background="@color/colorPrimary"
+          android:paddingBottom="4dp"
           >
       </android.support.design.widget.TabLayout>
 

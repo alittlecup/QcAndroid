@@ -10,4 +10,13 @@ public class Content {
   public String value;
   public UserExtra extra;
 
+  public Content(){
+
+  }
+
+  public Content(String name, String value, UserExtra extra) {
+    this.name = name;
+    this.value = value;
+    this.extra = extra;
+  }
 }

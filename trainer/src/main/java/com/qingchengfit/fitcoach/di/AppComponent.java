@@ -2,11 +2,11 @@ package com.qingchengfit.fitcoach.di;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.gym.GymModule;
 import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
+import cn.qingchengfit.gym.GymModule;
 import cn.qingchengfit.login.di.BindLoginActivity;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
@@ -25,17 +25,23 @@ import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
 import cn.qingchengfit.staff.di.BindTrainerStaffActivity;
 import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.di.BindStudentActivity;
+import cn.qingchengfit.student.view.followrecord.CoachFollowRecordPage;
+import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
+import cn.qingchengfit.student.view.home.StudentCoachHomePage;
 import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import cn.qingchengfit.wxpreview.old.newa.WxPreviewModule;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
+import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.fragment.CustomSaleFragment;
 import com.qingchengfit.fitcoach.fragment.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.SaleDetailFragment;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
+import com.qingchengfit.fitcoach.fragment.StudentBodyTestListFragment;
+import com.qingchengfit.fitcoach.fragment.StudentMoreInfoFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
@@ -114,7 +120,10 @@ import dagger.multibindings.IntoMap;
     AppComponent.UnLoginScheduleAdFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
     AppComponent.RecruitMessageListFragmentModule.class,AppComponent.SimpleCardListFragmentModule.class,
-    AppComponent.Manage2FragmentModule.class
+    AppComponent.Manage2FragmentModule.class, AppComponent.StudentHomeModule.class,
+    AppComponent.FollowRecordPageModule.class, AppComponent.StudentCoachHomePageModule.class,
+    AppComponent.CoachFollowRecordPageModule.class, AppComponent.StudentBodyTestListFragmentModule.class,
+    AppComponent.StudentMoreInfoFragmentModule.class,
 }) public interface AppComponent {
   void inject(App app);
 
@@ -342,6 +351,53 @@ import dagger.multibindings.IntoMap;
         extends AndroidInjector.Builder<ChooseActivity> {
     }
   }
+
+  @Subcomponent() public interface StudentHomeSubcomponent extends AndroidInjector<StudentHomeActivity> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<StudentHomeActivity> {
+    }
+  }
+
+  @Subcomponent() public interface FollowRecordPageSubcomponent
+      extends AndroidInjector<FollowRecordPage> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<FollowRecordPage> {
+    }
+  }
+
+  @Subcomponent() public interface StudentCoachHomePageSubcomponent
+      extends AndroidInjector<StudentCoachHomePage> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<StudentCoachHomePage> {
+    }
+  }
+
+  @Subcomponent() public interface CoachFollowRecordPageSubcomponent
+      extends AndroidInjector<CoachFollowRecordPage> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<CoachFollowRecordPage> {
+    }
+  }
+
+  @Subcomponent() public interface StudentBodyTestListFragmentSubcomponent
+      extends AndroidInjector<StudentBodyTestListFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<StudentBodyTestListFragment> {
+    }
+  }
+
+  @Subcomponent() public interface StudentMoreInfoFragmentSubcomponent
+      extends AndroidInjector<StudentMoreInfoFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<StudentMoreInfoFragment> {
+    }
+  }
+
+  //@Subcomponent() public interface StudentBaseInfocomponent extends AndroidInjector<StudentBaseInfoFragment> {
+  //  @Subcomponent.Builder public abstract class Builder
+  //      extends AndroidInjector.Builder<StudentBaseInfoFragment> {
+  //  }
+  //}
 
   @Module(subcomponents = ChooseStaffFragmentSubcomponent.class)
   abstract class ChooseStaffFragmentModule {
@@ -605,4 +661,46 @@ import dagger.multibindings.IntoMap;
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseGymTrainerFragmentSubcomponent.Builder builder);
   }
+
+  @Module(subcomponents = StudentHomeSubcomponent.class) abstract class StudentHomeModule {
+    @Binds @IntoMap @ActivityKey(StudentHomeActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        StudentHomeSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = FollowRecordPageSubcomponent.class)
+  abstract class FollowRecordPageModule {
+    @Binds @IntoMap @FragmentKey(FollowRecordPage.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        FollowRecordPageSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = StudentCoachHomePageSubcomponent.class)
+  abstract class StudentCoachHomePageModule {
+    @Binds @IntoMap @FragmentKey(StudentCoachHomePage.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        StudentCoachHomePageSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = CoachFollowRecordPageSubcomponent.class)
+  abstract class CoachFollowRecordPageModule {
+    @Binds @IntoMap @FragmentKey(CoachFollowRecordPage.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        CoachFollowRecordPageSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = StudentBodyTestListFragmentSubcomponent.class)
+  abstract class StudentBodyTestListFragmentModule {
+    @Binds @IntoMap @FragmentKey(StudentBodyTestListFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        StudentBodyTestListFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = StudentMoreInfoFragmentSubcomponent.class)
+  abstract class StudentMoreInfoFragmentModule {
+    @Binds @IntoMap @FragmentKey(StudentMoreInfoFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        StudentMoreInfoFragmentSubcomponent.Builder builder);
+  }
+
 }

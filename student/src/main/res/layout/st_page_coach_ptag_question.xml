@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+    <variable
+        name="model"
+        type="cn.qingchengfit.student.view.ptag.CoachPtagQuestionVM"
+        />
+  </data>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        app:toolbarModel="@{toolbarModel}"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_save_qrcode"
+        android:layout_below="@id/include_toolbar"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_coach_ptag_question"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            app:items="@{model.items}"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/bg_grey"
+            />
+      </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_save_qrcode"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:onClick="@{()->model.onSave()}"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        style="@style/QcTextStyleLargeDark"
+        />
+  </RelativeLayout>
+</layout>

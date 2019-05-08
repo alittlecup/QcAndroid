@@ -1,12 +1,12 @@
 package com.qingchengfit.fitcoach.http;
 
-import cn.qingchengfit.gym.bean.GymTypeData;
 import cn.qingchengfit.bean.BrandBody;
 import cn.qingchengfit.bean.ChangeBrandCreatorBody;
 import cn.qingchengfit.bean.CoachInitBean;
 import cn.qingchengfit.bean.QcResponsePage;
 import cn.qingchengfit.bean.QcResponseSpaces;
 import cn.qingchengfit.bean.SyncExpBody;
+import cn.qingchengfit.gym.bean.GymTypeData;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
@@ -37,6 +37,15 @@ import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
+import cn.qingchengfit.student.bean.CoachStudentPtagQuestionnaireWrapper;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordListWrap;
+import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
+import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.StudentBeanListWrapper;
 import com.qingchengfit.fitcoach.fragment.protocol.CheckProtocolModel;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
@@ -292,7 +301,7 @@ public interface TrainerAllApi {
 
   //获取教练所有学员
   @GET("/api/v2/coaches/{id}/students/") rx.Observable<QcAllStudentResponse> qcGetAllStudent(
-      @Path("id") int id, @QueryMap HashMap<String, Object> params);
+      @Path("id") int id, @QueryMap Map<String, Object> params);
 
   @GET("api/v2/coaches/{id}/cashier/users/")
   rx.Observable<QcDataResponse<StudentBeanListWrapper>> qcLoadStudentByPhone(@Path("id") String id,
@@ -851,6 +860,72 @@ public interface TrainerAllApi {
   @PUT("/api/v2/notifications/") rx.Observable<QcResponse> qcClearTypeNoti(
       @Body ClearNotiBody body);
 
+  //获取教练PTAG问卷内容
+  @GET("api/v2/coaches/{coach_id}/ptag/question-naire/detail/")
+  rx.Observable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(
+      @Path("coach_id") String coachId, @QueryMap HashMap<String, Object> params);
 
+  //获取教练App会员概览
+  @GET("api/v2/coaches/{coach_id}/users/data/glance/")
+  rx.Observable<QcDataResponse<CoachStudentOverview>> qcGetStudentOverview(
+      @Path("coach_id") String coachId, @QueryMap HashMap<String, Object> params);
 
+  //获取教练App会员概览
+  @GET("api/v2/coaches/{coach_id}/users/{user_id}/records/?format=app&order_by=created_at&show_all=1&is_new=true")
+  rx.Observable<QcDataResponse<FollowRecordListWrap>> qcGetStudentFollowRecord(
+      @Path("coach_id") String coachId, @Path("user_id") String userId,
+      @QueryMap HashMap<String, Object> params);
+
+  //教练App提交问卷结果
+  @POST("api/v2/coaches/{coach_id}/ptag/question-naire/answers/")
+  rx.Observable<QcDataResponse<Object>> qcSubmitPtagAnswer(@Path("coach_id") String coachId,
+      @QueryMap HashMap<String, Object> params, @Body CoachPtagAnswerBody body);
+
+  //获取教练App会员问卷情况
+  @GET("api/v2/coaches/{coach_id}/ptag/users/ptag/glance/")
+  rx.Observable<QcDataResponse<CoachStudentPtagQuestionnaireWrapper>> qcGetStudentPtagOverview(
+      @Path("coach_id") String coachId, @QueryMap HashMap<String, Object> params);
+
+  //获取教练App会员问卷情况
+  @GET("api/v2/coaches/{coach_id}/ptag/filters/")
+  rx.Observable<QcDataResponse<CoachStudentFilterWrapper>> qcGetStudentFilter(
+      @Path("coach_id") String coachId, @QueryMap HashMap<String, Object> params);
+
+  //获取PTAG会员填写问卷情况
+  @GET("api/v2/coaches/{coach_id}/ptag/question-naire/answers/")
+  rx.Observable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagAnswers(
+      @Path("coach_id") String coachId, @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 跟进状态列表
+   */
+  @GET("/api/coaches/{coach_id}/users/track/status/")
+  rx.Observable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus(
+      @Path("coach_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+  @POST("/api/coaches/{coach_id}/users/track/status/")
+  rx.Observable<QcDataResponse<Object>> qcAddTrackStatus(@Path("coach_id") String staff_id,
+      @Body HashMap<String, Object> params);
+
+  @GET("/api/coaches/{coach_id}/sellers-without-coach/")
+  rx.Observable<QcDataResponse<SalerUserListWrap>> qcGetSalers(@Path("coach_id") String staff_id,
+      @Query("brand_id") String brandid, @Query("shop_id") String shopid, @Query("id") String gymid,
+      @Query("model") String model);
+
+  /**
+   * 新增跟进记录
+   */
+  @POST("/api/v2/coaches/{coach_id}/users/{user_id}/records/")
+  rx.Observable<QcDataResponse<Object>> qcAddTrackRecord(@Path("coach_id") String staff_id,
+      @Path("user_id") String user_id, @Body FollowRecordAdd body);
+
+  //获取训练反馈问卷内容（已填写）
+  @GET("api/v2/coaches/{coach_id}/ptag/question-naire/naire-answer-history/{naire_id}/")
+  rx.Observable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(@Path("coach_id") String staff_id,
+      @Path("naire_id") String naireId, @QueryMap HashMap<String, Object> params);
+
+  //修改训练反馈问卷内容（已填写）
+  @PUT("api/v2/coaches/{coach_id}/ptag/question-naire/naire-answer-history/{naire_id}/")
+  rx.Observable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(@Path("coach_id") String staff_id,
+      @Path("naire_id") String naireId, @QueryMap HashMap<String, Object> queryParams, @Body HashMap<String, Object> params);
 }

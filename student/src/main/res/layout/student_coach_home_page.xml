@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="model"
+        type="cn.qingchengfit.student.view.home.StudentCoachHomeVM"
+        />
+    <variable
+        name="page"
+        type="cn.qingchengfit.student.view.home.StudentCoachHomePage"
+        />
+
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+
+  <android.support.constraint.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      >
+
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbarModel="@{toolbarModel}"
+        />
+
+    <TextView
+        android:id="@+id/tv_top_all_student_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="全部会员"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_toolbar"
+        style="@style/QcTextStyleMediumWarm"
+        />
+
+    <TextView
+        android:id="@+id/tv_all_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="10dp"
+        android:onClick="@{page::onClickAllStudent}"
+        android:text="138174"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_top_all_student_tips"
+        />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/tv_all_student"
+        app:layout_constraintLeft_toRightOf="@id/tv_all_student"
+        app:layout_constraintTop_toTopOf="@id/tv_all_student"
+        app:srcCompat="@drawable/vd_arrow_right_grey_small"
+        />
+    <TextView
+        android:id="@+id/tv_register_recent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/circle_orange"
+        android:drawablePadding="5dp"
+        android:drawableTint="@color/st_new_member_color"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_already_approach"
+        app:layout_constraintTop_toBottomOf="@id/tv_all_student"
+        tools:text="新注册27人"
+        style="@style/QcTextStyleSmallDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_already_approach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/circle_orange"
+        android:drawablePadding="5dp"
+        android:drawableTint="@color/st_follow_ing_color"
+        app:layout_constraintLeft_toRightOf="@id/tv_register_recent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_student"
+        app:layout_constraintTop_toBottomOf="@id/tv_all_student"
+        tools:text="已接洽40人"
+        style="@style/QcTextStyleSmallDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/circle_orange"
+        android:drawablePadding="5dp"
+        android:drawableTint="@color/st_new_student_color"
+        app:layout_constraintLeft_toRightOf="@id/tv_already_approach"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_all_student"
+        tools:text="会员10人"
+        style="@style/QcTextStyleSmallDark"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/bg_grey"
+        app:layout_constraintTop_toBottomOf="@id/tv_already_approach"
+        />
+
+    <TextView
+        android:id="@+id/vd_trainer_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="42dp"
+        android:text="训练目标"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_student"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/vd_trainer_goal"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@id/vd_trainer_goal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/vd_trainer_goal"
+        app:srcCompat="@drawable/vd_coach_pta"
+        android:onClick="@{page::onPlayVideo}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_input_lost_weight"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        app:civ_clickable="true"
+        app:civ_content="0人"
+        app:civ_is_show_left="true"
+        app:civ_lable="减肥"
+        app:civ_left_icon="@drawable/vd_lost_weight"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        app:layout_constraintTop_toBottomOf="@id/vd_trainer_goal"
+        android:onClick="@{page::onClickLosWeight}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_input_change_health"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        app:civ_clickable="true"
+        app:civ_content="0人"
+        app:civ_is_show_left="true"
+        app:civ_lable="健康改善"
+        app:civ_left_icon="@drawable/vd_change_health"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        app:layout_constraintTop_toBottomOf="@id/civ_input_lost_weight"
+        android:onClick="@{page::onClickChangeHealth}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_input_add_muscle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        app:civ_clickable="true"
+        app:civ_content="0人"
+        app:civ_is_show_left="true"
+        app:civ_lable="瘦体重"
+        app:civ_left_icon="@drawable/vd_add_muscle"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        app:layout_constraintTop_toBottomOf="@id/civ_input_change_health"
+        android:onClick="@{page::onClickAddMosule}"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_input_sport_performance"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        app:civ_clickable="true"
+        app:civ_content="0人"
+        app:civ_is_show_left="true"
+        app:civ_lable="健康改善"
+        app:civ_left_icon="@drawable/vd_sport_perform"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        app:layout_constraintTop_toBottomOf="@id/civ_input_add_muscle"
+        android:onClick="@{page::onClickSoprtPerformance}"
+        />
+
+    <TextView
+        android:id="@+id/tv_divider_temp"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/bg_grey"
+        app:layout_constraintTop_toBottomOf="@id/civ_input_sport_performance"
+        />
+
+    <TextView
+        android:id="@+id/tv_trainer_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:text="训练反馈"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_divider_temp"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_trainer_feedback"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@id/tv_trainer_feedback"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_trainer_feedback"
+        app:srcCompat="@drawable/vd_coach_pta"
+        android:onClick="@{page::onPlayVideo}"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_low_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/ll_medium_score"
+        app:layout_constraintTop_toBottomOf="@id/tv_trainer_feedback"
+        android:onClick="@{page::onClickLowScore}"
+        android:layout_marginTop="10dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_low_score_member"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/text_dark"
+          android:text="0"
+          android:textSize="20sp"
+          tools:text="52"
+          />
+
+      <TextView
+          android:id="@+id/tv_low_standard"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/vd_un_satisfaction"
+          android:drawablePadding="3dp"
+          android:text="1-6分"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:background="@color/bg_grey"
+        app:layout_constraintBottom_toBottomOf="@id/ll_low_score"
+        app:layout_constraintLeft_toRightOf="@id/ll_low_score"
+        app:layout_constraintRight_toLeftOf="@+id/ll_medium_score"
+        app:layout_constraintTop_toTopOf="@id/ll_low_score"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_medium_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@id/ll_low_score"
+        app:layout_constraintRight_toLeftOf="@+id/ll_high_score"
+        app:layout_constraintTop_toTopOf="@id/ll_low_score"
+        android:onClick="@{page::onClickMediumScore}"
+        >
+
+      <TextView
+          android:id="@+id/tv_medium_score_member"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/text_dark"
+          android:textSize="20sp"
+          android:text="0"
+          tools:text="542"
+          />
+
+      <TextView
+          android:id="@+id/tv_medium_standard"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/vd_normal_satisfaction"
+          android:drawablePadding="3dp"
+          android:text="7-8分"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:background="@color/bg_grey"
+        app:layout_constraintBottom_toBottomOf="@id/ll_low_score"
+        app:layout_constraintLeft_toRightOf="@id/ll_medium_score"
+        app:layout_constraintRight_toLeftOf="@+id/ll_high_score"
+        app:layout_constraintTop_toTopOf="@id/ll_low_score"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_high_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@id/ll_medium_score"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ll_low_score"
+        android:onClick="@{page::onClickHighScore}"
+        >
+
+      <TextView
+          android:id="@+id/tv_high_score_member"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/text_dark"
+          android:textSize="20sp"
+          android:text="0"
+          tools:text="252"
+          />
+
+      <TextView
+          android:id="@+id/tv_high_standard"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/vd_very_satisfaction"
+          android:drawablePadding="3dp"
+          android:text="9-10分"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="17dp"
+        android:background="@color/bg_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_low_score"
+        />
+
+
+  </android.support.constraint.ConstraintLayout>
+</layout>

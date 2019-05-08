@@ -3,13 +3,10 @@ package cn.qingchengfit.student.bean;
 import android.content.Context;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.student.bingdings.BindingUtils;
 import cn.qingchengfit.utils.DateUtils;
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class FollowRecord {
   public String getId() {
@@ -29,6 +26,7 @@ public class FollowRecord {
   @SerializedName(value = "attachments") List<Attach> image_attachments;//附件列表，图片
   User created_by;
   String created_at;
+  String naire_answer_history_id;
 
   public String getShop() {
     return shop;
@@ -39,6 +37,14 @@ public class FollowRecord {
 
   public String getCreatedTimeStr() {
     return DateUtils.getNotifacationTimeStr(DateUtils.formatDateFromServer(created_at));
+  }
+
+  public String getTrack_type_id() {
+    return track_type_id;
+  }
+
+  public String getNaire_answer_history_id() {
+    return naire_answer_history_id;
   }
 
   public String getFollowMethodString(Context context) {
