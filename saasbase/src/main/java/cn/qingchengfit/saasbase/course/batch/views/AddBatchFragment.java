@@ -143,7 +143,7 @@ public class AddBatchFragment extends SaasBaseFragment
   }
 
   private boolean isPrivate() {
-    if (isGroup!=null&&isGroup) return false;
+    if (isGroup != null && isGroup) return false;
     return (mCourse == null || mCourse.is_private());
   }
 
@@ -369,9 +369,9 @@ public class AddBatchFragment extends SaasBaseFragment
   }
 
   @Override public int isStaffAsTeather() {
-    if(batchBaseFragment != null && batchBaseFragment.isAdded()){
+    if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
       return batchBaseFragment.asTeacher;
-    }else{
+    } else {
       return -1;
     }
   }
@@ -532,7 +532,7 @@ public class AddBatchFragment extends SaasBaseFragment
    */
   public void addBatchLoop() {
     routeTo("/batch/loop/add/", AddBatchLoopParams.builder()
-        .courseLength(presenter.isPrivate() ? 0 : mCourse.getLength())
+        .courseLength(presenter.isPrivate() ? 0 : (mCourse == null ? 0 : mCourse.getLength()))
         .slice(10)
         .isPrivate(mCourse == null || mCourse.is_private)
         .originBatchLoop(getCurBatchLoop())
