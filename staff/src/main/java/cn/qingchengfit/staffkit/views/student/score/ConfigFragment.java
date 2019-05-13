@@ -30,7 +30,6 @@ import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
 import cn.qingchengfit.utils.CompatUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -150,7 +149,6 @@ public class ConfigFragment extends BaseFragment
     initToolbar(toolbar);
     initView();
     presenter.getScoreStatus();
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

@@ -53,6 +53,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.turnovers.TurnoverBarChartFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.events.EventChartTitle;
+import cn.qingchengfit.saascommon.events.RxCompleteGuideEvent;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.qrcode.views.QRScanActivity;
@@ -72,7 +73,6 @@ import cn.qingchengfit.staffkit.dianping.pages.DianPingAccountSuccessPageParams;
 import cn.qingchengfit.staffkit.dianping.pages.DianPingEmptyFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.GoToGuideEvent;
-import cn.qingchengfit.saascommon.events.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
@@ -95,7 +95,6 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -106,7 +105,6 @@ import cn.qingchengfit.wxpreview.old.newa.WxPreviewEmptyActivity;
 import com.bigkoo.pickerview.lib.DensityUtil;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -120,8 +118,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import org.json.JSONException;
-import org.json.JSONObject;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -267,16 +263,10 @@ public class GymDetailFragment extends BaseFragment
     delegatePresenter(gymDetailPresenter, this);
     initToolbar(toolbar);
     initView();
-    registeSensors();
     initListener(view);
     initPartnerRecyclerView();
     view.setOnTouchListener((v, event) -> true);
     view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {
-      if (showTime > 0) {
-        SensorsUtils.track("QcSaasSpecialPriceBannerClose")
-            .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
-            .commit(getContext());
-      }
       layoutCharge.setVisibility(View.GONE);
       firstMonthClose = true;
     });
@@ -686,24 +676,11 @@ public class GymDetailFragment extends BaseFragment
     hideLoading();
     showTime = 0L;
     layoutCharge.setVisibility((hasFirst && !firstMonthClose) ? View.VISIBLE : View.GONE);
-    if (hasFirst && !firstMonthClose) {
-      showTime = System.currentTimeMillis() / 1000;
-      SensorsUtils.track("QcSaasSpecialPriceBannerShow").commit(getContext());
-    }
     tvPrice.setText(getString(R.string.underline_pro_update_now, price));
     mRechargeBtn.setOnClickListener(v -> {
-      SensorsUtils.track("QcSaasEnterRechargePageBtnClick")
-          .addProperty("qc_saas_shop_status", gymWrapper.isPro() ? "pro" : "free")
-          .addProperty("qc_saas_shop_expire_date", gymWrapper.system_end())
-          .commit(getContext());
       toCharge();
     });
     layoutCharge.setOnClickListener(view -> {
-      if (showTime > 0) {
-        SensorsUtils.track("QcSaasEnterRechargePageBtnClick")
-            .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
-            .commit(getContext());
-      }
       toCharge();
     });
   }
@@ -1101,18 +1078,5 @@ public class GymDetailFragment extends BaseFragment
     }
   }
 
-  /**
-   * 记录神策的公共事件
-   */
-  void registeSensors() {
-    try {
-      JSONObject properties = new JSONObject();
-      properties.put("qc_shop_id", gymWrapper.shop_id());
-      properties.put("qc_brand_id", gymWrapper.brand_id());
-      properties.put("qc_gym_id", gymWrapper.getGymId());
-      SensorsDataAPI.sharedInstance(getContext()).registerSuperProperties(properties);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
+
 }

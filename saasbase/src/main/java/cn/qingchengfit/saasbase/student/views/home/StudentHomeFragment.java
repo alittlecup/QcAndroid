@@ -9,18 +9,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import cn.qingchengfit.utils.SensorsUtils;
-import com.anbillon.flabellum.annotations.Leaf;
-
-import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentStudentlistBinding;
@@ -28,12 +19,14 @@ import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.other.EventFreshStudent;
 import cn.qingchengfit.saasbase.student.presenters.home.StudentHomePresenter;
 import cn.qingchengfit.utils.ToastUtils;
+import com.anbillon.flabellum.annotations.Leaf;
+import java.util.List;
+import javax.inject.Inject;
 import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/10/26.
  */
-@SensorsDataTrackFragmentAppViewScreen
 @Leaf(module = "student", path = "/student/home")
 public class StudentHomeFragment extends SaasBaseFragment implements StudentHomePresenter.MVPView,SwipeRefreshLayout.OnRefreshListener {
     FragmentStudentlistBinding binding;

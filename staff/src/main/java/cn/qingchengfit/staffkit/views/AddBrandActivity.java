@@ -11,9 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.network.ResponseConstant;
@@ -25,7 +22,6 @@ import cn.qingchengfit.staffkit.views.gym.AddBrandView;
 import cn.qingchengfit.staffkit.views.gym.CreateBrandPresenter;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -137,10 +133,6 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
     }
 
     @Override public void onSucceed(final CreatBrand creatBrand) {
-        SensorsUtils.track("QcSaasCreateBrand")
-          .commit(this);
-
-
         restRepository.getStaffAllApi()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

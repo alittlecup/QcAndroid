@@ -11,8 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventFreshGyms;
@@ -20,9 +18,9 @@ import cn.qingchengfit.items.CoachServiceItem;
 import cn.qingchengfit.items.ListAddItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -32,7 +30,6 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.google.gson.Gson;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -105,10 +102,6 @@ public class GymsFragment extends BaseFragment
   @Override public void onResume() {
     super.onResume();
     gymWrapper.setCoachService(null);
-    SensorsDataAPI sensorsDataAPI = SensorsDataAPI.sharedInstance(getContext());
-    if (sensorsDataAPI != null) {
-      sensorsDataAPI.unregisterSuperProperty("qc_gym_id");
-    }
   }
 
   @Override public void onDestroyView() {

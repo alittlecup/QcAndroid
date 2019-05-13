@@ -13,14 +13,11 @@ import cn.qingchengfit.saascommon.widget.bubble.BubbleViewUtil;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopHomeBinding;
-import cn.qingchengfit.shop.listener.ShopHomePageTabStayListener;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListPage;
 import cn.qingchengfit.shop.ui.home.inventorylist.ShopInventoryListPage;
 import cn.qingchengfit.shop.ui.home.productlist.ShopProductsListPage;
-import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
@@ -54,7 +51,6 @@ import javax.inject.Inject;
           + gymWrapper.shop_id()
           + "/mobile/user/commodity/";
       WebActivity.startWeb(url, getActivity());
-      SensorsUtils.track(ShopSensorsConstants.SHOP_PREVIEW_MALL_BTN_CLICK).commit(getContext());
     });
     bubbleViewUtil = new BubbleViewUtil(getContext());
     bubbleViewUtil.showBubbleOnce(mBinding.showWebPreview, "点击预览商店并推广", "shopHome",
@@ -83,14 +79,6 @@ import javax.inject.Inject;
 
       @Override public void onPageSelected(int position) {
         if (preIndex == position) return;
-        Fragment preFragment = getFragmentList().get(preIndex).second;
-        if (preFragment instanceof ShopHomePageTabStayListener) {
-          ((ShopHomePageTabStayListener) preFragment).onLeave();
-        }
-        Fragment curFragment = getFragmentList().get(position).second;
-        if (curFragment instanceof ShopHomePageTabStayListener) {
-          ((ShopHomePageTabStayListener) curFragment).onVisit();
-        }
         preIndex = position;
       }
 
@@ -98,10 +86,7 @@ import javax.inject.Inject;
 
       }
     });
-    Fragment first = getFragmentList().get(preIndex).second;
-    if (first instanceof ShopHomePageTabStayListener) {
-      ((ShopHomePageTabStayListener) first).onVisit();
-    }
+
   }
 
 

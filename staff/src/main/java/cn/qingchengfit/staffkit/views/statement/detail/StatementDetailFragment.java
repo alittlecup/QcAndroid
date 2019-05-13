@@ -22,23 +22,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import cn.qingchengfit.utils.SensorsUtils;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
-import com.tencent.qcloud.timchat.widget.PhotoUtils;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -50,8 +33,8 @@ import cn.qingchengfit.model.responese.CourseCardForm;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.CourseTypeform;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
-import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.RxNetWorkEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
@@ -68,6 +51,18 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.TypeUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
+import com.tencent.qcloud.timchat.widget.PhotoUtils;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -258,7 +253,6 @@ public class StatementDetailFragment extends BaseFragment
         return true;
       }
     });
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

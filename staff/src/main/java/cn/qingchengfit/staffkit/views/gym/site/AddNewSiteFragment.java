@@ -15,15 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.AddSiteEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
@@ -32,7 +31,6 @@ import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
@@ -116,7 +114,6 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     toolbarTitile.setText(getString(R.string.title_add_new_site));
     name.addTextWatcher(textChange);
     count.addTextWatcher(textChange);
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

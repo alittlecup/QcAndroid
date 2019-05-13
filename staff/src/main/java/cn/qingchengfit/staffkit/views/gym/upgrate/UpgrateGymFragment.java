@@ -3,7 +3,6 @@ package cn.qingchengfit.staffkit.views.gym.upgrate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
@@ -17,9 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -31,12 +27,11 @@ import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.RenewalList;
 import cn.qingchengfit.model.responese.RenewalPay;
-import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
@@ -45,7 +40,6 @@ import cn.qingchengfit.staffkit.views.gym.upgrate.item.LinearFunItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.item.PayItem;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.GymUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AnimatedButton;
@@ -82,23 +76,23 @@ import rx.schedulers.Schedulers;
  */
 public class UpgrateGymFragment extends BaseFragment {
 
-	RecyclerView rvFunction;
-	TextView tvPayTitle;
-	TextView tagPro;
-	TextView tvPayHint;
-	RecyclerView rvFirstPayChoose;
-	TextView tvHideTitle;
-	AnimatedButton btnShowAll;
-	RecyclerView rvSecoundPayChoose;
-	TextView tvBrandName;
-	TextView tvTimeLong;
-	TextView tvPrice;
-	TextView tvHidenHint;
-	NestedScrollView rootScroll;
-	View hidenTrans;
-	RelativeLayout layoutHiden;
-	TextView tvFirstDiscount;
-	TextView tvFirstDiscountHide;
+  RecyclerView rvFunction;
+  TextView tvPayTitle;
+  TextView tagPro;
+  TextView tvPayHint;
+  RecyclerView rvFirstPayChoose;
+  TextView tvHideTitle;
+  AnimatedButton btnShowAll;
+  RecyclerView rvSecoundPayChoose;
+  TextView tvBrandName;
+  TextView tvTimeLong;
+  TextView tvPrice;
+  TextView tvHidenHint;
+  NestedScrollView rootScroll;
+  View hidenTrans;
+  RelativeLayout layoutHiden;
+  TextView tvFirstDiscount;
+  TextView tvFirstDiscountHide;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Inject StaffRespository staffRespository;
@@ -114,56 +108,43 @@ public class UpgrateGymFragment extends BaseFragment {
   private boolean has12MonDiscount = false;  //是否有满12月优惠
   private int chooseMonthTime = 12;
   private FlexibleAdapter.OnItemClickListener mPayClickListener =
-    new FlexibleAdapter.OnItemClickListener() {
-      @Override public boolean onItemClick(int position) {
-        mPayAdapter.clearSelection();
-        mHidenPayAdapter.clearSelection();
-        mPayAdapter.toggleSelection(position);
-        mHidenPayAdapter.notifyDataSetChanged();
-        mPayAdapter.notifyDataSetChanged();
-        PayItem payItem = (PayItem) mPayAdapter.getItem(position);
-        tvTimeLong.setText(payItem.getStrTime());
-        tvPrice.setText("￥" + payItem.getPrice());
-        choosehasDiscount = payItem.hasDiscount();
-        chooseMonthTime = payItem.getMonthCount();
-        choosehasDiscount = has12MonDiscount;
-        return false;
-      }
-    };
+      new FlexibleAdapter.OnItemClickListener() {
+        @Override public boolean onItemClick(int position) {
+          mPayAdapter.clearSelection();
+          mHidenPayAdapter.clearSelection();
+          mPayAdapter.toggleSelection(position);
+          mHidenPayAdapter.notifyDataSetChanged();
+          mPayAdapter.notifyDataSetChanged();
+          PayItem payItem = (PayItem) mPayAdapter.getItem(position);
+          tvTimeLong.setText(payItem.getStrTime());
+          tvPrice.setText("￥" + payItem.getPrice());
+          choosehasDiscount = payItem.hasDiscount();
+          chooseMonthTime = payItem.getMonthCount();
+          choosehasDiscount = has12MonDiscount;
+          return false;
+        }
+      };
   private FlexibleAdapter.OnItemClickListener mHidenClickListener =
-    new FlexibleAdapter.OnItemClickListener() {
-      @Override public boolean onItemClick(int position) {
-        mPayAdapter.clearSelection();
-        mHidenPayAdapter.clearSelection();
-        mHidenPayAdapter.toggleSelection(position);
-        mHidenPayAdapter.notifyDataSetChanged();
-        mPayAdapter.notifyDataSetChanged();
+      new FlexibleAdapter.OnItemClickListener() {
+        @Override public boolean onItemClick(int position) {
+          mPayAdapter.clearSelection();
+          mHidenPayAdapter.clearSelection();
+          mHidenPayAdapter.toggleSelection(position);
+          mHidenPayAdapter.notifyDataSetChanged();
+          mPayAdapter.notifyDataSetChanged();
 
-        PayItem payItem = (PayItem) mHidenPayAdapter.getItem(position);
-        tvTimeLong.setText(payItem.getStrTime());
-        tvPrice.setText("￥" + payItem.getPrice());
+          PayItem payItem = (PayItem) mHidenPayAdapter.getItem(position);
+          tvTimeLong.setText(payItem.getStrTime());
+          tvPrice.setText("￥" + payItem.getPrice());
 
-        choosehasDiscount = !has12MonDiscount;
-        chooseMonthTime = payItem.getMonthCount();
-        return false;
-      }
-    };
-  long stayTime ;
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    SensorsUtils.track("QcSaasStudioRenewVisit").commit(getContext());
-    stayTime = System.currentTimeMillis()/1000;
-  }
-
-  @Override public void onDestroy() {
-    SensorsUtils.track("QcSaasStudioRenewLeave")
-      .addProperty("QcSaasStudioRenewDuration",System.currentTimeMillis()/1000 - stayTime)
-      .commit(getContext());
-    super.onDestroy();
-  }
+          choosehasDiscount = !has12MonDiscount;
+          chooseMonthTime = payItem.getMonthCount();
+          return false;
+        }
+      };
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_upgrade_gym, container, false);
     rvFunction = (RecyclerView) view.findViewById(R.id.rv_function);
     tvPayTitle = (TextView) view.findViewById(R.id.tv_pay_title);
@@ -199,173 +180,169 @@ public class UpgrateGymFragment extends BaseFragment {
     });
 
     RxBus.getBus()
-      .post(new ToolbarBean.Builder().title("高级版")
-        .menu(R.menu.menu_pay_history)
-        .listener(new Toolbar.OnMenuItemClickListener() {
-          @Override public boolean onMenuItemClick(MenuItem item) {
-            Intent toHistory = new Intent(getActivity(), GymActivity.class);
-            toHistory.putExtra(Configs.EXTRA_GYM_STATUS,
-              new GymStatus.Builder().isSingle(true).build());
-            toHistory.putExtra(GymActivity.GYM_TO, GymActivity.GYM_HISORY);
-            startActivity(toHistory);
-            return true;
-          }
-        })
-        .build());
+        .post(new ToolbarBean.Builder().title("高级版")
+            .menu(R.menu.menu_pay_history)
+            .listener(new Toolbar.OnMenuItemClickListener() {
+              @Override public boolean onMenuItemClick(MenuItem item) {
+                Intent toHistory = new Intent(getActivity(), GymActivity.class);
+                toHistory.putExtra(Configs.EXTRA_GYM_STATUS,
+                    new GymStatus.Builder().isSingle(true).build());
+                toHistory.putExtra(GymActivity.GYM_TO, GymActivity.GYM_HISORY);
+                startActivity(toHistory);
+                return true;
+              }
+            })
+            .build());
 
     mIsPro = GymUtils.getSystemEndDay(gymWrapper.getCoachService()) >= 0;
 
     rvFunction.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     mFunDatas.add(new LinearFunItem(
-      new GymFuntion.Builder().moduleName(getString(R.string.module_student_cards))
-        .text(R.string.module_student_cards_desc)
-        .img(R.drawable.moudule_student_card)
-        .build()));
+        new GymFuntion.Builder().moduleName(getString(R.string.module_student_cards))
+            .text(R.string.module_student_cards_desc)
+            .img(R.drawable.moudule_student_card)
+            .build()));
     mFunDatas.add(new LinearFunItem(new GymFuntion.Builder().moduleName("运营推广")
-      .text(R.string.module_op_activity_desc)
-      .img(R.drawable.moudule_op_activity)
-      .build()));
+        .text(R.string.module_op_activity_desc)
+        .img(R.drawable.moudule_op_activity)
+        .build()));
     mFunDatas.add(new LinearFunItem(new GymFuntion.Builder().moduleName("员工管理")
-      .text(R.string.module_manage_staff_desc)
-      .img(R.drawable.moudule_manage_staff)
-      .build()));
+        .text(R.string.module_manage_staff_desc)
+        .img(R.drawable.moudule_manage_staff)
+        .build()));
     mFunDatas.add(new LinearFunItem(new GymFuntion.Builder().moduleName("完整报表")
-      .text(R.string.module_fi_card_statement_desc)
-      .img(R.drawable.moudule_fi_card_statement)
-      .build()));
+        .text(R.string.module_fi_card_statement_desc)
+        .img(R.drawable.moudule_fi_card_statement)
+        .build()));
     mFunAdapter = new CommonFlexAdapter(mFunDatas);
     rvFunction.setNestedScrollingEnabled(false);
     rvFunction.setAdapter(mFunAdapter);
 
     tvBrandName.setText(gymWrapper.brand_name() + gymWrapper.name());
     RxRegiste(staffRespository.getStaffAllApi()
-      .qcGetGymPay(App.staffId, GymUtils.getParams(gymWrapper.getCoachService(), null))
-      .onBackpressureBuffer()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Action1<QcDataResponse<RenewalList>>() {
-        @Override public void call(QcDataResponse<RenewalList> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            mOriDatas.clear();
-            mDisCountDatas.clear();
-            boolean hasFirst = (qcResponse.getData().has_first_month_favorable
-              && qcResponse.getData().first_month_favorable != null);
-            RenewalPay renewalPay399 = null;
-            if (hasFirst) { renewalPay399 = qcResponse.getData().first_month_favorable.get(0);}
-
-            if (qcResponse.getData().normal != null) {
-              for (int i = 0; i < (hasFirst ? qcResponse.getData().first_month_favorable.size()
-                : qcResponse.getData().normal.size()); i++) {
-                RenewalPay renewalPay = qcResponse.getData().normal.get(i);
-                mOriDatas.add(
-                  new PayItem(renewalPay.name, (hasFirst && i == 0 && renewalPay399 != null) ? renewalPay.price : null,
-                    (hasFirst && i == 0 && renewalPay399 != null) ? renewalPay399.favorable_price:renewalPay.price, renewalPay.times));
-                mDisCountDatas.add(
-                  new PayItem(renewalPay.name, renewalPay.price, renewalPay.favorable_price,
-                    renewalPay.times));
+        .qcGetGymPay(App.staffId, GymUtils.getParams(gymWrapper.getCoachService(), null))
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<RenewalList>>() {
+          @Override public void call(QcDataResponse<RenewalList> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              mOriDatas.clear();
+              mDisCountDatas.clear();
+              boolean hasFirst = (qcResponse.getData().has_first_month_favorable
+                  && qcResponse.getData().first_month_favorable != null);
+              RenewalPay renewalPay399 = null;
+              if (hasFirst) {
+                renewalPay399 = qcResponse.getData().first_month_favorable.get(0);
               }
+
+              if (qcResponse.getData().normal != null) {
+                for (int i = 0; i < (hasFirst ? qcResponse.getData().first_month_favorable.size()
+                    : qcResponse.getData().normal.size()); i++) {
+                  RenewalPay renewalPay = qcResponse.getData().normal.get(i);
+                  mOriDatas.add(new PayItem(renewalPay.name,
+                      (hasFirst && i == 0 && renewalPay399 != null) ? renewalPay.price : null,
+                      (hasFirst && i == 0 && renewalPay399 != null) ? renewalPay399.favorable_price
+                          : renewalPay.price, renewalPay.times));
+                  mDisCountDatas.add(
+                      new PayItem(renewalPay.name, renewalPay.price, renewalPay.favorable_price,
+                          renewalPay.times));
+                }
+              }
+              has12MonDiscount = qcResponse.getData().is_regular;
+              tvFirstDiscount.setVisibility(
+                  (hasFirst && !has12MonDiscount) ? View.VISIBLE : View.GONE);
+              tvFirstDiscountHide.setVisibility(
+                  (hasFirst && has12MonDiscount) ? View.VISIBLE : View.GONE);
+              initPay(qcResponse.getData().is_regular);
+            } else {
+              onShowError(qcResponse.getMsg());
             }
-            has12MonDiscount = qcResponse.getData().is_regular;
-            tvFirstDiscount.setVisibility((hasFirst && !has12MonDiscount) ? View.VISIBLE : View.GONE);
-            tvFirstDiscountHide.setVisibility((hasFirst && has12MonDiscount) ? View.VISIBLE : View.GONE);
-            initPay(qcResponse.getData().is_regular);
-          }else onShowError(qcResponse.getMsg());
-        }
-      }, new Action1<Throwable>() {
-        @Override public void call(Throwable throwable) {
-          onShowError(throwable.getMessage());
-        }
-      }));
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            onShowError(throwable.getMessage());
+          }
+        }));
     return view;
   }
 
- public void onShowAll() {
+  public void onShowAll() {
     btnShowAll.toggle();
     ViewCompat.setPivotY(layoutHiden, 0f);
     if (btnShowAll.isChecked()) {
       ViewCompat.setScaleY(layoutHiden, 0);
       layoutHiden.setVisibility(View.VISIBLE);
       ViewCompat.animate(layoutHiden)
-        .scaleY(1)
-        .setDuration(300)
-        .setUpdateListener(new ViewPropertyAnimatorUpdateListener() {
-          @Override public void onAnimationUpdate(View view) {
-            rootScroll.fullScroll(View.FOCUS_DOWN);
-          }
-        })
-        .start();
+          .scaleY(1)
+          .setDuration(300)
+          .setUpdateListener(new ViewPropertyAnimatorUpdateListener() {
+            @Override public void onAnimationUpdate(View view) {
+              rootScroll.fullScroll(View.FOCUS_DOWN);
+            }
+          })
+          .start();
     } else {
       rootScroll.smoothScrollBy(0, -layoutHiden.getHeight());
       ViewCompat.animate(layoutHiden)
-        .scaleY(0)
-        .setDuration(300)
-        .setListener(new ViewPropertyAnimatorListener() {
-          @Override public void onAnimationStart(View view) {
+          .scaleY(0)
+          .setDuration(300)
+          .setListener(new ViewPropertyAnimatorListener() {
+            @Override public void onAnimationStart(View view) {
 
-          }
+            }
 
-          @Override public void onAnimationEnd(View view) {
-            if (!btnShowAll.isChecked()) layoutHiden.setVisibility(View.GONE);
-          }
+            @Override public void onAnimationEnd(View view) {
+              if (!btnShowAll.isChecked()) layoutHiden.setVisibility(View.GONE);
+            }
 
-          @Override public void onAnimationCancel(View view) {
+            @Override public void onAnimationCancel(View view) {
 
-          }
-        })
-        .start();
+            }
+          })
+          .start();
     }
   }
 
- public void onClickPay() {
+  public void onClickPay() {
     String price = tvPrice.getText().toString();
     int numPrice = -1;
     try {
-      numPrice = Integer.parseInt(price.replace("￥",""));
-    }catch (Exception e){
+      numPrice = Integer.parseInt(price.replace("￥", ""));
+    } catch (Exception e) {
 
+      showLoading();
+      RxRegiste(staffRespository.getStaffAllApi()
+          .qcCharge(new RenewBody.Builder().app_id(getString(R.string.wechat_code))
+              .type("gym_time")
+              .channel(12)
+              .favorable(choosehasDiscount)
+              .times(chooseMonthTime)
+              .id(gymWrapper.id())
+              .model(gymWrapper.model())
+              .build())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcResponseRenew>() {
+            @Override public void call(QcResponseRenew qcResponse) {
+              hideLoading();
+              if (ResponseConstant.checkSuccess(qcResponse)) {
+                Intent intent = new Intent(getContext(), WebActivity.class);
+                intent.putExtra("url", qcResponse.data.url);
+                intent.putExtra("request", 404);
+                startActivityForResult(intent, 404);
+              } else {
+
+                // ToastUtils.logHttp(qcResponse);
+              }
+            }
+          }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+              hideLoading();
+            }
+          }));
     }
-    //记录场馆充值
-    SensorsUtils.track("QcSaasRechargeBtnClick")
-      //.addProperty("qc_saas_first_recharge_time",)//当前场馆第一次付费时间
-      .addProperty("qc_saas_shop_status",gymWrapper.isPro()?"pro":"free")//当前Saas场馆的状态
-      .addProperty("qc_saas_shop_expire_date",gymWrapper.system_end())//当前场馆的过期时间
-      .addProperty("qc_saas_recharge_type","wxPay")//Saas场馆续费方式
-      .addProperty("qc_saas_shop_has_trialed",gymWrapper.isHasFirst())//Saas场馆是否续费过
-      .addProperty("qc_saas_recharge_times",chooseMonthTime)//Saas场馆续费的月数
-      .addProperty("qc_saas_recharge_price",numPrice)//Saas场馆续费的价格
-      .commit(getContext());
-
-    showLoading();
-    RxRegiste(staffRespository.getStaffAllApi()
-      .qcCharge(new RenewBody.Builder().app_id(getString(R.string.wechat_code))
-        .type("gym_time")
-        .channel(12)
-        .favorable(choosehasDiscount)
-        .times(chooseMonthTime)
-        .id(gymWrapper.id())
-        .model(gymWrapper.model())
-        .build())
-      .onBackpressureBuffer()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Action1<QcResponseRenew>() {
-        @Override public void call(QcResponseRenew qcResponse) {
-          hideLoading();
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            Intent intent = new Intent(getContext(), WebActivity.class);
-            intent.putExtra("url", qcResponse.data.url);
-            intent.putExtra("request", 404);
-            startActivityForResult(intent, 404);
-          } else {
-
-            // ToastUtils.logHttp(qcResponse);
-          }
-        }
-      }, new Action1<Throwable>() {
-        @Override public void call(Throwable throwable) {
-          hideLoading();
-        }
-      }));
   }
 
   private void initPay(boolean hasDiscount) {
@@ -403,9 +380,9 @@ public class UpgrateGymFragment extends BaseFragment {
     mPayAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     rvFirstPayChoose.setNestedScrollingEnabled(false);
     rvFirstPayChoose.setLayoutManager(
-      new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     rvFirstPayChoose.addItemDecoration(
-      new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
+        new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
     if (mOriDatas.size() >= 3) {
       mPayAdapter.toggleSelection(2);
       PayItem payItem = (PayItem) mPayAdapter.getItem(2);
@@ -419,9 +396,9 @@ public class UpgrateGymFragment extends BaseFragment {
     mHidenPayAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     rvSecoundPayChoose.setNestedScrollingEnabled(false);
     rvSecoundPayChoose.setLayoutManager(
-      new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     rvSecoundPayChoose.addItemDecoration(
-      new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
+        new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
     rvSecoundPayChoose.setAdapter(mHidenPayAdapter);
   }
 
@@ -430,22 +407,21 @@ public class UpgrateGymFragment extends BaseFragment {
     if (resultCode == Activity.RESULT_OK) {
       if (requestCode == 404) {
         RxRegiste(staffRespository.getStaffAllApi()
-          .qcGetGymDetail(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model())
-          .onBackpressureLatest()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(new NetSubscribe<QcDataResponse<GymDetail>>() {
-            @Override public void onNext(QcDataResponse<GymDetail> qcResponse) {
-              if (ResponseConstant.checkSuccess(qcResponse)) {
-                gymWrapper.setCoachService(qcResponse.getData().gym);
-                routeTo("gym","/upgrade/done/",null);
-                getActivity().finish();
-              } else {
-                onShowError(qcResponse.getMsg());
+            .qcGetGymDetail(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model())
+            .onBackpressureLatest()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new NetSubscribe<QcDataResponse<GymDetail>>() {
+              @Override public void onNext(QcDataResponse<GymDetail> qcResponse) {
+                if (ResponseConstant.checkSuccess(qcResponse)) {
+                  gymWrapper.setCoachService(qcResponse.getData().gym);
+                  routeTo("gym", "/upgrade/done/", null);
+                  getActivity().finish();
+                } else {
+                  onShowError(qcResponse.getMsg());
+                }
               }
-            }
-          }));
-                        
+            }));
       }
     }
   }

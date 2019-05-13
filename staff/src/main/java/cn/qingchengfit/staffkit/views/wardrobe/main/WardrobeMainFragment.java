@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AllLockers;
@@ -40,7 +39,6 @@ import cn.qingchengfit.staffkit.views.wardrobe.choose.SearchResultFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.SimpleChooseItemItem;
 import cn.qingchengfit.staffkit.views.wardrobe.district.DistrictListFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeContinueHireFragment;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AnimatedButton;
@@ -235,7 +233,6 @@ public class WardrobeMainFragment extends BaseFragment
             }));
       }
     });
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

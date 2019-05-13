@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.WebFragment;
 import com.qingchengfit.fitcoach.R;
@@ -71,7 +70,6 @@ public class MainWebFragment extends WebFragment {
   }
 
   @Override protected void onVisible() {
-    SensorsUtils.track("AND_discover_tab_click", null, getContext());
   }
 
   @Override public void initWebClient() {

@@ -21,8 +21,6 @@ import cn.qingchengfit.shop.databinding.PageShopCategoryBinding;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListPage;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.vo.Category;
-import cn.qingchengfit.shop.vo.ShopSensorsConstants;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -113,14 +111,10 @@ import rx.functions.Action1;
         mBinding.categoryTitle.setText(getString(R.string.add_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
           checkUpCategory(category, category1 -> {
-            SensorsUtils.track(ShopSensorsConstants.SHOP_ADD_CATEGORY_CONFIRM_BTN_CLICK)
-                .commit(getContext());
             mViewModel.addShopCategory(category1);
           });
         });
         mBinding.includeBottom.cancel.setOnClickListener(v -> {
-          SensorsUtils.track(ShopSensorsConstants.SHOP_ADD_CATEGORY_CANCEL_BTN_CLICK)
-              .commit(getContext());
           dismiss();
         });
         break;

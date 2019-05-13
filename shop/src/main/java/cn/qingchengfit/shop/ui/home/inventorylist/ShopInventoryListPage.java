@@ -15,14 +15,11 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageInventoryListBinding;
-import cn.qingchengfit.shop.listener.ShopHomePageTabStayListener;
 import cn.qingchengfit.shop.ui.inventory.product.ProductInventoryPageParams;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryListItem;
 import cn.qingchengfit.shop.ui.items.inventory.InventorySingleTextItem;
 import cn.qingchengfit.shop.vo.Product;
-import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.DividerItemDecoration;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -41,7 +38,7 @@ import rx.schedulers.Schedulers;
 
 public class ShopInventoryListPage
     extends ShopBaseFragment<PageInventoryListBinding, ShopInventoryListViewModel>
-    implements FlexibleAdapter.OnItemClickListener, ShopHomePageTabStayListener {
+    implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
   @Inject IPermissionModel permissionModel;
 
@@ -156,19 +153,5 @@ public class ShopInventoryListPage
       mViewModel.getShowAllRecord().call();
     }
     return false;
-  }
-
-  long startTime = 0;
-
-  @Override public void onVisit() {
-    startTime = System.currentTimeMillis() / 1000;
-    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORY_VISIT).commit(getContext());
-  }
-
-  @Override public void onLeave() {
-    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORY_LEAVE)
-        .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-            System.currentTimeMillis() / 1000 - startTime)
-        .commit(getContext());
   }
 }

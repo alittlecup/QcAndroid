@@ -24,34 +24,33 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventTxT;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.base.User_Student;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.widgets.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.PhoneEditText;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
@@ -281,7 +280,6 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         return true;
       }
     });
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName() + (isAdd ? "add" : "edit"));
     return view;
   }
 

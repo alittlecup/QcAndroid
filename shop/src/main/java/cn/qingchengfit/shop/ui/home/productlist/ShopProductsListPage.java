@@ -16,16 +16,11 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
-import cn.qingchengfit.shop.listener.ShopHomePageTabStayListener;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
-import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import cn.qingchengfit.widgets.CommonInputView;
-import cn.qingchengfit.widgets.CommonInputViewAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -45,8 +40,7 @@ import rx.schedulers.Schedulers;
 
 public class ShopProductsListPage
     extends ShopBaseFragment<PageProductListBinding, ShopProductsViewModel>
-    implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener,
-    ShopHomePageTabStayListener {
+    implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
   CommonFlexAdapter adapter;
   @Inject IPermissionModel permissionModel;
 
@@ -91,9 +85,6 @@ public class ShopProductsListPage
       int status = getArguments().getInt("status");
       this.status = status == 1;
       mViewModel.setStatus(status);
-      if (this.status) {
-        onVisit();
-      }
     } else {
       LogUtil.e("TAG", "loadData: cant find this current page status");
     }
@@ -194,22 +185,6 @@ public class ShopProductsListPage
     Integer page = (Integer) mViewModel.getParams().get("page");
     mViewModel.getParams().put("page", page + 1);
     mViewModel.loadSource(mViewModel.getParams());
-  }
-
-  long startTime = 0;
-
-  @Override public void onVisit() {
-    startTime = System.currentTimeMillis() / 1000;
-    SensorsUtils.track(status ? ShopSensorsConstants.SHOP_ACTIVED_COMMODITY_LIST_VISIT
-        : ShopSensorsConstants.SHOP_INACTIVED_COMMODITY_LIST_VISIT).commit(getContext());
-  }
-
-  @Override public void onLeave() {
-    SensorsUtils.track(status ? ShopSensorsConstants.SHOP_ACTIVED_COMMODITY_LIST_LEAVE
-        : ShopSensorsConstants.SHOP_INACTIVED_COMMODITY_LIST_LEAVE)
-        .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-            System.currentTimeMillis() / 1000 - startTime)
-        .commit(getContext());
   }
 }
 

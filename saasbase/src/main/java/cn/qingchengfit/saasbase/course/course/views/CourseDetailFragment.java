@@ -17,14 +17,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.adapter.ViewPaperEndlessAdapter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.adapter.CourseTeacherAdapter;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -33,7 +29,6 @@ import cn.qingchengfit.saasbase.course.course.presenters.CourseDetailPresenter;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.PhotoUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.CircleIndicator;
@@ -144,7 +139,6 @@ import javax.inject.Inject;
     if (savedInstanceState != null){
       scrollView.scrollTo(0,savedInstanceState.getInt("p",0));
     }
-   SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mCourseDetail.is_private?"private":"group"));
 
     return view;
   }

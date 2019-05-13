@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.staffkit.R;
@@ -27,7 +24,6 @@ import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.Date;
@@ -122,7 +118,6 @@ public class StatementGlanceFragment extends BaseFragment implements StatementGl
             "本周(" + DateUtils.getMondayOfThisWeek(new Date()) + "至" + DateUtils.getSundayOfThisWeek(new Date()) + ")");
         statmentGlanceMonthTitle.setText(
             "本月(" + DateUtils.getStartDayOfMonth(new Date()) + "至" + DateUtils.getEndDayOfMonth(new Date()) + ")");
-      SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

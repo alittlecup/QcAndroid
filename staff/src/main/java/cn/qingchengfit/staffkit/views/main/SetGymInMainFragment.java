@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventAddress;
 import cn.qingchengfit.events.EventLoginChange;
@@ -33,7 +32,6 @@ import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -241,9 +239,6 @@ import timber.log.Timber;
                     coachServices.add(qcResponseSystenInit.data);
                     gymBaseInfoAction.writeGyms(coachServices);
                     //记录创建场馆动作
-                    SensorsUtils.track("QcSaasCreateShop")
-                        .addProperty("qc_brand_shops_count", "0")
-                        .commit(getContext());
                     RxBus.getBus().post(new EventLoginChange());
                   }
                 } else {

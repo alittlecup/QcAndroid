@@ -21,9 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -31,8 +28,8 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.SigninFilter;
 import cn.qingchengfit.model.responese.SigninReportDetail;
 import cn.qingchengfit.model.responese.SigninReportForm;
-import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.RxNetWorkEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
@@ -41,7 +38,6 @@ import cn.qingchengfit.staffkit.views.statement.excel.OutExcelFragment;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
@@ -225,7 +221,6 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
                 }
             }
         });
-        SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

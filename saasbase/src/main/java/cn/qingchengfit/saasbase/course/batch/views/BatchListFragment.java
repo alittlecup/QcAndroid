@@ -30,7 +30,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -58,7 +57,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/1/9.
  */
-@SensorsDataTrackFragmentAppViewScreen public abstract class BatchListFragment
+ public abstract class BatchListFragment
     extends SaasBaseFragment
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,
     BatchCopyItem.OnClickPrintListener {

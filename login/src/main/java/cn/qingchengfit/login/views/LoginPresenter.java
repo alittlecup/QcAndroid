@@ -18,7 +18,6 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -117,7 +116,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     PreferenceUtils.setPrefString(mvpContext,Configs.PREFER_WORK_NAME_MIRROR,qcResponLogin.data.user.username);
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
       qcResponLogin.getData().user.getId());
-    SensorsDataAPI.sharedInstance(mvpContext.getApplicationContext()).login(qcResponLogin.getData().user.id);
     PreferenceUtils.setPrefString(mvpContext,"user_info",new Gson().toJson(qcResponLogin.data.user));
     loginModel.doOnLogin(mvpContext,qcResponLogin.data,mvpView);
     mvpView.onShowLogining();

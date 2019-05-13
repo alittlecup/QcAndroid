@@ -32,7 +32,6 @@ import cn.qingchengfit.saascommon.widget.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.wxpreview.old.WebActivityForGuide;
 import cn.qingchengfit.wxpreview.old.newa.MiniProgramUtil;
 import com.bigkoo.pickerview.lib.DensityUtil;
@@ -201,7 +200,6 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     initListener();
     getServer();
     isInit = true;
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return mBinding;
   }
 

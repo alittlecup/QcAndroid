@@ -18,7 +18,6 @@ import cn.qingchengfit.router.QC;
 import cn.qingchengfit.router.QCResult;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.PhoneEditText;
@@ -109,7 +108,6 @@ public class AddStudentManulkFragment extends BaseFragment {
       }
     });
 
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

@@ -29,7 +29,6 @@ import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragmentAdapter;
@@ -234,7 +233,6 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
                 }
             }
         },new HttpThrowable());
-        SensorsUtils.trackScreen(this.getClass().getCanonicalName());
         return view;
     }
 
