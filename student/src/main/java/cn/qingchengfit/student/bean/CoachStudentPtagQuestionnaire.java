@@ -6,7 +6,7 @@ public class CoachStudentPtagQuestionnaire {
   String type;
 
   public String getAnswer() {
-    return answer;
+    return answer == null ? "" : answer;
   }
 
   public String getTitle() {

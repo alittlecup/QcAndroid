@@ -47,17 +47,6 @@
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         >
-
-      <ImageView
-          android:id="@+id/img_play_pta_video"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:paddingEnd="5dp"
-          android:paddingTop="5dp"
-          app:srcCompat="@drawable/vd_play_pta_video"
-          android:onClick="@{()->page.onPlayVideo()}"
-          />
-
       <ImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -76,7 +65,7 @@
           android:layout_height="wrap_content"
           android:drawableEnd="@drawable/vd_pdf_grey"
           android:drawablePadding="11dp"
-          android:text="下载PDF"
+          android:text="下载PDQ"
           style="@style/QcTextStyleSmallWarm"
           android:onClick="@{()->page.onDownloadPDF()}"
           />

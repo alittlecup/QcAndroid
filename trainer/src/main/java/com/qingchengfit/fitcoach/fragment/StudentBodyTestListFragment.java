@@ -170,6 +170,9 @@ public class StudentBodyTestListFragment extends BaseFragment {
             if (bodyTestReponse.data.measures.size() == 0){
               noDataLayout.setVisibility(View.VISIBLE);
               tvNoDataHint.setText("暂无体测数据");
+            }else{
+              noDataLayout.setVisibility(View.GONE);
+              tvNoDataHint.setVisibility(View.GONE);
             }
           }
         });

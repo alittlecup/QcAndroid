@@ -13,7 +13,7 @@
     >
 
   <LinearLayout
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
       android:orientation="horizontal"
@@ -21,18 +21,20 @@
 
   <TextView
       android:id="@+id/tv_ptag_select_title"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:layout_weight="7"
       android:padding="5dp"
-      tools:text="测试测试测试测试测试?"
+      tools:text="测试测试测试测试测试sssssssssssssssssssssssssssssssss?"
       style="@style/QcTextStyleLargeDark"
       android:textStyle="bold"
       />
 
   <ImageView
       android:id="@+id/img_ptag_select_help"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:layout_weight="1"
       android:layout_marginLeft="3dp"
       android:padding="5dp"
       app:srcCompat="@drawable/vd_ptag_question_help"
@@ -73,6 +75,7 @@
           android:id="@+id/edit_ptag_answer"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:minHeight="66dp"
           android:background="@null"
           android:textSize="14sp"
           android:textColor="#606060"
@@ -81,6 +84,7 @@
           android:textColorHint="#BBBBBB"
           android:paddingTop="10dp"
           android:paddingBottom="10dp"
+          android:visibility="gone"
           android:hint="请输入"/>
         
         <cn.qingchengfit.widgets.CommonInputView

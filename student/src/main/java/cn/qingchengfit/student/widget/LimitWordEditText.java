@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import cn.qingchengfit.student.R;
 
 /**
@@ -13,6 +14,7 @@ import cn.qingchengfit.student.R;
 public class LimitWordEditText extends android.support.v7.widget.AppCompatEditText {
   private int limit;
   private CharSequence already;
+  private OnTextCompleteListener listener;
   public LimitWordEditText(Context context) {
     this(context, null);
   }
@@ -35,8 +37,11 @@ public class LimitWordEditText extends android.support.v7.widget.AppCompatEditTe
     this.limit = limit;
   }
 
-  private void init(){
+  public void setListener(OnTextCompleteListener listener) {
+    this.listener = listener;
+  }
 
+  private void init(){
     this.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -49,14 +54,19 @@ public class LimitWordEditText extends android.support.v7.widget.AppCompatEditTe
       @Override public void afterTextChanged(Editable s) {
         if (limit <= 0) {
           setText(s.toString());
-          return;
-        }
-        if (already.length() > limit) {
+        }else if (already.length() > limit) {
           s.delete(getSelectionStart() - 1 < 0 ? 0 : getSelectionStart() - 1, getSelectionEnd());
           setSelection(getSelectionEnd());
         }
+        if (listener != null){
+          listener.onTextComplete(LimitWordEditText.this, s.toString());
+        }
       }
     });
+  }
+
+  public interface OnTextCompleteListener{
+    void onTextComplete(View v, String text);
   }
 
 }

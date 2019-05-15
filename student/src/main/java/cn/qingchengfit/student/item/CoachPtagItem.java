@@ -34,6 +34,7 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
   private LinearLayout llContainer;
   private CommonInputView commonInputView;
   private PtagAnswerTransform ptagAnswerTransform = new PtagAnswerTransform();
+  private int number = -1;
 
   public CoachPtagItem(PtagQuestion ptagQuestion) {
 
@@ -60,14 +61,11 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
     return R.layout.st_item_ptag_select_single;
   }
 
+  public void setNumber(int number) {
+    this.number = number;
+  }
+
   @Override public CoachPtagVH createViewHolder(View view, FlexibleAdapter adapter) {
-    ptagAnswerTransform.setListener(position -> {
-      if (ptagQuestion.getOptions().get(position).getMax_value() != null) {
-        RxBus.getBus()
-            .post(new DynamicPtagItemEvent(ptagQuestion.getId(), position,
-                DynamicPtagItemEvent.TYPE_TRAINER_FEEDBACK));
-      }
-    });
     return new CoachPtagVH(view, adapter);
   }
 
@@ -81,8 +79,22 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
   }
 
   private void loadData(CoachPtagVH holder, int position) {
-
-    holder.tvTitle.setText(ptagQuestion.getTitle());
+    if (ptagAnswerTransform.getListener() == null) {
+      ptagAnswerTransform.setListener(index -> {
+        if (ptagQuestion.getOptions().get(index).getMax_value() != null) {
+          //目标动机
+          RxBus.getBus()
+              .post(new DynamicPtagItemEvent(ptagQuestion.getId(), index,
+                  DynamicPtagItemEvent.TYPE_TRAINER_FEEDBACK));
+        } else if (ptagQuestion.getOptions().get(index).getWeight() != null) {
+          //训练风格
+          RxBus.getBus()
+              .post(new DynamicPtagItemEvent(ptagQuestion.getOptions().get(index),
+                  DynamicPtagItemEvent.TYPE_TRAINER_STYLE, ptagQuestion.getId()));
+        }
+      });
+    }
+    holder.tvTitle.setText(ptagQuestion.getReplace_title());
     holder.imgHelp.setVisibility(ptagQuestion.getHelp_text().isEmpty() ? View.GONE : View.VISIBLE);
     holder.imgHelp.setTag(position);
     holder.inputSelectNumber.setTag(position);
@@ -94,7 +106,6 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
     switch (ptagQuestion.getAnswer_type()) {
       case SINGLE_SELECT:
       case MULTIPLE_SELECT:
-        //TODO 需要修改
         //选择题答案列表
         List<String> answerIds = new ArrayList<>(ptagQuestion.getAnswerList());
         holder.editAnswer.setVisibility(View.GONE);
@@ -109,10 +120,17 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
         break;
       case TEXT:
       case TRUE_OR_FALSE:
+        //如果是需要总结的，则不显示输入框
+        if (ptagQuestion.isIs_summary()) {
+          break;
+        }
         holder.inputSelectNumber.setVisibility(View.GONE);
         holder.editAnswer.setLimit(ptagQuestion.getAnswer_length());
-        if (!ptagQuestion.getAnswer().isEmpty()) {
+        holder.editAnswer.setTag(position);
+        if (ptagQuestion.getEdit_text().isEmpty() && !ptagQuestion.getAnswer().isEmpty()) {
           holder.editAnswer.setText(ptagQuestion.getAnswer());
+        }else {
+          holder.editAnswer.setText(ptagQuestion.getEdit_text());
         }
         holder.editAnswer.setVisibility(View.VISIBLE);
         editText = holder.editAnswer;
@@ -120,11 +138,15 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
       case NUMBER:
         holder.editAnswer.setVisibility(View.GONE);
         holder.inputSelectNumber.setVisibility(View.VISIBLE);
+        if (number < 0 && !ptagQuestion.getAnswer().isEmpty()) {
+          holder.inputSelectNumber.setContent(ptagQuestion.getAnswer());
+        }
         commonInputView = holder.inputSelectNumber;
         break;
     }
   }
 
+  //获取问卷结果
   public CoachPtagAnswer getResult() {
     CoachPtagAnswer answer = new CoachPtagAnswer();
     answer.setId(ptagQuestion.getId());
@@ -132,14 +154,25 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
       case SINGLE_SELECT:
       case MULTIPLE_SELECT:
         List<Integer> ids = new ArrayList<>();
-        for (int index : ptagAnswerTransform.getSelectPosition(llContainer)) {
-          ids.add(Integer.parseInt(ptagQuestion.getOptions().get(index - 1).getId()));
+        if (llContainer != null) {
+          for (int index : ptagAnswerTransform.getSelectPosition(llContainer)) {
+            ids.add(Integer.parseInt(ptagQuestion.getOptions().get(index - 1).getId()));
+          }
+        } else {
+          for (String id : ptagQuestion.getAnswerList()) {
+            ids.add(Integer.parseInt(id));
+          }
         }
         answer.setAnswer(ids.size() == 0 ? null : ids);
         break;
       case TEXT:
       case TRUE_OR_FALSE:
-        String result = editText.getText().toString();
+        String result = "";
+        if (editText != null) {
+          result = editText.getText().toString();
+        } else {
+          result = ptagQuestion.getAnswer();
+        }
         if (result.equals("是")) {
           answer.setAnswer(true);
         } else if (result.equals("否")) {
@@ -149,8 +182,11 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
         }
         break;
       case NUMBER:
-        if (!commonInputView.getContent().isEmpty()) {
-          answer.setAnswer(Integer.parseInt(commonInputView.getContent()));
+        if (commonInputView != null && !commonInputView.getContent().equals("请选择")) {
+          //已有答案不修改，结果为Float，直接传float报错。
+          answer.setAnswer((int) Float.parseFloat(commonInputView.getContent()));
+        } else if (commonInputView == null) {
+          answer.setAnswer((int) Float.parseFloat(ptagQuestion.getAnswer()));
         }
         break;
     }
@@ -186,12 +222,15 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
                           ((CoachPtagItem) adapter.getItem((int) v.getTag())).getData().getId(),
                           position + 1, DynamicPtagItemEvent.TYPE_TRAINER_GOAL));
                 }
+                ((CoachPtagItem) adapter.getItem((int) v.getTag())).setNumber(position + 1);
               }).title("选择评分");
         }
         dialogList.show();
       });
-      editAnswer.setOnClickListener(v -> {
-        v.requestFocus();
+      editAnswer.setListener((v, text) -> {
+        if (adapter.getItem((int)v.getTag()) instanceof CoachPtagItem){
+          ((CoachPtagItem) adapter.getItem((int) v.getTag())).getData().setEdit_text(text);
+        }
       });
       imgHelp.setOnClickListener(v -> {
         if (adapter.getItem((int) v.getTag()) instanceof CoachPtagItem) {

@@ -14,13 +14,11 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.Map;
 
-@Leaf(module = "student", path = "/student/coach/all")
-public class StudentCoachAllPage extends StudentAllPage {
+@Leaf(module = "student", path = "/student/coach/all") public class StudentCoachAllPage
+    extends StudentAllPage {
 
-  @Need
-  String filterName;
-  @Need
-  String filterValue;
+  @Need String filterName;
+  @Need String filterValue;
 
   @Override protected void subscribeUI() {
     StudentParamsInjector.inject(this);
@@ -34,10 +32,11 @@ public class StudentCoachAllPage extends StudentAllPage {
   @Override
   public StPageAllStudentBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    mBinding =  super.initDataBinding(inflater, container, savedInstanceState);
+    mBinding = super.initDataBinding(inflater, container, savedInstanceState);
     mBinding.includeAllot.llBottomAllot.setVisibility(View.GONE);
     if (!filterName.isEmpty() && !filterValue.isEmpty()) {
       ((StudentCoachFilterView) filterView).setFilterItem(filterName, filterValue);
+      mBinding.fabAddStudent.setVisibility(View.GONE);
     }
     //mBinding.includeAllot.allotCoach.setVisibility(View.GONE);
     //mBinding.includeAllot.allotMsg.setVisibility(View.GONE);
@@ -46,8 +45,7 @@ public class StudentCoachAllPage extends StudentAllPage {
   }
 
   @Override public void loadData(Map<String, Object> params) {
-    if (filterName.isEmpty() && filterValue.isEmpty())
-      super.loadData(params);
+    if (filterName.isEmpty() && filterValue.isEmpty()) super.loadData(params);
   }
 
   @Override public void addStudent() {

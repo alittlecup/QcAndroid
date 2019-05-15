@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.bean.PtagAnswerOptoions;
+import cn.qingchengfit.student.bean.PtagAnswerOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,24 +23,25 @@ public class PtagAnswerTransform {
     this.listener = listener;
   }
 
+  public OnSelectionAnswerListener getListener() {
+    return listener;
+  }
+
   //教练PTAG问卷选择项处理
   public List<View> transformDataSelect(Context context, ViewGroup parent,
-      List<PtagAnswerOptoions> options, boolean isSingle, List<String> answerIds) {
+      List<PtagAnswerOption> options, boolean isSingle, List<String> answerIds) {
     List<View> views = new ArrayList<>();
     if (options == null) {
       return views;
     }
     int index = 0;
-    for (PtagAnswerOptoions option : options) {
+    for (PtagAnswerOption option : options) {
       View view =
           LayoutInflater.from(context).inflate(R.layout.st_view_ptag_seletct_answer, parent, false);
       TextView tvAnswerContent = view.findViewById(R.id.tv_ptag_select_answer_content);
       TextView tvAnswerTitle = view.findViewById(R.id.tv_ptag_select_answer_title);
       CheckBox cbSelected = view.findViewById(R.id.cb_ptag_select);
       cbSelected.setTag(index);
-      if (answerIds.size() != 0 && answerIds.contains(option.getId())) {
-        cbSelected.setChecked(true);
-      }
       cbSelected.setOnCheckedChangeListener((buttonView, isChecked) -> {
         if (isSingle && isChecked) {
           checkSelection(buttonView);
@@ -49,6 +50,9 @@ public class PtagAnswerTransform {
           }
         }
       });
+      if (answerIds.size() != 0 && answerIds.contains(option.getId())) {
+        cbSelected.setChecked(true);
+      }
       //remark为空时
       if (!option.getRemarks().isEmpty()) {
         tvAnswerTitle.setVisibility(View.VISIBLE);

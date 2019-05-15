@@ -18,6 +18,7 @@ import cn.qingchengfit.student.view.ptag.CoachPtagQuestionPageParams;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.VpFragment;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.databinding.FragmentStudentMoreInfoBinding;
 import com.qingchengfit.fitcoach.http.TrainerRepository;
@@ -45,6 +46,7 @@ public class StudentMoreInfoFragment extends VpFragment {
   private FragmentStudentMoreInfoBinding binding;
   //是否已填写
   private boolean[] isAleadyWrited = new boolean[4];
+  private boolean isShowDialogTip = true;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -89,6 +91,7 @@ public class StudentMoreInfoFragment extends VpFragment {
               if (answer.isEmpty()) {
                 continue;
               }
+              isShowDialogTip = false;
               switch (naire.getType()) {
                 case MEMBER_TRAIN_GOAL:
                   i = 0;
@@ -107,7 +110,7 @@ public class StudentMoreInfoFragment extends VpFragment {
                   binding.inputSportGoalMotivation.setContent(answer);
                   break;
               }
-              if (i >= 0){
+              if (i >= 0) {
                 isAleadyWrited[i] = true;
               }
             }
@@ -141,20 +144,34 @@ public class StudentMoreInfoFragment extends VpFragment {
   }
 
   public void onSportGoalMotivation() {
-    routeToPage(MEMBER_TRAIN_MOTIVATION, isAleadyWrited[3] ? studentWrap.id() : "");
+    routeToPage(MEMBER_TRAIN_MOTIVATION, isAleadyWrited[3] ? studentWrap.id() : "",
+        binding.inputTrainerGoal.getContent().equals("未填写")? "目标" : binding.inputTrainerGoal.getContent());
   }
 
-  private void routeToPage(String type, String user_id){
-    routeTo("student", "/coach/ptag/question",
-        CoachPtagQuestionPageParams.builder().type(type).userId(user_id).build());
+  private void routeToPage(String type, String user_id) {
+    routeTo("student", "/coach/ptag/question", CoachPtagQuestionPageParams.builder()
+        .type(type)
+        .userId(user_id)
+        .isShow(isShowDialogTip)
+        .build());
+    isShowDialogTip = false;
   }
 
-  public void onPlayVideo(){
-    Utils.playVideoFromUrl(Constants.PTAG_VIDEO, getContext());
+  private void routeToPage(String type, String user_id, String userGoal) {
+    routeTo("student", "/coach/ptag/question", CoachPtagQuestionPageParams.builder()
+        .type(type)
+        .userId(user_id)
+        .isShow(isShowDialogTip)
+        .userTrainerGoal(userGoal)
+        .build());
+    isShowDialogTip = false;
   }
 
-  public void onDownloadPDF(){
+  public void onPlayVideo() {
+    WebActivity.startWeb(Constants.PTAG_INTRODUCTION_ARTICAL, getContext());
+  }
+
+  public void onDownloadPDF() {
     Utils.openWithBrowser(Constants.PTAG_DOWNLOAD_PDF, getContext());
   }
-
 }

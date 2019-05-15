@@ -24,6 +24,7 @@ import cn.qingchengfit.student.bean.ShopPtagStat;
 import cn.qingchengfit.student.databinding.StudentCoachHomePageBinding;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.SpanUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.bumptech.glide.Glide;
@@ -105,7 +106,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
   }
 
   private void setFeedBackItem(TextView tvScore, TextView tvStandard, CoachPtagStat data) {
-    tvScore.setText(String.valueOf(data.getCount()));
+    tvScore.setText(new SpanUtils().append(
+        StringUtils.formatePrice(String.valueOf(data.getCount())))
+        .append("人")
+        .setFontSize(11, true)
+        .create());
     Glide.with(getContext()).load(data.getIcon()).asBitmap().into(new SimpleTarget<Bitmap>() {
       @Override
       public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -160,6 +165,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
   }
 
   public void onPlayVideo(View v) {
-    Utils.playVideoFromUrl(Constants.PTAG_VIDEO, getContext());
+    //Utils.playVideoFromUrl(Constants.PTAG_VIDEO, getContext());
+    WebActivity.startWeb(Constants.PTAG_INTRODUCTION_ARTICAL, getContext());
+  }
+
+  public void onShowHelpArtical(View v){
+    WebActivity.startWeb(Constants.PTAG_INTRODUCTION_ARTICAL, getContext());
   }
 }

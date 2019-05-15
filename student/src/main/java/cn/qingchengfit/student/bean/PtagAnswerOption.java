@@ -1,11 +1,13 @@
 package cn.qingchengfit.student.bean;
 
-public class PtagAnswerOptoions {
+public class PtagAnswerOption {
   String remarks;
   String id;
   String value;
   Integer max_value;
   Integer min_value;
+  Integer weight;
+  String option_type;
 
   public String getRemarks() {
     return remarks;
@@ -25,5 +27,13 @@ public class PtagAnswerOptoions {
 
   public Integer getMin_value() {
     return min_value;
+  }
+
+  public Integer getWeight() {
+    return weight;
+  }
+
+  public String getOption_type() {
+    return option_type;
   }
 }

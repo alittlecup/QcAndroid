@@ -112,6 +112,8 @@ public class StudentModel implements IStudentModel {
                   fllow.gender = bean.gender;
                   fllow.id = bean.id;
                   fllow.head = bean.head;
+                  fllow.joined_at = bean.joined_at;
+                  fllow.setJoin_at(bean.getJoin_at());
                   fllow.setCloud_user(bean.getCloud_user());
                   fllows.add(fllow);
                 }

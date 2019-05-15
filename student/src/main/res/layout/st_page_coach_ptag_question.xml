@@ -30,7 +30,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_save_qrcode"
+        android:layout_above="@+id/ll_save"
         android:layout_below="@id/include_toolbar"
         >
       <LinearLayout
@@ -55,17 +55,28 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_save_qrcode"
+    <LinearLayout
+        android:id="@+id/ll_save"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:onClick="@{()->model.onSave()}"
-        android:text="保存"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        style="@style/QcTextStyleLargeDark"
-        />
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        >
+      <Button
+          android:id="@+id/btn_save_qrcode"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:background="@drawable/btn_primary_radius_22"
+          android:onClick="@{()->model.onSave()}"
+          android:text="保存"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          style="@style/QcTextStyleLargeDark"
+          />
+    </LinearLayout>
   </RelativeLayout>
 </layout>

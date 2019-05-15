@@ -56,11 +56,9 @@ public class FollowRecordViewModel
     ViewGroup parent = ((ViewGroup)v.getParent());
     for (int j = 0 ; j < parent.getChildCount(); j++){
       View child = parent.getChildAt(j);
-      if (!child.equals(v)){
         child.setSelected(false);
-      }
     }
-    v.setSelected(!v.isSelected());
+    v.setSelected(true);
     List<Integer> typeList = new ArrayList<>();
     switch (i) {
       case 0:

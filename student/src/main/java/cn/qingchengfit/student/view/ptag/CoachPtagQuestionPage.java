@@ -1,7 +1,6 @@
 package cn.qingchengfit.student.view.ptag;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -11,15 +10,14 @@ import android.view.ViewGroup;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.bean.PtagQuestion;
+import cn.qingchengfit.student.Utils;
 import cn.qingchengfit.student.databinding.StPageCoachPtagQuestionBinding;
 import cn.qingchengfit.student.event.DynamicPtagItemEvent;
-import cn.qingchengfit.student.item.CoachPtagItem;
+import cn.qingchengfit.student.event.PtagStatementEvent;
 import cn.qingchengfit.student.routers.StudentParamsInjector;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -31,11 +29,9 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -49,6 +45,8 @@ import rx.schedulers.Schedulers;
   @Need String type;
   @Need String userId;
   @Need String naireId;
+  @Need Boolean isShow;
+  @Need String userTrainerGoal;
 
   @Override protected void subscribeUI() {
     StudentParamsInjector.inject(this);
@@ -61,16 +59,8 @@ import rx.schedulers.Schedulers;
         //items.add(new CommonNoDataItem())
         return;
       }
-
-
-      Iterator<CoachPtagItem> itemIterator = coachPtagItems.iterator();
-      while (itemIterator.hasNext()) {
-        PtagQuestion question = itemIterator.next().getData();
-        if (!question.isShow()) {
-          itemIterator.remove();
-        }
-      }
-      mViewModel.items.set(new ArrayList<>(coachPtagItems));
+      mViewModel.items.set(
+          new ArrayList<>(mViewModel.preHandlerItem(coachPtagItems, type, userTrainerGoal)));
     });
 
     mViewModel.isLoading.observe(this, aBoolean -> {
@@ -104,6 +94,17 @@ import rx.schedulers.Schedulers;
         .subscribe(dynamicPtagItemEvent -> {
           mViewModel.dynamicNotifyItem(dynamicPtagItemEvent);
         }));
+    RxRegiste(RxBus.getBus()
+        .register(PtagStatementEvent.class)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(ptagStatementEvent -> {
+          switch (ptagStatementEvent.getType()) {
+            case PtagStatementEvent.DOWNLOAD_PDF:
+              routeToDownloadPDF();
+              break;
+          }
+        }));
   }
 
   public <T> void dealResource(Resource<T> resource) {
@@ -135,6 +136,13 @@ import rx.schedulers.Schedulers;
     initRecyclerView();
     initRxbus();
     showLoading();
+    if (isShow != null && isShow) {
+      CoachPtagStatementDialog.newInstance("使用说明",
+          !type.equals(Constants.MEMBER_TRAIN_FEEDBACK) ? getString(
+              R.string.coach_ptag_statement_tips_pdq)
+              : getString(R.string.coach_ptag_statement_tips_feedback))
+          .show(getChildFragmentManager(), "");
+    }
     return mBinding;
   }
 
@@ -144,16 +152,24 @@ import rx.schedulers.Schedulers;
     if (userId != null && !userId.isEmpty()) {
       params.put("question_naire_type", type);
       params.put("user_id", userId);
-    } else if (naireId != null && !naireId.isEmpty()){
+    } else if (naireId != null && !naireId.isEmpty()) {
       params.put("naire_id", naireId);
-    }else{
+    } else {
       params.put("type", type);
     }
     mViewModel.loadSource(params);
   }
 
   @Override public boolean onMenuItemClick(MenuItem item) {
-    WebActivity.startWeb(Constants.PTAG_DOWNLOAD_PDF, getContext());
+    routeToDownloadPDF();
     return false;
+  }
+
+  private void routeToDownloadPDF() {
+    if (type.equals(Constants.MEMBER_TRAIN_FEEDBACK)) {
+      Utils.openWithBrowser(Constants.PTAG_DOWNLOAD_PDF_TRAINER_FEEDBACK, getContext());
+    } else {
+      Utils.openWithBrowser(Constants.PTAG_DOWNLOAD_PDF, getContext());
+    }
   }
 }

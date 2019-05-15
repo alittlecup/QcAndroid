@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.databinding.StPageFollowRecordBinding;
@@ -26,9 +27,9 @@ import java.util.Map;
  */
 public class CoachFollowRecordPage extends FollowRecordPage {
 
-  public static final String MEMBER_TRAIN_FEEDBACK = "MEMBER_TRAINING_FEEDBACK";
   private boolean isShowMenu = false;
   private PopupWindow popupWindow;
+  private boolean isShowDialog = true;
 
   @Override protected void subscribeUI() {
     super.subscribeUI();
@@ -78,10 +79,11 @@ public class CoachFollowRecordPage extends FollowRecordPage {
   private void showSelectPopWindows(View v) {
     if (popupWindow == null) {
       View contentView = LayoutInflater.from(getContext())
-        .inflate(R.layout.st_view_coach_follow_add_popwindow, null);
+          .inflate(R.layout.st_view_coach_follow_add_popwindow, null);
       //popupWindow = new PopupWindow(contentView, MeasureUtils.dpToPx(120f, getResources()),
       //    MeasureUtils.dpToPx(100f, getResources()));
-      popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+      popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT);
       popupWindow.setTouchable(true);
       TextView tvAddSellerFollow = contentView.findViewById(R.id.tv_coach_follow_add);
       TextView tvAddTrainerFeedBack =
@@ -97,17 +99,25 @@ public class CoachFollowRecordPage extends FollowRecordPage {
       });
 
       tvAddTrainerFeedBack.setOnClickListener(v12 -> {
-        routeTo("student", "/coach/ptag/question",
-            CoachPtagQuestionPageParams.builder().type(MEMBER_TRAIN_FEEDBACK).build());
+        isShowDialog = (mViewModel.getLiveItems().getValue() != null
+            && mViewModel.getLiveItems().getValue().size() == 0);
+        routeTo("student", "/coach/ptag/question", CoachPtagQuestionPageParams.builder()
+            .type(Constants.MEMBER_TRAIN_FEEDBACK)
+            .isShow(isShowDialog)
+            .build());
+        isShowDialog = false;
       });
     }
     int[] location = new int[2];
     v.getLocationOnScreen(location);
-    popupWindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+    popupWindow.getContentView()
+        .measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
     popupWindow.showAtLocation(v, Gravity.NO_GRAVITY,
         location[0] - (popupWindow.getContentView().getMeasuredWidth() - v.getMeasuredWidth()),
-        location[1] - v.getMeasuredHeight()/2 - popupWindow.getContentView().getMeasuredHeight() / 2 - MeasureUtils.dpToPx(
-            36f, getResources()));
+        location[1]
+            - v.getMeasuredHeight() / 2
+            - popupWindow.getContentView().getMeasuredHeight() / 2
+            - MeasureUtils.dpToPx(36f, getResources()));
     isShowMenu = true;
     ((FloatingActionButton) v).setImageResource(R.drawable.vd_close_white_24dp);
   }
@@ -119,7 +129,7 @@ public class CoachFollowRecordPage extends FollowRecordPage {
       //训练反馈、跳转到修改训练反馈问卷
       if (item.getItemViewType() == 5) {
         routeTo("student", "/coach/ptag/question", CoachPtagQuestionPageParams.builder()
-            .type(MEMBER_TRAIN_FEEDBACK)
+            .type(Constants.MEMBER_TRAIN_FEEDBACK)
             .naireId(((FollowRecordItem) item).getData().getNaire_answer_history_id())
             .build());
       }

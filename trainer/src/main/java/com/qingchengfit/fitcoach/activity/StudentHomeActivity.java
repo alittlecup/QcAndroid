@@ -371,7 +371,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void onBtn1() {
-    if (mStudentViewPager.getCurrentItem() == 1) {
+    if (mStudentViewPager.getCurrentItem() == 0) {
       goGroup();
     }
   }

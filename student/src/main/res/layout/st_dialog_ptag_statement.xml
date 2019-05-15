@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingEnd="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="30dp"
+    style="@style/AppTheme"
+    android:background="@drawable/white_radius"
+    >
+
+  <ImageView
+      android:id="@+id/img_clost_ptag_statement"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_gravity="right"
+      app:srcCompat="@drawable/vd_close_grey_24dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_ptag_statement_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="使用说明"
+      style="@style/QcTextStyleLargeDark"
+      />
+
+  <TextView
+      android:id="@+id/tv_ptag_statement_content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      tools:text="1、建议您下载并打印《持续改善-6》表格，手持表格，并根据表格内的问题顺序与会员进行面对面沟通。\n
+      2、沟通后，将表格内容记录在您的教练APP，便于日后查询和统计。"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+  <Button
+      android:id="@+id/btn_first"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_marginTop="20dp"
+      android:background="@drawable/btn_primary_radius_22"
+      android:text="下载PDF"
+      android:textColor="@color/white"
+      android:textSize="17sp"
+      />
+
+  <Button
+      android:id="@+id/btn_second"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@drawable/btn_border_primary_raidus_22"
+      android:layout_marginTop="15dp"
+      android:text="已完成沟通，开始记录"
+      android:textColor="@color/colorPrimary"
+      android:textSize="17sp"
+      />
+
+</LinearLayout>
