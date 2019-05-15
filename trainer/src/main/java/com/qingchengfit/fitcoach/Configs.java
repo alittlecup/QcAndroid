@@ -29,13 +29,13 @@ public class Configs {
    * 默认头像
    */
   public static final String HEADER_STUDENT_MALE =
-      "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+      "https://img.qingchengfit.cn/977ad17699c4e4212b52000ed670091a.png";
   public static final String HEADER_STUDENT_FEMALE =
-      "http://zoneke-img.b0.upaiyun.com/f1ac90184acb746e4fbdef4b61dcd6f6.png";
+      "https://img.qingchengfit.cn/f1ac90184acb746e4fbdef4b61dcd6f6.png";
   public static final String HEADER_COACH_MALE =
-      "http://zoneke-img.b0.upaiyun.com/75656eb980b79e7748041f830332cc62.png";
+      "https://img.qingchengfit.cn/75656eb980b79e7748041f830332cc62.png";
   public static final String HEADER_COACH_FEMALE =
-      "http://zoneke-img.b0.upaiyun.com/7f362320fb3c82270f6c9c623e39ba92.png";
+      "https://img.qingchengfit.cn/7f362320fb3c82270f6c9c623e39ba92.png";
   /**
    * 会员预览页面
    */

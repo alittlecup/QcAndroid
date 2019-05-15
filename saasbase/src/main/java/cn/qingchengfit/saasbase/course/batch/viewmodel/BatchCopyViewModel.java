@@ -12,18 +12,17 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCopyCoach;
 import cn.qingchengfit.saasbase.course.batch.bean.CopySchedule;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.views.BatchCourseChooseParams;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
-import cn.qingchengfit.widgets.CommonInputViewAdapter;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
@@ -342,14 +341,14 @@ public class BatchCopyViewModel extends BaseViewModel {
     CourseType course = new CourseType();
     course.setId("0");
     course.setName("全部课程");
-    course.setPhoto("http://zoneke-img.b0.upaiyun.com/3fedf1fabde72ee00b8dd08e5547aa57.png");
+    course.setPhoto("https://img.qingchengfit.cn/3fedf1fabde72ee00b8dd08e5547aa57.png");
     return course;
   }
 
   private BatchCopyCoach createAllShip() {
     BatchCopyCoach ship = new BatchCopyCoach();
     ship.setId("0");
-    ship.setAvatar("http://zoneke-img.b0.upaiyun.com/3fedf1fabde72ee00b8dd08e5547aa57.png");
+    ship.setAvatar("https://img.qingchengfit.cn/3fedf1fabde72ee00b8dd08e5547aa57.png");
     ship.setName("全部教练");
     return ship;
   }

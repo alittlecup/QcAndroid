@@ -11,7 +11,7 @@ public class DianPingShop {
    * id : 1
    * gd_city : {"code":"110100","name":"北京市市辖区"}
    * gd_province : {"code":"110000","name":"北京市"}
-   * weixin_image : http://zoneke-img.b0.upaiyun.com/0d0d3827-be74-44e1-90ce-9f8dfc601b30.png
+   * weixin_image : https://img.qingchengfit.cn/0d0d3827-be74-44e1-90ce-9f8dfc601b30.png
    * end : 22:00
    * area : 1024
    * start : 08:00

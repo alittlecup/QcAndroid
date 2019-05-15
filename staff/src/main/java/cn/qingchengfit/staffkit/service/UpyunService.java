@@ -25,7 +25,7 @@ import java.util.UUID;
  * Created by Paper on 15/12/7 2015.
  */
 public class UpyunService extends IntentService {
-    public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com/";
+    public static final String UPYUNPATH = "https://img.qingchengfit.cn/";
     private static final String FILE_PATH = "upload_filepath";
 
     public UpyunService() {

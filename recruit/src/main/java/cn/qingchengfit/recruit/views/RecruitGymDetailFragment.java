@@ -112,7 +112,7 @@ public class RecruitGymDetailFragment extends BaseFragment
         String title = gym != null ? gym.getBrand_name() + "|" + gym.getName() : "";
         String content = "热招职位：" + RecruitBusinessUtils.getHotJob(tempJob);
         String pic = gym != null ? gym.photo
-            : "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+            : "https://img.qingchengfit.cn/977ad17699c4e4212b52000ed670091a.png";
         String url = qcRestRepository.getHost() + "mobile/company/" + gym.id + "/";
         ShareDialogFragment.newInstance(title, content, pic, url)
             .show(getChildFragmentManager(), "");
