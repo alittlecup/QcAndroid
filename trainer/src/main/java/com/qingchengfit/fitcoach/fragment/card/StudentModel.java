@@ -93,6 +93,11 @@ public class StudentModel implements IStudentModel {
     return null;
   }
 
+  @Override
+  public Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(String id) {
+    return null;
+  }
+
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
       Map<String, Object> params) {
     params.remove("show_all");
