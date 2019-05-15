@@ -81,6 +81,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Need public ArrayList<String> studentIdList;
   @Need public String source;
   @Need public String from;
+  @Need public String cardId;
   @Need public Integer chooseType;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -213,6 +214,10 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   public void getData() {
-    presenter.getAllStudents();
+    if(TextUtils.isEmpty(from)){
+      presenter.getAllStudents("");
+    }else{
+      presenter.getAllStudents("put");
+    }
   }
 }

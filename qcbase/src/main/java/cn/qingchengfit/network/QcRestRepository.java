@@ -16,13 +16,10 @@ import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.phrase.Phrase;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
@@ -67,8 +64,6 @@ public class QcRestRepository {
         this.host = debug_ip;
       }
     }
-    List<Protocol> protocols = new ArrayList<>();
-    protocols.add(Protocol.HTTP_1_1);
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> LogUtil.d(message));
     interceptor.setLevel(
         BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
@@ -121,7 +116,6 @@ public class QcRestRepository {
       }
     })
         .followRedirects(false)
-        //.protocols(protocols)
         .addNetworkInterceptor(interceptor)
         .readTimeout(3, TimeUnit.MINUTES)
         .build();

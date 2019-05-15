@@ -78,6 +78,11 @@ public interface StudentApi {
   Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(@Path("staff_id") String id,
       @QueryMap HashMap<String, Object> params);
 
+  //会员卡修改绑定会员列表
+  @GET("/api/staffs/{id}/cards/bind/users/")
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetBindStudent(@Path("id") String staff,
+      @QueryMap HashMap<String, Object> params);
+
   /**
    * 获取教练分配或者销售分配列表
    * type -coaches 教练

@@ -60,7 +60,7 @@ public interface IStudentModel {
   /**
    * 购卡 绑定会员时选择会员列表
    */
-  Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission();
+  Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method);
 
   /**
    * 收银台模块获取会员列表，通过手机号前几位筛选
@@ -77,8 +77,7 @@ public interface IStudentModel {
   /**
    * 会员卡可绑定的会员列表
    */
-  //Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(String id);
 
   /**
    * 工作人员下所有会员

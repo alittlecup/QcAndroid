@@ -55,7 +55,7 @@ public class StudentModel implements IStudentModel {
     api = restRepository.createRxJava1Api(TrainerAllApi.class);
   }
 
-    @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission() {
+  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method) {
     return RxJavaInterop.toV2Flowable(
         api.qcGetAllStudent(Integer.parseInt(loginStatus.staff_id()), gymWrapper.getParams())
             .map(qcAllStudentResponse -> {
@@ -86,6 +86,11 @@ public class StudentModel implements IStudentModel {
     params.put("q", phone);
     params.put("show_all", 1);
     return RxJavaInterop.toV2Flowable(api.qcLoadStudentByPhone(loginStatus.staff_id(), params));
+  }
+
+  @Override
+  public Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(String id) {
+    return null;
   }
 
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
