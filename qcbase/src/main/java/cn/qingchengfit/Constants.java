@@ -51,13 +51,13 @@ public class Constants {
       "https://img.qingchengfit.cn/7f362320fb3c82270f6c9c623e39ba92.png";
 
   public static final String PTAG_VIDEO =
-      "http://qcfile.b0.upaiyun.com/e3dafdeeb5d17eed6394d052537a3d10.mp4";
+      "https://static.qingchengfit.cn/e3dafdeeb5d17eed6394d052537a3d10.mp4";
 
   public static final String PTAG_DOWNLOAD_PDF =
-      "http://qcfile.b0.upaiyun.com/0af9d4cf68841d306cfa6cdc87a679d4.pdf";
+      "https://static.qingchengfit.cn/0af9d4cf68841d306cfa6cdc87a679d4.pdf";
 
   public static final String PTAG_DOWNLOAD_PDF_TRAINER_FEEDBACK =
-      "http://qcfile.b0.upaiyun.com/0d6e8377cea0b35ce4ca3003a2034039.pdf";
+      "https://static.qingchengfit.cn/0d6e8377cea0b35ce4ca3003a2034039.pdf";
 
   public static final String MEMBER_TRAIN_FEEDBACK = "MEMBER_TRAINING_FEEDBACK";
 

@@ -34,8 +34,6 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-import static android.content.Intent.ACTION_VIEW;
-
 /**
  * weex工具类
  * Created by huangbaole on 2018/1/10.
@@ -73,8 +71,8 @@ public final class WeexUtil {
   /**
    * 根据加载的地址获取需要给JS端的BundleURL,主要目的是去除远端js路径的hash值
    *
-   * @param uri https://qcfile.b0.upaiyun.com/qc-commodity-weex/commodity_list.a5edc2d0468d4df8541811b307654dd2.js
-   * @return https://qcfile.b0.upaiyun.com/qc-commodity-weex/commodity_list.js
+   * @param uri  https://static.qingchengfit.cn/qc-commodity-weex/commodity_list.a5edc2d0468d4df8541811b307654dd2.js
+   * @return  https://static.qingchengfit.cn/qc-commodity-weex/commodity_list.js
    */
 
   public static String makeBundleUri(Uri uri) {
@@ -149,9 +147,9 @@ public final class WeexUtil {
   private static void loadNetWork(String path) {
     WXHttpTask task = new WXHttpTask();
     if (BuildConfig.DEBUG) {
-      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+      task.url = "https://static.qingchengfit.cn/qc-commodity-weex/version_test.json";
     } else {
-      task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+      task.url = "https://static.qingchengfit.cn/qc-commodity-weex/version.json";
     }
 
     task.requestListener = new WXRequestListener() {

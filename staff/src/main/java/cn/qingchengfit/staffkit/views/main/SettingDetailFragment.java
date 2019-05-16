@@ -113,7 +113,7 @@ import javax.inject.Inject;
 
   public void onWebSite() {
     new MaterialDialog.Builder(getContext()).autoDismiss(true)
-        .content("网页端地址\n" + "http://cloud.qingchengfit.cn/backend/settings/")
+        .content("网页端地址\n" + "https://cloud.qingchengfit.cn/backend/settings/")
         .positiveText(R.string.common_comfirm)
         .negativeText(R.string.copy_link)
         .autoDismiss(true)
@@ -123,7 +123,7 @@ import javax.inject.Inject;
             ClipboardManager cmb =
                 (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             cmb.setPrimaryClip(ClipData.newPlainText("qingcheng",
-                "http://cloud.qingchengfit.cn/backend/settings/"));
+                "https://cloud.qingchengfit.cn/backend/settings/"));
             ToastUtils.showS("已复制");
           }
         })
@@ -147,7 +147,7 @@ import javax.inject.Inject;
 
   public void onShare() {
     ShareDialogFragment.newInstance("健身房管理", getString(R.string.str_share_app),
-        "http://qcresource.b0.upaiyun.com/14.pic_thumb.jpg", Configs.DOWNLOAD_MANAGE)
+        "", Configs.DOWNLOAD_MANAGE)
         .show(getFragmentManager(), "");
   }
 
