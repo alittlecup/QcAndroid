@@ -30,7 +30,7 @@
 //     * sender : 系统
 //     * title : 通知测试
 //     * url : http://www.qingchengfit.cn/
-//     * photo : http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png
+//     * photo : https://img.qingchengfit.cn/21d3bcb5600f8b2a005cdd40c57d0c4d.png
 //     * created_at : 2015-09-14T11:29:00
 //     * id : 1
 //     */

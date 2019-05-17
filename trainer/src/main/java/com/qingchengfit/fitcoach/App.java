@@ -22,7 +22,6 @@ import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.di.AppComponent;
 import com.qingchengfit.fitcoach.di.AppModule;
 import com.qingchengfit.fitcoach.di.DaggerAppComponent;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -54,23 +53,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   public static int coachid;
   public static boolean gCanReload = false;
   public static DiskLruCache diskLruCache;
-  // 数据接收的 URL
-  final String SA_SERVER_URL =
-      "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
-  // 配置分发的 URL
-  final String SA_CONFIGURE_URL =
-      "http://qingchengfit.cloud.sensorsdata.cn:8006/config?project=default";
-  // Debug 模式选项
-  //   SensorsDataAPI.DebugMode.DEBUG_OFF - 关闭 Debug 模式
-  //   SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
-  //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
-  // 注意！请不要在正式发布的 App 中使用 Debug 模式！
-  final SensorsDataAPI.DebugMode SA_DEBUG_MODE =
-      BuildConfig.DEBUG ? SensorsDataAPI.DebugMode.DEBUG_ONLY : SensorsDataAPI.DebugMode.DEBUG_OFF;
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
   private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";
-  //private ApplicationLike tinkerApplicationLike;
 
   public static void setgUser(User ser) {
     gUser = ser;
@@ -108,7 +93,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
     initDebug();
     initBaseUser();
-    initSensor();
     initInject();
     QC.init(this);
     QC.enableDebug(true);
@@ -141,30 +125,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
   }
 
-  /**
-   * 初始化神策
-   */
-  private void initSensor() {
-    SensorsDataAPI.sharedInstance(this,                               // 传入 Context
-        SA_SERVER_URL,                      // 数据接收的 URL
-        SA_CONFIGURE_URL,                   // 配置分发的 URL
-        SA_DEBUG_MODE);
-    try {
-      SensorsDataAPI.sharedInstance(this).enableAutoTrack();
-      SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
 
-      JSONObject properties = new JSONObject();
-      properties.put("qc_app_name", "Trainer");
-      SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
-      JSONObject properties2 = new JSONObject();
-      //这里示例 DownloadChannel 记录下载商店的渠道(下载渠道)。如果需要多个字段来标记渠道包，请按业务实际需要添加。
-      properties2.put("DownloadChannel", "qc_official");
-      //记录激活事件、渠道追踪，这里激活事件取名为 AppInstall。
-      SensorsDataAPI.sharedInstance().trackInstallation("AppInstall", properties2);
-    } catch (Exception e) {
-
-    }
-  }
 
   void initInject() {
     AppComponent appComponent = DaggerAppComponent.builder()

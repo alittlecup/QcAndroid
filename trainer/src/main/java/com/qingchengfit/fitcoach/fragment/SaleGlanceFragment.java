@@ -11,7 +11,6 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -152,7 +151,6 @@ public class SaleGlanceFragment extends BaseFragment {
         "本月(" + DateUtils.getStartDayOfMonth(new Date()) + "至" + DateUtils.getEndDayOfMonth(
             new Date()) + ")");
     freshData();
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

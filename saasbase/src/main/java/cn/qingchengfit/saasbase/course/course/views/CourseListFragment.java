@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -23,13 +20,11 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -136,7 +131,6 @@ import rx.schedulers.Schedulers;
     rv.setAdapter(commonFlexAdapter);
     srl.setOnRefreshListener(this);
     onRefresh();
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName()+"_"+(mIsPrivate?"private":"group"));
 
     return view;
   }

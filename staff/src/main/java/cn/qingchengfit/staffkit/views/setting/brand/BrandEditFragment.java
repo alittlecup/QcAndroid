@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.qingchengfit.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.BrandBody;
@@ -37,7 +37,6 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -314,9 +313,6 @@ public class BrandEditFragment extends BaseFragment {
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .subscribe(servicess -> {
                   gymBaseInfoAction.writeGyms(servicess);
-                  SensorsUtils.track("QcSaasCreateShop")
-                      .addProperty("qc_brand_shops_count", (servicess.size() - 1) + "")
-                      .commit(getContext());
                 }));
             RxBus.getBus().post(new EventFreshCoachService());
             RxBus.getBus().post(new EventLoginChange());

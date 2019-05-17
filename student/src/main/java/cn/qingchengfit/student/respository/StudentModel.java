@@ -6,10 +6,15 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
@@ -49,23 +54,35 @@ public class StudentModel implements IStudentModel {
   }
 
   //
-  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission() {
+  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("key", PermissionServerUtils.MANAGE_COSTS);
-    params.put("method", "post");
+    if(StringUtils.isEmpty(method)){
+      params.put("method", "post");
+    }else{
+      params.put("method", method);
+
+    }
     return studentApi.qcGetCardBundldStudents(loginStatus.staff_id(), params);
   }
 
   @Override
   public Flowable<QcDataResponse<StudentBeanListWrapper>> loadStudentsByPhone(String phone) {
     HashMap<String, Object> params = gymWrapper.getParams();
-    if(phone.length()>=4){
+    if (phone.length() >= 4) {
       params.put("q", phone);
-    }else{
+    } else {
       params.put("username__icontains", phone);
     }
-    params.put("show_all",1);
+    params.put("show_all", 1);
     return studentApi.qcLoadStudentByPhone(loginStatus.staff_id(), params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(String id) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("card_id", id);
+    return studentApi.qcGetBindStudent(loginStatus.staff_id(), params);
   }
 
   //
@@ -198,6 +215,41 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
     return studentApi.qcGetTrackRecords(loginStatus.staff_id(), user_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coach_id,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coach_id,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override public Flowable<QcDataResponse<Object>> qcSubmitPtagAnswer(CoachPtagAnswerBody body) {
+    return null;
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String coachId) {
+    return null;
+  }
+
+  @Override public Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter() {
+    return null;
   }
 
   //@Override

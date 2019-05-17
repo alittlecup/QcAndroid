@@ -9,14 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import cn.qingchengfit.model.body.AddLockerBody;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseRegionFragment;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -81,7 +79,6 @@ public class WardrobeAddFragment extends BaseFragment implements WardrobeAddPres
         mChoseRegion = lockerRegion;
       }
     });
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

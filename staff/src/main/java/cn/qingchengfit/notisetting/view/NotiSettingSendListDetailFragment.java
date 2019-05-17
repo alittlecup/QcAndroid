@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.notisetting.bean.NotiSettingMsgDetail;
@@ -25,7 +22,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ListUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcFilterToggle;
@@ -132,7 +128,6 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
     rv.setLayoutManager(linearLayoutManager);
     adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true).setStickyHeaderElevation(1);
     rv.setAdapter(adapter);
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

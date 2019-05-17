@@ -225,7 +225,7 @@ public interface StudentApi {
      *               7-30天：absence__gte=7&absence__lte=30,
      *               缺勤>60天：absence__ge=60
      * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
-     * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
+     * "https://img.qingchengfit.cn/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
      * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
      */
     @GET("/api/staffs/{staff_id}/users/absence/")
@@ -242,7 +242,7 @@ public interface StudentApi {
      *               private     -private
      *               checkin   -checkin
      * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
-     * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
+     * "https://img.qingchengfit.cn/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
      * 142},
      */
     @GET("/api/staffs/{staff_id}/users/attendance/")

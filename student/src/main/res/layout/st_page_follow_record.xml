@@ -6,30 +6,102 @@
         type="cn.qingchengfit.student.view.followrecord.FollowRecordViewModel"
         />
   </data>
-  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
+
+  <LinearLayout
       android:layout_height="match_parent"
-      android:background="@color/bg_grey"
+      android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:orientation="vertical"
       >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
+        android:id="@+id/ll_coach_follow_record_category"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+
+      <TextView
+          android:id="@+id/tv_student_follow_record_all"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="全部"
+          android:textSize="12sp"
+          android:textColor="@color/st_bg_click_grey_to_white"
+          android:background="@drawable/btn_qc_rect_radus_17"
+          android:gravity="center"
+          android:onClick="@{(view)->vm.onClickCategory(view, -1)}"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          />
+
+      <TextView
+          android:id="@+id/tv_student_follow_record"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="销售跟进"
+          android:textSize="12sp"
+          android:textColor="@color/st_bg_click_grey_to_white"
+          android:background="@drawable/btn_qc_rect_radus_17"
+          android:gravity="center"
+          android:layout_marginLeft="10dp"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:onClick="@{(view)->vm.onClickCategory(view, 0)}"
+          />
+
+      <TextView
+          android:id="@+id/tv_student_follow_record_train_feedback"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="训练反馈"
+          android:textSize="12sp"
+          android:textColor="@color/st_bg_click_grey_to_white"
+          android:background="@drawable/btn_qc_rect_radus_17"
+          android:gravity="center"
+          android:layout_marginLeft="10dp"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:onClick="@{(view)->vm.onClickCategory(view, 5)}"
+          />
+
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="100dp"
-        />
+        android:background="@color/bg_grey"
+        android:orientation="vertical"
+        >
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/vd_edit_black"
-        app:tint="@color/white"
-        />
-  </FrameLayout>
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_view"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:clipToPadding="false"
+          android:paddingBottom="100dp"
+          />
+
+      <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_margin="20dp"
+          app:fabSize="normal"
+          app:srcCompat="@drawable/vd_edit_black"
+          app:tint="@color/white"
+          />
+    </FrameLayout>
+  </LinearLayout>
 </layout>

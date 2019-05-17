@@ -35,7 +35,6 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -46,7 +45,6 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -73,7 +71,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-@SensorsDataIgnoreTrackAppViewScreen @Leaf(module = "course", path = "/batch/add/")
+ @Leaf(module = "course", path = "/batch/add/")
 public class AddBatchFragment extends SaasBaseFragment
     implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
     BatchDetailCommonView.BatchTempleListener {
@@ -143,7 +141,7 @@ public class AddBatchFragment extends SaasBaseFragment
   }
 
   private boolean isPrivate() {
-    if (isGroup!=null&&isGroup) return false;
+    if (isGroup != null && isGroup) return false;
     return (mCourse == null || mCourse.is_private());
   }
 
@@ -209,8 +207,6 @@ public class AddBatchFragment extends SaasBaseFragment
       scrollRoot.scrollTo(0, savedInstanceState.getInt("p", 0));
     }
     add.setText(!presenter.isPrivate() ? "+ 新增课程时间" : "+ 新增可约时间段");
-    SensorsUtils.trackScreen(
-        this.getClass().getCanonicalName() + "_" + (presenter.isPrivate() ? "private" : "group"));
     return view;
   }
 
@@ -369,9 +365,9 @@ public class AddBatchFragment extends SaasBaseFragment
   }
 
   @Override public int isStaffAsTeather() {
-    if(batchBaseFragment != null && batchBaseFragment.isAdded()){
+    if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
       return batchBaseFragment.asTeacher;
-    }else{
+    } else {
       return -1;
     }
   }
@@ -532,7 +528,7 @@ public class AddBatchFragment extends SaasBaseFragment
    */
   public void addBatchLoop() {
     routeTo("/batch/loop/add/", AddBatchLoopParams.builder()
-        .courseLength(presenter.isPrivate() ? 0 : mCourse.getLength())
+        .courseLength(presenter.isPrivate() ? 0 : (mCourse == null ? 0 : mCourse.getLength()))
         .slice(10)
         .isPrivate(mCourse == null || mCourse.is_private)
         .originBatchLoop(getCurBatchLoop())

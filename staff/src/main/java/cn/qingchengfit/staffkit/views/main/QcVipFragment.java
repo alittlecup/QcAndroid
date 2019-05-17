@@ -15,7 +15,6 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.WebFragment;
 import com.jakewharton.rxbinding.view.RxMenuItem;
@@ -100,17 +99,9 @@ public class QcVipFragment extends WebFragment {
 
   @Override public boolean canSwipeRefreshChildScrollUp() {
     return true;
-    //try {
-    //    return mWebviewWebView.getWebScrollY() > 0;
-    //}catch (Exception e){
-    //    return true;
-    //}
+
   }
 
-  @Override protected void onVisible() {
-    super.onVisible();
-    SensorsUtils.track("AND_discover_tab_click", null, getContext());
-  }
 
   @Override public void initWebClient() {
 

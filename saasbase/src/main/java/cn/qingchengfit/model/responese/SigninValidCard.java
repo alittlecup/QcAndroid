@@ -35,7 +35,7 @@ public class SigninValidCard {
          * lock_start : 2016-08-13T10:51:27
          * lock_end : 2016-08-13T10:51:27
          * balance : 76
-         * users : [{"name":"学民","gender":0,"sellers":"志恒","phone":"18614029017","avatar":"http://zoneke-img.b0.upaiyun.com/ea39d72f2da36d972047c1ee26af31cd.jpg!120x120","id":3531}]
+         * users : [{"name":"学民","gender":0,"sellers":"志恒","phone":"18614029017","avatar":"https://img.qingchengfit.cn/ea39d72f2da36d972047c1ee26af31cd.jpg!120x120","id":3531}]
          * modify_at : 2016-09-18T11:24:31
          * type : 1
          * id : 2435
@@ -87,7 +87,7 @@ public class SigninValidCard {
              * gender : 0
              * sellers : 志恒
              * phone : 18614029017
-             * avatar : http://zoneke-img.b0.upaiyun.com/ea39d72f2da36d972047c1ee26af31cd.jpg!120x120
+             * avatar : https://img.qingchengfit.cn/ea39d72f2da36d972047c1ee26af31cd.jpg!120x120
              * id : 3531
              */
 

@@ -19,7 +19,7 @@ import java.util.List;
 public class QcNotificationResponse extends QcResponse {
 
     /**
-     * data : {"message":"ok","msgs":[{"read_at":"2015-09-14T12:38:25","sender":"系统","title":"通知测试","url":"http://www.qingchengfit.cn/","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","created_at":"2015-09-14T11:29:00","id":1}],"ret_code":0}
+     * data : {"message":"ok","msgs":[{"read_at":"2015-09-14T12:38:25","sender":"系统","title":"通知测试","url":"http://www.qingchengfit.cn/","photo":"https://img.qingchengfit.cn/21d3bcb5600f8b2a005cdd40c57d0c4d.png","created_at":"2015-09-14T11:29:00","id":1}],"ret_code":0}
      */
 
     private DataEntity data;
@@ -35,7 +35,7 @@ public class QcNotificationResponse extends QcResponse {
     public static class DataEntity {
         /**
          * message : ok
-         * msgs : [{"read_at":"2015-09-14T12:38:25","sender":"系统","title":"通知测试","url":"http://www.qingchengfit.cn/","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","created_at":"2015-09-14T11:29:00","id":1}]
+         * msgs : [{"read_at":"2015-09-14T12:38:25","sender":"系统","title":"通知测试","url":"http://www.qingchengfit.cn/","photo":"https://img.qingchengfit.cn/21d3bcb5600f8b2a005cdd40c57d0c4d.png","created_at":"2015-09-14T11:29:00","id":1}]
          * ret_code : 0
          */
 
@@ -109,7 +109,7 @@ public class QcNotificationResponse extends QcResponse {
              * sender : 系统
              * title : 通知测试
              * url : http://www.qingchengfit.cn/
-             * photo : http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png
+             * photo : https://img.qingchengfit.cn/21d3bcb5600f8b2a005cdd40c57d0c4d.png
              * created_at : 2015-09-14T11:29:00
              * id : 1
              */

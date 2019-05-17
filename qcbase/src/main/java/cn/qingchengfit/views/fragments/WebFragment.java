@@ -5,13 +5,10 @@ import android.app.DownloadManager;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -46,7 +43,6 @@ import cn.qingchengfit.model.common.ShareBean;
 import cn.qingchengfit.model.common.ToolbarAction;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.QCResult;
-import cn.qingchengfit.router.qc.IQcRouteCallback;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.utils.AppUtils;
@@ -58,7 +54,6 @@ import cn.qingchengfit.utils.MD5;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.ShareDialogWithExtendFragment;
@@ -90,7 +85,6 @@ import java.util.List;
 import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -957,7 +951,6 @@ public class WebFragment extends BaseFragment
     }
 
     @JavascriptInterface public void sensorsTrack(String key, String json) {
-      SensorsUtils.track(key, json, getContext());
     }
 
     @JavascriptInterface public String getSessionId() {

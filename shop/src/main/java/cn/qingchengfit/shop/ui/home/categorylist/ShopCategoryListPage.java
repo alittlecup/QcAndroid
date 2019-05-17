@@ -14,12 +14,9 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.base.ShopPermissionUtils;
 import cn.qingchengfit.shop.databinding.PageCategoryListBinding;
-import cn.qingchengfit.shop.listener.ShopHomePageTabStayListener;
 import cn.qingchengfit.shop.ui.category.ShopCategoryPage;
 import cn.qingchengfit.shop.vo.Category;
-import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.DividerItemDecoration;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -38,8 +35,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class ShopCategoryListPage
-    extends ShopBaseFragment<PageCategoryListBinding, ShopCategoryListViewModel>
-    implements ShopHomePageTabStayListener {
+    extends ShopBaseFragment<PageCategoryListBinding, ShopCategoryListViewModel> {
   CommonFlexAdapter adapter;
   @Inject IPermissionModel permissionModel;
 
@@ -171,17 +167,5 @@ public class ShopCategoryListPage
     mBinding.swipeRefresh.setOnRefreshListener(() -> mViewModel.loadSource(new HashMap<>()));
   }
 
-  long startTime = 0;
 
-  @Override public void onVisit() {
-    startTime = System.currentTimeMillis() / 1000;
-    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_CATEGORY_VISIT).commit(getContext());
-  }
-
-  @Override public void onLeave() {
-    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_CATEGORY_LEAVE)
-        .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-            System.currentTimeMillis() / 1000 - startTime)
-        .commit(getContext());
-  }
 }

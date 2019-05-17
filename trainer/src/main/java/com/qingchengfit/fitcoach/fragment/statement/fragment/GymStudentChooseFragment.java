@@ -13,7 +13,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.event.EventChooseStudent;
 import com.qingchengfit.fitcoach.fragment.statement.item.ChooseStudentItem;
 import com.qingchengfit.fitcoach.http.TrainerRepository;
-import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
 import java.util.List;
@@ -58,17 +57,15 @@ import rx.schedulers.Schedulers;
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcAllStudentResponse>() {
-                @Override public void call(QcAllStudentResponse qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.users != null) {
-                            mDatas.clear();
-                            mDatas.add(new SimpleTextItemItem("全部学员"));
-                            for (int i = 0; i < qcResponse.data.users.size(); i++) {
-                                mDatas.add(new ChooseStudentItem(qcResponse.data.users.get(i)));
-                            }
-                            mFlexibleAdapter.notifyDataSetChanged();
+            .subscribe(qcResponse -> {
+                if (ResponseConstant.checkSuccess(qcResponse)) {
+                    if (qcResponse.data != null && qcResponse.data.users != null) {
+                        mDatas.clear();
+                        mDatas.add(new SimpleTextItemItem("全部学员"));
+                        for (int i = 0; i < qcResponse.data.users.size(); i++) {
+                            mDatas.add(new ChooseStudentItem(qcResponse.data.users.get(i)));
                         }
+                        mFlexibleAdapter.notifyDataSetChanged();
                     }
                 }
             }, new Action1<Throwable>() {

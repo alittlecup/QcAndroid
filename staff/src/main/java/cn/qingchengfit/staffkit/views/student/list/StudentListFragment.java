@@ -23,13 +23,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -52,8 +49,6 @@ import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragmentBuilde
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
-import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -71,7 +66,6 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/3/4 2016.
  */
-@SensorsDataTrackFragmentAppViewScreen
 public class StudentListFragment extends FilterCommonFragment {
 
 	public EditText searchviewEt;
@@ -164,7 +158,6 @@ public class StudentListFragment extends FilterCommonFragment {
 
         // 注册 event 刷新列表
         RxBusAdd(EventFreshStudent.class).subscribe(eventFreshStudent -> freshData());
-      SensorsUtils.trackScreen(this.getClass().getCanonicalName());
         return view;
     }
 

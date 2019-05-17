@@ -1,5 +1,7 @@
 package cn.qingchengfit.student.view.home;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
@@ -355,6 +357,16 @@ public class StudentListView
   }
 
   @Override public boolean onItemClick(int position) {
+    //教练App单独处理
+    if(AppUtils.getCurAppSchema(getContext()).equals("qccoach")){
+      if (adapter.getItem(position) instanceof IItemData) {
+        String id = ((IItemData) adapter.getItem(position)).getData().getCloud_user().id;
+        String uri = "qccoach://studentdetail/student/detail?studentId=" + id + "&shipId=" + ((IItemData) adapter.getItem(position)).getData().getId();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        getContext().startActivity(intent);
+        return false;
+      }
+    }
     if (adapter.getTag("contact") != null && (boolean) adapter.getTag("contact")) {
       IFlexible item = adapter.getItem(position);
       if (item instanceof IItemData) {

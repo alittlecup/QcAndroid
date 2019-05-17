@@ -32,7 +32,6 @@ import cn.qingchengfit.staffkit.views.gym.items.FunHeaderItem;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.utils.CompatUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -577,9 +576,6 @@ public class GymMoreFragment extends BaseFragment
         .subscribeOn(io.reactivex.schedulers.Schedulers.io())
         .subscribe(servicess -> {
           gymBaseInfoAction.writeGyms(servicess);
-          SensorsUtils.track("QcSaasCreateShop")
-              .addProperty("qc_brand_shops_count", (servicess.size() - 1) + "")
-              .commit(getContext());
         }));
     getActivity().finish();
   }

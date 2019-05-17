@@ -10,7 +10,6 @@ import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Trunk;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -19,7 +18,6 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import java.net.URISyntaxException;
 import javax.inject.Inject;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 @Trunk(fragments = {
@@ -44,20 +42,7 @@ import org.json.JSONObject;
   }
 
 
-  /**
-   * 初始化属性
-   */
-  private void initSensor() {
-    try {
-      JSONObject properties = SensorsDataAPI.sharedInstance(getApplicationContext()).getSuperProperties();
-      if (properties == null) properties = new JSONObject();
-      properties.put("qc_user_id", loginStatus.getUserId());
-      properties.put("qc_user_phone", loginStatus.getLoginUser().getPhone());
-      SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
+
 
   @Override protected void onDestroy() {
     super.onDestroy();

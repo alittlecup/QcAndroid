@@ -37,15 +37,12 @@ import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.smtt.sdk.QbSdk;
 import io.reactivex.Maybe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import org.json.JSONException;
-import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -132,15 +129,7 @@ public class SplashActivity extends BaseActivity {
       loginStatus.setLoginUser(Staff.formatFromUser(gUser, id));
       loginStatus.setSession(session_id);
       loginStatus.setUserId(gUser.getId());
-      SensorsDataAPI.sharedInstance(getApplicationContext()).login(loginStatus.getUserId());
-      try {
-        JSONObject properties = new JSONObject();
-        properties.put("qc_app_name", "Trainer");
-        properties.put("qc_user_id", gUser.id);
-        SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+
 
       Observable.just("")
           .delay(1500, TimeUnit.MILLISECONDS)

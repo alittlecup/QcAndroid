@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:layout_marginTop="8dp"
+    android:background="@color/white"
+    android:paddingBottom="15dp"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      >
+
+  <TextView
+      android:id="@+id/tv_ptag_select_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="测试测试测试测试测试sdaddadasdasdasdasdasdas?"
+      style="@style/QcTextStyleLargeDark"
+      android:textStyle="bold"
+      android:lineSpacingExtra="8dp"
+      android:gravity="center_vertical"
+      />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/tv_ptag_question_remark"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      tools:visibility="visible"
+      tools:text="ssssssssssssss"
+      style="@style/QcTextStyleSmallWarm"
+      android:lineSpacingExtra="4dp"
+      android:layout_marginTop="8dp"
+      />
+
+  <TextView
+      android:id="@+id/divider"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/divider_dark"
+      android:layout_marginTop="15dp"
+      />
+
+    <LinearLayout
+        android:id="@+id/ll_ptag_select_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        >
+      
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+      <cn.qingchengfit.student.widget.LimitWordEditText
+          android:id="@+id/edit_ptag_answer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:minHeight="66dp"
+          android:background="@null"
+          android:textSize="14sp"
+          android:textColor="#606060"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:textColorHint="#BBBBBB"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          android:visibility="gone"
+          android:lineSpacingExtra="6dp"
+          android:hint="请输入"/>
+        
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/input_selected_number"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:civ_lable="评分"
+            app:civ_content="请选择"
+            app:civ_content_color="@color/text_warm"
+            app:civ_showright="true"
+            app:civ_clickable="true"
+            android:paddingLeft="-15dp"
+            android:visibility="gone"
+            app:civ_showdivier="false"
+            tools:visibility="visible"
+            android:layout_marginTop="5dp"
+            />
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

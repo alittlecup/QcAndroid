@@ -17,7 +17,6 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -120,8 +119,6 @@ public class MineFragmentFragment extends BaseFragment {
     toolbarTitle.setText(R.string.mine);
 
     RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> checkLogin());
-    //checkLogin();
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

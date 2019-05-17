@@ -14,11 +14,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.views.MutiChooseGymFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -26,7 +24,6 @@ import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.presenters.AddCoursePresenter;
 import cn.qingchengfit.saasbase.network.model.Shop;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -116,8 +113,6 @@ import javax.inject.Inject;
     if (mEditBaseInfo == null) {
       mEditBaseInfo = CourseBaseInfoEditFragment.newInstance(new CourseType(isPrivate));
     }
-    SensorsUtils.trackScreen(
-        this.getClass().getCanonicalName() + "_" + (isPrivate ? "private" : "group"));
     return view;
   }
 

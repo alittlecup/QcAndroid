@@ -4,27 +4,38 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import cn.qingchengfit.model.base.QcStudentBean;
+import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.saascommon.flexble.FlexibleViewModel;
-import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.student.item.FollowRecordItem;
 import cn.qingchengfit.student.respository.StudentRepository;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 
-public class FollowRecordViewModel extends FlexibleViewModel<List<FollowRecord>,FollowRecordItem,Map<String,Object>> {
+public class FollowRecordViewModel
+    extends FlexibleViewModel<List<FollowRecord>, FollowRecordItem, Map<String, Object>> {
   MutableLiveData<List<FollowRecord>> datas = new MutableLiveData<>();
-  @Inject FollowRecordViewModel(){}
+
+  @Inject public FollowRecordViewModel() {
+
+  }
+
   @Inject StudentRepository repository;
   @Inject StudentWrap studentWrap;
 
+  public MutableLiveData<List<Integer>> types = new MutableLiveData<>();
+
   @NonNull @Override
   protected LiveData<List<FollowRecord>> getSource(@NonNull Map<String, Object> stringObjectMap) {
-    repository.qcGetTrackRecords(datas,defaultResult,studentWrap.id());
+    if (studentWrap != null && studentWrap.id() != null) {
+      repository.qcGetTrackRecords(datas, defaultResult, studentWrap.id(),
+          (HashMap<String, Object>) stringObjectMap);
+    }
     return datas;
   }
 
@@ -38,5 +49,27 @@ public class FollowRecordViewModel extends FlexibleViewModel<List<FollowRecord>,
       items.add(new FollowRecordItem(followRecord));
     }
     return items;
+  }
+
+  //教练端会员详情跟进记录筛选
+  public void onClickCategory(View v, int i) {
+    ViewGroup parent = ((ViewGroup)v.getParent());
+    for (int j = 0 ; j < parent.getChildCount(); j++){
+      View child = parent.getChildAt(j);
+        child.setSelected(false);
+    }
+    v.setSelected(true);
+    List<Integer> typeList = new ArrayList<>();
+    switch (i) {
+      case 0:
+        for (int j = 1 ; j < 5; j++){
+          typeList.add(j);
+        }
+        break;
+      case 5:
+        typeList.add(5);
+        break;
+    }
+    types.setValue(typeList);
   }
 }

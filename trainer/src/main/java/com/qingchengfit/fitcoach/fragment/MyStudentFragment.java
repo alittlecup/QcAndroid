@@ -35,7 +35,6 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -45,7 +44,6 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -169,17 +167,17 @@ public class MyStudentFragment extends BaseFragment {
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(mLinearLayoutManager);
         mStudentAdapter = new StudentAdapter(adapterData);
-        mStudentAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                Intent it = new Intent(getContext(), StudentHomeActivity.class);
-                it.putExtra("id", adapterData.get(pos).modelid);
-                it.putExtra("model", adapterData.get(pos).model);
-                it.putExtra("student_id", adapterData.get(pos).id);
-                it.putExtra("ship_id", adapterData.get(pos).ship_id);
-                it.putExtra("modeltype", adapterData.get(pos).modeltype);
-                MyStudentFragment.this.startActivityForResult(it, 404);
-            }
-        });
+        //mStudentAdapter.setListener(new OnRecycleItemClickListener() {
+        //    @Override public void onItemClick(View v, int pos) {
+        //        Intent it = new Intent(getContext(), StudentHomeActivity.class);
+        //        it.putExtra("id", adapterData.get(pos).modelid);
+        //        it.putExtra("model", adapterData.get(pos).model);
+        //        it.putExtra("student_id", adapterData.get(pos).id);
+        //        it.putExtra("ship_id", adapterData.get(pos).ship_id);
+        //        it.putExtra("modeltype", adapterData.get(pos).modeltype);
+        //        MyStudentFragment.this.startActivityForResult(it, 404);
+        //    }
+        //});
         recyclerview.setAdapter(mStudentAdapter);
         recyclerview.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
@@ -229,7 +227,6 @@ public class MyStudentFragment extends BaseFragment {
                 curSystemId = coachService.getId();
             }
         }
-      SensorsUtils.trackScreen(this.getClass().getCanonicalName());
         return view;
     }
 

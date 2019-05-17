@@ -13,18 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.adapter.ChooseSiteAdapter;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +92,6 @@ public class SiteListFragment extends BaseFragment implements ChooseSiteView {
             recyclerview.stopLoading();
         }
         isLoading = true;
-      SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
         return view;
     }
 

@@ -12,7 +12,6 @@ import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
-import cn.qingchengfit.student.bean.QcStudentWithUsers;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
@@ -77,6 +76,11 @@ public interface StudentApi {
   //会员卡可绑定的会员列表
   @GET("/api/staffs/{staff_id}/method/users/?show_all=1")
   Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(@Path("staff_id") String id,
+      @QueryMap HashMap<String, Object> params);
+
+  //会员卡修改绑定会员列表
+  @GET("/api/staffs/{id}/cards/bind/users/")
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetBindStudent(@Path("id") String staff,
       @QueryMap HashMap<String, Object> params);
 
   /**
@@ -253,7 +257,7 @@ public interface StudentApi {
    * 7-30天：absence__gte=7&absence__lte=30,
    * 缺勤>60天：absence__ge=60
    * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
-   * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
+   * "https://img.qingchengfit.cn/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
    * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title":
    * "娜娜私教 杨娜娜"},]
    */
@@ -271,7 +275,7 @@ public interface StudentApi {
    * checkin   -checkin
    * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id":
    * 2219,"avatar":
-   * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone":
+   * "https://img.qingchengfit.cn/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone":
    * "18536668518"},"private_count": 8,"days":
    * 142},
    */
@@ -398,4 +402,10 @@ public interface StudentApi {
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(
       @Path("staff_id") String staff_id, @Path("user_id") String user_id,
       @QueryMap HashMap<String, Object> params);
+
+  /**
+   *  教练名下所有会员
+   */
+  @GET("/api/v2/coaches/{id}/students/") Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudentWithCoach(
+      @Path("id") String id, @QueryMap HashMap<String, Object> params);
 }

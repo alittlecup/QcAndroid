@@ -55,10 +55,7 @@
       android:name="com.tencent.rdm.uuid"
       android:value="e12a51d3-d049-456b-89cc-15d311605ce7"
       />
-  <meta-data
-      android:name="com.sensorsdata.analytics.android.ResourcePackageName"
-      android:value="${APP_PACKAGE}"
-      />
+
 
   <application
       android:name=".App"
@@ -83,10 +80,7 @@
         android:name="UMENG_CHANNEL"
         android:value="@string/oem_tag"
         />
-    <meta-data
-        android:name="com.sensorsdata.analytics.android.ResourcePackageName"
-        android:value="cn.qingchengfit.staffkit.debug"
-        />
+
     <meta-data
         android:name="com.amap.api.v2.apikey"
         android:value="@string/gd_api"

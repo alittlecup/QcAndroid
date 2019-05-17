@@ -16,7 +16,6 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.GuideWindow;
 import com.qingchengfit.fitcoach.App;
@@ -174,7 +173,6 @@ public class MainScheduleFragment extends BaseFragment {
       }
     });
     onVisible();
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 
@@ -189,10 +187,7 @@ public class MainScheduleFragment extends BaseFragment {
     }
   }
 
-  public void setInvisible() {
-    //if (gd1 != null && gd1.isShowing()) gd1.dismiss();
-    //if (gd2 != null && gd2.isShowing()) gd2.dismiss();
-  }
+
 
   private void goStudentPreview(CoachService coachService) {
     Intent toStudnet = new Intent(getActivity(), SpecialWebActivity.class);

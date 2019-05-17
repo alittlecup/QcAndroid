@@ -15,7 +15,6 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -112,7 +111,6 @@ public class StatementGlanceFragment extends BaseFragment {
         freshData();
       }
     });
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

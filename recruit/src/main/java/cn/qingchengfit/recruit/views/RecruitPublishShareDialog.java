@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.Util;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -27,7 +25,6 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.net.URL;
-import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -174,8 +171,6 @@ public class RecruitPublishShareDialog extends DialogFragment {
         (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
     cmb.setPrimaryClip(ClipData.newPlainText("qingcheng", mUrl));
     ToastUtils.showDefaultStyle("已复制");
-    sensorTrack("qc_copyurl");
-    sensorTrack("qc_copyurl", "1");
     dismiss();
   }
 
@@ -205,28 +200,11 @@ public class RecruitPublishShareDialog extends DialogFragment {
           (!isFriend) ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
       api.sendReq(req);
 
-      sensorTrack(isFriend ? "qc_sharetofriends" : "qc_moments");
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
       e.printStackTrace();
     }
   }
 
-  public void sensorTrack(String channel) {
-    sensorTrack(channel, "0");
-  }
 
-  public void sensorTrack(String channel, String success) {
-    try {
-      JSONObject jsonObject = new JSONObject();
-      jsonObject.put("qc_page_url", mUrl);
-      jsonObject.put("qc_share_title", mTitle);
-      jsonObject.put("qc_share_channel", channel);
-      jsonObject.put("qc_sharesuccess", success);
-      SensorsUtils.track("page_share", jsonObject.toString(), getContext());
-      PreferenceUtils.setPrefString(getContext(), "share_tmp", jsonObject.toString());
-    } catch (Exception e) {
-
-    }
-  }
 }

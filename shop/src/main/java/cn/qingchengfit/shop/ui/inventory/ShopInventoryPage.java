@@ -16,7 +16,6 @@ import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
 import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.DividerItemDecoration;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.DoubleListFilterFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -55,26 +54,7 @@ import rx.android.schedulers.AndroidSchedulers;
     adapter.updateDataSet(items);
   }
 
-  long startTime = 0;
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    startTime = System.currentTimeMillis() / 100;
-    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORT_RECORDS_VISIT)
-        .commit(getContext());
-    return super.onCreateView(inflater, container, savedInstanceState);
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    if (startTime > 0) {
-      SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_INVENTORY_RECORDS_LEAVE)
-          .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-              System.currentTimeMillis() / 1000 - startTime)
-          .commit(getContext());
-    }
-  }
 
   @Override
   public PageShopInventoryBinding initDataBinding(LayoutInflater inflater, ViewGroup container,

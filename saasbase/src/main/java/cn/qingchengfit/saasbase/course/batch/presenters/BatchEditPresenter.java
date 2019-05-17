@@ -42,19 +42,20 @@ public class BatchEditPresenter extends IBatchPresenter {
 
   public void queryData() {
     RxRegiste(courseApi.qcGetBatchDetail(batchId)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<BatchDetailWrap>>() {
-        @Override public void onNext(QcDataResponse<BatchDetailWrap> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            batchDetail = qcResponse.data.batch;
-            mvpView.onBatchDetail(qcResponse.data.batch);
-          } else {
-            mvpView.onShowError(qcResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<BatchDetailWrap>>() {
+          @Override public void onNext(QcDataResponse<BatchDetailWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              batchDetail = qcResponse.data.batch;
+              body.open_rule = batchDetail.open_rule;
+              mvpView.onBatchDetail(qcResponse.data.batch);
+            } else {
+              mvpView.onShowError(qcResponse.getMsg());
+            }
           }
-        }
-      }));
+        }));
   }
 
   /**
@@ -62,42 +63,20 @@ public class BatchEditPresenter extends IBatchPresenter {
    */
   public void delBatch() {
     RxRegiste(courseApi.delBatch(batchId)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse>() {
-        @Override public void onNext(QcDataResponse qcDataResponse) {
-          if (ResponseConstant.checkSuccess(qcDataResponse)) {
-            mvpView.onShowError("删除成功");
-            RxBus.getBus().post(new EventSaasFresh.BatchList());
-            mvpView.popBack();
-          } else {
-            mvpView.onShowError(qcDataResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcDataResponse) {
+            if (ResponseConstant.checkSuccess(qcDataResponse)) {
+              mvpView.onShowError("删除成功");
+              RxBus.getBus().post(new EventSaasFresh.BatchList());
+              mvpView.popBack();
+            } else {
+              mvpView.onShowError(qcDataResponse.getMsg());
+            }
           }
-        }
-      }));
-  }
-
-  /**
-   * 修改某一天的时间
-   */
-  public void editBatchTime() {
-    //RxRegiste(courseApi.qcUpdateBatch(batchId,new ArrangeBatchBody.Builder()
-    //    .time_repeats()
-    //  .build())
-    //  .onBackpressureLatest()
-    //  .subscribeOn(Schedulers.io())
-    //  .observeOn(AndroidSchedulers.mainThread())
-    //  .subscribe(new NetSubscribe<QcDataResponse>() {
-    //    @Override public void onNext(QcDataResponse qcDataResponse) {
-    //      if (ResponseConstant.checkSuccess(qcDataResponse)){
-    //        mvpView.onShowError("删除成功");
-    //        mvpView.popBack();
-    //      }else {
-    //        mvpView.onShowError(qcDataResponse.getMsg());
-    //      }
-    //    }
-    //  }));
+        }));
   }
 
   /**
@@ -109,21 +88,20 @@ public class BatchEditPresenter extends IBatchPresenter {
       mvpView.showAlert(err);
     } else {
       RxRegiste(courseApi.qcUpdateBatch(batchId, body)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse>() {
-          @Override public void onNext(QcDataResponse qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              mvpView.onShowError("保存成功");
-              RxBus.getBus().post(new EventSaasFresh.BatchList());
-              mvpView.popBack();
-            } else {
-              mvpView.onShowError(qcResponse.getMsg());
+          .onBackpressureLatest()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new NetSubscribe<QcDataResponse>() {
+            @Override public void onNext(QcDataResponse qcResponse) {
+              if (ResponseConstant.checkSuccess(qcResponse)) {
+                mvpView.onShowError("保存成功");
+                RxBus.getBus().post(new EventSaasFresh.BatchList());
+                mvpView.popBack();
+              } else {
+                mvpView.onShowError(qcResponse.getMsg());
+              }
             }
-          }
-        }));
-
+          }));
     }
   }
 }

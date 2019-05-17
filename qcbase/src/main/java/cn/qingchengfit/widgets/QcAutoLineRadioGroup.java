@@ -106,6 +106,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
         int widthSpace = width;
         for(int i = 0;i<childCount; i++){
           View view = getChildAt(i);
+          view.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
           int childW = view.getMeasuredWidth();
           if(widthSpace >= childW ){
             widthSpace -= childW;
@@ -116,7 +117,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
           widthSpace -= mHorizontalSpacing;
         }
         int childH = getChildAt(0).getMeasuredHeight();
-        height = (childH * row) + mVerticalSpacing * (row-1);
+        height = (childH * row) + mVerticalSpacing * row;
 
       }
     }

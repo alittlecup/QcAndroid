@@ -47,10 +47,8 @@ import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordFragment;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordListFragment;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import com.anbillon.flabellum.annotations.Trunk;
-import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
 
-@SensorsDataIgnoreTrackAppViewScreen
 @Trunk(fragments = {
   CardTplsHomeInGymFragment.class, CardTplsInBrandFragment.class, CardTplDetailFragment.class, AutoNotifySettingFragment.class,CardBalanceFragment.class,
   ChangeAutoNotifyFragment.class, BatchPayCardFragment.class,

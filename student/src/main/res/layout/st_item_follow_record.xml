@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     >
   <data>
     <import type="android.view.View"/>
@@ -88,7 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            android:text="@{info.getContent()}"
             tools:text="@string/test_long"
             style="@style/QcTextStyleMediumDark"
             />
@@ -196,14 +194,14 @@
             android:id="@+id/follow_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/QcTextStyleStandardGrey"
+            style="@style/QcTextStyleSmallGrey"
             />
 
         <TextView
             android:id="@+id/follow_members"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/QcTextStyleStandardGrey"
+            style="@style/QcTextStyleSmallGrey"
             />
 
       </LinearLayout>

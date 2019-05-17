@@ -30,11 +30,9 @@ import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
-import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -322,110 +320,6 @@ import javax.inject.Inject;
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
-  protected void sensorsTrack(String trackType) {
-    SensorsUtils.TrackBuilder trackBuilder = SensorsUtils.track(trackType)
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_HAS_IMAGE,
-            mViewModel.getProduct().getImages() != null && !mViewModel.getProduct()
-                .getImages()
-                .isEmpty())
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMDITY_NAME,
-            mViewModel.getProduct().getName())
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMDITY_UNIT,
-            mViewModel.getProduct().getUnit())
-
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMODITY_PRIORITY,
-            mViewModel.getProduct().getPriority())
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_CARD_PAY_SUPPORTED,
-            mViewModel.getProduct().getSupport_card())
-
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_IN_HOUSE_PURCHASE_ENABLED,
-            false)
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_SELF_PURCHASE_ENABLED, false)
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_DELIVERY_ENABLED, false)
-
-        .addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_HAS_DESC,
-            TextUtils.isEmpty(mViewModel.getProduct().getDesc()));
-
-    if (mViewModel.getProduct().getSupport_card()) {
-      if (mViewModel.getProduct().getCard_tpl_ids() != null) {
-        trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_SUPPORT_CARDS_COUNT,
-            mViewModel.getProduct().getCard_tpl_ids().size());
-      }
-    }
-    if (mViewModel.getProduct().getImages() != null) {
-      trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IMAGE_COUNT,
-          mViewModel.getProduct().getImages().size());
-    }
-    if (mViewModel.getProduct().getCategory() != null) {
-      trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_COMMODITY_CATEGORY,
-          mViewModel.getProduct().getCategory().getName());
-    }
-
-    List<Good> goods = new ArrayList<>();
-    for (Object item : goodsAdapter.getMainItems()) {
-      if (item instanceof GoodProductItem) {
-        Good good = ((GoodProductItem) item).getGood();
-        // 移除会员卡价格
-        if (!mViewModel.getProduct().getSupport_card()) {
-          good.removeCardPrice();
-        }
-        if (goodsAdapter.getItemCount() == 1 && !((GoodProductItem) item).isExpend()) {
-          good.setName("");
-        }
-        goods.add(good);
-      }
-    }
-    mViewModel.getProduct().setGoods(goods);
-
-    if (mViewModel.getProduct().getGoods() != null) {
-
-      trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_OPTIONS_COUNT,
-          mViewModel.getProduct().getGoods().size());
-
-      for (int i = 1; i < mViewModel.getProduct().getGoods().size() + 1; i++) {
-        Good good = mViewModel.getProduct().getGoods().get(i - 1);
-        String rmbPrices = good.getRmbPrices();
-        if (!TextUtils.isEmpty(rmbPrices)) {
-          trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_PRICES + i,
-              Double.valueOf(good.getRmbPrices()));
-        }
-        Long inventory = good.getInventory();
-        if (inventory != null) {
-          trackBuilder.addProperty(ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_INVENTORY + i,
-              Double.valueOf(good.getInventory()));
-        }
-        if (mViewModel.getProduct().getSupport_card()) {
-          String cardPrices = good.getCardPrices();
-          if (!TextUtils.isEmpty(cardPrices)) {
-            trackBuilder.addProperty(
-                ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_GOOD_CARD_PRICES + i,
-                Double.valueOf(good.getCardPrices()));
-          }
-        }
-      }
-      if (mViewModel.getProduct().getDelivery_types() != null) {
-
-        for (Integer i : mViewModel.getProduct().getDelivery_types()) {
-          switch (i) {
-            case 1:
-              trackBuilder.addProperty(
-                  ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_IN_HOUSE_PURCHASE_ENABLED, true);
-              break;
-            case 2:
-              trackBuilder.addProperty(
-                  ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_SELF_PURCHASE_ENABLED, true);
-              break;
-            case 3:
-              trackBuilder.addProperty(
-                  ShopSensorsConstants.SHOP_COMMODITY_PROPERTY_IS_DELIVERY_ENABLED, true);
-              break;
-          }
-        }
-      }
-
-      trackBuilder.commit(getContext());
-    }
-  }
 
   private PagerAdapter adapter;
 

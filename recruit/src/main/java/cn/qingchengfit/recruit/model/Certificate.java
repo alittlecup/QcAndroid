@@ -39,7 +39,7 @@ public class Certificate implements Cloneable, Parcelable {
    * date_of_issue : 2015-09-16T15:08:00
    * coach : {"id":6}
    * username : 青橙科技
-   * photo : http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png
+   * photo : https://img.qingchengfit.cn/21d3bcb5600f8b2a005cdd40c57d0c4d.png
    * grade : 100
    * organization : {}
    * created_at : 2015-09-16T15:08:00

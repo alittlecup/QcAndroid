@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -191,6 +192,11 @@ public class CommonInputView extends RelativeLayout {
       ((ImageView) image1).setImageResource(drawable);
       image1.setVisibility(VISIBLE);
     }
+  }
+
+  public void setLabelLeftDrawable(Drawable drawable){
+    label.setCompoundDrawables(drawable, null, null, null);
+    label.setCompoundDrawablePadding(MeasureUtils.dpToPx(10f, getResources()));
   }
 
   public void setLabelDrawable(@DrawableRes int firstDrawable, @DrawableRes int secondDrawable) {

@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
  */
 public class UpYunClient {
 
-  public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com";
+  public static final String UPYUNPATH = "https://img.qingchengfit.cn/";
   //空间名
   public static String SPACE = "zoneke-img";
   //操作员
@@ -80,7 +80,6 @@ public class UpYunClient {
                 CrashUtils.sendCrash(e);
               }
             } else {
-              //subscriber.onError(new Throwable("上传图片失败"));
               CrashUtils.sendCrash(new Throwable("上传图片失败"));
               Log.e("upyun", isSuccess + ":" + result);
             }

@@ -2,11 +2,9 @@ package cn.qingchengfit.student.item;
 
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.databinding.StItemFollowRecordBinding;
-import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -36,9 +34,24 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
     return new FollowRecordVH(view, adapter);
   }
 
+  @Override public int getItemViewType() {
+    return Integer.parseInt(followRecord.getTrack_type_id());
+  }
+
   @Override public void bindViewHolder(FlexibleAdapter adapter, FollowRecordVH holder, int position,
       List payloads) {
     holder.binding.setInfo(followRecord);
+    if (Integer.parseInt(followRecord.getTrack_type_id()) == 5){
+      holder.binding.tvContent.setText(followRecord.getCreatedTimeStr() + " 添加训练反馈");
+      holder.binding.tvFollowStatus.setVisibility(View.GONE);
+      holder.binding.tvNextTime.setVisibility(View.GONE);
+      holder.binding.tvGymName.setText(followRecord.getShop());
+      holder.binding.tvNextTime.setVisibility(View.GONE);
+      holder.binding.followType.setText(followRecord.getContent());
+      holder.binding.followMembers.setVisibility(View.GONE);
+      return;
+    }
+    holder.binding.tvContent.setText(followRecord.getContent());
     if (TextUtils.isEmpty(followRecord.getFollowStatusString())) {
       holder.binding.tvFollowStatus.setVisibility(View.GONE);
     } else {
@@ -63,13 +76,13 @@ public class FollowRecordItem extends AbstractFlexibleItem<FollowRecordItem.Foll
     public FollowRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       binding = StItemFollowRecordBinding.bind(view);
-      binding.llImage.setOnClickListener(this);
+      //binding.llImage.setOnClickListener(this);
     }
 
-    @Override public void onClick(View view) {
-      if (view.getId() == R.id.ll_image) {
-        super.onClick(view);
-      }
-    }
+    //@Override public void onClick(View view) {
+    //  if (view.getId() == R.id.ll_image) {
+    //    super.onClick(view);
+    //  }
+    //}
   }
 }

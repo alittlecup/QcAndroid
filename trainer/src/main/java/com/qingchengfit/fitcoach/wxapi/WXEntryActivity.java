@@ -11,10 +11,7 @@ package com.qingchengfit.fitcoach.wxapi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.R;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -23,7 +20,6 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import org.json.JSONObject;
 
 /** 微信客户端回调activity示例 */
 public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
@@ -55,7 +51,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             case BaseResp.ErrCode.ERR_OK: {
               if (baseResp.getType() == RETURN_MSG_TYPE_SHARE) {
                 ToastUtils.showS("分享成功！");
-                sensorTrack();
               }else if (baseResp.getType() == RETURN_MSG_TYPE_LOGIN){
                 SendAuth.Resp auth = (SendAuth.Resp) baseResp;
                 RxBus.getBus().post(auth);
@@ -66,19 +61,5 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         this.finish();
     }
 
-    public void sensorTrack() {
 
-        try {
-
-          String shareBean = PreferenceUtils.getPrefString(this, "share_tmp", "");
-            if (!TextUtils.isEmpty(shareBean)) {
-                JSONObject jsonObject1 = new JSONObject(shareBean);
-                jsonObject1.put("qc_sharesuccess", "1");
-              SensorsUtils.track("page_share", jsonObject1.toString(), this);
-                PreferenceUtils.setPrefString(this, "share_tmp", "");
-            }
-        } catch (Exception e) {
-
-        }
-    }
 }

@@ -41,7 +41,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.manager.SupportRequestManagerFragment;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.umeng.analytics.MobclickAgent;
 import dagger.android.AndroidInjection;
 import java.util.Date;
@@ -147,8 +146,6 @@ public class BaseActivity extends AppCompatActivity {
           R.anim.slide_right_out);
     else tr.setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold);
     Fragment fragment = getRouterFragment(intent);
-    //神策记录fragment页面
-    SensorsDataAPI.sharedInstance().trackViewScreen(fragment);
     tr.replace(R.id.web_frag_layout, fragment);
     if (hasFrag && !notStack) tr.addToBackStack(null);
     try {

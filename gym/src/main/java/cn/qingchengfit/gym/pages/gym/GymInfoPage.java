@@ -35,7 +35,6 @@ import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.EventFreshCoachService;
@@ -322,9 +321,6 @@ import rx.functions.Action1;
             RxRegiste(
                 gymBaseInfoAction.getAllGyms().subscribeOn(Schedulers.io()).subscribe(servicess -> {
                   gymBaseInfoAction.writeGyms(servicess);
-                  SensorsUtils.track("QcSaasCreateShop")
-                      .addProperty("qc_brand_shops_count", (servicess.size() - 1) + "")
-                      .commit(getContext());
                 }));
             RxBus.getBus().post(new EventFreshCoachService());
             RxBus.getBus().post(new EventLoginChange());

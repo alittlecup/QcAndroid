@@ -600,14 +600,26 @@
         android:name=".activity.ChangeTimeActivity"
         android:label="@string/title_activity_change_time"
         />
-    <activity
-        android:name=".activity.StudentHomeActivity"
-        android:screenOrientation="portrait"
-        />
+    <activity android:name=".activity.StudentHomeActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <data
+            android:scheme="${APP_SCHAME}"
+            android:host="studentdetail"
+            android:path="/student/detail"
+            />
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+      </intent-filter>
+
+    </activity>
     <activity
         android:name=".activity.BrandManageActivity"
         android:screenOrientation="portrait"
         />
+
     <activity
         android:name=".activity.ChooseBrandActivity"
         android:screenOrientation="portrait"
@@ -844,7 +856,8 @@
         android:exported="false"
         >
     </service>
-
+  <activity android:name="cn.qingchengfit.views.fragments.VideoActivity"
+      android:screenOrientation="portrait"/>
 
   </application>
 

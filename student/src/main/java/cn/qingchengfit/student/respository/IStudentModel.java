@@ -1,15 +1,20 @@
 package cn.qingchengfit.student.respository;
 
 import android.support.annotation.IntRange;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
 import cn.qingchengfit.student.bean.InactiveStat;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerListWrap;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
@@ -28,13 +33,7 @@ import cn.qingchengfit.student.bean.StudentWIthCount;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
-
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import java.util.Map;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
 
 /**
  * power by
@@ -61,7 +60,7 @@ public interface IStudentModel {
   /**
    * 购卡 绑定会员时选择会员列表
    */
-  Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission();
+  Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method);
 
   /**
    * 收银台模块获取会员列表，通过手机号前几位筛选
@@ -78,8 +77,7 @@ public interface IStudentModel {
   /**
    * 会员卡可绑定的会员列表
    */
-  //Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(String id,
-  //    HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(String id);
 
   /**
    * 工作人员下所有会员
@@ -242,7 +240,7 @@ public interface IStudentModel {
    *               7-30天：absence__gte=7&absence__lte=30,
    *               缺勤>60天：absence__ge=60
    * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
-   * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
+   * "https://img.qingchengfit.cn/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
    * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
    */
   Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id,
@@ -257,7 +255,7 @@ public interface IStudentModel {
    *               private     -private
    *               checkin   -checkin
    * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
-   * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
+   * "https://img.qingchengfit.cn/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
    * 142},
    */
   Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id,
@@ -338,4 +336,19 @@ public interface IStudentModel {
 
   Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
     HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coach_id, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coach_id, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<Object>> qcSubmitPtagAnswer(CoachPtagAnswerBody body);
+
+  Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String naireId);
+
+  Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter();
+
 }

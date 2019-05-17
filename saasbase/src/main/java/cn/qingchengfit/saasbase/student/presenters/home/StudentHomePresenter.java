@@ -65,7 +65,7 @@ public class StudentHomePresenter extends BasePresenter<StudentHomePresenter.MVP
         coachService.setId("10548");
         coachService.setModel("staff_gym");
         coachService.setPhone("010-52089816");
-        coachService.setPhoto("http://zoneke-img.b0.upaiyun.com/60d25dd5afd2098562b192e38e4a75cf.jpeg!120x120");
+        coachService.setPhoto("https://img.qingchengfit.cn/60d25dd5afd2098562b192e38e4a75cf.jpeg!120x120");
         coachService.setPosition("管理员");
         coachService.setShop_id("1");
         coachService.setSystem_end("2043-04-02");

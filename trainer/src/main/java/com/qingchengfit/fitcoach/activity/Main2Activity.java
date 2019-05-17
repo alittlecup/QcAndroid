@@ -63,7 +63,6 @@ import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -81,8 +80,6 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONException;
-import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -548,15 +545,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     if (!TextUtils.isEmpty(u)) {
       User user = gson.fromJson(u, User.class);
       App.setgUser(user);
-      try {
-        JSONObject properties = new JSONObject();
-        properties.put("qc_app_name", "Trainer");
-        properties.put("qc_user_id", user.id);
-        //properties.put("qc_user_phone", user.phone);
-        SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
     }
   }
 

@@ -3,7 +3,6 @@ package cn.qingchengfit.views.fragments;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,11 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.Util;
 import cn.qingchengfit.widgets.R;
@@ -28,7 +24,6 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.net.URL;
-import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -178,8 +173,6 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
     cmb.setPrimaryClip(ClipData.newPlainText("qingcheng", mUrl));
     ToastUtils.showDefaultStyle("已复制");
-    sensorTrack("qc_copyurl");
-    sensorTrack("qc_copyurl", "1");
     dismiss();
   }
 
@@ -205,28 +198,10 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
           (!isFriend) ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
       api.sendReq(req);
 
-      sensorTrack(isFriend ? "qc_sharetofriends" : "qc_moments");
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
       e.printStackTrace();
     }
   }
 
-  public void sensorTrack(String channel) {
-    sensorTrack(channel, "0");
-  }
-
-  public void sensorTrack(String channel, String success) {
-    try {
-      JSONObject jsonObject = new JSONObject();
-      jsonObject.put("qc_page_url", mUrl);
-      jsonObject.put("qc_share_title", mTitle);
-      jsonObject.put("qc_share_channel", channel);
-      jsonObject.put("qc_sharesuccess", success);
-      SensorsUtils.track("page_share", jsonObject.toString(), getContext());
-      PreferenceUtils.setPrefString(getContext(), "share_tmp", jsonObject.toString());
-    } catch (Exception e) {
-
-    }
-  }
 }

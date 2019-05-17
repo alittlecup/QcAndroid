@@ -21,7 +21,6 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -208,7 +207,6 @@ import rx.schedulers.Schedulers;
           onNextStep();
         }
       });
-      SensorsUtils.trackScreen(this.getClass().getCanonicalName());
       return view;
     }
 

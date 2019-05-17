@@ -15,14 +15,17 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
-import cn.qingchengfit.student.bean.InactiveStat;
-import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
-import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.FollowRecord;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
+import cn.qingchengfit.student.bean.InactiveStat;
+import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
+import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.StatDate;
@@ -280,10 +283,40 @@ public class StudentRepositoryImpl implements StudentRepository {
     bindToLiveData(null, remoteService.qcAddTrackRecord(user_id, body), rst, "add");
   }
 
+  @Override public LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coachId,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetPtagQuestionnaire(coachId, params));
+  }
+
+  @Override public LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetPtagAnswers(coachId, params));
+  }
+
+  @Override
+  public Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coachId,
+      HashMap<String, Object> params) {
+    return remoteService.qcGetCoachStudentOverview(coachId, params);
+  }
+
+  @Override
+  public LiveData<Resource<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String naireId) {
+    return toLiveData(remoteService.qcGetTrainerFeedbackNaire(naireId));
+  }
+
+  @Override
+  public void qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params, MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null, remoteService.qcModifyTrainerFeedbackNaire(naireId, params), rst, "modify");
+  }
+
+  @Override public void qcSubmitPtagAnswer(CoachPtagAnswerBody body, MutableLiveData<Resource<Object>> rst) {
+    bindToLiveData(null, remoteService.qcSubmitPtagAnswer(body), rst, "submit");
+  }
+
   @Override public void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
-      MutableLiveData<Resource<Object>> rst, String studentId) {
+      MutableLiveData<Resource<Object>> rst, String studentId, HashMap<String, Object> params) {
     bindToLiveData(liveData,
-        remoteService.qcGetTrackRecords(studentId, new HashMap<String, Object>())
+        remoteService.qcGetTrackRecords(studentId, params)
             .flatMap(
                 (Function<QcDataResponse<FollowRecordListWrap>, Flowable<QcDataResponse<List<FollowRecord>>>>) followRecordListWrapQcDataResponse -> Flowable
                     .just(followRecordListWrapQcDataResponse.copyResponse(

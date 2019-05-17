@@ -41,6 +41,7 @@ public class StudentComponent implements IComponent {
         Object from = qc.getParams().get("from");
         if(from instanceof String){
           studentIdList.putString("from", (String) from);
+          studentIdList.putString("cardId", (String) qc.getParams().get("cardId"));
         }
         if(qc.getParams().get("addAble")!=null){
           studentIdList.putBoolean("addAble", (Boolean) qc.getParams().get("addAble"));

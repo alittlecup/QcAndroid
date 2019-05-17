@@ -2,19 +2,22 @@ package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
+import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
+import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.FollowRecord;
+import cn.qingchengfit.student.bean.FollowRecordAdd;
+import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.InactiveStat;
 import cn.qingchengfit.student.bean.QcStudentBeanWithFollow;
 import cn.qingchengfit.student.bean.QcStudentBirthdayWrapper;
-import cn.qingchengfit.student.bean.FollowRecordAdd;
-import cn.qingchengfit.student.bean.FollowRecordStatus;
 import cn.qingchengfit.student.bean.SalerTeachersListWrap;
 import cn.qingchengfit.student.bean.SalerUserListWrap;
 import cn.qingchengfit.student.bean.StatDate;
@@ -23,6 +26,7 @@ import cn.qingchengfit.student.bean.StudentListWrappeForFollow;
 import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
+import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,7 +121,7 @@ public interface StudentRepository {
 
   //
   LiveData<Resource<StudentListWrapper>> qcGetAllStudents(Map<String, Object> params);
-  //
+
   //LiveData<List<FilterModel>> qcGetFilterModelFromLocal();
   //
   //LiveData<SalerUserListWrap> qcGetTrackStudentsRecommends(String id, HashMap<String, Object> params);
@@ -129,7 +133,7 @@ public interface StudentRepository {
       MutableLiveData<Resource<Object>> rst);
 
   void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
-      MutableLiveData<Resource<Object>> rst, String studentId);
+      MutableLiveData<Resource<Object>> rst, String studentId, HashMap<String, Object> params);
 
   //void qcLoadStudentInfoById(MutableLiveData<QcStudentBean> liveData,MutableLiveData<Resource<Object>>rst,String studentId);
 
@@ -145,4 +149,17 @@ public interface StudentRepository {
 
   void qcAddTrackRecord(String user_id, FollowRecordAdd body,
       MutableLiveData<Resource<Object>> rst);
+
+  LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coachId, HashMap<String, Object> params);
+
+  LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId, HashMap<String, Object> params);
+
+  Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coachId, HashMap<String, Object> params);
+
+  LiveData<Resource<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String naireId);
+
+  void qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params, MutableLiveData<Resource<Object>> rst);
+
+  void qcSubmitPtagAnswer(CoachPtagAnswerBody body, MutableLiveData<Resource<Object>> rst);
+
 }

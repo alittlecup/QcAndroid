@@ -20,7 +20,6 @@ import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.ShopSensorsConstants;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.DialogAction;
@@ -130,7 +129,6 @@ import javax.inject.Inject;
     }, 50);
   }
 
-  long startTime = 0;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -140,20 +138,10 @@ import javax.inject.Inject;
     mBinding.framelayoutClick.setVisibility(View.VISIBLE);
     AppUtils.hideKeyboard(getActivity());
     initBottom();
-    startTime = System.currentTimeMillis() / 1000;
-    SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_DETAIL_VISIT).commit(getContext());
     return view;
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    if (startTime > 0) {
-      SensorsUtils.track(ShopSensorsConstants.SHOP_COMMODITY_DETAIL_LEAVE)
-          .addProperty(ShopSensorsConstants.QC_PAGE_STAY_TIME,
-              System.currentTimeMillis() / 1000 - startTime)
-          .commit(getContext());
-    }
-  }
+
 
   private void initBottom() {
     mBinding.llBottomContainer.setVisibility(View.GONE);
@@ -198,8 +186,6 @@ import javax.inject.Inject;
         inUpdate = true;
         setCurPageStatus(inUpdate);
       } else if (item.getTitle().equals("完成")) {
-        SensorsUtils.track(ShopSensorsConstants.SHOP_EDIT_COMMODITY_CONFIRM_BTN_CLICK)
-            .commit(getContext());
         putProduct();
       }
       return false;
@@ -223,7 +209,6 @@ import javax.inject.Inject;
           (dialog, which) -> {
             dialog.dismiss();
             if (which == DialogAction.POSITIVE) {
-              sensorsTrack(ShopSensorsConstants.SHOP_EDIT_COMMODITY_CANCEL_BTN_CLICK);
               onback = false;
               if (getActivity() instanceof BaseActivity) {
                 ((BaseActivity) getActivity()).setBackPress(null);

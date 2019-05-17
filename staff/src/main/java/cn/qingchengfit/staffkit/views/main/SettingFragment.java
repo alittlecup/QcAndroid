@@ -20,19 +20,15 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import javax.inject.Inject;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * power by
@@ -178,18 +174,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
         .into(new CircleImgWrapper(headerIcon, getContext()));
     drawerName.setText(bean.getUsername());
     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, bean.getUsername());
-    if (!BuildConfig.DEBUG) {
-      try {
-        JSONObject properties = SensorsDataAPI.sharedInstance(getActivity().getApplicationContext())
-            .getSuperProperties();
-        if (properties == null) properties = new JSONObject();
-        properties.put("qc_user_id", loginStatus.getUserId());
-        SensorsDataAPI.sharedInstance(getActivity().getApplicationContext())
-            .registerSuperProperties(properties);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-    }
+
   }
 
   @Override public void onBrandsCount(int count) {

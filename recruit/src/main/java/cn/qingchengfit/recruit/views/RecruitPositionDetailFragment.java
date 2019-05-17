@@ -142,7 +142,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
             + "\n【坐标】"
             + job.gym.getAddressStr();
         String pic = job.gym != null ? job.gym.photo
-            : "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+            : "https://img.qingchengfit.cn/977ad17699c4e4212b52000ed670091a.png";
         String url = restRepository.getHost() + "mobile/job/" + job.id + "/";
         ShareDialogFragment.newInstance(title, content, pic, url)
             .show(getChildFragmentManager(), "");

@@ -16,17 +16,16 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import cn.qingchengfit.gym.responsitory.network.GymApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.gym.R;
+import cn.qingchengfit.gym.responsitory.network.GymApi;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
@@ -98,7 +97,6 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     toolbarTitile.setText("新增场地");
     name.addTextWatcher(textChange);
     count.addTextWatcher(textChange);
-    SensorsUtils.trackScreen(      this.getClass().getCanonicalName());
     return view;
   }
 

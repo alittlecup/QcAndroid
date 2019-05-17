@@ -4,4 +4,9 @@
     <attr format="string" name="ct_text"/>
     <attr format="integer" name="ct_count"/>
   </declare-styleable>
+
+  <declare-styleable name="LimitWordEditText">
+    <attr format="integer" name="limit"/>
+  </declare-styleable>
+
 </resources>

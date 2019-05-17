@@ -13,7 +13,6 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import javax.inject.Inject;
 
@@ -79,25 +78,14 @@ public class UpgradeInfoDialogFragment extends BaseDialogFragment {
     view.findViewById(R.id.btn_close).setOnClickListener(view1 ->{
       dismiss();});
     btn.setOnClickListener(view1 -> {
-      SensorsUtils.track("QcSaasRechargeWindowConfirmBtnClick")
-        .addProperty("qc_saas_module_key", this.module)
-        .commit(getContext());
+
       onLeftClick();
     });
-    SensorsUtils.track("QcSaasRechargeWindowOpen")
-      .addProperty("qc_saas_module_key",module)
-      .commit(getContext());
+
 
     return view;
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    SensorsUtils.track("QcSaasRechargeWindowClose")
-      .addProperty("qc_saas_module_key",module)
-      .addProperty("qc_stay_time",System.currentTimeMillis()/1000 - timeStart)
-      .commit(getContext());
-  }
 
   public void onLeftClick() {
     Intent toRenewal = new Intent(Intent.ACTION_VIEW, Uri.parse("qcstaff://bottom/"));

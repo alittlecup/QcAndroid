@@ -11,7 +11,7 @@ def annotations = rootProject.ext.annotations
 //}
 
 dependencies {
-  addComponent("qcbase",true)
+  addComponent("qcbase",false)
   implementation dependens["constraint-layout"]
   annotationProcessor annotations["dagger-compiler"]
   annotationProcessor annotations["dagger-android-processor"]

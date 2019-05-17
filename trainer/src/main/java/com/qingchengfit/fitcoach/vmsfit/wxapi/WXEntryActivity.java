@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.R;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -65,7 +64,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
       if (!TextUtils.isEmpty(shareBean)) {
         JSONObject jsonObject1 = new JSONObject(shareBean);
         jsonObject1.put("qc_sharesuccess", "1");
-        SensorsUtils.track("page_share", jsonObject1.toString(), this);
         PreferenceUtils.setPrefString(this, "share_tmp", "");
       }
     } catch (Exception e) {

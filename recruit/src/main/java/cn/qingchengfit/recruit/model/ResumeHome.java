@@ -51,7 +51,7 @@ import java.util.List;
  * "gender": 0,
  * "created_at": "2017-06-09T11:07:33",
  * "brief_description": "",
- * "avatar": "http://zoneke-img.b0.upaiyun.com/header/43a167df-ee5b-4641-84bb-a36fa018e0aa.png"
+ * "avatar": "https://img.qingchengfit.cn/header/43a167df-ee5b-4641-84bb-a36fa018e0aa.png"
  * }
  */
 

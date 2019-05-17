@@ -8,8 +8,6 @@ import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.mvvm.ActionLiveEvent;
 import cn.qingchengfit.saascommon.utils.StringUtils;
-import cn.qingchengfit.student.item.ChooseDetailItem;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -108,7 +106,7 @@ public class SortViewModel {
   }
 
   public void onFilterClick(boolean isChecked) {
-    if (isChecked) return;
+    //if (isChecked) return;
     filterEvent.call();
   }
 

@@ -24,7 +24,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -33,7 +32,6 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragmentAdapter;
@@ -249,7 +247,6 @@ public class StatementDetailFragment extends BaseFragment
         return true;
       }
     });
-    SensorsUtils.trackScreen(this.getClass().getCanonicalName());
     return view;
   }
 

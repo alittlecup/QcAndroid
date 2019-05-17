@@ -70,13 +70,13 @@ public class Configs {
   public static final String DOWNLOAD_TRAINER = "http://fir.im/qingchengfit";
   public static final String DOWNLOAD_MANAGE = "http://fir.im/qcfit";
   public static final String HEADER_STUDENT_MALE =
-      "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+      "https://img.qingchengfit.cn/977ad17699c4e4212b52000ed670091a.png";
   public static final String HEADER_STUDENT_FEMALE =
-      "http://zoneke-img.b0.upaiyun.com/f1ac90184acb746e4fbdef4b61dcd6f6.png";
+      "https://img.qingchengfit.cn/f1ac90184acb746e4fbdef4b61dcd6f6.png";
   public static final String HEADER_COACH_MALE =
-      "http://zoneke-img.b0.upaiyun.com/75656eb980b79e7748041f830332cc62.png";
+      "https://img.qingchengfit.cn/75656eb980b79e7748041f830332cc62.png";
   public static final String HEADER_COACH_FEMALE =
-      "http://zoneke-img.b0.upaiyun.com/7f362320fb3c82270f6c9c623e39ba92.png";
+      "https://img.qingchengfit.cn/7f362320fb3c82270f6c9c623e39ba92.png";
   public static final String WECHAT_GUIDE = "mobile/weixin/guide/";
   public static final String GYM_GUIDE = "mobile/gym/guide/";
   /**
@@ -136,15 +136,14 @@ public class Configs {
   public static final String SCHEDULE_GROUP = "fitness/redirect/staff/group/";
   public static final String SCHEDULE_PRIVATE = "fitness/redirect/staff/private/";
   public static final String HOST_ORDERS = "mobile/trades/home/";
-  public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
   public static String Server = Constants.Server;
   public static String URL_QC_FIND = Server + "mobile/staff/discover/";
   public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
 
   public static final String WEEX_TEST_PATH =
-      "https://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
+      " https://static.qingchengfit.cn/qc-commodity-weex/version_test.json";
   public static final String WEEX_RELEASE_PATH =
-      "https://qcfile.b0.upaiyun.com/qc-commodity-weex/0.0.39/version.json";
+      " https://static.qingchengfit.cn/qc-commodity-weex/0.0.39/version.json";
   public static final String WEEX_PAGE_INDEX = "proxy_commodity.js";
   public static String QR_POINT_URL =
       BuildConfig.DEBUG ? "saotest.qingchengfit.cn" : "sao.qingchengfit.cn";

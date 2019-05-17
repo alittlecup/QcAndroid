@@ -1,10 +1,14 @@
 package cn.qingchengfit.student;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.util.Pair;
 import cn.qingchengfit.saascommon.model.FollowUpDataStatistic;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.views.fragments.VideoActivity;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -134,4 +138,19 @@ public class Utils {
     int rgb = 0x00ffffff & baseColor;
     return a + rgb;
   }
+
+  //播放视频
+  public static void playVideoFromUrl(String url, Context context){
+    Intent intent = new Intent(context, VideoActivity.class);
+    intent.putExtra("url", url);
+    context.startActivity(intent);
+  }
+
+  //播放视频
+  public static void openWithBrowser(String url, Context context){
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    context.startActivity(intent);
+  }
+
 }
+

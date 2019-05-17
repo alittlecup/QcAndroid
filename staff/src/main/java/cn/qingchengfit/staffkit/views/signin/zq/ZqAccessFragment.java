@@ -56,7 +56,7 @@ public class ZqAccessFragment extends BaseFragment
     BottomListFragment.ComfirmChooseListener {
 
   public static final String IMG_URL =
-      "http://zoneke-img.b0.upaiyun.com/0ffa48dbbbb23b74c4d936a51dd65d60.jpg";
+      "https://img.qingchengfit.cn/0ffa48dbbbb23b74c4d936a51dd65d60.jpg";
 
   public static final String INTRO_URL =
       "https://mp.weixin.qq.com/s/Rz4jRg2NyJG5AEDxC1M41A";

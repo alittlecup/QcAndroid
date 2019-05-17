@@ -8,7 +8,7 @@ public class TurOrderSellerHistory implements ITurOrderHistoryData {
   /**
    * created_at : 2018-12-09T14:40:16
    * id : 1
-   * created_by : {"username":"邹英杰","gender":0,"id":545,"avatar":"http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png!120x120"}
+   * created_by : {"username":"邹英杰","gender":0,"id":545,"avatar":"https://img.qingchengfit.cn/977ad17699c4e4212b52000ed670091a.png!120x120"}
    * seller : {"username":"APP","gender":0,"id":3,"avatar":""}
    */
 

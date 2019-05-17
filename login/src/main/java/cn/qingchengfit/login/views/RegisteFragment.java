@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.login.LoConstants;
 import cn.qingchengfit.login.R;
@@ -23,9 +22,7 @@ import cn.qingchengfit.login.bean.GetCodeBody;
 import cn.qingchengfit.login.bean.RegisteBody;
 import cn.qingchengfit.login.event.SendMsgEvent;
 import cn.qingchengfit.network.QcRestRepository;
-
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -177,10 +174,6 @@ public class RegisteFragment extends BaseFragment implements LoginView {
               .area_code(phoneNum.getDistrictInt())
               .has_read_agreement(btnAgreeProtocol.isChecked())
               .build());
-      SensorsUtils.track("QcRegister")
-          .addProperty("qc_user_gender",
-              compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female ? "1" : "0")
-          .commit(getContext());
     }
   }
 

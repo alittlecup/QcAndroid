@@ -12,16 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-
-
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.common.AttendanceRecord;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.ClassRecords;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.ChooseGymPopWin;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
@@ -75,7 +71,6 @@ public class ClassRecordFragment extends BaseFragment
   private CommonFlexAdapter commonFlexAdapter;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
   private List<Shop> shops = new ArrayList<>();
-  private ChooseGymPopWin chooseGymPopWin;
   private HashMap<String, Object> params = new HashMap<>();
   private NotSignFilterFragment notSignFilterFragment;
 
