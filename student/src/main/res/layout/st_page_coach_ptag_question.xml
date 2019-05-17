@@ -20,6 +20,7 @@
       android:layout_height="match_parent"
       android:background="@color/bg_grey"
       android:orientation="vertical"
+      android:fitsSystemWindows="true"
       >
 
     <include
@@ -32,6 +33,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_save"
         android:layout_below="@id/include_toolbar"
+        android:fillViewport="true"
         >
       <LinearLayout
           android:layout_width="match_parent"
@@ -46,9 +48,9 @@
             app:items="@{model.items}"
             />
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="80dp"
             android:background="@color/bg_grey"
             />
       </LinearLayout>
@@ -61,11 +63,14 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
+        android:orientation="vertical"
         >
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#eeeeee"/>
+
       <Button
           android:id="@+id/btn_save_qrcode"
           android:layout_width="match_parent"
@@ -75,7 +80,11 @@
           android:text="保存"
           android:textColor="@color/white"
           android:textSize="18sp"
-          style="@style/QcTextStyleLargeDark"
+          android:layout_marginBottom="10dp"
+          style="?android:attr/borderlessButtonStyle"
+          android:layout_marginTop="10dp"
+          android:layout_marginLeft="40dp"
+          android:layout_marginRight="40dp"
           />
     </LinearLayout>
   </RelativeLayout>

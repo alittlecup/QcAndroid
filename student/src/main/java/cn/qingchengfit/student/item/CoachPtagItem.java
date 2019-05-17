@@ -1,7 +1,10 @@
 package cn.qingchengfit.student.item;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
@@ -10,6 +13,7 @@ import cn.qingchengfit.student.bean.CoachPtagAnswer;
 import cn.qingchengfit.student.bean.PtagQuestion;
 import cn.qingchengfit.student.event.DynamicPtagItemEvent;
 import cn.qingchengfit.student.view.ptag.PtagAnswerTransform;
+import cn.qingchengfit.student.widget.CenterGravityImageSpan;
 import cn.qingchengfit.student.widget.LimitWordEditText;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -37,7 +41,6 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
   private int number = -1;
 
   public CoachPtagItem(PtagQuestion ptagQuestion) {
-
     this.ptagQuestion = ptagQuestion;
   }
 
@@ -94,9 +97,19 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
         }
       });
     }
-    holder.tvTitle.setText(ptagQuestion.getReplace_title());
-    holder.imgHelp.setVisibility(ptagQuestion.getHelp_text().isEmpty() ? View.GONE : View.VISIBLE);
-    holder.imgHelp.setTag(position);
+    holder.tvTitle.setTag(position);
+    if (ptagQuestion.getHelp_text() != null && !ptagQuestion.getHelp_text().isEmpty()) {
+      SpannableString ss = new SpannableString(ptagQuestion.getReplace_title() + " ");
+      int len = ss.length();
+      Drawable d = ContextCompat.getDrawable(holder.itemView.getContext(), (R.drawable.vd_ptag_question_help));
+      d.setBounds(20, 0, d.getIntrinsicWidth() + 20, d.getIntrinsicHeight());
+      CenterGravityImageSpan span = new CenterGravityImageSpan(d);
+      ss.setSpan(span, len - 1, len, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+      holder.tvTitle.setText(ss);
+    } else {
+      holder.tvTitle.setText(ptagQuestion.getReplace_title());
+
+    }
     holder.inputSelectNumber.setTag(position);
     if (!ptagQuestion.getRemarks().isEmpty()) {
       holder.tvQuestionRemark.setVisibility(View.VISIBLE);
@@ -129,7 +142,7 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
         holder.editAnswer.setTag(position);
         if (ptagQuestion.getEdit_text().isEmpty() && !ptagQuestion.getAnswer().isEmpty()) {
           holder.editAnswer.setText(ptagQuestion.getAnswer());
-        }else {
+        } else {
           holder.editAnswer.setText(ptagQuestion.getEdit_text());
         }
         holder.editAnswer.setVisibility(View.VISIBLE);
@@ -168,8 +181,8 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
       case TEXT:
       case TRUE_OR_FALSE:
         String result = "";
-        if (editText != null) {
-          result = editText.getText().toString();
+        if (ptagQuestion.getEdit_text() != null) {
+          result = ptagQuestion.getEdit_text();
         } else {
           result = ptagQuestion.getAnswer();
         }
@@ -195,7 +208,6 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
 
   public class CoachPtagVH extends FlexibleViewHolder {
     TextView tvTitle;
-    ImageView imgHelp;
     LinearLayout llOptions;
     LimitWordEditText editAnswer;
     TextView tvQuestionRemark;
@@ -205,7 +217,6 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
     public CoachPtagVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       tvTitle = view.findViewById(R.id.tv_ptag_select_title);
-      imgHelp = view.findViewById(R.id.img_ptag_select_help);
       llOptions = view.findViewById(R.id.ll_ptag_select_answer);
       tvQuestionRemark = view.findViewById(R.id.tv_ptag_question_remark);
       editAnswer = view.findViewById(R.id.edit_ptag_answer);
@@ -228,14 +239,18 @@ public class CoachPtagItem extends AbstractFlexibleItem<CoachPtagItem.CoachPtagV
         dialogList.show();
       });
       editAnswer.setListener((v, text) -> {
-        if (adapter.getItem((int)v.getTag()) instanceof CoachPtagItem){
+        if (adapter.getItem((int) v.getTag()) instanceof CoachPtagItem) {
           ((CoachPtagItem) adapter.getItem((int) v.getTag())).getData().setEdit_text(text);
         }
       });
-      imgHelp.setOnClickListener(v -> {
+      tvTitle.setOnClickListener(v -> {
         if (adapter.getItem((int) v.getTag()) instanceof CoachPtagItem) {
-          DialogUtils.showAlert(v.getContext(),
-              ((CoachPtagItem) adapter.getItem((int) v.getTag())).getData().getHelp_text());
+          String str = ((CoachPtagItem) adapter.getItem((int) v.getTag())).getData().getHelp_text();
+          if (str != null && !str.isEmpty()) {
+            DialogUtils.initNoCenterContentAlert(v.getContext(), null,
+                ((CoachPtagItem) adapter.getItem((int) v.getTag())).getData().getHelp_text(), null)
+                .show();
+          }
         }
       });
     }

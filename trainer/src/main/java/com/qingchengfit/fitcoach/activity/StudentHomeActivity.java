@@ -134,7 +134,7 @@ public class StudentHomeActivity extends BaseActivity {
       mStudentId = getIntent().getStringExtra("student_id");
       mStudentShipId = getIntent().getStringExtra("ship_id");
     }
-    mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+    mToolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     setSupportActionBar(mToolbar);
     getSupportActionBar().setTitle("");
     toolbarTitle.setText("学员详情");

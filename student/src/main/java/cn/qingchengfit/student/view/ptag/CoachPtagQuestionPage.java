@@ -126,6 +126,7 @@ import rx.schedulers.Schedulers;
   private void initRecyclerView() {
     FlexibleAdapter adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerCoachPtagQuestion.setLayoutManager(new LinearLayoutManager(getContext()));
+    //mBinding.recyclerCoachPtagQuestion.setNestedScrollingEnabled(false);
     mBinding.recyclerCoachPtagQuestion.setAdapter(adapter);
   }
 
