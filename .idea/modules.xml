@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/saasbase/saasbase.iml" filepath="$PROJECT_DIR$/saasbase/saasbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/saascommon/saascommon.iml" filepath="$PROJECT_DIR$/saascommon/saascommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/shop/shop.iml" filepath="$PROJECT_DIR$/shop/shop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/staff/staff.iml" filepath="$PROJECT_DIR$/staff/staff.iml" />
       <module fileurl="file://$PROJECT_DIR$/student/student.iml" filepath="$PROJECT_DIR$/student/student.iml" />
       <module fileurl="file://$PROJECT_DIR$/trainer/trainer.iml" filepath="$PROJECT_DIR$/trainer/trainer.iml" />
       <module fileurl="file://$PROJECT_DIR$/weex/weex.iml" filepath="$PROJECT_DIR$/weex/weex.iml" />

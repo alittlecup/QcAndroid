@@ -71,6 +71,7 @@
         app:layout_constraintLeft_toRightOf="@id/tv_all_student"
         app:layout_constraintTop_toTopOf="@id/tv_all_student"
         app:srcCompat="@drawable/vd_arrow_right_grey_small"
+        android:onClick="@{page::onClickAllStudent}"
         />
     <TextView
         android:id="@+id/tv_register_recent"
