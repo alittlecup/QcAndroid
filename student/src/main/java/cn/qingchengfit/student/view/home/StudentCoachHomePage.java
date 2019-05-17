@@ -1,22 +1,19 @@
 package cn.qingchengfit.student.view.home;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.Utils;
 import cn.qingchengfit.student.bean.CoachMemberPtagData;
 import cn.qingchengfit.student.bean.CoachPtagStat;
 import cn.qingchengfit.student.bean.CoachStudentOverview;
@@ -100,7 +97,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
     Glide.with(getContext()).load(data.getIcon()).asBitmap().into(new SimpleTarget<Bitmap>() {
       @Override
       public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-        civ.setLabelLeftDrawable(new BitmapDrawable(getResources(), resource));
+        Drawable drawable = new BitmapDrawable(getResources(), resource);
+        drawable.setBounds(0, 0, MeasureUtils.dpToPx(18f, getResources()),
+            MeasureUtils.dpToPx(18f, getResources()));
+        civ.setLabelLeftDrawable(drawable);
       }
     });
   }
@@ -114,9 +114,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
     Glide.with(getContext()).load(data.getIcon()).asBitmap().into(new SimpleTarget<Bitmap>() {
       @Override
       public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-        tvStandard.setCompoundDrawablesWithIntrinsicBounds(
-            new BitmapDrawable(getResources(), resource), null, null, null);
-        tvStandard.setCompoundDrawablePadding(MeasureUtils.dpToPx(5f, getResources()));
+        Drawable drawable = new BitmapDrawable(getResources(), resource);
+        drawable.setBounds(0, 0, MeasureUtils.dpToPx(18f, getResources()),
+            MeasureUtils.dpToPx(18f, getResources()));
+        tvStandard.setCompoundDrawables(drawable, null, null, null);
+        tvStandard.setCompoundDrawablePadding(MeasureUtils.dpToPx(3f, getResources()));
         tvStandard.setText(data.getTitle());
       }
     });

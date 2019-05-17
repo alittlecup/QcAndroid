@@ -6,4 +6,9 @@
     <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
   </style>
 
+  <style name="QcTabLayoutText">
+    <item name="android:textSize">15sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
 </resources>

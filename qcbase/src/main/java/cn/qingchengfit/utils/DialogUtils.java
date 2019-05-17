@@ -193,6 +193,26 @@ public class DialogUtils {
     return builder.build();
   }
 
+  //文字左对齐的Dialog
+  public static MaterialDialog initNoCenterContentAlert(Context context, String title, String content,
+      MaterialDialog.SingleButtonCallback callback) {
+    MaterialDialog.Builder builder = new MaterialDialog.Builder(context).content(content)
+        .autoDismiss(false)
+        .titleGravity(GravityEnum.CENTER)
+        .buttonsGravity(GravityEnum.CENTER)
+        .dividerColorRes(R.color.divider_medium)
+        .neutralColorRes(R.color.colorPrimary)
+        .onNeutral(callback == null ? (dialog, action) -> dialog.dismiss() : callback)
+        .neutralText(cn.qingchengfit.widgets.R.string.common_i_konw);
+    if (!TextUtils.isEmpty(title)) {
+      builder.title(title);
+    } else {
+      builder.contentColorRes(R.color.text_dark);
+      builder.contentTextSize(15);
+    }
+    return builder.build();
+  }
+
   public static void showAlert(Context context, String content,
       MaterialDialog.SingleButtonCallback callback) {
     showAlert(context, null, content, callback);

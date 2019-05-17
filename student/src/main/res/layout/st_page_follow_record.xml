@@ -35,6 +35,10 @@
           android:background="@drawable/btn_qc_rect_radus_17"
           android:gravity="center"
           android:onClick="@{(view)->vm.onClickCategory(view, -1)}"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
           />
 
       <TextView
@@ -47,7 +51,10 @@
           android:background="@drawable/btn_qc_rect_radus_17"
           android:gravity="center"
           android:layout_marginLeft="10dp"
-          android:padding="5dp"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
           android:onClick="@{(view)->vm.onClickCategory(view, 0)}"
           />
 
@@ -61,7 +68,10 @@
           android:background="@drawable/btn_qc_rect_radus_17"
           android:gravity="center"
           android:layout_marginLeft="10dp"
-          android:padding="5dp"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
           android:onClick="@{(view)->vm.onClickCategory(view, 5)}"
           />
 

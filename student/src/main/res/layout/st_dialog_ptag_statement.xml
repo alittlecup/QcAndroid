@@ -39,6 +39,8 @@
       tools:text="1、建议您下载并打印《持续改善-6》表格，手持表格，并根据表格内的问题顺序与会员进行面对面沟通。\n
       2、沟通后，将表格内容记录在您的教练APP，便于日后查询和统计。"
       style="@style/QcTextStyleMediumWarm"
+      android:textSize="15sp"
+      android:lineSpacingExtra="6dp"
       />
 
   <Button
@@ -50,6 +52,7 @@
       android:text="下载PDF"
       android:textColor="@color/white"
       android:textSize="17sp"
+      style="?android:attr/borderlessButtonStyle"
       />
 
   <Button

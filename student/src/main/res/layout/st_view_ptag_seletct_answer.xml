@@ -25,6 +25,8 @@
         style="@style/QcTextStyleMediumDark"
         android:visibility="gone"
         tools:visibility="visible"
+        android:textSize="15sp"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -34,6 +36,8 @@
         tools:text="内容内容内容内容内容内容ssssssssssssssssssssssssssssssssss"
         style="@style/QcTextStyleSmallWarm"
         android:maxWidth="400dp"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginTop="8dp"
         />
 
   </LinearLayout>

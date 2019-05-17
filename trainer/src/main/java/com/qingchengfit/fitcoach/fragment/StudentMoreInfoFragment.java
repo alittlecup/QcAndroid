@@ -154,7 +154,6 @@ public class StudentMoreInfoFragment extends VpFragment {
         .userId(user_id)
         .isShow(isShowDialogTip)
         .build());
-    isShowDialogTip = false;
   }
 
   private void routeToPage(String type, String user_id, String userGoal) {
@@ -164,7 +163,6 @@ public class StudentMoreInfoFragment extends VpFragment {
         .isShow(isShowDialogTip)
         .userTrainerGoal(userGoal)
         .build());
-    isShowDialogTip = false;
   }
 
   public void onPlayVideo() {

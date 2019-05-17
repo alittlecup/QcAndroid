@@ -195,7 +195,7 @@ public class CommonInputView extends RelativeLayout {
   }
 
   public void setLabelLeftDrawable(Drawable drawable){
-    label.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+    label.setCompoundDrawables(drawable, null, null, null);
     label.setCompoundDrawablePadding(MeasureUtils.dpToPx(10f, getResources()));
   }
 
