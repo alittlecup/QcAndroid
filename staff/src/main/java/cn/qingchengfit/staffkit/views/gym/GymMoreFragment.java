@@ -134,16 +134,17 @@ public class GymMoreFragment extends BaseFragment
             }
           }
           mGymMorePresenter.updateFunction(modules);
+          updateMyRecyclerViewVisible();
         } else {
           toolbar.getMenu().clear();
           toolbar.inflateMenu(R.menu.menu_compelete);
-
           mFunAdapter.setStatus(GymFuntionItem.STATUS_REMOVE);
           mAdapter.setStatus(GymFuntionItem.STATUS_ADD);
           mAdapter.mOtherDatas.clear();
           mAdapter.mOtherDatas.addAll(mFunsDatas);
           mFunAdapter.notifyDataSetChanged();
           mAdapter.notifyDataSetChanged();
+          myFunRecycleview.setVisibility(View.VISIBLE);
         }
         mEditableMode = !mEditableMode;
         return true;
@@ -213,6 +214,7 @@ public class GymMoreFragment extends BaseFragment
             myFunRecycleview.setNestedScrollingEnabled(false);
             myFunRecycleview.setLayoutManager(layoutManager1);
             myFunRecycleview.setAdapter(mFunAdapter);
+            updateMyRecyclerViewVisible();
 
             mDatas.clear();
             FunHeaderItem workFuntion = new FunHeaderItem("工作台");
@@ -272,6 +274,9 @@ public class GymMoreFragment extends BaseFragment
 
             FunHeaderItem internalFuntion = new FunHeaderItem("场馆管理");
             mDatas.add(new GymFuntionItem(
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_COURSE_DEV),
+                internalFuntion));
+            mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MANAGE_STAFF),
                 internalFuntion));
             mDatas.add(new GymFuntionItem(
@@ -280,17 +285,12 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     internalFuntion));
-            mDatas.add(
-                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
-                    internalFuntion));
-
             FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
 
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_TMALL_JOIN), runFuntion));
             mDatas.add(new GymFuntionItem(
-                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GENERAL_CARD),
-                runFuntion));
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GENERAL_CARD), runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_DIANPING),
                 runFuntion));
@@ -457,6 +457,13 @@ public class GymMoreFragment extends BaseFragment
       }
     });
     return view;
+  }
+  private void updateMyRecyclerViewVisible(){
+    if (mFunsDatas.isEmpty()) {
+      myFunRecycleview.setVisibility(View.GONE);
+    } else {
+      myFunRecycleview.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override public String getFragmentName() {

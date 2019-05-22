@@ -184,8 +184,7 @@ public class GymFunctionFactory {
       case MODULE_OPERATE_COMPETITION:
         return R.drawable.moudule_op_competition;
       case MODULE_COURSE_DEV:
-        return R.drawable.ic_module_parnter_manager;
-
+        return R.drawable.ic_module_course_dev;
       case MODULE_MANAGE_COACH:
         return R.drawable.moudule_manage_trainer;
       case MODULE_MANAGE_STAFF:
