@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
@@ -25,11 +24,11 @@ import cn.qingchengfit.saasbase.cards.item.BatchCardChooseTypeCountItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardHeaderItem;
 import cn.qingchengfit.saasbase.cards.item.BatchPayCardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
-import cn.qingchengfit.saascommon.views.UseStaffAppFragmentFragment;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -220,7 +219,7 @@ import javax.inject.Inject;
     totalCount = new int[] { 0, 0, 0, 0 };
     openCount = new int[] { 0, 0, 0, 0 };
     commonFlexAdapter.clear();
-    if (card_tpls != null&&!card_tpls.isEmpty()) {
+    if (card_tpls != null && !card_tpls.isEmpty()) {
       if (cardTplBatchShips != null) {
         for (int i = 0; i < cardTplBatchShips.size(); i++) {
           CardTplBatchShip cardTplBatchShip = cardTplBatchShips.get(i);
@@ -239,7 +238,9 @@ import javax.inject.Inject;
         @Override public int compare(CardTpl o1, CardTpl o2) {
           int result = o1.getType() - o2.getType();
           if (result == 0) {
-            if (cardCost.containsKey(o1.getId())) {
+            if (cardCost.containsKey(o1.getId()) && cardCost.containsKey(o2.getId())) {
+              return 0;
+            } else if (cardCost.containsKey(o1.getId())) {
               return -1;
             } else if (cardCost.containsKey(o2.getId())) {
               return 1;
@@ -320,9 +321,10 @@ import javax.inject.Inject;
         }
       }
       commonFlexAdapter.updateDataSet(mDatas);
-    }else{
+    } else {
       List<CommonNoDataItem> commonNoDataItems = new ArrayList<>();
-      commonNoDataItems.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "没有可用的会员卡种类","请先添加会员卡种类"));
+      commonNoDataItems.add(
+          new CommonNoDataItem(R.drawable.vd_img_empty_universe, "没有可用的会员卡种类", "请先添加会员卡种类"));
       commonFlexAdapter.updateDataSet(commonNoDataItems);
     }
   }
@@ -361,10 +363,10 @@ import javax.inject.Inject;
 
   @Override public void onDoneCardtplList() {
     List<CardTpl> cardTplByType = presenter.getCardTplByType(0);
-    List<CardTpl> filterCardTplEnable=new ArrayList<>();
-    if(!cardTplByType.isEmpty()){
-      for(CardTpl tpl:cardTplByType){
-        if(tpl.is_enable){
+    List<CardTpl> filterCardTplEnable = new ArrayList<>();
+    if (!cardTplByType.isEmpty()) {
+      for (CardTpl tpl : cardTplByType) {
+        if (tpl.is_enable) {
           filterCardTplEnable.add(tpl);
         }
       }
