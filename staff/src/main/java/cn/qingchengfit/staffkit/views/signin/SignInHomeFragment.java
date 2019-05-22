@@ -275,6 +275,7 @@ import timber.log.Timber;
 
   @Override public void onModuleStatus(ScoreStatus.ModuleBean moduleBean) {
     if (!moduleBean.isCheckin()) {
+      hideLoading();
       getFragmentManager().beginTransaction()
           .replace(R.id.student_frag, new SignInCloseFragment())
           .commitAllowingStateLoss();
