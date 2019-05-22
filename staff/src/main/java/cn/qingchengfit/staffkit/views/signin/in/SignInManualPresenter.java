@@ -6,7 +6,6 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-
 import cn.qingchengfit.model.body.SignInManualBody;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInSchdule;
@@ -15,11 +14,17 @@ import cn.qingchengfit.model.responese.SigninValidCard;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
+import cn.qingchengfit.staffkit.views.signin.bean.UserCheckInOrder;
 import cn.qingchengfit.student.bean.StudentWrap;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.ListUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -146,6 +151,10 @@ public class SignInManualPresenter extends BasePresenter {
     body.setUser_id(Integer.valueOf(studentBase.id()));
     body.setLocker_id(lockerId);
     body.setCard_id(cardId);
+    loadStudentCheckinOrders(body);
+  }
+
+  private void checkinStudent(SignInManualBody body) {
     RxRegiste(restRepository.getStaffAllApi()
         .qcPostCheckInMaual(App.staffId, gymWrapper.getParams(), body)
         .onBackpressureBuffer()
@@ -178,11 +187,7 @@ public class SignInManualPresenter extends BasePresenter {
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              //                            if (view != null)
-              //                                view.onImageChangeSuccess();
             } else {
-              //                            if (view != null)
-              //                                view.onShowError(qcResponse.getMsg());
             }
           }
         }, new Action1<Throwable>() {
@@ -193,12 +198,39 @@ public class SignInManualPresenter extends BasePresenter {
         }));
   }
 
+  public void loadStudentCheckinOrders(SignInManualBody body) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("user_id", body.getUser_id());
+    RxRegiste(restRepository.getStaffAllApi()
+        .qcGetUserCheckinOrders(loginStatus.staff_id(), params)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            List<UserCheckInOrder> orders = response.data.orders;
+            if (ListUtils.isEmpty(orders)) {
+              for (UserCheckInOrder order : orders) {
+                if (!order.isExpire()) {
+                  view.errorMultiCheckinOrders(DateUtils.formatDateFromServer(order.getExpireTime()));
+                  return;
+                }
+              }
+            }
+            checkinStudent(body);
+          } else {
+            ToastUtils.show(response.msg);
+          }
+        }, throwable -> {
+          ToastUtils.show(throwable.getMessage());
+        }));
+  }
+
   /**
    * Created by yangming on 16/8/29.
    */
   public interface SignInManualView extends CView {
 
     void confirmSignIn();
+    void errorMultiCheckinOrders(Date date);
 
     void queryCardList(List<SigninValidCard.DataBean.CardsBean> cards);
 
