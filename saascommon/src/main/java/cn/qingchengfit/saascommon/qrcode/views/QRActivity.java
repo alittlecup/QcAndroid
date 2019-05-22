@@ -120,6 +120,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String MODULE_STUDENT = "/manage/members";
   public static final String MODULE_STUDENT_CARDS = "/manage/costs";
   public static final String MODULE_STUDENT_BODY_TEST = "/measure/setting";
+  public static final String MODULE_COURSE_DEV = "/course/dev";
 
   /**
    * 内部管理

@@ -30,6 +30,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.weex.utils.WeexUtil;
 import javax.inject.Inject;
 
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_COURSE_DEV;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_BIG;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_GROUP;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_INCOME;
@@ -182,6 +183,8 @@ public class GymFunctionFactory {
         return R.drawable.module_ali_pay_card;
       case MODULE_OPERATE_COMPETITION:
         return R.drawable.moudule_op_competition;
+      case MODULE_COURSE_DEV:
+        return R.drawable.ic_module_parnter_manager;
 
       case MODULE_MANAGE_COACH:
         return R.drawable.moudule_manage_trainer;
@@ -277,6 +280,7 @@ public class GymFunctionFactory {
       case MODULE_SMARTGYM_SMART:
       case MODULE_TMALL_JOIN:
       case MODULE_GENERAL_CARD:
+      case MODULE_COURSE_DEV:
 
         return 1;
       case MODULE_GYM_SITE:
@@ -365,7 +369,8 @@ public class GymFunctionFactory {
         return R.string.module_fi_class_statement;
       case MODULE_FINANCE_VISUAL_REPORT:
         return R.string.module_fi_visual_statement;
-
+      case MODULE_COURSE_DEV:
+        return R.string.module_course_dev;
       case MODULE_MANAGE_COACH:
         return R.string.module_manage_trainer;
       case MODULE_MANAGE_STAFF:
@@ -532,6 +537,9 @@ public class GymFunctionFactory {
       /**内部管理
        * 工作人员  教练
        */
+      case MODULE_COURSE_DEV:
+        goQrScan(fragment, "course-system", null, coachService);
+        return;
       case MODULE_MANAGE_STAFF:
         if (!serPermisAction.check(coachService.getId(), coachService.getModel(),
             PermissionServerUtils.MANAGE_STAFF)) {
@@ -561,10 +569,10 @@ public class GymFunctionFactory {
         }
         break;
       case MODULE_TMALL_JOIN:
-        goQrScan(fragment,"/enter-ali",null,coachService);
+        goQrScan(fragment, "/enter-ali", null, coachService);
         return;
       case MODULE_GENERAL_CARD:
-        goQrScan(fragment,"/ali-general-card/setting",null,coachService);
+        goQrScan(fragment, "/ali-general-card/setting", null, coachService);
         return;
 
       case MODULE_MARKET_DIANPING:

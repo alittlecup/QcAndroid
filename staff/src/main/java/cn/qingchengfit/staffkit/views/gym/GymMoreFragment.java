@@ -270,7 +270,7 @@ public class GymMoreFragment extends BaseFragment
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.REPORT_EXPORT),
                     studentsFuntion));
 
-            FunHeaderItem internalFuntion = new FunHeaderItem("员工管理");
+            FunHeaderItem internalFuntion = new FunHeaderItem("场馆管理");
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MANAGE_STAFF),
                 internalFuntion));
@@ -371,7 +371,7 @@ public class GymMoreFragment extends BaseFragment
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     financialFuntion));
 
-            FunHeaderItem gymFuntion = new FunHeaderItem("场馆管理");
+            FunHeaderItem gymFuntion = new FunHeaderItem("系统设置");
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GYM_INFO), gymFuntion));
             mDatas.add(new GymFuntionItem(
