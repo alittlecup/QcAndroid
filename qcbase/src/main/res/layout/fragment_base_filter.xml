@@ -9,6 +9,7 @@
       android:layout_height="wrap_content"
       />
   <View
+      android:minHeight="100dp"
       android:id="@+id/bg_filter"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

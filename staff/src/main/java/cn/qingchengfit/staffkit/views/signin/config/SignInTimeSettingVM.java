@@ -53,7 +53,7 @@ public class SignInTimeSettingVM extends BaseViewModel {
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
-            delResult.setValue(response.getData().isSuccessful());
+            delResult.setValue(true);
           } else {
             delResult.setValue(false);
             ToastUtils.show(response.getMsg());

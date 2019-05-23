@@ -217,9 +217,11 @@ import javax.inject.Inject;
 
   public void showFilterView(boolean show, int index) {
     if (show) {
+      mBinding.getRoot().setClickable(false);
       filterFragement.showPage(index);
       mViewModel.filterVisible.setValue(true);
     } else {
+      mBinding.getRoot().setClickable(true);
       mViewModel.filterVisible.setValue(false);
     }
   }

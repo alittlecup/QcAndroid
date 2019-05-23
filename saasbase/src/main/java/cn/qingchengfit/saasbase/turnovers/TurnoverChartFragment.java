@@ -80,14 +80,15 @@ public class TurnoverChartFragment extends SaasCommonFragment
   }
 
   public void upDateChartStat(List<ITurnoverChartData> datas, float total) {
-    this.total = total;
     if (datas != null && !datas.isEmpty()) {
+      chartTotal = 0;
       List<PieEntry> entries = new ArrayList<>();
       List<Integer> colors = new ArrayList<>();
       for (ITurnoverChartData data : datas) {
         float present = data.getPresent();
         entries.add(new PieEntry(present, data.getLabel()));
         colors.add(Color.parseColor(data.getColor()));
+        chartTotal += data.getPresent();
       }
 
       PieDataSet dataSet = new PieDataSet(entries, "");
@@ -111,19 +112,17 @@ public class TurnoverChartFragment extends SaasCommonFragment
       mBinding.pieChart.invalidate();
       mBinding.pieChart.setCenterText("");
       turnoversVM.chartVisible.setValue(true);
+      setSimpleTotal(total);
     } else {
       turnoversVM.chartVisible.setValue(false);
     }
   }
-
-  private float total = 0f;
-
   @Override public void onValueSelected(Entry e, Highlight h) {
     String label = ((PieEntry) e).getLabel();
     String[] split = label.split("/");
     String account = split[0].substring(1);
-    if (total != 0) {
-      float v = Float.valueOf(account) * 100 / total;
+    if (chartTotal != 0) {
+      float v = Float.valueOf(account) * 100 / chartTotal;
       if (v < 0.01f) {
         mBinding.pieChart.setCenterText("<0.01%\n" + split[1]);
       } else {
@@ -131,6 +130,25 @@ public class TurnoverChartFragment extends SaasCommonFragment
         String format1 = format.format(v);
         mBinding.pieChart.setCenterText(format1 + "%\n" + split[1]);
       }
+    }
+  }
+
+  private float chartTotal = 0;
+
+  private void setSimpleTotal(float total) {
+    SpannableStringBuilder spannableStringBuilder = new SpanUtils().append("¥")
+        .setFontSize(20, true)
+        .append(StringUtils.formatePrice(String.valueOf(total)))
+        .setFontSize(25, true)
+        .create();
+    mBinding.tvTotalCount.setText(spannableStringBuilder);
+    TurnoversChartStatData statTotal = turnoversVM.totalRate.getValue();
+    if (statTotal != null && statTotal.getAmount() <= total) {
+      mBinding.imgRate.setVisibility(View.VISIBLE);
+      mBinding.tvCharge.setVisibility(View.VISIBLE);
+    } else {
+      mBinding.imgRate.setVisibility(View.GONE);
+      mBinding.tvCharge.setVisibility(View.GONE);
     }
   }
 

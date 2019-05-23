@@ -21,7 +21,6 @@ public class TurnoverGirdSellerFilterFragment extends SaasCommonFragment
     implements FlexibleAdapter.OnItemClickListener {
   TurnoverGirdSellerFragmentBinding mBinding;
   CommonFlexAdapter adapter;
-  private List<? extends ICommonUser> datas;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -34,16 +33,14 @@ public class TurnoverGirdSellerFilterFragment extends SaasCommonFragment
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(getContext(), 4);
-    gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-      @Override public int getSpanSize(int position) {
-        return 1;
-      }
-    });
+    adapter = new CommonFlexAdapter(new ArrayList(), this);
+    adapter.setMode(SelectableAdapter.Mode.SINGLE);
+
     mBinding.recyclerView.setLayoutManager(gridLayoutManager);
     mBinding.recyclerView.setItemViewCacheSize(4);
-    mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
-    adapter.setMode(SelectableAdapter.Mode.SINGLE);
+    mBinding.recyclerView.setAdapter(adapter);
   }
+
 
   @Override public boolean onItemClick(int position) {
     adapter.toggleSelection(position);
@@ -58,7 +55,6 @@ public class TurnoverGirdSellerFilterFragment extends SaasCommonFragment
     if (datas == null) {
       return;
     }
-    this.datas = datas;
     List<TurnoverSellerItem> items = new ArrayList<>();
     for (ICommonUser data : datas) {
       items.add(new TurnoverSellerItem(data));

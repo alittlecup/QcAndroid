@@ -145,6 +145,7 @@ public class TurnoversVM extends BaseViewModel {
             input12 -> dealResource(input12) == null ? null : dealResource(input12)));
 
     chartDatas.addSource(chartResponse, response -> {
+      if(response==null)return;
       totalRate.setValue(response.total);
       upDateChartDatas(response, Integer.valueOf(
           filterFeatureType.getValue() == null ? "-1" : filterFeatureType.getValue()));
@@ -216,8 +217,8 @@ public class TurnoversVM extends BaseViewModel {
               } else {
                 loadMoreOrderDatas.setValue(response.data.shop_turnovers);
               }
-              orderListUpdateTime.setValue(
-                  DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(response.data.update_time)));
+              orderListUpdateTime.setValue(DateUtils.Date2YYYYMMDDHHmm(
+                  DateUtils.formatDateFromServer(response.data.update_time)));
               curPage++;
               totalPage = response.data.pages;
               totalCount.setValue(response.data.total_count);
@@ -244,19 +245,35 @@ public class TurnoversVM extends BaseViewModel {
           }
         }
       }
+      float realTotal=response.total.getAmount();
       if (type != -1) {
-        iTurnoverChartData =
-            convertChartStats(filterWithTradeType(data, type), total);
+        realTotal = getTypeAmount(data, type);
+        iTurnoverChartData = convertChartStats(filterWithTradeType(data, type), total);
       } else {
         iTurnoverChartData = convertChartStats(data, total);
       }
-      chartDatas.setValue(new Pair<>(iTurnoverChartData, total));
-      if(total>0){
+      chartDatas.setValue(new Pair<>(iTurnoverChartData, realTotal));
+      if (realTotal > 0) {
         chartVisible.setValue(true);
+      }else{
+        chartVisible.setValue(false);
       }
     } else {
       chartVisible.setValue(false);
     }
+  }
+
+  private float getTypeAmount(List<TurnoversChartStatData> statData, int traderType) {
+    float amount = 0;
+    if (statData != null && !statData.isEmpty()) {
+      for (TurnoversChartStatData stat : statData) {
+        if (stat.getTrade_type() == traderType) {
+          amount = stat.getAmount();
+          break;
+        }
+      }
+    }
+    return amount;
   }
 
   private List<TurnoversChartStatData> filterWithTradeType(List<TurnoversChartStatData> statData,
@@ -317,7 +334,7 @@ public class TurnoversVM extends BaseViewModel {
     if (data == null) {
       data = new HashMap<>();
     }
-    if ((value == null || value.equals("-1")) && data.containsKey(key)) {
+    if ((value == null || value.equals("-1"))) {
       data.remove(key);
     } else {
       data.put(key, value);

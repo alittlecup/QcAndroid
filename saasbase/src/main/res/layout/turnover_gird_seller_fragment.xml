@@ -2,13 +2,21 @@
 <layout>
   <data>
   </data>
-  <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/recycler_view"
-      android:paddingTop="15dp"
+  <FrameLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@color/bg_white"
       >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@color/bg_white"
+        android:paddingTop="15dp"
+        >
 
-  </android.support.v7.widget.RecyclerView>
+
+    </android.support.v7.widget.RecyclerView>
+  </FrameLayout>
+
 </layout>

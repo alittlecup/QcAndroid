@@ -11,7 +11,7 @@ public class TurnoverTradeType implements Parcelable, ITurnoverFilterItemData {
    * desc : 充值
    */
 
-  private String color;
+  private String color="#e5e5e5";
   private int trade_type;
   private String desc;
 
