@@ -13,7 +13,6 @@ import cn.qingchengfit.staffkit.views.signin.bean.SignInCheckInQrCodeBean;
 import cn.qingchengfit.staffkit.views.signin.bean.UserCheckInOrder;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.HashMap;
-import java.util.List;
 import javax.inject.Inject;
 import timber.log.Timber;
 
@@ -23,7 +22,7 @@ public class SignInMemberVM extends BaseViewModel {
   @Inject StaffRespository staffRespository;
   public MutableLiveData<SignInCheckInQrCodeBean.Data> data = new MutableLiveData<>();
   public MutableLiveData<Boolean> checkInResult = new MutableLiveData<>();
-  public MutableLiveData<List<UserCheckInOrder>> orders = new MutableLiveData<>();
+  public MutableLiveData<UserCheckInOrder> orders = new MutableLiveData<>();
 
   @Inject public SignInMemberVM() {
 
@@ -72,8 +71,7 @@ public class SignInMemberVM extends BaseViewModel {
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
-            List<UserCheckInOrder> orders = response.data.orders;
-            this.orders.setValue(orders);
+            this.orders.setValue(response.data.order);
           } else {
             ToastUtils.show(response.msg);
           }

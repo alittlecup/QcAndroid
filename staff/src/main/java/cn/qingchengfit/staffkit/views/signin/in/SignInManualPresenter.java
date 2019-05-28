@@ -21,7 +21,6 @@ import cn.qingchengfit.staffkit.usecase.StudentUsecase;
 import cn.qingchengfit.staffkit.views.signin.bean.UserCheckInOrder;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.Date;
@@ -206,14 +205,10 @@ public class SignInManualPresenter extends BasePresenter {
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
-            List<UserCheckInOrder> orders = response.data.orders;
-            if (ListUtils.isEmpty(orders)) {
-              for (UserCheckInOrder order : orders) {
-                if (!order.isExpire()) {
-                  view.errorMultiCheckinOrders(DateUtils.formatDateFromServer(order.getExpireTime()));
-                  return;
-                }
-              }
+            UserCheckInOrder order = response.data.order;
+            if (order != null && order.getId() > 0) {
+              view.errorMultiCheckinOrders(DateUtils.formatDateFromServer(order.getExpireTime()));
+              return;
             }
             checkinStudent(body);
           } else {
@@ -230,6 +225,7 @@ public class SignInManualPresenter extends BasePresenter {
   public interface SignInManualView extends CView {
 
     void confirmSignIn();
+
     void errorMultiCheckinOrders(Date date);
 
     void queryCardList(List<SigninValidCard.DataBean.CardsBean> cards);

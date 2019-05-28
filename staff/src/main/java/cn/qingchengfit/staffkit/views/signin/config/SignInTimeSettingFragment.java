@@ -80,7 +80,7 @@ public class SignInTimeSettingFragment
       mBinding.civPayOnce.setContent(event.isOpen() ? "已设置" : "未设置");
     });
     mViewModel.cardCosts.observe(this, cardCosts1 -> {
-      if (cardCosts1 != null && !cardCosts1.isEmpty()) {
+      if (!cardCosts1.isEmpty()) {
         for (int i = 0; i < cardCosts1.size(); i++) {
           SignInCardCostBean.CardCost cardCost = cardCosts1.get(i);
           cardCost.setSelected(false);
@@ -310,10 +310,6 @@ public class SignInTimeSettingFragment
   ArrayList<SignInCardCostBean.CardCost> cardCosts = new ArrayList<>();
 
   private void routeToCardConfig() {
-    if (allCardCosts.isEmpty()) {
-      mViewModel.loadCardCosts();
-      return;
-    }
     Intent x = IntentUtils.getChooseIntent(getContext(), gymWrapper.getCoachService(),
         gymWrapper.getBrand(), ChooseActivity.SIGN_IN_CARDS);
     x.putExtra("costs", getAllWithSelectedCardCosts());

@@ -96,9 +96,6 @@ public class IntentUtils {
 
     public static Intent getChooseIntent(Context context, CoachService coachService, Brand brand, int to) {
         Intent toChoose = new Intent(context, ChooseActivity.class);
-        //toChoose.putExtra(Configs.EXTRA_BRAND,brand);
-        //toChoose.putExtra(Configs.EXTRA_GYM_SERVICE,coachService);
-        //toChoose.putExtra(Configs.EXTRA_GYM_STATUS,new GymStatus(false));
         toChoose.putExtra("to", to);
         return toChoose;
     }

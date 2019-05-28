@@ -47,17 +47,15 @@ public class SignInMemberCheckinFragment
         getActivity().onBackPressed();
       }
     });
-    mViewModel.orders.observe(this, orders -> {
-      if (ListUtils.isEmpty(orders)) {
-        for (UserCheckInOrder order : orders) {
-          if (!order.isExpire()) {
-            upDateExpireView(DateUtils.formatDateFromServer(order.getExpireTime()));
-            return;
-          }
-        }
+    mViewModel.orders.observe(this, order -> {
+      if (order != null && order.getId() > 0) {
+        upDateExpireView(DateUtils.formatDateFromServer(order.getExpireTime()));
+      } else {
+        mBinding.cardCheckIn.setVisibility(View.GONE);
+        mBinding.cardView.setVisibility(View.VISIBLE);
+        mBinding.btnApply.setText("确认入场");
+        mBinding.btnApply.setOnClickListener((view) -> checkIn());
       }
-      mBinding.cardCheckIn.setVisibility(View.GONE);
-      mBinding.cardView.setVisibility(View.VISIBLE);
     });
   }
 

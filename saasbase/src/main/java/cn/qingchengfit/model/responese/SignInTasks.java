@@ -38,7 +38,7 @@ public class SignInTasks {
         @SerializedName("user_name") private String userName;
         @SerializedName("id") private Integer id;
         @SerializedName("unit") private String unit;
-        @SerializedName("cost") private Integer cost;
+        @SerializedName("cost") private float cost;
         @SerializedName("locker") private Locker locker;
 
         @SerializedName("card") private Card card;
@@ -312,14 +312,14 @@ public class SignInTasks {
         /**
          * @return The cost
          */
-        public Integer getCost() {
+        public float getCost() {
             return cost;
         }
 
         /**
          * @param cost The cost
          */
-        public void setCost(Integer cost) {
+        public void setCost(float cost) {
             this.cost = cost;
         }
 
