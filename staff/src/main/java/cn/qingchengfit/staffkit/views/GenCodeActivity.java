@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -71,12 +72,15 @@ public class GenCodeActivity extends BaseActivity {
     } catch (WriterException e) {
       Timber.e(e, " qr gen");
     }
-    findViewById(R.id.btn_scan).setOnClickListener(v -> {
-      Intent intent = new Intent(GenCodeActivity.this, QRScanActivity.class);
-      intent.putExtra("title", "扫描二维码");
-      intent.putExtra("point_text", "将取景框对准二维码，即可自动扫描");
-      startActivityForResult(intent, 1001);
-    });
+    if ("签到二维码".equals(tilte)) {
+      findViewById(R.id.btn_scan).setVisibility(View.VISIBLE);
+      findViewById(R.id.btn_scan).setOnClickListener(v -> {
+        Intent intent = new Intent(GenCodeActivity.this, QRScanActivity.class);
+        intent.putExtra("title", "扫描二维码");
+        intent.putExtra("point_text", "将取景框对准二维码，即可自动扫描");
+        startActivityForResult(intent, 1001);
+      });
+    }
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -86,13 +90,13 @@ public class GenCodeActivity extends BaseActivity {
         if (null != data) {
           String content = data.getStringExtra("content");
           if (!TextUtils.isEmpty(content)) {
-           if (content.startsWith("QINGCHENG-STAFF-CHECKIN")) {
-             Intent toSignInConfigs = new Intent(this, SignInActivity.class);
-             toSignInConfigs.setAction(getResources().getString(R.string.qc_action));
-             toSignInConfigs.setData(Uri.parse("checkin/member"));
-             toSignInConfigs.putExtra("qrcode", content);
-             toSignInConfigs.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-             startActivity(toSignInConfigs);
+            if (content.startsWith("QINGCHENG-STAFF-CHECKIN")) {
+              Intent toSignInConfigs = new Intent(this, SignInActivity.class);
+              toSignInConfigs.setAction(getResources().getString(R.string.qc_action));
+              toSignInConfigs.setData(Uri.parse("checkin/member"));
+              toSignInConfigs.putExtra("qrcode", content);
+              toSignInConfigs.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              startActivity(toSignInConfigs);
             } else if (content.startsWith("http")) {
               WebActivity.startWeb(content, this);
             } else {
