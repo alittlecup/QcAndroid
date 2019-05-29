@@ -311,7 +311,7 @@
   <string name="generate_statment">生成报表</string>
   <string name="all_group_course">全部团课</string>
   <string name="all_private_course">全部私教</string>
-  <string name="label_card_type">卡类型</string>
+  <string name="label_card_type">支付类型</string>
   <string name="server_count">服务人次</string>
   <string name="course_income">课程收入</string>
   <string name="real_income_long">实际收入</string>

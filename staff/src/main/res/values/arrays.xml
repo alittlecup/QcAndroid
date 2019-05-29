@@ -33,10 +33,11 @@
     <item>@string/cardtype_date</item>
   </array>
   <array name="cardtype_filter">
-    <item>@string/cardtype_all</item>
+    <item>全部支付方式</item>
     <item>@string/cardtype_value</item>
     <item>@string/cardtype_times</item>
     <item>@string/cardtype_date</item>
+    <item>单次支付</item>
   </array>
   <array name="cardtype_disable">
     <item>正常</item>

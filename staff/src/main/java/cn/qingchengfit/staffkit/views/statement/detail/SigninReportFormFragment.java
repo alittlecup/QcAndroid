@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import cn.qingchengfit.model.responese.SigninReportForm;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
@@ -22,18 +21,19 @@ import java.util.Locale;
  */
 public class SigninReportFormFragment extends BaseFragment {
 
-	TextView tv_signin_report_date_count;
-	TextView tvSigninReportDateIncome;
-	TextView tv_siginin_report_times_count;
-	TextView tv_siginin_report_value_count;
-	TextView tv_siginin_report_value_income;
-	TextView tv_siginin_report_total_count;
-	TextView tv_siginin_report_total_income;
-	TextView tv_siginin_report_times_incomes;
-	TextView tvSigninReportDateCost;
-	TextView tvSigininReportTimesCost;
-	TextView tvSigininReportValueCost;
-	TextView tvSigininReportTotalCost;
+  TextView tv_signin_report_date_count;
+  TextView tvSigninReportDateIncome;
+  TextView tv_siginin_report_times_count;
+  TextView tv_siginin_report_value_count;
+  TextView tv_siginin_report_value_income;
+  TextView tv_siginin_report_total_count;
+  TextView tv_siginin_report_total_income;
+  TextView tv_siginin_report_times_incomes;
+  TextView tvSigninReportDateCost;
+  TextView tvSigininReportTimesCost;
+  TextView tvSigininReportValueCost;
+  TextView tvSigininReportTotalCost;
+  TextView tvOnlineNum, tvIncome, tvRealIncome;
 
   public static SigninReportFormFragment newInstance(List<SigninReportForm> ts) {
 
@@ -66,6 +66,9 @@ public class SigninReportFormFragment extends BaseFragment {
     tvSigininReportTimesCost = (TextView) view.findViewById(R.id.tv_siginin_report_times_cost);
     tvSigininReportValueCost = (TextView) view.findViewById(R.id.tv_siginin_report_value_cost);
     tvSigininReportTotalCost = (TextView) view.findViewById(R.id.tv_siginin_report_total_cost);
+    tvOnlineNum = view.findViewById(R.id.online_sign_num);
+    tvIncome = view.findViewById(R.id.online_sign_income);
+    tvRealIncome = view.findViewById(R.id.online_real_income);
 
     if (getArguments() != null) {
       ArrayList<SigninReportForm> ts = getArguments().getParcelableArrayList("form");
@@ -92,6 +95,14 @@ public class SigninReportFormFragment extends BaseFragment {
             case Configs.CATEGORY_DATE:
               tv_signin_report_date_count.setText(
                   String.format(Locale.CHINA, getString(R.string.menber_times), t.signin_count));
+              break;
+            case 4:
+              tvOnlineNum.setText(
+                  String.format(Locale.CHINA, getString(R.string.menber_times), t.signin_count));
+              tvIncome.setText(
+                  String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
+              tvRealIncome.setText(
+                  String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.cost))));
               break;
             default:
               tv_siginin_report_total_count.setText(

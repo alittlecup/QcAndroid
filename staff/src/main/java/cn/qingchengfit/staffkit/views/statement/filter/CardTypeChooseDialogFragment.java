@@ -14,8 +14,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.R;
@@ -52,132 +50,140 @@ import java.util.List;
  */
 public class CardTypeChooseDialogFragment extends BaseDialogFragment {
 
-	TextView comfirm;
-	WheelView courseType;
-	WheelView courseList;
-	LinearLayout wheellayout;
+  TextView comfirm;
+  WheelView courseType;
+  WheelView courseList;
+  LinearLayout wheellayout;
 
-    List<CardTpl> mCard_tpls = new ArrayList<>();
-    List<CardTpl> mOrigin = new ArrayList<>();
+  List<CardTpl> mCard_tpls = new ArrayList<>();
+  List<CardTpl> mOrigin = new ArrayList<>();
 
-    public static CardTypeChooseDialogFragment newInstance(List<CardTpl> card_tpls) {
+  public static CardTypeChooseDialogFragment newInstance(List<CardTpl> card_tpls) {
 
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("datas", (ArrayList<CardTpl>) card_tpls);
-        CardTypeChooseDialogFragment fragment = new CardTypeChooseDialogFragment();
-        fragment.setArguments(args);
-        return fragment;
+    Bundle args = new Bundle();
+    args.putParcelableArrayList("datas", (ArrayList<CardTpl>) card_tpls);
+    CardTypeChooseDialogFragment fragment = new CardTypeChooseDialogFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setStyle(DialogFragment.STYLE_NORMAL, R.style.ChoosePicDialogStyle);
+    if (getArguments() != null) mOrigin = getArguments().getParcelableArrayList("datas");
+  }
+
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.dialog_cardtype, container, false);
+    comfirm = (TextView) view.findViewById(R.id.comfirm);
+    courseType = (WheelView) view.findViewById(R.id.course_type);
+    courseList = (WheelView) view.findViewById(R.id.course_list);
+    wheellayout = (LinearLayout) view.findViewById(R.id.wheellayout);
+    view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        CardTypeChooseDialogFragment.this.onClick();
+      }
+    });
+
+    ArrayWheelAdapter<String> courseTypeAdatper = new ArrayWheelAdapter<String>(
+        new ArrayList<String>(
+            Arrays.asList(getResources().getStringArray(R.array.cardtype_filter))), 8);
+    courseType.setAdapter(courseTypeAdatper);
+    courseType.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 16f);
+    courseType.addChangingListener(new OnWheelChangedListener() {
+      @Override public void onChanged(WheelView wheel, int oldValue, int newValue) {
+        setSecond(newValue);
+      }
+    });
+    setSecond(0);
+    return view;
+  }
+
+  public void setSecond(int type) {
+    wheellayout.removeViewAt(1);
+    mCard_tpls.clear();
+    String all = "";
+    for (int i = 0; i < mOrigin.size(); i++) {
+      CardTpl card_tpl = mOrigin.get(i);
+      switch (type) {
+        case 0:
+          mCard_tpls.add(card_tpl);
+          all = "全部支付方式";
+          break;
+        case 1:
+          all = getString(R.string.all_cardtype_value);
+          if (card_tpl.getType() == Configs.CATEGORY_VALUE) {
+            mCard_tpls.add(card_tpl);
+          }
+          break;
+        case 2:
+          all = getString(R.string.all_cardtype_times);
+          if (card_tpl.getType() == Configs.CATEGORY_TIMES) {
+            mCard_tpls.add(card_tpl);
+          }
+          break;
+        case 3:
+          all = getString(R.string.all_cardtype_date);
+          if (card_tpl.getType() == Configs.CATEGORY_DATE) {
+            mCard_tpls.add(card_tpl);
+          }
+          break;
+        case 4:
+          all = "全部单次支付";
+          break;
+        default:
+          break;
+      }
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.ChoosePicDialogStyle);
-        if (getArguments() != null) mOrigin = getArguments().getParcelableArrayList("datas");
+    WheelView wheelView = new WheelView(getContext());
+
+    ArrayList<String> d = new ArrayList<String>();
+    d.add(all);
+    for (int i = 0; i < mCard_tpls.size(); i++) {
+      CardTpl card_tpl = mCard_tpls.get(i);
+      d.add(card_tpl.getName());
     }
-
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_cardtype, container, false);
-      comfirm = (TextView) view.findViewById(R.id.comfirm);
-      courseType = (WheelView) view.findViewById(R.id.course_type);
-      courseList = (WheelView) view.findViewById(R.id.course_list);
-      wheellayout = (LinearLayout) view.findViewById(R.id.wheellayout);
-      view.findViewById(R.id.comfirm).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          CardTypeChooseDialogFragment.this.onClick();
-        }
-      });
-
-      ArrayWheelAdapter<String> courseTypeAdatper =
-            new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.cardtype_filter))), 8);
-        courseType.setAdapter(courseTypeAdatper);
-        courseType.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 16f);
-        courseType.addChangingListener(new OnWheelChangedListener() {
-            @Override public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                setSecond(newValue);
-            }
-        });
-        setSecond(0);
-        return view;
+    if (type == 4 || type == 0) {
+      d.add("微信支付");
     }
+    ArrayWheelAdapter<String> courseTypeAdatper = new ArrayWheelAdapter<String>(d, 16);
+    wheelView.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);
+    wheelView.setAdapter(courseTypeAdatper);
+    LinearLayout.LayoutParams params =
+        new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+    params.weight = 1;
+    wheellayout.addView(wheelView, params);
+  }
 
-    public void setSecond(int type) {
-        wheellayout.removeViewAt(1);
-        mCard_tpls.clear();
-        String all = "";
-        for (int i = 0; i < mOrigin.size(); i++) {
-            CardTpl card_tpl = mOrigin.get(i);
-            switch (type) {
-                case 0:
-                    mCard_tpls.add(card_tpl);
-                    all = getString(R.string.cardtype_all_all);
-                    break;
-                case 1:
-                    all = getString(R.string.all_cardtype_value);
-                    if (card_tpl.getType() == Configs.CATEGORY_VALUE) {
-                        mCard_tpls.add(card_tpl);
-                    }
-                    break;
-                case 2:
-                    all = getString(R.string.all_cardtype_times);
-                    if (card_tpl.getType() == Configs.CATEGORY_TIMES) {
-                        mCard_tpls.add(card_tpl);
-                    }
-                    break;
-                case 3:
-                    all = getString(R.string.all_cardtype_date);
-                    if (card_tpl.getType() == Configs.CATEGORY_DATE) {
-                        mCard_tpls.add(card_tpl);
-                    }
-                    break;
-                default:
-                    all = getString(R.string.cardtype_all_all);
-                    break;
-            }
-        }
+  @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    Dialog dialog = super.onCreateDialog(savedInstanceState);
+    dialog.setCanceledOnTouchOutside(true);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    Window window = dialog.getWindow();
+    window.getDecorView().setPadding(0, 0, 0, 0);
+    WindowManager.LayoutParams wlp = window.getAttributes();
+    wlp.gravity = Gravity.BOTTOM;
+    wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    wlp.height = MeasureUtils.dpToPx(245f, getResources());
+    window.setAttributes(wlp);
+    window.setWindowAnimations(R.style.ButtomDialogStyle);
+    return dialog;
+  }
 
-        WheelView wheelView = new WheelView(getContext());
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 
-        ArrayList<String> d = new ArrayList<String>();
-        d.add(all);
-        for (int i = 0; i < mCard_tpls.size(); i++) {
-            CardTpl card_tpl = mCard_tpls.get(i);
-            d.add(card_tpl.getName());
-        }
-        ArrayWheelAdapter<String> courseTypeAdatper = new ArrayWheelAdapter<String>(d, 16);
-        wheelView.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);
-        wheelView.setAdapter(courseTypeAdatper);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.weight = 1;
-        wheellayout.addView(wheelView, params);
+  public void onClick() {
+    int pos1 = courseType.getCurrentItem();
+    int pos2 = ((WheelView) wheellayout.getChildAt(1)).getCurrentItem();
+    if (pos2 == 0) {
+      RxBus.getBus().post(new CardTypeEvent(pos1));
+    } else {
+      RxBus.getBus().post(mCard_tpls.get(pos2 - 1));
     }
-
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = dialog.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.BOTTOM;
-        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        wlp.height = MeasureUtils.dpToPx(245f, getResources());
-        window.setAttributes(wlp);
-        window.setWindowAnimations(R.style.ButtomDialogStyle);
-        return dialog;
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
-
- public void onClick() {
-        int pos1 = courseType.getCurrentItem();
-        int pos2 = ((WheelView) wheellayout.getChildAt(1)).getCurrentItem();
-        if (pos2 == 0) {
-            RxBus.getBus().post(new CardTypeEvent(pos1));
-        } else {
-            RxBus.getBus().post(mCard_tpls.get(pos2 - 1));
-        }
-        dismiss();
-    }
+    dismiss();
+  }
 }

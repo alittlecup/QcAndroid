@@ -90,7 +90,6 @@ public class CustomSigninPresenter extends BasePresenter {
     }
 
     public void queryCardTpl() {
-
         if (gymWrapper.inBrand()) {
             RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
                 .qcGetBrandCardtpl(loginStatus.staff_id(), gymWrapper.brand_id())
@@ -108,7 +107,6 @@ public class CustomSigninPresenter extends BasePresenter {
                     }
                 }, new NetWorkThrowable()));
         } else {
-
             RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
                 .qcGetGymCardtpl(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model(),
                     null)

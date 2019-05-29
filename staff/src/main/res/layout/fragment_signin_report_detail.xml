@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     >
 
-  <CheckBox
-      android:id="@+id/btn_filter"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:layout_marginBottom="@dimen/activity_vertical_margin"
-      android:layout_marginEnd="@dimen/activity_horizontal_margin"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      android:button="@drawable/bg_cb_filter"
-      />
 
   <LinearLayout
       android:layout_width="match_parent"
@@ -68,30 +56,30 @@
 
         <TextView
             android:id="@+id/statement_detail_time"
+            style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="2015-09-11"
-            style="@style/Qc.TextCommonBlack"
             />
 
         <TextView
             android:id="@+id/statement_detail_filter"
+            style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:visibility="gone"
             tools:text="所有学员 所有课程"
-            style="@style/Qc.TextCommonBlack"
             />
 
         <TextView
             android:id="@+id/item_statement_time_shop"
+            style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:visibility="gone"
             tools:text="8节课程 12人参加 服务30人次"
-            style="@style/Qc.TextCommonBlack"
             />
       </LinearLayout>
 
@@ -191,5 +179,20 @@
         android:text="@string/statement_change_filter"
         android:visibility="visible"
         />
+
   </LinearLayout>
+
+  <CheckBox
+      android:id="@+id/btn_filter"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:button="@drawable/bg_cb_filter"
+      />
+
 </RelativeLayout>
