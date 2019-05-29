@@ -1,5 +1,8 @@
 package cn.qingchengfit.student.bean;
 
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
 public class CoachStudentOverview {
 
   private int new_registered_users_count;
@@ -31,5 +34,17 @@ public class CoachStudentOverview {
 
   public ShopPtagStat getShop_ptag_stat() {
     return shop_ptag_stat;
+  }
+
+  @SerializedName(value = "attendance_stat") private AttendenceStat attendenceStat;
+
+  public class CountAndAvatars {
+    public int count;
+    public List<String> avatars;
+  }
+
+  public class AttendenceStat {
+    public CountAndAvatars absence;
+    public CountAndAvatars attendance;
   }
 }

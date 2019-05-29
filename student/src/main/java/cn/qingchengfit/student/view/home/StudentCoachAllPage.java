@@ -38,9 +38,6 @@ import java.util.Map;
       ((StudentCoachFilterView) filterView).setFilterItem(filterName, filterValue);
       mBinding.fabAddStudent.setVisibility(View.GONE);
     }
-    //mBinding.includeAllot.allotCoach.setVisibility(View.GONE);
-    //mBinding.includeAllot.allotMsg.setVisibility(View.GONE);
-    //mBinding.includeAllot.allotSale.setVisibility(View.GONE);
     return mBinding;
   }
 

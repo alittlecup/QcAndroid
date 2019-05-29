@@ -130,7 +130,7 @@ public class StudentHomeActivity extends BaseActivity {
     if (data != null) {
       mStudentId = data.getQueryParameter("studentId");
       mStudentShipId = data.getQueryParameter("shipId");
-    }else{
+    } else {
       mStudentId = getIntent().getStringExtra("student_id");
       mStudentShipId = getIntent().getStringExtra("ship_id");
     }
@@ -150,8 +150,6 @@ public class StudentHomeActivity extends BaseActivity {
     } else {
       getStudentCards();
     }
-    //getStudentBodyTest();
-
     mObserveRefresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
     mObserveRefresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Object>() {
       @Override public void onCompleted() {
@@ -173,9 +171,7 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
-    //if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
     getMenuInflater().inflate(R.menu.menu_delete, menu);
-    //}
 
     return super.onCreateOptionsMenu(menu);
   }
@@ -202,7 +198,8 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   private void deleteStudent() {
-    TrainerRepository.getStaticTrainerAllApi().qcDelStudent(App.coachid + "", mStudentShipId, getParams())
+    TrainerRepository.getStaticTrainerAllApi()
+        .qcDelStudent(App.coachid + "", mStudentShipId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -228,7 +225,8 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void initBaseInfo() {
-    TrainerRepository.getStaticTrainerAllApi().qcGetStudentInfo(App.coachid + "", mStudentShipId, getParams())
+    TrainerRepository.getStaticTrainerAllApi()
+        .qcGetStudentInfo(App.coachid + "", mStudentShipId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -283,7 +281,8 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void getCourseRecords() {
-    TrainerRepository.getStaticTrainerAllApi().qcGetStuedntCourse(mStudentId, getParams())
+    TrainerRepository.getStaticTrainerAllApi()
+        .qcGetStuedntCourse(mStudentId, getParams())
         .observeOn(AndroidSchedulers.mainThread())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
@@ -392,7 +391,6 @@ public class StudentHomeActivity extends BaseActivity {
     }
 
     //studentBodyTestListFragment = StudentBodyTestListFragment.newInstance(mModel, mModelId);
-
 
     fragments.add(new CoachFollowRecordPage());
     studentMoreInfoFragment = new StudentMoreInfoFragment();

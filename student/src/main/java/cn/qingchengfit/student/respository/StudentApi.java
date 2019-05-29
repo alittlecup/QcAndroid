@@ -251,6 +251,14 @@ public interface StudentApi {
       @QueryMap HashMap<String, Object> params);
 
   /**
+   * 获取缺勤图表数据
+   */
+  @GET("/api/coaches/{id}/users/attendance/glance/")
+  Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetTrainerAttendanceChart(@Path("id") String id,
+      @QueryMap HashMap<String, Object> params);
+
+
+  /**
    * 缺勤列表
    *
    * @param params 缺勤<7： absence__lt=7，
@@ -265,6 +273,9 @@ public interface StudentApi {
   Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(@Path("staff_id") String id,
       @QueryMap HashMap<String, Object> params);
 
+  @GET("/api/coaches/{staff_id}/users/absence/")
+  Flowable<QcDataResponse<AbsentceListWrap>> qcGetTrainerUsersAbsences(@Path("staff_id") String id,
+      @QueryMap HashMap<String, Object> params);
   /**
    * @param params 必传start, end，
    * 可选排序字段 加 “-”说明是倒序
@@ -283,12 +294,21 @@ public interface StudentApi {
   Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(@Path("staff_id") String id,
       @QueryMap HashMap<String, Object> params);
 
+  @GET("/api/coaches/{staff_id}/users/attendance/")
+  Flowable<QcDataResponse<AttendanceListWrap>> qcGetTrainerUsersAttendances(@Path("staff_id") String id,
+      @QueryMap HashMap<String, Object> params);
+
   /**
    * 获取未签课的学员
    */
   @GET("/api/staffs/{staff_id}/users/checkin/records/")
   Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
       @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
+
+  @GET("/api/coaches/{staff_id}/users/checkin/records/")
+  Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetTrainerNotSignStudent(
+      @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
+
 
   /**
    * 推荐人列表

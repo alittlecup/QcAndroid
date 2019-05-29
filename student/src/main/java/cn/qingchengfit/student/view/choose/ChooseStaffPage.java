@@ -62,7 +62,7 @@ import java.util.Map;
         }
       }
       mViewModel.items.set(items1);
-      mBinding.includeFilter.setItems(items);
+      mBinding.includeFilter.setItems(new ArrayList<>(items));
       mBinding.recyclerview.post(new Runnable() {
         @Override public void run() {
           if (selectId != null && !selectId.isEmpty()) {

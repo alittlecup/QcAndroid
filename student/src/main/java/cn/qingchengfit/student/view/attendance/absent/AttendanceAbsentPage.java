@@ -83,6 +83,10 @@ import java.util.List;
       showBottomSheet(item.getData().user.phone);
     } else {
       QcStudentBean user = item.getData().user;
+      if (AppUtils.getCurAppSchema(getContext()).equals("qccoach")) {
+        toTrainStudentInfo(user.id, user.getShipId());
+        return false;
+      }
       QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
           .addParam("qcstudent", user)).call();
     }

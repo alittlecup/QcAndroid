@@ -2,52 +2,8 @@
 apply from: rootProject.file('init_module_files/qc_new_module.gradle')
 apply from: rootProject.file("dependencies.gradle")
 
-ext {
-  bakPath = "tinkeroutput/"
-  buildTimeListener = new BuildTimeListener()
-}
-/**
- *  打印超过50ms的任务*/
-class BuildTimeListener implements TaskExecutionListener, BuildListener {
-  private Date clock
-  private times = []
-
-  @Override
-  void beforeExecute(Task task) {
-    clock = new Date()
-  }
-
-  @Override
-  void afterExecute(Task task, TaskState taskState) {
-    def ms = new Date().time - clock.time
-    times.add([ms, task.path])
-  }
-
-  @Override
-  void buildFinished(BuildResult result) {
-    println "Task spend time:"
-    for (time in times) {
-      if (time[0] >= 50) {
-        printf "%7sms  %s\n", time
-      }
-    }
-  }
-
-  @Override
-  void buildStarted(Gradle gradle) {}
-
-  @Override
-  void projectsEvaluated(Gradle gradle) {}
-
-  @Override
-  void projectsLoaded(Gradle gradle) {}
-
-  @Override
-  void settingsEvaluated(Settings settings) {}
-}
-
 buildscript {
-  ext.kotlin_version = '1.2.21'
+  ext.kotlin_version = '1.3.31'
 
   repositories {
     maven {
@@ -56,7 +12,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.1.2'
+    classpath 'com.android.tools.build:gradle:3.4.1'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath 'com.billy.android:autoregister:1.3.0'
 

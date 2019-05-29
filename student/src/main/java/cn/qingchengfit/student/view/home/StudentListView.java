@@ -1,7 +1,5 @@
 package cn.qingchengfit.student.view.home;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
@@ -358,12 +356,10 @@ public class StudentListView
 
   @Override public boolean onItemClick(int position) {
     //教练App单独处理
-    if(AppUtils.getCurAppSchema(getContext()).equals("qccoach")){
+    if (AppUtils.getCurAppSchema(getContext()).equals("qccoach")) {
       if (adapter.getItem(position) instanceof IItemData) {
         String id = ((IItemData) adapter.getItem(position)).getData().getCloud_user().id;
-        String uri = "qccoach://studentdetail/student/detail?studentId=" + id + "&shipId=" + ((IItemData) adapter.getItem(position)).getData().getId();
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        getContext().startActivity(intent);
+        toTrainStudentInfo(id, ((IItemData) adapter.getItem(position)).getData().getId());
         return false;
       }
     }
@@ -452,12 +448,6 @@ public class StudentListView
   }
 
   public void showEmptyLayout(@DrawableRes int drawable, String title, String content) {
-    //layoutManager =
-    //    new StatusLayoutManager.Builder(mBinding.container).setEmptyLayoutDrawableRes(drawable)
-    //        .setEmptyLayoutTitle(title)
-    //        .setEmptyLayoutContent(content)
-    //        .build();
-    //layoutManager.showEmptyLayout();
     CommonNoDataItem commonNoDataItem = new CommonNoDataItem(drawable, content, "");
     List<AbstractFlexibleItem> items = new ArrayList<>();
     items.add(commonNoDataItem);
@@ -465,6 +455,5 @@ public class StudentListView
   }
 
   public void restoreLayout() {
-    //if (layoutManager != null) layoutManager.restoreLayout();
   }
 }

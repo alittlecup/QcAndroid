@@ -384,10 +384,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
       case 2:
         if (CurentPermissions.newInstance()
             .queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS)) {
-          Intent toStudent = new Intent(getActivity(), FragActivity.class);
-          toStudent.putExtra("type", 9);
-          toStudent.putExtra("service", gymWrapper.getCoachService());
-          startActivity(toStudent);
+          routeTo("student","/student/coach/home/",null);
         } else {
           showAlert(getString(R.string.sorry_no_permission));
         }

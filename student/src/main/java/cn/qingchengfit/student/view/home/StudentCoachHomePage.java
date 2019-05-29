@@ -47,16 +47,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
     mBinding.setPage(this);
     mBinding.setToolbarModel(new ToolbarModel("会员"));
     initToolbar(mBinding.includeToolbar.toolbar);
-    return mBinding;
-  }
-
-  @Override protected boolean isfitSystemPadding() {
-    return false;
-  }
-
-  @Override public void onResume() {
-    super.onResume();
     mViewModel.getStudentData();
+    return mBinding;
   }
 
   private void loadDataToUI(CoachStudentOverview overview) {
@@ -91,6 +83,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
     setItem(mBinding.civInputSportPerformance, trainingGoal.getStat().get(3));
   }
 
+  private void setAttendanceView(CoachStudentOverview.AttendenceStat stat) {
+    mBinding.tvAttendCountBelow.setText("最近7-30天缺勤  / " + stat.absence.count + "人");
+    mBinding.tvAttendCountHeight.setText("最近30天出勤  / " + stat.attendance.count + "2人");
+
+  }
+
   private void setItem(CommonInputView civ, CoachPtagStat data) {
     civ.setContent(String.valueOf(data.getCount()) + " 人");
     civ.setLabel(data.getTitle());
@@ -106,11 +104,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
   }
 
   private void setFeedBackItem(TextView tvScore, TextView tvStandard, CoachPtagStat data) {
-    tvScore.setText(new SpanUtils().append(
-        StringUtils.formatePrice(String.valueOf(data.getCount())))
-        .append("人")
-        .setFontSize(11, true)
-        .create());
+    tvScore.setText(
+        new SpanUtils().append(StringUtils.formatePrice(String.valueOf(data.getCount())))
+            .append("人")
+            .setFontSize(11, true)
+            .create());
     Glide.with(getContext()).load(data.getIcon()).asBitmap().into(new SimpleTarget<Bitmap>() {
       @Override
       public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -157,6 +155,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
     routeToWithParams(trainingFeedback, 2);
   }
 
+  public void onClickMemberAttend(View v) {
+    routeTo("/attendance/page", null);
+  }
+
   private void routeToWithParams(CoachMemberPtagData data, int position) {
     if (data != null) {
       routeTo("student", "/student/coach/all",
@@ -171,7 +173,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
     WebActivity.startWeb(Constants.PTAG_INTRODUCTION_ARTICAL, getContext());
   }
 
-  public void onShowHelpArtical(View v){
+  public void onShowHelpArtical(View v) {
     WebActivity.startWeb(Constants.PTAG_INTRODUCTION_ARTICAL, getContext());
   }
 }

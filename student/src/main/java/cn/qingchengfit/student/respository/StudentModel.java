@@ -293,50 +293,24 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcAllocateCoach(staff_id, body);
   }
 
-  //
-  //@Override
-  //public Observable<QcResponse> qcRemoveStudent(String staff_id, HashMap<String, Object> body) {
-  //  return studentApi.qcRemoveStudent(staff_id, body);
-  //}
-  //
-  //@Override
-  //public Observable<QcResponse> qcDeleteStudents(String staff_id, HashMap<String, Object> body) {
-  //  return studentApi.qcDeleteStudents(staff_id, body);
-  //}
-  //
   @Override public Flowable<QcDataResponse> qcRemoveStaff(String staff_id, String type,
       HashMap<String, Object> body) {
     return studentApi.qcRemoveStaff(staff_id, type, body);
   }
 
-  //
-  //@Override public Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
-  //    String staff_id, HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentsStatistics(staff_id, params);
-  //}
-  //
-  //@Override public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
-  //    String staff_id, HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentCreate(staff_id, params);
-  //}
-  //
+
   @Override public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentFollow(staff_id, params);
   }
 
-  //
+
   @Override public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
       String staff_id, String type, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudents(staff_id, type, params);
   }
 
-  //
-  //@Override public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
-  //    String staff_id, HashMap<String, Object> params) {
-  //  return studentApi.qcGetTrackStudentMember(staff_id, params);
-  //}
-  //
+
   @Override public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);

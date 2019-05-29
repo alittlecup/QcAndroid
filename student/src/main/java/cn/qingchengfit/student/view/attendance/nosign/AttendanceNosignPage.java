@@ -24,40 +24,38 @@ import java.util.List;
 /**
  * Created by huangbaole on 2017/11/17.
  */
-@Leaf(module = "student",path = "/attendance/nosign")
-public class AttendanceNosignPage extends
-    StudentBaseFragment<PageAttendanceNosignBinding,AttendanceNosignViewModel>  implements
-    FlexibleAdapter.OnItemClickListener {
-    private AttendanceNosignView filterView;
-    CommonFlexAdapter adapter;
+@Leaf(module = "student", path = "/attendance/nosign") public class AttendanceNosignPage
+    extends StudentBaseFragment<PageAttendanceNosignBinding, AttendanceNosignViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
+  private AttendanceNosignView filterView;
+  CommonFlexAdapter adapter;
 
-    @Override
-    protected void subscribeUI() {
+  @Override protected void subscribeUI() {
 
-        mViewModel.getFilterIndex().observe(this,index->filterView.showPage(index));
+    mViewModel.getFilterIndex().observe(this, index -> filterView.showPage(index));
 
-        mViewModel.getLiveItems().observe(this,notSignClassItems -> {
-            mViewModel.items.set(notSignClassItems);
-            mViewModel.textDetail.set(
-                    getString(R.string.text_not_sign_tip,
-                            DateUtils.interval(mViewModel.getDataHolder().getDays().first,mViewModel.getDataHolder().getDays().second)+1
-                    ,mViewModel.topCount.get(),notSignClassItems==null?0:notSignClassItems.size()));
-        });
+    mViewModel.getLiveItems().observe(this, notSignClassItems -> {
+      mViewModel.items.set(notSignClassItems);
+      mViewModel.textDetail.set(getString(R.string.text_not_sign_tip,
+          DateUtils.interval(mViewModel.getDataHolder().getDays().first,
+              mViewModel.getDataHolder().getDays().second) + 1, mViewModel.topCount.get(),
+          notSignClassItems == null ? 0 : notSignClassItems.size()));
+    });
+  }
 
-    }
-
-    @Override
-    public PageAttendanceNosignBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding=PageAttendanceNosignBinding.inflate(inflater,container,false);
-        mBinding.setViewModel(mViewModel);
-        mBinding.setToolbarModel(new ToolbarModel("未签课统计"));
-        initToolbar(mBinding.includeToolbar.toolbar);
-        initFragment();
-        mBinding.recyclerview.setAdapter(adapter=new CommonFlexAdapter(new ArrayList(),this));
-        mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mViewModel.loadSource(mViewModel.getDataHolder());
-        return mBinding;
-    }
+  @Override
+  public PageAttendanceNosignBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    mBinding = PageAttendanceNosignBinding.inflate(inflater, container, false);
+    mBinding.setViewModel(mViewModel);
+    mBinding.setToolbarModel(new ToolbarModel("未签课统计"));
+    initToolbar(mBinding.includeToolbar.toolbar);
+    initFragment();
+    mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
+    mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    mViewModel.loadSource(mViewModel.getDataHolder());
+    return mBinding;
+  }
 
   private void showBottomSheet(String phone) {
     List<CharSequence> contents = new ArrayList<>();
@@ -75,24 +73,27 @@ public class AttendanceNosignPage extends
     });
   }
 
-
   private void initFragment() {
-        filterView = new AttendanceNosignView();
-        stuff(R.id.frag_filter, filterView);
-    }
+    filterView = new AttendanceNosignView();
+    stuff(R.id.frag_filter, filterView);
+  }
 
-    @Override public boolean onItemClick(int position) {
-        Boolean connect = (Boolean) adapter.getTag("connect");
-        NotSignClassItem item = (NotSignClassItem) adapter.getItem(position);
-        if (connect != null &&  connect) {
-            showBottomSheet(item.getData().getPhone());
-            return false;
-        }else {
-            QcStudentBean qcStudentBean=((NotSignClassItem) item).getData();
-            QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
-                .addParam("qcstudent", qcStudentBean)).call();
-        }
-
+  @Override public boolean onItemClick(int position) {
+    Boolean connect = (Boolean) adapter.getTag("connect");
+    NotSignClassItem item = (NotSignClassItem) adapter.getItem(position);
+    if (connect != null && connect) {
+      showBottomSheet(item.getData().getPhone());
+      return false;
+    } else {
+      QcStudentBean qcStudentBean = ((NotSignClassItem) item).getData();
+      if (AppUtils.getCurAppSchema(getContext()).equals("qccoach")) {
+        toTrainStudentInfo(qcStudentBean.id, qcStudentBean.getShipId());
         return false;
+      }
+      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
+          .addParam("qcstudent", qcStudentBean)).call();
     }
+
+    return false;
+  }
 }

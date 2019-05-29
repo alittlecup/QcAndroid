@@ -3,14 +3,14 @@
   <string name="unit_yuan">元</string>
   <string name="unit_time">次</string>
   <string name="unit_day">天</string>
-  <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
+  <string name="qr_code_2web" formatted="false">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
   <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
 
   <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
   <string name="scan_url">sao.qingchengfit.cn</string>
   <string name="realy_open_next">我已经打开，下一步</string>
   <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
-  <string name="markview_count_unit">%s%s</string>
+  <string name="markview_count_unit">%1$s%2$s</string>
   <string name="bottom_view_select_count">已选%d人</string>
   <string name="qr_point_text">请在电脑打开网址%s\n讲二维码放入框内,即可自动扫描</string>
   <string name="course_type_private">私教</string>

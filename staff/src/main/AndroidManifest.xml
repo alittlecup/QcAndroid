@@ -244,7 +244,7 @@
     <receiver
         android:name="com.tencent.qcloud.timchat.chatutils.MiPushMessageReceiver"
         android:exported="true"
-        >'
+        >
       <!--这里com.tencent.imsdk.MiPushMessageReceiver改成app中定义的完整类名-->
       <intent-filter>
         <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE"/>

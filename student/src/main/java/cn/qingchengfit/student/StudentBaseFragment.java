@@ -1,6 +1,6 @@
 package cn.qingchengfit.student;
 
-import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.student.routers.StudentParamsInjector;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 
@@ -30,9 +29,8 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
   public <T> void dealResource(Resource<T> resource) {
     switch (resource.status) {
       case SUCCESS:
-        if (resource.data != null && resource.data instanceof String
-          && !TextUtils.isEmpty((String)resource.data)
-          ){
+        if (resource.data != null && resource.data instanceof String && !TextUtils.isEmpty(
+            (String) resource.data)) {
           handleHttpSuccess((String) resource.data);
         }
         break;
@@ -42,10 +40,9 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
       case LOADING:
         break;
     }
-
   }
 
-  protected void handleHttpSuccess(String s){
+  protected void handleHttpSuccess(String s) {
 
   }
 
@@ -63,5 +60,12 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     } else {
       super.routeTo(uri, bd, b);
     }
+  }
+
+  protected void toTrainStudentInfo(String studentId, String shipID) {
+    String uri =
+        "qccoach://studentdetail/student/detail?studentId=" + studentId + "&shipId=" + shipID;
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+    getContext().startActivity(intent);
   }
 }

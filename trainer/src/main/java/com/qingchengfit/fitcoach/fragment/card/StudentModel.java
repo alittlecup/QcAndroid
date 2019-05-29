@@ -35,6 +35,7 @@ import cn.qingchengfit.student.bean.StudentListWrapper;
 import cn.qingchengfit.student.bean.StudentTransferBean;
 import cn.qingchengfit.student.bean.StudentWIthCount;
 import cn.qingchengfit.student.respository.IStudentModel;
+import cn.qingchengfit.student.respository.StudentApi;
 import com.qingchengfit.fitcoach.http.TrainerAllApi;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
@@ -48,14 +49,17 @@ import rx.functions.Func1;
 
 public class StudentModel implements IStudentModel {
   TrainerAllApi api;
+  StudentApi studentApi;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
 
   @Inject public StudentModel(QcRestRepository restRepository) {
     api = restRepository.createRxJava1Api(TrainerAllApi.class);
+    studentApi = restRepository.createRxJava2Api(StudentApi.class);
   }
 
-  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method) {
+  @Override
+  public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method) {
     return RxJavaInterop.toV2Flowable(
         api.qcGetAllStudent(Integer.parseInt(loginStatus.staff_id()), gymWrapper.getParams())
             .map(qcAllStudentResponse -> {
@@ -97,37 +101,40 @@ public class StudentModel implements IStudentModel {
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
       Map<String, Object> params) {
     params.remove("show_all");
-    return RxJavaInterop.toV2Flowable(api.qcGetAllStudent(Integer.parseInt(loginStatus.staff_id()), params)
-        .map(
-            (Func1<QcAllStudentResponse, QcDataResponse<StudentListWrapper>>) qcAllStudentResponse -> {
-              QcDataResponse response = new QcDataResponse.Builder().msg(qcAllStudentResponse.msg)
-                  .error_code(qcAllStudentResponse.error_code)
-                  .info(qcAllStudentResponse.info)
-                  .level(qcAllStudentResponse.level)
-                  .status(qcAllStudentResponse.status)
-                  .build();
-              if (qcAllStudentResponse.data.users != null && !qcAllStudentResponse.data.users.isEmpty()) {
-                StudentListWrapper wrapper = new StudentListWrapper();
-                List<QcStudentBeanWithFollow> fllows = new ArrayList<>();
-                for (QcStudentBean bean : qcAllStudentResponse.data.users){
-                  QcStudentBeanWithFollow fllow = new QcStudentBeanWithFollow();
-                  fllow.status = bean.status;
-                  fllow.username = bean.username;
-                  fllow.phone = bean.phone;
-                  fllow.avatar = bean.avatar;
-                  fllow.gender = bean.gender;
-                  fllow.id = bean.id;
-                  fllow.head = bean.head;
-                  fllow.joined_at = bean.joined_at;
-                  fllow.setJoin_at(bean.getJoin_at());
-                  fllow.setCloud_user(bean.getCloud_user());
-                  fllows.add(fllow);
-                }
-                wrapper.users = fllows;
-                response.data = wrapper;
-              }
-              return response;
-            }));
+    return RxJavaInterop.toV2Flowable(
+        api.qcGetAllStudent(Integer.parseInt(loginStatus.staff_id()), params)
+            .map(
+                (Func1<QcAllStudentResponse, QcDataResponse<StudentListWrapper>>) qcAllStudentResponse -> {
+                  QcDataResponse response =
+                      new QcDataResponse.Builder().msg(qcAllStudentResponse.msg)
+                          .error_code(qcAllStudentResponse.error_code)
+                          .info(qcAllStudentResponse.info)
+                          .level(qcAllStudentResponse.level)
+                          .status(qcAllStudentResponse.status)
+                          .build();
+                  if (qcAllStudentResponse.data.users != null
+                      && !qcAllStudentResponse.data.users.isEmpty()) {
+                    StudentListWrapper wrapper = new StudentListWrapper();
+                    List<QcStudentBeanWithFollow> fllows = new ArrayList<>();
+                    for (QcStudentBean bean : qcAllStudentResponse.data.users) {
+                      QcStudentBeanWithFollow fllow = new QcStudentBeanWithFollow();
+                      fllow.status = bean.status;
+                      fllow.username = bean.username;
+                      fllow.phone = bean.phone;
+                      fllow.avatar = bean.avatar;
+                      fllow.gender = bean.gender;
+                      fllow.id = bean.id;
+                      fllow.head = bean.head;
+                      fllow.joined_at = bean.joined_at;
+                      fllow.setJoin_at(bean.getJoin_at());
+                      fllow.setCloud_user(bean.getCloud_user());
+                      fllows.add(fllow);
+                    }
+                    wrapper.users = fllows;
+                    response.data = wrapper;
+                  }
+                  return response;
+                }));
   }
 
   @Override public Flowable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id,
@@ -144,8 +151,8 @@ public class StudentModel implements IStudentModel {
   @Override
   public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id, String brandid,
       String shopid, String gymid, String model) {
-    return RxJavaInterop.toV2Flowable(api.qcGetSalers(loginStatus.staff_id(), null, null, gymWrapper.id(),
-        gymWrapper.model()));
+    return RxJavaInterop.toV2Flowable(
+        api.qcGetSalers(loginStatus.staff_id(), null, null, gymWrapper.id(), gymWrapper.model()));
   }
 
   @Override
@@ -201,23 +208,23 @@ public class StudentModel implements IStudentModel {
 
   @Override public Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id,
       HashMap<String, Object> params) {
-    return null;
+    return studentApi.qcGetTrainerAttendanceChart(id, params);
   }
 
   @Override public Flowable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id,
       HashMap<String, Object> params) {
-    return null;
+    return studentApi.qcGetTrainerUsersAbsences(id, params);
   }
 
   @Override public Flowable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id,
       HashMap<String, Object> params) {
-    return null;
+    return studentApi.qcGetTrainerUsersAttendances(id, params);
   }
 
   @Override
   public Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId,
       HashMap<String, Object> params) {
-    return null;
+    return studentApi.qcGetTrainerNotSignStudent(staffId, params);
   }
 
   @Override
@@ -302,7 +309,8 @@ public class StudentModel implements IStudentModel {
   }
 
   @Override public Flowable<QcDataResponse<FollowRecordStatusListWrap>> qcGetTrackStatus() {
-    return RxJavaInterop.toV2Flowable(api.qcGetTrackStatus(loginStatus.staff_id(), gymWrapper.getParams()));
+    return RxJavaInterop.toV2Flowable(
+        api.qcGetTrackStatus(loginStatus.staff_id(), gymWrapper.getParams()));
   }
 
   @Override public Flowable<QcDataResponse<Object>> qcEditTrackStatus(String track_status_id,
@@ -324,7 +332,8 @@ public class StudentModel implements IStudentModel {
   @Override public Flowable<QcDataResponse<FollowRecordListWrap>> qcGetTrackRecords(String user_id,
       HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return RxJavaInterop.toV2Flowable(api.qcGetStudentFollowRecord(loginStatus.staff_id(), user_id, params));
+    return RxJavaInterop.toV2Flowable(
+        api.qcGetStudentFollowRecord(loginStatus.staff_id(), user_id, params));
   }
 
   @Override
@@ -345,20 +354,26 @@ public class StudentModel implements IStudentModel {
   }
 
   @Override public Flowable<QcDataResponse<Object>> qcSubmitPtagAnswer(CoachPtagAnswerBody body) {
-    return RxJavaInterop.toV2Flowable(api.qcSubmitPtagAnswer(loginStatus.staff_id(), gymWrapper.getParams(), body));
+    return RxJavaInterop.toV2Flowable(
+        api.qcSubmitPtagAnswer(loginStatus.staff_id(), gymWrapper.getParams(), body));
   }
 
-  @Override
-  public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String naireId) {
-    return RxJavaInterop.toV2Flowable(api.qcGetTrainerFeedbackNaire(loginStatus.staff_id(), naireId, gymWrapper.getParams()));
+  @Override public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(
+      String naireId) {
+    return RxJavaInterop.toV2Flowable(
+        api.qcGetTrainerFeedbackNaire(loginStatus.staff_id(), naireId, gymWrapper.getParams()));
   }
 
-  @Override public Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params) {
-    return RxJavaInterop.toV2Flowable(api.qcModifyTrainerFeedbackNaire(loginStatus.staff_id(), naireId, gymWrapper.getParams(), params));
+  @Override public Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId,
+      HashMap<String, Object> params) {
+    return RxJavaInterop.toV2Flowable(
+        api.qcModifyTrainerFeedbackNaire(loginStatus.staff_id(), naireId, gymWrapper.getParams(),
+            params));
   }
 
   @Override
   public Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter() {
-    return RxJavaInterop.toV2Flowable(api.qcGetStudentFilter(loginStatus.staff_id(), gymWrapper.getParams()));
+    return RxJavaInterop.toV2Flowable(
+        api.qcGetStudentFilter(loginStatus.staff_id(), gymWrapper.getParams()));
   }
 }

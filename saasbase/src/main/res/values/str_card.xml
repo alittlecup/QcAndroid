@@ -23,7 +23,7 @@
   <string name="card_unit_value">(元/人)</string>
   <string name="card_unit_times">(次/人)</string>
   <string name="card_content_lable">1对%d</string>
-  <string name="card_simple_count_total">%s(%d/%d)</string>
+  <string name="card_simple_count_total">%1$s(%2$d/%3$d)</string>
 
   <!--停卡文案-->
   <string name="unregiste_card">停卡</string>

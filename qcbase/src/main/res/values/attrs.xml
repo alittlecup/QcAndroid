@@ -81,7 +81,7 @@
   <declare-styleable name="CircleBackground">
     <attr format="color" name="border_color"/>
     <attr format="dimension" name="border_width"/>
-    <attr format="string" name="content"/>
+    <attr format="string" name="circle_content"/>
     <attr format="dimension" name="contentSize"/>
   </declare-styleable>
 

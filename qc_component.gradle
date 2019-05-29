@@ -6,8 +6,11 @@ ext.appComponent = { moduleName, boolean isRemote = false ->
 }
 
 ext.addComponent = { moduleName, boolean isRemote = false ->
-  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'implementation' :
-      'compile'
+//  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'implementation' :
+//      'compile'
+  print(project.gradle.gradleVersion)
+  def dependencyMode="implementation"
+
   if (isRemote) {
     def remoteName = modules[moduleName]
     if (remoteName == null) {
@@ -21,7 +24,9 @@ ext.addComponent = { moduleName, boolean isRemote = false ->
 }
 
 ext.addApiComponent = { moduleName, boolean isRemote = false ->
-  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'api' : 'compile'
+//  def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'api' : 'compile'
+  def dependencyMode="api"
+
   if (isRemote) {
     def remoteName = modules[moduleName]
     if (remoteName == null) {

@@ -88,10 +88,6 @@ public class AttendanceStudentViewModel extends BaseViewModel {
     return Utils.transformBean2Data(datas.get(), offDay.get(), Color.parseColor("#FF8CB4B9"),
         Color.parseColor("#648CB4B9"));
   }
-  //<!--
-  //app:data='@{StudentBusinessUtils.transformBean2Data(viewModel.datas, viewModel.offSetDay
-  //    , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")}'
-  //  -->
 
   public LiveData<AttendanceCharDataBean> getResponse() {
     return response;

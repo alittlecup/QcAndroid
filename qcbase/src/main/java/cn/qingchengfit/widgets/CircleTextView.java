@@ -48,7 +48,7 @@ public class CircleTextView extends android.support.v7.widget.AppCompatTextView 
         color = typedArray.getColor(R.styleable.CircleBackground_border_color, ContextCompat.getColor(context,R.color.qc_allotsale_green) );
         borderWidth = typedArray.getDimension(R.styleable.CircleBackground_border_width, MeasureUtils
             .dpToPx(3f, context.getResources()));
-        content = typedArray.getString(R.styleable.CircleBackground_content);
+        content = typedArray.getString(R.styleable.CircleBackground_circle_content);
         contentSize = typedArray.getDimension(R.styleable.CircleBackground_contentSize, 13);
         typedArray.recycle();
         if (mPaint == null){

@@ -9,7 +9,6 @@ apply from: rootProject.file('qc_component.gradle')
 
 /**
  *  打印超过50ms的任务  END*/
-project.gradle.addListener(rootProject.ext.buildTimeListener)
 
 
 

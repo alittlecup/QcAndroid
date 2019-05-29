@@ -1,6 +1,6 @@
 ext {
   configuration = [package             : "cn.qingchengfit.staffkit",
-                   buildToolsVersion   : "27.0.3",
+                   buildToolsVersion   : "28.0.3",
                    compileVersion      : 27,
                    minSdk              : 16,
                    targetSdk           : 26,
@@ -23,7 +23,7 @@ ext {
                tinkerpatch      : "1.1.3",
                tinker           : "1.7.7",
                flabellum        : "0.2.23",
-               constraint_layout: "1.0.2",]
+               constraint_layout: "1.1.2",]
 
 
   modules = ["card"      : "cn.qingchengfit.card:card:1.0.180814",
