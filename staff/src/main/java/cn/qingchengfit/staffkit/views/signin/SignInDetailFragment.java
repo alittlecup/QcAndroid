@@ -11,14 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInCancelEvent;
@@ -223,10 +222,24 @@ public class SignInDetailFragment extends BaseFragment
       }
     }
 
-    StringBuffer card = new StringBuffer();
-    card.append(signInTask.getCard().getName()).append(balance);
-    tvSignoutItemCard.setText(
-        getActivity().getString(R.string.sign_in_untreated_card, card.toString()));
+    StringBuffer payString = new StringBuffer();
+    SignInTasks.Card card = signInTask.getCard();
+    if (card != null && card.getId() != null && card.getId() >= 1) {
+      payString.append(signInTask.getCard().getName()).append(balance);
+      tvSignoutItemCard.setText(
+          getActivity().getString(R.string.sign_in_untreated_card, payString.toString()));
+    } else {
+      payString.append("支付方式:");
+      if (signInTask.getOrder() != null) {
+        String channel = signInTask.getOrder().getChannel();
+        if (!TextUtils.isEmpty(channel)) {
+          if (channel.equals("WEIXIN")) {
+            payString.append("微信支付");
+          }
+        }
+      }
+      tvSignoutItemCard.setText(payString.toString());
+    }
     tvSignoutItemFee.setText(getActivity().getString(R.string.sign_in_untreated_fee,
         signInTask.getCost() + signInTask.getUnit()));
 
