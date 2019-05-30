@@ -108,6 +108,11 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
       CardTpl card_tpl = mOrigin.get(i);
       switch (type) {
         case 0:
+          if (4 == card_tpl.getType()) {
+            if (card_tpl.getName().equals("WEIXIN")) {
+              card_tpl.name = "微信支付";
+            }
+          }
           mCard_tpls.add(card_tpl);
           all = "全部支付方式";
           break;
@@ -131,6 +136,12 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
           break;
         case 4:
           all = "全部单次支付";
+          if (4 == card_tpl.getType()) {
+            if (card_tpl.getName().equals("WEIXIN")) {
+              card_tpl.name = "微信支付";
+            }
+            mCard_tpls.add(card_tpl);
+          }
           break;
         default:
           break;
@@ -144,9 +155,6 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
     for (int i = 0; i < mCard_tpls.size(); i++) {
       CardTpl card_tpl = mCard_tpls.get(i);
       d.add(card_tpl.getName());
-    }
-    if (type == 4 || type == 0) {
-      d.add("微信支付");
     }
     ArrayWheelAdapter<String> courseTypeAdatper = new ArrayWheelAdapter<String>(d, 16);
     wheelView.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);

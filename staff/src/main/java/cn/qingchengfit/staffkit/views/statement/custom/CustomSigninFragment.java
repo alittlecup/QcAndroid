@@ -123,6 +123,16 @@ public class CustomSigninFragment extends BaseFragment
 
     RxBusAdd(CardTpl.class).subscribe(new Action1<CardTpl>() {
       @Override public void call(CardTpl card_tpl) {
+        if (card_tpl.type == 4) {
+          mSaleFilter.card = null;
+          card_id = null;
+          if (card_tpl.getName().equals("WEIXIN")) {
+            customStatmentCardtype.setContent("微信支付");
+            mSaleFilter.order_extra = "WEIXIN";
+          }
+          card_extra = null;
+          return;
+        }
         customStatmentCardtype.setContent(card_tpl.getName());
         card_id = card_tpl.getId();
         SigninReportDetail.CheckinsBean.CardBean card =
@@ -136,10 +146,11 @@ public class CustomSigninFragment extends BaseFragment
       @Override public void call(CardTypeEvent cardTypeEvent) {
         mSaleFilter.card_category = cardTypeEvent.cardtype;
         mSaleFilter.card = null;
+        mSaleFilter.order_extra=null;
         card_id = null;
         switch (cardTypeEvent.cardtype) {
           case 0:
-            customStatmentCardtype.setContent(getString(R.string.cardtype_all));
+            customStatmentCardtype.setContent("全部支付类型");
             card_extra = null;
             break;
           case Configs.CATEGORY_VALUE:
@@ -153,6 +164,11 @@ public class CustomSigninFragment extends BaseFragment
           case Configs.CATEGORY_DATE:
             customStatmentCardtype.setContent(getString(R.string.all_cardtype_date));
             card_extra = "all_time";
+            break;
+          case 4:
+            customStatmentCardtype.setContent("全部单次支付");
+            mSaleFilter.order_extra="ALL";
+            card_extra = null;
             break;
           default:
             break;
@@ -348,8 +364,7 @@ public class CustomSigninFragment extends BaseFragment
     }
     getFragmentManager().beginTransaction()
         .add(mCallbackActivity.getFragId(),
-            SigninReportFragment.newInstance(3, startTime, endTime, card_id, card_extra,
-                mSaleFilter))
+            SigninReportFragment.newInstance(3, startTime, endTime, card_id, card_extra,mSaleFilter))
         .addToBackStack(getFragmentName())
         .commit();
   }
@@ -362,6 +377,10 @@ public class CustomSigninFragment extends BaseFragment
 
   @Override public void onGetCards(List<CardTpl> cardtpls) {
     cardTpls = cardtpls;
+    CardTpl cardTpl = new CardTpl();
+    cardTpl.type = 4;
+    cardTpl.name = "WEIXIN";
+    cardTpls.add(cardTpl);
     showDialog();
   }
 

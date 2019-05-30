@@ -213,7 +213,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/pay_online"
+        android:text="单次支付"
         style="@style/Qc.TextCommonBlack"
         />
 

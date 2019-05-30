@@ -172,7 +172,6 @@ public class SigninReportFragment extends BaseFragment
         card_extra = getArguments().getString("card_extra");
         mDividerDay = DateUtils.interval(start, end);
         mSaleFilter = getArguments().getParcelable("filter");
-
         break;
       default:
         break;
@@ -253,7 +252,7 @@ public class SigninReportFragment extends BaseFragment
           toolbarTitile.setText(IntentUtils.getIntentString(data, 0));
         }
         showLoading();
-        presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra);
+        presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra, mSaleFilter.order_extra);
       } else if (requestCode == 2) {
         //筛选条件
         mSaleFilter = data.getParcelableExtra("filter");
@@ -309,7 +308,7 @@ public class SigninReportFragment extends BaseFragment
   public void freshData() {
     showLoading();
     //获取用户拥有系统信息
-    presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra);
+    presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra, mSaleFilter.order_extra);
   }
 
   @Override public void onDestroyView() {
@@ -330,7 +329,6 @@ public class SigninReportFragment extends BaseFragment
     Intent toFilter = new Intent(getActivity(), SigninFilterActivity.class);
     if (TextUtils.isEmpty(mSaleFilter.startDay)) mSaleFilter.startDay = start;
     if (TextUtils.isEmpty(mSaleFilter.endDay)) mSaleFilter.endDay = end;
-
     toFilter.putExtra("start", start);
     toFilter.putExtra("end", end);
     toFilter.putExtra("filter", mSaleFilter);
@@ -423,8 +421,18 @@ public class SigninReportFragment extends BaseFragment
       SigninReportDetail.CheckinsBean history = mAllstatementBeans.get(i);
 
       //可筛选数据
-      if (!mFilterCardTpl.contains(history.getCard())) {
+      if (!mFilterCardTpl.contains(history.getCard()) && history.getCard().getId() >= 1) {
         mFilterCardTpl.add(history.getCard());
+      }
+      if (history.getOrder() != null && !TextUtils.isEmpty(history.getOrder().getChannel())) {
+        SigninReportDetail.CheckinsBean.CardBean orderBean =
+            new SigninReportDetail.CheckinsBean.CardBean();
+        orderBean.setName(history.getOrder().getChannel());
+        orderBean.setCard_tpl_type(4);
+        orderBean.setId(history.getOrder().getChannel().charAt(0));
+        if (!mFilterCardTpl.contains(orderBean) && orderBean.getId() >= 1) {
+          mFilterCardTpl.add(orderBean);
+        }
       }
       for (int j = 0; j < signinDetail.getCheckins().size(); j++) {//学生
         if (!mFilterStudents.contains(signinDetail.getCheckins().get(j).getUser())) {
@@ -487,8 +495,13 @@ public class SigninReportFragment extends BaseFragment
           && (DateUtils.formatDateFromYYYYMMDD(mSaleFilter.startDay).getTime()
           <= DateUtils.formatDateFromServer(history.getCreated_at()).getTime()
           && DateUtils.formatDateFromServer(history.getCreated_at()).getTime()
-          < (DateUtils.formatDateFromYYYYMMDD(mSaleFilter.endDay).getTime()
-          + DateUtils.DAY_TIME))) {
+          < (DateUtils.formatDateFromYYYYMMDD(mSaleFilter.endDay).getTime() + DateUtils.DAY_TIME))
+          || (history.getOrder() != null
+          && !TextUtils.isEmpty(history.getOrder().getChannel())
+          && "ALL".equals(mSaleFilter.order_extra))
+          || (history.getOrder() != null
+          && !TextUtils.isEmpty(history.getOrder().getChannel())
+          && history.getOrder().getChannel().equals(mSaleFilter.order_extra))) {
         statementBeans.add(history);
 
         /**

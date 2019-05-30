@@ -56,7 +56,7 @@ public class SigninReportPresenter extends BasePresenter {
 
     }
 
-    public void queryReportDetail(String shop_id, final String start, final String end, String card_id, String cards_extra) {
+    public void queryReportDetail(String shop_id, final String start, final String end, String card_id, String cards_extra,String order_extra) {
         HashMap<String, Object> params = new HashMap<>();
         if (gymWrapper.inBrand()) {
             params.put("brand_id", gymWrapper.brand_id());
@@ -68,6 +68,12 @@ public class SigninReportPresenter extends BasePresenter {
         }
         params.put("start", start);
         params.put("end", end);
+        if(cards_extra!=null){
+            params.put("cards_extra",cards_extra);
+        }
+        if(order_extra!=null){
+            params.put("order_extra",order_extra);
+        }
 
         RxRegiste(restRepository.getStaffAllApi()
             .qcGetSigninReportDetail(App.staffId, params)

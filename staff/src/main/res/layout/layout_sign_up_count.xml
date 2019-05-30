@@ -70,7 +70,7 @@
             android:textStyle="bold"
             app:border_color="@color/text_orange"
             app:border_width="4dp"
-            app:content="出勤(天)"
+            app:circle_content="出勤(天)"
             app:contentSize="13sp"
             tools:text="23"
             />
@@ -114,7 +114,7 @@
             android:textStyle="bold"
             app:border_color="@color/circle_signal_time"
             app:border_width="4dp"
-            app:content="签到(次)"
+            app:circle_content="签到(次)"
             app:contentSize="13sp"
             tools:text="34"
             />
@@ -161,7 +161,7 @@
             android:textStyle="bold"
             app:border_color="@color/circle_group_class"
             app:border_width="4dp"
-            app:content="团课(节)"
+            app:circle_content="团课(节)"
             app:contentSize="13sp"
             tools:text="16"
             />
@@ -205,7 +205,7 @@
             android:textStyle="bold"
             app:border_color="@color/circle_private_class"
             app:border_width="4dp"
-            app:content="私教(节)"
+            app:circle_content="私教(节)"
             app:contentSize="13sp"
             tools:text="5"
             />
