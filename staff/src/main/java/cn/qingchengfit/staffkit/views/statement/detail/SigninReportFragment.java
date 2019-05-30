@@ -252,7 +252,8 @@ public class SigninReportFragment extends BaseFragment
           toolbarTitile.setText(IntentUtils.getIntentString(data, 0));
         }
         showLoading();
-        presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra, mSaleFilter.order_extra);
+        presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra,
+            mSaleFilter.order_extra);
       } else if (requestCode == 2) {
         //筛选条件
         mSaleFilter = data.getParcelableExtra("filter");
@@ -308,7 +309,8 @@ public class SigninReportFragment extends BaseFragment
   public void freshData() {
     showLoading();
     //获取用户拥有系统信息
-    presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra, mSaleFilter.order_extra);
+    presenter.queryReportDetail(mChooseShopId, start, end, card_id, card_extra,
+        mSaleFilter.order_extra);
   }
 
   @Override public void onDestroyView() {
@@ -486,22 +488,25 @@ public class SigninReportFragment extends BaseFragment
           || (mSaleFilter.status == 0 && (history.getStatus() == 0 || history.getStatus() == 3))
           //已签到
           || (mSaleFilter.status == history.getStatus()))//已签出、一撤销
-          && ((mSaleFilter.card == null && (mSaleFilter.card_category == 0
-          || mSaleFilter.card_category == history.getCard().getCard_tpl_type()))//会员卡类型
-          || (mSaleFilter.card != null && mSaleFilter.card.getCard_tpl_id()
-          .equals(history.getCard().getCard_tpl_id())))//筛选会员卡种类
+
+          && (
+          ((mSaleFilter.card == null && (mSaleFilter.card_category == 0
+              || mSaleFilter.card_category == history.getCard().getCard_tpl_type()))//会员卡类型
+              || (mSaleFilter.card != null && mSaleFilter.card.getCard_tpl_id()
+              .equals(history.getCard().getCard_tpl_id())))//筛选会员卡种类
+              || ((history.getOrder() != null
+              && !TextUtils.isEmpty(history.getOrder().getChannel())
+              && "ALL".equals(mSaleFilter.order_extra)) || (history.getOrder() != null && !TextUtils
+              .isEmpty(history.getOrder().getChannel()) && history.getOrder()
+              .getChannel()
+              .equals(mSaleFilter.order_extra))))
           && (mSaleFilter.student == null
           || history.getUser().getId() == mSaleFilter.student.getId())//筛选学员
           && (DateUtils.formatDateFromYYYYMMDD(mSaleFilter.startDay).getTime()
           <= DateUtils.formatDateFromServer(history.getCreated_at()).getTime()
           && DateUtils.formatDateFromServer(history.getCreated_at()).getTime()
-          < (DateUtils.formatDateFromYYYYMMDD(mSaleFilter.endDay).getTime() + DateUtils.DAY_TIME))
-          || (history.getOrder() != null
-          && !TextUtils.isEmpty(history.getOrder().getChannel())
-          && "ALL".equals(mSaleFilter.order_extra))
-          || (history.getOrder() != null
-          && !TextUtils.isEmpty(history.getOrder().getChannel())
-          && history.getOrder().getChannel().equals(mSaleFilter.order_extra))) {
+          < (DateUtils.formatDateFromYYYYMMDD(mSaleFilter.endDay).getTime()
+          + DateUtils.DAY_TIME))) {
         statementBeans.add(history);
 
         /**

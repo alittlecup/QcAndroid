@@ -63,8 +63,6 @@
 
 
 
-    #忽略警告
-    -ignorewarning
 
     ##记录生成的日志数据,gradle build时在本项目根目录输出##
 
@@ -350,20 +348,6 @@
 
 
 
-#butterkinfe
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
-
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
-
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
-
-
 #realm
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class *
@@ -540,16 +524,6 @@
 
     #避免混淆泛型 如果混淆报错建议关掉
     #–keepattributes Signature
-
-    #移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
-    #-assumenosideeffects class android.util.Log {
-    #    public static boolean isLoggable(java.lang.String, int);
-    #    public static int v(...);
-    #    public static int i(...);
-    #    public static int w(...);
-    #    public static int d(...);
-    #    public static int e(...);
-    #}
 
     #如果用用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错。
     #gson

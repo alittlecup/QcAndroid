@@ -35,7 +35,7 @@
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_content="@string/cardtype_all"
-      app:civ_lable="@string/cardtype"
+      app:civ_lable="支付方式"
       app:civ_showright="true"
       />
 

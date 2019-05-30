@@ -88,7 +88,7 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
 
     ArrayWheelAdapter<String> courseTypeAdatper = new ArrayWheelAdapter<String>(
         new ArrayList<String>(
-            Arrays.asList(getResources().getStringArray(R.array.cardtype_filter))), 8);
+            Arrays.asList(getResources().getStringArray(R.array.cardtype_filter))),12);
     courseType.setAdapter(courseTypeAdatper);
     courseType.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 16f);
     courseType.addChangingListener(new OnWheelChangedListener() {
