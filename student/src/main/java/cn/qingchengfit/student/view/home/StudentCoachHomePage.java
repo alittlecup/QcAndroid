@@ -194,6 +194,12 @@ import java.util.List;
   public void onClickMemberAttend(View v) {
     routeTo("/attendance/page", null);
   }
+  public void routeToAbsence(View v){
+    routeTo("/attendance/absent", null);
+  }
+  public void routeToAttendance(View v){
+    routeTo("/attendance/rank", null);
+  }
 
   private void routeToWithParams(CoachMemberPtagData data, int position) {
     if (data != null) {
