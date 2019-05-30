@@ -38,6 +38,14 @@ public class CoachStudentOverview {
 
   @SerializedName(value = "attendance_stat") private AttendenceStat attendenceStat;
 
+  public AttendenceStat getAttendenceStat() {
+    return attendenceStat;
+  }
+
+  public void setAttendenceStat(AttendenceStat attendenceStat) {
+    this.attendenceStat = attendenceStat;
+  }
+
   public class CountAndAvatars {
     public int count;
     public List<String> avatars;

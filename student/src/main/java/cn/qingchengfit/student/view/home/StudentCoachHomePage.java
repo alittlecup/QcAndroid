@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -20,13 +22,19 @@ import cn.qingchengfit.student.bean.CoachStudentOverview;
 import cn.qingchengfit.student.bean.ShopPtagStat;
 import cn.qingchengfit.student.databinding.StudentCoachHomePageBinding;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.bigkoo.pickerview.lib.DensityUtil;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import java.util.ArrayList;
+import java.util.List;
 
 @Leaf(module = "student", path = "/student/coach/home/") public class StudentCoachHomePage
     extends SaasBindingFragment<StudentCoachHomePageBinding, StudentCoachHomeVM> {
@@ -81,12 +89,40 @@ import com.bumptech.glide.request.target.SimpleTarget;
     setItem(mBinding.civInputChangeHealth, trainingGoal.getStat().get(1));
     setItem(mBinding.civInputAddMuscle, trainingGoal.getStat().get(2));
     setItem(mBinding.civInputSportPerformance, trainingGoal.getStat().get(3));
+    setAttendanceView(overview.getAttendenceStat());
   }
 
   private void setAttendanceView(CoachStudentOverview.AttendenceStat stat) {
     mBinding.tvAttendCountBelow.setText("最近7-30天缺勤  / " + stat.absence.count + "人");
-    mBinding.tvAttendCountHeight.setText("最近30天出勤  / " + stat.attendance.count + "2人");
+    mBinding.tvAttendCountHeight.setText("最近30天出勤  / " + stat.attendance.count + "人");
+    updateAvatars(stat.absence.avatars, R.id.img_absence_more);
+    updateAvatars(stat.attendance.avatars, R.id.img_attendance_more);
+  }
 
+  private void updateAvatars(List<String> avatars, int id) {
+    int width = DensityUtil.dip2px(getContext(), 28);
+    if (avatars != null && !avatars.isEmpty()) {
+      for (int i = avatars.size() - 1; i >= 0; i--) {
+        ConstraintLayout.LayoutParams layoutParams =
+            new ConstraintLayout.LayoutParams(width, width);
+        String url = avatars.get(i);
+        ImageView imageView = new ImageView(getContext());
+        imageView.setLayoutParams(layoutParams);
+        layoutParams.rightMargin =
+            DensityUtil.dip2px(getContext(), 14 + 24 * (avatars.size() - i - 1));
+        layoutParams.topToTop = id;
+        layoutParams.goneRightMargin =
+            DensityUtil.dip2px(getContext(), 32 + 24 * (avatars.size() - i - 1));
+        layoutParams.topMargin = DensityUtil.dip2px(getContext(), 4);
+        layoutParams.rightToRight = id;
+        PhotoUtils.smallCircle(imageView, url);
+        mBinding.root.addView(imageView, layoutParams);
+        if (avatars.size() - i >= 3) {
+          mBinding.root.findViewById(id).setVisibility(View.VISIBLE);
+          break;
+        }
+      }
+    }
   }
 
   private void setItem(CommonInputView civ, CoachPtagStat data) {
