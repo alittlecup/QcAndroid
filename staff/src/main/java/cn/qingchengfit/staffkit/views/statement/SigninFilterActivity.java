@@ -174,7 +174,7 @@ public class SigninFilterActivity extends BaseActivity {
       @Override public void call(CardTpl card_tpl) {
         if (card_tpl.type == 4) {
           mSaleFilter.card = null;
-          if (card_tpl.getName().equals("WEIXIN")) {
+          if (card_tpl.getName().equals("微信支付")) {
             cardType.setContent("微信支付");
             mSaleFilter.order_extra = "WEIXIN";
           }

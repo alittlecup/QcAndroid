@@ -126,7 +126,7 @@ public class CustomSigninFragment extends BaseFragment
         if (card_tpl.type == 4) {
           mSaleFilter.card = null;
           card_id = null;
-          if (card_tpl.getName().equals("WEIXIN")) {
+          if (card_tpl.getName().equals("微信支付")) {
             customStatmentCardtype.setContent("微信支付");
             mSaleFilter.order_extra = "WEIXIN";
           }
