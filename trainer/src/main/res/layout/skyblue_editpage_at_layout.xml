@@ -22,7 +22,6 @@
       android:id="@+id/atDescTextView"
       android:layout_width="wrap_content"
       android:layout_height="25dp"
-      android:layout_below="@id/textEditText"
       android:layout_marginTop="2dp"
       android:layout_toRightOf="@id/atTextView"
       android:gravity="center_vertical"
