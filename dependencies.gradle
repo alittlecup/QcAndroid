@@ -124,7 +124,7 @@ ext {
                   "sqlbrite"                    : "com.github.bumptech.glide:glide:3.7.0",
 
                   //matisse 图片选择库
-                  "matisse"                     : "cn.qingchengfit.imagepicker:matisse:1.0.4",
+                  "matisse"                     : "cn.qingchengfit.imagepicker:matisse:1.0.5",
 
                   //Dialog Dialog自定义弹窗
                   "dialog"                      : "cn.qingchengfit.material-dialogs:material-dialogs:1.0.5",

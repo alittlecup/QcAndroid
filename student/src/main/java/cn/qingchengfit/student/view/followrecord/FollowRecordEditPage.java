@@ -57,7 +57,6 @@ import javax.inject.Inject;
   @Inject IPermissionModel permissionModel;
 
   @Override protected void subscribeUI() {
-    //studentWrap.setStudentBean(studentBean);
     mViewModel.showLoading.observe(this, aBoolean -> {
       if (aBoolean) {
         showLoading();

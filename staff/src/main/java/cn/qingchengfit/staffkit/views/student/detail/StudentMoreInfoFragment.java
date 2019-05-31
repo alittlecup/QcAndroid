@@ -265,7 +265,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     if (coaches != null) {
       if (coaches.size() > 0) {
         coachName.setText(
-            coaches.size() >= 2 ? coaches.get(0).username + "、" + coaches.get(1).username
+            coaches.size() >= 2 ? coaches.get(0).username + "、" + coaches.get(1).username+"..."
                 : coaches.get(0).username);
       } else {
         coachName.setText("无教练");

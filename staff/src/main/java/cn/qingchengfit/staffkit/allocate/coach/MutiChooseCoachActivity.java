@@ -14,14 +14,12 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.item.ChooseCoachItem;
-import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.MutiChooseCoachPresenter;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
@@ -215,7 +213,12 @@ public class MutiChooseCoachActivity extends BaseActivity
         if (salers.get(i).id != null) {
           mDatas.add(new ChooseCoachItem(salers.get(i)));
           if (mChoosedCoachsList.size() > 0) {
-            if (mChoosedCoachsList != null && mChoosedCoachsList.contains(salers.get(i).id)) {
+            Staff teacher = salers.get(i).getTeacher();
+            String id = salers.get(i).id;
+            if (teacher != null) {
+              id = teacher.getId();
+            }
+            if (mChoosedCoachsList != null && mChoosedCoachsList.contains(id)) {
               chose.add(i);
             }
           }
@@ -227,15 +230,14 @@ public class MutiChooseCoachActivity extends BaseActivity
       mFlexAdapter.clear();
       mFlexAdapter.updateDataSet(mDatas);
       if (position >= 0) {
-        mFlexAdapter.toggleSelection(position);
+        mFlexAdapter.addSelection(position);
         mFlexAdapter.notifyItemChanged(position);
       }
       for (int j = 0; j < chose.size(); j++) {
-        mFlexAdapter.toggleSelection(chose.get(j));
+        mFlexAdapter.addSelection(chose.get(j));
         mFlexAdapter.notifyItemChanged(chose.get(j));
       }
     }
-
   }
 
   @Override public void onAllotSuccess() {
