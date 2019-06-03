@@ -172,6 +172,7 @@ public class SigninFilterActivity extends BaseActivity {
     obCardtpl = RxBus.getBus().register(CardTpl.class);
     obCardtpl.subscribe(new Action1<CardTpl>() {
       @Override public void call(CardTpl card_tpl) {
+        mSaleFilter.card_category = -1;
         if (card_tpl.type == 4) {
           mSaleFilter.card = null;
           if (card_tpl.getName().equals("微信支付")) {
@@ -185,7 +186,6 @@ public class SigninFilterActivity extends BaseActivity {
         c.setCard_tpl_id(card_tpl.getId());
         c.setName(card_tpl.getName());
         mSaleFilter.card = c;
-        mSaleFilter.card_category = -1;
       }
     });
     obCardType = RxBus.getBus().register(CardTypeEvent.class);
