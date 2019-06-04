@@ -51,6 +51,7 @@ public class AttendanceStudentPage extends
         mBinding.setToolbarModel(new ToolbarModel("出勤统计"));
         initToolbar(mBinding.includeToolbar.toolbar);
         initView();
+        mViewModel.getOffSetDay().setValue(6);
         return mBinding;
     }
 

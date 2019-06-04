@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
@@ -35,10 +36,12 @@ import java.util.List;
     mViewModel.getFilterIndex().observe(this, index -> filterView.showPage(index));
 
     mViewModel.getLiveItems().observe(this, notSignClassItems -> {
+      if (notSignClassItems == null || notSignClassItems.isEmpty()) {
+        List<CommonNoDataItem> items = new ArrayList<>();
+        items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无记录"));
+      }
       mViewModel.items.set(notSignClassItems);
       mViewModel.textDetail.set(getString(R.string.text_not_sign_tip,
-          DateUtils.interval(mViewModel.getDataHolder().getDays().first,
-              mViewModel.getDataHolder().getDays().second) + 1, mViewModel.topCount.get(),
           notSignClassItems == null ? 0 : notSignClassItems.size()));
     });
   }

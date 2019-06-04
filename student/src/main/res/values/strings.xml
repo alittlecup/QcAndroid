@@ -70,7 +70,7 @@
   <string name="absence_thirty">缺勤30-60天</string>
   <string name="absence_sixty">缺勤>60天</string>
   <string name="absence_condition" formatted="false">缺勤%s-%s天</string>
-  <string name="absence_account_student" formatted="false">%s的会员共计%d人</string>
+  <string name="absence_account_student" formatted="false">缺勤会员：%d人</string>
 
   <string name="unit_class">节</string>
   <string name="lable_attendace">出勤</string>
@@ -81,7 +81,7 @@
 
   <string name="text_empty_title_not_sign">您的场馆未开启签课功能</string>
   <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
-  <string formatted="false" name="text_not_sign_tip">%d天内未签课%d节以上的会员共计%d人</string>
+  <string formatted="false" name="text_not_sign_tip">未签课会员: %d人</string>
   <string name="transfer_student_sign_text">注册日期为%s的会员转化率</string>
 
 

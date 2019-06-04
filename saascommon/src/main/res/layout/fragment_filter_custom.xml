@@ -34,6 +34,7 @@
         android:background="@drawable/bg_rect_grey_corner"
         android:gravity="center"
         android:hint="30"
+        android:inputType="number"
         android:paddingBottom="7dp"
         android:paddingTop="4dp"
         />
@@ -55,6 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:inputType="number"
+
         android:background="@drawable/bg_rect_grey_corner"
         android:gravity="center"
         android:hint="30"

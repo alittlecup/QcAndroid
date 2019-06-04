@@ -88,7 +88,7 @@ public class AttendanceRankViewModel extends
         return Transformations.map(respository.qcGetUsersAttendances(loginStatus.staff_id(),params),input -> {
             AttendanceListWrap attendanceListWrap = dealResource(input);
             if(attendanceListWrap==null)return null;
-            textDetail.set(filterText.get() + "出勤会员共" + attendanceListWrap.total_count + "人");
+            textDetail.set("出勤会员：" + attendanceListWrap.total_count + "人");
             return attendanceListWrap.attendances;
         });
     }

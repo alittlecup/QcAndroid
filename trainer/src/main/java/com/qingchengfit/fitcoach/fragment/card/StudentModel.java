@@ -100,7 +100,6 @@ public class StudentModel implements IStudentModel {
 
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudents(String id,
       Map<String, Object> params) {
-    params.remove("show_all");
     return RxJavaInterop.toV2Flowable(
         api.qcGetAllStudent(Integer.parseInt(loginStatus.staff_id()), params)
             .map(
