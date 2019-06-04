@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
@@ -18,6 +19,7 @@ import cn.qingchengfit.views.fragments.ActionSheetDialog;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,13 @@ import java.util.List;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, listitem -> {
-      mViewModel.items.set(listitem);
+      if (listitem == null || listitem.isEmpty()) {
+        List<CommonNoDataItem> items = new ArrayList<>();
+        items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无记录"));
+        adapter.updateDataSet(items);
+      } else {
+        mViewModel.items.set(listitem);
+      }
     });
     mViewModel.getFilterIndex().observe(this, index -> {
       filterFragment.showPage(index);
@@ -78,6 +86,10 @@ import java.util.List;
 
   @Override public boolean onItemClick(int position) {
     Boolean contact = (Boolean) adapter.getTag("contact");
+    IFlexible item1 = adapter.getItem(position);
+    if (!(item1 instanceof AttendanceStudentItem)) {
+      return false;
+    }
     AttendanceStudentItem item = (AttendanceStudentItem) adapter.getItem(position);
     if (contact != null && contact) {
       showBottomSheet(item.getData().user.phone);
@@ -87,8 +99,9 @@ import java.util.List;
         toTrainStudentInfo(user.id, user.getShipId());
         return false;
       }
-      QcRouteUtil.setRouteOptions(new RouteOptions("staff").setActionName("/home/student")
-          .addParam("qcstudent", user)).call();
+      QcRouteUtil.setRouteOptions(
+          new RouteOptions("staff").setActionName("/home/student").addParam("qcstudent", user))
+          .call();
     }
     return false;
   }

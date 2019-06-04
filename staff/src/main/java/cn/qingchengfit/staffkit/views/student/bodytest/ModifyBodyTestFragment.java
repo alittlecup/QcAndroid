@@ -23,15 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestExtra;
 import cn.qingchengfit.model.responese.BodyTestMeasure;
 import cn.qingchengfit.model.responese.BodyTestTemplateBase;
-import cn.qingchengfit.model.base.Shop;
-import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saascommon.widget.NumberInputFilter;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -43,11 +42,9 @@ import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
@@ -59,9 +56,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,14 +97,14 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
   private GridLayoutManager gridLayoutManager;
   private List<BodyTestBody.Photo> datas = new ArrayList<>();
   private String measureId;
-  private MaterialDialog loadingDialog;
   private String mCurId, mCurModel;
+  private MultiChoosePicFragment picDialog;
 
   public ModifyBodyTestFragment() {
   }
 
   /**
-   * @return
+   *
    */
   public static ModifyBodyTestFragment newInstance(String measureid) {
 
@@ -259,50 +253,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
             galleryPhotoViewDialog.setSelected(pos);
             galleryPhotoViewDialog.show();
           } else {
-            final ChoosePictureFragmentDialog choosePictureFragmentDialog =
-                new ChoosePictureFragmentDialog();
-            choosePictureFragmentDialog.show(getFragmentManager(), "choose");
-            choosePictureFragmentDialog.setResult(
-                new ChoosePictureFragmentDialog.ChoosePicResult() {
-                  @Override
-                  public void onChoosePicResult(boolean isSuccess, final String filePath) {
-                    choosePictureFragmentDialog.dismiss();
-                    if (isSuccess) {
-                      showLoading();
-                      RxRegiste(UpYunClient.rxUpLoad("/course/", filePath)
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .onBackpressureBuffer()
-                          .subscribeOn(Schedulers.io())
-                          .subscribe(new Subscriber<String>() {
-                            @Override public void onCompleted() {
-
-                            }
-
-                            @Override public void onError(Throwable e) {
-                              LogUtil.e(e.getMessage());
-                              hideLoading();
-                            }
-
-                            @Override public void onNext(String upImg) {
-                              hideLoading();
-                              if (TextUtils.isEmpty(upImg)) {
-                                ToastUtils.showDefaultStyle("图片上传失败");
-                              } else {
-                                BodyTestBody.Photo photo = new BodyTestBody.Photo();
-                                photo.photo = upImg;
-                                datas.add(photo);
-                                imageGridAdapter.notifyDataSetChanged();
-                                //                                                        imageGridAdapter.notifyDataSetChanged();
-
-                              }
-                            }
-                          }));
-                    } else {
-                      hideLoading();
-                      ToastUtils.showDefaultStyle("上传图片失败");
-                    }
-                  }
-                });
+            addImage();
           }
         }
       }
@@ -311,20 +262,35 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     return view;
   }
 
+  void addImage() {
+    picDialog = MultiChoosePicFragment.newInstance(null);
+    picDialog.setUpLoadImageCallback(uris -> {
+      if (uris != null && !uris.isEmpty()) {
+        for (String uri : uris) {
+          BodyTestBody.Photo photo = new BodyTestBody.Photo();
+          photo.photo = uri;
+          datas.add(photo);
+        }
+      }
+      imageGridAdapter.refresh(datas);
+    });
+    if (!picDialog.isVisible()) picDialog.show(getChildFragmentManager(), "choose");
+  }
+
   private void setCommonInputViewFilter() {
-    bmi.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    weight.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    height.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    bodyFatRate.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    leftCalf.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    leftThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    leftUpper.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    rightCalf.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    rightThigh.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    rightUpper.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    chest.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    hipline.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
-    waistline.getEditText().setFilters(new InputFilter[]{new NumberInputFilter() });
+    bmi.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    weight.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    height.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    bodyFatRate.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    leftCalf.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    leftThigh.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    leftUpper.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    rightCalf.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    rightThigh.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    rightUpper.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    chest.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    hipline.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
+    waistline.getEditText().setFilters(new InputFilter[] { new NumberInputFilter() });
   }
 
   public void onClickDate() {
@@ -503,58 +469,47 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     if (!TextUtils.isEmpty(mMeasure.height)) {
       height.setVisibility(View.VISIBLE);
       height.setContent(String.format("%s", mMeasure.height));
-
     }
     if (!TextUtils.isEmpty(mMeasure.body_fat_rate)) {
       bodyFatRate.setVisibility(View.VISIBLE);
       bodyFatRate.setContent(String.format("%s", mMeasure.body_fat_rate));
-
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
       leftCalf.setVisibility(View.VISIBLE);
       leftCalf.setContent(String.format("%s", mMeasure.circumference_of_left_calf));
-
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
       rightCalf.setVisibility(View.VISIBLE);
       rightCalf.setContent(String.format("%s", mMeasure.circumference_of_right_calf));
-
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
       chest.setVisibility(View.VISIBLE);
       chest.setContent(String.format("%s", mMeasure.circumference_of_chest));
-
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
       rightThigh.setVisibility(View.VISIBLE);
       rightThigh.setContent(String.format("%s", mMeasure.circumference_of_right_thigh));
-
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
       leftThigh.setVisibility(View.VISIBLE);
       leftThigh.setContent(String.format("%s", mMeasure.circumference_of_left_thigh));
-
     }
 
     if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
       leftUpper.setVisibility(View.VISIBLE);
       leftUpper.setContent(String.format("%s", mMeasure.circumference_of_left_upper));
-
     }
     if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
       rightUpper.setVisibility(View.VISIBLE);
       rightUpper.setContent(String.format("%s", mMeasure.circumference_of_right_upper));
-
     }
     if (!TextUtils.isEmpty(mMeasure.hipline)) {
       hipline.setVisibility(View.VISIBLE);
       hipline.setContent(String.format("%s", mMeasure.hipline));
-
     }
     if (!TextUtils.isEmpty(mMeasure.waistline)) {
       waistline.setVisibility(View.VISIBLE);
       waistline.setContent(String.format("%s", mMeasure.waistline));
-
     }
   }
 

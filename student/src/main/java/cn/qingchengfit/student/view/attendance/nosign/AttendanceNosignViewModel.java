@@ -102,7 +102,7 @@ public class AttendanceNosignViewModel extends FlexibleViewModel<List<StudentWIt
 
     @Override
     protected boolean isSourceValid(@Nullable List<StudentWIthCount> studentWIthCountList) {
-        return studentWIthCountList != null && !studentWIthCountList.isEmpty();
+        return studentWIthCountList != null ;
     }
 
     @Override

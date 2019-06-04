@@ -12,13 +12,14 @@ import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceNosignBinding;
+import cn.qingchengfit.student.item.AttendanceStudentItem;
 import cn.qingchengfit.student.item.NotSignClassItem;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.ActionSheetDialog;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +40,12 @@ import java.util.List;
       if (notSignClassItems == null || notSignClassItems.isEmpty()) {
         List<CommonNoDataItem> items = new ArrayList<>();
         items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无记录"));
+        adapter.updateDataSet(items);
+      } else {
+        mViewModel.items.set(notSignClassItems);
       }
-      mViewModel.items.set(notSignClassItems);
-      mViewModel.textDetail.set(getString(R.string.text_not_sign_tip,
-          notSignClassItems == null ? 0 : notSignClassItems.size()));
+      mViewModel.textDetail.set(
+          "未签课会员: " + (notSignClassItems == null ? "0" : notSignClassItems.size() + "") + "人");
     });
   }
 
@@ -83,6 +86,10 @@ import java.util.List;
 
   @Override public boolean onItemClick(int position) {
     Boolean connect = (Boolean) adapter.getTag("connect");
+    IFlexible item1 = adapter.getItem(position);
+    if (!(item1 instanceof NotSignClassItem)) {
+      return false;
+    }
     NotSignClassItem item = (NotSignClassItem) adapter.getItem(position);
     if (connect != null && connect) {
       showBottomSheet(item.getData().getPhone());

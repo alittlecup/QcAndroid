@@ -119,7 +119,7 @@ public class AttendanceRankViewModel extends
 
     @Override
     protected boolean isSourceValid(@Nullable List<Attendance> attendances) {
-        return attendances != null && !attendances.isEmpty();
+        return attendances != null ;
     }
 
     @Override

@@ -31,6 +31,7 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
+import com.afollestad.materialdialogs.DialogAction;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -191,9 +192,11 @@ public class StudentHomeActivity extends BaseActivity {
   }
 
   public void delStudent() {
-    DialogUtils.showAlert(this, "是否删除该学员", (dialog, action) -> {
+    DialogUtils.showConfirm(this, "是否删除该学员", (dialog, action) -> {
       dialog.dismiss();
-      deleteStudent();
+      if (action == DialogAction.POSITIVE) {
+        deleteStudent();
+      }
     });
   }
 
@@ -402,15 +405,7 @@ public class StudentHomeActivity extends BaseActivity {
       @Override
       public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         LogUtil.e("position:" + position);
-        if (position == 0) {
-          add1.setVisibility(View.VISIBLE);
-          add2.setVisibility(View.VISIBLE);
-          add2.setText("代约私教");
-          add1.setText("代约团课");
-        } else {
-          add1.setVisibility(View.GONE);
-          add2.setVisibility(View.GONE);
-        }
+        updatePageOneBottom(position);
       }
 
       @Override public void onPageSelected(int position) {
@@ -422,6 +417,19 @@ public class StudentHomeActivity extends BaseActivity {
       }
     });
     mTabTabLayout.setupWithViewPager(mStudentViewPager);
+    updatePageOneBottom(0);
+  }
+
+  private void updatePageOneBottom(int page) {
+    if (page == 0) {
+      add1.setVisibility(View.VISIBLE);
+      add2.setVisibility(View.VISIBLE);
+      add2.setText("代约私教");
+      add1.setText("代约团课");
+    } else {
+      add1.setVisibility(View.GONE);
+      add2.setVisibility(View.GONE);
+    }
   }
 
   private void initHeader() {

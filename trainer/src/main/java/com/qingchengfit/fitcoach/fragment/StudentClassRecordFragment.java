@@ -47,37 +47,6 @@ public class StudentClassRecordFragment extends VpFragment {
       layoutNoData = (LinearLayout) view.findViewById(R.id.layout_no_data);
 
       mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        //        add1.setVisibility(View.VISIBLE);
-        //        add2.setVisibility(View.VISIBLE);
-        //        add1.setText("代约私教");
-        //        add2.setText("代约团教");
-        //        add1.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                if (getActivity() !=null){
-        //                    ((StudentHomeActivity)getActivity()).goPrivate();
-        //                }
-        //            }
-        //        });
-        //      add2.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                if (getActivity() !=null){
-        //                    ((StudentHomeActivity)getActivity()).goGroup();
-        //                }
-        //            }
-        //        });
-
-        //        datas.clear();
-        //        datas.add(new StatementBean(new Date(), "http://mmbiz.qpic.cn/mmbiz/8AuWu0VumXI39Nc61ibOCh2NFDNelSBSZTsTAUXNMLxWrJFqkkks3r0MRhN3ibTb0FFpqEGsod5BblF7iaQeJelzw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"
-        //                        , "Pilats mat", "90009099 xxx工作室", true, true, false)
-        //        );
-        //        datas.add(new StatementBean(new Date(), "http://mmbiz.qpic.cn/mmbiz/8AuWu0VumXI39Nc61ibOCh2NFDNelSBSZTsTAUXNMLxWrJFqkkks3r0MRhN3ibTb0FFpqEGsod5BblF7iaQeJelzw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"
-        //                        , "Pilats mat", "90009099 xxx工作室", true, true, false)
-        //        );
-        //        datas.add(new StatementBean(new Date(), "http://mmbiz.qpic.cn/mmbiz/8AuWu0VumXI39Nc61ibOCh2NFDNelSBSZTsTAUXNMLxWrJFqkkks3r0MRhN3ibTb0FFpqEGsod5BblF7iaQeJelzw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"
-        //                        , "Pilats mat", "90009099 xxx工作室", true, true, false)
-        //        );
         mAdapter = new StudentClassRecordAdapter(datas);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);

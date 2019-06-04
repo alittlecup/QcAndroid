@@ -80,8 +80,6 @@ public class CoachFollowRecordPage extends FollowRecordPage {
     if (popupWindow == null) {
       View contentView = LayoutInflater.from(getContext())
           .inflate(R.layout.st_view_coach_follow_add_popwindow, null);
-      //popupWindow = new PopupWindow(contentView, MeasureUtils.dpToPx(120f, getResources()),
-      //    MeasureUtils.dpToPx(100f, getResources()));
       popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT,
           ViewGroup.LayoutParams.WRAP_CONTENT);
       popupWindow.setTouchable(true);

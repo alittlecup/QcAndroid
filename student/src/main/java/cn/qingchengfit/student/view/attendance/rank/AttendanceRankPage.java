@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
-import cn.qingchengfit.saascommon.item.IItemData;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceRankBinding;
@@ -19,6 +19,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/11/16.
@@ -31,7 +32,13 @@ import java.util.ArrayList;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
-      mViewModel.items.set(items);
+      if (items == null || items.isEmpty()) {
+        List<CommonNoDataItem> noDataItems = new ArrayList<>();
+        noDataItems.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无记录"));
+        adapter.updateDataSet(noDataItems);
+      } else {
+        mViewModel.items.set(items);
+      }
     });
     mViewModel.getFilterIndex().observe(this, index -> {
       rankFilterView.showPage(index);

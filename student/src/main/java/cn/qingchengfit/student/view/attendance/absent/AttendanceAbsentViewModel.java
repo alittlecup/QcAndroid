@@ -111,7 +111,7 @@ public class AttendanceAbsentViewModel extends FlexibleViewModel<List<Absentce>,
 
     @Override
     protected boolean isSourceValid(@Nullable List<Absentce> absentces) {
-        return absentces != null && !absentces.isEmpty();
+        return absentces != null;
     }
 
     @Override

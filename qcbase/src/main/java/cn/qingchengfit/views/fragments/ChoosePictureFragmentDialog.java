@@ -122,15 +122,11 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
               .maxSelectable(1)
               .captureStrategy(
                   new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
-              //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
               .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
               .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
               .thumbnailScale(0.85f)
               .imageEngine(new GlideEngine())
               .forResult(CHOOSE_CAMERA);
-          //Uri uri = Uri.fromFile(fileCamera);
-          //startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
-          //    CHOOSE_CAMERA);
 
         } else {
           ToastUtils.show("请开启拍照及存储权限");
@@ -189,11 +185,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         mResult.onChoosePicResult(true, filepath);
       }
     } else {
-      //if (mResult != null) {
-      //  mResult.onChoosePicResult(false, filepath);
-      //}
       dismissAllowingStateLoss();
-      //            RxBus.getBus().post(new EventChooseImage(""));
     }
   }
 
