@@ -62,7 +62,7 @@ public class FollowRecordViewModel
     List<Integer> typeList = new ArrayList<>();
     switch (i) {
       case 0:
-        for (int j = 1 ; j < 5; j++){
+        for (int j = 0 ; j < 5; j++){
           typeList.add(j);
         }
         break;

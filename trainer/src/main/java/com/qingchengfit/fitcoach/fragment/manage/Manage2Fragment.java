@@ -345,7 +345,7 @@ public class Manage2Fragment extends SaasBindingFragment<ManageFragmentBinding, 
     items.add(new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.moudule_service_group).text("团课排期").build()));
     items.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_student)
-        .text(getString(R.string.student))
+        .text("会员")
         .build()));
     items.add(new DailyWorkItem(
         new FunctionBean.Builder().resImg(R.drawable.ic_function_more).text("管理功能").build()));
