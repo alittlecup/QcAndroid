@@ -472,9 +472,7 @@ public class WebFragment extends BaseFragment
       setCookie(host, "oem", oemTag);
       LogUtil.e("session:" + sessionid);
     } catch (Exception e) {
-      //e.printStackTrace();
     }
-    //setCookie(Constants.Server, "sessionid", sessionid);
   }
 
   public void setCookie(String url, String key, String value) {
