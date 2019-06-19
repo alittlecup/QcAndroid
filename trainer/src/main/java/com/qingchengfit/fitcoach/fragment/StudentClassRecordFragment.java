@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-
-
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.qingchengfit.fitcoach.R;
@@ -36,47 +34,46 @@ import java.util.List;
  */
 public class StudentClassRecordFragment extends VpFragment {
 
-	LinearLayout layoutNoData;
-    private RecyclerView mRecyclerView;
-    private StudentClassRecordAdapter mAdapter;
-    private List<StatementBean> datas = new ArrayList<>();
+  LinearLayout layoutNoData;
+  private RecyclerView mRecyclerView;
+  private StudentClassRecordAdapter mAdapter;
+  private List<StatementBean> datas = new ArrayList<>();
 
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+    layoutNoData = (LinearLayout) view.findViewById(R.id.layout_no_data);
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-      layoutNoData = (LinearLayout) view.findViewById(R.id.layout_no_data);
+    mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+    mAdapter = new StudentClassRecordAdapter(datas);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    mRecyclerView.setAdapter(mAdapter);
+    mAdapter.setListener(new OnRecycleItemClickListener() {
+      @Override public void onItemClick(View v, int pos) {
+        Intent toWenb = new Intent(getContext(), WebActivity.class);
+        toWenb.putExtra("url", datas.get(pos).url);
+        startActivity(toWenb);
+      }
+    });
+    return view;
+  }
 
-      mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        mAdapter = new StudentClassRecordAdapter(datas);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                Intent toWenb = new Intent(getContext(), WebActivity.class);
-                toWenb.putExtra("url", datas.get(pos).url);
-                startActivity(toWenb);
-            }
-        });
-        return view;
+  public void setDatas(List<StatementBean> d) {
+    if (d == null || d.size() == 0) {
+      layoutNoData.setVisibility(View.VISIBLE);
+    } else {
+      layoutNoData.setVisibility(View.GONE);
+      datas.clear();
+      datas.addAll(d);
+      mAdapter.notifyDataSetChanged();
     }
+  }
 
-    public void setDatas(List<StatementBean> d) {
-        if (d == null || d.size() == 0) {
-            layoutNoData.setVisibility(View.VISIBLE);
-        } else {
-            layoutNoData.setVisibility(View.GONE);
-            datas.clear();
-            datas.addAll(d);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
+  @Override public String getTitle() {
+    return "上课记录";
+  }
 
-    @Override public String getTitle() {
-        return "上课记录";
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

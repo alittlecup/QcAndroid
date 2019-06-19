@@ -63,6 +63,7 @@
     <attr format="dimension" name="rn_top_padding"/>
     <attr format="dimension" name="rn_no_data_top"/>
   </declare-styleable>
+
   <declare-styleable name="AnimatedButton">
     <attr format="reference" name="ab_drawable_on"/>
     <attr format="reference" name="ab_drawable_off"/>

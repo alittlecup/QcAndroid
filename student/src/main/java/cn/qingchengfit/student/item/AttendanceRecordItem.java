@@ -1,13 +1,11 @@
-package cn.qingchengfit.staffkit.views.student.detail;
+package cn.qingchengfit.student.item;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
-import cn.qingchengfit.model.common.AttendanceRecord;
-import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.AttendanceRecord;
 import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
@@ -82,11 +80,6 @@ public class AttendanceRecordItem
               + DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(attendanceRecord.end))
               + "  "
               + attendanceRecord.shop.name);
-      //if (!attendanceRecord.checked_in) {
-      //  holder.notSignClass.setVisibility(View.VISIBLE);
-      //} else {
-      //  holder.notSignClass.setVisibility(View.GONE);
-      //}
     }
   }
 

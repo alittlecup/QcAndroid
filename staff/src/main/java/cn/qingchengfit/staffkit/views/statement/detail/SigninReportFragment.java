@@ -32,7 +32,7 @@ import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.RxNetWorkEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.statement.SigninFilterActivity;
 import cn.qingchengfit.staffkit.views.statement.excel.OutExcelFragment;
 import cn.qingchengfit.utils.CmStringUtils;

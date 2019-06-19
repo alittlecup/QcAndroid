@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.body.GymBody;
-import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.model.responese.ResponseService;

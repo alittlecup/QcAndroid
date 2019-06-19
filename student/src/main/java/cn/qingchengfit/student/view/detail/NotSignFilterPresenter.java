@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.student.attendance.presenter;
+package cn.qingchengfit.student.view.detail;
 
 import cn.qingchengfit.di.BasePresenter;
 import java.util.ArrayList;

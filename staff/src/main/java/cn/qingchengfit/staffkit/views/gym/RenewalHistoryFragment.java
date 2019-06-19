@@ -17,7 +17,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.gym.items.RenewalsHistoryItem;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;

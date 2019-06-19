@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.student.bean;
+package cn.qingchengfit.student.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

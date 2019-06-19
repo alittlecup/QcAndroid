@@ -43,7 +43,7 @@ import cn.qingchengfit.staffkit.views.adapter.AllotSaleChooseAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;

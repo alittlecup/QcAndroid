@@ -29,7 +29,7 @@ import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextAdapter;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import java.util.ArrayList;

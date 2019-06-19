@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import java.util.ArrayList;

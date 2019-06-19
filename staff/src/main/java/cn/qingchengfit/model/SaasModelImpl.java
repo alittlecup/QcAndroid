@@ -8,11 +8,9 @@ import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.repository.SaasModel;
-import cn.qingchengfit.saasbase.student.bean.ClassRecords;
 import cn.qingchengfit.saasbase.student.network.body.AddFollowRecordBody;
 import cn.qingchengfit.saasbase.student.network.body.EditStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -105,10 +103,6 @@ public class SaasModelImpl implements SaasModel {
     return null;
   }
 
-  @Override public Observable<QcDataResponse<ClassRecords>> qcGetStudentRecords(String studentid,
-      HashMap<String, Object> params) {
-    return null;
-  }
 
   @Override public Observable<QcDataResponse> qcGetRealCardList() {
     return null;

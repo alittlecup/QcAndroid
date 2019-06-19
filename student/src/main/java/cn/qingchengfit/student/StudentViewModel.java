@@ -15,6 +15,7 @@ import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankViewModel;
 import cn.qingchengfit.student.view.birthday.StudentBirthdayViewModel;
 import cn.qingchengfit.student.view.choose.ChooseStaffViewModel;
+import cn.qingchengfit.student.view.detail.ClassRecordTempVM;
 import cn.qingchengfit.student.view.detail.StudentDetailWithCardViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordEditViewModel;
 import cn.qingchengfit.student.view.followrecord.FollowRecordStatusViewModel;
@@ -161,6 +162,9 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(StudentCoachHomeVM.class)
   abstract ViewModel bindStudentCoachHomeVM(StudentCoachHomeVM model);
+
+  @Binds @IntoMap @ViewModelKey(ClassRecordTempVM.class)
+  abstract ViewModel bindClassRecordTempVM(ClassRecordTempVM model);
 
 }
 

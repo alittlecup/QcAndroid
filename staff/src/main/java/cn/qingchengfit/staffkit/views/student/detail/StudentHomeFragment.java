@@ -21,28 +21,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
-
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardParams;
-import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saascommon.model.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.constant.StaffRespository;
 import cn.qingchengfit.staffkit.rxbus.event.EditStudentEvent;
 import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.student.bean.StudentWrap;
+import cn.qingchengfit.student.view.detail.ClassRecordTempFragment;
 import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -93,9 +90,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   TextView phone;
   ImageView tvStudentCall;
   ImageView tvStudentMsg;
-  @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-  @Inject StaffRespository restRepository;
   @Inject StudentWrap studentBean;
   @Inject SerPermisAction serPermisAction;
   @Inject GymBaseInfoAction gymBaseInfoAction;
@@ -272,7 +267,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    fragments.add(new ClassRecordFragment());
+    fragments.add(ClassRecordTempFragment.getInstanceWithStudentID(studentBean.id()));
     fragments.add(new StudentsCardsFragment());
     FollowRecordPage followRecordPage = new FollowRecordPage();
     fragments.add(followRecordPage);
@@ -365,7 +360,6 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
           }
         }
       } else if (requestCode == 10) {//购卡
-        //buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), this);
       } else if (requestCode == 9) {//选择场馆
 
         Shop shop = (Shop) IntentUtils.getParcelable(data);
@@ -376,9 +370,6 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         CoachService mChooseShop =
             gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shop.id);
         if (mChooseShop != null) {
-          //Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
-          //gymWrapper.setCoachService(mChooseShop);
-          //startActivityForResult(toCardType, 10);
           routeTo("card", "/choose/cardtpl/", null);
         }
       } else if (requestCode == 11) {//删除学员所属场馆
@@ -389,16 +380,10 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
             showAlert(getString(R.string.alert_permission_forbid));
             return;
           }
-          DialogUtils.instanceDelDialog(getContext(), "是否在所选场馆删除该学员",
-              new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                  RxBus.getBus()
-                      .post(new EditStudentEvent.Builder().type(EditStudentEvent.DEL)
-                          .shop_ids(shop.id)
-                          .build());
-                }
-              }).show();
+          DialogUtils.instanceDelDialog(getContext(), "是否在所选场馆删除该学员", (dialog, which) -> RxBus.getBus()
+              .post(new EditStudentEvent.Builder().type(EditStudentEvent.DEL)
+                  .shop_ids(shop.id)
+                  .build())).show();
         } else {
           showAlert(R.string.alert_at_least_one_gym);
         }

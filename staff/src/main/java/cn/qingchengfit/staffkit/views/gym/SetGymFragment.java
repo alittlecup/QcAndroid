@@ -26,7 +26,7 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.GymBody;
-import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.events.RxCompleteGuideEvent;

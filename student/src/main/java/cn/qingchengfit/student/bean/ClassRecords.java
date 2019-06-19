@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.student.bean;
+package cn.qingchengfit.student.bean;
 
 import cn.qingchengfit.model.base.Shop;
 import java.util.List;
@@ -8,7 +8,7 @@ public class ClassRecords {
     public List<AttendanceRecord> attendances;
     public List<Shop> shops;
 
-    public class Stat {
+    public static class Stat {
         public int group;
         public int checkin;
         public int private_count;

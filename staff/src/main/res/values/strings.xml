@@ -689,7 +689,6 @@
   <string name="absence_sixty">缺勤>60天</string>
   <string formatted="false" name="absence_condition">缺勤%s-%s天</string>
   <string formatted="false" name="absence_account">缺勤%s-%s天的会员共计%d人</string>
-  <string formatted="false" name="attendance_record_head">%d次签到，%d节团课，%d节私教</string>
   <string name="unit_calss">节</string>
 
 
@@ -714,8 +713,6 @@
   <!--<string name="absence_sixty">缺勤>60天</string>-->
   <!--<string formatted="false" name="absence_condition">缺勤%s-%s天</string>-->
   <!--<string formatted="false" name="absence_account">缺勤%s-%s天的会员共计%d人</string>-->
-  <!--<string formatted="false" name="attendance_record_head">%d次签到，%d节团课，%d节私教</string>-->
-  <!--<string name="unit_calss">节</string>-->
   <string formatted="false" name="batch_can_pay_card_count">可用%d种卡结算</string>
   <string formatted="false" name="batch_date_loop_group">%s至%s的课程：</string>
   <string formatted="false" name="batch_date_loop_private">%s至%s的排期：</string>

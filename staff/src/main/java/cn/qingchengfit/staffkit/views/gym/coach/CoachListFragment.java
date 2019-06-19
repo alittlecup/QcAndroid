@@ -32,7 +32,7 @@
 //import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 //import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 //import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-//import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+//import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 //import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
 //import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 //import cn.qingchengfit.utils.IntentUtils;

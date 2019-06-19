@@ -11,7 +11,7 @@
       android:id="@+id/layout_toolbar"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+  <cn.qingchengfit.widgets.RecycleViewWithNoImg
       android:id="@+id/recycleview"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

@@ -31,7 +31,6 @@ import java.util.List;
 public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
   private int status = 0;
 
-  private int positionOld = -1;
   private ArrayMap<String, Object> Tags = new ArrayMap<>();
 
   public CommonFlexAdapter(@NonNull List items) {
@@ -50,25 +49,8 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
     return Tags.get(key);
   }
 
-  //@Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
-  //  List<Animator> animators = new ArrayList<Animator>();
-  //
-  //  if (position != positionOld) positionOld = position;
-  //
-  //  return animators;
-  //}
-
-  @Override public void updateDataSet(@Nullable List items) {
-    super.updateDataSet(items);
-
-  }
-
-  @Override public void updateDataSet(@Nullable List items, boolean animate) {
-    super.updateDataSet(items, animate);
-  }
 
   @Override public boolean hasNewSearchText(String newText) {
-    //return super.hasNewSearchText(newText);
     return true;
   }
 

@@ -1,6 +1,6 @@
 package cn.qingchengfit.model.responese;
 
-import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.cards.bean.Create_By;
 
 /**

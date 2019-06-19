@@ -9,7 +9,7 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+  <cn.qingchengfit.widgets.RecycleViewWithNoImg
       xmlns:rn="http://schemas.android.com/apk/res-auto"
       android:id="@+id/recyclerview"
       android:layout_width="match_parent"

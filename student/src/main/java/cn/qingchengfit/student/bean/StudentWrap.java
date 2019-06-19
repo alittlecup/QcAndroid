@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.bean;
 
-import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 
 public class StudentWrap {

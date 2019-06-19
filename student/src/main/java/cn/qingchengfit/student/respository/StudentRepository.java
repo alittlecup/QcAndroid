@@ -9,6 +9,7 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
 import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
 import cn.qingchengfit.student.bean.CoachStudentOverview;
@@ -150,16 +151,22 @@ public interface StudentRepository {
   void qcAddTrackRecord(String user_id, FollowRecordAdd body,
       MutableLiveData<Resource<Object>> rst);
 
-  LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coachId, HashMap<String, Object> params);
+  LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagQuestionnaire(String coachId,
+      HashMap<String, Object> params);
 
-  LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId, HashMap<String, Object> params);
+  LiveData<Resource<CoachPtagQuestionnaire>> qcGetPtagAnswers(String coachId,
+      HashMap<String, Object> params);
 
-  Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coachId, HashMap<String, Object> params);
+  Flowable<QcDataResponse<CoachStudentOverview>> qcGetCoachStudentOverview(String coachId,
+      HashMap<String, Object> params);
 
   LiveData<Resource<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String naireId);
 
-  void qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params, MutableLiveData<Resource<Object>> rst);
+  void qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params,
+      MutableLiveData<Resource<Object>> rst);
 
   void qcSubmitPtagAnswer(CoachPtagAnswerBody body, MutableLiveData<Resource<Object>> rst);
 
+  LiveData<Resource<ClassRecords>> qcGetStudentClassRecords(String userID,
+      HashMap<String, Object> params);
 }

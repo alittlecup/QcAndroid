@@ -10,6 +10,7 @@ import cn.qingchengfit.staffkit.views.signin.config.SignInTimeSettingVM;
 import cn.qingchengfit.staffkit.views.signin.config.SignTimeListVM;
 import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.respository.StudentModel;
+import cn.qingchengfit.student.view.detail.ClassRecordTempFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -23,6 +24,7 @@ import dagger.multibindings.IntoMap;
 
 
   @ContributesAndroidInjector abstract CommonUserSearchFragment bindCommonUserSearchFragment();
+  @ContributesAndroidInjector abstract ClassRecordTempFragment bindClassRecordTempFragment();
 
 
 

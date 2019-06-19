@@ -9,7 +9,7 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+  <cn.qingchengfit.widgets.RecycleViewWithNoImg
       xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/rv"
       android:layout_width="match_parent"
@@ -17,5 +17,5 @@
       android:orientation="vertical"
       >
 
-  </cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg>
+  </cn.qingchengfit.widgets.RecycleViewWithNoImg>
 </LinearLayout>

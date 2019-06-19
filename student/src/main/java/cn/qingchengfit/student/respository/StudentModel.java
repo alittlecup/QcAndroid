@@ -11,6 +11,7 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
 import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
 import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
@@ -54,14 +55,14 @@ public class StudentModel implements IStudentModel {
   }
 
   //
-  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(String method) {
+  @Override public Flowable<QcDataResponse<StudentBeanListWrapper>> getAllStudentNoPermission(
+      String method) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("key", PermissionServerUtils.MANAGE_COSTS);
-    if(StringUtils.isEmpty(method)){
+    if (StringUtils.isEmpty(method)) {
       params.put("method", "post");
-    }else{
+    } else {
       params.put("method", method);
-
     }
     return studentApi.qcGetCardBundldStudents(loginStatus.staff_id(), params);
   }
@@ -238,18 +239,25 @@ public class StudentModel implements IStudentModel {
     return null;
   }
 
-  @Override
-  public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(String coachId) {
+  @Override public Flowable<QcDataResponse<CoachPtagQuestionnaire>> qcGetTrainerFeedbackNaire(
+      String coachId) {
     return null;
   }
 
-  @Override public Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params) {
+  @Override public Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId,
+      HashMap<String, Object> params) {
     return null;
   }
 
   @Override
   public Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter() {
     return null;
+  }
+
+  @Override public Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(String studentid,
+      HashMap<String, Object> params) {
+    params.put("brand_id", gymWrapper.brand_id());
+    return studentApi.qcGetStudentClassRecords(loginStatus.staff_id(), studentid, params);
   }
 
   //@Override
@@ -298,21 +306,20 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcRemoveStaff(staff_id, type, body);
   }
 
-
   @Override public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
       String staff_id, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentFollow(staff_id, params);
   }
 
-
-  @Override public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
-      String staff_id, String type, HashMap<String, Object> params) {
+  @Override
+  public Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id,
+      String type, HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudents(staff_id, type, params);
   }
 
-
-  @Override public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
-      String staff_id, HashMap<String, Object> params) {
+  @Override
+  public Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id,
+      HashMap<String, Object> params) {
     return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
   }
 

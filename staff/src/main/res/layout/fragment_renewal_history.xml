@@ -18,7 +18,7 @@
   <!--&gt;-->
   <include layout="@layout/item_contact_qingcheng"/>
 
-  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+  <cn.qingchengfit.widgets.RecycleViewWithNoImg
       android:id="@+id/recycleview"
       android:layout_width="match_parent"
       android:layout_height="0dp"

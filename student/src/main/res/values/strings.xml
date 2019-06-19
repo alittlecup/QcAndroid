@@ -128,6 +128,8 @@
   <string name="coach_student_new_register" formatted="false">新注册%d人</string>
   <string name="coach_student_already_follow" formatted="false">已接洽%d人</string>
   <string name="coach_student_member" formatted="false">会员%d人</string>
+  <string formatted="false" name="attendance_record_head">%d次签到，%d节团课，%d节私教</string>
+  <string name="unit_calss">节</string>
 
   <string name="coach_ptag_statement_tips_pdq">1、PDQ问卷适用于第一次和会员见面沟通训练需求。\n2、建议您下载并打印《PDQ运动课程设计问卷》，手持问卷，并根据问卷内的问题顺序与会员进行面对面沟通。\n3、沟通后，将表格内容记录在您的教练APP，便于日后查询和统计。</string>
   <string name="coach_ptag_statement_tips_feedback">1、训练反馈是针对PTA Global的另外一个工具—《持续改善表格Kaizen-6》开发的功能。

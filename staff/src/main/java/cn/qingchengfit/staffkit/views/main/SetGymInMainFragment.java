@@ -19,7 +19,7 @@ import cn.qingchengfit.events.EventAddress;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;

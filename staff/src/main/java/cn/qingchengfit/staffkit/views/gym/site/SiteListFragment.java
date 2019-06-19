@@ -21,7 +21,7 @@ import cn.qingchengfit.staffkit.views.adapter.ChooseSiteAdapter;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;

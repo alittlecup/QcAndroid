@@ -2,7 +2,7 @@ package cn.qingchengfit.staffkit.usecase.bean;
 
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.Batch;
-import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;

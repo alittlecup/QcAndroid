@@ -7,6 +7,7 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
 import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
 import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
@@ -350,5 +351,8 @@ public interface IStudentModel {
   Flowable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(String naireId, HashMap<String, Object> params);
 
   Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter();
+
+  Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(String studentid,
+       HashMap<String, Object> params);
 
 }

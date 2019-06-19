@@ -17,7 +17,7 @@
       >
   </View>
 
-  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+  <cn.qingchengfit.widgets.RecycleViewWithNoImg
       android:id="@+id/schedule_rv"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.student.attendance;
+package cn.qingchengfit.student.view.detail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,12 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-
 import cn.qingchengfit.items.FilterCommonLinearItem;
-import cn.qingchengfit.model.common.Shop;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.student.attendance.presenter.NotSignFilterPresenter;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.saascommon.filtertime.FilterCustomFragment;
+import cn.qingchengfit.saascommon.filtertime.FilterCustomFragmentBuilder;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.FilterFragment;

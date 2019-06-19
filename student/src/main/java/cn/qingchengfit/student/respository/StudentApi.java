@@ -7,6 +7,7 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.bean.FollowRecordAdd;
 import cn.qingchengfit.student.bean.FollowRecordListWrap;
 import cn.qingchengfit.student.bean.FollowRecordStatusListWrap;
@@ -428,4 +429,10 @@ public interface StudentApi {
    */
   @GET("/api/v2/coaches/{id}/students/") Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudentWithCoach(
       @Path("id") String id, @QueryMap HashMap<String, Object> params);
+
+  //获取某个学员的课程
+  @GET("/api/staffs/{staff_id}/users/attendance/records/")
+  Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
+      @Path("staff_id") String staffid, @Query("user_id") String studentid,
+      @QueryMap HashMap<String, Object> params);
 }

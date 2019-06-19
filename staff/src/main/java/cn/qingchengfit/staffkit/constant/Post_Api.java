@@ -39,7 +39,7 @@ import cn.qingchengfit.model.body.SignOutBody;
 import cn.qingchengfit.model.body.SingleBatchBody;
 import cn.qingchengfit.model.body.UpdateCardValidBody;
 import cn.qingchengfit.model.body.UpdateModule;
-import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.CoachResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.LockerWrapper;

@@ -16,7 +16,7 @@ import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.back.WardrobeReturnDialog;
 import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeDetailFragment;

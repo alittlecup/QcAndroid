@@ -1,8 +1,8 @@
-package cn.qingchengfit.staffkit.views.student.detail;
+package cn.qingchengfit.student.item;
 
 import android.view.View;
 import android.widget.TextView;
-import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.student.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;

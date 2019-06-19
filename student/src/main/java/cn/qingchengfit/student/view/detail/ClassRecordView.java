@@ -1,9 +1,9 @@
-package cn.qingchengfit.staffkit.views.student.detail;
+package cn.qingchengfit.student.view.detail;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.common.AttendanceRecord;
-import cn.qingchengfit.model.common.Shop;
-import cn.qingchengfit.model.responese.ClassRecords;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.student.bean.AttendanceRecord;
+import cn.qingchengfit.student.bean.ClassRecords;
 import java.util.List;
 
 /**

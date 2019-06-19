@@ -23,7 +23,7 @@ import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignOutManualEvent;
 import cn.qingchengfit.staffkit.views.adapter.SignInFlexibleAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
 import cn.qingchengfit.student.bean.StudentWrap;

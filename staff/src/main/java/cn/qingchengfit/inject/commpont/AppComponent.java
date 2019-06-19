@@ -2,11 +2,12 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.gym.GymModule;
 import cn.qingchengfit.card.CardModule;
 import cn.qingchengfit.card.view.SimpleCardListFragment;
 import cn.qingchengfit.checkout.CheckViewModule;
 import cn.qingchengfit.checkout.di.BindCheckoutCounterActivity;
+import cn.qingchengfit.gym.GymModule;
+import cn.qingchengfit.gym.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.inject.moudle.AppAbstractModule;
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
@@ -43,16 +44,15 @@ import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
-import cn.qingchengfit.gym.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.mvvm_student.di.ViewModelModule;
 import cn.qingchengfit.saascommon.qrcode.views.QRActivity;
 import cn.qingchengfit.saascommon.widget.BaseStatementChartFragment;
 import cn.qingchengfit.saascommon.widget.FlexableListFragment;
 import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.staff.di.BindSettingActivity;
+import cn.qingchengfit.staff.di.BindSignInActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
-import cn.qingchengfit.staff.di.BindSignInActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -144,7 +144,6 @@ import cn.qingchengfit.staffkit.views.setting.brand.BrandCreatorEditFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandDetailFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandEditFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandManageFragment;
-import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInCloseFragment;
 import cn.qingchengfit.staffkit.views.signin.SignInConfigFragment;
 import cn.qingchengfit.staffkit.views.signin.SignInDetailFragment;
@@ -206,14 +205,12 @@ import cn.qingchengfit.staffkit.views.student.attendance.AttendanceNotSignFragme
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceRankFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceStaticFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.FilterCustomFragment;
-import cn.qingchengfit.staffkit.views.student.attendance.NotSignFilterFragment;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestFragment;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.bodytest.ModifyBodyTestFragment;
 import cn.qingchengfit.staffkit.views.student.choose.ChooseStudentListFragment;
 import cn.qingchengfit.staffkit.views.student.choose.MultiChooseStudentWithFilterFragment;
 import cn.qingchengfit.staffkit.views.student.choose.StudentFilterWithBirthFragment;
-import cn.qingchengfit.staffkit.views.student.detail.ClassRecordFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentHomeFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentMoreInfoFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentSignInImageFragment;
@@ -267,6 +264,7 @@ import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeListFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
 import cn.qingchengfit.student.StudentViewModel;
 import cn.qingchengfit.student.di.BindStudentActivity;
+import cn.qingchengfit.student.view.detail.NotSignFilterFragment;
 import cn.qingchengfit.student.view.followrecord.FollowRecordPage;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
@@ -409,7 +407,7 @@ import javax.inject.Singleton;
 
     AppComponent.StudentHomeModule.class, AppComponent.FollowRecordPageModule.class,
     AppComponent.StudentMoreInfoModule.class, AppComponent.StudentsCardsModule.class,
-    AppComponent.ClassRecordModule.class, AppComponent.StudentSignInImageFragmentModule.class,
+     AppComponent.StudentSignInImageFragmentModule.class,
 
     AppComponent.SignInManualModule.class, AppComponent.StudentsDetailModule.class,
     AppComponent.ScoreDetailAModule.class, AppComponent.ScoreDetailModule.class,
@@ -1759,18 +1757,6 @@ public interface AppComponent {
     }
   }
 
-  /**
-   * {@link ClassRecordFragment}
-   * {@link StudentsCardsFragment}
-   *
-   * {@link StudentMoreInfoFragment}
-   */
-  @Subcomponent() public interface ClassRecordSubcomponent
-      extends AndroidInjector<ClassRecordFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<ClassRecordFragment> {
-    }
-  }
 
   @Subcomponent() public interface StudentsCardsSubcomponent
       extends AndroidInjector<StudentsCardsFragment> {
@@ -3350,12 +3336,6 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(SimpleCardListFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         SimpleCardListFragmentSubcomponent.Builder builder);
-  }
-
-  @Module(subcomponents = ClassRecordSubcomponent.class) abstract class ClassRecordModule {
-    @Binds @IntoMap @FragmentKey(ClassRecordFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-        ClassRecordSubcomponent.Builder builder);
   }
 
   @Module(subcomponents = StudentsCardsSubcomponent.class) abstract class StudentsCardsModule {

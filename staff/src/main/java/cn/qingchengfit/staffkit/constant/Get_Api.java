@@ -22,7 +22,7 @@ import cn.qingchengfit.model.responese.CardResponse;
 import cn.qingchengfit.model.responese.CardTplResponse;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.Cards;
-import cn.qingchengfit.model.responese.ClassRecords;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.model.responese.CoursePlans;
 import cn.qingchengfit.model.responese.CourseReportDetail;
 import cn.qingchengfit.model.responese.CourseSchedules;

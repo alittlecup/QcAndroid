@@ -16,7 +16,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.usecase.bean.ScheduleBean;
 import cn.qingchengfit.staffkit.views.custom.LoopView;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;

@@ -1,32 +1,35 @@
-package cn.qingchengfit.staffkit.views.student.detail;
+package cn.qingchengfit.student.view.detail;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.common.AttendanceRecord;
-import cn.qingchengfit.model.common.Shop;
-import cn.qingchengfit.model.responese.ClassRecords;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.TitleFragment;
-import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
-import cn.qingchengfit.staffkit.views.student.attendance.NotSignFilterFragment;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.AttendanceRecord;
+import cn.qingchengfit.student.bean.ClassRecords;
+import cn.qingchengfit.student.item.AttendanceAnalysItem;
+import cn.qingchengfit.student.item.AttendanceRecordHeadItem;
+import cn.qingchengfit.student.item.AttendanceRecordItem;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.WebActivity;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FilterTextLayout;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -51,22 +54,20 @@ import static android.view.View.GONE;
  * <p>
  * Created by Paper on 16/3/19 2016.
  */
-public class ClassRecordFragment extends BaseFragment
-    implements ClassRecordView, TitleFragment, FlexibleAdapter.OnItemClickListener,
+@Leaf(module = "student", path = "/student/class/record") public class ClassRecordFragment
+    extends SaasCommonFragment implements ClassRecordView, FlexibleAdapter.OnItemClickListener,
     NotSignFilterFragment.OnNotSignFilterListener {
 
-  public String curShopid = "";
-	RecycleViewWithNoImg recycleview;
-  //@BindView(R.id.tv_gym) TextView tvGym;
+  RecycleViewWithNoImg recycleview;
   @Inject ClassRecordPresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-	FilterTextLayout layoutGymFilter;
-	FilterTextLayout layoutTypeFilter;
-	FilterTextLayout layoutStatusFilter;
-	FilterTextLayout layoutTimeFilter;
-	FrameLayout fragNotSignFilterLayout;
-	View shadow;
+  FilterTextLayout layoutGymFilter;
+  FilterTextLayout layoutTypeFilter;
+  FilterTextLayout layoutStatusFilter;
+  FilterTextLayout layoutTimeFilter;
+  FrameLayout fragNotSignFilterLayout;
+  View shadow;
 
   private CommonFlexAdapter commonFlexAdapter;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
@@ -106,9 +107,6 @@ public class ClassRecordFragment extends BaseFragment
     });
 
     delegatePresenter(presenter, this);
-    //tvGym.setText(gymWrapper.name());
-    //tvGym.setCompoundDrawablesWithIntrinsicBounds(null, null,
-    //    ContextCompat.getDrawable(getContext(), R.drawable.vector_arrow_down_green), null);
     SmoothScrollGridLayoutManager manager = new SmoothScrollGridLayoutManager(getContext(), 4);
     recycleview.setLayoutManager(manager);
     manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -132,14 +130,17 @@ public class ClassRecordFragment extends BaseFragment
         .hide(notSignFilterFragment)
         .commit();
     recycleview.setAdapter(commonFlexAdapter);
-    //adater = new StudentClassRecordAdapter(datas);
-    recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-      @Override public void onRefresh() {
-        presenter.queryData(params);
-      }
-    });
+    recycleview.setOnRefreshListener(() -> presenter.queryData(params));
     presenter.queryData(params);
+    initToolbar(view);
     return view;
+  }
+
+  private void initToolbar(View view) {
+    Toolbar toolbar = view.findViewById(R.id.toolbar);
+    initToolbar(toolbar);
+    TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
+    toolbarTitle.setText("训练记录");
   }
 
   @Override public void onDestroyView() {
@@ -167,13 +168,13 @@ public class ClassRecordFragment extends BaseFragment
     }
   }
 
-  private void startShadowAnim(boolean isStart){
+  private void startShadowAnim(boolean isStart) {
 
     AlphaAnimation animation;
     if (isStart) {
       shadow.setVisibility(View.VISIBLE);
       animation = new AlphaAnimation(0f, 0.6f);
-    }else{
+    } else {
       shadow.setVisibility(GONE);
       animation = new AlphaAnimation(0.6f, 0f);
     }
@@ -182,19 +183,19 @@ public class ClassRecordFragment extends BaseFragment
     shadow.startAnimation(animation);
   }
 
- public void gymFilter() {
+  public void gymFilter() {
     showFilter("gym");
   }
 
- public void typeFilter() {
+  public void typeFilter() {
     showFilter("type");
   }
 
- public void statusFilter() {
+  public void statusFilter() {
     showFilter("status");
   }
 
- public void timeFilter() {
+  public void timeFilter() {
     showFilter("time");
   }
 
@@ -205,13 +206,13 @@ public class ClassRecordFragment extends BaseFragment
     shops.addAll(ss);
     //找到当前场馆
     if (TextUtils.isEmpty(layoutGymFilter.getLabel())) {
-      if(shops !=null && shops.size() > 0) {
+      if (shops != null && shops.size() > 0) {
         for (Shop shop : shops) {
           if (shop.id.equals(gymWrapper.shop_id())) {
             layoutGymFilter.setLabel(shop.name);
           }
         }
-      }else{
+      } else {
         layoutGymFilter.setLabel("全部");
       }
     }
@@ -276,15 +277,8 @@ public class ClassRecordFragment extends BaseFragment
         datas.add(new AttendanceRecordItem(monthData.get(j), false));
       }
     }
-    monthData = new ArrayList<>();
-    g = p = c = 0;
-
     commonFlexAdapter.updateDataSet(datas);
     recycleview.setNoData(datas.size() == 0);
-  }
-
-  @Override public String getTitle() {
-    return "上课记录";
   }
 
   @Override public String getFragmentName() {

@@ -62,6 +62,7 @@
     <attr format="string" name="rn_hint"/>
     <attr format="color" name="rn_color"/>
     <attr format="dimension" name="rn_bottom_padding"/>
+    <attr format="dimension" name="rn_top_padding"/>
     <attr format="dimension" name="rn_no_data_top"/>
   </declare-styleable>
 

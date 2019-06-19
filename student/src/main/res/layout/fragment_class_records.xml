@@ -7,12 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+  <include layout="@layout/common_simple_toolbar"/>
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="40dp"
       android:orientation="horizontal"
       >
+
 
     <cn.qingchengfit.widgets.FilterTextLayout
         android:id="@+id/layout_gym_filter"
@@ -26,8 +28,8 @@
         layout="@layout/divider_grey_vertical"
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         />
 
     <cn.qingchengfit.widgets.FilterTextLayout
@@ -43,8 +45,8 @@
         layout="@layout/divider_grey_vertical"
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         />
 
     <cn.qingchengfit.widgets.FilterTextLayout
@@ -60,8 +62,8 @@
         layout="@layout/divider_grey_vertical"
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         />
 
     <cn.qingchengfit.widgets.FilterTextLayout
@@ -87,7 +89,7 @@
         android:orientation="vertical"
         >
 
-      <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      <cn.qingchengfit.widgets.RecycleViewWithNoImg
           xmlns:rn="http://schemas.android.com/apk/res-auto"
           android:id="@+id/recycleview"
           android:layout_width="match_parent"
@@ -133,8 +135,8 @@
         android:id="@+id/shadow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
         android:alpha="0.6"
+        android:background="@color/grey"
         android:visibility="gone"
         />
 

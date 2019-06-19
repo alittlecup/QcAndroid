@@ -7,7 +7,7 @@
       android:background="@color/bg_grey"
       >
 
-    <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+    <cn.qingchengfit.widgets.RecycleViewWithNoImg
         android:id="@+id/rv_sales"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
