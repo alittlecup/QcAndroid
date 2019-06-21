@@ -4,13 +4,13 @@ import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.MiniProgram;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
 import cn.qingchengfit.saascommon.network.Resource;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.wxpreview.old.newa.bean.Shop;
 import cn.qingchengfit.wxpreview.old.newa.network.WxPreviewApi;
 import javax.inject.Inject;
 

@@ -12,17 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
-
-
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
-import cn.qingchengfit.saasbase.network.model.Shop;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.widgets.CommonInputView;

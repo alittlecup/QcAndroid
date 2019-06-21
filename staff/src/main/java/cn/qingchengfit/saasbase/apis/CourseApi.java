@@ -30,6 +30,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrap
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import java.util.HashMap;
+import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -262,4 +263,19 @@ public interface CourseApi {
   rx.Observable<QcDataResponse<WorkoutPlansResponse>> qcGetCourseWorkoutPlans(
       @Path("staff_id") String staff_id, @Path("workout_id") String workout_id,
       @QueryMap HashMap<String, Object> params);
+
+  //获取已经排好课程的课程详情，从课程预约进入
+  @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/detail/")
+  rx.Observable<QcDataResponse<>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
+      @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
+
+  //获取已经排好课程的预约人数列表
+  @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/orders/")
+  rx.Observable<QcDataResponse<>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
+      @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
+
+  //获取已经排好课程的课程照片列表
+  @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/photos/")
+  rx.Observable<QcDataResponse<>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
+      @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
 }

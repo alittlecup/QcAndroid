@@ -110,7 +110,6 @@ import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCoursePlan;
-import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseJacket;
@@ -409,12 +408,6 @@ public interface TrainerAllApi {
   @GET("/api/v2/coaches/{coach_id}/plantpls/all/?show_all=1")
   rx.Observable<QcResponseCoursePlan> qcGetCoursePlanAll(@Path("coach_id") String id);
 
-  /**
-   * 获取课程下教练
-   */
-  @GET("/api/v1/coaches/{coach_id}/courses/teachers/")
-  rx.Observable<QcResponseCourseTeacher> qcGetCourseTeacher(@Path("coach_id") String coach_id,
-      @Query("course_id") String id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 课程下照片

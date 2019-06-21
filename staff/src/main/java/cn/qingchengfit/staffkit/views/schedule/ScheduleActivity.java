@@ -320,24 +320,6 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CHOOSE_GYM) {
-                //toolbarTitle.setText(IntentUtils.getIntentString(data, 0));
-                //mChooseShopId = IntentUtils.getIntentString(data, 1);
-                //String CurGymId = IntentUtils.getIntentString(data, 2);
-                //String CurGymModel = IntentUtils.getIntentString(data, 3);
-                //if (!TextUtils.isEmpty(mChooseShopId)) {
-                //gymBaseInfoAction.getGymByModel(CurGymId, CurGymModel)
-                //        .subscribe(new Action1<List<CoachService>>() {
-                //            @Override
-                //            public void call(List<CoachService> coachServices) {
-                //                if (coachServices != null && coachServices.size() > 0) {
-                //                    mCurService = coachServices.get(0);
-                //                    RxBus.getBus().post(coachServices.get(0));
-                //                }
-                //            }
-                //        });
-                //} else {
-                //    RxBus.getBus().post(mCoachService);
-                //}
             } else if (requestCode == 404) {
                 mFragmentAdapter.notifyDataSetChanged();
             }

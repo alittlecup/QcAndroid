@@ -118,7 +118,6 @@ public class ScheduleListPresenter extends BasePresenter {
                                     bean.isSingle = false;
                                 }
                                 bean.gymname = schedule.shop.name;
-                                //                        bean.color = syscolor;
                                 bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
                                 bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();
                                 bean.count = schedule.count;

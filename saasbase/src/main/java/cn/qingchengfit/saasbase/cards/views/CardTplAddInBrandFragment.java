@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import cn.qingchengfit.saasbase.network.model.Shop;
+import cn.qingchengfit.model.base.Shop;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.List;
 
