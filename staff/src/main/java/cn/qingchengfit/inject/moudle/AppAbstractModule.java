@@ -3,6 +3,7 @@ package cn.qingchengfit.inject.moudle;
 import android.arch.lifecycle.ViewModel;
 import cn.qingchengfit.checkout.repository.CheckoutModel;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
+import cn.qingchengfit.saasbase.course.batch.views.BatchFragmentVM;
 import cn.qingchengfit.saasbase.staff.views.CommonUserSearchFragment;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.staffkit.views.signin.config.SignInMemberVM;
@@ -37,6 +38,8 @@ import dagger.multibindings.IntoMap;
   @Binds @IntoMap @ViewModelKey(SignInMemberVM.class)
   abstract ViewModel bindSignInMemberVM(SignInMemberVM model);
 
+  @Binds @IntoMap @ViewModelKey(BatchFragmentVM.class)
+  abstract ViewModel bindBatchFragmentVM(BatchFragmentVM model);
 
 
 

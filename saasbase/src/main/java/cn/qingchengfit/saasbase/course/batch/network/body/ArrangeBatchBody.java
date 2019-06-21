@@ -22,6 +22,7 @@ public class ArrangeBatchBody implements Cloneable {
   public ArrayList<Time_repeat> time_repeats;
   public String batch_id;
   public int request_user_as_teacher;
+  public String workout_plan_id;
   public boolean is_free = false;
 
   public BatchOpenRule open_rule = new BatchOpenRule();

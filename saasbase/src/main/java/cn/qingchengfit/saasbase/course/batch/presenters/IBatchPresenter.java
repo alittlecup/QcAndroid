@@ -22,9 +22,11 @@ import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +61,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
   protected Rule rulePayOnline;
 
   //是否为私教课程
-   boolean isPrivate;
+  boolean isPrivate;
 
   public boolean isPro() {
     return !body.is_free;
@@ -120,18 +122,18 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
       body.is_free = true;
     }
     RxBusAdd(BatchLoop.class).onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<BatchLoop>() {
-        @Override public void onNext(BatchLoop cmBean) {
-          addOrEditBatchLooper(cmBean);
-        }
-      });
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<BatchLoop>() {
+          @Override public void onNext(BatchLoop cmBean) {
+            addOrEditBatchLooper(cmBean);
+          }
+        });
   }
 
   private void addOrEditBatchLooper(BatchLoop cmBean) {
     if (cmBean.dateEnd == null && cmBean.dateStart == null && (cmBean.week == null
-      || cmBean.week.size() == 0)) {
+        || cmBean.week.size() == 0)) {
       return;
     }
     if (cmBean.position >= 0 && batchloopers.size() > cmBean.position) {
@@ -163,13 +165,15 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     body.from_date = mvpView.getStart();
     body.to_date = mvpView.getEnd();
     //body.is_open_for_bodys = mvpView.supportMutiMember();
-    body.max_users = (isPrivate && !mvpView.supportMutiMember())?1:mvpView.suportMemberNum();
+    body.max_users = (isPrivate && !mvpView.supportMutiMember()) ? 1 : mvpView.suportMemberNum();
     body.spaces = mvpView.getSupportSpace();
     body.course_id = mvpView.getCourseId();
     body.teacher_id = mvpView.getTrainerId();
-    body.time_repeats = mvpView.getBatchLoops() == null?mvpView.getTimeRepeats():BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
+    body.time_repeats = mvpView.getBatchLoops() == null ? mvpView.getTimeRepeats()
+        : BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
     body.is_free = !mvpView.needPay();
-    body.request_user_as_teacher= mvpView.isStaffAsTeather();
+    body.request_user_as_teacher = mvpView.isStaffAsTeather();
+    body.workout_plan_id = mvpView.getWorkoutPlanID();
   }
 
   /**
@@ -182,19 +186,23 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
       mvpView.showAlert(ret);
       return;
     }
+    if (!isPrivate && StringUtils.isEmpty(body.workout_plan_id)) {
+      ToastUtils.show("请选择训练计划");
+      return;
+    }
     RxRegiste(courseApi.qcCheckBatch(isPrivate, body)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcResponse>() {
-        @Override public void onNext(QcResponse qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            arrangeBatch();
-          } else {
-            mvpView.showAlert(qcResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcResponse>() {
+          @Override public void onNext(QcResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              arrangeBatch();
+            } else {
+              mvpView.showAlert(qcResponse.getMsg());
+            }
           }
-        }
-      }));
+        }));
   }
 
   /**
@@ -216,57 +224,59 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
    */
   public void getBatchTemplete(boolean isPrivate, String teacher_id, String course_id) {
     RxRegiste(courseApi.qcGetBatchTemplate(isPrivate, teacher_id, course_id)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<ScheduleTemplete>>() {
-        @Override public void onNext(QcDataResponse<ScheduleTemplete> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            body.is_free = qcResponse.data.is_free;
-            body.max_users = qcResponse.data.max_users;
-            /**
-             * time repeats -> CmBean
-             */
-            body.time_repeats = qcResponse.data.time_repeats;
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<ScheduleTemplete>>() {
+          @Override public void onNext(QcDataResponse<ScheduleTemplete> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              body.is_free = qcResponse.data.is_free;
+              body.max_users = qcResponse.data.max_users;
+              /**
+               * time repeats -> CmBean
+               */
+              body.time_repeats = qcResponse.data.time_repeats;
 
-            HashMap<String, ArrayList<Integer>> mTimeRep = new HashMap<>();
-            for (int i = 0; i < body.time_repeats.size(); i++) {
-              Time_repeat time_repeat = body.time_repeats.get(i);
-              String key = time_repeat.getStart() + "-" + time_repeat.getEnd() +(time_repeat.is_cross()?"-next":"");
-              if (mTimeRep.get(key) != null) {
-                mTimeRep.get(key).add(time_repeat.getWeekday());
-              } else {
-                ArrayList<Integer> weeks = new ArrayList<>();
-                weeks.add(time_repeat.getWeekday());
-                mTimeRep.put(key, weeks);
-              }
-            }
-            body.rules = qcResponse.data.rule;
-            if (body.rules != null) {
-              cardRules.clear();
-              rulePayOnline = null;
-              for (int i = 0; i < body.rules.size(); i++) {
-                if (body.rules.get(i).channel.equals(Constants.CHANNEL_CARD)) {
-                  cardRules.add(body.rules.get(i));
+              HashMap<String, ArrayList<Integer>> mTimeRep = new HashMap<>();
+              for (int i = 0; i < body.time_repeats.size(); i++) {
+                Time_repeat time_repeat = body.time_repeats.get(i);
+                String key =
+                    time_repeat.getStart() + "-" + time_repeat.getEnd() + (time_repeat.is_cross()
+                        ? "-next" : "");
+                if (mTimeRep.get(key) != null) {
+                  mTimeRep.get(key).add(time_repeat.getWeekday());
                 } else {
-                  rulePayOnline = body.rules.get(i);
+                  ArrayList<Integer> weeks = new ArrayList<>();
+                  weeks.add(time_repeat.getWeekday());
+                  mTimeRep.put(key, weeks);
                 }
               }
+              body.rules = qcResponse.data.rule;
+              if (body.rules != null) {
+                cardRules.clear();
+                rulePayOnline = null;
+                for (int i = 0; i < body.rules.size(); i++) {
+                  if (body.rules.get(i).channel.equals(Constants.CHANNEL_CARD)) {
+                    cardRules.add(body.rules.get(i));
+                  } else {
+                    rulePayOnline = body.rules.get(i);
+                  }
+                }
+              }
+              mvpView.onLoppers(BatchLoop.getBeansFromTimeRep(mTimeRep));
+              mvpView.onTemplete(qcResponse.data.is_free, rulePayOnline != null,
+                  qcResponse.data.max_users, rulePayOnline);
+            } else {
+              mvpView.onShowError(qcResponse.getMsg());
             }
-            mvpView.onLoppers(BatchLoop.getBeansFromTimeRep(mTimeRep));
-            mvpView.onTemplete(qcResponse.data.is_free, rulePayOnline != null,
-              qcResponse.data.max_users,rulePayOnline);
-          } else {
-            mvpView.onShowError(qcResponse.getMsg());
           }
-        }
-      }));
+        }));
   }
 
   public interface MVPView extends CView {
     void onSuccess();
 
-    void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer,Rule onLineRule);
+    void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer, Rule onLineRule);
 
     void onBatchDetail(BatchDetail batchDetail);
 
@@ -297,5 +307,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     boolean needPay();
 
     int isStaffAsTeather();
+
+    String getWorkoutPlanID();
   }
 }

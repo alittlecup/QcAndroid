@@ -37,8 +37,8 @@
         android:id="@+id/img_foot"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_alignBottom="@id/img_layout"
         android:layout_alignRight="@id/img_layout"
+        android:layout_alignBottom="@id/img_layout"
         android:src="@drawable/bg_rect_square_img"
         android:visibility="gone"
         />
@@ -54,11 +54,11 @@
 
       <TextView
           android:id="@+id/text1"
+          style="@style/Qc.TextCommonBlack"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:maxWidth="200dp"
           tools:text="健康公益讲座"
-          style="@style/Qc.TextCommonBlack"
           />
 
       <android.support.v4.widget.Space
@@ -100,6 +100,7 @@
   </RelativeLayout>
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/coach"
+      style="@style/QcCivInputStyle"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
@@ -107,28 +108,27 @@
       app:civ_lable="@string/coach"
       app:civ_showdivier="true"
       app:civ_showright="true"
-      style="@style/QcCivInputStyle"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/space"
+      style="@style/QcCivInputStyle"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="场地"
       app:civ_showdivier="true"
       app:civ_showright="true"
-      style="@style/QcCivInputStyle"
       />
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/order_sutdent_count"
+      style="@style/QcCivInputStyle"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_content="1"
       app:civ_lable="单节可预约人数"
       app:civ_showright="true"
-      style="@style/QcCivInputStyle"
       />
   <include layout="@layout/divider_grey"/>
 
@@ -137,20 +137,20 @@
       android:id="@+id/price_setting"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_content="免费"
+      app:civ_edit_able="false"
       app:civ_lable="课程价格"
       app:civ_showright="true"
-      app:civ_edit_able="false"
-      app:civ_clickable="true"
       app:civ_text_color="@color/text_black"
 
       />
   <LinearLayout
       android:id="@+id/ll_price_content"
       android:layout_width="match_parent"
-      android:visibility="gone"
       android:layout_height="wrap_content"
       android:orientation="vertical"
+      android:visibility="gone"
       >
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/pay_online"
@@ -171,6 +171,46 @@
         app:civ_hint="未设置"
         app:civ_lable="会员卡约课价格"
         app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_black"
+        />
+  </LinearLayout>
+  <LinearLayout
+      android:id="@+id/ll_course_system"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+    <TextView
+        android:id="@+id/tv_batch_loop_hint"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/bg_grey"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="训练计划"
+        android:textSize="@dimen/min_font"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_course_system"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_edit_able="false"
+        app:civ_hint="请选择课程体系"
+        app:civ_lable="课程体系"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_black"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_course_system_class"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_edit_able="false"
+        app:civ_hint="请选择训练计划"
+        app:civ_lable="训练计划"
         app:civ_showright="true"
         app:civ_text_color="@color/text_black"
         />

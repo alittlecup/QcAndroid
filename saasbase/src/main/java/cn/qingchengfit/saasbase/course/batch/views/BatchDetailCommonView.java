@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
@@ -29,6 +31,7 @@ import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlan;
 import cn.qingchengfit.saasbase.course.course.views.AddCourseParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
@@ -49,6 +52,7 @@ import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -57,6 +61,7 @@ import cn.qingchengfit.widgets.ExpandedLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -102,7 +107,8 @@ public class BatchDetailCommonView extends BaseFragment {
   @Inject LoginStatus loginStatus;
   @Inject IPermissionModel serPermisAction;
   @Inject public ICourseModel courseApi;
-
+  @Inject ViewModelProvider.Factory factory;
+  BatchFragmentVM mViewModel;
   @Inject IStaffModel staffModel;
 
   private Course course;
@@ -158,6 +164,9 @@ public class BatchDetailCommonView extends BaseFragment {
     }
   }
 
+  LinearLayout llCourseWorkout;
+  CommonInputView civWorkout, civWorkoutPlan;
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(isPrivate ? R.layout.fragment_batch_detail_common_private
@@ -176,6 +185,27 @@ public class BatchDetailCommonView extends BaseFragment {
     payCard = (CommonInputView) view.findViewById(R.id.pay_card);
     priceSetting = (CommonInputView) view.findViewById(R.id.price_setting);
     llPayContent = view.findViewById(R.id.ll_price_content);
+    llCourseWorkout = view.findViewById(R.id.ll_course_system);
+    civWorkout = view.findViewById(R.id.civ_course_system);
+    civWorkoutPlan = view.findViewById(R.id.civ_course_system_class);
+    if ((mSource.equals("addbatch") || mSource.equals("editbatch")) && !isPrivate) {
+      llCourseWorkout.setVisibility(View.VISIBLE);
+      mViewModel = ViewModelProviders.of(this, factory).get(BatchFragmentVM.class);
+      mViewModel.selectWork.observe(this, workout -> {
+        civWorkout.setContent(workout.getName());
+      });
+      mViewModel.selectWorkPlan.observe(this, workoutPlan -> {
+        if (workoutPlan != null) {
+          civWorkoutPlan.setContent(workoutPlan.getName());
+        } else {
+          civWorkoutPlan.setContent("");
+        }
+      });
+      civWorkout.setOnClickListener(v -> onWorkoutClick());
+      civWorkoutPlan.setOnClickListener(v -> onWorkoutPlanClick());
+    } else {
+      llCourseWorkout.setVisibility(View.GONE);
+    }
     view.findViewById(R.id.course_layout).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (isPrivate) {
@@ -236,6 +266,68 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   private int llPriceContentVisibility = View.INVISIBLE;
+
+  private void onWorkoutPlanClick() {
+    if (mViewModel == null) return;
+    List<WorkoutPlan.Workout> value = mViewModel.getWorks().getValue();
+    if (value == null) {
+      ToastUtils.show("请选择课程体系");
+      mViewModel.loadWorkout();
+    } else if (value.isEmpty()) {
+      ToastUtils.show("课程体系内容为空");
+    } else if (civWorkout.getContent().isEmpty() || mViewModel.selectWork.getValue() == null) {
+      ToastUtils.show("请选择课程体系");
+    } else {
+      Map<String, List<WorkoutPlan>> plans = mViewModel.getWorkoutPlans();
+      String id = mViewModel.selectWork.getValue().getId();
+      if (!plans.containsKey(id)) {
+        mViewModel.loadPlans();
+      } else if (plans.get(id) == null || plans.get(id).isEmpty()) {
+        ToastUtils.show("训练计划内容为空");
+      } else {
+        List<WorkoutPlan> workoutPlans = plans.get(id);
+        List<BottomChooseData> datas = new ArrayList<>();
+        for (WorkoutPlan workout : workoutPlans) {
+          datas.add(new BottomChooseData(workout.getName()));
+        }
+        BottomChooseDialog planChooseDialog;
+        planChooseDialog = new BottomChooseDialog(getContext(), "选择训练计划", datas);
+        planChooseDialog.setOnItemClickListener(position -> {
+          WorkoutPlan plan = workoutPlans.get(position);
+          mViewModel.selectWorkPlan.setValue(plan);
+          return true;
+        });
+        planChooseDialog.show();
+      }
+    }
+  }
+
+  BottomChooseDialog workoutChooseDialog;
+
+  private void onWorkoutClick() {
+    if (mViewModel == null) return;
+    List<WorkoutPlan.Workout> value = mViewModel.getWorks().getValue();
+    if (value == null) {
+      mViewModel.loadWorkout();
+    } else if (value.isEmpty()) {
+      ToastUtils.show("课程体系内容为空");
+    } else {
+      if (workoutChooseDialog == null) {
+        List<BottomChooseData> datas = new ArrayList<>();
+        for (WorkoutPlan.Workout workout : value) {
+          datas.add(new BottomChooseData(workout.getName()));
+        }
+        workoutChooseDialog = new BottomChooseDialog(getContext(), "选择课程体系", datas);
+        workoutChooseDialog.setOnItemClickListener(position -> {
+          WorkoutPlan.Workout workout = value.get(position);
+          mViewModel.setSelectWork(workout);
+          mViewModel.selectWorkPlan.setValue(null);
+          return true;
+        });
+      }
+      workoutChooseDialog.show();
+    }
+  }
 
   @Override public void onResume() {
     super.onResume();
@@ -346,7 +438,7 @@ public class BatchDetailCommonView extends BaseFragment {
     if (staff == null) {
       if (isPrivate) {
         if (text1 == null || text3 == null) return;
-        PhotoUtils.small(img,"",R.drawable.img_default_teacher_male);
+        PhotoUtils.small(img, "", R.drawable.img_default_teacher_male);
         img.setImageResource(R.drawable.img_default_teacher_male);
         text1.setText("请选择教练");
       }
@@ -598,7 +690,8 @@ public class BatchDetailCommonView extends BaseFragment {
                 showAlert(R.string.sorry_for_no_permission);
                 return;
               }
-              routeTo("/add/", new AddCourseParams().isPrivate(isPrivate).notFromList(true).build());
+              routeTo("/add/",
+                  new AddCourseParams().isPrivate(isPrivate).notFromList(true).build());
             }
           } else {
             onShowError(qcResponse.getMsg());
@@ -813,6 +906,11 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public void setListener(BatchTempleListener listener) {
     this.listener = listener;
+  }
+
+  public void setWorkOutPlan(WorkoutPlan workoutPlan) {
+    mViewModel.selectWork.setValue(workoutPlan.getWorkout());
+    mViewModel.selectWorkPlan.setValue(workoutPlan);
   }
 
   public interface BatchTempleListener {

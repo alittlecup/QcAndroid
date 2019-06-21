@@ -3,6 +3,8 @@ package cn.qingchengfit.saasbase.repository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlansResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutResponse;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
@@ -71,19 +73,19 @@ public interface ICourseModel {
 
   //获取某节课种类的排课列表
   rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-    @Path("course_id") String course_id);
+      @Path("course_id") String course_id);
 
   //获取某个排期的详情
   rx.Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
-    @Path("batch_id") String batch_id);
+      @Path("batch_id") String batch_id);
 
   //获取某个排期的schedule
   rx.Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(String batch_id,
-    boolean isPrivate);
+      boolean isPrivate);
 
   //排课填充
   rx.Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(boolean isPrivate,
-    String teacher_id, String course_id);
+      String teacher_id, String course_id);
 
   //检查排期是否冲突
   rx.Observable<QcDataResponse> qcCheckBatch(boolean isPrivate, ArrangeBatchBody body);
@@ -95,8 +97,7 @@ public interface ICourseModel {
   rx.Observable<QcDataResponse> qcUpdateBatch(String batchid, ArrangeBatchBody body);
 
   //删除排期 多条schedule
-  rx.Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate,
-     String ids);
+  rx.Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate, String ids);
 
   /**
    * 获取某一条排期的详情
@@ -105,13 +106,13 @@ public interface ICourseModel {
    * @param single_id 排期id
    */
   rx.Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
-    String single_id);
+      String single_id);
 
   //删除某个排期批次
   rx.Observable<QcDataResponse> delBatch(String batch_id);
 
   rx.Observable<QcDataResponse> qcUpdateBatchSchedule(boolean isPirvate, String scheduleid,
-    SingleBatchBody body);
+      SingleBatchBody body);
 
   /**
    * 获取课程计划
@@ -122,14 +123,14 @@ public interface ICourseModel {
    * 获取课程下教练
    */
   rx.Observable<QcDataResponse<CourseTeacherWrapper>> qcGetCourseTeacher(
-    @Query("course_id") String id,String shopid);
+      @Query("course_id") String id, String shopid);
 
   /**
    * 课程下照片
    */
   @GET("/api/v2/staffs/{staff_id}/courses/schedules/photos/")
   rx.Observable<QcDataResponse<SchedulePhotoListWrap>> qcGetSchedulePhotos(
-    @Query("course_id") String id, @Query("page") int page);
+      @Query("course_id") String id, @Query("page") int page);
 
   /**
    * 获取课程详情
@@ -144,19 +145,19 @@ public interface ICourseModel {
   rx.Observable<QcDataResponse<ShopCommentWrap>> qcGetShopComment(@Query("course_id") String id);
 
   @POST("/api/v2/staffs/{id}/courses/") rx.Observable<QcDataResponse> qcCreateCourse(
-    @Body CourseBody courseBody);
+      @Body CourseBody courseBody);
 
   //修改课程
   @PUT("/api/v2/staffs/{id}/courses/{course_id}/") rx.Observable<QcDataResponse> qcUpdateCourse(
-    @Path("course_id") String course_id, @Body CourseBody courseBody);
+      @Path("course_id") String course_id, @Body CourseBody courseBody);
 
   //删除课程
   @DELETE("/api/v2/staffs/{id}/courses/{course_id}/") rx.Observable<QcDataResponse> qcDelCourse(
-    @Path("course_id") String course_id);
+      @Path("course_id") String course_id);
 
   //修改封面
   @POST("/api/v2/staffs/{id}/courses/photos/") rx.Observable<QcDataResponse> qcEditJacket(
-    @Query("course_id") String course_id, @Body EditJacketBody body);
+      @Query("course_id") String course_id, @Body EditJacketBody body);
 
   //修改课程适用场馆
   @PUT("/api/v2/staffs/{staff_id}/courses/{course_id}/shops/")
@@ -169,5 +170,13 @@ public interface ICourseModel {
 
   rx.Observable<QcDataResponse> qcSureCopyBatch(@Body BatchCopyBody body);
 
-  rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(HashMap<String, Object> params);
+  rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(
+      HashMap<String, Object> params);
+
+  //获取排期的课程体系
+  rx.Observable<QcDataResponse<WorkoutResponse>> qcGetCourseWorkout(
+      HashMap<String, Object> params);
+
+  rx.Observable<QcDataResponse<WorkoutPlansResponse>> qcGetCourseWorkoutPlans(String workoutID,
+      HashMap<String, Object> params);
 }

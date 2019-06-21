@@ -96,7 +96,6 @@
             android:gravity="center_vertical"
             android:text="课程周期"
             android:textSize="@dimen/min_font"
-
             />
 
         <TextView

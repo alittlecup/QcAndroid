@@ -24,6 +24,8 @@ public class BatchDetail {
   public List<CardTplBatchShip> card_tpls;
   public boolean has_order;
   public BatchOpenRule open_rule;
+  @SerializedName("workout_plan")
+  public WorkoutPlan workoutPlan;
 
   public List<Space> getSpaces() {
     if (spaces != null) {

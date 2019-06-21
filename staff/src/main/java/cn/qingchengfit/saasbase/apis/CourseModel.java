@@ -8,6 +8,8 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlansResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutResponse;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -61,11 +63,11 @@ public class CourseModel implements ICourseModel {
   private CourseApi api;
 
   public CourseModel(QcRestRepository restRepository, GymWrapper gymWrapper,
-    LoginStatus loginStatus) {
+      LoginStatus loginStatus) {
     api = restRepository.createRxJava1Api(CourseApi.class);
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    ComponentModuleManager.register(ICourseModel.class,this);
+    ComponentModuleManager.register(ICourseModel.class, this);
   }
 
   /**
@@ -97,9 +99,9 @@ public class CourseModel implements ICourseModel {
    * @param is_private 是否为私教
    */
   @Override public Observable<QcDataResponse<CourseLisWrap>> qcGetCoursesPermission(
-    boolean is_private) {
+      boolean is_private) {
     return api.qcGetCoursesPermission(loginStatus.staff_id(), gymWrapper.getParams(),
-      is_private ? 1 : 0);
+        is_private ? 1 : 0);
   }
 
   /**
@@ -108,7 +110,7 @@ public class CourseModel implements ICourseModel {
    * @param coach_id 教练的id
    */
   @Override public Observable<QcDataResponse<QcResponsePrivateDetail>> qcGetPrivateCoaches(
-    String coach_id) {
+      String coach_id) {
     return api.qcGetPrivateCoaches(loginStatus.staff_id(), coach_id, gymWrapper.getParams());
   }
 
@@ -118,7 +120,7 @@ public class CourseModel implements ICourseModel {
    * @param course_id 课程ID
    */
   @Override public Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-    String course_id) {
+      String course_id) {
     return api.qcGetGroupCourses(loginStatus.staff_id(), course_id, gymWrapper.getParams());
   }
 
@@ -136,9 +138,9 @@ public class CourseModel implements ICourseModel {
    * @param isPrivate 是否为私教
    */
   @Override public Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(
-    String batch_id, boolean isPrivate) {
-    return api.qcGetbatchSchedules(loginStatus.staff_id(), batch_id, isPrivate ? "timetables" : "schedules",
-      gymWrapper.getParams());
+      String batch_id, boolean isPrivate) {
+    return api.qcGetbatchSchedules(loginStatus.staff_id(), batch_id,
+        isPrivate ? "timetables" : "schedules", gymWrapper.getParams());
   }
 
   /**
@@ -149,9 +151,9 @@ public class CourseModel implements ICourseModel {
    * @param course_id 课程
    */
   @Override public Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(
-    boolean isPrivate, String teacher_id, String course_id) {
-    return api.qcGetBatchTemplate(loginStatus.staff_id(), isPrivate ? "private" : "group", teacher_id,
-      course_id, gymWrapper.getParams());
+      boolean isPrivate, String teacher_id, String course_id) {
+    return api.qcGetBatchTemplate(loginStatus.staff_id(), isPrivate ? "private" : "group",
+        teacher_id, course_id, gymWrapper.getParams());
   }
 
   /**
@@ -160,9 +162,9 @@ public class CourseModel implements ICourseModel {
    * @param isPrivate 是否私教
    */
   @Override public Observable<QcDataResponse> qcCheckBatch(boolean isPrivate,
-    ArrangeBatchBody body) {
+      ArrangeBatchBody body) {
     return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "private" : "group", body,
-      gymWrapper.getParams());
+        gymWrapper.getParams());
   }
 
   /**
@@ -187,9 +189,9 @@ public class CourseModel implements ICourseModel {
     body.ids = ids;
     body.id = gymWrapper.id();
     body.model = gymWrapper.model();
-    return api.qcDelBatchSchedule(loginStatus.staff_id(),isPrivate ? "timetables" : "schedules",body,gymWrapper.getParams());
+    return api.qcDelBatchSchedule(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules",
+        body, gymWrapper.getParams());
   }
-
 
   /**
    * 获取某条 排课实例
@@ -198,9 +200,9 @@ public class CourseModel implements ICourseModel {
    * @param single_id 排期id
    */
   @Override public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
-    String single_id) {
-    return api.qcGetSingleBatch(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules", single_id,
-      gymWrapper.getParams());
+      String single_id) {
+    return api.qcGetSingleBatch(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules",
+        single_id, gymWrapper.getParams());
   }
 
   /**
@@ -214,13 +216,14 @@ public class CourseModel implements ICourseModel {
    * 更新某条排课实例
    */
   @Override public Observable<QcDataResponse> qcUpdateBatchSchedule(boolean isPirvate,
-    String scheduleid, SingleBatchBody body) {
+      String scheduleid, SingleBatchBody body) {
     int err = body.check();
-    if (err > 0){
-      return ResponseConstant.generateError(err,App.context);
-    }else
-      return api.qcUpdateBatchSchedule(loginStatus.staff_id(), isPirvate ? "timetables" : "schedules", scheduleid,
-      body, gymWrapper.getParams());
+    if (err > 0) {
+      return ResponseConstant.generateError(err, App.context);
+    } else {
+      return api.qcUpdateBatchSchedule(loginStatus.staff_id(),
+          isPirvate ? "timetables" : "schedules", scheduleid, body, gymWrapper.getParams());
+    }
   }
 
   @Override public Observable<QcDataResponse<CoursePlans>> qcGetCoursePlan() {
@@ -228,15 +231,13 @@ public class CourseModel implements ICourseModel {
   }
 
   @Override public Observable<QcDataResponse<CourseTeacherWrapper>> qcGetCourseTeacher(String id,
-    String shopid) {
+      String shopid) {
     // TODO: 2017/11/30 处理shop id 的问题
     return api.qcGetCourseTeacher(loginStatus.staff_id(), id, gymWrapper.getParams());
   }
 
-
-
   @Override public Observable<QcDataResponse<SchedulePhotoListWrap>> qcGetSchedulePhotos(String id,
-    int page) {
+      int page) {
     return api.qcGetSchedulePhotos(loginStatus.staff_id(), id, page, gymWrapper.getParams());
   }
 
@@ -250,15 +251,14 @@ public class CourseModel implements ICourseModel {
 
   @Override public Observable<QcDataResponse> qcCreateCourse(CourseBody courseBody) {
     int err = courseBody.check();
-    if (err > 0)
-      return ResponseConstant.generateError(err, App.context);
+    if (err > 0) return ResponseConstant.generateError(err, App.context);
     return api.qcCreateCourse(loginStatus.staff_id(), courseBody, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcUpdateCourse(String course_id, CourseBody courseBody) {
     return api.qcUpdateCourse(loginStatus.staff_id(), course_id, gymWrapper.getParams(),
-      courseBody);
+        courseBody);
   }
 
   @Override public Observable<QcDataResponse> qcDelCourse(String course_id) {
@@ -274,11 +274,10 @@ public class CourseModel implements ICourseModel {
   }
 
   @Override public Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket(String course_id) {
-    return api.qcGetJacket(loginStatus.staff_id(),course_id,gymWrapper.getParams());
+    return api.qcGetJacket(loginStatus.staff_id(), course_id, gymWrapper.getParams());
   }
 
-  @Override
-  public rx.Observable<QcDataResponse> qcCheckBatchConflict(BatchCopyBody body) {
+  @Override public rx.Observable<QcDataResponse> qcCheckBatchConflict(BatchCopyBody body) {
     return api.qcCheckBatchConflict(loginStatus.staff_id(), body, gymWrapper.getParams());
   }
 
@@ -290,5 +289,18 @@ public class CourseModel implements ICourseModel {
       HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
     return api.qcBatchCopySchedule(loginStatus.staff_id(), params);
+  }
+
+  @Override public Observable<QcDataResponse<WorkoutResponse>> qcGetCourseWorkout(
+      HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return api.qcGetCourseWorkout(loginStatus.staff_id(), params);
+  }
+
+  @Override
+  public Observable<QcDataResponse<WorkoutPlansResponse>> qcGetCourseWorkoutPlans(String workoutID,
+      HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return api.qcGetCourseWorkoutPlans(loginStatus.staff_id(), workoutID, params);
   }
 }

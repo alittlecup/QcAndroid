@@ -372,6 +372,14 @@ public class AddBatchFragment extends SaasBaseFragment
     }
   }
 
+  @Override public String getWorkoutPlanID() {
+    if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
+      return batchBaseFragment.mViewModel.selectWorkPlan.getValue().getId();
+    } else {
+      return "";
+    }
+  }
+
   /**
    * 选择开始时间
    */

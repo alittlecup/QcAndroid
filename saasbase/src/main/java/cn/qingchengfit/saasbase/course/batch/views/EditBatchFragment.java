@@ -29,6 +29,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlan;
 import cn.qingchengfit.saasbase.course.batch.items.CmLRTxt90Item;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchEditPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
@@ -318,6 +319,7 @@ import javax.inject.Inject;
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule,
         (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
+    batchBaseFragment.setWorkOutPlan(batchDetail.workoutPlan);
     hadSetData = true;
   }
 
@@ -382,6 +384,16 @@ import javax.inject.Inject;
 
   @Override public int isStaffAsTeather() {
     return -1;
+  }
+
+  @Override public String getWorkoutPlanID() {
+    if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
+      WorkoutPlan value = batchBaseFragment.mViewModel.selectWorkPlan.getValue();
+      if (value != null) {
+        return value.getId();
+      }
+    }
+    return "";
   }
 
   /**
