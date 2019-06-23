@@ -5,6 +5,7 @@ import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Course;
 import cn.qingchengfit.model.common.Rule;
 import java.util.List;
+import cn.qingchengfit.model.base.Space;
 
 /**
  * power by

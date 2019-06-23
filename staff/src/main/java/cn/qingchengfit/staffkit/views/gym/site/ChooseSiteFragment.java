@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 
 
-import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.saascommon.constant.Configs;

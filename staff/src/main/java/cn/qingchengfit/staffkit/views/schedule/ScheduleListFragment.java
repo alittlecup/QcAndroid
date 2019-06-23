@@ -9,16 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.usecase.bean.ScheduleBean;
 import cn.qingchengfit.staffkit.views.custom.LoopView;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.widgets.RecycleViewWithNoImg;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
@@ -59,7 +59,6 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
     View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
     scheduleTimeline = (View) view.findViewById(R.id.schedule_timeline);
     scheduleRv = (RecycleViewWithNoImg) view.findViewById(R.id.schedule_rv);
-
     delegatePresenter(presenter, this);
     initView();
 
@@ -71,8 +70,11 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
     scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
     scheduleRv.setAdapter(mAdapter);
     scheduleRv.setOnRefreshListener(this::freshData);
-    mAdapter.setListener(
-        (v, pos) -> WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404));
+    mAdapter.setListener((v, pos) -> {
+      //WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404);
+      RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+          new BundleBuilder().withString("scheduleID", datas.get(pos).id).build());
+    });
     freshData();
   }
 

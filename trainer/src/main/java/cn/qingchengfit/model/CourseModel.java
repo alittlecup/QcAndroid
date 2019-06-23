@@ -1,13 +1,15 @@
 package cn.qingchengfit.model;
 
+import cn.qingchengfit.api.CourseApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.api.CourseApi;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlansResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutResponse;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -28,6 +30,9 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
+import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import com.qingchengfit.fitcoach.App;
 import java.util.HashMap;
@@ -299,5 +304,31 @@ public class CourseModel implements ICourseModel {
       HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
     return api.qcBatchCopySchedule(loginStatus.staff_id(), params);
+  }
+
+  @Override public Observable<QcDataResponse<WorkoutResponse>> qcGetCourseWorkout(
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse<WorkoutPlansResponse>> qcGetCourseWorkoutPlans(String workoutID,
+      HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(String schedule_id) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(String schedule_id) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id) {
+    return null;
   }
 }

@@ -30,6 +30,9 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
+import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.staffkit.App;
 import java.util.HashMap;
@@ -302,5 +305,21 @@ public class CourseModel implements ICourseModel {
       HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
     return api.qcGetCourseWorkoutPlans(loginStatus.staff_id(), workoutID, params);
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(String schedule_id) {
+
+    return api.qcGetScheduleDetail(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(String schedule_id) {
+    return api.qcGetScheduleDetailOrder(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id) {
+    return api.qcGetScheduleDetailPhotos(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
   }
 }

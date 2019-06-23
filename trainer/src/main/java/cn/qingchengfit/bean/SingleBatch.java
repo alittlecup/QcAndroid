@@ -1,5 +1,6 @@
 package cn.qingchengfit.bean;
 
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;

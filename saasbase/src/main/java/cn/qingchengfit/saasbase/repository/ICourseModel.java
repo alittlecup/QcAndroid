@@ -24,6 +24,9 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
+import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -174,9 +177,17 @@ public interface ICourseModel {
       HashMap<String, Object> params);
 
   //获取排期的课程体系
-  rx.Observable<QcDataResponse<WorkoutResponse>> qcGetCourseWorkout(
-      HashMap<String, Object> params);
+  rx.Observable<QcDataResponse<WorkoutResponse>> qcGetCourseWorkout(HashMap<String, Object> params);
 
   rx.Observable<QcDataResponse<WorkoutPlansResponse>> qcGetCourseWorkoutPlans(String workoutID,
       HashMap<String, Object> params);
+
+  //获取已经排好课程的课程详情，从课程预约进入
+  rx.Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(String schedule_id);
+
+  //获取已经排好课程的预约人数列表
+  rx.Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(String schedule_id);
+
+  //获取已经排好课程的课程照片列表
+  rx.Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id);
 }

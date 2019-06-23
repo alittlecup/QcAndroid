@@ -7,7 +7,10 @@
     <variable
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
-
+        />
+    <variable
+        name="fragment"
+        type="cn.qingchengfit.saasbase.course.detail.ScheduleDetailFragment"
         />
   </data>
   <LinearLayout
@@ -99,7 +102,6 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_marginTop="20dp"
-            android:background="@color/bg_red"
             app:layout_constraintLeft_toLeftOf="@+id/course_name"
             app:layout_constraintTop_toBottomOf="@id/course_class"
             />
@@ -113,13 +115,25 @@
             app:layout_constraintTop_toTopOf="@id/img_trainer_photo"
             tools:text="娜娜"
             />
-
+        <cn.qingchengfit.widgets.RatingBarVectorFix
+            android:id="@+id/trainer_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:layout_marginTop="2dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            tools:rating="4.7"
+            app:layout_constraintLeft_toLeftOf="@id/course_trainer_name"
+            app:layout_constraintTop_toBottomOf="@id/course_trainer_name"
+            style="@style/Qc.RatingBar"
+            />
         <View
             android:id="@+id/course_divider"
             android:layout_width="0dp"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:background="@color/red"
+            android:background="@color/divider_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_trainer_photo"
@@ -127,14 +141,16 @@
 
         <TextView
             android:id="@+id/tv_order_count"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:onClick="@{fragment::routeAllOrders}"
+            android:paddingTop="15dp"
             android:textColor="@color/text_dark"
             android:textSize="13sp"
             app:layout_constraintLeft_toLeftOf="@id/course_name"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_divider"
-            tools:text="预约人数 (2)"
+            android:text="预约人数"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -145,11 +161,11 @@
             app:layout_constraintRight_toRightOf="@id/img_course"
             />
 
-        <FrameLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_orders"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
-            android:background="@color/red"
             app:layout_constraintEnd_toEndOf="@id/img_course"
             app:layout_constraintStart_toStartOf="@id/course_name"
             app:layout_constraintTop_toBottomOf="@id/tv_order_count"
@@ -159,7 +175,7 @@
             android:layout_width="0dp"
             android:layout_height="1px"
             android:layout_marginTop="70dp"
-            android:background="@color/red"
+            android:background="@color/divider_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_order_count"
@@ -169,9 +185,11 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:gravity="center"
+            android:onClick="@{fragment::routeAddOrder}"
             android:text="添加预约"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
+
             app:layout_constraintEnd_toStartOf="@id/tv_sign"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
@@ -190,9 +208,11 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:gravity="center"
+            android:onClick="@{fragment::routeSignOrder}"
             android:text="会员签课"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_order"
             app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
@@ -202,12 +222,13 @@
             android:layout_width="0dp"
             android:layout_height="1px"
             android:layout_marginTop="45dp"
-            android:background="@color/red"
+            android:background="@color/divider_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
             />
         <FrameLayout
+            android:id="@+id/fl_orders"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/bg_white"
@@ -215,6 +236,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_order_count"
+            tools:visibility="gone"
             >
           <Button
               android:id="@+id/btn_add_order"
@@ -222,6 +244,7 @@
               android:layout_width="140dp"
               android:layout_height="35dp"
               android:layout_gravity="center"
+              android:onClick="@{fragment::routeAddOrder}"
               android:text="添加预约"
               />
         </FrameLayout>
@@ -237,34 +260,37 @@
 
         <TextView
             android:id="@+id/tv_photo_count"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:paddingTop="15dp"
             android:textColor="@color/text_dark"
             android:textSize="13sp"
             app:layout_constraintLeft_toLeftOf="@id/course_name"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_order_divider"
-            tools:text="课程相册 (2)"
+            android:text="课程相册"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/vd_arrow_right_grey_small"
+            android:onClick="@{fragment::routeAllPhotos}"
             android:text="全部"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_photo_count"
             app:layout_constraintRight_toRightOf="@id/img_course"
             />
-        <FrameLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_photos"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"
-            android:background="@color/bg_red"
             app:layout_constraintEnd_toEndOf="@id/img_course"
             app:layout_constraintStart_toStartOf="@id/course_name"
             app:layout_constraintTop_toBottomOf="@id/tv_photo_count"
             />
         <FrameLayout
+            android:id="@+id/fl_photos"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/bg_white"
@@ -272,6 +298,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_photo_count"
+            tools:visibility="gone"
             >
           <Button
               android:id="@+id/btn_add_photo"
@@ -279,6 +306,7 @@
               android:layout_width="140dp"
               android:layout_height="35dp"
               android:layout_gravity="center"
+              android:onClick="@{fragment::routeAddPhotos}"
               android:text="立即上传"
               />
         </FrameLayout>

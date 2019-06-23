@@ -47,7 +47,7 @@ import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.model.responese.ResponseService;
-import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;

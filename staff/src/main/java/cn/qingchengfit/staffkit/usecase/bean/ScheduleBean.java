@@ -27,4 +27,5 @@ public class ScheduleBean {
     public String conflict;
     public int type;//0  休息  1:schedule
     public String teacher;
+    public String id;
 }

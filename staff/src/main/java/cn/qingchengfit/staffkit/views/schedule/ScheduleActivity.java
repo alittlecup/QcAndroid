@@ -220,7 +220,6 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
                 break;
         }
 
-        final boolean finalP = isPrivate;
         final String finalAction = action;
         restRepository.getStaffAllApi()
             .qcGetScheduleAciton(App.staffId, action, gymWrapper.getParams())

@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saascommon.constant.Configs;

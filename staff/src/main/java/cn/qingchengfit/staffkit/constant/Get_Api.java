@@ -47,13 +47,11 @@ import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.model.responese.NotityIsOpenConfigs;
 import cn.qingchengfit.model.responese.QcResponToken;
-import cn.qingchengfit.model.responese.QcResponseBtaches;
 import cn.qingchengfit.model.responese.QcResponseCards;
 import cn.qingchengfit.model.responese.QcResponseJacket;
 import cn.qingchengfit.model.responese.QcResponseOption;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.QcResponsePostions;
-import cn.qingchengfit.model.responese.QcResponsePrivateBatchDetail;
 import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
 import cn.qingchengfit.model.responese.QcResponseRenewalHistory;
@@ -513,10 +511,7 @@ public interface Get_Api {
       @Query("brand_id") String brandid, @Query("shop_id") String shopid, @Query("id") String gymid,
       @Query("model") String model);
 
-  //获取教练排期
-  @GET("/api/staffs/{id}/batches/?course__is_private=1")
-  rx.Observable<QcResponseBtaches> qcGetTeacherBatches(@Path("id") String id,
-      @Query("brand_id") String brand_id, @Query("teacher_id") String teacher_id);
+
 
   //获取工作人员列表
   @GET("/api/staffs/{id}/managers/?show_all=1")
@@ -560,11 +555,6 @@ public interface Get_Api {
       @Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id,
       @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
-  //获取某个排期的详情
-  @GET("/api/staffs/{id}/batches/{batch_id}/")
-  rx.Observable<QcResponsePrivateBatchDetail> qcGetBatchDetail(@Path("id") String staff_id,
-      @Path("batch_id") String batch_id, @Query("id") String gym_id,
-      @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
   //获取健身房课程
   @GET("/api/staffs/{id}/courses/?&show_all=1")

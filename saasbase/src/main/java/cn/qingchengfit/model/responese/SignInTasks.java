@@ -2,6 +2,7 @@ package cn.qingchengfit.model.responese;
 
 import cn.qingchengfit.model.base.Staff;
 import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.model.base.Space;
 import java.util.List;
 
 /**
@@ -367,7 +368,7 @@ public class SignInTasks {
   public class Schedule {
 
     @SerializedName("teacher") private Staff teacher;
-    @SerializedName("space") private Space space;
+    @SerializedName("space") private  Space space;
     @SerializedName("name") private String name;
     @SerializedName("time") private String time;
 

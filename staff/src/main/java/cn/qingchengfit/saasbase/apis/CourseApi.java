@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.apis;
 
 import cn.qingchengfit.model.responese.CourseTypeSamples;
-import cn.qingchengfit.model.responese.QcResponseBtaches;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -29,6 +28,9 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
+import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.http.Body;
@@ -62,11 +64,6 @@ import retrofit2.http.QueryMap;
  */
 
 public interface CourseApi {
-
-  //获取教练排期
-  @GET("/api/staffs/{id}/batches/?course__is_private=1")
-  rx.Observable<QcResponseBtaches> qcGetTeacherBatches(@Path("id") String id,
-      @Query("brand_id") String brand_id, @Query("teacher_id") String teacher_id);
 
   //获取团课排课
   @GET("/api/staffs/{id}/group/courses/")
@@ -266,16 +263,16 @@ public interface CourseApi {
 
   //获取已经排好课程的课程详情，从课程预约进入
   @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/detail/")
-  rx.Observable<QcDataResponse<>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
+  rx.Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
       @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
 
   //获取已经排好课程的预约人数列表
   @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/orders/")
-  rx.Observable<QcDataResponse<>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
+  rx.Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(@Path("staff_id") String staff_id,
       @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
 
   //获取已经排好课程的课程照片列表
   @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/photos/")
-  rx.Observable<QcDataResponse<>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
+  rx.Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(@Path("staff_id") String staff_id,
       @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
 }

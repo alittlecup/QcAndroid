@@ -199,7 +199,6 @@
                   android:stepSize="0.1"
                   tools:rating="4.7"
                   style="@style/Qc.RatingBar"
-
                   />
             </LinearLayout>
 

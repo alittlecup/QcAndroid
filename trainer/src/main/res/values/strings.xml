@@ -268,7 +268,7 @@
   <string name="common_please_choose">请选择</string>
   <string name="comfirm">确定</string>
   <string name="out_of_date_batch">--已过期排期--</string>
-  <string name="space_content">可以容纳%d人、支持</string>
+  <string name="space_content">可以容纳%s人、支持</string>
   <string name="space_support_private">和私教</string>
   <string name="err_at_least_one_space">至少选择一个场地</string>
   <string name="need_pay">需要结算</string>

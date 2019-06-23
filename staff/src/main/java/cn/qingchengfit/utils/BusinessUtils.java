@@ -8,16 +8,16 @@ import android.text.TextUtils;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.model.responese.SigninReportDetail;
 import cn.qingchengfit.model.responese.TeacherImpression;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.saascommon.constant.Configs;
-import cn.qingchengfit.model.common.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
@@ -297,7 +297,7 @@ public static List<String> qcstudents2strs(List<QcStudentBean> students) {
         return ret;
     }
 
-    public static List<String> shop2Str(List<QcScheduleBean.Shop> shops) {
+    public static List<String> shop2Str(List<Shop> shops) {
         List<String> ret = new ArrayList<>();
         if (shops == null) return ret;
         for (int i = 0; i < shops.size(); i++) {

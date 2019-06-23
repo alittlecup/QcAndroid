@@ -7,6 +7,8 @@ import cn.qingchengfit.gym.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.login.bean.Login;
 import cn.qingchengfit.login.bean.LoginBody;
 import cn.qingchengfit.login.views.CheckProtocolModel;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.model.body.AddDayOffBody;
@@ -47,12 +49,10 @@ import cn.qingchengfit.model.body.UpdateCardValidBody;
 import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.model.common.Attendances;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.responese.AllLockers;
 import cn.qingchengfit.model.responese.AllotSalePreViews;
 import cn.qingchengfit.model.responese.AllotSaleStudents;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
-import cn.qingchengfit.model.responese.BalanceConfigs;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
@@ -60,25 +60,16 @@ import cn.qingchengfit.model.responese.BodyTestTemplateData;
 import cn.qingchengfit.model.responese.BrandResponse;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.CacluScore;
-import cn.qingchengfit.model.responese.CardBindStudents;
-import cn.qingchengfit.model.responese.CardResponse;
-import cn.qingchengfit.model.responese.CardTplResponse;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.Cards;
 import cn.qingchengfit.model.responese.CoachResponse;
-import cn.qingchengfit.model.responese.CoursePlans;
 import cn.qingchengfit.model.responese.CourseReportDetail;
-import cn.qingchengfit.model.responese.CourseSchedules;
-import cn.qingchengfit.model.responese.CourseTeacherResponse;
-import cn.qingchengfit.model.responese.CourseTypeResponse;
 import cn.qingchengfit.model.responese.CourseTypeSamples;
-import cn.qingchengfit.model.responese.CourseTypes;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.DayOffs;
 import cn.qingchengfit.model.responese.FollowRecords;
 import cn.qingchengfit.model.responese.FollowUpConver;
 import cn.qingchengfit.model.responese.GroupCourseResponse;
-import cn.qingchengfit.model.responese.GroupCourseScheduleDetail;
 import cn.qingchengfit.model.responese.GymCardtpl;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.GymExtra;
@@ -91,22 +82,15 @@ import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.model.responese.NotityIsOpenConfigs;
 import cn.qingchengfit.model.responese.QcResponToken;
-import cn.qingchengfit.model.responese.QcResponseBtaches;
 import cn.qingchengfit.model.responese.QcResponseCards;
-import cn.qingchengfit.model.responese.QcResponseJacket;
 import cn.qingchengfit.model.responese.QcResponseOption;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.QcResponsePostions;
-import cn.qingchengfit.model.responese.QcResponsePrivateBatchDetail;
-import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
-import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.QcResponseRenewalHistory;
 import cn.qingchengfit.model.responese.QcResponseSaleDetail;
-import cn.qingchengfit.model.responese.QcResponseSchedulePhotos;
 import cn.qingchengfit.model.responese.QcResponseServiceDetial;
-import cn.qingchengfit.model.responese.QcResponseShopComment;
 import cn.qingchengfit.model.responese.QcResponseSignInImg;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
@@ -118,7 +102,6 @@ import cn.qingchengfit.model.responese.RenewalList;
 import cn.qingchengfit.model.responese.ResponseService;
 import cn.qingchengfit.model.responese.ResponseSu;
 import cn.qingchengfit.model.responese.ScheduleActions;
-import cn.qingchengfit.model.responese.ScheduleTemplete;
 import cn.qingchengfit.model.responese.Score;
 import cn.qingchengfit.model.responese.ScoreHistoryResponse;
 import cn.qingchengfit.model.responese.ScoreRankResponse;
@@ -138,7 +121,6 @@ import cn.qingchengfit.model.responese.SigninNoticeConfigs;
 import cn.qingchengfit.model.responese.SigninReportDetail;
 import cn.qingchengfit.model.responese.SigninValidCard;
 import cn.qingchengfit.model.responese.SingleBatchData;
-import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.model.responese.StaffShipResponse;
 import cn.qingchengfit.model.responese.Staffs;
@@ -158,7 +140,6 @@ import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
-import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.turnovers.TurFilterResponse;
@@ -344,15 +325,6 @@ public interface StaffAllApi {
       @QueryMap HashMap<String, Object> params, @Query("type") String type,
       @Query("is_enable") String isEnable);
 
-  // 卡类型
-  @GET("/api/staffs/{id}/method/cardtpls/?show_all=1")
-  rx.Observable<QcDataResponse<CardTpls>> qcGetCardTplsPermission(@Path("id") String id,
-      @QueryMap HashMap<String, Object> parasm);
-
-  //工作人员 卡类型详情
-  @GET("/api/staffs/{Staff}/cardtpls/{id}/")
-  rx.Observable<QcDataResponse<CardTplResponse>> qcGetCardTplsDetail(@Path("Staff") String staff,
-      @Path("id") String id, @QueryMap HashMap<String, Object> parasm);
 
   // 工作人员 卡类型 规格
   @GET("/api/staffs/{staff_id}/cardtpls/{cardtps_id}/options/")
@@ -412,12 +384,6 @@ public interface StaffAllApi {
       @Path("id") String studentid, @Query("id") String gymid, @Query("model") String model,
       @Query("brand_id") String brand_id);
 
-  //获取某个学员的课程
-  @GET("/api/staffs/{staff_id}/users/attendance/records/")
-  rx.Observable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
-      @Path("staff_id") String staffid, @Query("user_id") String studentid,
-      @QueryMap HashMap<String, Object> params);
-
   //获取某个学员的cardlist
   @GET("/api/staffs/{staff_id}/users/{id}/cards/?order_by=-id")
   rx.Observable<QcResponseStudentCards> qcGetStudentCards(@Path("staff_id") String staffid,
@@ -429,9 +395,6 @@ public interface StaffAllApi {
   rx.Observable<QcResponseStudentCards> qcGetStudentCardsWithShopId(
       @Path("staff_id") String staffid, @Path("id") String studentid,
       @QueryMap HashMap<String, Object> params);
-  //@GET("/api/staffs/{staff_id}/users/{id}/cards/?order_by=-id") rx.Observable<QcResponseStudentCards> qcGetStudentCardsWithShopId(
-  //    @Path("staff_id") String staffid, @Path("id") String studentid, @Query("id") String gymid, @Query("model") String model,
-  //    @Query("brand_id") String brand_id, @Query("shop_id") String shop_id);
 
   //获取某个学员的跟进记录
   @GET("/api/staffs/{id}/users/{student_id}/records/?format=app")
@@ -454,12 +417,6 @@ public interface StaffAllApi {
 
   );
 
-  /**
-   * 会员卡
-   */
-  //获取真实卡列表
-  @GET("/api/staffs/{id}/cards/?order_by=-id") rx.Observable<Cards> qcGetAllCard(
-      @Path("id") String staffid);
 
   //获取会员卡
   @GET("/api/staffs/{id}/cards/all/?order_by=-id")
@@ -474,31 +431,6 @@ public interface StaffAllApi {
       @Query("model") String gymmodel, @Query("page") int page, @Query("q") String keyword,
       @QueryMap HashMap<String, Object> params);
 
-  //获取卡详情
-  @GET("/api/staffs/{id}/cards/{card_id}/")
-  rx.Observable<QcDataResponse<CardResponse>> qcGetCardDetail(@Path("id") String staff,
-      @Path("card_id") String card_id, @QueryMap HashMap<String, Object> params);
-
-  @GET("/api/staffs/{id}/cards/bind/users/")
-  rx.Observable<QcDataResponse<CardBindStudents>> qcGetBindStudent(@Path("id") String staff,
-      @QueryMap HashMap<String, Object> params);
-
-  //获取筛选列表
-  @GET("/api/staffs/{id}/filter/cardtpls/?show_all=1")
-  rx.Observable<QcDataResponse<CardTpls>> qcGetCardFilterCondition(@Path("id") String staff,
-      @QueryMap HashMap<String, Object> params);
-
-  //设置余额条件
-  @GET("api/v2/staffs/{id}/users/configs/")
-  rx.Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(@Path("id") String staffId,
-      @QueryMap HashMap<String, Object> params, @Query("keys") String permission);
-
-  /**
-   * 会员卡模板
-   */
-  @GET("/api/staffs/{id}/cardtpls/all/")
-  rx.Observable<QcDataResponse<GymCardtpl>> qcGetBrandCardtpl(@Path("id") String staffid,
-      @Query("brand_id") String brand_id);
 
   //获取请假列表
   @GET("/api/staffs/{id}/leaves/?order_by=-created_at")
@@ -578,10 +510,6 @@ public interface StaffAllApi {
       @Query("brand_id") String brandid, @Query("shop_id") String shopid, @Query("id") String gymid,
       @Query("model") String model);
 
-  //获取教练排期
-  @GET("/api/staffs/{id}/batches/?course__is_private=1")
-  rx.Observable<QcResponseBtaches> qcGetTeacherBatches(@Path("id") String id,
-      @Query("brand_id") String brand_id, @Query("teacher_id") String teacher_id);
 
   //获取工作人员列表
   @GET("/api/staffs/{id}/managers/?show_all=1")
@@ -607,110 +535,20 @@ public interface StaffAllApi {
       @Query("id") String gym_id, @Query("model") String gym_model,
       @Query("brand_id") String brand_id);
 
-  //获取私教排课
-  @GET("/api/staffs/{id}/private/coaches/")
-  rx.Observable<QcResponsePrivateCourse> qcGetPrivateCrourse(@Path("id") String staff_id,
-      @Query("id") String gym_id, @Query("model") String gym_model,
-      @Query("brand_id") String brand_id);
-
-  //获取教练排期
-  @GET("/api/staffs/{id}/coaches/{coach_id}/batches/?course__is_private=1")
-  rx.Observable<QcResponsePrivateDetail> qcGetPrivateCoaches(@Path("id") String staff_id,
-      @Path("coach_id") String coach_id, @Query("id") String gym_id,
-      @Query("model") String gym_model, @Query("brand_id") String brand_id);
-
-  //获取团课排期
-  @GET("/api/staffs/{id}/courses/{course_id}/batches/")
-  rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-      @Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id,
-      @Query("model") String gym_model, @Query("brand_id") String brand_id);
-
-  //获取某个排期的详情
-  @GET("/api/staffs/{id}/batches/{batch_id}/")
-  rx.Observable<QcResponsePrivateBatchDetail> qcGetBatchDetail(@Path("id") String staff_id,
-      @Path("batch_id") String batch_id, @Query("id") String gym_id,
-      @Query("model") String gym_model, @Query("brand_id") String brand_id);
-
-  //获取健身房课程
-  @GET("/api/staffs/{id}/courses/?&show_all=1")
-  rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetCourses(@Path("id") String staff_id,
-      @Query("id") String gym_id, @Query("model") String gym_model,
-      @Query("is_private") int is_private);
-
-  //获取健身房课程权限
-  @GET("/api/v2/staffs/{id}/method/courses/?&show_all=1")
-  rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetCoursesPermission(
-      @Path("id") String staff_id, @QueryMap HashMap<String, Object> params,
-      @Query("is_private") int is_private);
 
   //获取健身房课程权限
   @GET("/api/v2/staffs/{id}/method/courses/?&show_all=1")
   rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetAllCoursesPermission(
       @Path("id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-  //获取健身房课程列表
-  @GET("/api/v2/staffs/{id}/courses/?&show_all=1")
-  rx.Observable<QcDataResponse<CourseTypes>> qcGetCourses(@Path("id") String staff_id,
-      @QueryMap HashMap<String, Object> params, @Query("is_private") int is_private);
 
   @GET("/api/staffs/{id}/courses/?&show_all=1")
   rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetAllCourses(@Path("id") String staff_id,
       @Query("brand_id") String brandid, @Query("id") String gym_id,
       @Query("model") String gym_model);
 
-  @GET("/api/staffs/{staff_id}/batches/{batch_id}/{type}/?order_by=start&show_all=1")
-  rx.Observable<QcDataResponse<CourseSchedules>> qcGetbatchSchedules(
-      @Path("staff_id") String staff_id, @Path("batch_id") String batch_id,
-      @Path("type") String type, @Query("brand_id") String brandid, @Query("id") String gymid,
-      @Query("model") String gymmodel);
 
-  //排课填充
-  @GET("/api/staffs/{id}/{type}/arrange/template/")
-  rx.Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(@Path("id") String id,
-      @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,
-      @Query("teacher_id") String teacher_id, @Query("course_id") String course_id);
 
-  @GET("/api/v2/staffs/{staff_id}/courses/photos/")
-  rx.Observable<QcDataResponse<QcResponseJacket>> qcGetJacket(@Path("staff_id") String id,
-      @Query("course_id") String course_id, @QueryMap HashMap<String, Object> params);
-
-  /**
-   * 获取课程计划
-   */
-  @GET("/api/v2/staffs/{staff_id}/plantpls/?show_all=1")
-  rx.Observable<QcDataResponse<CoursePlans>> qcGetCoursePlan(@Path("staff_id") String id,
-      @QueryMap HashMap<String, Object> params);
-
-  /**
-   * 获取课程下教练
-   */
-  @GET("/api/v2/staffs/{staff_id}/courses/teachers/")
-  rx.Observable<QcDataResponse<CourseTeacherResponse>> qcGetCourseTeacher(
-      @Path("staff_id") String staff_id, @Query("course_id") String id,
-      @QueryMap HashMap<String, Object> params);
-
-  /**
-   * 课程下照片
-   */
-  @GET("/api/v2/staffs/{staff_id}/courses/schedules/photos/")
-  rx.Observable<QcResponseSchedulePhotos> qcGetSchedulePhotos(@Path("staff_id") String staff_id,
-      @Query("course_id") String id, @Query("page") int page,
-      @QueryMap HashMap<String, Object> params);
-
-  /**
-   * 获取课程详情
-   */
-  @GET("/api/v2/staffs/{staff_id}/courses/")
-  rx.Observable<QcDataResponse<CourseTypeResponse>> qcGetCourseDetail(
-      @Path("staff_id") String staff_id, @Query("course_id") String id,
-      @QueryMap HashMap<String, Object> params);
-
-  /**
-   * 分场馆评分
-   */
-  @GET("/api/v2/staffs/{staff_id}/courses/shops/score/")
-  rx.Observable<QcResponseShopComment> qcGetShopComment(@Path("staff_id") String staff_id,
-      @Query("course_id") String id, @QueryMap HashMap<String, Object> params);
 
   @GET("/api/staffs/{id}/permissions/") rx.Observable<QcResponsePermission> qcPermission(
       @Path("id") String staff_id, @QueryMap HashMap<String, Object> params);

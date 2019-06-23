@@ -1,7 +1,8 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import cn.qingchengfit.bean.Space;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
@@ -32,7 +33,7 @@ public class QcResponsePrivateBatchDetail extends QcResponse {
 
     public class BatchDetail {
         @SerializedName("id") public String id;
-        @SerializedName("shop") public QcScheduleBean.Shop shop;
+        @SerializedName("shop") public Shop shop;
         @SerializedName("max_users") public int max_users;
         @SerializedName("from_date") public String from_date;
         @SerializedName("to_date") public String to_date;

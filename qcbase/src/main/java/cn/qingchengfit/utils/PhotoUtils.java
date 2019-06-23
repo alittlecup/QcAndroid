@@ -71,13 +71,6 @@ public class PhotoUtils {
         .into(v);
   }
 
-  public static void originCircle(ImageView v, String url, int placeholder, int error) {
-    Glide.with(v.getContext())
-        .load(url)
-        .asBitmap().placeholder(ContextCompat.getDrawable(v.getContext(), placeholder))
-        .error(error)
-        .into(new CircleImgWrapper(v, v.getContext()));
-  }
 
   public static void smallCircle(ImageView v, String url) {
     smallCircle(v, url, R.drawable.default_manage_male, R.drawable.default_manage_male);
@@ -111,18 +104,9 @@ public class PhotoUtils {
     originCenterCrop(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
   }
 
-  public static void smallCornner4dp(ImageView v, String url){
-    Glide.with(v.getContext())
-        .load(getSmall(url))
-        .asBitmap()
-        .placeholder(R.drawable.img_loadingimage)
-        .error(R.drawable.img_loadingimage)
-        .into(new Corner4dpImgWrapper(v, v.getContext()));
-  }
 
   public static void conner4dp(ImageView v, String url) {
     Glide.with(v.getContext()).load(url).asBitmap().placeholder(R.color.backgroud_grey)
-        //.transform(new Corner4dpImgTrans(v.getContext(), 10))
         .into(new Corner4dpImgWrapper(v, v.getContext()));
   }
 
