@@ -34,8 +34,10 @@ import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import cn.qingchengfit.staffkit.App;
 import java.util.HashMap;
+import java.util.Map;
 import rx.Observable;
 
 /**
@@ -321,5 +323,12 @@ public class CourseModel implements ICourseModel {
   @Override
   public Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id) {
     return api.qcGetScheduleDetailPhotos(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
+      String order_id) {
+    Map<String,Object> body=new HashMap<>(gymWrapper.getParams());
+    body.put("order_id",order_id);
+    return api.qcPostScheduleOrderCancel(loginStatus.staff_id(),order_id,gymWrapper.getParams(),body);
   }
 }

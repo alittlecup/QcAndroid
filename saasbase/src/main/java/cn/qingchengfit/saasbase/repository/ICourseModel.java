@@ -27,14 +27,8 @@ import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import java.util.HashMap;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * power by
@@ -76,11 +70,11 @@ public interface ICourseModel {
 
   //获取某节课种类的排课列表
   rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-      @Path("course_id") String course_id);
+     String course_id);
 
   //获取某个排期的详情
   rx.Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
-      @Path("batch_id") String batch_id);
+     String batch_id);
 
   //获取某个排期的schedule
   rx.Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(String batch_id,
@@ -126,52 +120,47 @@ public interface ICourseModel {
    * 获取课程下教练
    */
   rx.Observable<QcDataResponse<CourseTeacherWrapper>> qcGetCourseTeacher(
-      @Query("course_id") String id, String shopid);
+      String id, String shopid);
 
   /**
    * 课程下照片
    */
-  @GET("/api/v2/staffs/{staff_id}/courses/schedules/photos/")
   rx.Observable<QcDataResponse<SchedulePhotoListWrap>> qcGetSchedulePhotos(
-      @Query("course_id") String id, @Query("page") int page);
+     String id, int page);
 
   /**
    * 获取课程详情
    */
-  @GET("/api/v2/staffs/{staff_id}/courses/")
-  rx.Observable<QcDataResponse<CourseTypeWrap>> qcGetCourseDetail(@Query("course_id") String id);
+  rx.Observable<QcDataResponse<CourseTypeWrap>> qcGetCourseDetail( String id);
 
   /**
    * 分场馆评分
    */
-  @GET("/api/v2/staffs/{staff_id}/courses/shops/score/")
-  rx.Observable<QcDataResponse<ShopCommentWrap>> qcGetShopComment(@Query("course_id") String id);
+  rx.Observable<QcDataResponse<ShopCommentWrap>> qcGetShopComment(String id);
 
-  @POST("/api/v2/staffs/{id}/courses/") rx.Observable<QcDataResponse> qcCreateCourse(
-      @Body CourseBody courseBody);
+ rx.Observable<QcDataResponse> qcCreateCourse(
+       CourseBody courseBody);
 
   //修改课程
-  @PUT("/api/v2/staffs/{id}/courses/{course_id}/") rx.Observable<QcDataResponse> qcUpdateCourse(
-      @Path("course_id") String course_id, @Body CourseBody courseBody);
+  rx.Observable<QcDataResponse> qcUpdateCourse(
+      String course_id,  CourseBody courseBody);
 
   //删除课程
-  @DELETE("/api/v2/staffs/{id}/courses/{course_id}/") rx.Observable<QcDataResponse> qcDelCourse(
-      @Path("course_id") String course_id);
+ rx.Observable<QcDataResponse> qcDelCourse(
+     String course_id);
 
   //修改封面
-  @POST("/api/v2/staffs/{id}/courses/photos/") rx.Observable<QcDataResponse> qcEditJacket(
-      @Query("course_id") String course_id, @Body EditJacketBody body);
+ rx.Observable<QcDataResponse> qcEditJacket(
+       String course_id,  EditJacketBody body);
 
   //修改课程适用场馆
-  @PUT("/api/v2/staffs/{staff_id}/courses/{course_id}/shops/")
-  rx.Observable<QcDataResponse> qcEditCourseShops(@Path("course_id") String course_id);
+  rx.Observable<QcDataResponse> qcEditCourseShops( String course_id);
 
-  @GET("/api/v2/staffs/{staff_id}/courses/photos/")
-  rx.Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket(@Query("course_id") String course_id);
+  rx.Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket( String course_id);
 
-  rx.Observable<QcDataResponse> qcCheckBatchConflict(@Body BatchCopyBody body);
+  rx.Observable<QcDataResponse> qcCheckBatchConflict( BatchCopyBody body);
 
-  rx.Observable<QcDataResponse> qcSureCopyBatch(@Body BatchCopyBody body);
+  rx.Observable<QcDataResponse> qcSureCopyBatch( BatchCopyBody body);
 
   rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(
       HashMap<String, Object> params);
@@ -190,4 +179,7 @@ public interface ICourseModel {
 
   //获取已经排好课程的课程照片列表
   rx.Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id);
+
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(String order_id);
+
 }

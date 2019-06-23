@@ -8,13 +8,14 @@ import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.ToastUtils;
 import javax.inject.Inject;
 
-public class CourseDetailViewModel extends BaseViewModel {
+public class ScheduleDetailVM extends BaseViewModel {
   @Inject ICourseModel courseModel;
   public MutableLiveData<ScheduleDetail> detail = new MutableLiveData<>();
   public MutableLiveData<ScheduleOrders> detailOrders = new MutableLiveData<>();
   public MutableLiveData<SchedulePhotos> detailPhotos = new MutableLiveData<>();
+  public MutableLiveData<Boolean> cancelResult=new MutableLiveData<>();
 
-  @Inject public CourseDetailViewModel() {
+  @Inject public ScheduleDetailVM() {
 
   }
 
@@ -51,6 +52,22 @@ public class CourseDetailViewModel extends BaseViewModel {
           if (ResponseConstant.checkSuccess(response)) {
             detailPhotos.setValue(response.data);
           } else {
+            ToastUtils.show(response.msg);
+          }
+        }, throwable -> {
+        });
+  }
+
+  public void postCancelOrder(String order_id) {
+    courseModel.qcPostScheduleOrderCancel(order_id)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            ToastUtils.show("取消预约成功");
+            cancelResult.setValue(true);
+          } else {
+            cancelResult.setValue(false);
+
             ToastUtils.show(response.msg);
           }
         }, throwable -> {

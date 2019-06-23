@@ -31,6 +31,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.http.Body;
@@ -263,16 +264,25 @@ public interface CourseApi {
 
   //获取已经排好课程的课程详情，从课程预约进入
   @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/detail/")
-  rx.Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(@Path("staff_id") String staff_id,
-      @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
+  rx.Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
 
   //获取已经排好课程的预约人数列表
   @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/orders/")
-  rx.Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(@Path("staff_id") String staff_id,
-      @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
+  rx.Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
 
   //获取已经排好课程的课程照片列表
   @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/photos/")
-  rx.Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(@Path("staff_id") String staff_id,
-      @Path("schedule_id") String schedule_id, @QueryMap Map<String, Object> params);
+  rx.Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+  //获取已经排好课程的课程照片列表
+  @POST("/api/v2/staffs/{staff_id}/orders/{order_id}/cancel/")
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
+      @Path("staff_id") String staff_id, @Path("order_id") String order_id,
+      @QueryMap Map<String, Object> query, @Body Map<String, Object> body);
 }

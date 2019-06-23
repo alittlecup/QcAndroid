@@ -6,26 +6,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
 import cn.qingchengfit.saasbase.databinding.FragmentScheduleDetailBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.SpanUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 @Leaf(module = "course", path = "/schedule/detail") public class ScheduleDetailFragment
-    extends SaasBindingFragment<FragmentScheduleDetailBinding, CourseDetailViewModel> {
+    extends SaasBindingFragment<FragmentScheduleDetailBinding, ScheduleDetailVM> {
 
   CommonFlexAdapter orderAdapter;
   CommonFlexAdapter photoAdapter;
+  @Inject GymWrapper gymWrapper;
 
   @Need String scheduleID;
 
@@ -43,10 +48,11 @@ import java.util.List;
   private void updateDetailView(ScheduleDetail scheduleDetail) {
     if (scheduleDetail != null) {
       mBinding.courseName.setText(scheduleDetail.getCourse().getName());
-      String during = DateUtils.Date2MMDDHHmm(DateUtils.formatDateFromServer(scheduleDetail.start))
+      String during = DateUtils.Date2HHmm(DateUtils.formatDateFromServer(scheduleDetail.start))
           + "-"
-          + DateUtils.Date2MMDDHHmm(DateUtils.formatDateFromServer(scheduleDetail.end));
-      mBinding.courseTime.setText(makeSpanString("时间：", during));
+          + DateUtils.Date2HHmm(DateUtils.formatDateFromServer(scheduleDetail.end));
+      mBinding.courseTime.setText(makeSpanString("时间：",
+          DateUtils.getYYYYMMDDfromServer(scheduleDetail.start) + "  " + during));
       mBinding.courseGymName.setText(makeSpanString("场馆：", scheduleDetail.getShop().name));
       mBinding.courseClass.setText(makeSpanString("场地：", scheduleDetail.getSpace().getName()));
       mBinding.courseTrainerName.setText(scheduleDetail.getTeacher().getUsername());
@@ -123,7 +129,9 @@ import java.util.List;
   }
 
   public void routeAllOrders(View view) {
-
+    routeTo("course", "/schedule/orders", new BundleBuilder().withString("scheduleID", scheduleID)
+        .withParcelable("orders", mViewModel.detailOrders.getValue())
+        .build());
   }
 
   public void routeAllPhotos(View view) {
@@ -131,15 +139,21 @@ import java.util.List;
   }
 
   public void routeAddPhotos(View view) {
-
+    String host = gymWrapper.getCoachService().getHost();
+    WebActivity.startWeb(host + "/shop/" + 1 + "/m/upload/photo/?type=user&schedule_id=" + scheduleID,
+        getContext());
   }
 
   public void routeAddOrder(View view) {
-
+    String host = gymWrapper.getCoachService().getHost();
+    WebActivity.startWeb(host + "/shop/" + 1 + "/m/coach/schedules/" + scheduleID + "/group/order/",
+        getContext());
   }
 
   public void routeSignOrder(View view) {
-
+    String host = gymWrapper.getCoachService().getHost();
+    WebActivity.startWeb(
+        host + "/shop/" + 1 + "/m/coach/schedules/" + scheduleID + "/checkin/proxy/", getContext());
   }
 
   private void initToolbar() {

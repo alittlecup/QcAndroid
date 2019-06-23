@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import cn.qingchengfit.checkout.repository.CheckoutModel;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.saasbase.course.batch.views.BatchFragmentVM;
-import cn.qingchengfit.saasbase.course.detail.CourseDetailViewModel;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailVM;
 import cn.qingchengfit.saasbase.staff.views.CommonUserSearchFragment;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.staffkit.views.signin.config.SignInMemberVM;
@@ -39,6 +39,6 @@ import dagger.multibindings.IntoMap;
   @Binds @IntoMap @ViewModelKey(BatchFragmentVM.class)
   abstract ViewModel bindBatchFragmentVM(BatchFragmentVM model);
 
-  @Binds @IntoMap @ViewModelKey(CourseDetailViewModel.class)
-  abstract ViewModel bindCourseDetailViewModel(CourseDetailViewModel model);
+  @Binds @IntoMap @ViewModelKey(ScheduleDetailVM.class)
+  abstract ViewModel bindCourseDetailViewModel(ScheduleDetailVM model);
 }
