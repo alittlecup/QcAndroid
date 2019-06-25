@@ -40,7 +40,7 @@ public class NotSignFilterFragment extends BaseFragment
   public static final String SHOP_NAME = "shop_name";
   public static final String TIME_LABEL = "time_label";
 
-	FrameLayout fragStudentFilter;
+  FrameLayout fragStudentFilter;
 
   @Inject NotSignFilterPresenter presenter;
 
@@ -63,7 +63,6 @@ public class NotSignFilterFragment extends BaseFragment
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_not_sign_filter, container, false);
     fragStudentFilter = (FrameLayout) view.findViewById(R.id.frag_student_filter);
-
     initFilter();
     return view;
   }
@@ -73,12 +72,14 @@ public class NotSignFilterFragment extends BaseFragment
     typeFilter = new FilterFragment();
     statusFilter = new FilterFragment();
     timeFitler = new FilterFragment();
+
     initGymFilter(new ArrayList<Shop>(), "");
     filterCustomFragment = FilterCustomFragmentBuilder.newFilterCustomFragment("时间段");
     filterCustomFragment.setSelectTime(true);
     filterCustomFragment.setOnBackFilterDataListener(this);
     typeList = presenter.getClassFilterList();
     timeList = presenter.getTimeFiler();
+    statusParams.put(SHOP_NAME, "全部");
     statusParams.put(GROUP, "全部");
     statusParams.put(STATUS_FILTER, "全部");
     statusParams.put(TIME_LABEL, "不限");
@@ -87,7 +88,7 @@ public class NotSignFilterFragment extends BaseFragment
         if (position > 0) {
           params.put(SHOP_ID, shopList.get(position - 1).id);
           statusParams.put(SHOP_NAME, shopList.get(position - 1).name);
-        }else{
+        } else {
           params.put(SHOP_ID, "0");
           statusParams.put(SHOP_NAME, "全部");
         }
@@ -161,18 +162,25 @@ public class NotSignFilterFragment extends BaseFragment
       }
     });
 
-    if (!typeFilter.isAdded())
-      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, typeFilter, "type").commit();
-    if (!statusFilter.isAdded())
-      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, statusFilter, "status").commit();
-    if (!timeFitler.isAdded())
-      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, timeFitler, "time").commit();
+    if (!typeFilter.isAdded()) {
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.frag_student_filter, typeFilter, "type")
+          .commit();
+    }
+    if (!statusFilter.isAdded()) {
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.frag_student_filter, statusFilter, "status")
+          .commit();
+    }
+    if (!timeFitler.isAdded()) {
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.frag_student_filter, timeFitler, "time")
+          .commit();
+    }
   }
 
-
-
-  private int getStatusCode(String status){
-    switch (status){
+  private int getStatusCode(String status) {
+    switch (status) {
       case "已预约":
         return 1;
       case "已取消":
@@ -189,8 +197,8 @@ public class NotSignFilterFragment extends BaseFragment
     return 0;
   }
 
-  private String getType(String type){
-    switch (type){
+  private String getType(String type) {
+    switch (type) {
       case "全部":
         return "";
       case "团课":
@@ -224,13 +232,13 @@ public class NotSignFilterFragment extends BaseFragment
     statusFilter.setItemList(itemList);
   }
 
-  public void show(String s){
+  public void show(String s) {
     hideAllandShow(s);
   }
 
   public void initGymFilter(List<Shop> shops, String curShopId) {
-    if (shops == null || shops.size() == 0){
-      return;
+    if (shops == null) {
+      shops = new ArrayList<>();
     }
     shopList.clear();
     shopList.addAll(shops);
@@ -238,16 +246,18 @@ public class NotSignFilterFragment extends BaseFragment
     itemList.add(new FilterCommonLinearItem("全部"));
     for (Shop shop : shops) {
       itemList.add(new FilterCommonLinearItem(shop.name));
-      if (shop.id.equals(curShopId)){
+      if (shop.id.equals(curShopId)) {
         statusParams.put(SHOP_NAME, shop.name);
       }
     }
     gymFilter.setItemList(itemList);
-    if (shops.size() == 0){
+    if (shops.size() == 0) {
       params.put(SHOP_ID, "0");
     }
     if (!gymFilter.isAdded()) {
-      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, gymFilter, "gym").commit();
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.frag_student_filter, gymFilter, "gym")
+          .commit();
     }
   }
 
@@ -275,7 +285,7 @@ public class NotSignFilterFragment extends BaseFragment
     ft.commit();
   }
 
-  private void hideAll(String m){
+  private void hideAll(String m) {
     FragmentTransaction ft = getChildFragmentManager().beginTransaction()
         .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out);
     for (String s : filterType) {

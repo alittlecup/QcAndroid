@@ -1,9 +1,12 @@
 package cn.qingchengfit.api;
 
 import android.support.annotation.Nullable;
+import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlansResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutResponse;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.BatchCopyBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -21,6 +24,10 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
+import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.http.Body;
@@ -201,4 +208,50 @@ public interface CourseApi {
       @QueryMap HashMap<String, Object> params);
 
 
+
+  //获取排期的课程体系
+  @GET("api/v2/coaches/{staff_id}/workouts/")
+  rx.Observable<QcDataResponse<WorkoutResponse>> qcGetCourseWorkout(
+      @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+  //获取排期的课程体系
+  @GET("api/v2/coaches/{staff_id}/workouts/{workout_id}/plans/")
+  rx.Observable<QcDataResponse<WorkoutPlansResponse>> qcGetCourseWorkoutPlans(
+      @Path("staff_id") String staff_id, @Path("workout_id") String workout_id,
+      @QueryMap HashMap<String, Object> params);
+
+  //获取已经排好课程的课程详情，从课程预约进入
+  @GET("/api/v2/coaches/{staff_id}/schedules/{schedule_id}/detail/")
+  rx.Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+  //获取已经排好课程的预约人数列表
+  @GET("/api/v2/coaches/{staff_id}/schedules/{schedule_id}/orders/")
+  rx.Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+  //获取已经排好课程的课程照片列表
+  @GET("/api/v2/coaches/{staff_id}/schedules/{schedule_id}/photos/")
+  rx.Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+  //取消预约
+  @POST("/api/v2/coaches/{staff_id}/orders/{order_id}/cancel/")
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
+      @Path("staff_id") String staff_id, @Path("order_id") String order_id,
+      @QueryMap Map<String, Object> query, @Body Map<String, Object> body);
+
+  // 课程照片 批量删除
+  @DELETE("/api/v2/coaches/{staff_id}/schedules/{schedule_id}/photos/")
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcDeleteSchedulePhotos(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+
+  @GET("/api/v2/coaches/{staff_id}/gym-extra/")
+  rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 }

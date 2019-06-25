@@ -68,7 +68,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
             if (commonFlexAdapter == null) {
                 commonFlexAdapter = new CommonFlexAdapter(this.items, this);
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(items);
         }
     }
 
