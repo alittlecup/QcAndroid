@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.apis;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
+import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -312,23 +313,35 @@ public class CourseModel implements ICourseModel {
   @Override
   public Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(String schedule_id) {
 
-    return api.qcGetScheduleDetail(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+    return api.qcGetScheduleDetail(loginStatus.staff_id(), schedule_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(String schedule_id) {
-    return api.qcGetScheduleDetailOrder(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+    return api.qcGetScheduleDetailOrder(loginStatus.staff_id(), schedule_id,
+        gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id) {
-    return api.qcGetScheduleDetailPhotos(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+    return api.qcGetScheduleDetailPhotos(loginStatus.staff_id(), schedule_id,
+        gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
       String order_id) {
-    Map<String,Object> body=new HashMap<>(gymWrapper.getParams());
-    body.put("order_id",order_id);
-    return api.qcPostScheduleOrderCancel(loginStatus.staff_id(),order_id,gymWrapper.getParams(),body);
+    return api.qcPostScheduleOrderCancel(loginStatus.staff_id(), order_id, gymWrapper.getParams(),
+        gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcDeleteSchedulePhotos(
+      String schedule_id, String photoIDs) {
+    Map<String, Object> body = new HashMap<>(gymWrapper.getParams());
+    body.put("photo_ids", photoIDs);
+    return api.qcDeleteSchedulePhotos(loginStatus.staff_id(), schedule_id, body);
+  }
+
+  @Override public Observable<QcDataResponse<GymExtra>> qcGetGymExtra() {
+    return api.qcGetGymExtra(loginStatus.staff_id(), gymWrapper.getParams());
   }
 }

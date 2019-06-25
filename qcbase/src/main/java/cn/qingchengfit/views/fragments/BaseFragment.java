@@ -113,9 +113,6 @@ import rx.functions.Func1;
     super.onCreate(savedInstanceState);
   }
 
-  @Override public void onResume() {
-    super.onResume();
-  }
 
   protected void doEventOnCreatView(Class classz, Action1 action1) {
     RxBus.getBus()

@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
@@ -25,6 +26,8 @@ import java.util.List;
 
 public class GymExtra {
     public List<Extra> urls;
+    @SerializedName("shop_id")
+    public String shopID;
 
     public class Extra {
         public String url;

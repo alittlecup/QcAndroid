@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.apis;
 
 import cn.qingchengfit.model.responese.CourseTypeSamples;
+import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -280,9 +281,20 @@ public interface CourseApi {
       @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
       @QueryMap Map<String, Object> params);
 
-  //获取已经排好课程的课程照片列表
+  //取消预约
   @POST("/api/v2/staffs/{staff_id}/orders/{order_id}/cancel/")
   rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
       @Path("staff_id") String staff_id, @Path("order_id") String order_id,
       @QueryMap Map<String, Object> query, @Body Map<String, Object> body);
+
+  // 课程照片 批量删除
+  @DELETE("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/photos/")
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcDeleteSchedulePhotos(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+
+  @GET("/api/v2/staffs/{staff_id}/gym-extra/")
+  rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 }

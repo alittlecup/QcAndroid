@@ -12,6 +12,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.constant.Get_Api;
+import cn.qingchengfit.staffkit.constant.StaffAllApi;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.Date;
@@ -107,7 +108,7 @@ public class CustomSigninPresenter extends BasePresenter {
                     }
                 }, new NetWorkThrowable()));
         } else {
-            RxRegiste(qcRestRepository.createRxJava1Api(Get_Api.class)
+            RxRegiste(qcRestRepository.createRxJava1Api(StaffAllApi.class)
                 .qcGetGymCardtpl(loginStatus.staff_id(), gymWrapper.id(), gymWrapper.model(),
                     null)
                 .onBackpressureBuffer()

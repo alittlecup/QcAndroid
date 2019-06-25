@@ -36,6 +36,25 @@
         app:layout_constraintTop_toTopOf="@id/img_member_photo"
         tools:text="陈坤"
         />
+    <ImageView
+        android:id="@+id/img_gender"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        tools:src="@drawable/vd_gender_male"
+        app:layout_constraintTop_toTopOf="@id/tv_name"
+        app:layout_constraintLeft_toRightOf="@id/tv_name"
+        />
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_name"
+        app:layout_constraintLeft_toRightOf="@id/img_gender"
+        tools:text="1人"
+        />
     <TextView
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
@@ -47,6 +66,7 @@
         tools:text="手机 17600201543"
         />
     <TextView
+        android:id="@+id/tv_remarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -60,7 +80,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
-        android:drawableLeft="@drawable/circle_green"
         android:drawablePadding="5dp"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,14 +87,14 @@
         tools:text="已完成"
         />
     <TextView
-        style="@style/QcBtnPrimaryFrame"
         android:id="@+id/tv_cancel"
+        style="@style/QcBtnPrimaryFrame"
         android:layout_width="68dp"
         android:layout_height="30dp"
         android:layout_marginTop="9dp"
         android:text="取消预约"
-        android:visibility="gone"
         android:textSize="13sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/tv_order_status"
         app:layout_constraintTop_toBottomOf="@id/tv_order_status"
         />

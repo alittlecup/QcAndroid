@@ -1,13 +1,16 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.staff.model.StaffShipResponse;
 import cn.qingchengfit.saasbase.staff.model.Staffs;
+import java.util.HashMap;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by fb on 2017/8/17.
@@ -27,4 +30,9 @@ public interface GetApi {
 
   //工作人员详情
   @GET("/api/staffs/{id}/") rx.Observable<QcDataResponse<StaffResponse>> qcGetSelfInfo(@Path("id") String id);
+
+
+  @GET("/api/v2/staffs/{staff_id}/gym-extra/")
+  rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 }

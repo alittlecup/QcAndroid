@@ -14,6 +14,15 @@ public class ScheduleOrders extends QcListData implements Parcelable {
     private String id;
     private String remarks;
     private User user;
+    private int count;
+
+    public int getCount() {
+      return count;
+    }
+
+    public void setCount(int count) {
+      this.count = count;
+    }
 
     public int getStatus() {
       return status;
@@ -76,6 +85,7 @@ public class ScheduleOrders extends QcListData implements Parcelable {
       dest.writeString(this.id);
       dest.writeString(this.remarks);
       dest.writeParcelable(this.user, flags);
+      dest.writeInt(this.count);
       dest.writeInt(this.status);
     }
 
@@ -83,6 +93,7 @@ public class ScheduleOrders extends QcListData implements Parcelable {
       this.id = in.readString();
       this.remarks = in.readString();
       this.user = in.readParcelable(User.class.getClassLoader());
+      this.count = in.readInt();
       this.status = in.readInt();
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class ScheduleDetail implements Parcelable {
   @SerializedName("start") public String start;
   @SerializedName("end") public String end;
-  @SerializedName("url") public String url;
+  @SerializedName("photo") public String url;
   @SerializedName("id") public long id;
   @SerializedName("course") public Course course;
   @SerializedName("teacher") public List<ScheduleTeacherDTO> teacher;

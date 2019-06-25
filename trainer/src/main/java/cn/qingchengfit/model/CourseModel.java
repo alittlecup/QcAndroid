@@ -3,6 +3,7 @@ package cn.qingchengfit.model;
 import cn.qingchengfit.api.CourseApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -34,6 +35,7 @@ import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import com.qingchengfit.fitcoach.App;
 import java.util.HashMap;
 import rx.Observable;
@@ -329,6 +331,20 @@ public class CourseModel implements ICourseModel {
 
   @Override
   public Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
+      String order_id) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcDeleteSchedulePhotos(
+      String schedule_id, String photoIDs) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<GymExtra>> qcGetGymExtra() {
     return null;
   }
 }

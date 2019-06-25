@@ -39,9 +39,7 @@ public class DrawableUtils {
   }
   public  static Drawable generateCardStatusBg(@ColorRes int color,Context context){
     Drawable d  = ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
-    //Drawable d = new ShapeDrawable();
     DrawableCompat.setTint(d,ContextCompat.getColor(context, color));
-    //d.setColorFilter(color);
     return d;
   }
   public static Drawable tintDrawable(Context context,@DrawableRes int drawable,@ColorRes int color){

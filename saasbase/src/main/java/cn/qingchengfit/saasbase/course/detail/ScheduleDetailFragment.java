@@ -99,7 +99,7 @@ import javax.inject.Inject;
       mBinding.tvPhotoCount.setText("课程相册（" + photos.size() + ")");
       List<SquareImageItem> items = new ArrayList<>(photos.size());
       for (SchedulePhoto photo : photos) {
-        items.add(new SquareImageItem(photo.getPhoto()));
+        items.add(new SquareImageItem(photo));
       }
       photoAdapter.updateDataSet(items);
     }
@@ -108,14 +108,20 @@ import javax.inject.Inject;
   @Override
   public FragmentScheduleDetailBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    if(mBinding!=null)return mBinding;
     mBinding = FragmentScheduleDetailBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
     mViewModel.loadCourseDetail(scheduleID);
-    mViewModel.loadCoursePhotos(scheduleID);
-    mViewModel.loadCouseOrders(scheduleID);
+    mViewModel.loadShopInfo();
     mBinding.setFragment(this);
     return mBinding;
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    mViewModel.loadCoursePhotos(scheduleID);
+    mViewModel.loadCouseOrders(scheduleID);
   }
 
   private void initRecyclerView() {
@@ -135,25 +141,27 @@ import javax.inject.Inject;
   }
 
   public void routeAllPhotos(View view) {
-
+    routeTo("course", "/schedule/photos", new BundleBuilder().withString("scheduleID", scheduleID)
+        .withParcelable("photos", mViewModel.detailPhotos.getValue())
+        .build());
   }
 
   public void routeAddPhotos(View view) {
     String host = gymWrapper.getCoachService().getHost();
-    WebActivity.startWeb(host + "/shop/" + 1 + "/m/upload/photo/?type=user&schedule_id=" + scheduleID,
+    WebActivity.startWeb(host + "/shop/" + mViewModel.shopID+ "/m/upload/photo/?type=coach&schedule_id=" + scheduleID,
         getContext());
   }
 
   public void routeAddOrder(View view) {
     String host = gymWrapper.getCoachService().getHost();
-    WebActivity.startWeb(host + "/shop/" + 1 + "/m/coach/schedules/" + scheduleID + "/group/order/",
+    WebActivity.startWeb(host + "/shop/" + mViewModel.shopID + "/m/coach/schedules/" + scheduleID + "/group/order/",
         getContext());
   }
 
   public void routeSignOrder(View view) {
     String host = gymWrapper.getCoachService().getHost();
     WebActivity.startWeb(
-        host + "/shop/" + 1 + "/m/coach/schedules/" + scheduleID + "/checkin/proxy/", getContext());
+        host + "/shop/" + mViewModel.shopID + "/m/coach/schedules/" + scheduleID + "/checkin/proxy/", getContext());
   }
 
   private void initToolbar() {

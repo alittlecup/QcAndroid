@@ -1,22 +1,14 @@
 package cn.qingchengfit.saasbase.repository;
 
 
-import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.coach.model.CoachResponse;
-import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
-import cn.qingchengfit.saasbase.network.body.FeedBackBody;
-import cn.qingchengfit.saasbase.network.body.SystemInitBody;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
-import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.user.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
 import cn.qingchengfit.saasbase.user.bean.GetCodeBody;
-import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -25,7 +17,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import rx.Observable;
 
 /**
  * Created by fb on 2017/8/17.
@@ -38,14 +29,6 @@ public interface PostApi {
   @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBody account);
 
 
-  //发送意见
-  @POST("/api/feedback/") rx.Observable<QcResponse> qcFeedBack(@Body FeedBackBody bean);
-
-  @POST("/api/brands/") rx.Observable<QcResponseData<CreatBrand>> qcCreatBrand(@Body
-      CreatBrandBody body);
-
-  @POST("/api/systems/initial/") rx.Observable<QcResponseSystenInit> qcSystemInit(@Body
-      SystemInitBody body);
 
   @PUT("/api/staffs/{id}/coaches/{cid}/") rx.Observable<QcResponse> qcFixCoach(@Path("id") String id, @Path("cid") String cid,
       @Query("id") String gymid, @Query("model") String model, @Body Staff coach);

@@ -5,7 +5,7 @@ ext {
                    minSdk              : 16,
                    targetSdk           : 26,
                    version_code        : 109, //缝10必更
-                   version_name        : "1.1905.09",
+                   version_name        : "1.1906.25",
                    trainer_version_code: 169,
                    trainer_version_name: "1.1901.01"
 
@@ -124,7 +124,7 @@ ext {
                   "sqlbrite"                    : "com.github.bumptech.glide:glide:3.7.0",
 
                   //matisse 图片选择库
-                  "matisse"                     : "cn.qingchengfit.imagepicker:matisse:1.0.5",
+                  "matisse"                     : "cn.qingchengfit.imagepicker:matisse:1.0.6",
 
                   //Dialog Dialog自定义弹窗
                   "dialog"                      : "cn.qingchengfit.material-dialogs:material-dialogs:1.0.5",

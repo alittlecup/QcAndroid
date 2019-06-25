@@ -2,11 +2,26 @@
 <layout>
   <data>
   </data>
-  <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/image_view"
-      android:layout_width="80dp"
-      android:layout_height="80dp"
-      >
 
-  </ImageView>
+  <FrameLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="8dp"
+      >
+    <CheckBox
+        android:id="@+id/check_box"
+        style="@style/Qc.CheckBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:visibility="gone"
+        />
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="5dp"
+        />
+  </FrameLayout>
 </layout>

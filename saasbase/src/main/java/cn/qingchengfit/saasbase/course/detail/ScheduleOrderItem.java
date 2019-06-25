@@ -14,7 +14,8 @@ import java.util.List;
 public class ScheduleOrderItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemScheduleOrderBinding>> {
   private ScheduleOrders.ScheduleOrder order;
-  public ScheduleOrders.ScheduleOrder getData(){
+
+  public ScheduleOrders.ScheduleOrder getData() {
     return order;
   }
 
@@ -42,7 +43,7 @@ public class ScheduleOrderItem
     dataBinding.tvName.setText(order.getUser().getUsername());
     dataBinding.tvPhone.setText("手机" + order.getUser().getPhone());
     String text = "";
-    int colorRes = -1;
+    int colorRes = R.color.green;
     dataBinding.tvCancel.setVisibility(View.VISIBLE);
     switch (order.getStatus()) {
       case 0:
@@ -67,7 +68,12 @@ public class ScheduleOrderItem
     Drawable drawable =
         DrawableUtils.tintDrawable(dataBinding.getRoot().getContext(), R.drawable.circle_green,
             colorRes);
+    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
     dataBinding.tvOrderStatus.setCompoundDrawables(drawable, null, null, null);
+    dataBinding.tvCount.setText(order.getCount() + "人");
+    dataBinding.tvRemarks.setText("备注:"+order.getRemarks());
+    dataBinding.imgGender.setImageResource(
+        order.getUser().getGender() == 0 ? R.drawable.vd_gender_male : R.drawable.vd_gender_female);
     dataBinding.tvCancel.setOnClickListener(v -> holder.onClick(v));
     holder.getDataBinding().getRoot().setClickable(false);
   }

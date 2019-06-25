@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
@@ -69,12 +70,10 @@ public interface ICourseModel {
   rx.Observable<QcDataResponse<QcResponsePrivateDetail>> qcGetPrivateCoaches(String coach_id);
 
   //获取某节课种类的排课列表
-  rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-     String course_id);
+  rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(String course_id);
 
   //获取某个排期的详情
-  rx.Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
-     String batch_id);
+  rx.Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(String batch_id);
 
   //获取某个排期的schedule
   rx.Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(String batch_id,
@@ -119,48 +118,42 @@ public interface ICourseModel {
   /**
    * 获取课程下教练
    */
-  rx.Observable<QcDataResponse<CourseTeacherWrapper>> qcGetCourseTeacher(
-      String id, String shopid);
+  rx.Observable<QcDataResponse<CourseTeacherWrapper>> qcGetCourseTeacher(String id, String shopid);
 
   /**
    * 课程下照片
    */
-  rx.Observable<QcDataResponse<SchedulePhotoListWrap>> qcGetSchedulePhotos(
-     String id, int page);
+  rx.Observable<QcDataResponse<SchedulePhotoListWrap>> qcGetSchedulePhotos(String id, int page);
 
   /**
    * 获取课程详情
    */
-  rx.Observable<QcDataResponse<CourseTypeWrap>> qcGetCourseDetail( String id);
+  rx.Observable<QcDataResponse<CourseTypeWrap>> qcGetCourseDetail(String id);
 
   /**
    * 分场馆评分
    */
   rx.Observable<QcDataResponse<ShopCommentWrap>> qcGetShopComment(String id);
 
- rx.Observable<QcDataResponse> qcCreateCourse(
-       CourseBody courseBody);
+  rx.Observable<QcDataResponse> qcCreateCourse(CourseBody courseBody);
 
   //修改课程
-  rx.Observable<QcDataResponse> qcUpdateCourse(
-      String course_id,  CourseBody courseBody);
+  rx.Observable<QcDataResponse> qcUpdateCourse(String course_id, CourseBody courseBody);
 
   //删除课程
- rx.Observable<QcDataResponse> qcDelCourse(
-     String course_id);
+  rx.Observable<QcDataResponse> qcDelCourse(String course_id);
 
   //修改封面
- rx.Observable<QcDataResponse> qcEditJacket(
-       String course_id,  EditJacketBody body);
+  rx.Observable<QcDataResponse> qcEditJacket(String course_id, EditJacketBody body);
 
   //修改课程适用场馆
-  rx.Observable<QcDataResponse> qcEditCourseShops( String course_id);
+  rx.Observable<QcDataResponse> qcEditCourseShops(String course_id);
 
-  rx.Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket( String course_id);
+  rx.Observable<QcDataResponse<JacketPhotoWrap>> qcGetJacket(String course_id);
 
-  rx.Observable<QcDataResponse> qcCheckBatchConflict( BatchCopyBody body);
+  rx.Observable<QcDataResponse> qcCheckBatchConflict(BatchCopyBody body);
 
-  rx.Observable<QcDataResponse> qcSureCopyBatch( BatchCopyBody body);
+  rx.Observable<QcDataResponse> qcSureCopyBatch(BatchCopyBody body);
 
   rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(
       HashMap<String, Object> params);
@@ -182,4 +175,9 @@ public interface ICourseModel {
 
   rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(String order_id);
 
+  // 课程照片 批量删除
+  rx.Observable<QcDataResponse<SimpleSuccessResponse>> qcDeleteSchedulePhotos(String schedule_id,
+      String photoIDs);
+
+  rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra();
 }

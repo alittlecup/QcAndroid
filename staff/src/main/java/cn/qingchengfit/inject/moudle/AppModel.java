@@ -5,22 +5,19 @@ import cn.qingchengfit.card.StaffCardRouters;
 import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.gym.gymconfig.IGymConfigModel;
 import cn.qingchengfit.login.ILoginModel;
 import cn.qingchengfit.model.CardModel;
 import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.LoginModel;
-import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.apis.CourseModel;
-import cn.qingchengfit.gym.gymconfig.IGymConfigModel;
-import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IExportModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
 import cn.qingchengfit.saasbase.routers.commonImpl;
@@ -30,6 +27,7 @@ import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saascommon.model.QcDbManager;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.staff.routers.StaffRouterCenter;
 import cn.qingchengfit.staff.routers.dianpingImpl;
@@ -162,9 +160,7 @@ import java.util.List;
     return qcDbManager;
   }
 
-  @Provides SaasModel providerSaasModel() {
-    return new SaasModelImpl(qcrestRepository);
-  }
+
 
   @Provides CardRealModel provideCardRealModel() {
     return cardModel;

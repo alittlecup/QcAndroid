@@ -2,7 +2,6 @@ package cn.qingchengfit.api;
 
 import android.support.annotation.Nullable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
@@ -11,7 +10,6 @@ import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchSchedulesWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
 import cn.qingchengfit.saasbase.course.course.bean.JacketPhotoWrap;
@@ -23,10 +21,6 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
-import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
-import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
-import com.qingchengfit.fitcoach.http.bean.QcResponseCoursePlan;
-import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.http.Body;
@@ -67,14 +61,7 @@ public interface CourseApi {
     @Path("batch_id") String batch_id, @Path("schedules") String schedules,
     @QueryMap HashMap<String, Object> params);
 
-  //排期列表
-  @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/batches/")
-  rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(@Path("coach_id") int coach_id,
-    @Path("course_id") String course_id, @QueryMap Map<String, Object> params);
 
-  @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/")
-  rx.Observable<QcOneCourseResponse> qcGetOneCourse(@Path("coach_id") int coach_id,
-    @Path("course_id") String course_id, @QueryMap Map<String, Object> params);
   //获取某个排期的详情
   @GET("/api/v1/coaches/{id}/batches/{batch_id}/") rx.Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
     @Path("id") String coach_id, @Path("batch_id") String batch_id, @QueryMap Map<String, Object> params);
@@ -96,12 +83,6 @@ public interface CourseApi {
   @GET("/api/v1/coaches/{coach_id}/plantpls/?show_all=1")
   rx.Observable<QcDataResponse<CoursePlans>> qcGetCoursePlan(@Path("coach_id") String id,
     @QueryMap HashMap<String, Object> params);
-
-  /**
-   * 获取课程计划
-   */
-  @GET("/api/v2/coaches/{coach_id}/plantpls/all/?show_all=1")
-  rx.Observable<QcResponseCoursePlan> qcGetCoursePlanAll(@Path("coach_id") String id);
 
   /**
    * 获取课程下教练
@@ -139,16 +120,10 @@ public interface CourseApi {
 
 
 
-  //批量排课
-  @POST("/api/v1/coaches/{id}/schedules/batches/") rx.Observable<QcResponse> qcAddCourseManage(@Path("id") String id,
-    @Body AddBatchCourse addBatchCourse,@QueryMap HashMap<String, Object> params);
 
   @POST("/api/v1/coaches/{id}/{schedules}/bulk/delete/") rx.Observable<QcDataResponse> qcDelBatchSchedule(@Path("id") String id,
     @Path("schedules") String schedules, @Body DelBatchScheduleBody delCourseManage,@QueryMap HashMap<String, Object> params);
 
-  //获取私教排课
-  @GET("/api/v1/coaches/{id}/private/coaches/") rx.Observable<QcResponsePrivateCourse> qcGetPrivateCrourse(
-    @Path("id") String coach_id, @QueryMap HashMap<String, Object> params);
 
   //获取私教课排期
   @GET("/api/v1/coaches/{id}/batches/?is_private=1") rx.Observable<QcDataResponse<QcResponsePrivateDetail>> qcGetPrivateCourses(
@@ -193,10 +168,6 @@ public interface CourseApi {
     @Query("course_id") String course_id, @QueryMap HashMap<String, Object> params,
     @Body EditJacketBody body);
 
-  //修改课程适用场馆
-  @PUT("/api/v2/coaches/{coach_id}/courses/{course_id}/shops/") rx.Observable<QcResponse> qcEditCourseShops(
-    @Path("coach_id") String coachid, @Path("course_id") String course_id,
-    @Body HashMap<String, Object> params);
 
   /**
    * 排期
@@ -228,5 +199,6 @@ public interface CourseApi {
   @GET("api/coaches/{coach_id}/copy-batch/schedules/")
   rx.Observable<QcDataResponse<CopyScheduleWrapper>> qcBatchCopySchedule(@Path("coach_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
+
 
 }

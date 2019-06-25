@@ -72,7 +72,6 @@ import cn.qingchengfit.model.responese.FollowUpConver;
 import cn.qingchengfit.model.responese.GroupCourseResponse;
 import cn.qingchengfit.model.responese.GymCardtpl;
 import cn.qingchengfit.model.responese.GymDetail;
-import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.GymSites;
 import cn.qingchengfit.model.responese.HomeInfo;
@@ -220,9 +219,6 @@ public interface StaffAllApi {
   rx.Observable<QcDataResponse<RenewalList>> qcGetGymPay(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
 
-  @GET("/api/v2/staffs/{staff_id}/gym-extra/")
-  rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
 
   //获取通知 分页和不分页接口 ,后者只为拿 未读
   @Deprecated @GET("/api/notifications/") rx.Observable<QcDataResponse<Notification>> qcGetMessages(

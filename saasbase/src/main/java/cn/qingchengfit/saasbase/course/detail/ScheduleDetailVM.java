@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.course.detail;
 
 import android.arch.lifecycle.MutableLiveData;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saascommon.mvvm.BaseViewModel;
@@ -13,10 +14,13 @@ public class ScheduleDetailVM extends BaseViewModel {
   public MutableLiveData<ScheduleDetail> detail = new MutableLiveData<>();
   public MutableLiveData<ScheduleOrders> detailOrders = new MutableLiveData<>();
   public MutableLiveData<SchedulePhotos> detailPhotos = new MutableLiveData<>();
-  public MutableLiveData<Boolean> cancelResult=new MutableLiveData<>();
+  public MutableLiveData<Boolean> cancelResult = new MutableLiveData<>();
+  public MutableLiveData<Boolean> delPhotoResult = new MutableLiveData<>();
+  public String shopID;//TODO 添加获取 shop ID 接口
+  @Inject GymWrapper gymWrapper;
+
 
   @Inject public ScheduleDetailVM() {
-
   }
 
   public void loadCourseDetail(String scheduleId) {
@@ -30,6 +34,15 @@ public class ScheduleDetailVM extends BaseViewModel {
           }
         }, throwable -> {
         });
+  }
+
+  public void loadShopInfo() {
+    courseModel.qcGetGymExtra().compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+      if (ResponseConstant.checkSuccess(response)) {
+        shopID = response.data.shopID;
+      }
+    }, throwable -> {
+    });
   }
 
   public void loadCouseOrders(String scheduleId) {
@@ -67,6 +80,21 @@ public class ScheduleDetailVM extends BaseViewModel {
             cancelResult.setValue(true);
           } else {
             cancelResult.setValue(false);
+
+            ToastUtils.show(response.msg);
+          }
+        }, throwable -> {
+        });
+  }
+
+  public void delPhotos(String scheduleId, String photos) {
+    courseModel.qcDeleteSchedulePhotos(scheduleId, photos)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            delPhotoResult.setValue(true);
+          } else {
+            delPhotoResult.setValue(false);
 
             ToastUtils.show(response.msg);
           }
