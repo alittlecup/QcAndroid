@@ -10,6 +10,7 @@ import cn.qingchengfit.student.bean.AbsentceListWrap;
 import cn.qingchengfit.student.bean.AllotDataResponseWrap;
 import cn.qingchengfit.student.bean.AttendanceCharDataBean;
 import cn.qingchengfit.student.bean.AttendanceListWrap;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
 import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
 import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
@@ -374,5 +375,10 @@ public class StudentModel implements IStudentModel {
   public Flowable<QcDataResponse<CoachStudentFilterWrapper>> qcGetCoachStudentPtagFilter() {
     return RxJavaInterop.toV2Flowable(
         api.qcGetStudentFilter(loginStatus.staff_id(), gymWrapper.getParams()));
+  }
+
+  @Override public Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(String studentid,
+      HashMap<String, Object> params) {
+    return api.qcGetStudentClassRecords(loginStatus.staff_id(),studentid,gymWrapper.getParams());
   }
 }

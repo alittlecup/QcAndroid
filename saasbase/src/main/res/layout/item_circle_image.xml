@@ -2,13 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
   <data>
   </data>
-  <ImageView
-      android:id="@+id/image_view"
+  <FrameLayout
       android:layout_width="40dp"
       android:layout_height="40dp"
-      android:layout_marginRight="10dp"
       >
 
-  </ImageView>
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        />
+  </FrameLayout>
 
 </layout>

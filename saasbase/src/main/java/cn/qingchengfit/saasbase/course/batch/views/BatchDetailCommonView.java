@@ -192,7 +192,11 @@ public class BatchDetailCommonView extends BaseFragment {
       llCourseWorkout.setVisibility(View.VISIBLE);
       mViewModel = ViewModelProviders.of(this, factory).get(BatchFragmentVM.class);
       mViewModel.selectWork.observe(this, workout -> {
-        civWorkout.setContent(workout.getName());
+        if (workout != null) {
+          civWorkout.setContent(workout.getName());
+        } else {
+          civWorkout.setContent("");
+        }
       });
       mViewModel.selectWorkPlan.observe(this, workoutPlan -> {
         if (workoutPlan != null) {

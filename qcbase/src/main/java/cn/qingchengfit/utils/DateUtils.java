@@ -515,6 +515,10 @@ public class DateUtils {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
     return formatter.format(d);
   }
+  public static String Date2MMDDV2(Date d) {
+    SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日", Locale.CHINA);
+    return formatter.format(d);
+  }
 
   public static int getDayOfMonth(Date d) {
     Calendar calendar = Calendar.getInstance();

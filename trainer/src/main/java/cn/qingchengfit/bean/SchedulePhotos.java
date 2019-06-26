@@ -2,7 +2,7 @@ package cn.qingchengfit.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
+import cn.qingchengfit.model.base.Shop;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class SchedulePhotos implements Parcelable {
     private String end;
     private String url;
     private Coach teacher;
-    private QcScheduleBean.Shop shop;
+    private Shop shop;
     private List<SchedulePhoto> photos;
     private Long id;
 
@@ -53,16 +53,16 @@ public class SchedulePhotos implements Parcelable {
         this.end = in.readString();
         this.url = in.readString();
         this.teacher = in.readParcelable(Coach.class.getClassLoader());
-        this.shop = in.readParcelable(QcScheduleBean.Shop.class.getClassLoader());
+        this.shop = in.readParcelable(Shop.class.getClassLoader());
         this.photos = in.createTypedArrayList(SchedulePhoto.CREATOR);
         this.id = (Long) in.readValue(Long.class.getClassLoader());
     }
 
-    public QcScheduleBean.Shop getShop() {
+    public Shop getShop() {
         return shop;
     }
 
-    public void setShop(QcScheduleBean.Shop shop) {
+    public void setShop(Shop shop) {
         this.shop = shop;
     }
 

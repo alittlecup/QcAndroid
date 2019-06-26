@@ -87,12 +87,5 @@
       civ:civ_lable="@string/course_min_num"
       />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/default_course_plan"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      android:visibility="gone"
-      civ:civ_clickable="true"
-      civ:civ_lable="@string/default_course_plan"
-      />
+
 </LinearLayout>

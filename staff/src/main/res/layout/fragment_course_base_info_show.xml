@@ -72,33 +72,6 @@
   </LinearLayout>
 
   <LinearLayout
-      android:id="@+id/default_course_plan_layout"
-      android:layout_width="match_parent"
-      android:layout_height="30dp"
-      android:orientation="horizontal"
-      android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:paddingRight="@dimen/activity_horizontal_margin"
-
-      >
-
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        android:text="默认课程计划"
-        android:textSize="13sp"
-        />
-
-    <TextView
-        android:id="@+id/default_course_plan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        tools:text="6"
-        style="@style/Qc.TextCommonGrey"
-        />
-  </LinearLayout>
-
-  <LinearLayout
       android:id="@+id/suit_gyms_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

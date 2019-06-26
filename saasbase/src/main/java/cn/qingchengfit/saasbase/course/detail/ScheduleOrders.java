@@ -9,7 +9,6 @@ import java.util.List;
 public class ScheduleOrders extends QcListData implements Parcelable {
   public List<ScheduleOrder> orders;
 
-
   public static class ScheduleOrder implements Parcelable {
     private String id;
     private String remarks;
@@ -34,21 +33,20 @@ public class ScheduleOrders extends QcListData implements Parcelable {
 
     /**
      * STATUS_CREATE = 0
-     *     STATUS_DONE = 1
-     *     STATUS_CANCEL = 2
-     *     STATUS_FAIL = 3
-     *     STATUS_SIGN_IN = 4
+     * STATUS_DONE = 1
+     * STATUS_CANCEL = 2
+     * STATUS_FAIL = 3
+     * STATUS_SIGN_IN = 4
      *
-     *     STATUS_CHOICES = (
-     *         (STATUS_CREATE, '已预约'),
-     *         (STATUS_DONE, '已完成'),
-     *         (STATUS_CANCEL, '已取消'),
-     *         (STATUS_FAIL, '失败'),
-     *         (STATUS_SIGN_IN, '已签课')
-     *     )
+     * STATUS_CHOICES = (
+     * (STATUS_CREATE, '已预约'),
+     * (STATUS_DONE, '已完成'),
+     * (STATUS_CANCEL, '已取消'),
+     * (STATUS_FAIL, '失败'),
+     * (STATUS_SIGN_IN, '已签课')
+     * )
      */
     private int status;
-
 
     public String getId() {
       return id;
@@ -106,6 +104,7 @@ public class ScheduleOrders extends QcListData implements Parcelable {
         return new ScheduleOrder[size];
       }
     };
+
   }
 
   @Override public int describeContents() {

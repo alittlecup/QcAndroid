@@ -25,6 +25,9 @@ import cn.qingchengfit.saasbase.course.course.views.CourseListFragment;
 import cn.qingchengfit.saasbase.course.course.views.EditCourseFragment;
 import cn.qingchengfit.saasbase.course.course.views.JacketManagerFragment;
 import cn.qingchengfit.saasbase.course.course.views.ShopCommentsFragment;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailFragment;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrdersFragment;
+import cn.qingchengfit.saasbase.course.detail.SchedulePhotosFragment;
 import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
 import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
 import com.anbillon.flabellum.annotations.Trunk;
@@ -50,15 +53,16 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2018/1/26.
  */
 @Trunk(fragments = {
-  BatchListTrainerFragment.class, TrainerBatchAddFragment.class,
-  BatchListPrivateFragment.class, BatchListGroupFragment.class, AddBatchFragment.class,
-  BatchListCategoryGroupFragment.class, BatchListCategoryPrivateFragment.class,
-  IBatchListCategoryFragment.class, EditBatchFragment.class, BatchScheduleListFragment.class,
-  BatchSingleFragment.class, CourseDetailFragment.class, EditCourseFragment.class,
-  CourseChooseFragment.class, CourseListFragment.class,JacketManagerFragment.class,ShopCommentsFragment.class,
-  AddCourseFragment.class, CoachCommentListFragment.class, CourseHomeInBrandFragment.class,
-  CourseImagesFragment.class, BatchDetailCommonView.class,UpgradeInfoDialogFragment.class,
-  MutiChooseGymFragment.class,ChooseCoursePlanFragment.class, BatchCopyFragment.class, BatchCourseChooseFragment.class,
-})
-public class TrainerCourseActivity extends CourseActivity {
+    BatchListTrainerFragment.class, TrainerBatchAddFragment.class, BatchListPrivateFragment.class,
+    BatchListGroupFragment.class, AddBatchFragment.class, BatchListCategoryGroupFragment.class,
+    BatchListCategoryPrivateFragment.class, IBatchListCategoryFragment.class,
+    EditBatchFragment.class, BatchScheduleListFragment.class, BatchSingleFragment.class,
+    CourseDetailFragment.class, EditCourseFragment.class, CourseChooseFragment.class,
+    CourseListFragment.class, JacketManagerFragment.class, ShopCommentsFragment.class,
+    AddCourseFragment.class, CoachCommentListFragment.class, CourseHomeInBrandFragment.class,
+    CourseImagesFragment.class, BatchDetailCommonView.class, UpgradeInfoDialogFragment.class,
+    MutiChooseGymFragment.class, ChooseCoursePlanFragment.class, BatchCopyFragment.class,
+    BatchCourseChooseFragment.class, ScheduleDetailFragment.class, ScheduleOrdersFragment.class,
+    SchedulePhotosFragment.class
+}) public class TrainerCourseActivity extends CourseActivity {
 }

@@ -5,10 +5,12 @@ import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.repository.RepoCoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.course.detail.ScheduleDetailVM;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.student.respository.IStudentModel;
+import cn.qingchengfit.student.view.detail.ClassRecordTempFragment;
 import com.qingchengfit.fitcoach.fragment.NotificationFragment;
 import com.qingchengfit.fitcoach.fragment.card.CardModel;
 import com.qingchengfit.fitcoach.fragment.card.StaffModel;
@@ -32,7 +34,8 @@ import dagger.multibindings.IntoMap;
 
   @Binds abstract IStudentModel bindStudentModel(StudentModel cardModel);
 
-  //@ContributesAndroidInjector() abstract StudentHomeActivity contributeStudentHomeActivity();
+  @ContributesAndroidInjector abstract ClassRecordTempFragment bindClassRecordTempFragment();
+
 
   @ContributesAndroidInjector() abstract ScheduesFragment contributeScheduesFragment();
   @ContributesAndroidInjector() abstract NotificationFragment contributeNotificationFragment();
@@ -41,4 +44,8 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(ManageViewModel.class)
   abstract ViewModel bindManageViewModel(ManageViewModel manageViewModel);
+
+
+  @Binds @IntoMap @ViewModelKey(ScheduleDetailVM.class)
+  abstract ViewModel bindCourseDetailViewModel(ScheduleDetailVM model);
 }

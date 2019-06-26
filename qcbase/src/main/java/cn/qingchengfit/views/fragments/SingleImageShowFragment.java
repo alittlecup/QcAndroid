@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -50,7 +49,6 @@ public class SingleImageShowFragment extends BottomSheetDialogFragment {
 	Button btnDownload;
 	ImageView close;
 
-  private BottomSheetBehavior<ViewGroup> mBehavior;
   private String s;
 
   public static SingleImageShowFragment newInstance(String url) {
@@ -91,15 +89,7 @@ public class SingleImageShowFragment extends BottomSheetDialogFragment {
   }
 
   @Override public void setupDialog(Dialog dialog, int style) {
-    //super.setupDialog(dialog, style);
-    //dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-    //  @Override public void onShow(DialogInterface dialog) {
-    //    BottomSheetDialog d = (BottomSheetDialog) dialog;
-    //    FrameLayout bottomSheet =
-    //        (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
-    //    BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
-    //  }
-    //});
+
   }
 
   @Override public void onDestroyView() {

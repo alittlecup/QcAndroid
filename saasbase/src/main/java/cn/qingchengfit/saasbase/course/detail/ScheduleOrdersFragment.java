@@ -17,17 +17,19 @@ import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Leaf(module = "course", path = "/schedule/orders") public class ScheduleOrdersFragment
-    extends SaasBindingFragment<FragmentScheduleOrdersBinding, ScheduleDetailVM> implements
-    FlexibleAdapter.OnItemClickListener {
+    extends SaasBindingFragment<FragmentScheduleOrdersBinding, ScheduleDetailVM>
+    implements FlexibleAdapter.OnItemClickListener {
   CommonFlexAdapter adapter;
   @Need ScheduleOrders orders;
   @Need String scheduleID;
 
   @Override protected void subscribeUI() {
-    mViewModel.cancelResult.observe(this,aBoolean -> {
+    mViewModel.cancelResult.observe(this, aBoolean -> {
       mViewModel.loadCouseOrders(scheduleID);
     });
     mViewModel.detailOrders.observe(this, this::updateOrderItems);
@@ -54,6 +56,21 @@ import java.util.List;
         && scheduleOrders.orders != null
         && !scheduleOrders.orders.isEmpty()) {
       List<ScheduleOrderItem> items = new ArrayList<>();
+      List<ScheduleOrders.ScheduleOrder> orders = scheduleOrders.orders;
+      Collections.sort(orders, (o1, o2) -> {
+        int status = o1.getStatus();
+        int toStatus = o2.getStatus();
+        if (toStatus == status) {
+          return 0;
+        } else if (status == 2) {
+          return -1;
+        } else if (status > toStatus || toStatus == 2) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+
       for (ScheduleOrders.ScheduleOrder order : scheduleOrders.orders) {
         items.add(new ScheduleOrderItem(order));
       }
@@ -67,7 +84,7 @@ import java.util.List;
 
   private void initRecyclerView() {
     mBinding.recyclerOrders.setLayoutManager(new LinearLayoutManager(getContext()));
-    mBinding.recyclerOrders.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(),this));
+    mBinding.recyclerOrders.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
   }
 
   private void initToolbar() {
@@ -77,7 +94,7 @@ import java.util.List;
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = adapter.getItem(position);
-    if(item instanceof ScheduleOrderItem){
+    if (item instanceof ScheduleOrderItem) {
       ScheduleOrders.ScheduleOrder data = ((ScheduleOrderItem) item).getData();
       mViewModel.postCancelOrder(data.getId());
     }

@@ -37,6 +37,7 @@ import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.bean.CoachPtagAnswerBody;
 import cn.qingchengfit.student.bean.CoachPtagQuestionnaire;
 import cn.qingchengfit.student.bean.CoachStudentFilterWrapper;
@@ -132,6 +133,7 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
+import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,12 +185,7 @@ public interface TrainerAllApi {
   @GET("/api/coaches/{coach_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(
       @Path("coach_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-  //
-  //        //获取通知 分页和不分页接口 ,后者只为拿 未读
-  //        @GET("/api/messages/")
-  //        rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
-  //        @GET("/api/messages/")
-  //        rx.Observable<QcNotificationResponse> qcGetMessages();
+
 
   //获取通知 分页和不分页接口 ,后者只为拿 未读
   @GET("/api/notifications/") rx.Observable<QcNotificationResponse> qcGetMessages(
@@ -360,6 +357,8 @@ public interface TrainerAllApi {
   //学员课程列表
   @GET("/api/students/{id}/schedules/") rx.Observable<StudentCourseResponse> qcGetStuedntCourse(
       @Path("id") String student_id, @QueryMap Map<String, String> params);
+
+
 
   //学员卡列表
   @GET("/api/students/{id}/cards/") rx.Observable<StudentCarsResponse> qcGetStuedntCard(
@@ -921,4 +920,10 @@ public interface TrainerAllApi {
   @PUT("api/v2/coaches/{coach_id}/ptag/question-naire/naire-answer-history/{naire_id}/")
   rx.Observable<QcDataResponse<Object>> qcModifyTrainerFeedbackNaire(@Path("coach_id") String staff_id,
       @Path("naire_id") String naireId, @QueryMap HashMap<String, Object> queryParams, @Body HashMap<String, Object> params);
+
+  //获取某个学员的课程
+  @GET("/api/coaches/{staff_id}/users/attendance/records/")
+  Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
+      @Path("staff_id") String staffid, @Query("user_id") String studentid,
+      @QueryMap HashMap<String, Object> params);
 }

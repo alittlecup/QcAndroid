@@ -5,11 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import java.util.ArrayList;
@@ -49,47 +48,7 @@ public class BrandManageFragment extends BaseFragment implements BrandManageView
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
       recyclerview = (RecycleViewWithNoImg) view.findViewById(R.id.recyclerview);
 
-      //((BrandManageComponent) mCallbackActivity.getComponent()).inject(this);
-        //mCallbackActivity.setToolbar(getString(R.string.brand_manage), false, null, 0, null);
-        //presenter.attachView(this);
-        //adapter = new BrandManageAdapterAdapter(datas);
-        //recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        //recyclerview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-        //    @Override
-        //    public void onRefresh() {
-        //        presenter.queryBrands();
-        //    }
-        //});
-        //recyclerview.setAdapter(adapter);
-        //
-        //adapter.setListener(new OnRecycleItemClickListener() {
-        //    @Override
-        //    public void onItemClick(View v, int pos) {
-        //        if (pos < datas.size()) {
-        //            Brand brand = datas.get(pos);
-        //            if (brand.isHas_add_permission()) {
-        //                getFragmentManager().beginTransaction()
-        //                        .replace(mCallbackActivity.getFragId(), BrandDetailFragment.newInstance(brand))
-        //                        .addToBackStack(getFragmentName())
-        //                        .commit();
-        //            } else {
-        //                //无权限
-        //                String un = " ";
-        //                if (brand.getCreated_by() != null && brand.getCreated_by().getUsername() != null) {
-        //                    un = brand.getCreated_by().getUsername();
-        //                }else un = " ";
-        //                new MaterialDialog.Builder(getContext())
-        //                        .content(String.format(Locale.CHINA, "仅品牌创建人%s可编辑", un))
-        //                        .positiveText(R.string.common_comfirm)
-        //                        .show();
-        //                ;
-        //            }
-        //        } else {
-        //            startActivityForResult(new Intent(getActivity(), AddBrandActivity.class), 1);
-        //        }
-        //    }
-        //});
+
         presenter.queryBrands();
         if (isLoading) {
             recyclerview.stopLoading();

@@ -57,22 +57,6 @@ public interface StudentApi {
   @GET("api/v2/staffs/{id}/cashier/users/")
   Flowable<QcDataResponse<StudentBeanListWrapper>>qcLoadStudentByPhone(@Path("id") String id,
       @QueryMap Map<String, Object> params);
-  //
-  //    /**
-  //     * 会员卡可绑定的会员列表
-  //     */
-  //    @GET("/api/staffs/{staff_id}/method/users/?show_all=1")
-  //    Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(
-  //        @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
-  //
-  //    /**
-  //     * 教练分配
-  //     */
-  //    @GET("api/v2/staffs/{staff_id}/coaches/preview/")
-  //    Observable<QcDataResponse<AllotDataResponseWrap>> qcGetCoachList(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
-  //
 
   //会员卡可绑定的会员列表
   @GET("/api/staffs/{staff_id}/method/users/?show_all=1")
@@ -93,35 +77,12 @@ public interface StudentApi {
   Flowable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(@Path("staff_id") String staff_id,
       @Path("type") String type, @QueryMap HashMap<String, Object> params);
 
-  //    /**
-  //     * 销售列表预览接口
-  //     * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/preview/?brand_id=2&shop_id=1
-  //     * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/preview/?id=5370&model=staff_gym
-  //     */
-  //    @GET("/api/v2/staffs/{staff_id}/sellers/preview/")
-  //    Observable<QcDataResponse<AllotDataResponseWrap>> qcGetAllotSalesPreView(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
-  //    /**
-  //     * 销售名下会员列表接口(无销售的会员列表不需要传seller_id)
-  //     * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?brand_id=2&shop_id=2&seller_id=1
-  //     * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?id=5370&model=staff_gym&seller_id=1
-  //     */
-  //    @GET("/api/v2/staffs/{staff_id}/sellers/users/")
-  //    Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-
   @GET("/api/v2/staffs/{staff_id}/{type}/users/")
   Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
       @Path("staff_id") String staff_id, @Path("type") String type,
       @QueryMap HashMap<String, Object> params);
 
-  //
-  //
-  //    @GET("/api/v2/staffs/{staff_id}/coaches/users/")
-  //    Observable<QcDataResponse<StudentWithCoashListWrap>> qcGetCoachStudentDetail(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
+
   //    //获取销售 卖卡  包含销售 不包含教练
   @GET("/api/staffs/{staff_id}/sellers-without-coach/")
   Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
@@ -154,48 +115,13 @@ public interface StudentApi {
   @PUT("/api/v2/staffs/{staff_id}/coaches/users/") Flowable<QcResponse> qcAllocateCoach(
       @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
 
-  //    /**
-  //     * 移除教练
-  //     */
-  //    @POST("/api/v2/staffs/{staff_id}/coaches/users/remove/")
-  //    Observable<QcResponse> qcRemoveStudent(@Path("staff_id") String staff_id,
-  //        @Body HashMap<String, Object> body);
-  //
+
       /**
        * 移除教练
        */
       @POST("/api/v2/staffs/{staff_id}/{type}/users/remove/")
       Flowable<QcDataResponse> qcRemoveStaff(@Path("staff_id") String staff_id,
           @Path("type") String type, @Body HashMap<String, Object> body);
-
-  //    /**
-  //     * 批量移除某个销售名下会员:
-  //     * POST http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/remove/?brand_id=2&shop_id=1
-  //     * POST http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/remove/?id=5370&model=staff_gym
-  //     * POST {"user_ids":"1,3,2", "seller_id":5}
-  //     */
-  //    @POST("/api/v2/staffs/{staff_id}/sellers/users/remove/")
-  //    Observable<QcResponse> qcDeleteStudents(@Path("staff_id") String staff_id,
-  //        @Body HashMap<String, Object> body);
-  //
-  //
-  //    /**
-  //     * 数据统计
-  //     * /api/staffs/:staff_id/users/stat/?brand_id=&shop_id= 或者 id=&model=
-  //     * GET参数:status,[start][end][seller_id(无销售seller_id=0)]
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/stat/")
-  //    Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
-  //
-  //    /**
-  //     * 新增注册
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/new/create/")
-  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
 
   /**
    * 新增
@@ -212,13 +138,6 @@ public interface StudentApi {
   Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-  //    /**
-  //     * 新增学员
-  //     */
-  //    @GET("/api/staffs/{staff_id}/users/new/member/")
-  //    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
-  //        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
-  //
 
   /**
    * 具有名下会员的销售列表
@@ -424,11 +343,7 @@ public interface StudentApi {
       @Path("staff_id") String staff_id, @Path("user_id") String user_id,
       @QueryMap HashMap<String, Object> params);
 
-  /**
-   *  教练名下所有会员
-   */
-  @GET("/api/v2/coaches/{id}/students/") Flowable<QcDataResponse<StudentListWrapper>> qcGetAllStudentWithCoach(
-      @Path("id") String id, @QueryMap HashMap<String, Object> params);
+
 
   //获取某个学员的课程
   @GET("/api/staffs/{staff_id}/users/attendance/records/")

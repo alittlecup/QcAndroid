@@ -26,6 +26,7 @@ public class ScheduleBean {
     public String intent_url;
     public String conflict;
     public int type;//0  休息  1:schedule
+    public String id;
 
     public ScheduleBean(int type) {
         this.type = type;

@@ -31,8 +31,6 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
 	RelativeLayout courseLayout;
 	TextView minCourseNum;
 	LinearLayout minCourseNumLayout;
-	TextView defaultCoursePlan;
-	LinearLayout defaultCoursePlanLayout;
 	TextView suitGyms;
 	LinearLayout suitGymsLayout;
 	TextView singleOrderCount;
@@ -69,8 +67,6 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
       courseLayout = (RelativeLayout) view.findViewById(R.id.course_layout);
       minCourseNum = (TextView) view.findViewById(R.id.min_course_num);
       minCourseNumLayout = (LinearLayout) view.findViewById(R.id.min_course_num_layout);
-      defaultCoursePlan = (TextView) view.findViewById(R.id.default_course_plan);
-      defaultCoursePlanLayout = (LinearLayout) view.findViewById(R.id.default_course_plan_layout);
       suitGyms = (TextView) view.findViewById(R.id.suit_gyms);
       suitGymsLayout = (LinearLayout) view.findViewById(R.id.suit_gyms_layout);
       singleOrderCount = (TextView) view.findViewById(R.id.single_order_count);
@@ -94,12 +90,9 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
 
             //默认课程计划
             if (mCourse.is_private()) {
-                defaultCoursePlanLayout.setVisibility(View.GONE);
                 minCourseNumLayout.setVisibility(View.GONE);
                 layoutSingleOrder.setVisibility(View.GONE);
             } else {
-                defaultCoursePlanLayout.setVisibility(View.VISIBLE);
-                if (mCourse.getPlan() != null) defaultCoursePlan.setText(mCourse.getPlan().getName());
                 minCourseNumLayout.setVisibility(View.VISIBLE);
                 //最小上课人数
                 minCourseNum.setText("" + mCourse.getMin_users());//切忌传int

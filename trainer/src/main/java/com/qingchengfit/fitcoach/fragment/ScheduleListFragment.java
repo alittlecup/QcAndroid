@@ -20,12 +20,12 @@ import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.RxRefreshList;
 import cn.qingchengfit.saascommon.network.RxHelper;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -140,17 +140,9 @@ public class ScheduleListFragment extends BaseFragment {
     scheduleRv.addItemDecoration(
         new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 5f));
     scheduleRv.setAdapter(scheduesAdapter);
-    scheduesAdapter.setListener(new OnRecycleItemClickListener() {
-      @Override public void onItemClick(View v, int pos) {
-        String url = scheduesAdapter.datas.get(pos).intent_url;
-        LogUtil.e("pos:" + pos + url);
-        if (!TextUtils.isEmpty(url)) {
-          Intent it = new Intent(getActivity(), WebActivity.class);
-          it.putExtra("url", url);
-          startActivityForResult(it, 404);
-        }
-      }
-    });
+    scheduesAdapter.setListener(
+        (v, pos) -> RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+            new BundleBuilder().withString("scheduleID", scheduesAdapter.datas.get(pos).id).build()));
     goDateSchedule(mCurDate);
     mCurCalId = PreferenceUtils.getPrefLong(getContext(), "calendar_id", -1);
     refresh.setColorSchemeResources(R.color.primary);
@@ -168,15 +160,6 @@ public class ScheduleListFragment extends BaseFragment {
       }
     });
 
-    //refresh.getViewTreeObserver()
-    //    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-    //      @Override public void onGlobalLayout() {
-    //        if (refresh != null) {
-    //          CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(), this);
-    //          refresh.setRefreshing(true);
-    //        }
-    //      }
-    //    });
     RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
       @Override public void call(EventScheduleService eventScheduleService) {
         if (eventScheduleService.mCoachService != null) {
@@ -198,12 +181,6 @@ public class ScheduleListFragment extends BaseFragment {
     return view;
   }
 
-  @Override public void onResume() {
-    super.onResume();
-    //if (isVisible()){
-    //    refresh();
-    //}
-  }
 
   @Override protected void onVisible() {
     super.onVisible();
@@ -290,6 +267,7 @@ public class ScheduleListFragment extends BaseFragment {
         bean.count = schedule.count;
         bean.pic_url = schedule.course.photo;
         bean.title = schedule.course.name;
+        bean.id=String.valueOf(schedule.id);
         bean.intent_url = schedule.url;
         if (getContext() != null) {
           try {

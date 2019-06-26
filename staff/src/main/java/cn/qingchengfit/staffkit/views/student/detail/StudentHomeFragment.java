@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -46,7 +45,6 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -83,9 +81,6 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
   TabLayout tab;
   ViewPager student;
   Button buycard;
-  Button orderGroup;
-  Button orderPrivate;
-  LinearLayout orderbtnLayout;
   TextView studentStatus;
   TextView phone;
   ImageView tvStudentCall;
@@ -114,9 +109,7 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
     tab = (TabLayout) view.findViewById(R.id.tab);
     student = (ViewPager) view.findViewById(R.id.student);
     buycard = (Button) view.findViewById(R.id.buycard);
-    orderGroup = (Button) view.findViewById(R.id.order_group);
-    orderPrivate = (Button) view.findViewById(R.id.order_private);
-    orderbtnLayout = (LinearLayout) view.findViewById(R.id.orderbtn_layout);
+
     studentStatus = (TextView) view.findViewById(R.id.student_status);
     phone = (TextView) view.findViewById(R.id.phone);
     tvStudentCall = (ImageView) view.findViewById(R.id.tv_student_call);
@@ -143,13 +136,10 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
       @Override
       public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (position == 0) {
-          orderbtnLayout.setVisibility(View.VISIBLE);
           buycard.setVisibility(View.GONE);
         } else if (position == 1) {
-          orderbtnLayout.setVisibility(View.GONE);
           buycard.setVisibility(View.VISIBLE);
         } else {
-          orderbtnLayout.setVisibility(View.GONE);
           buycard.setVisibility(View.GONE);
         }
       }
@@ -199,28 +189,12 @@ public class StudentHomeFragment extends BaseFragment implements View.OnClickLis
         tmpStudentBean.phone = studentBaseInfoEvent.user_student.getPhone();
         tmpStudentBean.username = studentBaseInfoEvent.user_student.getUsername();
         studentBean.setStudentBean(tmpStudentBean);
+        studentBean.privateUrl=studentBaseInfoEvent.privateUrl;
+        studentBean.groupUrl=studentBaseInfoEvent.groupUrl;
         updateQcStudentBean(tmpStudentBean);
       }
 
-      orderPrivate.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
 
-          if (serPermisAction.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
-            WebActivity.startWeb(studentBaseInfoEvent.privateUrl, getContext());
-          } else {
-            showAlert(getString(R.string.alert_permission_forbid));
-          }
-        }
-      });
-      orderGroup.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          if (serPermisAction.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
-            WebActivity.startWeb(studentBaseInfoEvent.groupUrl, getContext());
-          } else {
-            showAlert(getString(R.string.alert_permission_forbid));
-          }
-        }
-      });
       if (gymWrapper.inBrand()) {
         studentStatus.setVisibility(View.GONE);
       } else {

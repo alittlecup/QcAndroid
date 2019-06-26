@@ -2,8 +2,8 @@ package cn.qingchengfit.bean;
 
 import android.os.Parcel;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.Shop;
 import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class CourseDetail extends Course implements Cloneable {
     private List<String> photos;
     private int min_users;
     private List<CourseDetailTeacher> teachers;
-    private List<QcScheduleBean.Shop> shops;
+    private List<Shop> shops;
     private Float course_score;
     private Float service_score;
     private Float teacher_score;
@@ -58,7 +58,7 @@ public class CourseDetail extends Course implements Cloneable {
         this.photos = in.createStringArrayList();
         this.min_users = in.readInt();
         this.teachers = in.createTypedArrayList(CourseDetailTeacher.CREATOR);
-        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
+        this.shops = in.createTypedArrayList(Shop.CREATOR);
         this.course_score = (Float) in.readValue(Float.class.getClassLoader());
         this.service_score = (Float) in.readValue(Float.class.getClassLoader());
         this.teacher_score = (Float) in.readValue(Float.class.getClassLoader());
@@ -220,12 +220,12 @@ public class CourseDetail extends Course implements Cloneable {
         this.teachers = teachers;
     }
 
-    public List<QcScheduleBean.Shop> getShops() {
+    public List<Shop> getShops() {
         if (shops == null) return new ArrayList<>();
         return shops;
     }
 
-    public void setShops(List<QcScheduleBean.Shop> shops) {
+    public void setShops(List<Shop> shops) {
         this.shops = shops;
     }
 

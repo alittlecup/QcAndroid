@@ -38,7 +38,6 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
   CommonInputView courseName;
   CommonInputView courseLength;
   CommonInputView courseMinCount;
-  CommonInputView defaultCoursePlan;
   CommonInputView singleCount;
   private CourseType mCourse;
   private boolean isPrivate;
@@ -65,11 +64,9 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         .subscribe(new BusSubscribe<CoursePlan>() {
           @Override public void onNext(CoursePlan coursePlan) {
             if (coursePlan.getId() > 0) {
-              defaultCoursePlan.setContent(coursePlan.getName());
               mCourse.setPlan(coursePlan);
             } else {
               mCourse.setPlan(null);
-              defaultCoursePlan.setContent("不使用");
             }
           }
         });
@@ -83,13 +80,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     courseName = (CommonInputView) view.findViewById(R.id.course_name);
     courseLength = (CommonInputView) view.findViewById(R.id.course_length);
     courseMinCount = (CommonInputView) view.findViewById(R.id.course_min_count);
-    defaultCoursePlan = (CommonInputView) view.findViewById(R.id.default_course_plan);
     singleCount = (CommonInputView) view.findViewById(R.id.single_count);
-    view.findViewById(R.id.default_course_plan).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onCoursePlan();
-      }
-    });
     view.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         CourseBaseInfoEditFragment.this.onClick();
@@ -113,12 +104,9 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
       }
 
       if (!mCourse.is_private()) {//团课
-        defaultCoursePlan.setVisibility(View.VISIBLE);
-        if (mCourse.getPlan() != null) defaultCoursePlan.setContent(mCourse.getPlan().getName());
         courseMinCount.setVisibility(View.VISIBLE);
       } else {//私教
         courseMinCount.setVisibility(View.GONE);
-        defaultCoursePlan.setVisibility(View.GONE);
       }
       //                defaultCoursePlan.setContent();课程计划
     } else {

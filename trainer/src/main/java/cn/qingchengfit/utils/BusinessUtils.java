@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.TextView;
 import cn.qingchengfit.bean.StudentBean;
+import cn.qingchengfit.bean.TeacherImpression;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
@@ -52,24 +53,7 @@ public class BusinessUtils {
     public static void studentStatus(TextView view, int status) {
         String statuStr = "";
         Drawable drawable = new ColorDrawable();
-        //switch (Integer.valueOf(status)) {
-        //case 0:
-        //    statuStr = "新注册";
-        //    drawable = new CircleView(R.color.qc_student_status_0);
-        //    break;
-        //case 1:
-        //    statuStr = "跟进中";
-        //    drawable = new CircleView(R.color.qc_student_status_1);
-        //    break;
-        //case 2:
-        //    statuStr = "会员";
-        //    drawable = new CircleView(R.color.qc_student_status_2);
-        //    break;
-        //default:
-        //    statuStr = "未知";
-        //    drawable = new CircleView(R.color.qc_student_status_0);
-        //    break;
-        //}
+
         view.setText(statuStr);
         drawable.setBounds(0, 0, 26, 26);
         view.setCompoundDrawablePadding(10);
@@ -183,24 +167,7 @@ public class BusinessUtils {
         return ret;
     }
 
-    public static List<String> qcstudentIds2ListChatExcepteSb(List<QcStudentBean> students, String id, Context context) {
-        List<String> ret = new ArrayList<>();
-        for (int i = 0; i < students.size(); i++) {
-            if (!TextUtils.equals(students.get(i).getId(), id)) {
-                ret.add(context.getString(R.string.chat_user_id_header, students.get(i).getId()));
-            }
-        }
 
-        return ret;
-    }
-
-  public static List<String> qcstudentIds(List<QcStudentBean> students) {
-        List<String> ret = new ArrayList<>();
-        for (int i = 0; i < students.size(); i++) {
-                ret.add(students.get(i).getId());
-        }
-    return ret;
-  }
 
   public static <T extends Personage> List<String> PersonIdsExSu(List<T> students) {
     List<String> ret = new ArrayList<>();
@@ -235,6 +202,16 @@ public class BusinessUtils {
             default:
                 return Configs.TRADE_CHARGE;
         }
+    }
+
+    public static List<String> impress2Str(List<TeacherImpression> impressions) {
+
+        List<String> ret = new ArrayList<>();
+        if (impressions == null) return ret;
+        for (int i = 0; i < impressions.size(); i++) {
+            ret.add(impressions.get(i).comment);
+        }
+        return ret;
     }
 
     public static int getPayMethodServer(int i) {

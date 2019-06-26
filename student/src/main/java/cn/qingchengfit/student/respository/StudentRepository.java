@@ -61,7 +61,6 @@ public interface StudentRepository {
       HashMap<String, Object> params);
 
   //
-  //LiveData<FollowUpDataStatistic> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params);
   //
   LiveData<Resource<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id, String type,
       HashMap<String, Object> params);

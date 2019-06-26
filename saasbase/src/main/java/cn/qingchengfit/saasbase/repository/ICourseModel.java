@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.model.responese.GymExtra;
+import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
@@ -180,4 +181,5 @@ public interface ICourseModel {
       String photoIDs);
 
   rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra();
+  rx.Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig();
 }

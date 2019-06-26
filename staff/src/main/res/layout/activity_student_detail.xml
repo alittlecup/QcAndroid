@@ -58,32 +58,7 @@
         android:visibility="gone"
         />
 
-    <LinearLayout
-        android:id="@+id/orderbtn_layout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom"
-        android:divider="@drawable/divier_linear"
-        android:orientation="horizontal"
-        android:showDividers="middle"
-        >
 
-      <Button
-          android:id="@+id/order_group"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:text="代约团课"
-          />
-
-      <Button
-          android:id="@+id/order_private"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:text="代约私教"
-          />
-    </LinearLayout>
   </FrameLayout>
 
 

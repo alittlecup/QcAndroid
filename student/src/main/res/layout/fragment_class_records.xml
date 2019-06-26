@@ -93,11 +93,13 @@
           xmlns:rn="http://schemas.android.com/apk/res-auto"
           android:id="@+id/recycleview"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
           rn:rn_bottom_padding="@dimen/qc_item_height"
           />
 
       <LinearLayout
+          android:id="@+id/ll_proxy"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:layout_alignParentBottom="true"

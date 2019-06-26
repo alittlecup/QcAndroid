@@ -59,7 +59,7 @@ public class ScheduleOrderItem
         colorRes = R.color.grey;
         dataBinding.tvCancel.setVisibility(View.GONE);
         break;
-      case 5:
+      case 4:
         text = "已签课";
         colorRes = R.color.iris;
         break;

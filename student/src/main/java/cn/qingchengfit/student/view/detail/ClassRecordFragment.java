@@ -12,17 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.AttendanceRecord;
 import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.item.AttendanceAnalysItem;
 import cn.qingchengfit.student.item.AttendanceRecordHeadItem;
 import cn.qingchengfit.student.item.AttendanceRecordItem;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -68,12 +72,14 @@ import static android.view.View.GONE;
   FilterTextLayout layoutTimeFilter;
   FrameLayout fragNotSignFilterLayout;
   View shadow;
+  LinearLayout llProxy;
 
   private CommonFlexAdapter commonFlexAdapter;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
   private List<Shop> shops = new ArrayList<>();
   private HashMap<String, Object> params = new HashMap<>();
   private NotSignFilterFragment notSignFilterFragment;
+  private TextView orderGroup, orderPrivate;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -83,6 +89,9 @@ import static android.view.View.GONE;
     layoutTypeFilter = (FilterTextLayout) view.findViewById(R.id.layout_type_filter);
     layoutStatusFilter = (FilterTextLayout) view.findViewById(R.id.layout_status_filter);
     layoutTimeFilter = (FilterTextLayout) view.findViewById(R.id.layout_time_filter);
+    orderGroup = (TextView) view.findViewById(R.id.order_group);
+    orderPrivate = (TextView) view.findViewById(R.id.order_private);
+    llProxy = view.findViewById(R.id.ll_proxy);
     fragNotSignFilterLayout = (FrameLayout) view.findViewById(R.id.frag_not_sign_filter_layout);
     shadow = (View) view.findViewById(R.id.shadow);
     view.findViewById(R.id.layout_gym_filter).setOnClickListener(new View.OnClickListener() {
@@ -133,6 +142,7 @@ import static android.view.View.GONE;
     recycleview.setOnRefreshListener(() -> presenter.queryData(params));
     presenter.queryData(params);
     initToolbar(view);
+    addListener();
     return view;
   }
 
@@ -304,5 +314,34 @@ import static android.view.View.GONE;
     layoutTypeFilter.setLabel(String.valueOf(params.get(NotSignFilterFragment.GROUP)));
     layoutStatusFilter.setLabel(String.valueOf(params.get(NotSignFilterFragment.STATUS_FILTER)));
     layoutTimeFilter.setLabel(String.valueOf(params.get(NotSignFilterFragment.TIME_LABEL)));
+  }
+
+  @Inject IPermissionModel iPermissionModel;
+
+  private void addListener() {
+    if (AppUtils.getCurApp(getContext()) == 0) {
+      llProxy.setVisibility(GONE);
+      return;
+    } else {
+      llProxy.setVisibility(View.VISIBLE);
+    }
+    orderPrivate.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (iPermissionModel.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
+          WebActivity.startWeb(presenter.studentBase.privateUrl, getContext());
+        } else {
+          showAlert(getString(R.string.alert_permission_forbid));
+        }
+      }
+    });
+    orderGroup.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (iPermissionModel.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
+          WebActivity.startWeb(presenter.studentBase.groupUrl, getContext());
+        } else {
+          showAlert(getString(R.string.alert_permission_forbid));
+        }
+      }
+    });
   }
 }

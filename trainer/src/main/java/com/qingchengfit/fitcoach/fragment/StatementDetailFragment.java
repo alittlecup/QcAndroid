@@ -36,6 +36,7 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.Configs;

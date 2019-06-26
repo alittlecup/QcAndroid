@@ -9,11 +9,12 @@ public class StudentWrap {
     return studentBean;
   }
 
+  public String privateUrl;
+  public String groupUrl;
+
   public void setStudentBean(StudentBean studentBean) {
     this.studentBean = studentBean;
   }
-
-
 
   public String username() {
     if (studentBean != null) return studentBean.username;

@@ -50,9 +50,6 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
 	TextView toolbarTitle;
 
     @Inject ChangeAutoNotifyPresenter changeAutoNotifyPresenter;
-    private String storeValue;
-    private String secondValue;
-    private String timeValue;
     private List<CardBalanceNotifyBody.ConfigsBean> configsBeanList = new ArrayList<>();
     private CardBalanceNotifyBody.ConfigsBean configsBean;
 
@@ -202,7 +199,6 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
                     if (swStoreNotify.isOpen()) {
                         llStore.setVisibility(View.VISIBLE);
                         textStoreValue.setText(String.valueOf(balanceDetail.value));
-                        storeValue = balanceDetail.value;
                     } else {
                         llStore.setVisibility(View.GONE);
                     }
@@ -216,7 +212,6 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
                     if (swSecondNotify.isOpen()) {
                         llSecond.setVisibility(View.VISIBLE);
                         textSecondValue.setText(balanceDetail.value);
-                        secondValue = balanceDetail.value;
                     } else {
                         llSecond.setVisibility(View.GONE);
                     }
@@ -230,7 +225,6 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
                     if (swTimeNotify.isOpen()) {
                         llTime.setVisibility(View.VISIBLE);
                         textTimeValue.setText(balanceDetail.value);
-                        timeValue = balanceDetail.value;
                     } else {
                         llTime.setVisibility(View.GONE);
                     }

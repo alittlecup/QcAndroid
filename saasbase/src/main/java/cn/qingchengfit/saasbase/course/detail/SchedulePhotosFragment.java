@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
@@ -17,6 +15,7 @@ import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.MultiChoosePicFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -26,7 +25,6 @@ import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 
 @Leaf(module = "course", path = "/schedule/photos") public class SchedulePhotosFragment
     extends SaasBindingFragment<FragmentSchedulePhotosBinding, ScheduleDetailVM>
@@ -135,8 +133,6 @@ import javax.inject.Inject;
     });
     mBinding.recyclerPhotos.setLayoutManager(smoothScrollGridLayoutManager);
     mBinding.recyclerPhotos.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
-    adapter.setMode(SelectableAdapter.Mode.MULTI);
-    adapter.setStatus(0);
   }
 
   private void initToolbar() {
@@ -169,10 +165,18 @@ import javax.inject.Inject;
    */
   @Override public boolean onItemClick(int position) {
     if (adapter.getStatus() == 0) {
+      showMultiPhotos();
       return false;
+    } else {
+      adapter.toggleSelection(position);
+      adapter.notifyItemChanged(position);
     }
-    adapter.toggleSelection(position);
-    adapter.notifyItemChanged(position);
     return false;
+  }
+
+  private void showMultiPhotos() {
+    MultiChoosePicFragment fragment = MultiChoosePicFragment.newInstance(mViewModel.getPhotoUrls());
+    fragment.setShowFlag(true);
+    fragment.show(getFragmentManager(), "");
   }
 }

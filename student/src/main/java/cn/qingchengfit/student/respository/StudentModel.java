@@ -260,23 +260,13 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcGetStudentClassRecords(loginStatus.staff_id(), studentid, params);
   }
 
-  //@Override
-  //public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id,
-  //    HashMap<String, Object> params) {
-  //  return studentApi.qcGetAllotSaleOwenUsers(staff_id, params);
-  //}
-  //
+
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
       String staff_id, String type, HashMap<String, Object> params) {
     return studentApi.qcGetAllotStaffMembers(staff_id, type, params);
   }
 
-  //
-  //@Override public Observable<QcDataResponse<StudentWithCoashListWrap>> qcGetCoachStudentDetail(
-  //    String staff_id, HashMap<String, Object> params) {
-  //  return studentApi.qcGetCoachStudentDetail(staff_id, params);
-  //}
-  //
+
   @Override public Flowable<QcDataResponse<SalerUserListWrap>> qcGetSalers(String staff_id,
       String brandid, String shopid, String gymid, String model) {
     return studentApi.qcGetSalers(loginStatus.staff_id(), null, null, gymWrapper.id(),

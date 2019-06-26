@@ -4,6 +4,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
 import cn.qingchengfit.model.responese.GymExtra;
+import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -343,5 +344,9 @@ public class CourseModel implements ICourseModel {
 
   @Override public Observable<QcDataResponse<GymExtra>> qcGetGymExtra() {
     return api.qcGetGymExtra(loginStatus.staff_id(), gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig() {
+    return api.qcGetShopConfig(loginStatus.staff_id(),"group_course_check_in_type,group_course_check_in_is_open",gymWrapper.getParams());
   }
 }

@@ -4,6 +4,7 @@ import cn.qingchengfit.model.responese.CourseTypeSamples;
 import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
+import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.CopyScheduleWrapper;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
@@ -297,4 +298,12 @@ public interface CourseApi {
   @GET("/api/v2/staffs/{staff_id}/gym-extra/")
   rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
+  /**
+   * 获取签课设置
+   */
+  @GET("/api/staffs/{staff_id}/shops/configs/")
+  rx.Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig(
+      @Path("staff_id") String staff_id, @Query("keys") String key,
+      @QueryMap HashMap<String, Object> params);
+
 }

@@ -841,39 +841,9 @@ public class WebFragment extends BaseFragment
       }
     }
 
-    //@JavascriptInterface public void wechatPay(String info) {
-    //
-    //  // 将该app注册到微信
-    //  try {
-    //    JSONObject object = new JSONObject(info);
-    //
-    //    PayReq request = new PayReq();
-    //    request.appId = wxApiStr;
-    //    request.partnerId = object.getString("partnerid");
-    //    //                request.partnerId = "1316532101";
-    //    //                request.prepayId = "wx201602261807466f5480e7010494724957";
-    //    //                request.packageValue = "Sign=WXPay";
-    //    //                request.nonceStr = "4VNwF2PFwgXCbmr";
-    //    //                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
-    //    //                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
-    //    //                request.partnerId = object.getString("partnerId");
-    //
-    //    request.prepayId = object.getString("prepayid");
-    //    request.packageValue = "Sign=WXPay";
-    //    request.nonceStr = object.getString("noncestr");
-    //    request.timeStamp = object.getString("timestamp");
-    //    request.sign = object.getString("sign");
-    //    //                LogUtil.e("xxx:"+request.checkArgs() );
-    //    msgApi.sendReq(request);
-    //  } catch (JSONException e) {
-    //    e.printStackTrace();
-    //    LogUtil.e("wechat pay error");
-    //  }
-    //}
 
     @JavascriptInterface public void wechatPay(String info) {
 
-      // 将该app注册到微信
       try {
         JSONObject object = new JSONObject(info);
 

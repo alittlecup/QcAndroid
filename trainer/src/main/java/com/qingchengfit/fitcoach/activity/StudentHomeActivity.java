@@ -24,6 +24,7 @@ import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.student.bean.StudentWrap;
 import cn.qingchengfit.student.view.base.StudentBaseInfoBean;
+import cn.qingchengfit.student.view.detail.ClassRecordTempFragment;
 import cn.qingchengfit.student.view.followrecord.CoachFollowRecordPage;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -39,7 +40,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.StudentCardFragment;
-import com.qingchengfit.fitcoach.fragment.StudentClassRecordFragment;
 import com.qingchengfit.fitcoach.fragment.StudentMoreInfoFragment;
 import com.qingchengfit.fitcoach.http.TrainerRepository;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
@@ -88,7 +88,7 @@ public class StudentHomeActivity extends BaseActivity {
   private String mStudentId;
   private String mStudentShipId;
   private StudentMoreInfoFragment studentMoreInfoFragment;
-  private StudentClassRecordFragment studentClassRecordFragment;
+  private ClassRecordTempFragment studentClassRecordFragment;
   private StudentCardFragment studentCardFragment;
   private int mModelType = 1;
   private String gourpUrl;
@@ -316,7 +316,6 @@ public class StudentHomeActivity extends BaseActivity {
                   showHeader, schedule.url);
               datas.add(bean);
             }
-            if (studentClassRecordFragment != null) studentClassRecordFragment.setDatas(datas);
           }
         });
   }
@@ -384,7 +383,7 @@ public class StudentHomeActivity extends BaseActivity {
 
   private void initViewPager() {
     ArrayList<Fragment> fragments = new ArrayList<>();
-    studentClassRecordFragment = new StudentClassRecordFragment();
+    studentClassRecordFragment = ClassRecordTempFragment.getInstanceWithStudentID(studentWrap.getStudentBean().getId());
     fragments.add(studentClassRecordFragment);
     if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
 

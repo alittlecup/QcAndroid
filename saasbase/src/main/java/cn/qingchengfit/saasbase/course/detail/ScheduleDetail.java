@@ -18,6 +18,9 @@ public class ScheduleDetail implements Parcelable {
   @SerializedName("teacher") public List<ScheduleTeacherDTO> teacher;
   @SerializedName("shop") public Shop shop;
   @SerializedName("space") public Space space;
+  @SerializedName("max_users")public int maxUsers;
+  @SerializedName("users_count")public int usersCount;
+
 
   public float teacher_score;
 
