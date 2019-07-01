@@ -26,6 +26,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -125,7 +126,6 @@ public class ScheduleListFragment extends BaseFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
     scheduleRv = (RecyclerView) view.findViewById(R.id.schedule_rv);
     scheduleNoImg = (ImageView) view.findViewById(R.id.schedule_no_img);
@@ -140,9 +140,7 @@ public class ScheduleListFragment extends BaseFragment {
     scheduleRv.addItemDecoration(
         new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 5f));
     scheduleRv.setAdapter(scheduesAdapter);
-    scheduesAdapter.setListener(
-        (v, pos) -> RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
-            new BundleBuilder().withString("scheduleID", scheduesAdapter.datas.get(pos).id).build()));
+    scheduesAdapter.setListener((v, pos) -> onItemClick(scheduesAdapter.datas.get(pos)));
     goDateSchedule(mCurDate);
     mCurCalId = PreferenceUtils.getPrefLong(getContext(), "calendar_id", -1);
     refresh.setColorSchemeResources(R.color.primary);
@@ -181,6 +179,21 @@ public class ScheduleListFragment extends BaseFragment {
     return view;
   }
 
+  private void onItemClick(ScheduleBean scheduleBean) {
+    if (scheduleBean.type == 0) {
+      String url = scheduleBean.intent_url;
+      if (!TextUtils.isEmpty(url)) {
+        Intent it = new Intent(getActivity(), WebActivity.class);
+        it.putExtra("url", url);
+        startActivityForResult(it, 404);
+      }
+    } else {
+      RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+          new BundleBuilder()
+              .withParcelable("service",scheduleBean.service)
+              .withString("scheduleID", scheduleBean.id).build());
+    }
+  }
 
   @Override protected void onVisible() {
     super.onVisible();
@@ -201,7 +214,7 @@ public class ScheduleListFragment extends BaseFragment {
   private void goDateSchedule(Date date) {
     HashMap<String, String> params = new HashMap<>();
     params.put("date", DateUtils.Date2YYYYMMDD(date));
-    if(refresh!=null){
+    if (refresh != null) {
       refresh.setRefreshing(true);
     }
     TrainerRepository.getStaticTrainerAllApi()
@@ -245,7 +258,7 @@ public class ScheduleListFragment extends BaseFragment {
         bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
         bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
         bean.gymname = system.system.name;
-
+        bean.service=system.system;
         bean.intent_url = rest.url;
         scheduleBeans.add(bean);
       }
@@ -260,6 +273,7 @@ public class ScheduleListFragment extends BaseFragment {
         } else {
           bean.isSingle = false;
         }
+        bean.service=system.system;
         bean.gymname = system.system.name;
         bean.color = syscolor;
         bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
@@ -267,7 +281,7 @@ public class ScheduleListFragment extends BaseFragment {
         bean.count = schedule.count;
         bean.pic_url = schedule.course.photo;
         bean.title = schedule.course.name;
-        bean.id=String.valueOf(schedule.id);
+        bean.id = String.valueOf(schedule.id);
         bean.intent_url = schedule.url;
         if (getContext() != null) {
           try {

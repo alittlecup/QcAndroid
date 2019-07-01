@@ -267,6 +267,8 @@ public class NotSignFilterFragment extends BaseFragment
     params.put(START, start);
     params.put(END, end);
     refresh();
+    onBack();
+    hideAll("time");
   }
 
   public void hideAllandShow(String m) {

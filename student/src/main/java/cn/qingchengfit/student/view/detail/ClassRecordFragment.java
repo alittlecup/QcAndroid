@@ -20,6 +20,7 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.bean.AttendanceRecord;
 import cn.qingchengfit.student.bean.ClassRecords;
@@ -27,6 +28,7 @@ import cn.qingchengfit.student.item.AttendanceAnalysItem;
 import cn.qingchengfit.student.item.AttendanceRecordHeadItem;
 import cn.qingchengfit.student.item.AttendanceRecordItem;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -297,7 +299,9 @@ import static android.view.View.GONE;
 
   @Override public boolean onItemClick(int position) {
     if (datas.get(position) instanceof AttendanceRecordItem) {
-      WebActivity.startWeb(((AttendanceRecordItem) datas.get(position)).getUrl(), getActivity());
+      RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+          new BundleBuilder().withString("scheduleID",
+              ((AttendanceRecordItem) datas.get(position)).getAttendanceRecord().id).build());
     }
     return false;
   }

@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.detail;
 
 import android.arch.lifecycle.MutableLiveData;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
@@ -11,6 +12,7 @@ import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 public class ScheduleDetailVM extends BaseViewModel {
@@ -20,9 +22,10 @@ public class ScheduleDetailVM extends BaseViewModel {
   public MutableLiveData<SchedulePhotos> detailPhotos = new MutableLiveData<>();
   public MutableLiveData<Boolean> cancelResult = new MutableLiveData<>();
   public MutableLiveData<Boolean> delPhotoResult = new MutableLiveData<>();
+  public MutableLiveData<ScheduleShareDetail> scheduleShareDetail = new MutableLiveData<>();
   public String shopID;//TODO 添加获取 shop ID 接口
   public MutableLiveData<Boolean> signOpen = new MutableLiveData<>();
-  public int signType;
+  public double signType;
   @Inject GymWrapper gymWrapper;
 
   @Inject public ScheduleDetailVM() {
@@ -117,8 +120,10 @@ public class ScheduleDetailVM extends BaseViewModel {
       if (ResponseConstant.checkSuccess(response)) {
         List<SignInConfig.Config> configs = response.data.configs;
         signOpen.setValue((boolean) configs.get(1).getValue());
-        signType = (int) configs.get(0).getValue();
+        signType = (double) configs.get(0).getValue();
       } else {
+        ToastUtils.show(response.msg);
+
       }
     }, throwable -> {
     });
@@ -132,5 +137,38 @@ public class ScheduleDetailVM extends BaseViewModel {
       urls.add(photo.getPhoto());
     }
     return urls;
+  }
+
+  public void setService(CoachService service) {
+    courseModel.setService(service);
+  }
+
+  public void loadScheduleShare(String scheduleId) {
+    courseModel.qcGetScheduleShareInfo(scheduleId, null)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            ScheduleShareDetail data = response.data;
+            scheduleShareDetail.setValue(data);
+          } else {
+            ToastUtils.show(response.msg);
+
+          }
+        }, throwable -> {
+        });
+  }
+  public void putScheduleShare(String scheduleId, Map<String,Object> body) {
+    courseModel.qcPutScheduleShareInfo(scheduleId, body)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            ScheduleShareDetail data = response.data;
+            scheduleShareDetail.setValue(data);
+          } else {
+            ToastUtils.show(response.msg);
+
+          }
+        }, throwable -> {
+        });
   }
 }

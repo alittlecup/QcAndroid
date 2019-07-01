@@ -22,11 +22,9 @@ import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CmStringUtils;
-import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,7 +171,9 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
         : BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
     body.is_free = !mvpView.needPay();
     body.request_user_as_teacher = mvpView.isStaffAsTeather();
-    body.workout_plan_id = mvpView.getWorkoutPlanID();
+    if (!isPrivate) {
+      body.workout_plan_id = mvpView.getWorkoutPlanID();
+    }
   }
 
   /**
@@ -186,10 +186,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
       mvpView.showAlert(ret);
       return;
     }
-    if (!isPrivate && StringUtils.isEmpty(body.workout_plan_id)) {
-      ToastUtils.show("请选择训练计划");
-      return;
-    }
+
     RxRegiste(courseApi.qcCheckBatch(isPrivate, body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())

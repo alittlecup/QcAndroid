@@ -19,6 +19,12 @@ public class ScheduleDetail implements Parcelable {
   @SerializedName("shop") public Shop shop;
   @SerializedName("space") public Space space;
   @SerializedName("max_users")public int maxUsers;
+
+  public void setTrainerClass(boolean trainerClass) {
+    this.trainerClass = trainerClass;
+  }
+
+  @SerializedName("is_private") private boolean trainerClass;
   @SerializedName("users_count")public int usersCount;
 
 
@@ -57,6 +63,10 @@ public class ScheduleDetail implements Parcelable {
   }
 
   public ScheduleDetail() {
+  }
+
+  public boolean isTrainerClass() {
+    return trainerClass;
   }
 
   public static class ScheduleTeacherDTO implements Parcelable {
@@ -154,6 +164,9 @@ public class ScheduleDetail implements Parcelable {
     dest.writeTypedList(this.teacher);
     dest.writeParcelable(this.shop, flags);
     dest.writeParcelable(this.space, flags);
+    dest.writeInt(this.maxUsers);
+    dest.writeByte(this.trainerClass ? (byte) 1 : (byte) 0);
+    dest.writeInt(this.usersCount);
     dest.writeFloat(this.teacher_score);
   }
 
@@ -166,6 +179,9 @@ public class ScheduleDetail implements Parcelable {
     this.teacher = in.createTypedArrayList(ScheduleTeacherDTO.CREATOR);
     this.shop = in.readParcelable(Shop.class.getClassLoader());
     this.space = in.readParcelable(Space.class.getClassLoader());
+    this.maxUsers = in.readInt();
+    this.trainerClass = in.readByte() != 0;
+    this.usersCount = in.readInt();
     this.teacher_score = in.readFloat();
   }
 

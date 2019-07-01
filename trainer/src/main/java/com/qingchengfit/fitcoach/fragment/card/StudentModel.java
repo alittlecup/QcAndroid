@@ -379,6 +379,7 @@ public class StudentModel implements IStudentModel {
 
   @Override public Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(String studentid,
       HashMap<String, Object> params) {
-    return api.qcGetStudentClassRecords(loginStatus.staff_id(),studentid,gymWrapper.getParams());
+    params.put("brand_id", gymWrapper.brand_id());
+    return RxJavaInterop.toV2Flowable(api.qcGetStudentClassRecords(loginStatus.staff_id(),studentid,gymWrapper.getParams()));
   }
 }

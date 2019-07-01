@@ -17,6 +17,7 @@ import cn.qingchengfit.staffkit.views.custom.LoopView;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.bumptech.glide.Glide;
@@ -71,9 +72,14 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
     scheduleRv.setAdapter(mAdapter);
     scheduleRv.setOnRefreshListener(this::freshData);
     mAdapter.setListener((v, pos) -> {
-      //WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404);
-      RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
-          new BundleBuilder().withString("scheduleID", datas.get(pos).id).build());
+      ScheduleBean scheduleBean = datas.get(pos);
+      if (scheduleBean.type == 0) {
+        WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404);
+      } else {
+
+        RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+            new BundleBuilder().withString("scheduleID", datas.get(pos).id).build());
+      }
     });
     freshData();
   }

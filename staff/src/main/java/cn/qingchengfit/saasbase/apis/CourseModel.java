@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.apis;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.ComponentModuleManager;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.QcRestRepository;
@@ -35,6 +36,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.course.detail.ScheduleShareDetail;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import cn.qingchengfit.staffkit.App;
@@ -347,6 +349,25 @@ public class CourseModel implements ICourseModel {
   }
 
   @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig() {
-    return api.qcGetShopConfig(loginStatus.staff_id(),"group_course_check_in_type,group_course_check_in_is_open",gymWrapper.getParams());
+    return api.qcGetShopConfig(loginStatus.staff_id(),
+        "group_course_check_in_type,group_course_check_in_is_open", gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleShareDetail>> qcGetScheduleShareInfo(String schedule_id,
+      Map<String, Object> params) {
+    return api.qcGetScheduleShareInfo(loginStatus.staff_id(), schedule_id, gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(String schedule_id,
+      Map<String, Object> params) {
+
+    return api.qcPutScheduleShareInfo(loginStatus.staff_id(), schedule_id, gymWrapper.getParams(),
+        params);
+  }
+
+  @Override public void setService(CoachService coachService) {
+
   }
 }

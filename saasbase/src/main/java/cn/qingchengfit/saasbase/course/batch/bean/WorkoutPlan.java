@@ -9,6 +9,18 @@ public class WorkoutPlan implements Parcelable {
   private String name;
   private Workout workout;
 
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    WorkoutPlan plan = (WorkoutPlan) o;
+
+    return id.equals(plan.id);
+  }
+
+  @Override public int hashCode() {
+    return id.hashCode();
+  }
 
   public String getId() {
     return id;
@@ -46,6 +58,19 @@ public class WorkoutPlan implements Parcelable {
     String name;
     String id;
     String logo;
+
+    @Override public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      Workout workout = (Workout) o;
+
+      return id.equals(workout.id);
+    }
+
+    @Override public int hashCode() {
+      return id.hashCode();
+    }
 
     public String getName() {
       return name;

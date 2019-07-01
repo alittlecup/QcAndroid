@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
@@ -25,6 +26,7 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ import javax.inject.Inject;
   CommonFlexAdapter photoAdapter;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus status;
+  @Need CoachService service;
 
   @Need String scheduleID;
 
@@ -72,6 +75,11 @@ import javax.inject.Inject;
       if (scheduleDetail.maxUsers <= scheduleDetail.usersCount) {
         mBinding.tvOrder.setTextColor(getResources().getColor(R.color.text_grey));
         mBinding.tvOrder.setText("该课程已约满");
+        mBinding.groupSpell.setVisibility(View.GONE);
+      } else if (scheduleDetail.isTrainerClass()) {
+        mBinding.groupSpell.setVisibility(View.VISIBLE);
+      } else {
+        mBinding.groupSpell.setVisibility(View.GONE);
       }
       mBinding.tvOrderCount.setText(
           "预约人数（" + scheduleDetail.usersCount + "/" + scheduleDetail.maxUsers + ")");
@@ -100,7 +108,14 @@ import javax.inject.Inject;
         if (order.getStatus() == 2) {
           break;
         }
-        items.add(new CircleImageItem(order.getUser().getAvatar()));
+        int count = order.getCount();
+        String countText = "";
+        if (count > 99) {
+          countText = "99+";
+        } else if (count > 1) {
+          countText = count + "人";
+        }
+        items.add(new CircleImageItem(order.getUser().getAvatar(), countText));
       }
 
       orderAdapter.updateDataSet(items);
@@ -116,13 +131,16 @@ import javax.inject.Inject;
       mBinding.flPhotos.setVisibility(View.GONE);
       List<SchedulePhoto> photos = schedulePhotos.photos;
       mBinding.tvPhotoCount.setText("课程相册（" + photos.size() + ")");
-      List<SquareImageItem> items = new ArrayList<>(photos.size());
+      List<AbstractFlexibleItem> items = new ArrayList<>(photos.size() + 1);
+      items.add(new GirdImageAddItem());
       for (SchedulePhoto photo : photos) {
         items.add(new SquareImageItem(photo));
       }
       photoAdapter.updateDataSet(items);
     }
   }
+
+  private String host;
 
   @Override
   public FragmentScheduleDetailBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -135,6 +153,12 @@ import javax.inject.Inject;
     mViewModel.loadShopInfo();
     mBinding.setFragment(this);
     mViewModel.loadCourseConfig();
+    if (service != null) {
+      host = service.getHost();
+    } else if (gymWrapper.getCoachService() != null) {
+      host = gymWrapper.getCoachService().getHost();
+    }
+    mViewModel.setService(service);
     return mBinding;
   }
 
@@ -160,22 +184,24 @@ import javax.inject.Inject;
         .withParcelable("orders", mViewModel.detailOrders.getValue())
         .build());
   }
+  public void routeSharePage(View view) {
+    routeTo("course", "/schedule/share", new BundleBuilder().withString("scheduleID", scheduleID)
+        .build());
+  }
 
   public void routeAllPhotos(View view) {
     routeTo("course", "/schedule/photos", new BundleBuilder().withString("scheduleID", scheduleID)
         .withParcelable("photos", mViewModel.detailPhotos.getValue())
         .build());
   }
-  public void routeToPlan(View view){
-    String host = gymWrapper.getCoachService().getHost();
-    WebActivity.startWeb(host
-        + "/shop/"
-        + mViewModel.shopID
-        + "/m/schedules/"+scheduleID+"/plan/edit/", getContext());
+
+  public void routeToPlan(View view) {
+    WebActivity.startWeb(
+        host + "/shop/" + mViewModel.shopID + "/m/schedules/" + scheduleID + "/plan/edit/",
+        getContext());
   }
 
   public void routeAddPhotos(View view) {
-    String host = gymWrapper.getCoachService().getHost();
     WebActivity.startWeb(host
         + "/shop/"
         + mViewModel.shopID
@@ -184,16 +210,13 @@ import javax.inject.Inject;
   }
 
   public void routeAddOrder(View view) {
-    String host = gymWrapper.getCoachService().getHost();
     WebActivity.startWeb(
         host + "/shop/" + mViewModel.shopID + "/m/coach/schedules/" + scheduleID + "/group/order/",
         getContext());
   }
 
   public void routeSignOrder(View view) {
-    String host = gymWrapper.getCoachService().getHost();
     if (mViewModel.signType == 2) {
-
       WebActivity.startWeb(
           host + "/shop/" + mViewModel.shopID + "/m/coach/schedules/" + scheduleID + "/checkin/",
           getContext());
@@ -229,7 +252,6 @@ import javax.inject.Inject;
         .append(value.getShop().name)
         .append("】")
         .toString();
-    String host = gymWrapper.getCoachService().getHost();
 
     String link = host
         + "shop/"
@@ -248,8 +270,19 @@ import javax.inject.Inject;
     IFlexible item = photoAdapter.getItem(position);
     if (item instanceof SquareImageItem) {
       showMultiPhotos();
+    } else if (item instanceof GirdImageAddItem) {
+      routeAddPhotos();
     }
     return false;
+  }
+
+  public void routeAddPhotos() {
+    String host = mViewModel.gymWrapper.getCoachService().getHost();
+    WebActivity.startWeb(host
+        + "/shop/"
+        + mViewModel.shopID
+        + "/m/upload/photo/?type=coach&schedule_id="
+        + scheduleID, getContext());
   }
 
   private void showMultiPhotos() {

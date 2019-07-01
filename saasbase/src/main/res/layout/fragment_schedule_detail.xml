@@ -186,10 +186,9 @@
             android:layout_height="45dp"
             android:gravity="center"
             android:onClick="@{fragment::routeAddOrder}"
-            android:text="添加预约"
+            android:text="+ 添加预约"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
-
             app:layout_constraintEnd_toStartOf="@id/tv_sign"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
@@ -199,10 +198,18 @@
             android:layout_width="1px"
             android:layout_height="45dp"
             android:background="@color/divider_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_order"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sign"
+            app:layout_constraintStart_toStartOf="@+id/tv_sign"
+            app:layout_constraintTop_toTopOf="@id/tv_sign"
+            />
+        <View
+            android:id="@+id/divider_seconde"
+            android:layout_width="1px"
+            android:layout_height="45dp"
+            android:background="@color/divider_dark"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sign"
+            app:layout_constraintStart_toStartOf="@+id/tv_spell"
+            app:layout_constraintTop_toTopOf="@id/tv_sign"
             />
         <TextView
             android:id="@+id/tv_sign"
@@ -213,9 +220,21 @@
             android:text="会员签课"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
-
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_spell"
             app:layout_constraintStart_toEndOf="@id/tv_order"
+            app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
+            />
+        <TextView
+            android:id="@+id/tv_spell"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:onClick="@{fragment::routeSharePage}"
+            android:text="私教拼课"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_sign"
             app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
             />
         <android.support.constraint.Group
@@ -229,6 +248,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:constraint_referenced_ids="divider,tv_order"
+            />
+        <android.support.constraint.Group
+            android:id="@+id/groupSpell"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="divider_seconde,tv_spell"
             />
 
         <View
@@ -259,7 +285,7 @@
               android:layout_height="35dp"
               android:layout_gravity="center"
               android:onClick="@{fragment::routeAddOrder}"
-              android:text="添加预约"
+              android:text="+ 添加预约"
               />
         </FrameLayout>
         <TextView
@@ -271,10 +297,10 @@
             android:background="@color/bg_white"
             android:drawableRight="@drawable/vd_arrow_right_grey"
             android:gravity="center|left"
+            android:onClick="@{fragment::routeToPlan}"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="课程计划"
-            android:onClick="@{fragment::routeToPlan}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_order_divider"
@@ -338,7 +364,7 @@
               android:layout_height="35dp"
               android:layout_gravity="center"
               android:onClick="@{fragment::routeAddPhotos}"
-              android:text="立即上传"
+              android:text="+ 立即上传"
               />
         </FrameLayout>
 

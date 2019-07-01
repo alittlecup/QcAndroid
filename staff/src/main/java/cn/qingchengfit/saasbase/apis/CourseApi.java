@@ -33,6 +33,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.course.detail.ScheduleShareDetail;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -294,10 +295,10 @@ public interface CourseApi {
       @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
       @QueryMap Map<String, Object> params);
 
-
   @GET("/api/v2/staffs/{staff_id}/gym-extra/")
   rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
+
   /**
    * 获取签课设置
    */
@@ -306,4 +307,13 @@ public interface CourseApi {
       @Path("staff_id") String staff_id, @Query("keys") String key,
       @QueryMap HashMap<String, Object> params);
 
+  @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/share/")
+  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcGetScheduleShareInfo(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
+
+  @PUT("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/share/")
+  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params, @Body Map<String, Object> body);
 }

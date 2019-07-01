@@ -30,7 +30,7 @@ public class CircleImgWrapper extends BitmapImageViewTarget {
     public CircleImgWrapper(ImageView view, Context context) {
         super(view);
         this.imageView = view;
-        this.context = new WeakReference<Context>(context);
+        this.context = new WeakReference<>(context);
     }
 
     @Override

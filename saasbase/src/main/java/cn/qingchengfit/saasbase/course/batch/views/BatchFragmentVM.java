@@ -54,7 +54,9 @@ public class BatchFragmentVM extends BaseViewModel {
 
   public void setSelectWork(WorkoutPlan.Workout work) {
     this.selectWork.setValue(work);
-    loadWorkoutPlans(work.getId());
+    if (work != null) {
+      loadWorkoutPlans(work.getId());
+    }
   }
 
   public void loadPlans() {

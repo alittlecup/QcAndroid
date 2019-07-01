@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saascommon.di.ViewModelKey;
 import cn.qingchengfit.student.respository.IStudentModel;
 import cn.qingchengfit.student.view.detail.ClassRecordTempFragment;
+import cn.qingchengfit.student.view.detail.NotSignFilterFragment;
 import com.qingchengfit.fitcoach.fragment.NotificationFragment;
 import com.qingchengfit.fitcoach.fragment.card.CardModel;
 import com.qingchengfit.fitcoach.fragment.card.StaffModel;
@@ -35,6 +36,7 @@ import dagger.multibindings.IntoMap;
   @Binds abstract IStudentModel bindStudentModel(StudentModel cardModel);
 
   @ContributesAndroidInjector abstract ClassRecordTempFragment bindClassRecordTempFragment();
+  @ContributesAndroidInjector abstract NotSignFilterFragment bindNotSignFilterFragment();
 
 
   @ContributesAndroidInjector() abstract ScheduesFragment contributeScheduesFragment();

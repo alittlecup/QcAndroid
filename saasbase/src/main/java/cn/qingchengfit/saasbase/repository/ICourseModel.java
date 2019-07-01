@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -29,8 +30,10 @@ import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.course.detail.ScheduleShareDetail;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * power by
@@ -182,4 +185,14 @@ public interface ICourseModel {
 
   rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra();
   rx.Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig();
+
+
+  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcGetScheduleShareInfo(
+    String schedule_id,  Map<String, Object> params);
+
+
+  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(String schedule_id,  Map<String, Object> params);
+
+
+  void setService(CoachService coachService);
 }

@@ -319,7 +319,9 @@ import javax.inject.Inject;
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule,
         (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
-    batchBaseFragment.setWorkOutPlan(batchDetail.workoutPlan);
+    if (!isPrvite) {
+      batchBaseFragment.setWorkOutPlan(batchDetail.workoutPlan);
+    }
     hadSetData = true;
   }
 

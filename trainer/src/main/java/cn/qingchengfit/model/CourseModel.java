@@ -3,6 +3,7 @@ package cn.qingchengfit.model;
 import cn.qingchengfit.api.CourseApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.QcRestRepository;
@@ -69,7 +70,7 @@ public class CourseModel implements ICourseModel {
   private CourseApi api;
 
   public CourseModel(QcRestRepository restRepository, GymWrapper gymWrapper,
-    LoginStatus loginStatus) {
+      LoginStatus loginStatus) {
     api = restRepository.createRxJava1Api(CourseApi.class);
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
@@ -106,29 +107,33 @@ public class CourseModel implements ICourseModel {
    * @param is_private 是否为私教
    */
   @Override public Observable<QcDataResponse<CourseLisWrap>> qcGetCoursesPermission(
-    boolean is_private) {
+      boolean is_private) {
     return api.qcGetCourses(loginStatus.staff_id(), gymWrapper.getParams(), is_private ? 1 : 0);
   }
 
   /**
    * 获取 某个教练的排课
    * 教练用不到
+   *
    * @param coach_id 教练的id
    */
   @Override public Observable<QcDataResponse<QcResponsePrivateDetail>> qcGetPrivateCoaches(
-    String coach_id) {
-    if (coach_id.equalsIgnoreCase("group")){
-      return api.qcGetGroupCourses(loginStatus.staff_id(),gymWrapper.getParams());
-    }else return api.qcGetPrivateCourses(loginStatus.staff_id(),gymWrapper.getParams());
+      String coach_id) {
+    if (coach_id.equalsIgnoreCase("group")) {
+      return api.qcGetGroupCourses(loginStatus.staff_id(), gymWrapper.getParams());
+    } else {
+      return api.qcGetPrivateCourses(loginStatus.staff_id(), gymWrapper.getParams());
+    }
   }
 
   /**
    * 获取某个团课 下的排期
-   *  教练 不用课程 id;
+   * 教练 不用课程 id;
+   *
    * @param course_id 课程ID
    */
   @Override public Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-    String course_id) {
+      String course_id) {
     return null;
     //return api.qcGetGroupCourses(loginStatus.staff_id(), course_id, gymWrapper.getParams());
   }
@@ -147,9 +152,9 @@ public class CourseModel implements ICourseModel {
    * @param isPrivate 是否为私教
    */
   @Override public Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(
-    String batch_id, boolean isPrivate) {
+      String batch_id, boolean isPrivate) {
     return api.qcGetbatchSchedules(loginStatus.staff_id(), batch_id,
-      isPrivate ? "timetables" : "schedules", gymWrapper.getParams());
+        isPrivate ? "timetables" : "schedules", gymWrapper.getParams());
   }
 
   /**
@@ -160,9 +165,9 @@ public class CourseModel implements ICourseModel {
    * @param course_id 课程
    */
   @Override public Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(
-    boolean isPrivate, String teacher_id, String course_id) {
+      boolean isPrivate, String teacher_id, String course_id) {
     return api.qcGetBatchTemplate(loginStatus.staff_id(), isPrivate ? "private" : "group",
-      teacher_id, course_id, gymWrapper.getParams());
+        teacher_id, course_id, gymWrapper.getParams());
   }
 
   /**
@@ -171,11 +176,11 @@ public class CourseModel implements ICourseModel {
    * @param isPrivate 是否私教
    */
   @Override public Observable<QcDataResponse> qcCheckBatch(boolean isPrivate,
-    ArrangeBatchBody body) {
+      ArrangeBatchBody body) {
     ArrangeBatchBody b = (ArrangeBatchBody) body.clone();
     b.teacher_id = null;
     return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "private" : "group", b,
-      gymWrapper.getParams());
+        gymWrapper.getParams());
   }
 
   /**
@@ -203,7 +208,7 @@ public class CourseModel implements ICourseModel {
     body.id = gymWrapper.id();
     body.model = gymWrapper.model();
     return api.qcDelBatchSchedule(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules",
-      body, gymWrapper.getParams());
+        body, gymWrapper.getParams());
   }
 
   /**
@@ -213,9 +218,9 @@ public class CourseModel implements ICourseModel {
    * @param single_id 排期id
    */
   @Override public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
-    String single_id) {
+      String single_id) {
     return api.qcGetSingleBatch(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules",
-      single_id, gymWrapper.getParams());
+        single_id, gymWrapper.getParams());
   }
 
   /**
@@ -229,13 +234,13 @@ public class CourseModel implements ICourseModel {
    * 更新某条排课实例
    */
   @Override public Observable<QcDataResponse> qcUpdateBatchSchedule(boolean isPirvate,
-    String scheduleid, SingleBatchBody body) {
+      String scheduleid, SingleBatchBody body) {
     int err = body.check();
     if (err > 0) {
       return ResponseConstant.generateError(err, App.AppContex);
     } else {
       return api.qcUpdateBatchSchedule(loginStatus.staff_id(),
-        isPirvate ? "timetables" : "schedules", scheduleid, body, gymWrapper.getParams());
+          isPirvate ? "timetables" : "schedules", scheduleid, body, gymWrapper.getParams());
     }
   }
 
@@ -244,13 +249,13 @@ public class CourseModel implements ICourseModel {
   }
 
   @Override public Observable<QcDataResponse<CourseTeacherWrapper>> qcGetCourseTeacher(String id,
-    String shopid) {
+      String shopid) {
     // TODO: 2017/11/30 处理shop id 的问题
     return api.qcGetCourseTeacher(loginStatus.staff_id(), id, gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SchedulePhotoListWrap>> qcGetSchedulePhotos(String id,
-    int page) {
+      int page) {
     return api.qcGetSchedulePhotos(loginStatus.staff_id(), id, page, gymWrapper.getParams());
   }
 
@@ -271,7 +276,7 @@ public class CourseModel implements ICourseModel {
   @Override
   public Observable<QcDataResponse> qcUpdateCourse(String course_id, CourseBody courseBody) {
     return api.qcUpdateCourse(loginStatus.staff_id(), course_id, gymWrapper.getParams(),
-      courseBody);
+        courseBody);
   }
 
   @Override public Observable<QcDataResponse> qcDelCourse(String course_id) {
@@ -326,38 +331,57 @@ public class CourseModel implements ICourseModel {
   @Override
   public Observable<QcDataResponse<ScheduleDetailWrapper>> qcGetScheduleDetail(String schedule_id) {
 
-    return api.qcGetScheduleDetail(loginStatus.staff_id(), schedule_id, gymWrapper.getParams());
+    return api.qcGetScheduleDetail(loginStatus.staff_id(), schedule_id, getParams());
   }
 
   @Override
   public Observable<QcDataResponse<ScheduleOrders>> qcGetScheduleDetailOrder(String schedule_id) {
     return api.qcGetScheduleDetailOrder(loginStatus.staff_id(), schedule_id,
-        gymWrapper.getParams());
+        getParams());
   }
 
   @Override
   public Observable<QcDataResponse<SchedulePhotos>> qcGetScheduleDetailPhotos(String schedule_id) {
     return api.qcGetScheduleDetailPhotos(loginStatus.staff_id(), schedule_id,
-        gymWrapper.getParams());
+        getParams());
   }
 
   @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcPostScheduleOrderCancel(
       String order_id) {
-    return api.qcPostScheduleOrderCancel(loginStatus.staff_id(), order_id, gymWrapper.getParams(),
-        gymWrapper.getParams());
+    return api.qcPostScheduleOrderCancel(loginStatus.staff_id(), order_id, getParams(),
+        getParams());
   }
 
   @Override public Observable<QcDataResponse<SimpleSuccessResponse>> qcDeleteSchedulePhotos(
       String schedule_id, String photoIDs) {
-    Map<String, Object> body = new HashMap<>(gymWrapper.getParams());
+    Map<String, Object> body = new HashMap<>(getParams());
     body.put("photo_ids", photoIDs);
     return api.qcDeleteSchedulePhotos(loginStatus.staff_id(), schedule_id, body);
   }
 
   @Override public Observable<QcDataResponse<GymExtra>> qcGetGymExtra() {
-    return api.qcGetGymExtra(loginStatus.staff_id(), gymWrapper.getParams());
+    return api.qcGetGymExtra(loginStatus.staff_id(), getParams());
   }
+
   @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig() {
-    return api.qcGetShopConfig(loginStatus.staff_id(),"private_course_check_in_type,private_course_check_in_is_open",gymWrapper.getParams());
+    return api.qcGetShopConfig(loginStatus.staff_id(),
+        "private_course_check_in_type,private_course_check_in_is_open", getParams());
+  }
+
+  private Map<String, Object> getParams() {
+    if (coachService != null) {
+      Map<String, Object> params = new HashMap<>();
+      params.put("id", coachService.getId());
+      params.put("model", coachService.getModel());
+      return params;
+    } else {
+      return gymWrapper.getParams();
+    }
+  }
+
+  private CoachService coachService;
+
+  @Override public void setService(CoachService coachService) {
+    this.coachService = coachService;
   }
 }

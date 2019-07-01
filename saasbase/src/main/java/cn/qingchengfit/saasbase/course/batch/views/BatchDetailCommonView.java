@@ -55,6 +55,7 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.BottomChooseDialog;
+import cn.qingchengfit.widgets.BottomChooseInverseDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
@@ -185,10 +186,10 @@ public class BatchDetailCommonView extends BaseFragment {
     payCard = (CommonInputView) view.findViewById(R.id.pay_card);
     priceSetting = (CommonInputView) view.findViewById(R.id.price_setting);
     llPayContent = view.findViewById(R.id.ll_price_content);
-    llCourseWorkout = view.findViewById(R.id.ll_course_system);
     civWorkout = view.findViewById(R.id.civ_course_system);
     civWorkoutPlan = view.findViewById(R.id.civ_course_system_class);
     if ((mSource.equals("addbatch") || mSource.equals("editbatch")) && !isPrivate) {
+      llCourseWorkout = view.findViewById(R.id.ll_course_system);
       llCourseWorkout.setVisibility(View.VISIBLE);
       mViewModel = ViewModelProviders.of(this, factory).get(BatchFragmentVM.class);
       mViewModel.selectWork.observe(this, workout -> {
@@ -207,8 +208,6 @@ public class BatchDetailCommonView extends BaseFragment {
       });
       civWorkout.setOnClickListener(v -> onWorkoutClick());
       civWorkoutPlan.setOnClickListener(v -> onWorkoutPlanClick());
-    } else {
-      llCourseWorkout.setVisibility(View.GONE);
     }
     view.findViewById(R.id.course_layout).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -290,15 +289,25 @@ public class BatchDetailCommonView extends BaseFragment {
         ToastUtils.show("训练计划内容为空");
       } else {
         List<WorkoutPlan> workoutPlans = plans.get(id);
+        WorkoutPlan selectWorkPlanValue = mViewModel.selectWorkPlan.getValue();
         List<BottomChooseData> datas = new ArrayList<>();
+        int selePosition = -1;
         for (WorkoutPlan workout : workoutPlans) {
           datas.add(new BottomChooseData(workout.getName()));
+          if (selectWorkPlanValue != null && selectWorkPlanValue.equals(workout)) {
+            selePosition = workoutPlans.indexOf(workout);
+          }
         }
-        BottomChooseDialog planChooseDialog;
-        planChooseDialog = new BottomChooseDialog(getContext(), "选择训练计划", datas);
+        BottomChooseDialog planChooseDialog = new BottomChooseInverseDialog(getContext(), "选择训练计划", datas);
+        planChooseDialog.addSeleced(selePosition);
         planChooseDialog.setOnItemClickListener(position -> {
           WorkoutPlan plan = workoutPlans.get(position);
-          mViewModel.selectWorkPlan.setValue(plan);
+          WorkoutPlan selectWorkPlanValue1 = mViewModel.selectWorkPlan.getValue();
+          if (plan.equals(selectWorkPlanValue1)) {
+            mViewModel.selectWorkPlan.setValue(null);
+          } else {
+            mViewModel.selectWorkPlan.setValue(plan);
+          }
           return true;
         });
         planChooseDialog.show();
@@ -318,13 +327,24 @@ public class BatchDetailCommonView extends BaseFragment {
     } else {
       if (workoutChooseDialog == null) {
         List<BottomChooseData> datas = new ArrayList<>();
+        WorkoutPlan.Workout selectWorkValue = mViewModel.selectWork.getValue();
+        int selectPosition = -1;
         for (WorkoutPlan.Workout workout : value) {
           datas.add(new BottomChooseData(workout.getName()));
+          if (selectWorkValue != null && selectWorkValue.getId().equals(workout.getId())) {
+            selectPosition = value.indexOf(workout);
+          }
         }
-        workoutChooseDialog = new BottomChooseDialog(getContext(), "选择课程体系", datas);
+        workoutChooseDialog = new BottomChooseInverseDialog(getContext(), "选择课程体系", datas);
+        workoutChooseDialog.addSeleced(selectPosition);
+
         workoutChooseDialog.setOnItemClickListener(position -> {
           WorkoutPlan.Workout workout = value.get(position);
-          mViewModel.setSelectWork(workout);
+          if (workout.equals(mViewModel.selectWork.getValue())) {
+            mViewModel.setSelectWork(null);
+          } else {
+            mViewModel.setSelectWork(workout);
+          }
           mViewModel.selectWorkPlan.setValue(null);
           return true;
         });

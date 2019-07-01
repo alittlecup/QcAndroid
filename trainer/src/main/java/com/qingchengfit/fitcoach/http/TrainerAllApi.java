@@ -133,7 +133,6 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
-import io.reactivex.Flowable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -923,7 +922,7 @@ public interface TrainerAllApi {
 
   //获取某个学员的课程
   @GET("/api/coaches/{staff_id}/users/attendance/records/")
-  Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
+  rx.Observable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
       @Path("staff_id") String staffid, @Query("user_id") String studentid,
       @QueryMap HashMap<String, Object> params);
 }

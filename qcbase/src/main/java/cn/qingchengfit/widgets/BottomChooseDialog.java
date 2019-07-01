@@ -7,12 +7,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import cn.qingchengfit.items.ActionSheetDialogItem;
 import cn.qingchengfit.items.BottomChooseItem;
 import cn.qingchengfit.model.common.BottomChooseData;
-import cn.qingchengfit.views.fragments.ActionSheetDialog;
 import cn.qingchengfit.widgets.databinding.ActionBottomChooseDialogBinding;
-import cn.qingchengfit.widgets.databinding.ActionSheetDialogBinding;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -103,7 +100,7 @@ public class BottomChooseDialog extends BottomSheetDialog
   public interface onItemClickListener {
     /**
      * 返回值是因为通过选中的item 进行业务判断，来反向控制是否选中
-     * @param position
+     *
      * @return true-表示可以修改选择，false-表示不可以选中新的点击
      */
     boolean onItemClick(int position);

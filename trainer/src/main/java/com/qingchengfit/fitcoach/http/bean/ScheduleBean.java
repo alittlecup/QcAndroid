@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.CoachService;
+
 /**
  * power by
  * <p>
@@ -27,6 +29,7 @@ public class ScheduleBean {
     public String conflict;
     public int type;//0  休息  1:schedule
     public String id;
+    public CoachService service;
 
     public ScheduleBean(int type) {
         this.type = type;

@@ -26,6 +26,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
+import cn.qingchengfit.saasbase.course.batch.bean.WorkoutPlan;
 import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
@@ -374,7 +375,11 @@ public class AddBatchFragment extends SaasBaseFragment
 
   @Override public String getWorkoutPlanID() {
     if (batchBaseFragment != null && batchBaseFragment.isAdded()) {
-      return batchBaseFragment.mViewModel.selectWorkPlan.getValue().getId();
+      WorkoutPlan value = batchBaseFragment.mViewModel.selectWorkPlan.getValue();
+      if(value!=null){
+        return value.getId();
+      }
+      return "";
     } else {
       return "";
     }

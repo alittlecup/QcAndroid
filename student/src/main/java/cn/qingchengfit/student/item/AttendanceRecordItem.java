@@ -19,6 +19,10 @@ import java.util.List;
 public class AttendanceRecordItem
     extends AbstractFlexibleItem<AttendanceRecordItem.AttendanceRecordVH> implements IFilterable {
 
+  public AttendanceRecord getAttendanceRecord() {
+    return attendanceRecord;
+  }
+
   AttendanceRecord attendanceRecord;
   boolean isfistDay;
 

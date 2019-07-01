@@ -6,9 +6,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
 import cn.qingchengfit.saascommon.events.EventSaasFresh;
-import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.utils.ToastUtils;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -89,9 +87,6 @@ public class BatchEditPresenter extends IBatchPresenter {
 
     if (err > 0) {
       mvpView.showAlert(err);
-    } else if (!isPrivate && StringUtils.isEmpty(body.workout_plan_id)) {
-      ToastUtils.show("请选择训练计划");
-      return;
     } else {
       RxRegiste(courseApi.qcUpdateBatch(batchId, body)
           .onBackpressureLatest()
