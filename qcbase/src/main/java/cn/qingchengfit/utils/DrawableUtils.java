@@ -8,7 +8,9 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.widget.TextView;
 import cn.qingchengfit.widgets.R;
+import com.bigkoo.pickerview.lib.DensityUtil;
 
 /**
  * power by
@@ -51,5 +53,12 @@ public class DrawableUtils {
     Drawable mutate = ContextCompat.getDrawable(context, drawable).mutate();
     DrawableCompat.setTint(mutate, Color.parseColor(color));
     return mutate;
+  }
+
+  public static void setDrawableLeft(@DrawableRes int drawRes, TextView textView) {
+    Drawable drawable = textView.getContext().getResources().getDrawable(drawRes);
+    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+    textView.setCompoundDrawablePadding(DensityUtil.dip2px(textView.getContext(), 5));
+    textView.setCompoundDrawables(drawable, null, null, null);
   }
 }

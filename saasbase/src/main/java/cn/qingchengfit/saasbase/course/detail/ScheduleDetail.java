@@ -25,6 +25,16 @@ public class ScheduleDetail implements Parcelable {
   }
 
   @SerializedName("is_private") private boolean trainerClass;
+
+  public boolean isEnable() {
+    return enable;
+  }
+
+  public void setEnable(boolean enable) {
+    this.enable = enable;
+  }
+
+  @SerializedName("is_enable") private boolean enable;
   @SerializedName("users_count")public int usersCount;
 
 
@@ -166,6 +176,7 @@ public class ScheduleDetail implements Parcelable {
     dest.writeParcelable(this.space, flags);
     dest.writeInt(this.maxUsers);
     dest.writeByte(this.trainerClass ? (byte) 1 : (byte) 0);
+    dest.writeByte(this.enable ? (byte) 1 : (byte) 0);
     dest.writeInt(this.usersCount);
     dest.writeFloat(this.teacher_score);
   }
@@ -181,6 +192,7 @@ public class ScheduleDetail implements Parcelable {
     this.space = in.readParcelable(Space.class.getClassLoader());
     this.maxUsers = in.readInt();
     this.trainerClass = in.readByte() != 0;
+    this.enable = in.readByte() != 0;
     this.usersCount = in.readInt();
     this.teacher_score = in.readFloat();
   }

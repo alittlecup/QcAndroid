@@ -27,6 +27,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleCandidates;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
@@ -184,15 +185,16 @@ public interface ICourseModel {
       String photoIDs);
 
   rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra();
-  rx.Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig();
 
+  rx.Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig(String s);
 
-  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcGetScheduleShareInfo(
-    String schedule_id,  Map<String, Object> params);
+  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcGetScheduleShareInfo(String schedule_id,
+      Map<String, Object> params);
 
+  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(String schedule_id,
+      Map<String, Object> params);
 
-  rx.Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(String schedule_id,  Map<String, Object> params);
-
+  rx.Observable<QcDataResponse<ScheduleCandidates>> qcGetScheduleCandidate(String schedule_id);
 
   void setService(CoachService coachService);
 }

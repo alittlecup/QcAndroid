@@ -33,9 +33,11 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleCandidates;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
+import cn.qingchengfit.saasbase.course.detail.ScheduleShareDetail;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.staff.beans.SimpleSuccessResponse;
 import com.qingchengfit.fitcoach.App;
@@ -363,9 +365,27 @@ public class CourseModel implements ICourseModel {
     return api.qcGetGymExtra(loginStatus.staff_id(), getParams());
   }
 
-  @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig() {
+  @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig(String s) {
     return api.qcGetShopConfig(loginStatus.staff_id(),
-        "private_course_check_in_type,private_course_check_in_is_open", getParams());
+        s, getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleShareDetail>> qcGetScheduleShareInfo(String schedule_id,
+      Map<String, Object> params) {
+    return api.qcGetScheduleShareInfo(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(String schedule_id,
+      Map<String, Object> params) {
+    return api.qcPutScheduleShareInfo(loginStatus.staff_id(),schedule_id,gymWrapper.getParams(),params);
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleCandidates>> qcGetScheduleCandidate(String schedule_id) {
+    return api.qcGetScheduleCandidate(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+
   }
 
   private Map<String, Object> getParams() {

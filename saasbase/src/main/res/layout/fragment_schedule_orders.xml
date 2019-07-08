@@ -8,16 +8,12 @@
   </data>
   <LinearLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:bind="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
       >
-    <include
-        android:id="@+id/include_toolbar"
-        layout="@layout/common_simple_toolbar"
-        bind:toolbarModel="@{toolbarModel}"
-        />
+    <include layout="@layout/divider_medium"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_orders"
         android:layout_width="match_parent"

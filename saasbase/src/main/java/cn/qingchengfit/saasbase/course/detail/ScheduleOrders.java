@@ -26,6 +26,24 @@ public class ScheduleOrders extends QcListData implements Parcelable {
     public int getStatus() {
       return status;
     }
+    public String getStatusString(){
+      String text="";
+      switch (getStatus()) {
+        case 0:
+          text = "已预约";
+          break;
+        case 1:
+          text = "已完成";
+          break;
+        case 2:
+          text = "已取消";
+          break;
+        case 4:
+          text = "已签课";
+          break;
+      }
+      return text;
+    }
 
     public void setStatus(int status) {
       this.status = status;

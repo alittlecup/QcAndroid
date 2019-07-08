@@ -30,6 +30,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleCandidates;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
@@ -316,4 +317,9 @@ public interface CourseApi {
   rx.Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(
       @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
       @QueryMap Map<String, Object> params, @Body Map<String, Object> body);
+
+  @GET("/api/v2/staffs/{staff_id}/schedules/{schedule_id}/candidate/")
+  rx.Observable<QcDataResponse<ScheduleCandidates>> qcGetScheduleCandidate(
+      @Path("staff_id") String staff_id, @Path("schedule_id") String schedule_id,
+      @QueryMap Map<String, Object> params);
 }

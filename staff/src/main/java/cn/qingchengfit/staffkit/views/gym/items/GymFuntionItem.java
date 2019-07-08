@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.model.responese.GymFuntion;
+import cn.qingchengfit.saasbase.items.FunHeaderItem;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;

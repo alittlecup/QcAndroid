@@ -15,8 +15,11 @@ import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
 import cn.qingchengfit.saasbase.databinding.FragmentScheduleDetailBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.SpanUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -72,17 +75,28 @@ import javax.inject.Inject;
       PhotoUtils.smallCircle(mBinding.imgTrainerPhoto, scheduleDetail.getTeacher().getAvatar());
       PhotoUtils.origin(mBinding.imgCourse, scheduleDetail.getCourse().getPhoto());
       mBinding.trainerScore.setRating(Float.valueOf(scheduleDetail.teacher_score));
+      mBinding.groupSpell.setVisibility(View.GONE);
+
       if (scheduleDetail.maxUsers <= scheduleDetail.usersCount) {
         mBinding.tvOrder.setTextColor(getResources().getColor(R.color.text_grey));
         mBinding.tvOrder.setText("该课程已约满");
-        mBinding.groupSpell.setVisibility(View.GONE);
-      } else if (scheduleDetail.isTrainerClass()) {
-        mBinding.groupSpell.setVisibility(View.VISIBLE);
+        mBinding.tvOrder.setOnClickListener(null);
       } else {
-        mBinding.groupSpell.setVisibility(View.GONE);
+        mBinding.tvOrder.setText("+ 添加预约");
+        mBinding.tvOrder.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mBinding.tvOrder.setOnClickListener(this::routeAddOrder);
+        if (scheduleDetail.isTrainerClass()) {
+          mBinding.groupSpell.setVisibility(View.VISIBLE);
+        }
       }
       mBinding.tvOrderCount.setText(
           "预约人数（" + scheduleDetail.usersCount + "/" + scheduleDetail.maxUsers + ")");
+      cancel = scheduleDetail.isTrainerClass() && !scheduleDetail.isEnable();
+      if (cancel) {
+        disableView();
+      }
+      DrawableUtils.setDrawableLeft(scheduleDetail.isTrainerClass() ? R.drawable.ic_appxlnr_kcbs_s
+          : R.drawable.ic_appxlnr_kcbs_t, mBinding.courseName);
     }
   }
 
@@ -106,7 +120,7 @@ import javax.inject.Inject;
       List<CircleImageItem> items = new ArrayList<>(orders.size());
       for (ScheduleOrders.ScheduleOrder order : orders) {
         if (order.getStatus() == 2) {
-          break;
+          continue;
         }
         int count = order.getCount();
         String countText = "";
@@ -132,7 +146,9 @@ import javax.inject.Inject;
       List<SchedulePhoto> photos = schedulePhotos.photos;
       mBinding.tvPhotoCount.setText("课程相册（" + photos.size() + ")");
       List<AbstractFlexibleItem> items = new ArrayList<>(photos.size() + 1);
-      items.add(new GirdImageAddItem());
+      if (!cancel) {
+        items.add(new GirdImageAddItem());
+      }
       for (SchedulePhoto photo : photos) {
         items.add(new SquareImageItem(photo));
       }
@@ -141,6 +157,7 @@ import javax.inject.Inject;
   }
 
   private String host;
+  private boolean cancel;
 
   @Override
   public FragmentScheduleDetailBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
@@ -152,14 +169,24 @@ import javax.inject.Inject;
     initRecyclerView();
     mViewModel.loadShopInfo();
     mBinding.setFragment(this);
-    mViewModel.loadCourseConfig();
     if (service != null) {
       host = service.getHost();
     } else if (gymWrapper.getCoachService() != null) {
       host = gymWrapper.getCoachService().getHost();
     }
     mViewModel.setService(service);
+    loadConfig();
     return mBinding;
+  }
+
+  private void loadConfig() {
+    String config = "";
+    if (AppUtils.getCurApp(getContext()) == 0) {
+      config = "private_course_check_in_type,private_course_check_in_is_open";
+    } else {
+      config = "group_course_check_in_type,group_course_check_in_is_open";
+    }
+    mViewModel.loadCourseConfig(config);
   }
 
   @Override public void onStart() {
@@ -180,13 +207,15 @@ import javax.inject.Inject;
   }
 
   public void routeAllOrders(View view) {
-    routeTo("course", "/schedule/orders", new BundleBuilder().withString("scheduleID", scheduleID)
-        .withParcelable("orders", mViewModel.detailOrders.getValue())
-        .build());
+    routeTo("course", "/schedule/order/detail",
+        new BundleBuilder().withString("scheduleID", scheduleID)
+            .withParcelable("orders", mViewModel.detailOrders.getValue())
+            .build());
   }
+
   public void routeSharePage(View view) {
-    routeTo("course", "/schedule/share", new BundleBuilder().withString("scheduleID", scheduleID)
-        .build());
+    routeTo("course", "/schedule/share",
+        new BundleBuilder().withString("scheduleID", scheduleID).build());
   }
 
   public void routeAllPhotos(View view) {
@@ -196,9 +225,13 @@ import javax.inject.Inject;
   }
 
   public void routeToPlan(View view) {
-    WebActivity.startWeb(
-        host + "/shop/" + mViewModel.shopID + "/m/schedules/" + scheduleID + "/plan/edit/",
-        getContext());
+    if (cancel) {
+      DialogUtils.showAlert(getContext(), "当前课程已取消");
+    } else {
+      WebActivity.startWeb(
+          host + "/shop/" + mViewModel.shopID + "/m/schedules/" + scheduleID + "/plan/edit/",
+          getContext());
+    }
   }
 
   public void routeAddPhotos(View view) {
@@ -269,7 +302,7 @@ import javax.inject.Inject;
   @Override public boolean onItemClick(int position) {
     IFlexible item = photoAdapter.getItem(position);
     if (item instanceof SquareImageItem) {
-      showMultiPhotos();
+      showMultiPhotos(position - 1);
     } else if (item instanceof GirdImageAddItem) {
       routeAddPhotos();
     }
@@ -285,9 +318,26 @@ import javax.inject.Inject;
         + scheduleID, getContext());
   }
 
-  private void showMultiPhotos() {
-    MultiChoosePicFragment fragment = MultiChoosePicFragment.newInstance(mViewModel.getPhotoUrls());
+  private void showMultiPhotos(int position) {
+    SchedulePhoto schedulePhoto = mViewModel.detailPhotos.getValue().photos.get(position);
+    List<String> url = new ArrayList<>();
+    url.add(schedulePhoto.getPhoto());
+    MultiChoosePicFragment fragment = MultiChoosePicFragment.newInstance(url);
     fragment.setShowFlag(true);
     fragment.show(getFragmentManager(), "");
+  }
+
+  private void disableView() {
+    mBinding.tvOrder.setEnabled(false);
+    mBinding.tvOrder.setClickable(false);
+    mBinding.tvOrder.setText("该课程已取消");
+    mBinding.tvSign.setEnabled(false);
+    mBinding.tvSign.setClickable(false);
+    mBinding.tvSpell.setEnabled(false);
+    mBinding.tvSpell.setClickable(false);
+    mBinding.btnAddOrder.setEnabled(false);
+    mBinding.btnAddOrder.setClickable(false);
+    mBinding.btnAddPhoto.setEnabled(false);
+    mBinding.btnAddPhoto.setClickable(false);
   }
 }

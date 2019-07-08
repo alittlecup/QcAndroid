@@ -1,10 +1,8 @@
-package cn.qingchengfit.staffkit.views.gym.items;
+package cn.qingchengfit.saasbase.items;
 
 import android.view.View;
 import android.widget.TextView;
-
-
-import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.saasbase.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
 import eu.davidea.flexibleadapter.items.IHeader;

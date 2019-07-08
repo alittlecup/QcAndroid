@@ -28,7 +28,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
 import cn.qingchengfit.staffkit.views.gym.items.EmptyFunItem;
-import cn.qingchengfit.staffkit.views.gym.items.FunHeaderItem;
+import cn.qingchengfit.saasbase.items.FunHeaderItem;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.utils.CompatUtils;

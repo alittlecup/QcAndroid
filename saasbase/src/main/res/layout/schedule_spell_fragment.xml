@@ -50,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:onClick="@{fragment::showChooseCountDialog}"
         app:civ_clickable="true"
         app:civ_edit_able="false"
         app:civ_lable="可邀约人数"
@@ -84,7 +83,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:onClick="@{fragment::showChooseShareTypeDialog}"
         app:civ_clickable="true"
         app:civ_edit_able="false"
         app:civ_lable="拼课类型"
@@ -111,7 +109,6 @@
           android:layout_gravity="center"
           android:layout_marginLeft="15dp"
           android:layout_marginRight="15dp"
-          android:onClick="@{fragment::save}"
           android:text="保存设置"
           />
     </FrameLayout>

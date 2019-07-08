@@ -17,6 +17,7 @@ import cn.qingchengfit.staffkit.views.custom.LoopView;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
@@ -76,7 +77,6 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
       if (scheduleBean.type == 0) {
         WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404);
       } else {
-
         RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
             new BundleBuilder().withString("scheduleID", datas.get(pos).id).build());
       }
@@ -204,6 +204,8 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
         }
 
         holder.getItemScheduleDone.setVisibility(View.VISIBLE);
+        DrawableUtils.setDrawableLeft(bean.is_private ? R.drawable.ic_appxlnr : R.drawable.ic_appxlnr_kcbs_h_t,
+            holder.itemScheduleClassname);
       } else {
         holder.itemScheduleNum.setVisibility(View.VISIBLE);
         holder.itemScheduleClassname.setTextColor(
@@ -219,10 +221,14 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
         } else {
           holder.itemScheduleNum.setText(bean.count + "人已预约");
         }
+        DrawableUtils.setDrawableLeft(
+            bean.is_private ? R.drawable.ic_appxlnr_kcbs_s : R.drawable.ic_appxlnr_kcbs_t,
+            holder.itemScheduleClassname);
 
         holder.getItemScheduleDone.setVisibility(View.GONE);
       }
     }
+
 
     @Override public int getItemCount() {
       return datas.size();

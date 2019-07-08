@@ -58,14 +58,14 @@ public class CircleImageItem
             RoundedBitmapDrawable roundedBitmapDrawable =
                 RoundedBitmapDrawableFactory.create(dataBinding.imageView.getResources(), resource);
             roundedBitmapDrawable.setCircular(true);
-            if (!TextUtils.isEmpty(text)) {
-              dataBinding.imageView.setText(text);
-              dataBinding.imageView.setBackgroundResource(R.drawable.colorprimary_circle);
-              int i = DensityUtil.dip2px(dataBinding.imageView.getContext(), 2);
-              dataBinding.imageView.setPadding(i, i, i, i);
-            }
             dataBinding.imageView.setImageDrawable(roundedBitmapDrawable);
           }
         });
+    if (!TextUtils.isEmpty(text)) {
+      dataBinding.imageView.setText(text);
+      dataBinding.imageView.setBackgroundResource(R.drawable.colorprimary_circle);
+      int i = DensityUtil.dip2px(dataBinding.imageView.getContext(), 2);
+      dataBinding.imageView.setPadding(i, i, i, i);
+    }
   }
 }

@@ -33,6 +33,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrapper;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
+import cn.qingchengfit.saasbase.course.detail.ScheduleCandidates;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailWrapper;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrders;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotos;
@@ -348,9 +349,8 @@ public class CourseModel implements ICourseModel {
     return api.qcGetGymExtra(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
-  @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig() {
-    return api.qcGetShopConfig(loginStatus.staff_id(),
-        "group_course_check_in_type,group_course_check_in_is_open", gymWrapper.getParams());
+  @Override public Observable<QcDataResponse<SignInConfig.Data>> qcGetShopConfig(String s) {
+    return api.qcGetShopConfig(loginStatus.staff_id(), s, gymWrapper.getParams());
   }
 
   @Override
@@ -362,9 +362,15 @@ public class CourseModel implements ICourseModel {
   @Override
   public Observable<QcDataResponse<ScheduleShareDetail>> qcPutScheduleShareInfo(String schedule_id,
       Map<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
 
     return api.qcPutScheduleShareInfo(loginStatus.staff_id(), schedule_id, gymWrapper.getParams(),
         params);
+  }
+
+  @Override
+  public Observable<QcDataResponse<ScheduleCandidates>> qcGetScheduleCandidate(String schedule_id) {
+    return api.qcGetScheduleCandidate(loginStatus.staff_id(), schedule_id, gymWrapper.getParams());
   }
 
   @Override public void setService(CoachService coachService) {

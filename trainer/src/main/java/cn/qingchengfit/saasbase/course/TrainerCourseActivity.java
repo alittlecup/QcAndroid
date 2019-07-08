@@ -25,9 +25,12 @@ import cn.qingchengfit.saasbase.course.course.views.CourseListFragment;
 import cn.qingchengfit.saasbase.course.course.views.EditCourseFragment;
 import cn.qingchengfit.saasbase.course.course.views.JacketManagerFragment;
 import cn.qingchengfit.saasbase.course.course.views.ShopCommentsFragment;
+import cn.qingchengfit.saasbase.course.detail.ScheduleCandidateFragment;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailFragment;
+import cn.qingchengfit.saasbase.course.detail.ScheduleOrderDetailFragment;
 import cn.qingchengfit.saasbase.course.detail.ScheduleOrdersFragment;
 import cn.qingchengfit.saasbase.course.detail.SchedulePhotosFragment;
+import cn.qingchengfit.saasbase.course.detail.ScheduleShareFragment;
 import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
 import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
 import com.anbillon.flabellum.annotations.Trunk;
@@ -63,6 +66,7 @@ import com.anbillon.flabellum.annotations.Trunk;
     CourseImagesFragment.class, BatchDetailCommonView.class, UpgradeInfoDialogFragment.class,
     MutiChooseGymFragment.class, ChooseCoursePlanFragment.class, BatchCopyFragment.class,
     BatchCourseChooseFragment.class, ScheduleDetailFragment.class, ScheduleOrdersFragment.class,
-    SchedulePhotosFragment.class
+    SchedulePhotosFragment.class,ScheduleCandidateFragment.class, ScheduleOrderDetailFragment.class,
+    ScheduleShareFragment.class
 }) public class TrainerCourseActivity extends CourseActivity {
 }

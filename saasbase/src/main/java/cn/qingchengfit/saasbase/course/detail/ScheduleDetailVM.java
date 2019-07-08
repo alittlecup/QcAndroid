@@ -19,12 +19,16 @@ public class ScheduleDetailVM extends BaseViewModel {
   @Inject ICourseModel courseModel;
   public MutableLiveData<ScheduleDetail> detail = new MutableLiveData<>();
   public MutableLiveData<ScheduleOrders> detailOrders = new MutableLiveData<>();
+  public MutableLiveData<ScheduleCandidates> detailCandidate = new MutableLiveData<>();
   public MutableLiveData<SchedulePhotos> detailPhotos = new MutableLiveData<>();
   public MutableLiveData<Boolean> cancelResult = new MutableLiveData<>();
+  public MutableLiveData<Boolean> putShareInfoResult = new MutableLiveData<>();
   public MutableLiveData<Boolean> delPhotoResult = new MutableLiveData<>();
   public MutableLiveData<ScheduleShareDetail> scheduleShareDetail = new MutableLiveData<>();
   public String shopID;//TODO 添加获取 shop ID 接口
   public MutableLiveData<Boolean> signOpen = new MutableLiveData<>();
+  public MutableLiveData<String> orderDetailFirstTab = new MutableLiveData<>();
+  public MutableLiveData<String> orderDetailSecondTab = new MutableLiveData<>();
   public double signType;
   @Inject GymWrapper gymWrapper;
 
@@ -115,15 +119,14 @@ public class ScheduleDetailVM extends BaseViewModel {
    * 应该是按照 key 去匹配的，由于是两个 APP 共享，应该是写一个 UseCase 去分别实现
    * 不过赶工期就按照默认的 key 顺序去处理了
    */
-  public void loadCourseConfig() {
-    courseModel.qcGetShopConfig().compose(RxHelper.schedulersTransformer()).subscribe(response -> {
+  public void loadCourseConfig(String s) {
+    courseModel.qcGetShopConfig(s).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
       if (ResponseConstant.checkSuccess(response)) {
         List<SignInConfig.Config> configs = response.data.configs;
         signOpen.setValue((boolean) configs.get(1).getValue());
         signType = (double) configs.get(0).getValue();
       } else {
         ToastUtils.show(response.msg);
-
       }
     }, throwable -> {
     });
@@ -152,21 +155,32 @@ public class ScheduleDetailVM extends BaseViewModel {
             scheduleShareDetail.setValue(data);
           } else {
             ToastUtils.show(response.msg);
-
           }
         }, throwable -> {
         });
   }
-  public void putScheduleShare(String scheduleId, Map<String,Object> body) {
+
+  public void putScheduleShare(String scheduleId, Map<String, Object> body) {
     courseModel.qcPutScheduleShareInfo(scheduleId, body)
         .compose(RxHelper.schedulersTransformer())
         .subscribe(response -> {
           if (ResponseConstant.checkSuccess(response)) {
-            ScheduleShareDetail data = response.data;
-            scheduleShareDetail.setValue(data);
+            putShareInfoResult.setValue(true);
           } else {
             ToastUtils.show(response.msg);
+          }
+        }, throwable -> {
+        });
+  }
 
+  public void loadScheduleCandidate(String scheduleId) {
+    courseModel.qcGetScheduleCandidate(scheduleId)
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(response -> {
+          if (ResponseConstant.checkSuccess(response)) {
+            detailCandidate.setValue(response.data);
+          } else {
+            ToastUtils.show(response.msg);
           }
         }, throwable -> {
         });

@@ -1,10 +1,12 @@
 package cn.qingchengfit.saasbase.course.detail;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import cn.qingchengfit.model.common.BottomChooseData;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.databinding.ScheduleSpellFragmentBinding;
@@ -18,13 +20,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@Leaf(module = "course",path = "/schedule/share")
-public class ScheduleShareFragment
+
+@Leaf(module = "course", path = "/schedule/share") public class ScheduleShareFragment
     extends SaasBindingFragment<ScheduleSpellFragmentBinding, ScheduleDetailVM> {
   @Need String scheduleID;
 
   @Override protected void subscribeUI() {
     mViewModel.scheduleShareDetail.observe(this, this::updateView);
+    mViewModel.putShareInfoResult.observe(this, aBoolean -> {
+      if (aBoolean) {
+        getActivity().onBackPressed();
+      }
+    });
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +53,25 @@ public class ScheduleShareFragment
     mBinding = ScheduleSpellFragmentBinding.inflate(inflater, container, false);
     initToolbar();
     mViewModel.loadScheduleShare(scheduleID);
+    mBinding.setFragment(this);
+    mBinding.civSpellCount.setOnClickListener(this::showChooseCountDialog);
+    mBinding.civSpellType.setOnClickListener(this::showChooseShareTypeDialog);
+    mBinding.btnSave.setOnClickListener(this::save);
+    mBinding.switchClass.setOnCheckedChangeListener(
+        (buttonView, isChecked) -> checkSwitch(isChecked));
     return mBinding;
+  }
+
+  private void checkSwitch(boolean open) {
+    mBinding.civSpellCount.setClickable(open);
+    mBinding.civSpellType.setClickable(open);
+    mBinding.edRemarks.setEnabled(open);
+    if (!open) {
+      mBinding.civSpellCount.setContent("");
+      mBinding.civSpellType.setContent("");
+      mBinding.edRemarks.setText("");
+      mBinding.edRemarks.clearFocus();
+    }
   }
 
   SimpleScrollPicker chooseCountPicker;
@@ -73,8 +98,8 @@ public class ScheduleShareFragment
   public void showChooseShareTypeDialog(View view) {
     if (bottomChooseDialog == null) {
       List<BottomChooseData> types = new ArrayList<>();
-      types.add(new BottomChooseData("公开","所有会员可在私教列表中进行拼课"));
-      types.add(new BottomChooseData("私密","会员仅可通过分享链接进行拼课"));
+      types.add(new BottomChooseData("公开", "所有会员可在私教列表中进行拼课"));
+      types.add(new BottomChooseData("私密", "会员仅可通过分享链接进行拼课"));
       bottomChooseDialog = new BottomChooseDialog(getContext(), "请选择拼课类型", types);
       bottomChooseDialog.setOnItemClickListener(new BottomChooseDialog.onItemClickListener() {
         @Override public boolean onItemClick(int position) {
@@ -89,10 +114,18 @@ public class ScheduleShareFragment
 
   public void save(View view) {
     Map<String, Object> body = new HashMap<>();
-    body.put("is_shared", mBinding.switchClass.isChecked());
-    body.put("is_public_shared", "公开".equals(mBinding.civSpellType.getContent()));
-    body.put("is_public_shared", mBinding.edRemarks.getText());
-    body.put("can_shared_max_user", mBinding.civSpellCount.getContent());
+    boolean checked = mBinding.switchClass.isChecked();
+    if (checked) {
+      body.put("is_shared", true);
+      body.put("is_public_shared", "公开".equals(mBinding.civSpellType.getContent()));
+      body.put("shared_text", mBinding.edRemarks.getText().toString());
+      body.put("can_shared_max_user", Integer.valueOf(mBinding.civSpellCount.getContent()));
+    } else {
+      body.put("is_shared", false);
+      body.put("is_public_shared", false);
+      body.put("shared_text", "");
+      body.put("can_shared_max_user", 0);
+    }
     mViewModel.putScheduleShare(scheduleID, body);
   }
 

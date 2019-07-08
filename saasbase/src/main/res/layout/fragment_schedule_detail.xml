@@ -19,8 +19,8 @@
       android:orientation="vertical"
       >
     <include
-        android:id="@+id/include_toolbar"
         layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
         app:toolbarModel="@{toolbarModel}"
         />
     <ScrollView
@@ -42,7 +42,6 @@
             />
         <TextView
             android:id="@+id/course_name"
-            style="@style/QcTextStyleLargeDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -50,6 +49,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="娜娜私教"
+            style="@style/QcTextStyleLargeDark"
             />
         <TextView
             android:id="@+id/course_time"
@@ -117,7 +117,6 @@
             />
         <cn.qingchengfit.widgets.RatingBarVectorFix
             android:id="@+id/trainer_score"
-            style="@style/Qc.RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -127,6 +126,7 @@
             app:layout_constraintLeft_toLeftOf="@id/course_trainer_name"
             app:layout_constraintTop_toBottomOf="@id/course_trainer_name"
             tools:rating="4.7"
+            style="@style/Qc.RatingBar"
             />
         <View
             android:id="@+id/course_divider"
@@ -187,7 +187,7 @@
             android:gravity="center"
             android:onClick="@{fragment::routeAddOrder}"
             android:text="+ 添加预约"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_primary_grey"
             android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@id/tv_sign"
             app:layout_constraintStart_toStartOf="parent"
@@ -198,18 +198,19 @@
             android:layout_width="1px"
             android:layout_height="45dp"
             android:background="@color/divider_dark"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_sign"
             app:layout_constraintStart_toStartOf="@+id/tv_sign"
-            app:layout_constraintTop_toTopOf="@id/tv_sign"
+            app:layout_constraintTop_toBottomOf="@id/course_order_photo_divider"
             />
         <View
             android:id="@+id/divider_seconde"
             android:layout_width="1px"
             android:layout_height="45dp"
             android:background="@color/divider_dark"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_sign"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_spell"
             app:layout_constraintStart_toStartOf="@+id/tv_spell"
-            app:layout_constraintTop_toTopOf="@id/tv_sign"
+            app:layout_constraintTop_toTopOf="@id/tv_spell"
             />
         <TextView
             android:id="@+id/tv_sign"
@@ -218,7 +219,7 @@
             android:gravity="center"
             android:onClick="@{fragment::routeSignOrder}"
             android:text="会员签课"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_primary_grey"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/tv_spell"
             app:layout_constraintStart_toEndOf="@id/tv_order"
@@ -231,7 +232,7 @@
             android:gravity="center"
             android:onClick="@{fragment::routeSharePage}"
             android:text="私教拼课"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_primary_grey"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_sign"
@@ -247,13 +248,14 @@
             android:id="@+id/groupOrder"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:constraint_referenced_ids="divider,tv_order"
+
+            app:constraint_referenced_ids="tv_order"
             />
         <android.support.constraint.Group
             android:id="@+id/groupSpell"
             android:layout_width="0dp"
-            android:visibility="gone"
             android:layout_height="0dp"
+            android:visibility="visible"
             app:constraint_referenced_ids="divider_seconde,tv_spell"
             />
 
@@ -280,17 +282,16 @@
             >
           <Button
               android:id="@+id/btn_add_order"
-              style="@style/QcBtnPrimaryFrame"
               android:layout_width="140dp"
               android:layout_height="35dp"
               android:layout_gravity="center"
               android:onClick="@{fragment::routeAddOrder}"
               android:text="+ 添加预约"
+              style="@style/QcBtnPrimaryFrame"
               />
         </FrameLayout>
         <TextView
             android:id="@+id/tv_plan"
-            style="@style/QcTextStyleStandardDark"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -304,6 +305,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/course_order_divider"
+            style="@style/QcTextStyleStandardDark"
             />
         <View
             android:id="@+id/view_back_photo"
@@ -359,12 +361,12 @@
             >
           <Button
               android:id="@+id/btn_add_photo"
-              style="@style/QcBtnPrimaryFrame"
               android:layout_width="140dp"
               android:layout_height="35dp"
               android:layout_gravity="center"
               android:onClick="@{fragment::routeAddPhotos}"
               android:text="+ 立即上传"
+              style="@style/QcBtnPrimaryFrame"
               />
         </FrameLayout>
 

@@ -126,6 +126,7 @@ public class ScheduleListPresenter extends BasePresenter {
                   bean.title = schedule.course.name;
                   bean.intent_url = schedule.url;
                   bean.teacher = schedule.teacher.username;
+                  bean.is_private = schedule.course.is_private;
                   if (!TextUtils.isEmpty(gymWrapper.shop_id()) && !gymWrapper.shop_id()
                       .equalsIgnoreCase(schedule.shop.id)) {
                     continue;

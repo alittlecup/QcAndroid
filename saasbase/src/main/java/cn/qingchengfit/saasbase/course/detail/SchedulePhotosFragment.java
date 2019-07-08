@@ -164,7 +164,7 @@ import java.util.List;
    */
   @Override public boolean onItemClick(int position) {
     if (adapter.getStatus() == 0) {
-      showMultiPhotos();
+      showMultiPhotos(position);
       return false;
     } else {
       adapter.toggleSelection(position);
@@ -173,8 +173,11 @@ import java.util.List;
     return false;
   }
 
-  private void showMultiPhotos() {
-    MultiChoosePicFragment fragment = MultiChoosePicFragment.newInstance(mViewModel.getPhotoUrls());
+  private void showMultiPhotos(int position) {
+    SchedulePhoto schedulePhoto = mViewModel.detailPhotos.getValue().photos.get(position);
+    List<String> url = new ArrayList<>();
+    url.add(schedulePhoto.getPhoto());
+    MultiChoosePicFragment fragment = MultiChoosePicFragment.newInstance(url);
     fragment.setShowFlag(true);
     fragment.show(getFragmentManager(), "");
   }
