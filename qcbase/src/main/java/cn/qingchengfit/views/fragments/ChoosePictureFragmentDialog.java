@@ -29,6 +29,8 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import rx.functions.Action1;
 
@@ -59,6 +61,14 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
   public static ChoosePictureFragmentDialog newInstance() {
     Bundle args = new Bundle();
     ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static ChoosePictureFragmentDialog newInstance(int chooseCount) {
+    Bundle args = new Bundle();
+    ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+    args.putInt("chooseCount", chooseCount);
     fragment.setArguments(args);
     return fragment;
   }
@@ -95,6 +105,8 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     fileCamera = FileUtils.getTmpImageFileName(getActivity(), "camara" + UUID.randomUUID());
   }
 
+  int count = 1;
+
   @Nullable @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     Window window = this.getDialog().getWindow();
@@ -110,6 +122,9 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     if (savedInstanceState != null) {
       mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
+    if (getArguments() != null) {
+      count = getArguments().getInt("chooseCount");
+    }
     new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
       @Override public void call(Boolean aBoolean) {
@@ -119,7 +134,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
               .theme(R.style.QcPicAppTheme)
               .countable(true)
               .capture(true)
-              .maxSelectable(1)
+              .maxSelectable(count)
               .captureStrategy(
                   new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
               .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
@@ -127,7 +142,6 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
               .thumbnailScale(0.85f)
               .imageEngine(new GlideEngine())
               .forResult(CHOOSE_CAMERA);
-
         } else {
           ToastUtils.show("请开启拍照及存储权限");
         }
@@ -182,7 +196,12 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         dismissAllowingStateLoss();
       }
       if (mResult != null) {
-        mResult.onChoosePicResult(true, filepath);
+        if (mResult instanceof MultiChooseResult) {
+          ((MultiChooseResult) mResult).onMultiChoosePicResult(true,
+              Matisse.obtainPathResult(data));
+        } else {
+          mResult.onChoosePicResult(true, filepath);
+        }
       }
     } else {
       dismissAllowingStateLoss();
@@ -194,6 +213,16 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
    */
   public void clipPhoto(Uri uri) {
     CropImage.activity(uri).setAspectRatio(1, 1).start(getContext(), this);
+  }
+
+  public abstract static class MultiChooseResult implements ChoosePicResult {
+    @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
+      List<String> path = new ArrayList<>();
+      path.add(filePath);
+      onMultiChoosePicResult(isSuccess, path);
+    }
+
+    abstract void onMultiChoosePicResult(boolean isSuccess, List<String> paths);
   }
 
   public interface ChoosePicResult {

@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
         android:visibility="gone"
+        android:clickable="false"
         />
   </FrameLayout>
 </layout>

@@ -168,4 +168,9 @@ public interface StudentRepository {
 
   LiveData<Resource<ClassRecords>> qcGetStudentClassRecords(String userID,
       HashMap<String, Object> params);
+
+  LiveData<Resource<ClassRecords>> qcGetClassRecordTemp(String userID,
+      HashMap<String, Object> params);
+
+
 }

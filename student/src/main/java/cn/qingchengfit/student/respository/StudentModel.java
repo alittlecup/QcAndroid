@@ -260,6 +260,10 @@ public class StudentModel implements IStudentModel {
     return studentApi.qcGetStudentClassRecords(loginStatus.staff_id(), studentid, params);
   }
 
+  @Override public Flowable<QcDataResponse<ClassRecords>> qcGetClassRecordTemp(String studentid,
+      HashMap<String, Object> params) {
+    return studentApi.qcGetClassRecordTemp(loginStatus.staff_id(),studentid,gymWrapper.getParams());
+  }
 
   @Override public Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
       String staff_id, String type, HashMap<String, Object> params) {

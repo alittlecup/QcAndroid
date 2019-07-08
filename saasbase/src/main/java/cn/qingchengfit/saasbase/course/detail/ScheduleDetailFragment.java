@@ -89,6 +89,7 @@ import javax.inject.Inject;
           mBinding.groupSpell.setVisibility(View.VISIBLE);
         }
       }
+      loadConfig(scheduleDetail.isTrainerClass());
       mBinding.tvOrderCount.setText(
           "预约人数（" + scheduleDetail.usersCount + "/" + scheduleDetail.maxUsers + ")");
       cancel = scheduleDetail.isTrainerClass() && !scheduleDetail.isEnable();
@@ -175,16 +176,15 @@ import javax.inject.Inject;
       host = gymWrapper.getCoachService().getHost();
     }
     mViewModel.setService(service);
-    loadConfig();
     return mBinding;
   }
 
-  private void loadConfig() {
+  private void loadConfig(boolean trainerClass) {
     String config = "";
-    if (AppUtils.getCurApp(getContext()) == 0) {
-      config = "private_course_check_in_type,private_course_check_in_is_open";
+    if (trainerClass) {
+      config = "private_course_check_in_is_open,private_course_check_in_type";
     } else {
-      config = "group_course_check_in_type,group_course_check_in_is_open";
+      config = "group_course_check_in_is_open,group_course_check_in_type";
     }
     mViewModel.loadCourseConfig(config);
   }
@@ -208,8 +208,9 @@ import javax.inject.Inject;
 
   public void routeAllOrders(View view) {
     routeTo("course", "/schedule/order/detail",
-        new BundleBuilder().withString("scheduleID", scheduleID)
+        new BundleBuilder()
             .withParcelable("orders", mViewModel.detailOrders.getValue())
+            .withParcelable("schedule",mViewModel.detail.getValue())
             .build());
   }
 
@@ -254,7 +255,6 @@ import javax.inject.Inject;
           host + "/shop/" + mViewModel.shopID + "/m/coach/schedules/" + scheduleID + "/checkin/",
           getContext());
     } else {
-
       WebActivity.startWeb(host
           + "/shop/"
           + mViewModel.shopID

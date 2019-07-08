@@ -41,13 +41,9 @@ public class SquareImageItem
     ItemSquareImageBinding dataBinding = holder.getDataBinding();
     PhotoUtils.origin(dataBinding.imageView, photo.getPhoto());
     if (adapter instanceof CommonFlexAdapter) {
-      int status = ((CommonFlexAdapter) adapter).getStatus();
-      if (status == 1) {
-        dataBinding.checkBox.setVisibility(View.VISIBLE);
-      } else {
-        dataBinding.checkBox.setVisibility(View.GONE);
-      }
+      dataBinding.checkBox.setVisibility(
+          ((CommonFlexAdapter) adapter).getStatus() == 1 ? View.VISIBLE : View.GONE);
+      dataBinding.checkBox.setChecked(adapter.isSelected(position));
     }
-
   }
 }

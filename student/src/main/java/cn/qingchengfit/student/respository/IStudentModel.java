@@ -354,5 +354,6 @@ public interface IStudentModel {
 
   Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(String studentid,
        HashMap<String, Object> params);
+  Flowable<QcDataResponse<ClassRecords>> qcGetClassRecordTemp(String studentid,  HashMap<String, Object> params);
 
 }

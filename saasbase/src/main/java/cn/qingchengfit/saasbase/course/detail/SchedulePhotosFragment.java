@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
 import cn.qingchengfit.saasbase.databinding.FragmentSchedulePhotosBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -47,7 +48,10 @@ import java.util.List;
       List<CommonNoDataItem> items = new ArrayList<>();
       items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程照片"));
       adapter.updateDataSet(items);
+      changeSelectMode(false);
     } else {
+      adapter.clearSelection();
+
       List<SquareImageItem> items = new ArrayList<>();
       for (SchedulePhoto photo : photos.photos) {
         items.add(new SquareImageItem(photo));
@@ -106,7 +110,7 @@ import java.util.List;
         SchedulePhoto photo = ((SquareImageItem) adapter.getItem(index)).getPhoto();
         ids.add(String.valueOf(photo.getId()));
       }
-      mViewModel.delPhotos(scheduleID, ListUtils.List2Str(ids));
+      mViewModel.delPhotos(scheduleID, StringUtils.List2Str(ids));
     } else {
       ToastUtils.show("请选择要移除的图片");
     }
@@ -163,6 +167,9 @@ import java.util.List;
    * 通过设置 status 来区分是展示模式还是编辑模式吧
    */
   @Override public boolean onItemClick(int position) {
+    if(adapter.getItem(position) instanceof CommonNoDataItem){
+      return false;
+    }
     if (adapter.getStatus() == 0) {
       showMultiPhotos(position);
       return false;

@@ -123,8 +123,10 @@ public class ScheduleDetailVM extends BaseViewModel {
     courseModel.qcGetShopConfig(s).compose(RxHelper.schedulersTransformer()).subscribe(response -> {
       if (ResponseConstant.checkSuccess(response)) {
         List<SignInConfig.Config> configs = response.data.configs;
-        signOpen.setValue((boolean) configs.get(1).getValue());
-        signType = (double) configs.get(0).getValue();
+        signOpen.setValue((boolean) configs.get(0).getValue());
+        if (configs.size() > 1) {
+          signType = (double) configs.get(1).getValue();
+        }
       } else {
         ToastUtils.show(response.msg);
       }

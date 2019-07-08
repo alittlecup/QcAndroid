@@ -322,6 +322,11 @@ public class StudentRepositoryImpl implements StudentRepository {
     return toLiveData(remoteService.qcGetStudentClassRecords(userID, params));
   }
 
+  @Override public LiveData<Resource<ClassRecords>> qcGetClassRecordTemp(String userID,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcGetClassRecordTemp(userID,params));
+  }
+
   @Override public void qcGetTrackRecords(MutableLiveData<List<FollowRecord>> liveData,
       MutableLiveData<Resource<Object>> rst, String studentId, HashMap<String, Object> params) {
     bindToLiveData(liveData, remoteService.qcGetTrackRecords(studentId, params)

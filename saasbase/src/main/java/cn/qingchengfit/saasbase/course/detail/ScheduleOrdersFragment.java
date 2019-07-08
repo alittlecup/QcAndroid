@@ -49,6 +49,8 @@ import java.util.List;
     initRecyclerView();
     updateOrderItems(orders);
     mViewModel.loadCouseOrders(scheduleID);
+    setTitle();
+
     return mBinding;
   }
 
@@ -89,6 +91,7 @@ import java.util.List;
       adapter.updateDataSet(items);
     }
     setTitle();
+
   }
 
   private void initRecyclerView() {

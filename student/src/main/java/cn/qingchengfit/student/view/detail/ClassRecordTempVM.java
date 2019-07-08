@@ -17,7 +17,7 @@ public class ClassRecordTempVM extends BaseViewModel {
   }
 
   public LiveData<ClassRecords> loadParams(String id, Map<String, Object> params) {
-    return Transformations.map(studentRepository.qcGetStudentClassRecords(id, new HashMap<>(params)),
+    return Transformations.map(studentRepository.qcGetClassRecordTemp(id, new HashMap<>(params)),
             input -> {
               ClassRecords classRecords = dealResource(input);
               return classRecords;

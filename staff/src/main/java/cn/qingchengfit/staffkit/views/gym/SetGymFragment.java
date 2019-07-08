@@ -324,21 +324,17 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
   public void onHeader() {
     ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
     dialog.show(getFragmentManager(), "");
-    dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
-      @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
-        SetGymFragment.this.RxRegiste(
-            UpYunClient.rxUpLoad("gym/", filePath).subscribe(new Action1<String>() {
-              @Override public void call(String s) {
-                Glide.with(getContext())
-                    .load(PhotoUtils.getSmall(s))
-                    .asBitmap()
-                    .into(new CircleImgWrapper(header, getContext()));
-                gymBody.image = s;
-                imageStr = s;
-              }
-            }));
-      }
-    });
+    dialog.setResult((isSuccess, filePath) -> SetGymFragment.this.RxRegiste(
+        UpYunClient.rxUpLoad("gym/", filePath).subscribe(new Action1<String>() {
+          @Override public void call(String s) {
+            Glide.with(getContext())
+                .load(PhotoUtils.getSmall(s))
+                .asBitmap()
+                .into(new CircleImgWrapper(header, getContext()));
+            gymBody.image = s;
+            imageStr = s;
+          }
+        })));
   }
 
   @Override public void onDestroyView() {

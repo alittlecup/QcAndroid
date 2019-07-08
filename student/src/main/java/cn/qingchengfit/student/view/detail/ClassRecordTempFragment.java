@@ -56,9 +56,6 @@ public class ClassRecordTempFragment
     });
   }
 
-
-
-
   private void initRecyclerView() {
     SmoothScrollGridLayoutManager manager = new SmoothScrollGridLayoutManager(getContext(), 4);
     mBinding.recyclerView.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
@@ -68,6 +65,7 @@ public class ClassRecordTempFragment
   private List<AbstractFlexibleItem> items = new ArrayList<>();
 
   public void updateItem(ClassRecords.Stat stat) {
+    if (stat == null) return;
     items.clear();
     items.add(new AttendanceAnalysItem(stat.days + "", "出勤",
         CompatUtils.getColor(getContext(), R.color.orange), getString(R.string.unit_day)));

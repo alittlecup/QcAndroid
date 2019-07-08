@@ -308,7 +308,7 @@ public class WebFragment extends BaseFragment
     msgApi = WXAPIFactory.createWXAPI(getContext(), wxApiStr);
     msgApi.registerApp(wxApiStr);
 
-    choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
+    choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance(9);
     choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
       @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
         if (isSuccess) {
@@ -318,6 +318,26 @@ public class WebFragment extends BaseFragment
           if (mValueCallbackNew != null) {
             Uri[] uris = new Uri[1];
             uris[0] = Uri.fromFile(new File(filePath));
+            mValueCallbackNew.onReceiveValue(uris);
+          }
+        } else {
+          if (mValueCallback != null) mValueCallback.onReceiveValue(null);
+          if (mValueCallbackNew != null) mValueCallbackNew.onReceiveValue(null);
+        }
+      }
+    });
+    choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.MultiChooseResult() {
+
+      @Override void onMultiChoosePicResult(boolean isSuccess, List<String> paths) {
+        if (isSuccess) {
+          if (mValueCallback != null) {
+            mValueCallback.onReceiveValue(Uri.fromFile(new File(paths.get(0))));
+          }
+          if (mValueCallbackNew != null) {
+            Uri[] uris = new Uri[paths.size()];
+            for (int i = 0; i < paths.size(); i++) {
+              uris[i] = Uri.fromFile(new File(paths.get(i)));
+            }
             mValueCallbackNew.onReceiveValue(uris);
           }
         } else {
@@ -355,7 +375,8 @@ public class WebFragment extends BaseFragment
             }
           }
         }));
-    RxRegiste(RxBus.getBus().register(EventLoginChange.class)
+    RxRegiste(RxBus.getBus()
+        .register(EventLoginChange.class)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(eventLoginChange -> {
           initCookie(mCurUrl);
@@ -481,7 +502,6 @@ public class WebFragment extends BaseFragment
     sb.append("=");
     sb.append(value).append(";");
     cookieManager.setCookie(url, sb.toString());
-
   }
 
   private void initChromClient() {
@@ -841,7 +861,6 @@ public class WebFragment extends BaseFragment
       }
     }
 
-
     @JavascriptInterface public void wechatPay(String info) {
 
       try {
@@ -995,7 +1014,6 @@ public class WebFragment extends BaseFragment
               }
             }
           }));
-
     }
 
     @JavascriptInterface public void goNativePath(String s) {

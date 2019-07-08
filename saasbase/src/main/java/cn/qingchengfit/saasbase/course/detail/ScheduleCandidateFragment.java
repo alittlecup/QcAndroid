@@ -74,6 +74,7 @@ import java.util.List;
     initRecyclerView();
     loadCandidateConfig();
     mViewModel.loadScheduleCandidate(scheduleID);
+    setTitle();
     return mBinding;
   }
 

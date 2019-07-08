@@ -28,7 +28,7 @@ import javax.inject.Inject;
     extends SaasCommonFragment {
   List<Fragment> fragmentList = new ArrayList<>();
   FragmentScheduleOrderDetailBinding mBinding;
-  @Need String scheduleID;
+  @Need ScheduleDetail schedule;
   @Need ScheduleOrders orders;
   @Inject ViewModelProvider.Factory factory;
   ScheduleDetailVM mViewModel;
@@ -39,15 +39,39 @@ import javax.inject.Inject;
     super.onCreateView(inflater, container, savedInstanceState);
     mBinding = FragmentScheduleOrderDetailBinding.inflate(inflater, container, false);
     mViewModel = ViewModelProviders.of(this, factory).get(ScheduleDetailVM.class);
-    initTab();
+    initViewPager();
+    if (schedule.isTrainerClass()) {
+      mBinding.tabBar.setVisibility(View.GONE);
+    } else {
+      initTab();
+      mViewModel.orderDetailFirstTab.observe(this, first -> {
+        mBinding.tabBar.getTabAt(0).setText(first);
+      });
+      mViewModel.orderDetailSecondTab.observe(this, second -> {
+        mBinding.tabBar.getTabAt(1).setText(second);
+      });
+    }
     initToolbar();
-    mViewModel.orderDetailFirstTab.observe(this, first -> {
-      mBinding.tabBar.getTabAt(0).setText(first);
-    });
-    mViewModel.orderDetailSecondTab.observe(this, second -> {
-      mBinding.tabBar.getTabAt(1).setText(second);
-    });
+
     return mBinding.getRoot();
+  }
+
+  private void initViewPager() {
+    if (fragmentList.isEmpty()) {
+      ScheduleOrdersFragment scheduleOrdersFragment = new ScheduleOrdersFragment();
+      scheduleOrdersFragment.setArguments(
+          new BundleBuilder().withString("scheduleID", String.valueOf(schedule.getId()))
+              .withParcelable("orders", orders)
+              .build());
+      fragmentList.add(scheduleOrdersFragment);
+      if (!schedule.isTrainerClass()) {
+        ScheduleCandidateFragment scheduleCandidateFragment = new ScheduleCandidateFragment();
+        scheduleCandidateFragment.setArguments(
+            new BundleBuilder().withString("scheduleID", String.valueOf(schedule.getId())).build());
+        fragmentList.add(scheduleCandidateFragment);
+      }
+    }
+    mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,21 +80,7 @@ import javax.inject.Inject;
   }
 
   private void initTab() {
-    if (fragmentList.isEmpty()) {
-      ScheduleOrdersFragment scheduleOrdersFragment = new ScheduleOrdersFragment();
-      scheduleOrdersFragment.setArguments(new BundleBuilder().withString("scheduleID", scheduleID)
-          .withParcelable("orders", orders)
-          .build());
-      fragmentList.add(scheduleOrdersFragment);
-      ScheduleCandidateFragment scheduleCandidateFragment = new ScheduleCandidateFragment();
-      scheduleCandidateFragment.setArguments(
-          new BundleBuilder().withString("scheduleID", scheduleID).build());
-      fragmentList.add(scheduleCandidateFragment);
-    }
     mBinding.tabBar.setupWithViewPager(mBinding.viewpager);
-
-    mBinding.viewpager.setAdapter(new StateViewPager(getChildFragmentManager()));
-
     mBinding.tabBar.setTabTextColors(getResources().getColor(R.color.text_grey),
         getResources().getColor(R.color.colorPrimary));
   }
@@ -96,11 +106,12 @@ import javax.inject.Inject;
     }
 
     @Nullable @Override public CharSequence getPageTitle(int position) {
-      Fragment fragment = fragmentList.get(position);
-      if (fragment instanceof TitleFragment) {
-        return ((TitleFragment) fragment).getTitle();
+      if (position == 0) {
+        return "约课人数";
+      } else if (position == 1) {
+        return "空位订阅";
       }
-      return "";
+      return super.getPageTitle(position);
     }
 
     @Override public int getItemPosition(Object object) {

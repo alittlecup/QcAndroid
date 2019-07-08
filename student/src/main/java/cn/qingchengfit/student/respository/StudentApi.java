@@ -55,13 +55,13 @@ public interface StudentApi {
       @QueryMap Map<String, Object> params);
 
   @GET("api/v2/staffs/{id}/cashier/users/")
-  Flowable<QcDataResponse<StudentBeanListWrapper>>qcLoadStudentByPhone(@Path("id") String id,
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcLoadStudentByPhone(@Path("id") String id,
       @QueryMap Map<String, Object> params);
 
   //会员卡可绑定的会员列表
   @GET("/api/staffs/{staff_id}/method/users/?show_all=1")
-  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(@Path("staff_id") String id,
-      @QueryMap HashMap<String, Object> params);
+  Flowable<QcDataResponse<StudentBeanListWrapper>> qcGetCardBundldStudents(
+      @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
   //会员卡修改绑定会员列表
   @GET("/api/staffs/{id}/cards/bind/users/")
@@ -81,7 +81,6 @@ public interface StudentApi {
   Flowable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(
       @Path("staff_id") String staff_id, @Path("type") String type,
       @QueryMap HashMap<String, Object> params);
-
 
   //    //获取销售 卖卡  包含销售 不包含教练
   @GET("/api/staffs/{staff_id}/sellers-without-coach/")
@@ -115,13 +114,12 @@ public interface StudentApi {
   @PUT("/api/v2/staffs/{staff_id}/coaches/users/") Flowable<QcResponse> qcAllocateCoach(
       @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
 
-
-      /**
-       * 移除教练
-       */
-      @POST("/api/v2/staffs/{staff_id}/{type}/users/remove/")
-      Flowable<QcDataResponse> qcRemoveStaff(@Path("staff_id") String staff_id,
-          @Path("type") String type, @Body HashMap<String, Object> body);
+  /**
+   * 移除教练
+   */
+  @POST("/api/v2/staffs/{staff_id}/{type}/users/remove/") Flowable<QcDataResponse> qcRemoveStaff(
+      @Path("staff_id") String staff_id, @Path("type") String type,
+      @Body HashMap<String, Object> body);
 
   /**
    * 新增
@@ -138,7 +136,6 @@ public interface StudentApi {
   Flowable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-
   /**
    * 具有名下会员的销售列表
    * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
@@ -146,6 +143,7 @@ public interface StudentApi {
   @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
   Flowable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
   /**
    * 具有名下会员的教练列表
    * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
@@ -174,9 +172,20 @@ public interface StudentApi {
    * 获取缺勤图表数据
    */
   @GET("/api/coaches/{id}/users/attendance/glance/")
-  Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetTrainerAttendanceChart(@Path("id") String id,
-      @QueryMap HashMap<String, Object> params);
+  Flowable<QcDataResponse<AttendanceCharDataBean>> qcGetTrainerAttendanceChart(
+      @Path("id") String id, @QueryMap HashMap<String, Object> params);
 
+  /**
+   */
+  @GET("/api/v2/staffs/{id}/users/attendance/glance/")
+  Flowable<QcDataResponse<ClassRecords>> qcGetClassRecordTemp(@Path("id") String staffid,
+      @Query("user_id") String studentid, @QueryMap HashMap<String, Object> params);
+
+  /**
+   */
+  @GET("/api/v2/coaches/{id}/users/attendance/glance/")
+  Flowable<QcDataResponse<ClassRecords>> qcGetTrainerClassRecordTemp(@Path("id") String staffid,
+      @Query("user_id") String studentid, @QueryMap HashMap<String, Object> params);
 
   /**
    * 缺勤列表
@@ -196,6 +205,7 @@ public interface StudentApi {
   @GET("/api/coaches/{staff_id}/users/absence/")
   Flowable<QcDataResponse<AbsentceListWrap>> qcGetTrainerUsersAbsences(@Path("staff_id") String id,
       @QueryMap HashMap<String, Object> params);
+
   /**
    * @param params 必传start, end，
    * 可选排序字段 加 “-”说明是倒序
@@ -215,8 +225,8 @@ public interface StudentApi {
       @QueryMap HashMap<String, Object> params);
 
   @GET("/api/coaches/{staff_id}/users/attendance/")
-  Flowable<QcDataResponse<AttendanceListWrap>> qcGetTrainerUsersAttendances(@Path("staff_id") String id,
-      @QueryMap HashMap<String, Object> params);
+  Flowable<QcDataResponse<AttendanceListWrap>> qcGetTrainerUsersAttendances(
+      @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 获取未签课的学员
@@ -228,7 +238,6 @@ public interface StudentApi {
   @GET("/api/coaches/{staff_id}/users/checkin/records/")
   Flowable<QcDataResponse<List<StudentWIthCount>>> qcGetTrainerNotSignStudent(
       @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
-
 
   /**
    * 推荐人列表
@@ -343,11 +352,8 @@ public interface StudentApi {
       @Path("staff_id") String staff_id, @Path("user_id") String user_id,
       @QueryMap HashMap<String, Object> params);
 
-
-
   //获取某个学员的课程
   @GET("/api/staffs/{staff_id}/users/attendance/records/")
-  Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
-      @Path("staff_id") String staffid, @Query("user_id") String studentid,
-      @QueryMap HashMap<String, Object> params);
+  Flowable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(@Path("staff_id") String staffid,
+      @Query("user_id") String studentid, @QueryMap HashMap<String, Object> params);
 }
