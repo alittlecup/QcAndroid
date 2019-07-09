@@ -272,7 +272,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
           datas.add(photo);
         }
       }
-      imageGridAdapter.refresh(datas);
+      imageGridAdapter.notifyDataSetChanged();
     });
     if (!picDialog.isVisible()) picDialog.show(getChildFragmentManager(), "choose");
   }

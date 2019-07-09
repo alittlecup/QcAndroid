@@ -58,11 +58,6 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         return vh;
     }
 
-    public void refresh(List<BodyTestBody.Photo> photos) {
-        this.datas.clear();
-        this.datas.addAll(photos);
-        notifyDataSetChanged();
-    }
 
     @Override public void onBindViewHolder(ImageGridVh holder, int position) {
         holder.itemView.setTag(position);
@@ -70,7 +65,6 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         if (isEditable && position == datas.size()) {
             holder.delete.setVisibility(View.GONE);
             holder.img.setScaleType(ImageView.ScaleType.CENTER);
-            //            Glide.with(App.context).load(R.drawable.ic_add_image).into(holder.img);
             holder.img.setImageResource(R.drawable.ic_add_image);
             holder.img.setBackgroundResource(R.drawable.bg_rect);
         } else {
