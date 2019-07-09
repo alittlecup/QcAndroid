@@ -21,7 +21,7 @@
       app:qc_color_on="@color/qc_allotsale_green"
       app:qc_text="最新注册"
       app:qc_text_size="11sp"
-      app:qc_vc_drawable="@drawable/vector_list_order_normal"
+      app:qc_vc_drawable="@drawable/vector_list_order_register"
       />
 
   <include
@@ -45,7 +45,7 @@
       app:qc_color_on="@color/qc_allotsale_green"
       app:qc_text="字母排序"
       app:qc_text_size="11sp"
-      app:qc_vc_drawable="@drawable/vector_list_order_normal"
+      app:qc_vc_drawable="@drawable/vector_list_order_register"
       />
 
   <include

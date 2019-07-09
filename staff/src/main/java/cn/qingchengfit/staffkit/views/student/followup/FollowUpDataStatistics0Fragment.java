@@ -27,7 +27,7 @@ import cn.qingchengfit.staffkit.R;
 public class FollowUpDataStatistics0Fragment extends FollowUpDataStatisticsBaseFragment {
 
     @Override public int getLayoutResouseId() {
-        return R.layout.fragment_follow_up_data_statistics_0;
+        return R.layout.fragment_attendance_chart;
     }
 
     @Override public int getLineColor() {

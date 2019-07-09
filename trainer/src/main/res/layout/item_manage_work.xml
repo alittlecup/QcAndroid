@@ -19,7 +19,7 @@
       android:id="@+id/image"
       android:layout_width="24dp"
       android:layout_height="24dp"
-      app:srcCompat="@drawable/ic_module_staff_grey"
+      app:srcCompat="@drawable/vd_module_staff_grey"
       />
 
   <LinearLayout

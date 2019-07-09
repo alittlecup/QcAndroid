@@ -749,8 +749,8 @@ public class StatementDetailFragment extends BaseFragment
       }
 
       holder.imageCourseType.setImageResource(
-          bean.course.is_private ? R.drawable.ic_course_private_conner
-              : R.drawable.ic_course_group_conner);
+          bean.course.is_private ? R.drawable.vd_course_private_conner
+              : R.drawable.vd_course_group_conner);
       holder.itemStatementDetailName.setText(bean.course.getName() + "-" + bean.teacher.username);
       holder.itemStatementDetailContent.setText(DateUtils.getTimeHHMM(date)
           + "-"

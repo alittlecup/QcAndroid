@@ -25,6 +25,6 @@
       android:layout_height="wrap_content"
       android:drawablePadding="4dp"
       android:text="青橙健身"
-      app:drawableStart="@drawable/vd_qc_comfirm"
+      app:drawableStart="@drawable/vd_qc_logo"
       />
 </LinearLayout>

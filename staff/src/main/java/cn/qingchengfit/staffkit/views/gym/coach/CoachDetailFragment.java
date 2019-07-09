@@ -111,7 +111,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_coach_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_coach_info_saas, container, false);
       headerImg = (ImageView) view.findViewById(R.id.header_img);
       civName = (CommonInputView) view.findViewById(R.id.civ_name);
       genderMale = (RadioButton) view.findViewById(R.id.gender_male);

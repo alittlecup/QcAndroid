@@ -742,7 +742,7 @@ public class StatementDetailFragment extends BaseFragment
           ContextCompat.getDrawable(getContext(), R.drawable.ic_smallarrow_right), null);
       holder.imageCourseType.setImageResource(
           bean.course.is_private ? R.drawable.ic_course_private_conner
-              : R.drawable.ic_course_group_conner);
+              : R.drawable.vd_course_group_conner);
 
       if (position == getItemCount() - 1) {
         holder.itemStatementDetailBottomdivier.setVisibility(View.VISIBLE);

@@ -83,7 +83,7 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
 
     @Override
     public int getLayoutRes() {
-        return R.layout.item_filter_saler_list;
+        return R.layout.item_filter_list;
     }
 
     public void setShowAll(boolean showAll) {

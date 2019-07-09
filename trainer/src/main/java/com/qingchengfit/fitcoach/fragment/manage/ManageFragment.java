@@ -184,7 +184,7 @@ public class ManageFragment extends BaseFragment
     data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_card_grey)
         .text(getString(R.string.student_card_manage))
         .build()));
-    data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_staff_grey)
+    data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.vd_module_staff_grey)
         .text(getString(R.string.manage_salers))
         .build()));
     data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_sales_grey)

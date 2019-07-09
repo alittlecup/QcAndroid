@@ -29,7 +29,7 @@ public class ChooseGymItem extends AbstractFlexibleItem<ChooseGymItem.ChooseGymV
     }
 
     @Override public int getLayoutRes() {
-        return R.layout.item_competition_gym;
+        return R.layout.item_base_choose_gym;
     }
 
     @Override public ChooseGymVH createViewHolder(View view, FlexibleAdapter adapter) {

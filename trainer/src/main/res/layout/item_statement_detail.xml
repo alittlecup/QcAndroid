@@ -172,7 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/item_statement_detail_pic"
         android:layout_alignRight="@id/item_statement_detail_pic"
-        tools:src="@drawable/ic_course_group_conner"
+        tools:src="@drawable/vd_course_group_conner"
         />
 
 </RelativeLayout>
