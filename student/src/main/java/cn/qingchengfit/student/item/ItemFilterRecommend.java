@@ -25,13 +25,11 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
     private CommonFlexAdapter flexAdapter;
     private List<AbstractFlexibleItem> itemList = new ArrayList<>();
     private boolean isShowAll;
-    private String selectedId;
 
     public ItemFilterRecommend(FilterModel filterModel) {
         this.filterModel = filterModel;
-        flexAdapter = new CommonFlexAdapter(itemList, new FlexibleAdapter.OnItemClickListener() {
-            @Override
-            public boolean onItemClick(int position) {
+        flexAdapter = new CommonFlexAdapter(itemList,
+            (FlexibleAdapter.OnItemClickListener) position -> {
                 if (flexAdapter.isSelected(position)) {
                     flexAdapter.removeSelection(position);
                 } else {
@@ -40,23 +38,8 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
                 }
                 flexAdapter.notifyDataSetChanged();
                 return false;
-            }
-        });
+            });
     }
-
-
-//    private void setInitList() {
-//        for (int i = 0; i < flexAdapter.getItemCount(); i++) {
-//            if (flexAdapter.getItem(i) instanceof FilterCommonLinearItem) {
-//                FilterCommonLinearItem item = (FilterCommonLinearItem) flexAdapter.getItem(i);
-//                if (item.getData().equals(selectedId)) {
-//                    flexAdapter.addSelection(i);
-//                    flexAdapter.notifyItemChanged(i);
-//                    break;
-//                }
-//            }
-//        }
-//    }
 
     public FilterModel getFilterModel() {
         return filterModel;
@@ -83,7 +66,7 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
 
     @Override
     public int getLayoutRes() {
-        return R.layout.item_filter_saler_list;
+        return R.layout.item_filter_saler_list2;
     }
 
     public void setShowAll(boolean showAll) {
@@ -110,8 +93,6 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
             clearSelect();
             return;
         }
-
-
         if (filterModel.content.size() > 3) {
             if (itemList.size() > 0 && !isShowAll) {
                 itemList.clear();
@@ -141,9 +122,6 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
         }
         flexAdapter.updateDataSet(itemList);
         holder.tvFilterShowAll.setTag(position);
-//        if (!TextUtils.isEmpty(selectedId)) {
-//            setInitList();
-//        }
     }
 
 
@@ -162,17 +140,14 @@ public class ItemFilterRecommend extends AbstractFlexibleItem<ItemFilterRecommen
           tvFilterShowAll = view.findViewById(R.id.tv_filter_show_all);
           tvFilterListTitle = view.findViewById(R.id.tv_filter_list_title);
 
-          tvFilterShowAll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = (int) view.getTag();
-                    if (adapter.getItem(position) instanceof ItemFilterRecommend) {
-                        ((ItemFilterRecommend) adapter.getItem(position)).setShowAll(
-                                !((ItemFilterRecommend) adapter.getItem(position)).isShowAll());
-                        adapter.notifyItemChanged(position);
-                    }
-                }
-            });
+          tvFilterShowAll.setOnClickListener(view1 -> {
+              int position = (int) view1.getTag();
+              if (adapter.getItem(position) instanceof ItemFilterRecommend) {
+                  ((ItemFilterRecommend) adapter.getItem(position)).setShowAll(
+                          !((ItemFilterRecommend) adapter.getItem(position)).isShowAll());
+                  adapter.notifyItemChanged(position);
+              }
+          });
         }
     }
 }
