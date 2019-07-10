@@ -52,7 +52,7 @@ public class ScheduleCandidateItem
     dataBinding.tvCancel.setVisibility(View.GONE);
     switch (order.getStatus()) {
       case 1:
-        if (DateUtils.isOverCurrent(DateUtils.formatDateFromServer(limitDate))) {
+        if (!DateUtils.isOverCurrent(DateUtils.formatDateFromServer(limitDate))) {
           text = "已过期";
           colorRes = R.color.grey;
         } else {

@@ -163,12 +163,10 @@ import javax.inject.Inject;
   @Override
   public FragmentScheduleDetailBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-
     if (mBinding != null) return mBinding;
     mBinding = FragmentScheduleDetailBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
-    mViewModel.loadShopInfo();
     mBinding.setFragment(this);
     if (service != null) {
       host = service.getHost();
@@ -176,6 +174,8 @@ import javax.inject.Inject;
       host = gymWrapper.getCoachService().getHost();
     }
     mViewModel.setService(service);
+    mViewModel.loadShopInfo();
+
     return mBinding;
   }
 
