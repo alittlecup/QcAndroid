@@ -27,7 +27,6 @@ import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.item.AttendanceAnalysItem;
 import cn.qingchengfit.student.item.AttendanceRecordHeadItem;
 import cn.qingchengfit.student.item.AttendanceRecordItem;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -323,12 +322,6 @@ import static android.view.View.GONE;
   @Inject IPermissionModel iPermissionModel;
 
   private void addListener() {
-    if (AppUtils.getCurApp(getContext()) == 0) {
-      llProxy.setVisibility(GONE);
-      return;
-    } else {
-      llProxy.setVisibility(View.VISIBLE);
-    }
     orderPrivate.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (iPermissionModel.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {

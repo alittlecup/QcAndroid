@@ -384,7 +384,7 @@ public class CourseModel implements ICourseModel {
 
   @Override
   public Observable<QcDataResponse<ScheduleCandidates>> qcGetScheduleCandidate(String schedule_id) {
-    return api.qcGetScheduleCandidate(loginStatus.staff_id(),schedule_id,gymWrapper.getParams());
+    return api.qcGetScheduleCandidate(loginStatus.staff_id(),schedule_id,getParams());
 
   }
 

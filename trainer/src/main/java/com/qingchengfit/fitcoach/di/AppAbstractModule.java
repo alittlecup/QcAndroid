@@ -5,6 +5,7 @@ import cn.qingchengfit.card.network.CardRealModel;
 import cn.qingchengfit.checkout.repository.ICheckoutModel;
 import cn.qingchengfit.repository.RepoCoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.course.batch.views.BatchFragmentVM;
 import cn.qingchengfit.saasbase.course.detail.ScheduleDetailVM;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
@@ -50,4 +51,9 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(ScheduleDetailVM.class)
   abstract ViewModel bindCourseDetailViewModel(ScheduleDetailVM model);
+
+  @Binds @IntoMap @ViewModelKey(BatchFragmentVM.class)
+  abstract ViewModel bindBatchFragmentVM(BatchFragmentVM model);
+
+
 }

@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.course.detail;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.databinding.ScheduleSpellFragmentBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.BottomChooseDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -116,10 +118,15 @@ import java.util.Map;
     Map<String, Object> body = new HashMap<>();
     boolean checked = mBinding.switchClass.isChecked();
     if (checked) {
+      String countContent = mBinding.civSpellCount.getContent();
+      if (TextUtils.isEmpty(countContent)) {
+        ToastUtils.show("请选择可邀约人数");
+        return;
+      }
       body.put("is_shared", true);
       body.put("is_public_shared", "公开".equals(mBinding.civSpellType.getContent()));
       body.put("shared_text", mBinding.edRemarks.getText().toString());
-      body.put("can_shared_max_user", Integer.valueOf(mBinding.civSpellCount.getContent()));
+      body.put("can_shared_max_user", Integer.valueOf(countContent));
     } else {
       body.put("is_shared", false);
       body.put("is_public_shared", false);

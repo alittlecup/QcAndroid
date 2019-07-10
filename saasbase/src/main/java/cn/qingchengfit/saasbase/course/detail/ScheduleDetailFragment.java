@@ -298,6 +298,7 @@ import javax.inject.Inject;
     String imgUrl = value.getCourse().getPhoto();
 
     ShareDialogFragment.newInstance(title, desc, imgUrl, link).show(getFragmentManager(), "");
+
   }
 
   @Override public boolean onItemClick(int position) {

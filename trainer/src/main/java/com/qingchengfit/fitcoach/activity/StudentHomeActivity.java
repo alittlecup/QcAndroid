@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qingchengfit.RxBus;
@@ -28,7 +27,6 @@ import cn.qingchengfit.student.view.detail.ClassRecordTempFragment;
 import cn.qingchengfit.student.view.followrecord.CoachFollowRecordPage;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -71,8 +69,6 @@ import rx.schedulers.Schedulers;
  */
 public class StudentHomeActivity extends BaseActivity {
 
-  Button add1;
-  Button add2;
   TextView toolbarTitle;
   private View mMyhomeBgView;
   private ImageView mHeaderImageView;
@@ -102,19 +98,8 @@ public class StudentHomeActivity extends BaseActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_student_home);
-    add1 = (Button) findViewById(R.id.add1);
-    add2 = (Button) findViewById(R.id.add2);
     toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-    findViewById(R.id.add1).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onBtn1();
-      }
-    });
-    findViewById(R.id.add2).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        onBtn2();
-      }
-    });
+
 
     mMyhomeBgView = (View) findViewById(R.id.myhome_bg);
     mHeaderImageView = (ImageView) findViewById(R.id.header);
@@ -162,7 +147,6 @@ public class StudentHomeActivity extends BaseActivity {
       }
 
       @Override public void onNext(Object o) {
-        //getStudentBodyTest();
       }
     });
   }
@@ -400,36 +384,11 @@ public class StudentHomeActivity extends BaseActivity {
     mAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
     mStudentViewPager.setAdapter(mAdapter);
     mStudentViewPager.setOffscreenPageLimit(4);
-    mStudentViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-      @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        LogUtil.e("position:" + position);
-        updatePageOneBottom(position);
-      }
 
-      @Override public void onPageSelected(int position) {
-
-      }
-
-      @Override public void onPageScrollStateChanged(int state) {
-
-      }
-    });
     mTabTabLayout.setupWithViewPager(mStudentViewPager);
-    updatePageOneBottom(0);
   }
 
-  private void updatePageOneBottom(int page) {
-    if (page == 0) {
-      add1.setVisibility(View.VISIBLE);
-      add2.setVisibility(View.VISIBLE);
-      add2.setText("代约私教");
-      add1.setText("代约团课");
-    } else {
-      add1.setVisibility(View.GONE);
-      add2.setVisibility(View.GONE);
-    }
-  }
+
 
   private void initHeader() {
 

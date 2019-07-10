@@ -119,17 +119,17 @@
           android:id="@+id/tab"
           android:layout_width="match_parent"
           android:layout_height="44dp"
+          android:background="@color/colorPrimary"
+          android:paddingBottom="4dp"
           app:tabGravity="center"
           app:tabIndicatorColor="@color/white"
           app:tabIndicatorHeight="3dp"
           app:tabSelectedTextColor="@color/white"
           app:tabTextAppearance="@style/QcTabLayoutText"
           app:tabTextColor="#b2ffffff"
-          android:background="@color/colorPrimary"
-          android:paddingBottom="4dp"
           />
-          <!--android:paddingStart="@dimen/activity_horizontal_margin"-->
-          <!--android:paddingEnd="@dimen/activity_horizontal_margin"-->
+      <!--android:paddingStart="@dimen/activity_horizontal_margin"-->
+      <!--android:paddingEnd="@dimen/activity_horizontal_margin"-->
 
       <View
           android:layout_width="match_parent"
@@ -153,39 +153,4 @@
   </android.support.design.widget.CoordinatorLayout>
 
   <include layout="@layout/common_toolbar"/>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      android:layout_gravity="bottom"
-      android:orientation="horizontal"
-      >
-
-    <Button
-
-        android:id="@+id/add1"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="1"
-        android:background="@color/primary"
-        android:text="添加体测信息"
-        android:visibility="gone"
-        tools:visibility="visible"
-        />
-
-    <Button
-        android:id="@+id/add2"
-        android:layout_width="0dp"
-
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="1"
-        android:background="@color/primary"
-        android:text="添加体测信息"
-        android:visibility="gone"
-        tools:visibility="visible"
-
-        />
-  </LinearLayout>
 </FrameLayout>
