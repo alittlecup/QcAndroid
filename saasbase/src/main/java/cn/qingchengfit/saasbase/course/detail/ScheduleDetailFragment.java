@@ -292,7 +292,7 @@ import javax.inject.Inject;
         .toString();
 
     String link = host
-        + "shop/"
+        + "/shop/"
         + mViewModel.shopID
         + "/m/user/schedules/"
         + scheduleID
