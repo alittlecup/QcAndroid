@@ -87,8 +87,6 @@ public class StudentHomeActivity extends BaseActivity {
   private ClassRecordTempFragment studentClassRecordFragment;
   private StudentCardFragment studentCardFragment;
   private int mModelType = 1;
-  private String gourpUrl;
-  private String privateUrl;
   private Observable<Object> mObserveRefresh;
   private int mGender = 0;
 
@@ -99,7 +97,6 @@ public class StudentHomeActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_student_home);
     toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-
 
     mMyhomeBgView = (View) findViewById(R.id.myhome_bg);
     mHeaderImageView = (ImageView) findViewById(R.id.header);
@@ -249,15 +246,11 @@ public class StudentHomeActivity extends BaseActivity {
             tmpStudentBean.id = studentInfoResponse.data.ship.user.id;
             tmpStudentBean.avatar = user.avatar;
             tmpStudentBean.checkin_avatar = user.avatar;
-            //tmpStudentBean.sellers = studentBaseInfoEvent.user_student.getSellers();
-            //tmpStudentBean.coaches = studentBaseInfoEvent.user_student.getCoaches();
             tmpStudentBean.gender = Integer.parseInt(user.gender) == 0;
             tmpStudentBean.phone = user.phone;
             tmpStudentBean.username = user.username;
             studentWrap.setStudentBean(tmpStudentBean);
             mGender = user.user.gender;
-            gourpUrl = studentInfoResponse.data.group_url;
-            privateUrl = studentInfoResponse.data.private_url;
             if (studentMoreInfoFragment != null) {
               studentMoreInfoFragment.setBean(
                   new StudentBaseInfoBean(user.avatar, user.phone, user.date_of_birth, user.address,
@@ -367,7 +360,8 @@ public class StudentHomeActivity extends BaseActivity {
 
   private void initViewPager() {
     ArrayList<Fragment> fragments = new ArrayList<>();
-    studentClassRecordFragment = ClassRecordTempFragment.getInstanceWithStudentID(studentWrap.getStudentBean().getId());
+    studentClassRecordFragment =
+        ClassRecordTempFragment.getInstanceWithStudentID(studentWrap.getStudentBean().getId());
     fragments.add(studentClassRecordFragment);
     if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
 
@@ -375,8 +369,6 @@ public class StudentHomeActivity extends BaseActivity {
       studentCardFragment = new StudentCardFragment();
       fragments.add(studentCardFragment);
     }
-
-    //studentBodyTestListFragment = StudentBodyTestListFragment.newInstance(mModel, mModelId);
 
     fragments.add(new CoachFollowRecordPage());
     studentMoreInfoFragment = new StudentMoreInfoFragment();
@@ -388,16 +380,11 @@ public class StudentHomeActivity extends BaseActivity {
     mTabTabLayout.setupWithViewPager(mStudentViewPager);
   }
 
-
-
   private void initHeader() {
 
   }
 
   public void goPrivate() {
-    //LogUtil.e("privateurl:" + privateUrl);
-    //if (!TextUtils.isEmpty(privateUrl)) {
-
     goWeb(Configs.Server
         + Configs.SCHEDULE_PRIVATE
         + "?id="
@@ -406,12 +393,9 @@ public class StudentHomeActivity extends BaseActivity {
         + mModel
         + "&student_id="
         + mStudentId);
-    //}
   }
 
   public void goGroup() {
-    //LogUtil.e("gourpUrl:" + gourpUrl);
-    //if (!TextUtils.isEmpty(gourpUrl)) {
     goWeb(Configs.Server
         + Configs.SCHEDULE_GROUP
         + "?id="
@@ -420,7 +404,6 @@ public class StudentHomeActivity extends BaseActivity {
         + mModel
         + "&student_id="
         + mStudentId);
-    //}
   }
 
   public void goWeb(String url) {

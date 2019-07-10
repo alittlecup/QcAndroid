@@ -19,6 +19,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.student.R;
@@ -27,6 +28,7 @@ import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.student.item.AttendanceAnalysItem;
 import cn.qingchengfit.student.item.AttendanceRecordHeadItem;
 import cn.qingchengfit.student.item.AttendanceRecordItem;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -325,7 +327,19 @@ import static android.view.View.GONE;
     orderPrivate.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (iPermissionModel.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
-          WebActivity.startWeb(presenter.studentBase.privateUrl, getContext());
+          if (AppUtils.getCurApp(getContext()) == 0) {
+            String path = Configs.Server
+                + Configs.SCHEDULE_PRIVATE
+                + "?id="
+                + gymWrapper.id()
+                + "&model="
+                + gymWrapper.model()
+                + "&student_id="
+                + presenter.studentBase.getStudentBean().id;
+            WebActivity.startWeb(path, getContext());
+          } else {
+            WebActivity.startWeb(presenter.studentBase.privateUrl, getContext());
+          }
         } else {
           showAlert(getString(R.string.alert_permission_forbid));
         }
@@ -333,8 +347,26 @@ import static android.view.View.GONE;
     });
     orderGroup.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (iPermissionModel.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
-          WebActivity.startWeb(presenter.studentBase.groupUrl, getContext());
+        String permission = "";
+        if (AppUtils.getCurApp(getContext()) == 0) {
+          permission = PermissionServerUtils.GROUP_ORDER_CAN_WRITE;
+        } else {
+          permission = PermissionServerUtils.ORDERS_DAY_CAN_WRITE;
+        }
+        if (iPermissionModel.check(permission)) {
+          if (AppUtils.getCurApp(getContext()) == 0) {
+            String path = Configs.Server
+                + Configs.SCHEDULE_GROUP
+                + "?id="
+                + gymWrapper.id()
+                + "&model="
+                + gymWrapper.model()
+                + "&student_id="
+                + presenter.studentBase.getStudentBean().id;
+            WebActivity.startWeb(path, getContext());
+          } else {
+            WebActivity.startWeb(presenter.studentBase.groupUrl, getContext());
+          }
         } else {
           showAlert(getString(R.string.alert_permission_forbid));
         }

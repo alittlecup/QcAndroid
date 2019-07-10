@@ -221,8 +221,12 @@ import javax.inject.Inject;
   }
 
   public void routeAllPhotos(View view) {
-    routeTo("course", "/schedule/photos", new BundleBuilder().withString("scheduleID", scheduleID)
-        .withParcelable("photos", mViewModel.detailPhotos.getValue())
+    ScheduleDetail value = mViewModel.detail.getValue();
+    if (value == null) return;
+    routeTo("course", "/schedule/photos",
+        new BundleBuilder().withString("scheduleID", scheduleID)
+            .withBoolean("cancel", cancel)
+            .withParcelable("photos", mViewModel.detailPhotos.getValue())
         .build());
   }
 
