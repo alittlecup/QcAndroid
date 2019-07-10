@@ -123,7 +123,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
       mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
     if (getArguments() != null) {
-      count = getArguments().getInt("chooseCount");
+      count = getArguments().getInt("chooseCount",1);
     }
     new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {

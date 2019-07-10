@@ -207,10 +207,11 @@ import javax.inject.Inject;
   }
 
   public void routeAllOrders(View view) {
+    ScheduleDetail value = mViewModel.detail.getValue();
+    if (value == null) return;
     routeTo("course", "/schedule/order/detail",
-        new BundleBuilder()
-            .withParcelable("orders", mViewModel.detailOrders.getValue())
-            .withParcelable("schedule",mViewModel.detail.getValue())
+        new BundleBuilder().withParcelable("orders", mViewModel.detailOrders.getValue())
+            .withParcelable("schedule", value)
             .build());
   }
 
