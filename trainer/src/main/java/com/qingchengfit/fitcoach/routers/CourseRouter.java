@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
 import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
+import cn.qingchengfit.saasbase.course.views.TrainerScheduleDetailFragment;
 import cn.qingchengfit.saasbase.routers.courseImpl;
 
 /**
@@ -36,6 +37,12 @@ public class CourseRouter extends courseImpl {
 
   @Override public Fragment toAddBatchFragment(Bundle args) {
     TrainerBatchAddFragment fragment = new TrainerBatchAddFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public Fragment toScheduleDetailFragment(Bundle args) {
+    TrainerScheduleDetailFragment fragment = new TrainerScheduleDetailFragment();
     fragment.setArguments(args);
     return fragment;
   }

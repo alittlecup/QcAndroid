@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 public class ClassRecordPresenter extends BasePresenter {
   @Inject StudentWrap studentBase;
-  public String requestUserID="";
+  public String requestUserID = "";
   @Inject IStudentModel studentModel;
   private ClassRecordView view;
 

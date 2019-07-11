@@ -178,7 +178,7 @@ public interface TrainerAllApi {
 
   @GET("/api/v2/coaches/{coach_id}/permissions/")
   rx.Observable<QcResponsePermission> qcGetPermission(@Path("coach_id") String coach_id,
-      @QueryMap HashMap<String, Object> params);
+      @QueryMap Map<String, Object> params);
 
   //获取销售 卖卡  包含销售和教练
   @GET("/api/coaches/{coach_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(
