@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.views;
 
 import android.view.View;
 import cn.qingchengfit.bean.Permission;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
@@ -21,11 +22,16 @@ import rx.schedulers.Schedulers;
 public class TrainerScheduleDetailFragment extends ScheduleDetailFragment {
   @Inject LoginStatus loginStatus;
   @Inject TrainerRepository repository;
+  @Inject GymWrapper gymWrapper;
 
   @Override public void routeAddOrder(View view) {
     Map<String, Object> params = new HashMap<>();
-    params.put("id", service.getId() + "");
-    params.put("model", service.getModel());
+    if(service==null){
+      params.putAll(gymWrapper.getParams());
+    }else{
+      params.put("id", service.getId() + "");
+      params.put("model", service.getModel());
+    }
     repository.getTrainerAllApi()
         .qcGetPermission(loginStatus.staff_id(), params)
         .subscribeOn(Schedulers.io())
