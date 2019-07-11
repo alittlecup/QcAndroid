@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 public class ClassRecordPresenter extends BasePresenter {
   @Inject StudentWrap studentBase;
-
+  public String requestUserID="";
   @Inject IStudentModel studentModel;
   private ClassRecordView view;
 
@@ -100,6 +100,7 @@ public class ClassRecordPresenter extends BasePresenter {
             if (qcResponse.data.attendances != null
                 && qcResponse.data.stat != null
                 && qcResponse.data.shops != null) {
+              requestUserID = qcResponse.data.requestUserId;
               view.onData(qcResponse.getData().attendances, qcResponse.getData().stat,
                   qcResponse.getData().shops);
             }

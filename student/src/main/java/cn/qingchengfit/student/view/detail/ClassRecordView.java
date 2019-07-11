@@ -1,7 +1,6 @@
 package cn.qingchengfit.student.view.detail;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.student.bean.AttendanceRecord;
 import cn.qingchengfit.student.bean.ClassRecords;
 import java.util.List;
@@ -20,5 +19,5 @@ import java.util.List;
  * Created by Paper on 16/3/19 2016.
  */
 public interface ClassRecordView extends PView {
-    void onData(List<AttendanceRecord> statementBeans, ClassRecords.Stat stat, List<Shop> ss);
+    void onData(List<AttendanceRecord> statementBeans, ClassRecords.Stat stat, List<ClassRecords.Shop> ss);
 }

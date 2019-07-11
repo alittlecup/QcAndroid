@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import cn.qingchengfit.items.FilterCommonLinearItem;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.filtertime.FilterCustomFragment;
 import cn.qingchengfit.saascommon.filtertime.FilterCustomFragmentBuilder;
 import cn.qingchengfit.student.R;
+import cn.qingchengfit.student.bean.ClassRecords;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.FilterFragment;
@@ -55,7 +55,7 @@ public class NotSignFilterFragment extends BaseFragment
   private List<String> typeList = new ArrayList<>();
   private List<String> statusList = new ArrayList<>();
   private List<String> timeList = new ArrayList<>();
-  private List<Shop> shopList = new ArrayList<>();
+  private List<ClassRecords.Shop> shopList = new ArrayList<>();
   private OnNotSignFilterListener onNotSignFilterListener;
 
   @Nullable @Override
@@ -73,7 +73,7 @@ public class NotSignFilterFragment extends BaseFragment
     statusFilter = new FilterFragment();
     timeFitler = new FilterFragment();
 
-    initGymFilter(new ArrayList<Shop>(), "");
+    initGymFilter(new ArrayList<ClassRecords.Shop>(), "");
     filterCustomFragment = FilterCustomFragmentBuilder.newFilterCustomFragment("时间段");
     filterCustomFragment.setSelectTime(true);
     filterCustomFragment.setOnBackFilterDataListener(this);
@@ -236,7 +236,7 @@ public class NotSignFilterFragment extends BaseFragment
     hideAllandShow(s);
   }
 
-  public void initGymFilter(List<Shop> shops, String curShopId) {
+  public void initGymFilter(List<ClassRecords.Shop> shops, String curShopId) {
     if (shops == null) {
       shops = new ArrayList<>();
     }
@@ -244,7 +244,7 @@ public class NotSignFilterFragment extends BaseFragment
     shopList.addAll(shops);
     List<AbstractFlexibleItem> itemList = new ArrayList<>();
     itemList.add(new FilterCommonLinearItem("全部"));
-    for (Shop shop : shops) {
+    for (ClassRecords.Shop shop : shops) {
       itemList.add(new FilterCommonLinearItem(shop.name));
       if (shop.id.equals(curShopId)) {
         statusParams.put(SHOP_NAME, shop.name);

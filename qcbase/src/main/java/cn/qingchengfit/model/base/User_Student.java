@@ -3,6 +3,7 @@ package cn.qingchengfit.model.base;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.utils.CmStringUtils;
+import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class User_Student implements Parcelable, Cloneable {
     private String recommend_by_id;
     private String recommend_by;
     private String origin;
+    @SerializedName("user_id")
+    public String userID;
     private String remarks;
     private int status;
     private String area_code;
