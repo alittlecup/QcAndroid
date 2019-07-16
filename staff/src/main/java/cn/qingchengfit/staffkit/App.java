@@ -70,8 +70,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
 
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
-  private AppComponent appCompoent;
-
 
   @Override public void onCreate() {
 
@@ -147,7 +145,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     lb.loginUser(staff);
     lb.session(session);
     lb.userId(user_id);
-    appCompoent = DaggerAppComponent.builder()
+    AppComponent appCompoent = DaggerAppComponent.builder()
         .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
             new GymWrapper.Builder().build(), new BaseRouter(),
             new QcRestRepository(this, Configs.getServerByBuildFLAVOR(BuildConfig.FLAVOR),

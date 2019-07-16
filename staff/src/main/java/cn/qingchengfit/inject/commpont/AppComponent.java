@@ -3018,36 +3018,13 @@ public interface AppComponent {
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         StudentSignInImageFragmentSubcomponent.Builder builder);
   }
-  //
-  //@Module(subcomponents = SendMsgsSubcomponent.class) abstract class SendMsgsModule {
-  //  @Binds @IntoMap @ActivityKey(SendMsgsActivity.class)
-  //  abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-  //      SendMsgsSubcomponent.Builder builder);
-  //}
-  //
-  //@Module(subcomponents = SendMsgHomeSubcomponent.class) abstract class SendMsgHomeModule {
-  //  @Binds @IntoMap @FragmentKey(SendMsgHomeFragment.class)
-  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-  //      SendMsgHomeSubcomponent.Builder builder);
-  //}
+
 
   @Module(subcomponents = FlexableListSubcomponent.class) abstract class FlexableListModule {
     @Binds @IntoMap @FragmentKey(FlexableListFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         FlexableListSubcomponent.Builder builder);
   }
-
-  //@Module(subcomponents = ShortMsgDetailSubcomponent.class) abstract class ShortMsgDetailModule {
-  //  @Binds @IntoMap @FragmentKey(ShortMsgDetailFragment.class)
-  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-  //      ShortMsgDetailSubcomponent.Builder builder);
-  //}
-  //
-  //@Module(subcomponents = MsgSendFragmentSubcomponent.class) abstract class MsgSendFragmentModule {
-  //  @Binds @IntoMap @FragmentKey(MsgSendFragmentFragment.class)
-  //  abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-  //      MsgSendFragmentSubcomponent.Builder builder);
-  //}
 
   @Module(subcomponents = MultiChooseStudentWithFilterSubcomponent.class)
   abstract class MultiChooseStudentWithFilterModule {

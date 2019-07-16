@@ -149,24 +149,6 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     if (studentIdList != null && studentIdList.size() > 0) {
       selectStudent(studentIdList);
     }
-    //super.onUpdateEmptyView(size);
-    //if (studentIdList.size() > 0){
-    //  if (commonFlexAdapter.getSelectedPositions().size() > 0){
-    //    commonFlexAdapter.clearSelection();
-    //  }
-    //  selectStudent(studentIdList);
-    //}
-    //  if (studentIdList != null) {
-    //    for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
-    //      IFlexible item = commonFlexAdapter.getItem(i);
-    //      if (item instanceof ChosenStudentItem) {
-    //        if (studentIdList.contains(((ChosenStudentItem) item).getId())) {
-    //          commonFlexAdapter.toggleSelection(i);
-    //          commonFlexAdapter.notifyItemChanged(i);
-    //        }
-    //      }
-    //    }
-    //  }
-    //}
+
   }
 }
