@@ -90,7 +90,7 @@ import javax.inject.Inject;
     initToolbar();
     initListener();
     initTabLayout();
-    showGuide();
+    //showGuide();
     return mBinding;
   }
 
