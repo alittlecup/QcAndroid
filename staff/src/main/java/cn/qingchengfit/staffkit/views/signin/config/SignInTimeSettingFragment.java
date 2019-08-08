@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -12,9 +13,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.model.body.BatchPayResponse;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
 import cn.qingchengfit.saascommon.network.RxHelper;
 import cn.qingchengfit.staffkit.R;
@@ -33,7 +40,6 @@ import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -43,15 +49,15 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 
-import static java.lang.invoke.MethodHandles.lookup;
-
 /**
  * @author huangbaole
  */
 public class SignInTimeSettingFragment
     extends SaasBindingFragment<FragmentSigninTimeSettingBinding, SignInTimeSettingVM> {
   @Inject GymWrapper gymWrapper;
+  @Inject IStaffModel staffModel;
   private SignInTimeFrameBean bean;
+
   private int durationPos = -1;
 
   @Override protected void subscribeUI() {
@@ -114,6 +120,44 @@ public class SignInTimeSettingFragment
     mBinding.civTrainCount.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
     mViewModel.loadCardCosts();
     return mBinding;
+  }
+
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    loadBatchPayStatus();
+    mBinding.civPayOnce.setLabelDrawable(cn.qingchengfit.saasbase.R.drawable.vd_payment_wechat,
+        cn.qingchengfit.saasbase.R.drawable.vd_payment_alipay);
+  }
+
+  private void loadBatchPayStatus() {
+    RxRegiste(staffModel.qcGetBatchPayMethod()
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(batchPayResponseQcDataResponse -> {
+          if (ResponseConstant.checkSuccess(batchPayResponseQcDataResponse)) {
+            updatePayOnceView(batchPayResponseQcDataResponse.data);
+          }
+        }, throwable -> {
+
+        }));
+  }
+
+  private BatchPayResponse data = new BatchPayResponse();
+
+  private void updatePayOnceView(BatchPayResponse data) {
+    this.data = data;
+    View icon1 = mBinding.civPayOnce.findViewById(cn.qingchengfit.saasbase.R.id.im_icon1);
+    ViewGroup.LayoutParams layoutParams = icon1.getLayoutParams();
+    ImageView icon3 = new ImageView(getContext());
+    ImageView icon4 = new ImageView(getContext());
+    icon3.setImageResource(data.alisp ? cn.qingchengfit.saasbase.R.drawable.icon_alisp_circle_enable
+        : cn.qingchengfit.saasbase.R.drawable.icon_alisp_circle_disable);
+    icon4.setImageResource(data.corpCard ? cn.qingchengfit.saasbase.R.drawable.icon_corp_circle
+        : cn.qingchengfit.saasbase.R.drawable.icon_crop_circle_disable);
+    ViewParent parent = icon1.getParent();
+    if (parent instanceof LinearLayout) {
+      ((LinearLayout) parent).addView(icon3, 3, layoutParams);
+      ((LinearLayout) parent).addView(icon4, 4, layoutParams);
+    }
   }
 
   private void updateView(SignInTimeFrameBean bean) {
@@ -289,6 +333,7 @@ public class SignInTimeSettingFragment
           if (payOnceFragment == null) {
             payOnceFragment = new SignInTimePayOnceFragment();
           }
+          payOnceFragment.setPayMethos(data);
           if (bean != null) {
             payOnceFragment.setOncePay(bean.isSupportOnlinePay(), bean.getOnlinePayPrice() / 100f);
           }

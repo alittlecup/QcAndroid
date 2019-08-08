@@ -212,25 +212,29 @@ import static android.view.View.GONE;
     showFilter("time");
   }
 
-  private SparseArray<ClassRecords.Shop> shopArray;
+  private SparseArray<ClassRecords.Shop> shopArray = new SparseArray<>();
 
   @Override public void onData(List<AttendanceRecord> attendanceRecords, ClassRecords.Stat stat,
       List<ClassRecords.Shop> ss) {
     hideLoadingTrans();
     shops.clear();
     shops.addAll(ss);
+    shopArray.clear();
     //找到当前场馆
     if (TextUtils.isEmpty(layoutGymFilter.getLabel())) {
       if (shops != null && shops.size() > 0) {
-        shopArray = new SparseArray<>(shops.size());
         for (ClassRecords.Shop shop : shops) {
-          shopArray.put(Integer.valueOf(shop.id), shop);
           if (shop.id.equals(gymWrapper.shop_id())) {
             layoutGymFilter.setLabel(shop.name);
           }
         }
       } else {
         layoutGymFilter.setLabel("全部");
+      }
+    }
+    if (shops != null && shops.size() > 0) {
+      for (ClassRecords.Shop shop : shops) {
+        shopArray.put(Integer.valueOf(shop.id), shop);
       }
     }
     notSignFilterFragment.initGymFilter(shops, gymWrapper.shop_id());
@@ -313,7 +317,7 @@ import static android.view.View.GONE;
           RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
               new BundleBuilder().withString("scheduleID",
                   ((AttendanceRecordItem) datas.get(position)).getAttendanceRecord().id).build());
-        }else{
+        } else {
           showAlert(getString(R.string.alert_permission_forbid));
         }
       }

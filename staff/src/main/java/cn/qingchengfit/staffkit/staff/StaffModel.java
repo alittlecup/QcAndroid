@@ -13,6 +13,7 @@ import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
+import cn.qingchengfit.saasbase.staff.model.body.BatchPayResponse;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.model.body.SendSmsBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -211,7 +212,7 @@ public class StaffModel implements IStaffModel {
   @Override public Observable<QcDataResponse<TurOrderListDataWrapper>> qcPutTurnoverOrderDetail(
       String turnover_id, String seller_id) {
     Map<String, Object> sellerParams = new HashMap<>();
-    if(!StringUtils.isEmpty(seller_id)){
+    if (!StringUtils.isEmpty(seller_id)) {
       sellerParams.put("seller_id", seller_id);
     }
     return staffAllApi.qcPutTurnoverOrderDetail(loginStatus.staff_id(), turnover_id, sellerParams,
@@ -220,6 +221,11 @@ public class StaffModel implements IStaffModel {
 
   @Override public Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
       String turnover_id) {
-    return staffAllApi.qcGetOrderHistorty(loginStatus.staff_id(),turnover_id,gymWrapper.getParams());
+    return staffAllApi.qcGetOrderHistorty(loginStatus.staff_id(), turnover_id,
+        gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<BatchPayResponse>> qcGetBatchPayMethod() {
+    return staffApi.qcGetbatchPay(loginStatus.staff_id(), gymWrapper.getParams());
   }
 }

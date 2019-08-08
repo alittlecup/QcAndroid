@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
@@ -9,21 +10,22 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
-
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.OnlineLimit;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.events.EventMutiChoose;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
+import cn.qingchengfit.saasbase.staff.model.body.BatchPayResponse;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.utils.StringUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -33,6 +35,7 @@ import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.bigkoo.pickerview.lib.DensityUtil;
 import java.util.ArrayList;
 import rx.functions.Action1;
 
@@ -42,6 +45,7 @@ import rx.functions.Action1;
   @Need public Rule rule;
   @Need public Integer maxPeople;
   @Need public Boolean multiPrice;
+  @Need public BatchPayResponse payResponse;
 
   TextView toolbarTitile;
   Toolbar toolbar;
@@ -53,6 +57,7 @@ import rx.functions.Action1;
   CommonInputView limitNum;
   CommonInputView payOnlineMoney;
   View divider;
+  TextView mTvWxPay;
 
   /**
    * 用来记录在线支付的约课限制
@@ -71,6 +76,7 @@ import rx.functions.Action1;
     payOnline = (ExpandedLayout) view.findViewById(R.id.pay_online);
     limitWho = (CommonInputView) view.findViewById(R.id.limit_who);
     limitNum = (CommonInputView) view.findViewById(R.id.limit_num);
+    mTvWxPay = view.findViewById(R.id.tv_wx_pay);
     payOnlineMoney = (CommonInputView) view.findViewById(R.id.pay_online_money);
     divider = (View) view.findViewById(R.id.divider);
     view.findViewById(R.id.limit_who).setOnClickListener(new View.OnClickListener() {
@@ -178,8 +184,38 @@ import rx.functions.Action1;
         }
       }
     });
-
+    updatePayMethod(payResponse);
     return view;
+  }
+
+  private void updatePayMethod(BatchPayResponse payResponse) {
+    if (payResponse == null) {
+      payResponse = new BatchPayResponse();
+    }
+    TextView aliSPPayText = new TextView(getContext());
+    aliSPPayText.setText("全民健身卡");
+    Drawable alispDrawable = getResources().getDrawable(
+        payResponse.alisp ? cn.qingchengfit.saasbase.R.drawable.icon_alisp_circle_enable
+            : cn.qingchengfit.saasbase.R.drawable.icon_alisp_circle_disable);
+    alispDrawable.setBounds(0, 0, alispDrawable.getMinimumWidth(), alispDrawable.getMinimumHeight());
+    aliSPPayText.setCompoundDrawables(alispDrawable, null, null, null);
+    aliSPPayText.setCompoundDrawablePadding(DensityUtil.dip2px(getContext(),5));
+
+    TextView corpPayText = new TextView(getContext());
+    corpPayText.setText("企业健身卡");
+    Drawable corpDrawable = getResources().getDrawable(
+        payResponse.corpCard ? cn.qingchengfit.saasbase.R.drawable.icon_corp_circle
+            : cn.qingchengfit.saasbase.R.drawable.icon_crop_circle_disable);
+    corpDrawable.setBounds(0, 0, corpDrawable.getMinimumWidth(), corpDrawable.getMinimumHeight());
+    corpPayText.setCompoundDrawables(corpDrawable, null, null, null);
+    corpPayText.setCompoundDrawablePadding(DensityUtil.dip2px(getContext(),5));
+
+    ViewGroup.LayoutParams layoutParams = mTvWxPay.getLayoutParams();
+    ViewParent parent = mTvWxPay.getParent();
+    if (parent instanceof LinearLayout) {
+      ((LinearLayout) parent).addView(aliSPPayText, 2, layoutParams);
+      ((LinearLayout) parent).addView(corpPayText, 3, layoutParams);
+    }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

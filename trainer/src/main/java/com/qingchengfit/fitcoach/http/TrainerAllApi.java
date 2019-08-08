@@ -35,6 +35,7 @@ import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.report.bean.GymCardtpl;
 import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
+import cn.qingchengfit.saasbase.staff.model.body.BatchPayResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saascommon.qrcode.model.ScanBody;
 import cn.qingchengfit.student.bean.ClassRecords;
@@ -924,5 +925,9 @@ public interface TrainerAllApi {
   @GET("/api/coaches/{staff_id}/users/attendance/records/")
   rx.Observable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
       @Path("staff_id") String staffid, @Query("user_id") String studentid,
+      @QueryMap HashMap<String, Object> params);
+
+  @GET("/api/coaches/{staff_id}/general-card/auth/status/")
+  rx.Observable<QcDataResponse<BatchPayResponse>> qcGetbatchPay(@Path("id") String staff_id,
       @QueryMap HashMap<String, Object> params);
 }

@@ -37,6 +37,7 @@ import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_INC
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_MEMBER;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_PRIVATE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_DATA_WHITEPAPER;
+import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_ENTERPRISE_CARD;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_FINACE_ONLINE;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_FINANCE_CARD;
 import static cn.qingchengfit.saascommon.qrcode.views.QRActivity.MODULE_FINANCE_COURSE;
@@ -181,6 +182,8 @@ public class GymFunctionFactory {
         return R.drawable.ic_module_tmall_join;
       case MODULE_GENERAL_CARD:
         return R.drawable.module_ali_pay_card;
+      case MODULE_ENTERPRISE_CARD:
+        return R.drawable.icon_module_corp;
       case MODULE_OPERATE_COMPETITION:
         return R.drawable.moudule_op_competition;
       case MODULE_COURSE_DEV:
@@ -279,6 +282,7 @@ public class GymFunctionFactory {
       case MODULE_SMARTGYM_SMART:
       case MODULE_TMALL_JOIN:
       case MODULE_GENERAL_CARD:
+      case MODULE_ENTERPRISE_CARD:
       case MODULE_COURSE_DEV:
 
         return 1;
@@ -350,6 +354,8 @@ public class GymFunctionFactory {
         return R.string.module_op_tmall_join;
       case MODULE_GENERAL_CARD:
         return R.string.module_op_parnter_manager;
+      case MODULE_ENTERPRISE_CARD:
+        return R.string.module_op_enterprise_manager;
       case MODULE_OPERATE_SCORE:
         return R.string.module_op_score;
       case MODULE_OPERATE_COMPETITION:
@@ -573,7 +579,9 @@ public class GymFunctionFactory {
       case MODULE_GENERAL_CARD:
         goQrScan(fragment, "/ali-general-card/setting", null, coachService);
         return;
-
+      case MODULE_ENTERPRISE_CARD:
+        goQrScan(fragment, "/enterprise-card/setting", null, coachService);
+        return;
       case MODULE_MARKET_DIANPING:
         if (coachService.meituan_status == 0) {
           fragment.routeTo("dianping", "/dianping/home", null);
