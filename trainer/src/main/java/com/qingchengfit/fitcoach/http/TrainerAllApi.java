@@ -928,6 +928,6 @@ public interface TrainerAllApi {
       @QueryMap HashMap<String, Object> params);
 
   @GET("/api/coaches/{staff_id}/general-card/auth/status/")
-  rx.Observable<QcDataResponse<BatchPayResponse>> qcGetbatchPay(@Path("id") String staff_id,
+  rx.Observable<QcDataResponse<BatchPayResponse>> qcGetbatchPay(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
 }

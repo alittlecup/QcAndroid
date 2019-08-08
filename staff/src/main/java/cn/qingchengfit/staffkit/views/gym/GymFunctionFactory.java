@@ -183,7 +183,7 @@ public class GymFunctionFactory {
       case MODULE_GENERAL_CARD:
         return R.drawable.module_ali_pay_card;
       case MODULE_ENTERPRISE_CARD:
-        return R.drawable.icon_module_corp;
+        return R.drawable.icon_module_crop;
       case MODULE_OPERATE_COMPETITION:
         return R.drawable.moudule_op_competition;
       case MODULE_COURSE_DEV:

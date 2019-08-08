@@ -68,7 +68,8 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
       List payloads) {
     if (mGymFuntion.getImg() != 0) {
       holder.funImg.setVisibility(View.VISIBLE);
-      holder.funImg.setImageResource(mGymFuntion.getImg());
+      holder.funImg.setImageDrawable(
+          holder.funImg.getResources().getDrawable(mGymFuntion.getImg()));
     } else {
       holder.funImg.setVisibility(View.INVISIBLE);
     }
@@ -118,7 +119,7 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
       } else {
         holder.notSetting.setVisibility(View.GONE);
       }
-    }else{
+    } else {
       Drawable drawable = DrawableUtils.tintDrawable(holder.notSetting.getContext(),
           R.drawable.bg_fill_red_slide_white, R.color.danger_red_normal);
       holder.notSetting.setBackground(drawable);
