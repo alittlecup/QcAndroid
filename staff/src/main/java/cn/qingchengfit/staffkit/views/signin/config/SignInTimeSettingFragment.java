@@ -135,9 +135,11 @@ public class SignInTimeSettingFragment
         .subscribe(batchPayResponseQcDataResponse -> {
           if (ResponseConstant.checkSuccess(batchPayResponseQcDataResponse)) {
             updatePayOnceView(batchPayResponseQcDataResponse.data);
+          } else {
+            updatePayOnceView(data);
           }
         }, throwable -> {
-
+          updatePayOnceView(data);
         }));
   }
 

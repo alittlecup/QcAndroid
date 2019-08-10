@@ -66,14 +66,10 @@ public class SignInTimePayOnceFragment extends SaasCommonFragment {
     initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.swOpen.setOnCheckedChangeListener((buttonView, isChecked) -> {
       if (isChecked) {
-        mBinding.civPayCount.setEnable(true);
-        mBinding.civPayCount.setCanClick(false);
-        mBinding.civPayCount.setEditable(true);
-      } else {
         mBinding.civPayCount.setContent("");
-        mBinding.civPayCount.setEditable(false);
-        mBinding.civPayCount.setCanClick(true);
-        mBinding.civPayCount.setEnable(false);
+        mBinding.civPayCount.setVisibility(View.VISIBLE);
+      } else {
+        mBinding.civPayCount.setVisibility(View.GONE);
       }
     });
     datas.observe(this, data -> {
@@ -113,7 +109,7 @@ public class SignInTimePayOnceFragment extends SaasCommonFragment {
             : cn.qingchengfit.saasbase.R.drawable.icon_alisp_circle_disable);
     alispDrawable.setBounds(0, 0, size, size);
     aliSPPayText.setCompoundDrawables(alispDrawable, null, null, null);
-    aliSPPayText.setCompoundDrawablePadding(DensityUtil.dip2px(getContext(),5));
+    aliSPPayText.setCompoundDrawablePadding(DensityUtil.dip2px(getContext(), 5));
 
     TextView corpPayText = new TextView(getContext());
     corpPayText.setText("企业健身卡");
@@ -122,7 +118,7 @@ public class SignInTimePayOnceFragment extends SaasCommonFragment {
             : cn.qingchengfit.saasbase.R.drawable.icon_crop_circle_disable);
     corpDrawable.setBounds(0, 0, size, size);
     corpPayText.setCompoundDrawables(corpDrawable, null, null, null);
-    corpPayText.setCompoundDrawablePadding(DensityUtil.dip2px(getContext(),5));
+    corpPayText.setCompoundDrawablePadding(DensityUtil.dip2px(getContext(), 5));
 
     ViewGroup.LayoutParams layoutParams = mBinding.tvWxPay.getLayoutParams();
     ViewParent parent = mBinding.tvWxPay.getParent();

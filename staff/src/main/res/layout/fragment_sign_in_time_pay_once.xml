@@ -79,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         app:civ_edit_able="true"
         app:civ_inputnum="true"
         app:civ_lable="单次支付"

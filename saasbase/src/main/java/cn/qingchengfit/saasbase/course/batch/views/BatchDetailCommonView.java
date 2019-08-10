@@ -173,8 +173,11 @@ public class BatchDetailCommonView extends BaseFragment {
         .subscribe(batchPayResponseQcDataResponse -> {
           if (ResponseConstant.checkSuccess(batchPayResponseQcDataResponse)) {
             updateView(batchPayResponseQcDataResponse.data);
+          }else{
+            updateView(data);
           }
         }, throwable -> {
+          updateView(data);
 
         }));
   }
