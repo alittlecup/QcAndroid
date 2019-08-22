@@ -380,7 +380,7 @@ public class StudentModel implements IStudentModel {
       HashMap<String, Object> params) {
     params.put("brand_id", gymWrapper.brand_id());
     return RxJavaInterop.toV2Flowable(
-        api.qcGetStudentClassRecords(loginStatus.staff_id(), studentid, gymWrapper.getParams()));
+        api.qcGetStudentClassRecords(loginStatus.staff_id(), studentid, params));
   }
 
   @Override public Flowable<QcDataResponse<ClassRecords>> qcGetClassRecordTemp(String studentid,

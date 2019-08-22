@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,8 @@ import android.widget.TextView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
+import cn.qingchengfit.saascommon.constant.Configs;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.saascommon.utils.RouteUtil;
 import cn.qingchengfit.student.R;
@@ -78,7 +79,7 @@ import static android.view.View.GONE;
 
   private CommonFlexAdapter commonFlexAdapter;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
-  private List<Shop> shops = new ArrayList<>();
+  private List<ClassRecords.Shop> shops = new ArrayList<>();
   private HashMap<String, Object> params = new HashMap<>();
   private NotSignFilterFragment notSignFilterFragment;
   private TextView orderGroup, orderPrivate;
@@ -211,21 +212,29 @@ import static android.view.View.GONE;
     showFilter("time");
   }
 
+  private SparseArray<ClassRecords.Shop> shopArray = new SparseArray<>();
+
   @Override public void onData(List<AttendanceRecord> attendanceRecords, ClassRecords.Stat stat,
-      List<Shop> ss) {
+      List<ClassRecords.Shop> ss) {
     hideLoadingTrans();
     shops.clear();
     shops.addAll(ss);
+    shopArray.clear();
     //找到当前场馆
     if (TextUtils.isEmpty(layoutGymFilter.getLabel())) {
       if (shops != null && shops.size() > 0) {
-        for (Shop shop : shops) {
+        for (ClassRecords.Shop shop : shops) {
           if (shop.id.equals(gymWrapper.shop_id())) {
             layoutGymFilter.setLabel(shop.name);
           }
         }
       } else {
         layoutGymFilter.setLabel("全部");
+      }
+    }
+    if (shops != null && shops.size() > 0) {
+      for (ClassRecords.Shop shop : shops) {
+        shopArray.put(Integer.valueOf(shop.id), shop);
       }
     }
     notSignFilterFragment.initGymFilter(shops, gymWrapper.shop_id());
@@ -293,17 +302,39 @@ import static android.view.View.GONE;
     recycleview.setNoData(datas.size() == 0);
   }
 
+  private int requestUserID = -1;
+
   @Override public String getFragmentName() {
     return ClassRecordFragment.class.getName();
   }
 
   @Override public boolean onItemClick(int position) {
     if (datas.get(position) instanceof AttendanceRecordItem) {
-      RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
-          new BundleBuilder().withString("scheduleID",
-              ((AttendanceRecordItem) datas.get(position)).getAttendanceRecord().id).build());
+      AttendanceRecord attendanceRecord =
+          ((AttendanceRecordItem) datas.get(position)).getAttendanceRecord();
+      if (attendanceRecord.type != 3) {
+        if (checkEnterPermission(attendanceRecord.shop.id, attendanceRecord.teacher.userID)) {
+          RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+              new BundleBuilder().withString("scheduleID",
+                  ((AttendanceRecordItem) datas.get(position)).getAttendanceRecord().id).build());
+        } else {
+          showAlert(getString(R.string.alert_permission_forbid));
+        }
+      }
     }
     return false;
+  }
+
+  private boolean checkEnterPermission(String shopID, String teacherID) {
+    if (AppUtils.getCurApp(getContext()) == 0) {
+      return presenter.requestUserID.equals(teacherID);
+    } else {
+      if (shopArray != null) {
+        return shopArray.get(Integer.valueOf(shopID)).has_staff_permission;
+      } else {
+        return false;
+      }
+    }
   }
 
   @Override public void onFilter(HashMap<String, Object> params) {
@@ -323,16 +354,22 @@ import static android.view.View.GONE;
   @Inject IPermissionModel iPermissionModel;
 
   private void addListener() {
-    if (AppUtils.getCurApp(getContext()) == 0) {
-      llProxy.setVisibility(GONE);
-      return;
-    } else {
-      llProxy.setVisibility(View.VISIBLE);
-    }
     orderPrivate.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (iPermissionModel.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
-          WebActivity.startWeb(presenter.studentBase.privateUrl, getContext());
+          if (AppUtils.getCurApp(getContext()) == 0) {
+            String path = Configs.Server
+                + Configs.SCHEDULE_PRIVATE
+                + "?id="
+                + gymWrapper.id()
+                + "&model="
+                + gymWrapper.model()
+                + "&student_id="
+                + presenter.studentBase.getStudentBean().id;
+            WebActivity.startWeb(path, getContext());
+          } else {
+            WebActivity.startWeb(presenter.studentBase.privateUrl, getContext());
+          }
         } else {
           showAlert(getString(R.string.alert_permission_forbid));
         }
@@ -340,8 +377,26 @@ import static android.view.View.GONE;
     });
     orderGroup.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (iPermissionModel.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
-          WebActivity.startWeb(presenter.studentBase.groupUrl, getContext());
+        String permission = "";
+        if (AppUtils.getCurApp(getContext()) == 0) {
+          permission = PermissionServerUtils.GROUP_ORDER_CAN_WRITE;
+        } else {
+          permission = PermissionServerUtils.ORDERS_DAY_CAN_WRITE;
+        }
+        if (iPermissionModel.check(permission)) {
+          if (AppUtils.getCurApp(getContext()) == 0) {
+            String path = Configs.Server
+                + Configs.SCHEDULE_GROUP
+                + "?id="
+                + gymWrapper.id()
+                + "&model="
+                + gymWrapper.model()
+                + "&student_id="
+                + presenter.studentBase.getStudentBean().id;
+            WebActivity.startWeb(path, getContext());
+          } else {
+            WebActivity.startWeb(presenter.studentBase.groupUrl, getContext());
+          }
         } else {
           showAlert(getString(R.string.alert_permission_forbid));
         }

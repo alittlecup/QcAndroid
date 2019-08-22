@@ -292,6 +292,9 @@ public class GymMoreFragment extends BaseFragment
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GENERAL_CARD), runFuntion));
             mDatas.add(new GymFuntionItem(
+                GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_ENTERPRISE_CARD),
+                runFuntion));
+            mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MARKET_DIANPING),
                 runFuntion));
             mDatas.add(new GymFuntionItem(
@@ -326,9 +329,6 @@ public class GymMoreFragment extends BaseFragment
                 runFuntion));
             mDatas.add(new GymFuntionItem(
                 GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_MORE), runFuntion));
-            mDatas.add(
-                new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
-                    runFuntion));
             mDatas.add(
                 new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE),
                     runFuntion));
@@ -458,7 +458,8 @@ public class GymMoreFragment extends BaseFragment
     });
     return view;
   }
-  private void updateMyRecyclerViewVisible(){
+
+  private void updateMyRecyclerViewVisible() {
     if (mFunsDatas.isEmpty()) {
       myFunRecycleview.setVisibility(View.GONE);
     } else {

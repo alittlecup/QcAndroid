@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -32,6 +33,7 @@ import java.util.List;
   CommonFlexAdapter adapter;
   @Need SchedulePhotos photos;
   @Need String scheduleID;
+  @Need Boolean cancel;
 
   @Override protected void subscribeUI() {
     mViewModel.detailPhotos.observe(this, this::updatePhotos);
@@ -76,6 +78,11 @@ import java.util.List;
     mViewModel.loadCoursePhotos(scheduleID);
     mViewModel.loadShopInfo();
     changeSelectMode(false);
+    if(cancel){
+      mBinding.flBottom.setVisibility(View.GONE);
+      mBinding.setToolbarModel(new ToolbarModel("图片相册"));
+
+    }
     return mBinding;
   }
 

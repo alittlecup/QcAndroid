@@ -197,17 +197,13 @@ public class WardrobeLongHireFragment extends BaseFragment
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.choose_student://选择会员
-        //Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);
-        //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
-        //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");
-        //startActivityForResult(toChooseStudent, 1);
 
         Map<String,Object> map=new HashMap<>();
         map.put("source",getFragmentName());
         map.put("chooseType",1);
+        map.put("from", "locker");
         QcRouteUtil.setRouteOptions(new RouteOptions("student").setActionName("/choose/student/")
             .addParams(map)).call();
-        //                toChooseStudent.putExtra(MutiChooseStudentActivity.EXTRA_STUDENTS)
         break;
       case R.id.start_day: //开始时间
         if (pwTime == null) {

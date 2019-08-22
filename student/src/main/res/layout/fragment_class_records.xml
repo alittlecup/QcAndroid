@@ -106,8 +106,6 @@
           android:background="@color/colorPrimary"
           android:divider="@drawable/divier_linear"
           android:showDividers="middle"
-          android:visibility="gone"
-          tools:visibility="visible"
           >
 
         <TextView

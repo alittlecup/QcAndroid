@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -15,6 +16,8 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.HttpThrowable;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saascommon.utils.RouteUtil;
+import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -132,10 +135,18 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                   .build());
         } else {
           String url = (String) tags.get("url");
-          if (!TextUtils.isEmpty(url)) {
-            Intent it = new Intent(getActivity(), WebActivity.class);
-            it.putExtra("url", url);
-            getParentFragment().startActivityForResult(it, 404);
+          Object scheduleID = tags.get("scheduleID");
+          if (scheduleID != null) {
+            RouteUtil.routeTo(getContext(), "course", "/schedule/detail",
+                new BundleBuilder().withParcelable("service", (Parcelable) tags.get("service"))
+                    .withString("scheduleID", (String) scheduleID)
+                    .build());
+          } else {
+            if (!TextUtils.isEmpty(url)) {
+              Intent it = new Intent(getActivity(), WebActivity.class);
+              it.putExtra("url", url);
+              getParentFragment().startActivityForResult(it, 404);
+            }
           }
         }
       }
@@ -282,6 +293,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                   schedule.course.is_private ? R.color.private_color : R.color.group_color));
           HashMap<String, Object> tag = new HashMap<>();
           tag.put("url", schedule.url);
+          tag.put("scheduleID", String.valueOf(schedule.id));
+          tag.put("service", scheduleService.system);
           if (schedule.orders != null && schedule.orders.size() > 0) {
             tag.put("name", schedule.orders.get(0).username);
           }

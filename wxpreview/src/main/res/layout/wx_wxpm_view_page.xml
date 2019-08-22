@@ -50,7 +50,7 @@
               android:id="@+id/btn_start_mini"
               android:layout_width="match_parent"
               android:layout_height="45dp"
-              android:text="立即开通"
+              android:text="免费开通"
               style="@style/QcBtnPrimary"
               />
         </FrameLayout>

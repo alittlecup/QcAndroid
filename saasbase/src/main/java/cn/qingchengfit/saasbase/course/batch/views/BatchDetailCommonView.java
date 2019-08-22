@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +40,7 @@ import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
+import cn.qingchengfit.saasbase.staff.model.body.BatchPayResponse;
 import cn.qingchengfit.saascommon.events.EventCourse;
 import cn.qingchengfit.saascommon.events.EventSiteSelected;
 import cn.qingchengfit.saascommon.events.EventStaffWrap;
@@ -165,6 +167,40 @@ public class BatchDetailCommonView extends BaseFragment {
     }
   }
 
+  private void loadBatchPayStatus() {
+    RxRegiste(staffModel.qcGetBatchPayMethod()
+        .compose(RxHelper.schedulersTransformer())
+        .subscribe(batchPayResponseQcDataResponse -> {
+          if (ResponseConstant.checkSuccess(batchPayResponseQcDataResponse)) {
+            updateView(batchPayResponseQcDataResponse.data);
+          }else{
+            updateView(data);
+          }
+        }, throwable -> {
+          updateView(data);
+
+        }));
+  }
+
+  private BatchPayResponse data = new BatchPayResponse();
+
+  private void updateView(BatchPayResponse data) {
+    this.data = data;
+    View icon1 = payOnline.findViewById(R.id.im_icon1);
+    ViewGroup.LayoutParams layoutParams = icon1.getLayoutParams();
+    ImageView icon3 = new ImageView(getContext());
+    ImageView icon4 = new ImageView(getContext());
+    icon3.setImageResource(
+        data.alisp ? R.drawable.icon_alisp_circle_enable : R.drawable.icon_alisp_circle_disable);
+    icon4.setImageResource(
+        data.corpCard ? R.drawable.icon_corp_circle : R.drawable.icon_crop_circle_disable);
+    ViewParent parent = icon1.getParent();
+    if (parent instanceof LinearLayout) {
+      ((LinearLayout) parent).addView(icon3, 3, layoutParams);
+      ((LinearLayout) parent).addView(icon4, 4, layoutParams);
+    }
+  }
+
   LinearLayout llCourseWorkout;
   CommonInputView civWorkout, civWorkoutPlan;
 
@@ -264,6 +300,7 @@ public class BatchDetailCommonView extends BaseFragment {
         payCard.setContent(b ? "已开启多人支持，请重新设置" : "已关闭多人支持，请重新设置");
       });
     }
+    loadBatchPayStatus();
     payOnline.setLabelDrawable(R.drawable.vd_payment_wechat, R.drawable.vd_payment_alipay);
     return view;
   }
@@ -298,7 +335,8 @@ public class BatchDetailCommonView extends BaseFragment {
             selePosition = workoutPlans.indexOf(workout);
           }
         }
-        BottomChooseDialog planChooseDialog = new BottomChooseInverseDialog(getContext(), "选择训练计划", datas);
+        BottomChooseDialog planChooseDialog =
+            new BottomChooseInverseDialog(getContext(), "选择训练计划", datas);
         planChooseDialog.addSeleced(selePosition);
         planChooseDialog.setOnItemClickListener(position -> {
           WorkoutPlan plan = workoutPlans.get(position);
@@ -778,12 +816,14 @@ public class BatchDetailCommonView extends BaseFragment {
       routeTo("/batch/pay/online/",
           new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
               .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
+              .payResponse(data)
               .multiPrice(elMultiSupport.isExpanded())
               .build());
     } else {
       routeTo("/batch/pay/online/",
           new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
               .maxPeople(getOrderStudentCount())
+              .payResponse(data)
               .multiPrice(prePriceChoosePos == 2)
               .build());
     }

@@ -33,6 +33,7 @@ import cn.qingchengfit.saasbase.course.detail.SchedulePhotosFragment;
 import cn.qingchengfit.saasbase.course.detail.ScheduleShareFragment;
 import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
 import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
+import cn.qingchengfit.saasbase.course.views.TrainerScheduleDetailFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -67,6 +68,6 @@ import com.anbillon.flabellum.annotations.Trunk;
     MutiChooseGymFragment.class, ChooseCoursePlanFragment.class, BatchCopyFragment.class,
     BatchCourseChooseFragment.class, ScheduleDetailFragment.class, ScheduleOrdersFragment.class,
     SchedulePhotosFragment.class,ScheduleCandidateFragment.class, ScheduleOrderDetailFragment.class,
-    ScheduleShareFragment.class
+    ScheduleShareFragment.class, TrainerScheduleDetailFragment.class
 }) public class TrainerCourseActivity extends CourseActivity {
 }

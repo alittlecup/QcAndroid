@@ -27,7 +27,6 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.CrashUtils;
@@ -111,7 +110,7 @@ public class BaseActivity extends AppCompatActivity {
     try {
       if (getIntent().getParcelableExtra(Constants.EXTRA_GYM_SERVICE) != null) {
         gymWrapper.setCoachService(
-            (CoachService) getIntent().getParcelableExtra(Constants.EXTRA_GYM_SERVICE));
+            getIntent().getParcelableExtra(Constants.EXTRA_GYM_SERVICE));
       }
       if (getIntent().getParcelableExtra(Constants.EXTRA_BRAND) != null) {
         gymWrapper.setBrand((Brand) getIntent().getParcelableExtra(Constants.EXTRA_BRAND));

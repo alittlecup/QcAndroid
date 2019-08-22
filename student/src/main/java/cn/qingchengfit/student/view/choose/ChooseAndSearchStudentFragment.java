@@ -16,16 +16,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
-
 import cn.qingchengfit.router.qc.QcRouteUtil;
 import cn.qingchengfit.router.qc.RouteOptions;
 import cn.qingchengfit.saascommon.SaasCommonFragment;
 import cn.qingchengfit.saascommon.events.EventSaasFresh;
 import cn.qingchengfit.saascommon.events.EventSelectedStudent;
+import cn.qingchengfit.saascommon.item.StudentItem;
 import cn.qingchengfit.saascommon.permission.IPermissionModel;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -139,6 +138,13 @@ import rx.android.schedulers.AndroidSchedulers;
     }
   }
 
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if (chooseType == 1&&!TextUtils.isEmpty(from)&&from.equals("locker")) {
+      initListItemListener();
+    }
+  }
+
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
       Bundle savedInstanceState) {
     if (f instanceof ChooseStudentListFragment) {
@@ -166,6 +172,20 @@ import rx.android.schedulers.AndroidSchedulers;
         return false;
       }
     });
+  }
+
+  protected void initListItemListener() {
+    if (chooseStudentListFragment != null) {
+      chooseStudentListFragment.setOnItemClickListener(position -> {
+        StudentItem item = chooseStudentListFragment.getItem(position);
+        QcStudentBean data = item.getData();
+        List<QcStudentBean> beans = new ArrayList<>();
+        beans.add(data);
+        RxBus.getBus().post(new EventSelectedStudent(beans, source));
+        popBack();
+        return false;
+      });
+    }
   }
 
   public void postBackSelectedStudent() {
@@ -214,9 +234,9 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   public void getData() {
-    if(TextUtils.isEmpty(from)){
+    if (TextUtils.isEmpty(from)) {
       presenter.getAllStudents("");
-    }else{
+    } else {
       presenter.getAllStudents("put");
     }
   }

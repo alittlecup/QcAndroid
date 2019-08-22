@@ -15,7 +15,6 @@ import cn.qingchengfit.saasbase.course.course.bean.SchedulePhoto;
 import cn.qingchengfit.saasbase.databinding.FragmentScheduleDetailBinding;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saascommon.mvvm.SaasBindingFragment;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -43,7 +42,7 @@ import javax.inject.Inject;
   CommonFlexAdapter photoAdapter;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus status;
-  @Need CoachService service;
+  @Need public CoachService service;
 
   @Need String scheduleID;
 
@@ -163,12 +162,10 @@ import javax.inject.Inject;
   @Override
   public FragmentScheduleDetailBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-
     if (mBinding != null) return mBinding;
     mBinding = FragmentScheduleDetailBinding.inflate(inflater, container, false);
     initToolbar();
     initRecyclerView();
-    mViewModel.loadShopInfo();
     mBinding.setFragment(this);
     if (service != null) {
       host = service.getHost();
@@ -176,6 +173,8 @@ import javax.inject.Inject;
       host = gymWrapper.getCoachService().getHost();
     }
     mViewModel.setService(service);
+    mViewModel.loadShopInfo();
+
     return mBinding;
   }
 
@@ -221,7 +220,10 @@ import javax.inject.Inject;
   }
 
   public void routeAllPhotos(View view) {
+    ScheduleDetail value = mViewModel.detail.getValue();
+    if (value == null) return;
     routeTo("course", "/schedule/photos", new BundleBuilder().withString("scheduleID", scheduleID)
+        .withBoolean("cancel", cancel)
         .withParcelable("photos", mViewModel.detailPhotos.getValue())
         .build());
   }
@@ -288,7 +290,7 @@ import javax.inject.Inject;
         .toString();
 
     String link = host
-        + "shop/"
+        + "/shop/"
         + mViewModel.shopID
         + "/m/user/schedules/"
         + scheduleID

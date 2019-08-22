@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
+import cn.qingchengfit.saasbase.staff.model.body.BatchPayResponse;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
@@ -162,5 +163,9 @@ public class StaffModel implements IStaffModel {
   @Override public Observable<QcDataResponse<TurOrderSellerHistoryWrapper>> qcGetOrderHistorty(
       String turnover_id) {
     return null;
+  }
+
+  @Override public Observable<QcDataResponse<BatchPayResponse>> qcGetBatchPayMethod() {
+    return restRepository.createRxJava1Api(TrainerAllApi.class).qcGetbatchPay(loginStatus.staff_id(),gymWrapper.getParams());
   }
 }

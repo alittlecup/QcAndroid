@@ -70,7 +70,6 @@ import rx.functions.Action1;
         .replace(R.id.web_for_guide_frag, WebFragment.newInstance(mUrl))
         .commit();
     initViewModel();
-    mViewModel.loadShopDetail();
     if (AppUtils.getCurApp(this) == 0) {
       findViewById(R.id.btn_config_homepage).setVisibility(View.GONE);
       mViewModel.loadTrainerShopDetail();

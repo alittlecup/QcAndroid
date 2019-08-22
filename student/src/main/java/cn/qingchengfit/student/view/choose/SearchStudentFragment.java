@@ -112,12 +112,16 @@ import java.util.List;
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    initListItemListener();
     if (addAble) {
       addStudent.setVisibility(View.VISIBLE);
     } else {
       addStudent.setVisibility(View.GONE);
       toolbar.getMenu().clear();
     }
+  }
+
+  @Override protected void initListItemListener() {
     if (chooseStudentListFragment != null) {
       chooseStudentListFragment.setOnItemClickListener(new FlexibleAdapter.OnItemClickListener() {
         @Override public boolean onItemClick(int position) {

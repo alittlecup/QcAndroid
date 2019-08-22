@@ -148,6 +148,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
 
   public static final String MODULE_TMALL_JOIN = "/tmall/join";
   public static final String MODULE_GENERAL_CARD = "/general/card";
+  public static final String MODULE_ENTERPRISE_CARD = "/enterprise/card";
 
   /**
    * 财务

@@ -11,9 +11,9 @@
 
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="30dp"
+      android:layout_height="wrap_content"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
+      android:orientation="vertical"
       >
 
     <TextView
@@ -21,46 +21,40 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="@string/online_pay_client"
         android:gravity="center_vertical"
-        android:textColor="@color/qc_text_black"
-        android:textSize="12sp"
-
-        />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        app:srcCompat="@drawable/ic_pay_wechat"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="@string/wechat_pay"
+        android:text="@string/online_pay_client"
         android:textColor="@color/qc_text_black"
         android:textSize="12sp"
         />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/ic_order_alipay"
-        />
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="@string/ali_pay"
-        android:textColor="@color/qc_text_black"
-        android:textSize="12sp"
-        />
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        >
+      <TextView
+          android:id="@+id/tv_wx_pay"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="5dp"
+          android:drawableLeft="@drawable/ic_pay_wechat"
+          android:drawablePadding="5dp"
+          android:text="@string/wechat_pay"
+          android:textColor="@color/qc_text_black"
+          android:textSize="12sp"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/vd_pay_alipay_small"
+          android:drawablePadding="5dp"
+          android:layout_marginRight="5dp"
+          android:text="@string/ali_pay"
+          android:textColor="@color/qc_text_black"
+          android:textSize="12sp"
+          />
+    </LinearLayout>
 
   </LinearLayout>
 

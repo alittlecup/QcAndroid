@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.export.item.ExportRecordItem;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
@@ -27,12 +27,12 @@ import javax.inject.Inject;
  * Created by fb on 2017/9/6.
  */
 
-public class ExportRecordFragment extends BaseFragment implements ImportExportPresenter.MVPView,
-    ExportRecordItem.OnButtonClickListener {
+public class ExportRecordFragment extends BaseFragment
+    implements ImportExportPresenter.MVPView, ExportRecordItem.OnButtonClickListener {
 
-	Toolbar toolbar;
-	TextView toolbarTitle;
-	RecyclerView recyclerExportRecord;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  RecyclerView recyclerExportRecord;
   @Inject ImportExportPresenter presenter;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
@@ -50,10 +50,10 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
     toolbarTitle.setText(getString(R.string.toolbar_export_record));
     adapter = new CommonFlexAdapter(itemList);
     recyclerExportRecord.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerExportRecord.addItemDecoration(new FlexibleItemDecoration(getContext())
-        .addItemViewType(R.layout.item_export_record, 1)
-        .withDivider(R.drawable.divider_card_list)
-        .withBottomEdge(true));
+    recyclerExportRecord.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_export_record, 1)
+            .withDivider(R.drawable.divider_card_list)
+            .withBottomEdge(true));
     recyclerExportRecord.setAdapter(adapter);
     return view;
   }
@@ -70,12 +70,15 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
 
   @Override public void onExportRecord(List<ExportRecord> record) {
     hideLoadingTrans();
-    if(record.size() > 0){
-      itemList.clear();
+    itemList.clear();
+    if (record == null || record.size() == 0) {
+      itemList.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无记录"));
+    } else {
+      for (ExportRecord exportRecord : record) {
+        itemList.add(new ExportRecordItem(exportRecord, this));
+      }
     }
-    for (ExportRecord exportRecord : record){
-      itemList.add(new ExportRecordItem(exportRecord, this));
-    }
+
     adapter.updateDataSet(itemList);
   }
 
@@ -88,10 +91,10 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
 
   @Override public void onDownload(int position) {
     if (itemList.get(position) instanceof ExportRecordItem) {
-      getFragmentManager()
-          .beginTransaction()
+      getFragmentManager().beginTransaction()
           .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
-          .replace(R.id.frag_import_export, ExportSendEmailFragment.newInstance(((ExportRecordItem) itemList.get(position)).getData()))
+          .replace(R.id.frag_import_export, ExportSendEmailFragment.newInstance(
+              ((ExportRecordItem) itemList.get(position)).getData()))
           .addToBackStack(null)
           .commit();
     }

@@ -82,7 +82,6 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
     if (getArguments() != null) {
       mTitle = getArguments().getString("title");
       mText = getArguments().getString("text");
@@ -149,11 +148,9 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
   }
 
   public void clickFriend() {
-    Observable.create(new Observable.OnSubscribe<Boolean>() {
-      @Override public void call(Subscriber<? super Boolean> subscriber) {
-        sendToWx(true);
-        subscriber.onCompleted();
-      }
+    Observable.create((Observable.OnSubscribe<Boolean>) subscriber -> {
+      sendToWx(true);
+      subscriber.onCompleted();
     }).onBackpressureBuffer().subscribeOn(Schedulers.io()).subscribe();
     dismiss();
   }
@@ -185,9 +182,11 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
       msg.description = mText;
       if (!TextUtils.isEmpty(mImg)) {
         Bitmap bitmap = BitmapFactory.decodeStream(new URL(mImg).openStream());
-        Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-        bitmap.recycle();
-        msg.thumbData = Util.bmpToByteArray(thumb, true);
+        if (bitmap != null) {
+          Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+          bitmap.recycle();
+          msg.thumbData = Util.bmpToByteArray(thumb, true);
+        }
       } else if (mBitmap != null) {
         msg.thumbData = Util.bmpToByteArray(mBitmap, true);
       }
@@ -197,11 +196,9 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
       req.scene =
           (!isFriend) ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
       api.sendReq(req);
-
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
       e.printStackTrace();
     }
   }
-
 }
